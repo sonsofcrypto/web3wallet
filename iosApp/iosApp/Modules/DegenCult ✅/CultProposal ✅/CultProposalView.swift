@@ -175,7 +175,7 @@ private extension CultProposalViewController {
         // Section
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.orthogonalScrollingBehavior = .groupPagingCentered
-        //section.interGroupSpacing = Theme.constant.padding * 0.25
+        //section.interGroupSpacing = Theme.padding * 0.25
         
         return section
     }

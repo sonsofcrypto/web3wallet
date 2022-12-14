@@ -18,11 +18,11 @@ final class CultProposalDetailDocsView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = Theme.color.bgPrimary
-        layer.cornerRadius = Theme.constant.cornerRadius
+        layer.cornerRadius = Theme.cornerRadius
         titleLabel.apply(style: .headline, weight: .bold)
         separatorView.backgroundColor = Theme.color.separatorSecondary
-        stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: titleLabel)
-        stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: separatorView)
+        stackView.setCustomSpacing(Theme.padding * 0.75, after: titleLabel)
+        stackView.setCustomSpacing(Theme.padding * 0.75, after: separatorView)
     }
     
     func update(
@@ -54,7 +54,7 @@ private extension CultProposalDetailDocsView {
             views.append(makeDocumentView(from: $0))
         }
         let vStack = VStackView(views)
-        vStack.spacing = Theme.constant.padding * 0.25
+        vStack.spacing = Theme.padding * 0.25
         return vStack
     }
     

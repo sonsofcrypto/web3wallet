@@ -28,7 +28,7 @@ final class MnemonicUpdateCell: UICollectionViewCell {
 
     func configure() {
         scheduleAutohideMnemonic()
-        layer.cornerRadius = Theme.constant.cornerRadius
+        layer.cornerRadius = Theme.cornerRadius
         backgroundColor = Theme.color.bgPrimary
         var attrs: [NSAttributedString.Key: Any] = [
             .font: Theme.font.body,
@@ -40,7 +40,7 @@ final class MnemonicUpdateCell: UICollectionViewCell {
         textView.isEditable = false
         textView.isUserInteractionEnabled = false
         overlay.isHidden = false
-        overlay.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        overlay.layer.cornerRadius = Theme.cornerRadiusSmall
         overlay.clipsToBounds = true
         overlayLabel.numberOfLines = 2
         overlayLabel.text = Localized("mnemonic.tapToReveal")

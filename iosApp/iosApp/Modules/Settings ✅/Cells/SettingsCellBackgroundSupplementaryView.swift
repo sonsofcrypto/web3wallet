@@ -7,7 +7,7 @@ final class SettingsCellBackgroundSupplementaryView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        layer.cornerRadius = Theme.constant.cornerRadius
+        layer.cornerRadius = Theme.cornerRadius
         backgroundColor = Theme.color.bgPrimary
     }
 

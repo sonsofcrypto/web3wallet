@@ -49,7 +49,7 @@ extension NFTsDashboardViewController {
                 ctaButton
             ]
         )
-        stackView.spacing = Theme.constant.padding
+        stackView.spacing = Theme.padding
         let view = UIView()
         view.backgroundColor = .clear
         view.addSubview(stackView)
@@ -59,11 +59,11 @@ extension NFTsDashboardViewController {
                 .layout(anchor: .bottomAnchor),
                 .layout(
                     anchor: .leadingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 ),
                 .layout(
                     anchor: .trailingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 )
             ]
         )
@@ -73,7 +73,7 @@ extension NFTsDashboardViewController {
                 .layout(
                     anchor: .topAnchor,
                     constant: .equalTo(
-                        constant: Theme.constant.padding
+                        constant: Theme.padding
                     )
                 ),
                 .layout(anchor: .centerXAnchor),

@@ -22,7 +22,7 @@ final class CultProposalStatus: UIView {
     }
     
     func configureUI() {
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        layer.cornerRadius = Theme.cornerRadiusSmall
         layer.borderWidth = 0.5
         layer.borderColor = Theme.color.bgPrimary.cgColor
         

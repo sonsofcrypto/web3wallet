@@ -15,7 +15,7 @@ final class AccountTransactionLoadingCell: CollectionViewCell {
         label.apply(style: .callout)
         label.textColor = Theme.color.textPrimary
         label.numberOfLines = 0
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
+        layer.cornerRadius = Theme.cornerRadiusSmall * 2
         activityIndicator.color = Theme.color.activityIndicator
     }
     

@@ -59,8 +59,8 @@ private extension AlertViewController {
         alertView.addConstraints(
             [
                 .layout(anchor: .centerYAnchor),
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding))
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.padding)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.padding))
             ]
         )
     }
@@ -71,7 +71,7 @@ private extension AlertViewController {
         content.append(contentsOf: alertMessage(with: alertContext.message))
         content.append(contentsOf: alertActions(with: alertContext.actions))
         let stackView = VStackView(content)
-        stackView.spacing = Theme.constant.padding
+        stackView.spacing = Theme.padding
         return stackView
     }
     
@@ -122,7 +122,7 @@ private extension AlertViewController {
         let wrappingView = UIView()
         wrappingView.backgroundColor = .clear
         wrappingView.clipsToBounds = true
-        wrappingView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        wrappingView.layer.cornerRadius = Theme.cornerRadiusSmall
         wrappingView.addSubview(imageView)
         imageView.addConstraints(
             [
@@ -142,15 +142,15 @@ private extension AlertViewController {
         webView.backgroundColor = .clear
         webView.scrollView.isScrollEnabled = false
         webView.clipsToBounds = true
-        webView.layer.cornerRadius = Theme.constant.cornerRadius
+        webView.layer.cornerRadius = Theme.cornerRadius
         webView.loadFileURL(url, allowingReadAccessTo: url)
         let request = URLRequest(url: url)
         webView.load(request)
-        webView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        webView.layer.cornerRadius = Theme.cornerRadiusSmall
         let wrappingView = UIView()
         wrappingView.backgroundColor = .clear
         wrappingView.clipsToBounds = true
-        wrappingView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        wrappingView.layer.cornerRadius = Theme.cornerRadiusSmall
         wrappingView.addSubview(webView)
         webView.addConstraints(
             [

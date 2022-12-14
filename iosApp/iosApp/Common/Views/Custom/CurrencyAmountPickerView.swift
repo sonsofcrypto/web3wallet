@@ -38,7 +38,7 @@ final class CurrencyAmountPickerView: UIView {
         super.awakeFromNib()
         
         backgroundColor = Theme.color.bgPrimary
-        layer.cornerRadius = Theme.constant.cornerRadius
+        layer.cornerRadius = Theme.cornerRadius
         
         fiatSymbol.font = Theme.font.title3
         fiatSymbol.textColor = Theme.color.textPrimary
@@ -62,7 +62,7 @@ final class CurrencyAmountPickerView: UIView {
         amountLabel.addGestureRecognizer(tapGesture2)
         
         currencyView.backgroundColor = Theme.color.bgPrimary
-        currencyView.layer.cornerRadius = Theme.constant.cornerRadius
+        currencyView.layer.cornerRadius = Theme.cornerRadius
         let tapGesture = UITapGestureRecognizer(
             target: self, action: #selector(currencyTapped)
         )

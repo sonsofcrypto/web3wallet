@@ -36,13 +36,13 @@ class Button: UIButton {
         var size = super.intrinsicContentSize
         switch style {
         case .primary:
-            size.height = Theme.constant.buttonPrimaryHeight
+            size.height = Theme.buttonHeight
         case .secondary:
-            size.height = Theme.constant.buttonSecondaryHeight
+            size.height = Theme.buttonHeight
         case .secondarySmall:
-            size.height = Theme.constant.buttonSecondarySmallHeight
+            size.height = Theme.buttonHeightExtraSmall
         case .dashboardAction:
-            size.height = Theme.constant.buttonDashboardActionHeight
+            size.height = Theme.buttonSmallHeight
         case .accountAction:
             break
         }
@@ -82,13 +82,13 @@ private extension Button {
                 outgoing.font = Theme.font.title3
                 return outgoing
             }
-            configuration.titlePadding = Theme.constant.padding * 0.5
-            configuration.imagePadding = Theme.constant.padding * 0.5
+            configuration.titlePadding = Theme.padding * 0.5
+            configuration.imagePadding = Theme.padding * 0.5
             self.configuration = configuration
             updateConfiguration()
             updateBackgroundColor()
             tintColor = Theme.color.buttonTextPrimary
-            layer.cornerRadius = Theme.constant.cornerRadiusSmall
+            layer.cornerRadius = Theme.cornerRadiusSmall
             setTitleColor(Theme.color.buttonTextPrimary, for: .normal)
             setTitleColor(Theme.color.buttonTextPrimary.withAlpha(0.5), for: .disabled)
         case .secondary:
@@ -98,22 +98,22 @@ private extension Button {
                 outgoing.font = Theme.font.title3
                 return outgoing
             }
-            configuration.titlePadding = Theme.constant.padding * 0.5
-            configuration.imagePadding = Theme.constant.padding * 0.5
+            configuration.titlePadding = Theme.padding * 0.5
+            configuration.imagePadding = Theme.padding * 0.5
             self.configuration = configuration
             updateConfiguration()
             updateBackgroundColor()
             tintColor = Theme.color.buttonTextSecondary
-            layer.cornerRadius = Theme.constant.cornerRadiusSmall
+            layer.cornerRadius = Theme.cornerRadiusSmall
             layer.borderWidth = 1
             layer.borderColor = Theme.color.buttonTextSecondary.cgColor
             setTitleColor(Theme.color.buttonTextSecondary, for: .normal)
         case let .secondarySmall(leftImage):
             updateSecondaryStyle(leftImage: leftImage)
-            layer.cornerRadius = Theme.constant.buttonSecondarySmallHeight.half
+            layer.cornerRadius = Theme.buttonHeightExtraSmall.half
         case let .dashboardAction(leftImage):
             updateSecondaryStyle(leftImage: leftImage)
-            layer.cornerRadius = Theme.constant.buttonDashboardActionHeight.half
+            layer.cornerRadius = Theme.buttonSmallHeight.half
         case .accountAction:
             updateBackgroundColor()
             tintColor = Theme.color.textPrimary
@@ -150,8 +150,8 @@ private extension Button {
             outgoing.font = Theme.font.footnote
             return outgoing
         }
-        configuration.titlePadding = Theme.constant.padding * 0.5
-        configuration.imagePadding = Theme.constant.padding * 0.5
+        configuration.titlePadding = Theme.padding * 0.5
+        configuration.imagePadding = Theme.padding * 0.5
         self.configuration = configuration
         updateConfiguration()
         updateBackgroundColor()
@@ -230,7 +230,7 @@ final class CustomVerticalButton: UIView {
         super.awakeFromNib()
         
         backgroundColor = Theme.color.bgPrimary
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        layer.cornerRadius = Theme.cornerRadiusSmall
         tintColor = Theme.color.textPrimary
         
         let wrapperView = UIView()
@@ -257,7 +257,7 @@ final class CustomVerticalButton: UIView {
         self.nameLabel = nameLabel
         
         let vStack = VStackView([wrapperView, nameLabel])
-        vStack.spacing = Theme.constant.padding.half
+        vStack.spacing = Theme.padding.half
         addSubview(vStack)
         
         vStack.addConstraints(

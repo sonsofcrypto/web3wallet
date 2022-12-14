@@ -41,7 +41,7 @@ final class CultProposalCellClosed: CollectionViewCell {
                 .layout(
                     anchor: .trailingAnchor,
                     constant: .equalTo(
-                        constant: Theme.constant.padding
+                        constant: Theme.padding
                     )
                 )
             ]

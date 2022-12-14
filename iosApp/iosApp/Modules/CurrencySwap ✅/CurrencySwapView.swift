@@ -54,7 +54,7 @@ extension CurrencySwapViewController {
         feesPickerView.present(
             with: networkFees,
             onFeeSelected: makeOnFeeSelected(),
-            at: .init(x: Theme.constant.padding, y: fromFrame.midY)
+            at: .init(x: Theme.padding, y: fromFrame.midY)
         )
     }
     
@@ -204,7 +204,7 @@ private extension CurrencySwapViewController {
             heightDimension: .estimated(100)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding)
+        let screenWidth: CGFloat = (view.bounds.width - Theme.padding)
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(screenWidth),
             heightDimension: .estimated(100)
@@ -218,7 +218,7 @@ private extension CurrencySwapViewController {
             bottom: 0,
             trailing: 8
         )
-        let sectionInset: CGFloat = Theme.constant.padding
+        let sectionInset: CGFloat = Theme.padding
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .init(
             top: sectionInset.half,

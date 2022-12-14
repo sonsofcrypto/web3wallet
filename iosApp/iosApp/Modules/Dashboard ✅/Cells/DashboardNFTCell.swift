@@ -11,7 +11,7 @@ final class DashboardNFTCell: CollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
+        layer.cornerRadius = Theme.cornerRadiusSmall * 2
         clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
     }

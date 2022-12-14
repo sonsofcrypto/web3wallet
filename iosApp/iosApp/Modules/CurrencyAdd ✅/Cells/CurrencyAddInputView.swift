@@ -63,7 +63,7 @@ private extension CurrencyAddInputView {
         self.actionsView = _actionsView()
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = Theme.constant.padding.half
+        stackView.spacing = Theme.padding.half
         stackView.addArrangedSubview(inputStack)
         stackView.addArrangedSubview(actionsView)
         addSubview(stackView)
@@ -82,7 +82,7 @@ private extension CurrencyAddInputView {
     func inputStack() -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = Theme.constant.padding.half.half
+        stackView.spacing = Theme.padding.half.half
         let nameLabel = UILabel()
         nameLabel.font =  Theme.font.footnote
         nameLabel.textColor = Theme.color.textSecondary

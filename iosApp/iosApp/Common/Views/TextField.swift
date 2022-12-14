@@ -93,7 +93,7 @@ private extension TextField {
     func textShadow(_ tint: UIColor) -> NSShadow {
         let shadow = NSShadow()
         shadow.shadowOffset = .zero
-        shadow.shadowBlurRadius = Theme.constant.cornerRadiusSmall.half
+        shadow.shadowBlurRadius = Theme.cornerRadiusSmall.half
         shadow.shadowColor = tint
         return shadow
     }

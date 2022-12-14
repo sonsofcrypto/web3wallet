@@ -35,11 +35,11 @@ private extension ConfirmationSwapView {
             confirmButton()
         ]
         let stackView = VStackView(views)
-        stackView.spacing = Theme.constant.padding.half
-        stackView.setCustomSpacing(Theme.constant.padding * 0.25, after: views[0])
-        stackView.setCustomSpacing(Theme.constant.padding * 0.25, after: views[1])
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[2])
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[3])
+        stackView.spacing = Theme.padding.half
+        stackView.setCustomSpacing(Theme.padding * 0.25, after: views[0])
+        stackView.setCustomSpacing(Theme.padding * 0.25, after: views[1])
+        stackView.setCustomSpacing(Theme.padding, after: views[2])
+        stackView.setCustomSpacing(Theme.padding, after: views[3])
         addSubview(stackView)
         stackView.addConstraints(.toEdges)
     }
@@ -51,12 +51,12 @@ private extension ConfirmationSwapView {
                 currencyAmountView(with: currency.value, and: currency.usdValue)
             ]
         )
-        horizontalStack.spacing = Theme.constant.padding
+        horizontalStack.spacing = Theme.padding
         let view = UIView()
-        view.layer.cornerRadius = Theme.constant.cornerRadius
+        view.layer.cornerRadius = Theme.cornerRadius
         view.backgroundColor = Theme.color.bgPrimary
         view.addSubview(horizontalStack)
-        horizontalStack.addConstraints(.toEdges(padding: Theme.constant.padding))
+        horizontalStack.addConstraints(.toEdges(padding: Theme.padding))
         return view
     }
     
@@ -85,7 +85,7 @@ private extension ConfirmationSwapView {
         let backgroundView = UIView()
         backgroundView.backgroundColor = Theme.color.bgPrimary
         backgroundView.addSubview(imageView)
-        backgroundView.layer.cornerRadius = Theme.constant.cornerRadiusSmall.half
+        backgroundView.layer.cornerRadius = Theme.cornerRadiusSmall.half
         imageView.addConstraints(
             [
                 .layout(anchor: .centerXAnchor),
@@ -127,12 +127,12 @@ private extension ConfirmationSwapView {
         ]
         
         let stack = VStackView(views)
-        stack.spacing = Theme.constant.padding * 0.5
+        stack.spacing = Theme.padding * 0.5
         let view = UIView()
-        view.layer.cornerRadius = Theme.constant.cornerRadius
+        view.layer.cornerRadius = Theme.cornerRadius
         view.backgroundColor = Theme.color.bgPrimary
         view.addSubview(stack)
-        stack.addConstraints(.toEdges(padding: Theme.constant.padding))
+        stack.addConstraints(.toEdges(padding: Theme.padding))
         return view
     }
     
@@ -155,7 +155,7 @@ private extension ConfirmationSwapView {
             fontSmall: Theme.font.extraSmall
         )
         let stackView = VStackView([amountLabel, amountUSDLabel])
-        stackView.spacing = Theme.constant.padding * 0.25
+        stackView.spacing = Theme.padding * 0.25
         return stackView
     }
     
@@ -172,7 +172,7 @@ private extension ConfirmationSwapView {
                 providerLabel, icon, providerName
             ]
         )
-        horizontalStack.spacing = Theme.constant.padding * 0.5
+        horizontalStack.spacing = Theme.padding * 0.5
         icon.addConstraints(
             [
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24)),
@@ -212,7 +212,7 @@ private extension ConfirmationSwapView {
         divider.addConstraints(
             [
                 .layout(anchor: .leadingAnchor),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: -Theme.constant.padding)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: -Theme.padding)),
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 1)),
                 .layout(anchor: .topAnchor),
                 .layout(anchor: .bottomAnchor)

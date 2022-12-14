@@ -193,9 +193,9 @@ extension MnemonicUpdateViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let width = view.bounds.width - Theme.constant.padding * 2
+        let width = view.bounds.width - Theme.padding * 2
         guard let viewModel = viewModel?.sections[indexPath.section].items[indexPath.item] else {
-            return CGSize(width: width, height: Theme.constant.cellHeight)
+            return CGSize(width: width, height: Theme.cellHeight)
         }
         if viewModel is MnemonicUpdateViewModel.SectionItemMnemonic {
             return CGSize(width: width, height: Constant.mnemonicCellHeight)
@@ -339,7 +339,7 @@ private extension MnemonicUpdateViewController {
         // TODO: Smell
         let window = UIApplication.shared.keyWindow
         ctaButtonBottomConstraint.constant = window?.safeAreaInsets.bottom == 0
-            ? -Theme.constant.padding
+            ? -Theme.padding
             : 0
     }
     

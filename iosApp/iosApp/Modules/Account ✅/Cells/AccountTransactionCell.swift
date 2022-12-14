@@ -19,7 +19,7 @@ final class AccountTransactionCell: CollectionViewCell {
         addressLabel.textColor = Theme.color.textSecondary
         chevronView.tintColor = Theme.color.textSecondary
         chevronView.image = .init(systemName: "chevron.right")
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
+        layer.cornerRadius = Theme.cornerRadiusSmall * 2
     }
     
     override func setSelected(_ selected: Bool) {}

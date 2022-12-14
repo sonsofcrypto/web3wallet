@@ -11,7 +11,7 @@ class CollectionViewCell: UICollectionViewCell {
     }
 
     private(set) var bottomSeparatorView = LineView()
-    var separatorViewLeadingPadding: CGFloat = Theme.constant.padding
+    var separatorViewLeadingPadding: CGFloat = Theme.padding
     var separatorViewTrailingPadding: CGFloat = 0
 
     override init(frame: CGRect) {
@@ -49,7 +49,7 @@ private extension CollectionViewCell {
     func configureUI() {
         clipsToBounds = false
         backgroundColor = Theme.color.bgPrimary
-        layer.cornerRadius = Theme.constant.cornerRadius
+        layer.cornerRadius = Theme.cornerRadius
         contentView.addSubview(bottomSeparatorView)
         bottomSeparatorView.isHidden = true
         setSelected(isSelected)

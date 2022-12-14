@@ -14,11 +14,11 @@ final class CultProposalDetailSummaryView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = Theme.color.bgPrimary
-        layer.cornerRadius = Theme.constant.cornerRadius
+        layer.cornerRadius = Theme.cornerRadius
         titleLabel.apply(style: .headline, weight: .bold)
         separatorView.backgroundColor = Theme.color.separatorSecondary
-        stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: titleLabel)
-        stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: separatorView)
+        stackView.setCustomSpacing(Theme.padding * 0.75, after: titleLabel)
+        stackView.setCustomSpacing(Theme.padding * 0.75, after: separatorView)
         infoLabel.apply(style: .body)
     }
 

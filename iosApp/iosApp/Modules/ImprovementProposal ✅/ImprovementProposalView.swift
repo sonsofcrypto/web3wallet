@@ -54,10 +54,10 @@ private extension ImprovementProposalViewController {
     func configureUI() {
         voteButton.style = .primary
         voteButton.setTitle(Localized("proposal.button.vote"), for: .normal)
-        stackView.spacing = Theme.constant.padding.half
+        stackView.spacing = Theme.padding.half
         stackView.superview?.backgroundColor = Theme.color.bgPrimary
-        stackView.superview?.layer.cornerRadius = Theme.constant.cornerRadius
-        imageView.layer.cornerRadius = Theme.constant.cornerRadius
+        stackView.superview?.layer.cornerRadius = Theme.cornerRadius
+        imageView.layer.cornerRadius = Theme.cornerRadius
         subtitleLabel.apply(style: .headline, weight: .bold)
         subtitleLabel.text = Localized("proposal.summary.header")
         bodyTextView.font = Theme.font.body

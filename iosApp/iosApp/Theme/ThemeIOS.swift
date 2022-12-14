@@ -5,28 +5,30 @@
 import UIKit
 
 struct ThemeIOS: Themable {
-    
     let style: ThemeStyle
-    
-    init(
-        style: ThemeStyle
-    ) {
+    let name: String = "themeIOS"
+    let type: ThemeType = .themeVanilla
+
+    let padding: CGFloat = 16
+    let cornerRadius: CGFloat = 14
+    let cornerRadiusSmall: CGFloat = 8
+    let shadowRadius: CGFloat = 4
+    let cellHeight: CGFloat = 64
+    let cellHeightSmall: CGFloat = 46
+    let buttonHeight: CGFloat = 46
+    let buttonSmallHeight: CGFloat = 32
+    let buttonHeightExtraSmall: CGFloat = 24
+
+    init(style: ThemeStyle) {
         self.style = style
     }
 
-    var name: String {
-        "themeIOS"
-    }
-    
     var statusBarStyle: ThemeStatusBarStyle {
-        
         isDarkMode
         ? .init(lightMode: .light, darkMode: .light)
         : .init(lightMode: .dark, darkMode: .dark)
     }
-    
-    var type: ThemeType { .themeVanilla }
-    
+
     var color: ThemeColor {
         
         let pallete = ThemeColourPalette(isDarkMode: isDarkMode)
@@ -141,7 +143,6 @@ struct ThemeIOS: Themable {
     }
     
     var font: ThemeFont {
-        
         .init(
             largeTitle: .systemFont(ofSize: 34, weight: .regular), // line_height = 41
             largeTitleBold: .systemFont(ofSize: 34, weight: .bold), // line_height = 41
@@ -179,22 +180,8 @@ struct ThemeIOS: Themable {
             dashboardTVTokenBalanceSmall: .init(name: "OCR-A", size: 8)!
         )
     }
-    
-    var constant: ThemeConstant {
-        
-        .init(
-            cornerRadius: 14,
-            cornerRadiusSmall: 8,
-            shadowRadius: 4,
-            cellHeight: 64,
-            cellHeightSmall: 46,
-            padding: 16,
-            buttonPrimaryHeight: 46,
-            buttonSecondaryHeight: 46,
-            buttonSecondarySmallHeight: 24,
-            buttonDashboardActionHeight: 32
-        )
-    }
+
+
 }
 
 private extension ThemeIOS {

@@ -109,7 +109,7 @@ class DashboardWalletCellBackgroundView: UIView {
         view.colors = [UIColor(hexString: "3461BE")!, UIColor(hexString: "223E7B")!]
         view.direction = .custom(CGPoint(x: 0, y: 0), CGPoint(x: 0, y: 1))
         insertSubview(view, at: 1)
-        view.layer.cornerRadius = Theme.constant.cornerRadius
+        view.layer.cornerRadius = Theme.cornerRadius
         view.layer.maskedCorners = .all
         return view
     }()
@@ -146,7 +146,7 @@ class DashboardWalletCellBackgroundView: UIView {
 
     func configUI() {
         clipsToBounds = true
-        layer.cornerRadius = Theme.constant.cornerRadius
+        layer.cornerRadius = Theme.cornerRadius
         layer.maskedCorners = CACornerMask.all
 //        noise.alpha = 0.5
 //        [highlight, highlightBtm].forEach { $0.alpha = 0.5 }

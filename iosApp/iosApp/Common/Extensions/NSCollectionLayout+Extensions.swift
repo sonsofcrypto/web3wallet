@@ -39,27 +39,27 @@ extension NSDirectionalEdgeInsets {
 
     static var padding: Self {
         .init(
-            top: Theme.constant.padding,
-            leading: Theme.constant.padding,
-            bottom: Theme.constant.padding,
-            trailing: Theme.constant.padding
+            top: Theme.padding,
+            leading: Theme.padding,
+            bottom: Theme.padding,
+            trailing: Theme.padding
         )
     }
 
     static var paddingHalf: Self {
         .init(
-            top: Theme.constant.padding.half,
-            leading: Theme.constant.padding.half,
-            bottom: Theme.constant.padding.half,
-            trailing: Theme.constant.padding.half
+            top: Theme.padding.half,
+            leading: Theme.padding.half,
+            bottom: Theme.padding.half,
+            trailing: Theme.padding.half
         )
     }
 
     static func padding(
-        top: CGFloat = Theme.constant.padding,
-        leading: CGFloat = Theme.constant.padding,
-        bottom: CGFloat = Theme.constant.padding,
-        trailing: CGFloat = Theme.constant.padding
+        top: CGFloat = Theme.padding,
+        leading: CGFloat = Theme.padding,
+        bottom: CGFloat = Theme.padding,
+        trailing: CGFloat = Theme.padding
     ) -> NSDirectionalEdgeInsets {
         .init(
             top: top,

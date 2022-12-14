@@ -38,9 +38,9 @@ final class DashboardBackgroundView: BackgroundView {
         let sunSize = btmSun.image?.size ?? .zero
         let logoSize = btmLogo.image?.size ?? .zero
         let memeSize = btmMeme.image?.size ?? .zero
-        let maxY = bounds.maxY - cv.adjustedContentInset.top + Theme.constant.padding
+        let maxY = bounds.maxY - cv.adjustedContentInset.top + Theme.padding
         let scrollY = cv.contentSize.height +
-            Theme.constant.padding +
+            Theme.padding +
             cv.adjustedContentInset.bottom -
             cv.adjustedContentInset.top -
             cv.contentOffset.y

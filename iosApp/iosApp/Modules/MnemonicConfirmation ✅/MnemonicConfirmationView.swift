@@ -97,7 +97,7 @@ private extension MnemonicConfirmationViewController {
         statusLabel.textColor = Theme.color.textPrimary
         statusLabel.textAlignment = .left
         textViewContainer.backgroundColor = Theme.color.bgPrimary
-        textViewContainer.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        textViewContainer.layer.cornerRadius = Theme.cornerRadiusSmall
         textView.delegate = self
         textView.applyStyle(.body)
         textView.inputAccessoryView = mnemonicImportHelper.inputAccessoryView(
@@ -106,7 +106,7 @@ private extension MnemonicConfirmationViewController {
         saltLabel.text = Localized("mnemonicConfirmation.salt")
         saltLabel.apply(style: .headline)
         saltTextFieldView.backgroundColor = Theme.color.bgPrimary
-        saltTextFieldView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        saltTextFieldView.layer.cornerRadius = Theme.cornerRadiusSmall
         saltTextField.backgroundColor = .clear
         saltTextField.text = nil
         saltTextField.delegate = self

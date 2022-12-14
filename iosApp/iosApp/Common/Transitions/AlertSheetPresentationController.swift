@@ -27,7 +27,7 @@ final class AlertSheetPresentationController: UIPresentationController {
     override var frameOfPresentedViewInContainerView: CGRect {
         
         let size: CGSize = .init(
-            width: containerViewBounds().width - (Theme.constant.padding * 2),
+            width: containerViewBounds().width - (Theme.padding * 2),
             height: contentHeight
         )
         let bounds = containerViewBounds()
@@ -48,7 +48,7 @@ final class AlertSheetPresentationController: UIPresentationController {
         let bgView = newBGView()
         containerView?.addSubview(bgView)
         self.bgView = bgView
-        presentedView?.layer.cornerRadius = Theme.constant.cornerRadius
+        presentedView?.layer.cornerRadius = Theme.cornerRadius
 
         UIView.animate(withDuration: Constant.animDuration) {
             self.bgView?.alpha = 1.0

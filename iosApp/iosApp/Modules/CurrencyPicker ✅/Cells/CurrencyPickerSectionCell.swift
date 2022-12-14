@@ -22,7 +22,7 @@ final class CurrencyPickerSectionCell: UICollectionReusableView {
         trailingConstraint.isActive = true
         bottomAnchor.constraint(
             equalTo: label.bottomAnchor,
-            constant: Theme.constant.padding.half
+            constant: Theme.padding.half
         ).isActive = true
         return label
     }()
@@ -36,8 +36,8 @@ extension CurrencyPickerSectionCell {
             leadingConstraint.constant = 0
             trailingConstraint.constant = 0
         } else {
-            leadingConstraint.constant = Theme.constant.padding
-            trailingConstraint.constant = Theme.constant.padding
+            leadingConstraint.constant = Theme.padding
+            trailingConstraint.constant = Theme.padding
         }
     }
 }

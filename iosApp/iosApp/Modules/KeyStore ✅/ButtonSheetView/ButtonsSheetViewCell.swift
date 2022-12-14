@@ -41,7 +41,7 @@ private extension ButtonsSheetViewCell {
         titleLabel.font = Theme.font.title3
         titleLabel.textColor = Theme.color.buttonTextPrimary
         backgroundColor = Theme.color.buttonBgPrimary
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        layer.cornerRadius = Theme.cornerRadiusSmall
         layer.borderWidth = 0
     }
     
@@ -49,7 +49,7 @@ private extension ButtonsSheetViewCell {
         titleLabel.font = Theme.font.title3
         titleLabel.textColor = Theme.color.buttonTextSecondary
         backgroundColor = .clear
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        layer.cornerRadius = Theme.cornerRadiusSmall
         layer.borderColor = Theme.color.buttonTextSecondary.cgColor
         layer.borderWidth = 1
     }

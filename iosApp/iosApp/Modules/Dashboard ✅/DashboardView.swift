@@ -341,7 +341,7 @@ private extension DashboardViewController {
     }
 
     func buttonsCollectionLayoutSection() -> NSCollectionLayoutSection {
-        let h = Theme.constant.buttonDashboardActionHeight
+        let h = Theme.buttonSmallHeight
         let group = NSCollectionLayoutGroup.horizontal(
             .fractional(estimatedH: 100),
             items: [.init(layoutSize: .fractional(estimatedH: h))]
@@ -358,32 +358,32 @@ private extension DashboardViewController {
     }
 
     func actionsCollectionLayoutSection() -> NSCollectionLayoutSection {
-        let width = floor((view.bounds.width - Theme.constant.padding * 3)  / 2)
+        let width = floor((view.bounds.width - Theme.padding * 3)  / 2)
         let group = NSCollectionLayoutGroup.horizontal(
             .estimated(view.bounds.width * 3, height: 64),
             items: [.init(layoutSize: .absolute(width, estimatedH: 64))]
         )
         let section = NSCollectionLayoutSection(group: group, insets: .padding)
-        section.interGroupSpacing = Theme.constant.padding
+        section.interGroupSpacing = Theme.padding
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         return section
     }
 
     func walletsCollectionLayoutSection() -> NSCollectionLayoutSection {
-        let width = floor((view.bounds.width - Theme.constant.padding * 3) / 2)
+        let width = floor((view.bounds.width - Theme.padding * 3) / 2)
         let height = round(width * 0.95)
         let group = NSCollectionLayoutGroup.horizontal(
             .fractional(absoluteH: height),
             items: [.init(.absolute(width, height: height))]
         )
-        group.interItemSpacing = .fixed(Theme.constant.padding)
+        group.interItemSpacing = .fixed(Theme.padding)
         let section = NSCollectionLayoutSection(group: group, insets: .padding)
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: .fractional(estimatedH: 100),
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
-        section.interGroupSpacing = Theme.constant.padding
+        section.interGroupSpacing = Theme.padding
         section.boundarySupplementaryItems = [headerItem]
         return section
     }
@@ -402,26 +402,26 @@ private extension DashboardViewController {
         let backgroundItem = NSCollectionLayoutDecorationItem.background(
             elementKind: "background"
         )
-        backgroundItem.contentInsets = .padding(top: Theme.constant.padding * 3)
+        backgroundItem.contentInsets = .padding(top: Theme.padding * 3)
         section.decorationItems = [backgroundItem]
         section.boundarySupplementaryItems = [headerItem]
         return section
     }
 
     func nftsCollectionLayoutSection() -> NSCollectionLayoutSection {
-        let width = floor((view.bounds.width - Theme.constant.padding * 3) / 2)
+        let width = floor((view.bounds.width - Theme.padding * 3) / 2)
         let group = NSCollectionLayoutGroup.horizontal(
             .estimated(view.bounds.width * 3, height: width),
             items: [.init(.absolute(width, height: width))]
         )
-        group.interItemSpacing = .fixed(Theme.constant.padding)
+        group.interItemSpacing = .fixed(Theme.padding)
         let section = NSCollectionLayoutSection(group: group, insets: .padding)
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: .fractional(estimatedH: 100),
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
-        section.interGroupSpacing = Theme.constant.padding
+        section.interGroupSpacing = Theme.padding
         section.boundarySupplementaryItems = [headerItem]
         section.orthogonalScrollingBehavior = .continuous
         return section

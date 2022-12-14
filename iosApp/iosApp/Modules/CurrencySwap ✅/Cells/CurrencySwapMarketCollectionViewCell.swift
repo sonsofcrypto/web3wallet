@@ -34,7 +34,7 @@ final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        imageView.superview?.layer.cornerRadius = Theme.constant.cornerRadius.half.half
+        imageView.superview?.layer.cornerRadius = Theme.cornerRadius.half.half
         imageView.superview?.backgroundColor = Theme.color.bgPrimary
         imageView.tintColor = Theme.color.textSecondary
         imageView.image = "arrow.up.arrow.down".assetImage
@@ -53,11 +53,11 @@ final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
         approveButton.updateConfiguration()
         button.style = .primary
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        stackView.setCustomSpacing(Theme.constant.padding, after: currencyTo)
-        stackView.setCustomSpacing(Theme.constant.padding.half.half, after: currencySwapProviderView)
-        stackView.setCustomSpacing(Theme.constant.padding.half.half, after: currencySwapPriceView)
-        stackView.setCustomSpacing(Theme.constant.padding.half, after: currencySwapSlippageView)
-        stackView.setCustomSpacing(Theme.constant.padding, after: networkFeeView)
+        stackView.setCustomSpacing(Theme.padding, after: currencyTo)
+        stackView.setCustomSpacing(Theme.padding.half.half, after: currencySwapProviderView)
+        stackView.setCustomSpacing(Theme.padding.half.half, after: currencySwapPriceView)
+        stackView.setCustomSpacing(Theme.padding.half, after: currencySwapSlippageView)
+        stackView.setCustomSpacing(Theme.padding, after: networkFeeView)
     }
     
     override func resignFirstResponder() -> Bool {

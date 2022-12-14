@@ -13,7 +13,7 @@ final class AccountTransactionEmptyCell: CollectionViewCell {
         super.awakeFromNib()
         label.apply(style: .callout)
         label.textColor = Theme.color.textSecondary
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
+        layer.cornerRadius = Theme.cornerRadiusSmall * 2
     }
     
     func update(with viewModel: AccountViewModel.TransactionEmpty) {

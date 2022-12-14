@@ -41,7 +41,7 @@ extension CurrencySendViewController {
         feesPickerView.present(
             with: networkFees,
             onFeeSelected: makeOnFeeSelected(),
-            at: .init(x: Theme.constant.padding, y: fromFrame.midY)
+            at: .init(x: Theme.padding, y: fromFrame.midY)
         )
     }
     
@@ -153,7 +153,7 @@ private extension CurrencySendViewController {
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]
         )
-        let sectionInset: CGFloat = Theme.constant.padding
+        let sectionInset: CGFloat = Theme.padding
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .init(
             top: sectionIndex == 0 ? sectionInset : 0,

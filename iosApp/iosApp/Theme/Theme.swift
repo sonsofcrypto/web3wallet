@@ -32,14 +32,21 @@ protocol Themable {
     var type: ThemeType { get }
     var font: ThemeFont { get }
     var color: ThemeColor { get }
-    var constant: ThemeConstant { get }
     var statusBarStyle: ThemeStatusBarStyle { get }
+    var padding: CGFloat { get }
+    var cornerRadius: CGFloat { get }
+    var cornerRadiusSmall: CGFloat { get }
+    var shadowRadius: CGFloat { get }
+    var cellHeight: CGFloat { get }
+    var cellHeightSmall: CGFloat { get }
+    var buttonHeight: CGFloat { get }
+    var buttonSmallHeight: CGFloat { get }
+    var buttonHeightExtraSmall: CGFloat { get }
 }
 
 extension Themable {
     
     var isThemeIOSDarkSelected: Bool {
-        
         let service: SettingsService = AppAssembler.resolve()
         return service.isSelected(setting: .init(group: .theme, action: .themeIosDark))
     }
@@ -159,17 +166,4 @@ struct ThemeColor {
     let dashboardTVCryptoBalance: UIColor
     let activityIndicator: UIColor
     let destructive: UIColor
-}
-
-struct ThemeConstant {
-    let cornerRadius: CGFloat
-    let cornerRadiusSmall: CGFloat
-    let shadowRadius: CGFloat
-    let cellHeight: CGFloat
-    let cellHeightSmall: CGFloat
-    let padding: CGFloat
-    let buttonPrimaryHeight: CGFloat
-    let buttonSecondaryHeight: CGFloat
-    let buttonSecondarySmallHeight: CGFloat
-    let buttonDashboardActionHeight: CGFloat
 }

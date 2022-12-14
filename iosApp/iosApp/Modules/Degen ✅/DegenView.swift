@@ -183,16 +183,16 @@ extension DegenViewController {
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = sectionIndex.isMultiple(of: 2) ?
             .init(
-                top: sectionIndex == 0 ? Theme.constant.padding : 0,
-                leading: Theme.constant.padding,
+                top: sectionIndex == 0 ? Theme.padding : 0,
+                leading: Theme.padding,
                 bottom: 0,
-                trailing: Theme.constant.padding
+                trailing: Theme.padding
             ) :
             .init(
-                top: Theme.constant.padding,
-                leading: Theme.constant.padding,
-                bottom: sectionIndex == 0 ? 0 : Theme.constant.padding,
-                trailing: Theme.constant.padding
+                top: Theme.padding,
+                leading: Theme.padding,
+                bottom: sectionIndex == 0 ? 0 : Theme.padding,
+                trailing: Theme.padding
             )
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),

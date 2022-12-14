@@ -35,7 +35,7 @@ private extension ConfirmationCultCastVoteView {
             confirmButton()
         ]
         let stackView = VStackView(views)
-        stackView.spacing = Theme.constant.padding
+        stackView.spacing = Theme.padding
         addSubview(stackView)
         stackView.addConstraints(
             [
@@ -92,12 +92,12 @@ private extension ConfirmationCultCastVoteView {
             )
         ]
         let stack = VStackView(views)
-        stack.spacing = Theme.constant.padding * 0.5
+        stack.spacing = Theme.padding * 0.5
         let view = UIView()
-        view.layer.cornerRadius = Theme.constant.cornerRadius
+        view.layer.cornerRadius = Theme.cornerRadius
         view.backgroundColor = Theme.color.bgPrimary
         view.addSubview(stack)
-        stack.addConstraints(.toEdges(padding: Theme.constant.padding))
+        stack.addConstraints(.toEdges(padding: Theme.padding))
         return view
     }
     

@@ -94,12 +94,12 @@ private extension CurrencyPickerTokenCell {
             separatorBottomView.isHidden = true
         case .middle:
             separatorTopView.isHidden = false
-            separatorTopViewLeadingConstraint.constant = Theme.constant.padding
+            separatorTopViewLeadingConstraint.constant = Theme.padding
             separatorTopViewTrailingConstraint.constant = 0
             separatorBottomView.isHidden = true
         case .last:
             separatorTopView.isHidden = false
-            separatorTopViewLeadingConstraint.constant = Theme.constant.padding
+            separatorTopViewLeadingConstraint.constant = Theme.padding
             separatorTopViewTrailingConstraint.constant = 0
             separatorBottomView.isHidden = false
         default:

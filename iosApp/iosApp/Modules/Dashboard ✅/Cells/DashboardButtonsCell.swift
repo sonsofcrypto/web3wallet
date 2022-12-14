@@ -23,7 +23,7 @@ final class DashboardButtonsCell: UICollectionViewCell {
         
     override func awakeFromNib() {
         super.awakeFromNib()
-        stack.spacing = Theme.constant.padding
+        stack.spacing = Theme.padding
         updateViews()
     }
     

@@ -27,11 +27,11 @@ final class ConfirmationSheetPresentationController: UIPresentationController {
         
         .init(
             origin: .init(
-                x: Theme.constant.padding,
+                x: Theme.padding,
                 y: containerViewBounds().height - contentHeight - presentingViewController.view.safeAreaInsets.bottom
             ),
             size: .init(
-                width: containerViewBounds().width - (Theme.constant.padding * 2),
+                width: containerViewBounds().width - (Theme.padding * 2),
                 height: contentHeight
             )
         )
@@ -45,7 +45,7 @@ final class ConfirmationSheetPresentationController: UIPresentationController {
         let bgView = newBGView()
         containerView?.addSubview(bgView)
         self.bgView = bgView
-        presentedView?.layer.cornerRadius = Theme.constant.cornerRadius
+        presentedView?.layer.cornerRadius = Theme.cornerRadius
 
         UIView.animate(withDuration: Constant.animDuration) {
             self.bgView?.alpha = Constant.bgAlpha

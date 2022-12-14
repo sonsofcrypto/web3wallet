@@ -55,7 +55,7 @@ extension NFTsDashboardViewController {
     var collectionItemSize: CGSize {
         let width: CGFloat
         if let view = navigationController?.view {
-            width = view.frame.size.width - Theme.constant.padding * 3
+            width = view.frame.size.width - Theme.padding * 3
         } else {
             width = 220
         }
@@ -117,7 +117,7 @@ private extension NFTsDashboardViewController {
             [
                 .layout(
                     anchor: .topAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding * 2)
+                    constant: .equalTo(constant: Theme.padding * 2)
                 ),
                 .layout(
                     anchor: .centerXAnchor

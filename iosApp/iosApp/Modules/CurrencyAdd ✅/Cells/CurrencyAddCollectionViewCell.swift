@@ -32,9 +32,9 @@ final class CurrencyAddCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
         networkDetailsView.backgroundColor = Theme.color.bgPrimary
-        networkDetailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        networkDetailsView.layer.cornerRadius = Theme.cornerRadiusSmall
         detailsView.backgroundColor = Theme.color.bgPrimary
-        detailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        detailsView.layer.cornerRadius = Theme.cornerRadiusSmall
         (detailsView.subviews.first as? UIStackView)?.arrangedSubviews.forEach {
             if $0.tag == 10 { $0.backgroundColor = Theme.color.separatorSecondary }
         }
@@ -99,7 +99,7 @@ final class CurrencyAddCollectionViewCell: UICollectionViewCell {
         )
         saveButton.setTitle(viewModel.saveButtonTitle, for: .normal)
         saveButton.isEnabled = viewModel.saveButtonEnabled
-        widthLayoutConstraint.constant = width - Theme.constant.padding * 2
+        widthLayoutConstraint.constant = width - Theme.padding * 2
     }
 }
 

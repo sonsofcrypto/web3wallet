@@ -16,13 +16,13 @@ extension NFTsDashboardViewController {
         carousel.type = .coverFlow
         carousel.dataSource = self
         carousel.delegate = self
-        carousel.layer.cornerRadius = Theme.constant.cornerRadius
+        carousel.layer.cornerRadius = Theme.cornerRadius
         mainScrollView.addSubview(carousel)
         carousel.clipsToBounds = false
         self.carousel = carousel
         carousel.addConstraints(
             [
-                .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.padding)),
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: nftsCollectionHeight)),
                 .layout(anchor: .widthAnchor, constant: .equalTo(constant: carouselWidth)),
                 .layout(anchor: .centerXAnchor)
@@ -36,7 +36,7 @@ extension NFTsDashboardViewController {
                 .layout(
                     anchor: .topAnchor,
                     constant: .equalTo(
-                        constant: nftsCollectionHeight + Theme.constant.padding * 2
+                        constant: nftsCollectionHeight + Theme.padding * 2
                     )
                 ),
                 .layout(anchor: .bottomAnchor),
@@ -59,6 +59,6 @@ extension NFTsDashboardViewController {
     
     var carouselWidth: CGFloat {
         let width = navigationController?.view.frame.width ?? 0
-        return width - Theme.constant.padding * 2
+        return width - Theme.padding * 2
     }
 }

@@ -24,7 +24,7 @@ final class NetworkAddressPickerView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         textFieldView.backgroundColor = Theme.color.bgPrimary
-        textFieldView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        textFieldView.layer.cornerRadius = Theme.cornerRadiusSmall
         qrCodeScanButton.setImage("qrcode.viewfinder".assetImage, for: .normal)
         qrCodeScanButton.tintColor = Theme.color.textPrimary
         qrCodeScanButton.addTarget(self, action: #selector(qrCodeScanTapped), for: .touchUpInside)

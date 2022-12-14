@@ -40,7 +40,7 @@ extension NFTsCollectionViewController {
                 )
             )
         }
-        return VStackView(rows, spacing: Theme.constant.padding)
+        return VStackView(rows, spacing: Theme.padding)
     }
     
     func refreshNFTs() {
@@ -51,8 +51,8 @@ extension NFTsCollectionViewController {
             [
                 .layout(anchor: .topAnchor),
                 .layout(anchor: .bottomAnchor),
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding))
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.padding)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.padding))
             ]
         )
     }
@@ -64,7 +64,7 @@ private extension NFTsCollectionViewController {
         guard let viewWidth = navigationController?.view.frame.size.width else {
             return 200
         }
-        return (viewWidth - Theme.constant.padding * 3) * 0.5
+        return (viewWidth - Theme.padding * 3) * 0.5
     }
     
     func makeNFTsCollectionRow(
@@ -78,7 +78,7 @@ private extension NFTsCollectionViewController {
         } else {
             views.append(UIView())
         }
-        return HStackView(views, spacing: Theme.constant.padding)
+        return HStackView(views, spacing: Theme.padding)
     }
     
     func makeNFTContent(
@@ -100,7 +100,7 @@ private extension NFTsCollectionViewController {
                 )
             ]
         )
-        view.layer.cornerRadius = Theme.constant.cornerRadius
+        view.layer.cornerRadius = Theme.cornerRadius
         view.clipsToBounds = true
         view.tag = item.index
         view.add(

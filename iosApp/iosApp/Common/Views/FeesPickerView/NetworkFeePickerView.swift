@@ -28,7 +28,7 @@ final class NetworkFeePickerView: UIView {
         
         isHidden = true
                 
-        feesView.layer.cornerRadius = Theme.constant.cornerRadius
+        feesView.layer.cornerRadius = Theme.cornerRadius
         feesView.clipsToBounds = true
         
         let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
@@ -43,7 +43,7 @@ final class NetworkFeePickerView: UIView {
     func present(
         with fees: [NetworkFee],
         onFeeSelected: @escaping (NetworkFee) -> Void,
-        at topRightAnchor: CGPoint = .init(x: Theme.constant.padding, y: 96)
+        at topRightAnchor: CGPoint = .init(x: Theme.padding, y: 96)
     ) {
         self.fees = fees
         self.onFeeSelected = onFeeSelected

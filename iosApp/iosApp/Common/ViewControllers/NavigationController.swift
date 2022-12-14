@@ -118,12 +118,12 @@ private extension NavigationController {
 
         var barFrame = navigationBar.frame
         barFrame.size.height += contentView.intrinsicContentSize.height
-        barFrame.size.height += Theme.constant.padding
+        barFrame.size.height += Theme.padding
         navigationBar.frame = barFrame
 
-        var contentFrame = barFrame.insetBy(dx: Theme.constant.padding, dy: 0)
+        var contentFrame = barFrame.insetBy(dx: Theme.padding, dy: 0)
         contentFrame.size.height = contentView.bounds.height
-        contentFrame.origin.y = barFrame.maxY - Theme.constant.padding
+        contentFrame.origin.y = barFrame.maxY - Theme.padding
         contentFrame.origin.y -= contentView.bounds.height
         contentView.frame = contentFrame
 

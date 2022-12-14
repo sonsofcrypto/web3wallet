@@ -106,8 +106,8 @@ extension AccountViewController: UICollectionViewDataSource {
             } else {
                 fatalError("Type not handled")
             }
-            cell.separatorViewLeadingPadding = Theme.constant.padding
-            cell.separatorViewTrailingPadding = Theme.constant.padding
+            cell.separatorViewLeadingPadding = Theme.padding
+            cell.separatorViewTrailingPadding = Theme.padding
             if viewModel.transactions.count == 1 {
                 cell.update(for: .single)
                 cell.bottomSeparatorView.isHidden = true
@@ -150,7 +150,7 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
         guard let section = Section(rawValue: indexPath.section) else {
             return .zero
         }
-        let width = view.bounds.width - Theme.constant.padding * 2
+        let width = view.bounds.width - Theme.padding * 2
         switch section {
         case .header:
             return CGSize(width: width, height: Constant.headerHeight)
@@ -183,7 +183,7 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
             return .zero
         }
         return CGSize(
-            width: view.bounds.width - Theme.constant.padding * 2,
+            width: view.bounds.width - Theme.padding * 2,
             height: Constant.sectionHeaderHeight
         )
     }
@@ -196,7 +196,7 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
         guard let section = Section(rawValue: section), section == .marketInfo else {
             return 0
         }
-        return Theme.constant.padding
+        return Theme.padding
     }
 }
 
@@ -342,7 +342,7 @@ private extension AccountViewController {
             action: #selector(dismissAction)
         )
         var insets = collectionView.contentInset
-        insets.bottom += Theme.constant.padding
+        insets.bottom += Theme.padding
         collectionView.contentInset = insets
         collectionView.refreshControl = refreshControl
         refreshControl.tintColor = Theme.color.activityIndicator

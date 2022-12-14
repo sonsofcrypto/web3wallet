@@ -5,15 +5,23 @@
 import UIKit
 
 struct ThemeMiami: Themable {
-    
     let style: ThemeStyle
+    let name: String  = "themeMiami"
+    let type: ThemeType  = .themeMiami
+
+    let cornerRadius: CGFloat = 16
+    let cornerRadiusSmall: CGFloat = 8
+    let shadowRadius: CGFloat = 4
+    let cellHeight: CGFloat = 64
+    let cellHeightSmall: CGFloat = 46
+    let padding: CGFloat = 16
+    let buttonHeight: CGFloat = 46
+    let buttonSmallHeight: CGFloat = 32
+    let buttonHeightExtraSmall: CGFloat = 24
     
     init(style: ThemeStyle) {
         self.style = style
     }
-    
-    var name: String { "themeMiami" }
-    var type: ThemeType { .themeMiami }
 
     var statusBarStyle: ThemeStatusBarStyle {
         .init(lightMode: .light, darkMode: .light)
@@ -79,8 +87,7 @@ struct ThemeMiami: Themable {
     }
     
     var font: ThemeFont {
-        
-        .init(
+        return .init(
             largeTitle: .systemFont(ofSize: 34, weight: .regular), // line_height = 41
             largeTitleBold: .systemFont(ofSize: 34, weight: .bold), // line_height = 41
             title1: .systemFont(ofSize: 28, weight: .regular), // line_height = 34
@@ -117,21 +124,8 @@ struct ThemeMiami: Themable {
             dashboardTVTokenBalanceSmall: .init(name: "OCR-A", size: 8)!
         )
     }
-    
-    var constant: ThemeConstant {
-        .init(
-            cornerRadius: 16,
-            cornerRadiusSmall: 8,
-            shadowRadius: 4,
-            cellHeight: 64,
-            cellHeightSmall: 46,
-            padding: 16,
-            buttonPrimaryHeight: 46,
-            buttonSecondaryHeight: 46,
-            buttonSecondarySmallHeight: 24,
-            buttonDashboardActionHeight: 32
-        )
-    }
+
+
 }
 
 private extension ThemeMiami {

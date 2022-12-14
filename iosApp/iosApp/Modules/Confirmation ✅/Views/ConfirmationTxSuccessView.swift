@@ -38,7 +38,7 @@ private extension ConfirmationTxSuccessView {
             ctaButton()
         ]
         let stackView = VStackView(views)
-        stackView.spacing = Theme.constant.padding
+        stackView.spacing = Theme.padding
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.tag = 12
@@ -55,7 +55,7 @@ private extension ConfirmationTxSuccessView {
             label(with: .body, and: viewModel.message),
         ]
         let stackView = VStackView(views)
-        stackView.spacing = Theme.constant.padding
+        stackView.spacing = Theme.padding
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.tag = 12

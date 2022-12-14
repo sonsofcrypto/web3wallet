@@ -15,15 +15,15 @@ extension NFTDetailViewController {
                 .layout(anchor: .topAnchor),
                 .layout(
                     anchor: .bottomAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 ),
                 .layout(
                     anchor: .leadingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 ),
                 .layout(
                     anchor: .trailingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 )
             ]
         )
@@ -44,7 +44,7 @@ private extension NFTDetailViewController {
         content.append(contentsOf: makeOther(with: item))
         content.append(makeSendButton())
         let vStackView = VStackView(content)
-        vStackView.spacing = Theme.constant.padding
+        vStackView.spacing = Theme.padding
         return vStackView
     }
     

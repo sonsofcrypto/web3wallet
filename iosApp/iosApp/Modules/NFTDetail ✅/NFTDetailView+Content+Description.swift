@@ -11,8 +11,8 @@ extension NFTDetailViewController {
         view.backgroundColor = .clear
         let content = makeDescriptionContent(with: item.description)
         view.addSubview(content)
-        content.addConstraints(.toEdges(padding: Theme.constant.padding))
-        view.layer.cornerRadius = Theme.constant.cornerRadius
+        content.addConstraints(.toEdges(padding: Theme.padding))
+        view.layer.cornerRadius = Theme.cornerRadius
         view.backgroundColor = Theme.color.bgPrimary
         return view
     }
@@ -33,7 +33,7 @@ private extension NFTDetailViewController {
         sectionContent.text = description
         sectionContent.numberOfLines = 0
         vStack.addArrangedSubview(sectionContent)
-        vStack.spacing = Theme.constant.padding * 0.5
+        vStack.spacing = Theme.padding * 0.5
         return vStack
     }
 }

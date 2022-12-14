@@ -11,7 +11,7 @@ final class DashboardHeaderTitleView: UICollectionReusableView {
     private lazy var lineView = LineView()
     private lazy var stack = HStackView(
         [label, UIView(), rightAction],
-        spacing: Theme.constant.padding
+        spacing: Theme.padding
     )
     
     private var handler: (()->Void)?
@@ -45,7 +45,7 @@ private extension DashboardHeaderTitleView {
         rightAction.textColor = Theme.color.textPrimary
         rightAction.isHidden = true
         rightAction.add(.targetAction(.init(target: self, selector: #selector(moreTapped))))
-        let offset = Theme.type.isThemeIOS ? 0 : -Theme.constant.padding.half + 1
+        let offset = Theme.type.isThemeIOS ? 0 : -Theme.padding.half + 1
         stack.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stack)
         stack.contraintToSuperView(bottom: offset)
