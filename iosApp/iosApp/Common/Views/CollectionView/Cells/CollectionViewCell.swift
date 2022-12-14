@@ -30,7 +30,7 @@ class CollectionViewCell: UICollectionViewCell {
 
     func setSelected(_ selected: Bool) {
         layer.borderWidth = isSelected ? 1.0 : 0.0
-        layer.borderColor = Theme.colour.labelPrimary.cgColor
+        layer.borderColor = Theme.color.textPrimary.cgColor
     }
 
     override func layoutSubviews() {
@@ -48,7 +48,7 @@ private extension CollectionViewCell {
 
     func configureUI() {
         clipsToBounds = false
-        backgroundColor = Theme.colour.cellBackground
+        backgroundColor = Theme.color.bgPrimary
         layer.cornerRadius = Theme.constant.cornerRadius
         contentView.addSubview(bottomSeparatorView)
         bottomSeparatorView.isHidden = true

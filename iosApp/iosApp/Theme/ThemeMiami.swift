@@ -19,13 +19,21 @@ struct ThemeMiami: Themable {
         .init(lightMode: .light, darkMode: .light)
     }
 
-    var colour: ThemeColour {
+    var color: ThemeColor {
         let pallete = ThemeColourPalette(isDarkMode: isDarkMode)
         return .init(
-            gradientTop: .init { traits in
+            textPrimary: pallete.systemWhite,
+            textSecondary: pallete.systemEBEBF5.withAlpha(0.6),
+            textTertiary: pallete.systemEBEBF5.withAlpha(0.3),
+            bgPrimary: .init { traits in
+                isDarkMode ?
+                    pallete.systemEBEBF5.withAlpha(0.18) :
+                    pallete.systemEBEBF5.withAlpha(0.18)
+            },
+            bgGradientTop: .init { traits in
                 isDarkMode ? pallete.systemPink : pallete.systemBlue
             },
-            gradientBottom: .init { traits in
+            bgGradientBtm: .init { traits in
                 isDarkMode ? pallete.systemPurple : pallete.systemFC78A9
             },
             navBarBackground: pallete.system1C1C1E,
@@ -34,53 +42,26 @@ struct ThemeMiami: Themable {
             tabBarBackground: pallete.system1C1C1E,
             tabBarTint: pallete.systemBlue,
             tabBarTintSelected: pallete.systemPink,
-            backgroundBasePrimary: pallete.systemBlack,
-            backgroundBaseSecondary: .init { traits in
-                isDarkMode ?
-                pallete.system1C1C1E :
-                pallete.systemF2F2F7
-            },
-            fillPrimary: .init { traits in
+            stroke: .init { traits in
                 isDarkMode ?
                 pallete.system787880.withAlpha(0.36) :
                 pallete.system787880.withAlpha(0.2)
             },
-            fillSecondary: .init { traits in
-                isDarkMode ?
-                pallete.system787880.withAlpha(0.32) :
-                pallete.system787880.withAlpha(0.16)
-            },
-            fillTertiary: pallete.system767680,
-            fillQuaternary: pallete.systemEBEBF5.withAlpha(0.18),
-            separator: pallete.systemC6C6C8,
-            separatorTransparent: pallete.systemEBEBF5.withAlpha(0.3),
-            labelPrimary: pallete.systemWhite,
-            labelSecondary: pallete.systemEBEBF5.withAlpha(0.6),
-            labelTertiary: pallete.systemEBEBF5.withAlpha(0.3),
-            labelQuaternary: pallete.systemEBEBF5.withAlpha(0.18),
-            buttonBackgroundPrimary: .init { traits in
+            separatorPrimary: pallete.systemC6C6C8,
+            separatorSecondary: pallete.systemEBEBF5.withAlpha(0.3),
+
+            buttonBgPrimary: .init { traits in
                 isDarkMode ? pallete.systemPink : pallete.systemBlue
             },
-            buttonBackgroundPrimaryDisabled: pallete.systemGray,
-            buttonPrimaryText: pallete.systemWhite,
-            buttonBackgroundSecondary: .init { traits in
+            ButtonBgPrimaryDisabled: pallete.systemGray,
+            buttonTextPrimary: pallete.systemWhite,
+            buttonBgSecondary: .init { traits in
                 isDarkMode ?
                 pallete.system787880.withAlpha(0.36) :
                 pallete.system787880.withAlpha(0.2)
             },
-            buttonSecondaryText: pallete.systemWhite,
-            switchThumbTintColor: pallete.systemWhite,
-            switchBackgroundColor: pallete.systemEBEBF5.withAlpha(0.3),
+            buttonTextSecondary: pallete.systemWhite,
             switchOnTint: pallete.systemOrange,
-            switchDisabledThumbTint: pallete.systemEBEBF5.withAlpha(0.6),
-            switchDisabledBackgroundColor: .init { traits in
-                isDarkMode ?
-                pallete.system787880.withAlpha(0.32) :
-                pallete.system787880.withAlpha(0.16)
-            },
-            textFieldTextColour: pallete.systemWhite,
-            textFieldPlaceholderColour: pallete.systemEBEBF5.withAlpha(0.6),
-            textFieldInputAccessoryViewBGColor: pallete.system1C1C1E,
             segmentedControlBackground: .init { traits in
                 isDarkMode ?
                 pallete.system767680.withAlpha(0.18) :
@@ -89,21 +70,10 @@ struct ThemeMiami: Themable {
             segmentedControlBackgroundSelected: pallete.systemEBEBF5.withAlpha(0.18),
             segmentedControlText: pallete.systemWhite,
             segmentedControlTextSelected: pallete.systemWhite,
-            cellBackground: .init { traits in
-                isDarkMode ?
-                pallete.systemEBEBF5.withAlpha(0.18) :
-                pallete.systemEBEBF5.withAlpha(0.18)
-                //pallete.systemBlack.withAlpha(0.2)
-            },
-            keystoreEnumFill: pallete.systemBlue,
-            keystoreEnumText: pallete.systemWhite,
-            priceUp: pallete.systemGreen,
+            priceUp: pallete.systemTeal,
             priceDown: pallete.systemPink,
-            candleGreen: pallete.systemTeal,
-            candleRed: pallete.systemPink,
-            dashboardTVCryptoBallance: pallete.systemOrange,
+            dashboardTVCryptoBalance: pallete.systemOrange,
             activityIndicator: pallete.systemWhite,
-            toastAlertBackgroundColor: pallete.system1C1C1E,
             destructive: pallete.systemRed
         )
     }

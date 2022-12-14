@@ -275,7 +275,7 @@ private extension DashboardViewController {
         collectionView.refreshControl = UIRefreshControl()
         collectionView.backgroundView = nil
         collectionView.layer.sublayerTransform = CATransform3D.m34(-1.0 / 500.0)
-        collectionView.refreshControl?.tintColor = Theme.colour.activityIndicator
+        collectionView.refreshControl?.tintColor = Theme.color.activityIndicator
         collectionView.refreshControl?.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
         
         NotificationCenter.default.addObserver(

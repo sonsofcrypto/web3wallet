@@ -21,16 +21,16 @@ final class CurrencyPickerTokenCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        iconImageView.backgroundColor = Theme.colour.labelPrimary
+        iconImageView.backgroundColor = Theme.color.textPrimary
         iconImageView.layer.cornerRadius = 15
         nameLabel.font = Theme.font.body
-        nameLabel.textColor = Theme.colour.labelPrimary
+        nameLabel.textColor = Theme.color.textPrimary
         symbolLabel.font = Theme.font.body
-        symbolLabel.textColor = Theme.colour.labelSecondary
+        symbolLabel.textColor = Theme.color.textSecondary
         multiSelectView.isHidden = true
         tokenPriceView.isHidden = true
         tokenLabel.font = Theme.font.body
-        tokenLabel.textColor = Theme.colour.labelPrimary
+        tokenLabel.textColor = Theme.color.textPrimary
         tokenLabel.textAlignment = .right
         usdPriceLabel.textAlignment = .right
     }
@@ -50,7 +50,7 @@ private extension CurrencyPickerTokenCell {
     func updateIsSelected(with isSelected: Bool?) {
         if let isSelected = isSelected {
             multiSelectView.isHidden = false
-            multiSelectTick.tintColor = Theme.colour.labelSecondary
+            multiSelectTick.tintColor = Theme.color.textSecondary
             multiSelectTick.image = isSelected
             ? "checkmark.circle.fill".assetImage
             : "circle".assetImage
@@ -72,7 +72,7 @@ private extension CurrencyPickerTokenCell {
                 fiat,
                 font: Theme.font.callout,
                 fontSmall: Theme.font.caption2,
-                foregroundColor: Theme.colour.labelSecondary
+                foregroundColor: Theme.color.textSecondary
             )
         } else {
             symbolLabel.isHidden = false

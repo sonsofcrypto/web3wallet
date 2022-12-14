@@ -21,6 +21,6 @@ class SelectionCollectionViewCell: CollectionViewCell {
 
     func configureUI() {
         titleLabel?.apply(style: .body)
-        selectionView?.tintColor = Theme.colour.labelPrimary
+        selectionView?.tintColor = Theme.color.textPrimary
     }
 }

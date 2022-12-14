@@ -28,9 +28,9 @@ final class NetworksCell: CollectionViewCell {
         iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
         
         titleLabel.font = Theme.font.body
-        titleLabel.textColor = Theme.colour.labelPrimary
+        titleLabel.textColor = Theme.color.textPrimary
         
-        settingsButton.tintColor = Theme.colour.labelPrimary
+        settingsButton.tintColor = Theme.color.textPrimary
         settingsButton.addTarget(
             self,
             action: #selector(settingsAction),
@@ -46,12 +46,12 @@ final class NetworksCell: CollectionViewCell {
 
         [connectionTitleLabel].forEach {
             $0?.font = Theme.font.subheadline
-            $0?.textColor = Theme.colour.labelSecondary
+            $0?.textColor = Theme.color.textSecondary
         }
 
         [connectionLabel].forEach {
             $0?.font = Theme.font.subheadlineBold
-            $0?.textColor = Theme.colour.labelPrimary
+            $0?.textColor = Theme.color.textPrimary
         }
 
         connectionTitleLabel.text = Localized("networks.cell.connection")

@@ -12,7 +12,7 @@ final class AccountTransactionEmptyCell: CollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         label.apply(style: .callout)
-        label.textColor = Theme.colour.labelSecondary
+        label.textColor = Theme.color.textSecondary
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
     }
     

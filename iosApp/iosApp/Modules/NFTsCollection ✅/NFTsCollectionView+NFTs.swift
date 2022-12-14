@@ -101,8 +101,6 @@ private extension NFTsCollectionViewController {
             ]
         )
         view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.layer.borderWidth = 1
-        view.layer.borderColor = Theme.colour.fillTertiary.cgColor
         view.clipsToBounds = true
         view.tag = item.index
         view.add(

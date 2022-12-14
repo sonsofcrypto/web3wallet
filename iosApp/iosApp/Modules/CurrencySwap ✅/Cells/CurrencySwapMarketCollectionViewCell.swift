@@ -35,15 +35,15 @@ final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         imageView.superview?.layer.cornerRadius = Theme.constant.cornerRadius.half.half
-        imageView.superview?.backgroundColor = Theme.colour.cellBackground
-        imageView.tintColor = Theme.colour.labelSecondary
+        imageView.superview?.backgroundColor = Theme.color.bgPrimary
+        imageView.tintColor = Theme.color.textSecondary
         imageView.image = "arrow.up.arrow.down".assetImage
         imageView.isHidden = false
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(flip))
         imageView.superview?.superview?.addGestureRecognizer(tapGesture)
         imageView.superview?.superview?.isUserInteractionEnabled = true
         loadingIndicator.isHidden = true
-        loadingIndicator.color = Theme.colour.activityIndicator
+        loadingIndicator.color = Theme.color.activityIndicator
         currencyTo.maxButton.isHidden = true
         approveButton.style = .primary
         approveButton.addTarget(self, action: #selector(approveButtonTapped), for: .touchUpInside)

@@ -13,7 +13,7 @@ extension NFTDetailViewController {
         view.addSubview(content)
         content.addConstraints(.toEdges(padding: Theme.constant.padding))
         view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.backgroundColor = Theme.colour.cellBackground
+        view.backgroundColor = Theme.color.bgPrimary
         return [view]
     }
 }
@@ -57,7 +57,7 @@ private extension NFTDetailViewController {
             let propertyName = UILabel()
             propertyName.numberOfLines = 1
             propertyName.apply(style: .subheadline)
-            propertyName.textColor = Theme.colour.labelSecondary
+            propertyName.textColor = Theme.color.textSecondary
             propertyName.textAlignment = .left
             propertyName.text = $0.name
             let propertyValue = UILabel()

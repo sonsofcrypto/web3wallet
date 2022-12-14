@@ -18,20 +18,20 @@ final class CultProposalDetailTokenomicsView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = Theme.colour.cellBackground
+        backgroundColor = Theme.color.bgPrimary
         layer.cornerRadius = Theme.constant.cornerRadius
         titleLabel.apply(style: .headline, weight: .bold)
-        separatorView.backgroundColor = Theme.colour.separatorTransparent
+        separatorView.backgroundColor = Theme.color.separatorSecondary
         stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: titleLabel)
         stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: separatorView)
         allocationLabel.apply(style: .subheadline)
-        allocationLabel.textColor = Theme.colour.labelSecondary
+        allocationLabel.textColor = Theme.color.textSecondary
         allocationValueLabel.apply(style: .subheadline, weight: .bold)
         distributionLabel.apply(style: .subheadline)
-        distributionLabel.textColor = Theme.colour.labelSecondary
+        distributionLabel.textColor = Theme.color.textSecondary
         distributionValueLabel.apply(style: .subheadline, weight: .bold)
         walletLabel.apply(style: .subheadline)
-        walletLabel.textColor = Theme.colour.labelSecondary
+        walletLabel.textColor = Theme.color.textSecondary
         walletValueLabel.apply(style: .subheadline, weight: .bold)
     }
     

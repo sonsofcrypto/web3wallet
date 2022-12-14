@@ -118,7 +118,7 @@ private extension AlertViewController {
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
         imageView.image = name.assetImage
-        imageView.tintColor = Theme.colour.labelPrimary.withAlpha(0.75)
+        imageView.tintColor = Theme.color.textPrimary.withAlpha(0.75)
         let wrappingView = UIView()
         wrappingView.backgroundColor = .clear
         wrappingView.clipsToBounds = true
@@ -176,7 +176,7 @@ private extension AlertViewController {
                 button.style = .secondary
             case .destructive:
                 button.style = .primary
-                button.backgroundColor = Theme.colour.destructive
+                button.backgroundColor = Theme.color.destructive
             default:
                 fatalError("Type not handled")
             }

@@ -13,7 +13,7 @@ final class AccountAddressCell: CollectionViewCell {
         super.awakeFromNib()
         titleLabel.apply(style: .callout, weight: .regular)
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
-        copyImage.tintColor = Theme.colour.labelPrimary
+        copyImage.tintColor = Theme.color.textPrimary
     }
     
     override func setSelected(_ selected: Bool) {}

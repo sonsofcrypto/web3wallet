@@ -13,9 +13,9 @@ final class NetworkPickerItemCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
-        iconImageView.backgroundColor = Theme.colour.labelPrimary
+        iconImageView.backgroundColor = Theme.color.textPrimary
         nameLabel.apply(style: .body)
-        nameLabel.textColor = Theme.colour.labelPrimary
+        nameLabel.textColor = Theme.color.textPrimary
     }
 
     func update(

@@ -28,7 +28,7 @@ final class CultProposalVoteView: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = Theme.colour.fillQuaternary
+        backgroundColor = Theme.color.bgPrimary
         layer.cornerRadius = Theme.constant.cornerRadiusSmall
     }
 

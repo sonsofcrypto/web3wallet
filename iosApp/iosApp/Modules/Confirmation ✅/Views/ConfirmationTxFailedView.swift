@@ -74,8 +74,8 @@ private extension ConfirmationTxFailedView {
         let image = UIImage(systemName: "xmark.icloud.fill")
         let config = UIImage.SymbolConfiguration(
             paletteColors: [
-                Theme.colour.candleRed,
-                Theme.colour.labelPrimary
+                Theme.color.priceDown,
+                Theme.color.textPrimary
             ]
         )
         let imageView = UIImageView(image: image?.applyingSymbolConfiguration(config))

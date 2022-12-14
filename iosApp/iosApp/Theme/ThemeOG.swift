@@ -8,7 +8,7 @@ struct ThemeOG: Themable {
     
     var type: ThemeType { .themeOG }
 
-    var colour: ThemeColour {
+    var colour: ThemeColor {
         
         .init(themeName: "themeOG")
     }

@@ -74,12 +74,12 @@ private extension NetworkFeePickerView {
         
         let nameLabel = stackView?.arrangedSubviews.first{ $0.tag == 1 } as? UILabel
         nameLabel?.font = Theme.font.body
-        nameLabel?.textColor = Theme.colour.labelPrimary
+        nameLabel?.textColor = Theme.color.textPrimary
         nameLabel?.text = fee.name
 
         let valueLabel = stackView?.arrangedSubviews.first{ $0.tag == 2 } as? UILabel
         valueLabel?.font = Theme.font.body
-        valueLabel?.textColor = Theme.colour.labelPrimary
+        valueLabel?.textColor = Theme.color.textPrimary
         let output = Formatters.Companion.shared.currency.format(
             amount: fee.amount, currency: fee.currency, style: Formatters.StyleCustom(maxLength: 10)
         )
@@ -87,7 +87,7 @@ private extension NetworkFeePickerView {
             output,
             font: Theme.font.body,
             fontSmall: Theme.font.caption2,
-            foregroundColor: Theme.colour.labelPrimary
+            foregroundColor: Theme.color.textPrimary
         )
         stackView?.add(.targetAction(.init(target: self, selector: #selector(feeTapped(_:)))))
     }

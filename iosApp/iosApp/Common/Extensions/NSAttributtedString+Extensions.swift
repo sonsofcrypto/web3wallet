@@ -11,7 +11,7 @@ extension NSAttributedString {
         _ output: [Formatters.Output],
         font: UIFont = Theme.font.dashboardTVBalance,
         fontSmall: UIFont = Theme.font.caption2,
-        foregroundColor color: UIColor = Theme.colour.labelPrimary,
+        foregroundColor color: UIColor = Theme.color.textPrimary,
         adjustedOffsetTop: CGFloat = 0,
         adjustedOffsetBottom: CGFloat = 0
     ) {

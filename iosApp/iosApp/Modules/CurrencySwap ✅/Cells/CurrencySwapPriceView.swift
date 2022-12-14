@@ -23,7 +23,7 @@ extension CurrencySwapPriceView {
             viewModel.value,
             font: Theme.font.footnote,
             fontSmall: Theme.font.extraSmall,
-            foregroundColor: Theme.colour.labelPrimary
+            foregroundColor: Theme.color.textPrimary
         )
     }
 }

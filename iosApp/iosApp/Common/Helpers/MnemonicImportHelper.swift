@@ -28,7 +28,7 @@ final class MnemonicImportHelper {
                 size: size
             )
         )
-        scrollView.backgroundColor = Theme.colour.navBarBackground
+        scrollView.backgroundColor = Theme.color.navBarBackground
         addWords([], to: scrollView)
         return scrollView
     }

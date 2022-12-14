@@ -52,7 +52,7 @@ private extension CurrencyReceiveViewController {
             target: self,
             action: #selector(navBarLeftActionTapped)
         )
-        cardView.backgroundColor = Theme.colour.cellBackground
+        cardView.backgroundColor = Theme.color.bgPrimary
         cardView.layer.cornerRadius = Theme.constant.cornerRadius
         cardView.add(
             .targetAction(.init(target: self, selector: #selector(onCopyAction)))

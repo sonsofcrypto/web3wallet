@@ -66,10 +66,8 @@ private extension NFTSendImageCollectionViewCell {
                 .layout(anchor: .centerXAnchor)
             ]
         )
-        vStackView.backgroundColor = Theme.colour.cellBackground
+        vStackView.backgroundColor = Theme.color.bgPrimary
         vStackView.layer.cornerRadius = Theme.constant.cornerRadius
-        vStackView.layer.borderWidth = 1
-        vStackView.layer.borderColor = Theme.colour.fillTertiary.cgColor
         return containerView
     }
     

@@ -10,9 +10,16 @@ class BaseViewController: UIViewController {
         Theme.statusBarStyle.statusBarStyle(for: traitCollection.userInterfaceStyle)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        #if DEBUG
+        print("[DEBUG][\(String(describing: self))] viewDidAppear")
+        #endif
+    }
+
     deinit {
         #if DEBUG
-        print("[DEBUG][ViewController] deinit \(String(describing: self))")
+        print("[DEBUG][\(String(describing: self))] deinit")
         #endif
     }
 }

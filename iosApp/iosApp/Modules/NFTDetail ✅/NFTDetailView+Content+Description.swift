@@ -13,7 +13,7 @@ extension NFTDetailViewController {
         view.addSubview(content)
         content.addConstraints(.toEdges(padding: Theme.constant.padding))
         view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.backgroundColor = Theme.colour.cellBackground
+        view.backgroundColor = Theme.color.bgPrimary
         return view
     }
 }

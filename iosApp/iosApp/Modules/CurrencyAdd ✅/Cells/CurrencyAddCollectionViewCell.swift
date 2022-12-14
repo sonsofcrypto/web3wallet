@@ -31,12 +31,12 @@ final class CurrencyAddCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        networkDetailsView.backgroundColor = Theme.colour.cellBackground
+        networkDetailsView.backgroundColor = Theme.color.bgPrimary
         networkDetailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        detailsView.backgroundColor = Theme.colour.cellBackground
+        detailsView.backgroundColor = Theme.color.bgPrimary
         detailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         (detailsView.subviews.first as? UIStackView)?.arrangedSubviews.forEach {
-            if $0.tag == 10 { $0.backgroundColor = Theme.colour.separatorTransparent }
+            if $0.tag == 10 { $0.backgroundColor = Theme.color.separatorSecondary }
         }
         saveButton.style = .primary
         saveButton.addTarget(self, action: #selector(addTokenTapped), for: .touchUpInside)

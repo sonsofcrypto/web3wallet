@@ -19,10 +19,10 @@ final class MnemonicNewCell: UICollectionViewCell {
 
     func configure() {
         layer.cornerRadius = Theme.constant.cornerRadius
-        backgroundColor = Theme.colour.labelQuaternary
+        backgroundColor = Theme.color.bgPrimary
         var attrs: [NSAttributedString.Key: Any] = [
             .font: Theme.font.body,
-            .foregroundColor: Theme.colour.labelPrimary
+            .foregroundColor: Theme.color.textPrimary
         ]
         attrs[.font] = Theme.font.body
         textView.typingAttributes = attrs
@@ -32,7 +32,7 @@ final class MnemonicNewCell: UICollectionViewCell {
         overlayLabel.numberOfLines = 2
         overlayLabel.text = Localized("mnemonic.tapToReveal")
         overlayLabel.font = Theme.font.body
-        overlayLabel.textColor = Theme.colour.labelPrimary
+        overlayLabel.textColor = Theme.color.textPrimary
     }
     
     func textShadow(_ tint: UIColor) -> NSShadow {

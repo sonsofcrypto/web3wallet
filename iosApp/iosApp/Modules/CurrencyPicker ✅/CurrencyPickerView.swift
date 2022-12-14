@@ -59,11 +59,11 @@ private extension CurrencyPickerViewController {
             name: UIApplication.keyboardWillHideNotification,
             object: nil
         )
-        view.backgroundColor = Theme.colour.gradientBottom
-        searchContainerBox.backgroundColor = Theme.colour.navBarBackground
-        searchTextFieldBox.backgroundColor = Theme.colour.fillQuaternary
+        view.backgroundColor = Theme.color.bgGradientBtm
+        searchContainerBox.backgroundColor = Theme.color.navBarBackground
+        searchTextFieldBox.backgroundColor = Theme.color.bgPrimary
         searchTextFieldBox.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        searchImageView.tintColor = Theme.colour.labelSecondary
+        searchImageView.tintColor = Theme.color.textSecondary
         searchTextField.backgroundColor = .clear
         searchTextField.text = nil
         searchTextField.delegate = self

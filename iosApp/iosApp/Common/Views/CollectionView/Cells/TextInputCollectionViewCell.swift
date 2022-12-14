@@ -16,7 +16,7 @@ final class TextInputCollectionViewCell: CollectionViewCell {
         super.awakeFromNib()
         
         titleLabel.font = Theme.font.body
-        titleLabel.textColor = Theme.colour.labelPrimary
+        titleLabel.textColor = Theme.color.textPrimary
         
         textField.delegate = self
         textField.addDoneInputAccessoryView(

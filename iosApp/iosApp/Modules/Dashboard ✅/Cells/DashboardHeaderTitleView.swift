@@ -39,10 +39,10 @@ private extension DashboardHeaderTitleView {
     
     func configureUI() {
         label.font = Theme.font.networkTitle
-        label.textColor = Theme.colour.labelPrimary
+        label.textColor = Theme.color.textPrimary
         // TODO: This should be button of certain type
         rightAction.font = Theme.font.body
-        rightAction.textColor = Theme.colour.labelPrimary
+        rightAction.textColor = Theme.color.textPrimary
         rightAction.isHidden = true
         rightAction.add(.targetAction(.init(target: self, selector: #selector(moreTapped))))
         let offset = Theme.type.isThemeIOS ? 0 : -Theme.constant.padding.half + 1

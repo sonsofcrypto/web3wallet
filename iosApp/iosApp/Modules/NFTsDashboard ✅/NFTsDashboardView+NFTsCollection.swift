@@ -106,9 +106,7 @@ private extension NFTsDashboardViewController {
             ]
         )
         view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.layer.borderWidth = 1
-        view.layer.borderColor = Theme.colour.fillTertiary.cgColor
-        view.backgroundColor = Theme.colour.backgroundBasePrimary
+        view.backgroundColor = Theme.color.bgPrimary
         view.clipsToBounds = true
         view.tag = item.index
         view.add(
@@ -148,7 +146,7 @@ private extension NFTsDashboardViewController {
         let titleLabel = UILabel(with: .caption1)
         titleLabel.numberOfLines = 1
         titleLabel.text = collection.title
-        titleLabel.textColor = Theme.colour.labelPrimary
+        titleLabel.textColor = Theme.color.textPrimary
         titleLabel.textAlignment = .center
         view.addArrangedSubview(titleLabel)
         let authorLabel = UILabel()
@@ -158,12 +156,11 @@ private extension NFTsDashboardViewController {
             collection.author
         ).attributtedString(
             with: font,
-            and: Theme.colour.labelPrimary,
+            and: Theme.color.textPrimary,
             updating: [collection.author],
-            withColour: Theme.colour.labelPrimary,
+            withColour: Theme.color.textPrimary,
             andFont: font
         )
-        authorLabel.layer.applyShadow(Theme.colour.fillSecondary)
         authorLabel.textAlignment = .center
         view.addArrangedSubview(authorLabel)
         view.spacing = Theme.constant.padding * 0.5

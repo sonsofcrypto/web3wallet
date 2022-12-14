@@ -17,7 +17,7 @@ class SeparatorView: UIView {
     }
 
     func configureUI() {
-        backgroundColor = Theme.colour.separator
+        backgroundColor = Theme.color.separatorPrimary
         translatesAutoresizingMaskIntoConstraints = false
         addConstraints([heightAnchor.constraint(equalToConstant: 0.33)])
     }
@@ -27,6 +27,6 @@ class TransparentSeparatorView: SeparatorView {
 
     override func configureUI() {
         super.configureUI()
-        backgroundColor = Theme.colour.separatorTransparent
+        backgroundColor = Theme.color.separatorSecondary
     }
 }

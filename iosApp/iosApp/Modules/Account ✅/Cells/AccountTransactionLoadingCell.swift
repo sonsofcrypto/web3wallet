@@ -13,10 +13,10 @@ final class AccountTransactionLoadingCell: CollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         label.apply(style: .callout)
-        label.textColor = Theme.colour.labelPrimary
+        label.textColor = Theme.color.textPrimary
         label.numberOfLines = 0
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
-        activityIndicator.color = Theme.colour.activityIndicator
+        activityIndicator.color = Theme.color.activityIndicator
     }
     
     override func setSelected(_ selected: Bool) {}

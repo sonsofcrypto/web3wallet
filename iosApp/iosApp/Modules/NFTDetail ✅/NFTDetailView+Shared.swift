@@ -8,7 +8,7 @@ extension NFTDetailViewController {
         let mainScrollView = ScrollView()
         mainScrollView.showsVerticalScrollIndicator = false
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = Theme.colour.activityIndicator
+        refreshControl.tintColor = Theme.color.activityIndicator
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         mainScrollView.refreshControl = refreshControl
         let scrollableContentView = UIView()

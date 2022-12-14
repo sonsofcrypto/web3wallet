@@ -29,11 +29,11 @@ var appTheme: Themable {
 
 protocol Themable {
     var name: String { get }
-    var statusBarStyle: ThemeStatusBarStyle { get }
     var type: ThemeType { get }
     var font: ThemeFont { get }
-    var colour: ThemeColour { get }
+    var color: ThemeColor { get }
     var constant: ThemeConstant { get }
+    var statusBarStyle: ThemeStatusBarStyle { get }
 }
 
 extension Themable {
@@ -127,71 +127,37 @@ struct ThemeFont {
     let dashboardTVTokenBalanceSmall: UIFont
 }
 
-struct ThemeColour {
-        
-    let gradientTop: UIColor
-    let gradientBottom: UIColor
-
+struct ThemeColor {
+    let textPrimary: UIColor
+    let textSecondary: UIColor
+    let textTertiary: UIColor
+    let bgPrimary: UIColor
+    let bgGradientTop: UIColor
+    let bgGradientBtm: UIColor
     let navBarBackground: UIColor
     let navBarTint: UIColor
     let navBarTitle: UIColor
-
     let tabBarBackground: UIColor
     let tabBarTint: UIColor
     let tabBarTintSelected: UIColor
-    
-    let backgroundBasePrimary: UIColor
-    let backgroundBaseSecondary: UIColor
-    
-    let fillPrimary: UIColor
-    let fillSecondary: UIColor
-    let fillTertiary: UIColor
-    let fillQuaternary: UIColor
-
-    let separator: UIColor
-    let separatorTransparent: UIColor
-        
-    let labelPrimary: UIColor
-    let labelSecondary: UIColor
-    let labelTertiary: UIColor
-    let labelQuaternary: UIColor
-    
-    let buttonBackgroundPrimary: UIColor
-    let buttonBackgroundPrimaryDisabled: UIColor
-    let buttonPrimaryText: UIColor
-    let buttonBackgroundSecondary: UIColor
-    let buttonSecondaryText: UIColor
-        
-    let switchThumbTintColor: UIColor
-    let switchBackgroundColor: UIColor
+    let stroke: UIColor
+    let separatorPrimary: UIColor
+    let separatorSecondary: UIColor
+    let buttonBgPrimary: UIColor
+    let ButtonBgPrimaryDisabled: UIColor
+    let buttonTextPrimary: UIColor
+    let buttonBgSecondary: UIColor
+    let buttonTextSecondary: UIColor
     let switchOnTint: UIColor
-    let switchDisabledThumbTint: UIColor
-    let switchDisabledBackgroundColor: UIColor
-
-    let textFieldTextColour: UIColor
-    let textFieldPlaceholderColour: UIColor
-    let textFieldInputAccessoryViewBGColor: UIColor
-
+    // TODO(Anon): Revisit, all of these are not necessary
     let segmentedControlBackground: UIColor
     let segmentedControlBackgroundSelected: UIColor
     let segmentedControlText: UIColor
     let segmentedControlTextSelected: UIColor
-
-    let cellBackground: UIColor
-    
-    let keystoreEnumFill: UIColor
-    let keystoreEnumText: UIColor
-    
     let priceUp: UIColor
     let priceDown: UIColor
-    let candleGreen: UIColor
-    let candleRed: UIColor
-    let dashboardTVCryptoBallance: UIColor
-    
+    let dashboardTVCryptoBalance: UIColor
     let activityIndicator: UIColor
-    
-    let toastAlertBackgroundColor: UIColor
-    
     let destructive: UIColor
 }
 

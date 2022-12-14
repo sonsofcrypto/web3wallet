@@ -15,7 +15,7 @@ extension SectionFooterView {
         let attrs = sectionFooter()
         let hlAttrs: [NSAttributedString.Key : Any] = [
             .font: Theme.font.subheadlineBold,
-            .foregroundColor: Theme.colour.labelPrimary,
+            .foregroundColor: Theme.color.textPrimary,
         ]
         let attrStr = NSMutableAttributedString(
             string: viewModel.text,
@@ -36,7 +36,7 @@ private extension SectionFooterView {
         paragraphStyle.lineSpacing = 6
         return [
             .font: Theme.font.subheadline,
-            .foregroundColor: Theme.colour.labelSecondary,
+            .foregroundColor: Theme.color.textSecondary,
             .paragraphStyle: paragraphStyle
         ]
     }

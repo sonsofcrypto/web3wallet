@@ -52,7 +52,7 @@ private extension ConfirmationSendView {
         horizontalStack.spacing = Theme.constant.padding
         let view = UIView()
         view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.backgroundColor = Theme.colour.cellBackground
+        view.backgroundColor = Theme.color.bgPrimary
         view.addSubview(horizontalStack)
         horizontalStack.addConstraints(.toEdges(padding: Theme.constant.padding))
         return view
@@ -116,7 +116,7 @@ private extension ConfirmationSendView {
         stack.spacing = Theme.constant.padding * 0.5
         let view = UIView()
         view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.backgroundColor = Theme.colour.cellBackground
+        view.backgroundColor = Theme.color.bgPrimary
         view.addSubview(stack)
         stack.addConstraints(.toEdges(padding: Theme.constant.padding))
         return view
@@ -124,7 +124,7 @@ private extension ConfirmationSendView {
     
     func dividerLine() -> UIView {
         let divider = UIView()
-        divider.backgroundColor = Theme.colour.separatorTransparent
+        divider.backgroundColor = Theme.color.separatorSecondary
         let view = UIView()
         view.backgroundColor = .clear
         view.addSubview(divider)
@@ -154,7 +154,7 @@ private extension ConfirmationSendView {
         stack.spacing = Theme.constant.padding * 0.5
         let view = UIView()
         view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.backgroundColor = Theme.colour.cellBackground
+        view.backgroundColor = Theme.color.bgPrimary
         view.addSubview(stack)
         stack.addConstraints(.toEdges(padding: Theme.constant.padding))
         return view

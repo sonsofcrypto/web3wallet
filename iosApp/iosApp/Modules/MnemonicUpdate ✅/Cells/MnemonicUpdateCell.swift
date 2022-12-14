@@ -29,10 +29,10 @@ final class MnemonicUpdateCell: UICollectionViewCell {
     func configure() {
         scheduleAutohideMnemonic()
         layer.cornerRadius = Theme.constant.cornerRadius
-        backgroundColor = Theme.colour.labelQuaternary
+        backgroundColor = Theme.color.bgPrimary
         var attrs: [NSAttributedString.Key: Any] = [
             .font: Theme.font.body,
-            .foregroundColor: Theme.colour.labelPrimary
+            .foregroundColor: Theme.color.textPrimary
         ]
         attrs[.font] = Theme.font.body
         textView.typingAttributes = attrs
@@ -45,9 +45,9 @@ final class MnemonicUpdateCell: UICollectionViewCell {
         overlayLabel.numberOfLines = 2
         overlayLabel.text = Localized("mnemonic.tapToReveal")
         overlayLabel.font = Theme.font.body
-        overlayLabel.textColor = Theme.colour.labelPrimary
+        overlayLabel.textColor = Theme.color.textPrimary
         countdownView.layer.cornerRadius = 10
-        countdownView.backgroundColor = Theme.colour.navBarTint
+        countdownView.backgroundColor = Theme.color.navBarTint
         countdownLabel.apply(style: .caption1)
     }
 }

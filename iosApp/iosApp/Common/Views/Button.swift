@@ -87,10 +87,10 @@ private extension Button {
             self.configuration = configuration
             updateConfiguration()
             updateBackgroundColor()
-            tintColor = Theme.colour.buttonPrimaryText
+            tintColor = Theme.color.buttonTextPrimary
             layer.cornerRadius = Theme.constant.cornerRadiusSmall
-            setTitleColor(Theme.colour.buttonPrimaryText, for: .normal)
-            setTitleColor(Theme.colour.buttonPrimaryText.withAlpha(0.5), for: .disabled)
+            setTitleColor(Theme.color.buttonTextPrimary, for: .normal)
+            setTitleColor(Theme.color.buttonTextPrimary.withAlpha(0.5), for: .disabled)
         case .secondary:
             var configuration = UIButton.Configuration.plain()
             configuration.titleTextAttributesTransformer = .init{ incoming in
@@ -103,11 +103,11 @@ private extension Button {
             self.configuration = configuration
             updateConfiguration()
             updateBackgroundColor()
-            tintColor = Theme.colour.buttonSecondaryText
+            tintColor = Theme.color.buttonTextSecondary
             layer.cornerRadius = Theme.constant.cornerRadiusSmall
             layer.borderWidth = 1
-            layer.borderColor = Theme.colour.buttonSecondaryText.cgColor
-            setTitleColor(Theme.colour.buttonSecondaryText, for: .normal)
+            layer.borderColor = Theme.color.buttonTextSecondary.cgColor
+            setTitleColor(Theme.color.buttonTextSecondary, for: .normal)
         case let .secondarySmall(leftImage):
             updateSecondaryStyle(leftImage: leftImage)
             layer.cornerRadius = Theme.constant.buttonSecondarySmallHeight.half
@@ -116,8 +116,8 @@ private extension Button {
             layer.cornerRadius = Theme.constant.buttonDashboardActionHeight.half
         case .accountAction:
             updateBackgroundColor()
-            tintColor = Theme.colour.labelPrimary
-            imageView?.tintColor = Theme.colour.labelPrimary
+            tintColor = Theme.color.textPrimary
+            imageView?.tintColor = Theme.color.textPrimary
         }
         invalidateIntrinsicContentSize()
     }
@@ -127,18 +127,18 @@ private extension Button {
         case let .primary(action):
             switch action {
             case .`default`:
-                backgroundColor = Theme.colour.buttonBackgroundPrimary.withAlpha(
+                backgroundColor = Theme.color.buttonBgPrimary.withAlpha(
                     isEnabled ? 1.0 : 0.5
                 )
             case .destructive:
-                backgroundColor = Theme.colour.destructive.withAlpha(
+                backgroundColor = Theme.color.destructive.withAlpha(
                     isEnabled ? 1.0 : 0.5
                 )
             }
         case .secondary, .secondarySmall, .dashboardAction:
             backgroundColor = .clear
         case .accountAction:
-            backgroundColor = Theme.colour.cellBackground
+            backgroundColor = Theme.color.bgPrimary
         }
     }
     
@@ -155,16 +155,16 @@ private extension Button {
         self.configuration = configuration
         updateConfiguration()
         updateBackgroundColor()
-        tintColor = Theme.colour.buttonSecondaryText
+        tintColor = Theme.color.buttonTextSecondary
         layer.borderWidth = 0.5
-        layer.borderColor = Theme.colour.buttonSecondaryText.cgColor
-        setTitleColor(Theme.colour.buttonSecondaryText, for: .normal)
+        layer.borderColor = Theme.color.buttonTextSecondary.cgColor
+        setTitleColor(Theme.color.buttonTextSecondary, for: .normal)
         titleLabel?.textAlignment = .natural
         
         if let leftImage = leftImage {
             setImage(
                 leftImage.withRenderingMode(.alwaysTemplate)
-                    .withTintColor(Theme.colour.buttonSecondaryText),
+                    .withTintColor(Theme.color.buttonTextSecondary),
                 for: .normal
             )
         }
@@ -229,15 +229,15 @@ final class CustomVerticalButton: UIView {
 
         super.awakeFromNib()
         
-        backgroundColor = Theme.colour.cellBackground
+        backgroundColor = Theme.color.bgPrimary
         layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        tintColor = Theme.colour.labelPrimary
+        tintColor = Theme.color.textPrimary
         
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = Theme.colour.labelPrimary
+        imageView.tintColor = Theme.color.textPrimary
         self.iconImageView = imageView
         wrapperView.addSubview(imageView)
         imageView.addConstraints(

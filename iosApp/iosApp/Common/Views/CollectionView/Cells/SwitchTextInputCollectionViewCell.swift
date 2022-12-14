@@ -116,7 +116,7 @@ private extension SwitchTextInputCollectionViewCell {
         )
 
         var hlAttrs  = sectionFooter()
-        hlAttrs[.foregroundColor] = Theme.colour.fillPrimary
+        hlAttrs[.foregroundColor] = Theme.color.textSecondary
 
         descriptionHighlightedWords.forEach {
             let range = NSString(string: description).range(of: $0)
@@ -137,7 +137,7 @@ private extension SwitchTextInputCollectionViewCell {
         
         return [
             .font: Theme.font.callout,
-            .foregroundColor: Theme.colour.labelTertiary,
+            .foregroundColor: Theme.color.textTertiary,
             .paragraphStyle: paragraphStyle
         ]
     }

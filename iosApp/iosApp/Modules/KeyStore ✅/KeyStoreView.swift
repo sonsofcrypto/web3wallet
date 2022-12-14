@@ -185,8 +185,8 @@ extension KeyStoreViewController {
             .layerMaxXMinYCorner,
             .layerMinXMinYCorner
         ]
-        buttonBackgroundView.contentView.backgroundColor = Theme.colour.gradientTop.withAlpha(0.4)
-        buttonHandleView.backgroundColor = Theme.colour.backgroundBasePrimary
+        buttonBackgroundView.contentView.backgroundColor = Theme.color.bgGradientTop.withAlpha(0.4)
+        buttonHandleView.backgroundColor = Theme.color.textTertiary
         buttonHandleView.layer.cornerRadius = buttonHandleView.frame.size.height.half
     }
 

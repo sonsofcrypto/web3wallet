@@ -110,7 +110,7 @@ private extension NFTsDashboardViewController {
         view.addSubview(gradient)
         gradient.addConstraints(.toEdges)
         let loadingView = UIActivityIndicatorView(style: .large)
-        loadingView.color = Theme.colour.activityIndicator
+        loadingView.color = Theme.color.activityIndicator
         view.addSubview(loadingView)
         self.loadingView = loadingView
         loadingView.addConstraints(

@@ -19,7 +19,7 @@ final class SettingsCell: CollectionViewCell {
         backgroundColor = .clear
         
         titleLabel.apply(style: .callout)
-        rightImageView.tintColor = Theme.colour.labelPrimary
+        rightImageView.tintColor = Theme.color.textPrimary
     }
     
     override func setSelected(_ selected: Bool) {

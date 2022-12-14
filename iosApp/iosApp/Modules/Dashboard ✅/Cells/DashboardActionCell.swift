@@ -12,11 +12,11 @@ final class DashboardActionCell: CollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        imageView.backgroundColor = Theme.colour.navBarTint
+        imageView.backgroundColor = Theme.color.navBarTint
         imageView.layer.cornerRadius = imageView.bounds.width.half
         titleLabel.apply(style: .footnote)
         bodyLabel.apply(style: .caption1)
-        bodyLabel.textColor = Theme.colour.labelSecondary
+        bodyLabel.textColor = Theme.color.textSecondary
     }
     
     override func setSelected(_ selected: Bool) {}
@@ -29,7 +29,7 @@ extension DashboardActionCell {
         bodyLabel.text = viewModel?.body
         imageView.image = .letterImage(
             viewModel?.image ?? "",
-            colors: [Theme.colour.labelPrimary, .clear]
+            colors: [Theme.color.textPrimary, .clear]
         )
         return self
     }

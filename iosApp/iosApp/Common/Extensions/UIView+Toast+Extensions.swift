@@ -28,7 +28,7 @@ extension UIView {
 
         let backgroundView = UIView()
         backgroundView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        backgroundView.backgroundColor = Theme.colour.toastAlertBackgroundColor
+        backgroundView.backgroundColor = Theme.color.tabBarBackground
         toastView.addSubview(backgroundView)
         backgroundView.addConstraints(
             [
@@ -52,7 +52,7 @@ extension UIView {
 
         let label = UILabel()
         label.apply(style: .subheadline)
-        label.textColor = Theme.colour.labelPrimary
+        label.textColor = Theme.color.textPrimary
         label.textAlignment = textAlignment
         label.numberOfLines = 0
         label.text = message

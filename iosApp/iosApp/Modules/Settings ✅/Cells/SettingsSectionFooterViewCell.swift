@@ -25,7 +25,7 @@ private extension SettingsSectionFooterViewCell {
 
         let label = UILabel()
         label.apply(style: .subheadline)
-        label.textColor = Theme.colour.labelSecondary
+        label.textColor = Theme.color.textSecondary
         self.label = label
         addSubview(label)
         label.addConstraints(

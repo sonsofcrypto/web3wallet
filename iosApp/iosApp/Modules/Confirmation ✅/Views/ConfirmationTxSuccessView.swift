@@ -74,8 +74,8 @@ private extension ConfirmationTxSuccessView {
         let image = UIImage(systemName: "checkmark.circle.fill")
         let config = UIImage.SymbolConfiguration(
             paletteColors: [
-                Theme.colour.labelPrimary,
-                Theme.colour.candleGreen
+                Theme.color.textPrimary,
+                Theme.color.priceUp
             ]
         )
         let imageView = UIImageView(image: image?.applyingSymbolConfiguration(config))

@@ -54,7 +54,7 @@ extension NetworkPickerViewController: NetworkPickerView {
 private extension NetworkPickerViewController {
         
     func configureUI() {
-        searchTextFieldBox.backgroundColor = Theme.colour.backgroundBasePrimary
+        searchTextFieldBox.backgroundColor = Theme.color.bgPrimary
         searchTextFieldBox.layer.cornerRadius = 16
         searchTextField.text = nil
         searchTextField.delegate = self

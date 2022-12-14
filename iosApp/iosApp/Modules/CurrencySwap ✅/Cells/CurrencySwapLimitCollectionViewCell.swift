@@ -10,10 +10,10 @@ final class CurrencySwapLimitCollectionViewCell: UICollectionViewCell {
             image: "coming-soon-meme".assetImage!.withRenderingMode(
                 .alwaysTemplate
             ).withTintColor(
-                Theme.colour.labelPrimary
+                Theme.color.textPrimary
             )
         )
-        imageView.tintColor = Theme.colour.labelPrimary
+        imageView.tintColor = Theme.color.textPrimary
         addSubview(imageView)
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear

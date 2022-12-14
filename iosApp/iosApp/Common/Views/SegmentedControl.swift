@@ -7,36 +7,21 @@ import UIKit
 final class SegmentedControl: UISegmentedControl {
     
     convenience init() {
-
-        // TODO: Smell
-        let windowWidth = UIApplication.shared.keyWindow?.frame.width ?? 0
-        
-        let frame: CGRect = .init(
-            origin: .zero,
-            size: .init(width: windowWidth * 0.5, height: 32)
-        )
-
-        self.init(frame: frame)
+        self.init(frame: .zero)
     }
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
         configureUI()
     }
     
     required init?(coder: NSCoder) {
-        
         super.init(coder: coder)
-        
         configureUI()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        
         super.traitCollectionDidChange(previousTraitCollection)
-        
         configureUI()
     }
 }
@@ -44,29 +29,28 @@ final class SegmentedControl: UISegmentedControl {
 private extension SegmentedControl {
     
     func configureUI() {
-        
         setTitleTextAttributes(
             [
-                NSAttributedString.Key.font: Theme.font.footnote,
-                NSAttributedString.Key.foregroundColor: Theme.colour.segmentedControlText
+                .font: Theme.font.footnote,
+                .foregroundColor: Theme.color.segmentedControlText
             ],
             for: .normal
         )
         setTitleTextAttributes(
             [
-                NSAttributedString.Key.font: Theme.font.footnote,
-                NSAttributedString.Key.foregroundColor: Theme.colour.segmentedControlTextSelected
+                .font: Theme.font.footnote,
+                .foregroundColor: Theme.color.segmentedControlTextSelected
             ],
             for: .selected
         )
 
         setBackgroundImage(
-            Theme.colour.segmentedControlBackground.image(),
+            Theme.color.segmentedControlBackground.image(),
             for: .normal,
             barMetrics: .default
         )
         setBackgroundImage(
-            Theme.colour.segmentedControlBackgroundSelected.image(),
+            Theme.color.segmentedControlBackgroundSelected.image(),
             for: .selected,
             barMetrics: .default
         )

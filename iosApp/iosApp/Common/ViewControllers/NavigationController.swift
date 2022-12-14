@@ -21,9 +21,9 @@ final class NavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let appearance = navigationBar.standardAppearance
-        appearance.backgroundColor = Theme.colour.navBarBackground
+        appearance.backgroundColor = Theme.color.navBarBackground
         appearance.titleTextAttributes = [
-            .foregroundColor: Theme.colour.navBarTitle,
+            .foregroundColor: Theme.color.navBarTitle,
             .font: Theme.font.navTitle
         ]
         appearance.setBackIndicatorImage(
@@ -35,7 +35,7 @@ final class NavigationController: UINavigationController {
         navigationBar.scrollEdgeAppearance = appearance
         navigationBar.compactAppearance = appearance
         navigationBar.compactScrollEdgeAppearance = appearance
-        navigationBar.tintColor = Theme.colour.navBarTint
+        navigationBar.tintColor = Theme.color.navBarTint
         interactivePopGestureRecognizer?.delegate = self
     }
 

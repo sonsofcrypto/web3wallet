@@ -20,9 +20,9 @@ final class CurrencyAddNetworkView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         nameLabel.apply(style: .callout)
-        nameLabel.textColor = Theme.colour.labelPrimary
+        nameLabel.textColor = Theme.color.textPrimary
         valueLabel.apply(style: .body)
-        valueLabel.textColor = Theme.colour.fillPrimary
+        valueLabel.textColor = Theme.color.textSecondary
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         addGestureRecognizer(tapGesture)
     }

@@ -9,7 +9,7 @@ extension UILabel {
     convenience init(
         with style: UILabel.Style,
         weight: UILabel.Weight = .regular,
-        colour: UIColor = Theme.colour.labelPrimary
+        colour: UIColor = Theme.color.textPrimary
     ) {
         self.init()
         apply(
@@ -49,7 +49,7 @@ extension UILabel {
     func apply(
         style: Style,
         weight: UILabel.Weight = .regular,
-        colour: UIColor = Theme.colour.labelPrimary
+        colour: UIColor = Theme.color.textPrimary
     ) {
         
         switch style {
@@ -143,7 +143,7 @@ extension UILabel {
             
         case .navTitle:
             font = Theme.font.navTitle
-            textColor = Theme.colour.navBarTitle
+            textColor = Theme.color.navBarTitle
             
         case .tabBar:
             font = Theme.font.tabBar

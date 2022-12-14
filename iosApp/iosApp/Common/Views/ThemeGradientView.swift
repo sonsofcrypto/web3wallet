@@ -22,6 +22,6 @@ final class ThemeGradientView: GradientView {
     }
 
     private func configureUI() {
-        colors = [Theme.colour.gradientTop, Theme.colour.gradientBottom]
+        colors = [Theme.color.bgGradientTop, Theme.color.bgGradientBtm]
     }
 }

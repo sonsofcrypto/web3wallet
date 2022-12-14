@@ -12,7 +12,7 @@ final class CurrencyPickerSectionCell: UICollectionReusableView {
     private lazy var label: UILabel = {
         let label = UILabel()
         label.font = Theme.font.headlineBold
-        label.textColor = Theme.colour.labelPrimary
+        label.textColor = Theme.color.textPrimary
         label.textAlignment = .left
         self.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false

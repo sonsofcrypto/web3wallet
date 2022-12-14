@@ -48,10 +48,10 @@ private extension ConfirmationTxInProgressView {
     
     func animationView() -> UIView {
         let activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.color = Theme.colour.activityIndicator
+        activityIndicator.color = Theme.color.activityIndicator
         activityIndicator.startAnimating()
         let view = UIView()
-        view.backgroundColor = Theme.colour.cellBackground
+        view.backgroundColor = Theme.color.bgPrimary
         view.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         view.addConstraints(
             [

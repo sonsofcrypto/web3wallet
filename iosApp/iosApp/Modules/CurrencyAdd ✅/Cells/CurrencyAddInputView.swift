@@ -85,7 +85,7 @@ private extension CurrencyAddInputView {
         stackView.spacing = Theme.constant.padding.half.half
         let nameLabel = UILabel()
         nameLabel.font =  Theme.font.footnote
-        nameLabel.textColor = Theme.colour.labelSecondary
+        nameLabel.textColor = Theme.color.textSecondary
         stackView.addArrangedSubview(nameLabel)
         self.nameLabel = nameLabel
         let textField = TextField()
@@ -101,7 +101,7 @@ private extension CurrencyAddInputView {
         self.textField = textField
         let hintLabel = UILabel()
         hintLabel.font = Theme.font.caption1
-        hintLabel.textColor = Theme.colour.labelPrimary
+        hintLabel.textColor = Theme.color.textPrimary
         hintLabel.isHidden = true
         stackView.addArrangedSubview(hintLabel)
         self.hintLabel = hintLabel
@@ -115,7 +115,7 @@ private extension CurrencyAddInputView {
         let pasteAction = UIButton(type: .custom)
         pasteAction.setTitle(Localized("paste"), for: .normal)
         pasteAction.titleLabel?.font = Theme.font.subheadlineBold
-        pasteAction.setTitleColor(Theme.colour.labelPrimary, for: .normal)
+        pasteAction.setTitleColor(Theme.color.textPrimary, for: .normal)
         pasteAction.addTarget(self, action: #selector(pasteActionTapped), for: .touchUpInside)
         pasteAction.addConstraints(
             [

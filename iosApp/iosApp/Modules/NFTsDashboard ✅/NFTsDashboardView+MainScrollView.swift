@@ -9,7 +9,7 @@ extension NFTsDashboardViewController {
         mainScrollView.showsVerticalScrollIndicator = false
         mainScrollView.showsHorizontalScrollIndicator = false
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = Theme.colour.activityIndicator
+        refreshControl.tintColor = Theme.color.activityIndicator
         refreshControl.addTarget(self, action: #selector(pullDownToRefresh), for: .valueChanged)
         mainScrollView.refreshControl = refreshControl
         let carousel = iCarousel(frame: .zero)
@@ -17,8 +17,6 @@ extension NFTsDashboardViewController {
         carousel.dataSource = self
         carousel.delegate = self
         carousel.layer.cornerRadius = Theme.constant.cornerRadius
-//        carousel.layer.borderWidth = 1
-//        carousel.layer.borderColor = Theme.colour.fillTertiary.cgColor
         mainScrollView.addSubview(carousel)
         carousel.clipsToBounds = false
         self.carousel = carousel

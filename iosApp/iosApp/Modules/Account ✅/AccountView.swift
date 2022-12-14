@@ -45,8 +45,8 @@ extension AccountViewController {
         let btnLabel = (navigationItem.rightBarButtonItem?.customView as? UILabel)
         btnLabel?.text = viewModel.header.pct
         btnLabel?.textColor = viewModel.header.pctUp
-            ? Theme.colour.priceUp
-            : Theme.colour.priceDown
+            ? Theme.color.priceUp
+            : Theme.color.priceDown
     }
 }
 
@@ -345,7 +345,7 @@ private extension AccountViewController {
         insets.bottom += Theme.constant.padding
         collectionView.contentInset = insets
         collectionView.refreshControl = refreshControl
-        refreshControl.tintColor = Theme.colour.activityIndicator
+        refreshControl.tintColor = Theme.color.activityIndicator
         refreshControl.addTarget(
             self,
             action: #selector(didPullToRefresh(_:)),

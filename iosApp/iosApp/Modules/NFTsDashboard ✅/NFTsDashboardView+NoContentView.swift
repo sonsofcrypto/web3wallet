@@ -11,7 +11,7 @@ extension NFTsDashboardViewController {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = Theme.colour.activityIndicator
+        refreshControl.tintColor = Theme.color.activityIndicator
         refreshControl.addTarget(self, action: #selector(pullDownToRefresh), for: .valueChanged)
         scrollView.refreshControl = refreshControl
         let imageViewGroup = UIView()

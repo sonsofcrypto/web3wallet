@@ -35,7 +35,7 @@ extension ImprovementProposalViewController {
 
         if var attrBody = try? AttributedString(markdown: viewModel.body) {
             attrBody.font = Theme.font.body
-            attrBody.foregroundColor = Theme.colour.labelPrimary
+            attrBody.foregroundColor = Theme.color.textPrimary
             bodyTextView.attributedText = NSAttributedString(attrBody)
         }
     }
@@ -55,15 +55,15 @@ private extension ImprovementProposalViewController {
         voteButton.style = .primary
         voteButton.setTitle(Localized("proposal.button.vote"), for: .normal)
         stackView.spacing = Theme.constant.padding.half
-        stackView.superview?.backgroundColor = Theme.colour.cellBackground
+        stackView.superview?.backgroundColor = Theme.color.bgPrimary
         stackView.superview?.layer.cornerRadius = Theme.constant.cornerRadius
         imageView.layer.cornerRadius = Theme.constant.cornerRadius
         subtitleLabel.apply(style: .headline, weight: .bold)
         subtitleLabel.text = Localized("proposal.summary.header")
         bodyTextView.font = Theme.font.body
-        bodyTextView.textColor = Theme.colour.labelPrimary
+        bodyTextView.textColor = Theme.color.textPrimary
         bodyTextView.textContainerInset = .init(top: 0, left: -4, bottom: 0, right: -4)
         statusView.label.apply(style: .headline)
-        statusView.backgroundColor = Theme.colour.navBarTint
+        statusView.backgroundColor = Theme.color.navBarTint
     }
 }

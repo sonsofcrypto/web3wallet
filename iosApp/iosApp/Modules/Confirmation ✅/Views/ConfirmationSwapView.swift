@@ -54,7 +54,7 @@ private extension ConfirmationSwapView {
         horizontalStack.spacing = Theme.constant.padding
         let view = UIView()
         view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.backgroundColor = Theme.colour.cellBackground
+        view.backgroundColor = Theme.color.bgPrimary
         view.addSubview(horizontalStack)
         horizontalStack.addConstraints(.toEdges(padding: Theme.constant.padding))
         return view
@@ -81,9 +81,9 @@ private extension ConfirmationSwapView {
     
     func arrowDown() -> UIView {
         let imageView = UIImageView(image: "arrow.down".assetImage)
-        imageView.tintColor = Theme.colour.labelPrimary
+        imageView.tintColor = Theme.color.textPrimary
         let backgroundView = UIView()
-        backgroundView.backgroundColor = Theme.colour.cellBackground
+        backgroundView.backgroundColor = Theme.color.bgPrimary
         backgroundView.addSubview(imageView)
         backgroundView.layer.cornerRadius = Theme.constant.cornerRadiusSmall.half
         imageView.addConstraints(
@@ -130,7 +130,7 @@ private extension ConfirmationSwapView {
         stack.spacing = Theme.constant.padding * 0.5
         let view = UIView()
         view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.backgroundColor = Theme.colour.cellBackground
+        view.backgroundColor = Theme.color.bgPrimary
         view.addSubview(stack)
         stack.addConstraints(.toEdges(padding: Theme.constant.padding))
         return view
@@ -205,7 +205,7 @@ private extension ConfirmationSwapView {
     
     func dividerLine() -> UIView {
         let divider = UIView()
-        divider.backgroundColor = Theme.colour.separatorTransparent
+        divider.backgroundColor = Theme.color.separatorSecondary
         let view = UIView()
         view.backgroundColor = .clear
         view.addSubview(divider)

@@ -106,7 +106,7 @@ private extension ConfirmationApproveUniswapView {
         stack.spacing = Theme.constant.padding * 0.5
         let view = UIView()
         view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.backgroundColor = Theme.colour.cellBackground
+        view.backgroundColor = Theme.color.bgPrimary
         view.addSubview(stack)
         stack.addConstraints(.toEdges(padding: Theme.constant.padding))
         return view

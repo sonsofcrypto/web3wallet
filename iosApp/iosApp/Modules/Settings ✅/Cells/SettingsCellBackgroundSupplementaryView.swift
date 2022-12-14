@@ -8,7 +8,7 @@ final class SettingsCellBackgroundSupplementaryView: UICollectionReusableView {
         super.init(frame: frame)
         
         layer.cornerRadius = Theme.constant.cornerRadius
-        backgroundColor = Theme.colour.cellBackground
+        backgroundColor = Theme.color.bgPrimary
     }
 
     required init?(coder: NSCoder) {
