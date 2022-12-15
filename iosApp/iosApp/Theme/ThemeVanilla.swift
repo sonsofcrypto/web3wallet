@@ -4,7 +4,7 @@
 
 import UIKit
 
-struct ThemeIOS: ThemeProtocol {
+struct ThemeVanilla: ThemeProtocol {
     let name: String = "Vanilla"
     let color: ThemeColorProtocol = ThemeColor()
     let supportedVariants: [ThemeVariant] = [.light, .dark]
@@ -99,6 +99,6 @@ struct ThemeIOS: ThemeProtocol {
     )
 
     static func isCurrent() -> Bool {
-        (Theme as? ThemeIOS) != nil
+        (Theme as? ThemeVanilla) != nil
     }
 }

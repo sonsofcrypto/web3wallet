@@ -29,8 +29,8 @@ final class DashboardHeaderTitleView: UICollectionReusableView {
     override func layoutSubviews() {
         super.layoutSubviews()
         lineView.frame = CGRect(
-            origin: CGPoint(x: 0, y: (ThemeIOS.isCurrent() ? bounds.maxY + 4 : bounds.maxY - 0.5)),
-            size: CGSize(width: bounds.width * (ThemeIOS.isCurrent() ? 1 : 1.1), height: 0.33)
+            origin: CGPoint(x: 0, y: (ThemeVanilla.isCurrent() ? bounds.maxY + 4 : bounds.maxY - 0.5)),
+            size: CGSize(width: bounds.width * (ThemeVanilla.isCurrent() ? 1 : 1.1), height: 0.33)
         )
     }
 }
@@ -45,7 +45,7 @@ private extension DashboardHeaderTitleView {
         rightAction.textColor = Theme.color.textPrimary
         rightAction.isHidden = true
         rightAction.add(.targetAction(.init(target: self, selector: #selector(moreTapped))))
-        let offset = ThemeIOS.isCurrent() ? 0 : -Theme.padding.half + 1
+        let offset = ThemeVanilla.isCurrent() ? 0 : -Theme.padding.half + 1
         stack.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stack)
         stack.contraintToSuperView(bottom: offset)

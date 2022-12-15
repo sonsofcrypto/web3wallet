@@ -25,10 +25,10 @@ extension DefaultSettingsServiceActionTrigger: SettingsServiceActionTrigger {
             Theme = ThemeMiamiSunrise()
         case .themeIosLight:
             AppDelegate.setUserInterfaceStyle(.light)
-            Theme = ThemeIOS()
+            Theme = ThemeVanilla()
         case .themeIosDark:
             AppDelegate.setUserInterfaceStyle(.dark)
-            Theme = ThemeIOS()
+            Theme = ThemeVanilla()
         case .improvementProposals:
             guard let deepLink = DeepLink(identifier: DeepLink.improvementProposalsList.identifier) else { return }
             let deepLinkHandler: DeepLinkHandler = AppAssembler.resolve()

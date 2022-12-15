@@ -141,7 +141,7 @@ extension DashboardViewController: UICollectionViewDataSource {
                 .update(with: input.data[idxPath.item])
         }
         if let input = section.items as? DashboardViewModel.SectionItemsWallets {
-            if ThemeIOS.isCurrent() {
+            if ThemeVanilla.isCurrent() {
                 let isLast = (section.items.count - 1) == indexPath.item
                 return cv.dequeue(DashboardTableWalletCell.self, for: indexPath)
                     .update(with: input.data[idxPath.item], showBottomSeparator: !isLast)
@@ -326,7 +326,7 @@ private extension DashboardViewController {
                 return self.actionsCollectionLayoutSection()
             }
             if section.items is DashboardViewModel.SectionItemsWallets {
-                return ThemeIOS.isCurrent()
+                return ThemeVanilla.isCurrent()
                     ? self.walletsTableCollectionLayoutSection()
                     : self.walletsCollectionLayoutSection()
             }
@@ -336,7 +336,7 @@ private extension DashboardViewController {
             fatalError("Section not handled")
         }
         // TODO: Decouple this
-        if ThemeIOS.isCurrent() {
+        if ThemeVanilla.isCurrent() {
             layout.register(
                 DgenCellBackgroundSupplementaryView.self,
                 forDecorationViewOfKind: "background"
