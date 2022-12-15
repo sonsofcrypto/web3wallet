@@ -41,7 +41,7 @@ data class JsonFragment(
     val output: List<JsonFragmentType>?
 )
 
-abstract class Fragment(
+open class Fragment(
     val type: String,
     val name: String,
     val inputs: List<Param>
@@ -51,7 +51,11 @@ abstract class Fragment(
         SIGNATURE, STRING
     }
 
-    abstract fun format(format: Format = Format.SIGNATURE): String
+    open fun format(format: Format = Format.SIGNATURE): String = when(format) {
+        Format.STRING -> "Fragment(type=$type, name=$name, inputs=$inputs)"
+        Format.SIGNATURE -> name + inputs.map { it.format(format) }
+            .joinToString(prefix = "(", postfix = ")")
+    }
 
     override fun toString(): String = this.format(Format.STRING)
 }
@@ -69,14 +73,12 @@ class EventFragment : Fragment {
     }
 
     override fun format(format: Format): String = when (format) {
+        Format.SIGNATURE -> super.format(format)
         Format.STRING -> "EventFragment(" +
-            "type=$type," +
-            "name=$name," +
-            "inputs=$inputs," +
-            "anonymous=$anonymous" +
-            ")"
-        Format.SIGNATURE -> name + inputs.map { it.format(format) }
-            .joinToString(prefix = "(", postfix = ")")
+            "type=$type, " +
+            "name=$name, " +
+            "inputs=$inputs, " +
+            "anonymous=$anonymous)"
     }
 
     companion object {
@@ -109,14 +111,13 @@ open class ConstructorFragment : Fragment {
     }
 
     override fun format(format: Format): String = when (format) {
+        Format.SIGNATURE -> super.format(format)
         Format.STRING -> "ConstructorFragment(" +
             "type=$type, " +
             "name=$name, " +
             "inputs=$inputs, " +
             "stateMutability=$stateMutability, " +
-            "payable=$payable" +
-            ")"
-        else -> TODO("Implement")
+            "payable=$payable)"
     }
 
     companion object {
@@ -153,6 +154,7 @@ class FunctionFragment : ConstructorFragment {
     }
 
     override fun format(format: Format): String = when (format) {
+        Format.SIGNATURE -> super.format(format)
         Format.STRING -> "FunctionFragment(" +
             "type=$type, " +
             "name=$name, " +
@@ -160,9 +162,7 @@ class FunctionFragment : ConstructorFragment {
             "stateMutability=$stateMutability, " +
             "payable=$payable, " +
             "constant=$constant, " +
-            "output=$output" +
-            ")"
-        else -> TODO("Implement")
+            "output=$output)"
     }
 
     companion object {
@@ -190,12 +190,8 @@ class ErrorFragment(
 ) : Fragment(type, name, inputs) {
 
     override fun format(format: Format): String = when (format) {
-        Format.STRING -> "ErrorFragment(" +
-            "type=$type, " +
-            "name=$name, " +
-            "inputs=$inputs" +
-            ")"
-        else -> TODO("Implement")
+        Format.SIGNATURE -> super.format(format)
+        Format.STRING -> "ErrorFragment(type=$type, name=$name, inputs=$inputs)"
     }
 
     companion object {
@@ -313,6 +309,9 @@ sealed class Error(
     /** Failed to parse fragment from string  */
     data class FromString(val string: String?) :
         Error("Failed to parse fragment from string $string")
+    /** Attempted unsupported operation */
+    data class UnsupportedOp(val string: String):
+        Error("Unsupported operation $string")
 }
 
 private const val ARRAY_PATTERN = "^(.*)\\[([0-9]*)\\]\$"
