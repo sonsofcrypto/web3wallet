@@ -47,6 +47,30 @@ class Interface {
         this.deploy = deploy
     }
 
+    /** Find function by signature, selector/sighash, bare name if unambiguous */
+    @Throws(Throwable::class)
+    fun function(identifier: String): FunctionFragment {
+        val id = identifier.trim().replace(" ", "")
+        // By selector sighash (bytes4 hash) used by Solidity (eg 0xa9059cbb)
+        if (id.isHexString()) {
+            functions.forEach {
+                if (sigHashString(it.key) == id.lowercase()) return it.value
+            }
+            throw Error.FunctionNotFound(id)
+        }
+        // By name only (eg transfer)
+        if (!id.contains("(")) {
+            val match = functions.filter { it.key.split("(").firstOrNull() == id }
+            when (match.size) {
+                0 -> throw Error.FunctionNotFound(id)
+                1 -> return match.values.first()
+                else -> throw Error.MultipleMatches(match.keys.toList())
+            }
+        }
+        // By signature (eg transfer(address,uint256))
+        return functions[id] ?: throw Error.FunctionNotFound(id)
+    }
+
     /** Find event by signature, topic or bare name if unambiguous */
     @Throws(Throwable::class)
     fun event(identifier: String): EventFragment {
@@ -56,19 +80,19 @@ class Interface {
             events.forEach {
                 if (eventTopic(it.value).toHexString() == id) return it.value
             }
-            throw Error.EventNonFound(id)
+            throw Error.EventNotFound(id)
         }
         // By name only (eg Transfer)
         if (!id.contains("(")) {
             val match = events.filter { it.key.split("(").firstOrNull() == id }
             when (match.size) {
-                0 -> throw Error.EventNonFound(id)
+                0 -> throw Error.EventNotFound(id)
                 1 -> return match.values.first()
                 else -> throw Error.MultipleMatches(match.keys.toList())
             }
         }
         // By signature (eg Transfer(address,address,uint256))
-        return events[id] ?: throw Error.EventNonFound(id)
+        return events[id] ?: throw Error.EventNotFound(id)
     }
 
     @Throws(Throwable::class)
@@ -87,8 +111,10 @@ class Interface {
     /** Topic (the bytes32 hash) used by Solidity to identify an event */
     fun eventTopic(event: EventFragment): ByteArray = eventTopic(event.format())
 
-    private fun selector(sig: String): String = keccak256(sig.toByteArray())
+    private fun sigHash(sig: String): ByteArray = keccak256(sig.toByteArray())
         .copyOfRange(0, 4)
+
+    private fun sigHashString(sig: String): String = sigHash(sig)
         .toHexString(true)
 
     /** Errors */
@@ -99,8 +125,10 @@ class Interface {
 
         constructor(cause: Throwable) : this(null, cause)
 
-        data class EventNonFound(val id: String) :
+        data class EventNotFound(val id: String) :
             Error("Event with identifier $id not found")
+        data class FunctionNotFound(val id: String) :
+            Error("Function with identifier $id not found")
         data class MultipleMatches(val matches: List<String>):
             Error("Multiple matches found $matches")
     }
