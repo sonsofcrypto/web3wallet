@@ -95,6 +95,30 @@ class Interface {
         return events[id] ?: throw Error.EventNotFound(id)
     }
 
+    /** Find error by signature, selector/sighash, bare name if unambiguous */
+    @Throws(Throwable::class)
+    fun error(identifier: String): ErrorFragment {
+        val id = identifier.trim().replace(" ", "")
+        // By selector sighash (bytes4 hash) used by Solidity (eg 0x5cdc1d55)
+        if (id.isHexString()) {
+            errors.forEach {
+                if (sigHashString(it.key) == id.lowercase()) return it.value
+            }
+            throw Error.ErrorNotFound(id)
+        }
+        // By name only (eg InsufficientBalance)
+        if (!id.contains("(")) {
+            val match = errors.filter { it.key.split("(").firstOrNull() == id }
+            when (match.size) {
+                0 -> throw Error.ErrorNotFound(id)
+                1 -> return match.values.first()
+                else -> throw Error.MultipleMatches(match.keys.toList())
+            }
+        }
+        // By signature (eg InsufficientBalance(uint256,uint256))
+        return errors[id] ?: throw Error.ErrorNotFound(id)
+    }
+
     @Throws(Throwable::class)
     fun decodeEventLogs(
         event: EventFragment,
@@ -129,6 +153,8 @@ class Interface {
             Error("Event with identifier $id not found")
         data class FunctionNotFound(val id: String) :
             Error("Function with identifier $id not found")
+        data class ErrorNotFound(val id: String) :
+            Error("Error with identifier $id not found")
         data class MultipleMatches(val matches: List<String>):
             Error("Multiple matches found $matches")
     }
