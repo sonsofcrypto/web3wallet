@@ -76,7 +76,7 @@ class EventFragment : Fragment {
             "anonymous=$anonymous" +
             ")"
         Format.SIGNATURE -> name + inputs.map { it.format(format) }
-            .joinToString("(", postfix = ")")
+            .joinToString(prefix = "(", postfix = ")")
     }
 
     companion object {
@@ -246,7 +246,7 @@ data class Param(
                 (this.arrayChildren?.format(format) ?: "") + "[$length]"
             }
             "tuple" -> components?.map { it.format(format) }
-                ?.joinToString("(", postfix = ")")
+                ?.joinToString(prefix = "(", postfix = ")")
                 ?: "()"
             else -> type
         }

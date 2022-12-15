@@ -71,6 +71,15 @@ class Interface {
         return events[id] ?: throw Error.EventNonFound(id)
     }
 
+    @Throws(Throwable::class)
+    fun decodeEventLogs(
+        event: EventFragment,
+        data: ByteArray,
+        topics: List<String>
+    ) {
+        TODO("Implement")
+    }
+
     /** Topic (the bytes32 hash) used by Solidity to identify an event from
      * signature (eg Transfer(address,uint256)) */
     fun eventTopic(sig: String): ByteArray = keccak256(sig.toByteArray())

@@ -1,11 +1,14 @@
 package com.sonsofcrypto.web3wallet.android
 
+import com.sonsofcrypto.web3lib.contract.Fragment
+import com.sonsofcrypto.web3lib.contract.Fragment.Format.SIGNATURE
 import com.sonsofcrypto.web3lib.contract.Interface
 import com.sonsofcrypto.web3lib.utils.BundledAssetProvider
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonArray
+import kotlin.math.exp
 
 class TmpTest {
 
@@ -65,11 +68,20 @@ class TmpTest {
         val bytes = BundledAssetProvider().file(name, "json")
         val tests = jsonDecode<List<TestCase>>(String(bytes!!))
         tests?.forEachIndexed { idx, test ->
-            println("$idx, ${test.name}")
             val iface = Interface(test.iface)
+            val types = iface.event("testEvent")
+                .inputs.map { it.format(SIGNATURE) }
+                .joinToString(prefix = "[", postfix = "]")
+            val adjustedTypes = "${test.types}"
+                .replace("int,", "int256,")
+                .replace("int]", "int256]")
+                .replace("int[", "int256[")
+            assertTrue(
+                adjustedTypes == types,
+                "$idx ${test.name} Expected: ${test.types}, Found: $types"
+            )
+            // TODO: Test decoding of events
             // let parsed = iface.decodeEventLog(iface.getEvent("testEvent"), test.data, test.topics);
-
-
         }
     }
 }
