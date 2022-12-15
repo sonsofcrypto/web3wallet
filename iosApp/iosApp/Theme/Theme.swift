@@ -5,34 +5,22 @@
 import UIKit
 import web3walletcore
 
-var Theme: ThemeProtocol = appTheme {
+var Theme: ThemeProtocol = ThemeMiamiSunrise() {
     didSet { AppDelegate.rebootApp() }
 }
 
-enum ThemeStyle: String {
+enum ThemeVariant: String {
     case light
     case dark
 }
 
-var appTheme: ThemeProtocol {
-    let service: SettingsService = AppAssembler.resolve()
-    if service.isSelected(setting: .init(group: .theme, action: .themeMiamiLight)) {
-        return ThemeMiami(style: .light)
-    } else if service.isSelected(setting: .init(group: .theme, action: .themeMiamiDark)) {
-        return ThemeMiami(style: .dark)
-    } else if service.isSelected(setting: .init(group: .theme, action: .themeIosLight)) {
-        return ThemeIOS(style: .light)
-    } else {
-        return ThemeIOS(style: .dark)
-    }
-}
-
 protocol ThemeProtocol {
     var name: String { get }
-    var type: ThemeType { get }
+    var color: ThemeColorProtocol { get }
     var font: ThemeFont { get }
-    var color: ThemeColor { get }
+    var supportedVariants: [ThemeVariant] { get }
     var statusBarStyle: UIStatusBarStyle { get }
+    // TODO(Anon): To be consolidated further
     var padding: CGFloat { get }
     var cornerRadius: CGFloat { get }
     var cornerRadiusSmall: CGFloat { get }
@@ -44,40 +32,44 @@ protocol ThemeProtocol {
     var buttonHeightExtraSmall: CGFloat { get }
 }
 
-extension ThemeProtocol {
-    
-    var isThemeIOSDarkSelected: Bool {
-        let service: SettingsService = AppAssembler.resolve()
-        return service.isSelected(setting: .init(group: .theme, action: .themeIosDark))
-    }
+// TODO(Anon): This can be further consolidated
+protocol ThemeColorProtocol {
+    var textPrimary: UIColor { get }
+    var textSecondary: UIColor { get }
+    var textTertiary: UIColor { get }
+    var bgPrimary: UIColor { get }
+    var bgGradientTop: UIColor { get }
+    var bgGradientBtm: UIColor { get }
+    var navBarBackground: UIColor { get }
+    var navBarTint: UIColor { get }
+    var navBarTitle: UIColor { get }
+    var tabBarBackground: UIColor { get }
+    var tabBarTint: UIColor { get }
+    var tabBarTintSelected: UIColor { get }
+    var stroke: UIColor { get }
+    var separatorPrimary: UIColor { get }
+    var separatorSecondary: UIColor { get }
+    var buttonBgPrimary: UIColor { get }
+    var buttonBgPrimaryDisabled: UIColor { get }
+    var buttonTextPrimary: UIColor { get }
+    var buttonBgSecondary: UIColor { get }
+    var buttonTextSecondary: UIColor { get }
+    var switchOnTint: UIColor { get }
+    // TODO(Anon): Definitely dont need all this for segmented control
+    var segmentedControlBackground: UIColor { get }
+    var segmentedControlBackgroundSelected: UIColor { get }
+    var segmentedControlText: UIColor { get }
+    var segmentedControlTextSelected: UIColor { get }
+    var priceUp: UIColor { get }
+    var priceDown: UIColor { get }
+    var dashboardTVCryptoBalance: UIColor { get }
+    var activityIndicator: UIColor { get }
+    var destructive: UIColor { get }
 }
 
-struct ThemeStatusBarStyle {
-    let lightMode: Style
-    let darkMode: Style
-    
-    enum Style {
-        case light
-        case dark
-    }
-}
-
-enum ThemeType {
-    
-    case themeMiami
-    case themeVanilla
-    
-    var isThemeMiami: Bool {
-        self == .themeMiami
-    }
-    
-    var isThemeIOS: Bool {
-        self == .themeVanilla
-    }
-}
-
+// TODO(Anon): This is way too many fonts. Need to consolidate.
+// TODO(Anon): Create font palette and move to protocol (like colors)
 struct ThemeFont {
-    
     let largeTitle: UIFont
     let largeTitleBold: UIFont
     let title1: UIFont
@@ -112,38 +104,4 @@ struct ThemeFont {
     let dashboardTVPct: UIFont
     let dashboardTVTokenBalance: UIFont
     let dashboardTVTokenBalanceSmall: UIFont
-}
-
-struct ThemeColor {
-    let textPrimary: UIColor
-    let textSecondary: UIColor
-    let textTertiary: UIColor
-    let bgPrimary: UIColor
-    let bgGradientTop: UIColor
-    let bgGradientBtm: UIColor
-    let navBarBackground: UIColor
-    let navBarTint: UIColor
-    let navBarTitle: UIColor
-    let tabBarBackground: UIColor
-    let tabBarTint: UIColor
-    let tabBarTintSelected: UIColor
-    let stroke: UIColor
-    let separatorPrimary: UIColor
-    let separatorSecondary: UIColor
-    let buttonBgPrimary: UIColor
-    let ButtonBgPrimaryDisabled: UIColor
-    let buttonTextPrimary: UIColor
-    let buttonBgSecondary: UIColor
-    let buttonTextSecondary: UIColor
-    let switchOnTint: UIColor
-    // TODO(Anon): Revisit, all of these are not necessary
-    let segmentedControlBackground: UIColor
-    let segmentedControlBackgroundSelected: UIColor
-    let segmentedControlText: UIColor
-    let segmentedControlTextSelected: UIColor
-    let priceUp: UIColor
-    let priceDown: UIColor
-    let dashboardTVCryptoBalance: UIColor
-    let activityIndicator: UIColor
-    let destructive: UIColor
 }

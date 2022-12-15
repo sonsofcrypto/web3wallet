@@ -38,6 +38,14 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate {
+
+    static func setUserInterfaceStyle(_ style: UIUserInterfaceStyle) {
+        UIApplication.shared.connectedScenes
+            .map { ($0 as? UIWindowScene)?.windows }
+            .compactMap { $0 }
+            .flatMap { $0 }
+            .forEach { $0.overrideUserInterfaceStyle = style }
+    }
     
     static func rebootApp() {
         guard let window = UIApplication.shared.keyWindow else { return }

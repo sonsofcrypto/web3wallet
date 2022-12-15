@@ -141,7 +141,7 @@ extension DashboardViewController: UICollectionViewDataSource {
                 .update(with: input.data[idxPath.item])
         }
         if let input = section.items as? DashboardViewModel.SectionItemsWallets {
-            if Theme.type.isThemeIOS {
+            if ThemeIOS.isCurrent() {
                 let isLast = (section.items.count - 1) == indexPath.item
                 return cv.dequeue(DashboardTableWalletCell.self, for: indexPath)
                     .update(with: input.data[idxPath.item], showBottomSeparator: !isLast)
@@ -313,25 +313,30 @@ private extension DashboardViewController {
 
     func compositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] idx, env in
-            guard let section = self?.viewModel?.sections[idx] else { return nil }
+            guard let `self` = self else {
+                return .empty()
+            }
+            guard let section = self.viewModel?.sections[idx] else {
+                return .empty()
+            }
             if section.items is DashboardViewModel.SectionItemsButtons {
-                return self?.buttonsCollectionLayoutSection()
+                return self.buttonsCollectionLayoutSection()
             }
             if section.items is DashboardViewModel.SectionItemsActions {
-                return self?.actionsCollectionLayoutSection()
+                return self.actionsCollectionLayoutSection()
             }
             if section.items is DashboardViewModel.SectionItemsWallets {
-                return Theme.type.isThemeIOS
-                    ? self?.walletsTableCollectionLayoutSection()
-                    : self?.walletsCollectionLayoutSection()
+                return ThemeIOS.isCurrent()
+                    ? self.walletsTableCollectionLayoutSection()
+                    : self.walletsCollectionLayoutSection()
             }
             if section.items is DashboardViewModel.SectionItemsNfts {
-                return self?.nftsCollectionLayoutSection()
+                return self.nftsCollectionLayoutSection()
             }
             fatalError("Section not handled")
         }
         // TODO: Decouple this
-        if Theme.type.isThemeIOS {
+        if ThemeIOS.isCurrent() {
             layout.register(
                 DgenCellBackgroundSupplementaryView.self,
                 forDecorationViewOfKind: "background"

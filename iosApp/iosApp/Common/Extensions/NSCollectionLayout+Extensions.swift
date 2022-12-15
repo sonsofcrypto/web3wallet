@@ -33,6 +33,10 @@ extension NSCollectionLayoutSection {
             self.contentInsets = contentInsets
         }
     }
+
+    static func empty() -> NSCollectionLayoutSection {
+        .init(group: .horizontal(.estimated(0, height: 0), items: []))
+    }
 }
 
 extension NSDirectionalEdgeInsets {

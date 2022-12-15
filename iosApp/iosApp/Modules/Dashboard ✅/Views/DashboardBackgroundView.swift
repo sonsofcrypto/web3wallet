@@ -24,7 +24,7 @@ final class DashboardBackgroundView: BackgroundView {
         super.configureUI()
         [btmMeme, btmLogo, btmSun, topPalm].forEach {
             insertSubview($0, aboveSubview: gradientView)
-            $0.isHidden = Theme.type.isThemeIOS
+            $0.isHidden = Theme as? ThemeIOS != nil
         }
     }
 

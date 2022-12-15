@@ -159,10 +159,10 @@
 "networks.header.l2sTest" = "Layer #2s Testnets";
 
 "settings.themes" = "Themes";
-"settings.themes.miami.light" = "Theme Miami Light";
-"settings.themes.miami.dark" = "Theme Miami Dark";
-"settings.themes.ios.light" = "Theme iOS Light";
-"settings.themes.ios.dark" = "Theme iOS Dark";
+"settings.themes.miami.light" = "Miami Sunrise Light";
+"settings.themes.miami.dark" = "Miami Sunrise Dark";
+"settings.themes.ios.light" = "Vanilla Light";
+"settings.themes.ios.dark" = "Vanilla Dark";
 
 "settings.improvement" = "Improvement proposals";
 

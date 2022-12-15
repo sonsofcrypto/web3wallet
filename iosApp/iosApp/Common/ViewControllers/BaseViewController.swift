@@ -10,12 +10,12 @@ class BaseViewController: UIViewController {
         Theme.statusBarStyle
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        #if DEBUG
-        print("[DEBUG][\(String(describing: self))] viewDidAppear")
-        #endif
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        #if DEBUG
+//        print("[DEBUG][\(String(describing: self))] viewDidAppear")
+//        #endif
+//    }
 
     deinit {
         #if DEBUG
