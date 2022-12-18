@@ -10,7 +10,6 @@ class Interface {
     val errors: Map<String, ErrorFragment>
     val events: Map<String, EventFragment>
     val functions: Map<String, FunctionFragment>
-//    private val structs: { [ name: string ]: any }
     val deploy: ConstructorFragment?
 //    private val _abiCoder: AbiCoder
 
