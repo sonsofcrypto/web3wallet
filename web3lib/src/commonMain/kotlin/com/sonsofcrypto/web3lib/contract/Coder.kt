@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3lib.contract
 
 import com.sonsofcrypto.web3lib.utils.BigInt
+import kotlin.math.ceil
 
 abstract class Coder(
     /** Coder name eg address, uint256, tuple, array, etc */
@@ -101,25 +102,40 @@ class Reader(
     val wordSize: Int = 32,
     val coerceFunc: ((type: String, value: Any) -> Any) = defaultCoerce(),
     val allowLoose: Boolean = false,
-    private val offset: Int = 0,
+    private var offset: Int = 0,
 ) {
 
     fun consumed(): Int = offset
 
-    fun coerce(name: String, value: Any): Any {
-        TODO("Implement")
+    fun coerce(name: String, value: Any): Any = coerceFunc(name, value)
+
+    fun subReader(offset: Int): Reader = Reader(
+        data.copyOfRange(this.offset + offset, data.size),
+        wordSize,
+        coerceFunc,
+        allowLoose
+    )
+
+    fun readBytes(length: Int, loose: Boolean? = null): ByteArray {
+        val bytes = peekBytes(length, loose ?: allowLoose)
+        offset += bytes.size
+        return bytes.copyOfRange(0, length)
     }
 
-    fun subReader(offset: Int): Reader {
-        TODO("Implement")
-    }
+    fun readValue(): BigInt = BigInt.from(readBytes(wordSize))
 
-    fun readBytes(length: Int, loose: Boolean?): ByteArray {
-        TODO("Implement")
-    }
-
-    fun readValue(): BigInt {
-        TODO("Implement")
+    @Throws(Throwable::class)
+    private fun peekBytes(length: Int, loose: Boolean): ByteArray {
+        var alignedLength = ceil(length.toDouble() / wordSize.toDouble())
+            .toInt() * wordSize
+        if (this.offset + alignedLength > data.size) {
+            if (allowLoose && loose && this.offset + length <= data.size) {
+                alignedLength = length
+            } else {
+                throw Error.OutOfBounds(data, offset, length)
+            }
+        }
+        return data.copyOfRange(this.offset, this.offset + alignedLength)
     }
 
     companion object {
@@ -127,11 +143,26 @@ class Reader(
         private fun defaultCoerce(): ((name: String, value: Any) -> Any) {
             return { name, value ->
                 val match = Regex("^u?int([0-9]+)\$").matchEntire(name)
-                if (match.groupValues[1].toInt() <= 48) value.
+                if (match != null && match.groupValues[1].toInt() <= 48)
+                    bigIntToInt(value)
                 else value
-        // if (match && parseInt(match[1]) <= 48) { value =  value.toNumber(); }
-
             }
         }
+
+        @Throws(Throwable::class)
+        private fun bigIntToInt(value: Any): Any {
+            (value as? BigInt)?.let { return it.toString().toInt() }
+            return value
+        }
+    }
+
+    /** Errors */
+    sealed class Error(message: String? = null, cause: Throwable? = null)
+        : Exception(message, cause) {
+
+        constructor(cause: Throwable) : this(null, cause)
+
+        data class OutOfBounds(val data: ByteArray, val offset: Int, val length: Int):
+            Error("Out of bounds Range($offset, ${length}), Size ${data.size}")
     }
 }
