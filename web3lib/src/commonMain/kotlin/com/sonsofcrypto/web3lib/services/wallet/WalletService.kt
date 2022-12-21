@@ -143,7 +143,7 @@ class DefaultWalletService(
         networksStateCache.get<String>(balanceKey(network, currency))?.let {
             jsonDecode<BigInt>(it)?.let { balance -> return balance }
         }
-        return BigInt.zero()
+        return BigInt.zero
     }
 
     override fun blockNumber(network: Network): BigInt {
@@ -151,7 +151,7 @@ class DefaultWalletService(
         networksStateCache.get<String>(blockNumKey(network))?.let {
             jsonDecode<BigInt>(it)?.let { blockNumber -> return blockNumber }
         }
-        return BigInt.zero()
+        return BigInt.zero
     }
 
     override fun transactionCount(network: Network): BigInt {
@@ -159,7 +159,7 @@ class DefaultWalletService(
         networksStateCache.get<String>(transactionCountKey(network))?.let {
             jsonDecode<BigInt>(it)?.let { balance -> return balance }
         }
-        return BigInt.zero()
+        return BigInt.zero
     }
 
     override fun pendingTransactions(network: Network): List<PendingInfo> {
@@ -283,7 +283,7 @@ class DefaultWalletService(
         transferLogsCache.get<String>(transferLogsNonceKey(currency, network))?.let {
             jsonDecode<BigInt>(it)?.let { nonce -> return nonce }
         }
-        return BigInt.zero()
+        return BigInt.zero
     }
 
     override fun add(listener: WalletListener) {
@@ -347,7 +347,7 @@ class DefaultWalletService(
 
     private suspend fun blockNumber(wallet: Wallet) {
         val network = wallet.network()!!
-        val block = wallet.provider()?.blockNumber() ?: BigInt.zero()
+        val block = wallet.provider()?.blockNumber() ?: BigInt.zero
         withUICxt {
             networksState[blockNumKey(network)] = block
             networksStateCache.set(blockNumKey(network), jsonEncode(block))

@@ -748,7 +748,7 @@ class ProviderTest {
             to = Address.HexString("0x789f1263215d4bcB7a109dE72b4c87116CFac5c4"),
             from = Address.HexString("0x13d32628Cb60EeaBC55c62Db770A27355a3F86b2"),
             nonce = nonce,
-            gasLimit = BigInt.zero(),
+            gasLimit = BigInt.zero,
             gasPrice = null,
             data = "",
             value = BigInt.from("1400000000000000"),
@@ -758,8 +758,8 @@ class ProviderTest {
             s = null,
             v = null,
             accessList = null,
-            maxPriorityFeePerGas = BigInt.zero(),
-            maxFeePerGas = BigInt.zero(),
+            maxPriorityFeePerGas = BigInt.zero,
+            maxFeePerGas = BigInt.zero,
         )
         val populatedTx = transaction.copy(
             maxPriorityFeePerGas = feeData.maxPriorityFeePerGas,

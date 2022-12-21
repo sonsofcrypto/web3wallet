@@ -27,7 +27,7 @@ data class Transaction(
     val to: Address.HexString?,
     val from: Address.HexString?,
     val nonce: BigInt,
-    val gasLimit: BigInt = BigInt.zero(),
+    val gasLimit: BigInt = BigInt.zero,
     val gasPrice: BigInt? = null,
     val input: DataHexString = "",
     val value: BigInt,
@@ -43,8 +43,8 @@ data class Transaction(
     val accessList: AccessList? = null,
 
     /** EIP-1559 */
-    val maxPriorityFeePerGas: BigInt? = BigInt.zero(),
-    val maxFeePerGas: BigInt? = BigInt.zero(),
+    val maxPriorityFeePerGas: BigInt? = BigInt.zero,
+    val maxFeePerGas: BigInt? = BigInt.zero,
 
     /** In response only */
     val blockHash: String? = null,
@@ -61,8 +61,8 @@ fun Transaction.encodeEIP1559(): ByteArray {
     var items = listOf(
         RlpItem(QuantityHexString(chainId).toByteArrayQnt()),
         RlpItem(if (nonce.isZero()) ByteArray(0) else QuantityHexString(nonce).toByteArrayQnt()),
-        RlpItem(QuantityHexString(maxPriorityFeePerGas ?: BigInt.zero()).toByteArrayQnt()),
-        RlpItem(QuantityHexString(maxFeePerGas ?: BigInt.zero()).toByteArrayQnt()),
+        RlpItem(QuantityHexString(maxPriorityFeePerGas ?: BigInt.zero).toByteArrayQnt()),
+        RlpItem(QuantityHexString(maxFeePerGas ?: BigInt.zero).toByteArrayQnt()),
         RlpItem(QuantityHexString(gasLimit).toByteArrayQnt()),
         RlpItem(to?.hexString?.toByteArrayData() ?: ByteArray(0)),
         RlpItem(QuantityHexString(value).toByteArrayQnt()),

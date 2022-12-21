@@ -33,8 +33,11 @@ abstract class Coder(
 
         constructor(cause: Throwable) : this(null, cause)
 
-        data class UnexpectedType(val coder: Coder, val type: Any):
+        data class UnexpectedType(val coder: Coder, val type: Any?):
             Error("$coder encountered unexpected type $type")
+
+        data class OutOfBounds(val coder: Coder, val value: Any):
+            Error("$coder encountered out of bounds value $value")
     }
 }
 

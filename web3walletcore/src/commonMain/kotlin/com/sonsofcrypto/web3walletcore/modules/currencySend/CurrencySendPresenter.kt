@@ -69,7 +69,7 @@ class DefaultCurrencySendPresenter(
                 wireframe.navigate(
                     SelectCurrency {
                         currency = it
-                        amount = BigInt.min(amount ?: BigInt.zero(), currencyBalance)
+                        amount = BigInt.min(amount ?: BigInt.zero, currencyBalance)
                         updateView(currencyUpdateTextField = true)
                     }
                 )
@@ -99,8 +99,8 @@ class DefaultCurrencySendPresenter(
             updateView(addressBecomeFirstResponder = true)
             return null
         }
-        val amount = amount ?: BigInt.zero()
-        if (currencyBalance.isLessThan(amount) || (amount == BigInt.zero())) {
+        val amount = amount ?: BigInt.zero
+        if (currencyBalance.isLessThan(amount) || (amount == BigInt.zero)) {
             updateView(currencyBecomeFirstResponder = true)
             return null
         }
@@ -228,13 +228,13 @@ class DefaultCurrencySendPresenter(
         else if (!context.network.isValidAddress(address ?: "")) { INVALID_DESTINATION }
         else if (zeroBalance) { INSUFFICIENT_FUNDS }
         else if (zeroAmount && positiveBalance) { ENTER_FUNDS }
-        else if (currencyBalance.isLessThan((amount ?: BigInt.zero()))) { INSUFFICIENT_FUNDS }
+        else if (currencyBalance.isLessThan((amount ?: BigInt.zero))) { INSUFFICIENT_FUNDS }
         else { READY }
 
     private val zeroAmount: Boolean get() {
         val amount = amount ?: return true
-        return amount == BigInt.zero()
+        return amount == BigInt.zero
     }
-    private val zeroBalance: Boolean = (currencyBalance == BigInt.zero())
-    private val positiveBalance: Boolean = currencyBalance.isGreaterThan(BigInt.zero())
+    private val zeroBalance: Boolean = (currencyBalance == BigInt.zero)
+    private val positiveBalance: Boolean = currencyBalance.isGreaterThan(BigInt.zero)
 }

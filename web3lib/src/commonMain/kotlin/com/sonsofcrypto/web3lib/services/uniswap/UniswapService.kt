@@ -108,20 +108,20 @@ class DefaultUniswapService(): UniswapService {
                 currencyChanged(inputCurrency, value)
             }
         }
-    override var inputAmount: BigInt = BigInt.zero()
+    override var inputAmount: BigInt = BigInt.zero
         set(value) {
             if (field.compare(value) != 0) {
                 field = value
                 inputChanged(inputCurrency, outputCurrency, value)
             }
         }
-    override var outputAmount: BigInt = BigInt.zero()
+    override var outputAmount: BigInt = BigInt.zero
         get() {
             val state = outputState
             return when (state) {
                 is OutputState.Loading -> return state.quote
                 is OutputState.Valid -> return state.quote
-                else -> return BigInt.zero()
+                else -> return BigInt.zero
             }
         }
         private set
@@ -201,7 +201,7 @@ class DefaultUniswapService(): UniswapService {
                 else IV3SwapRouter.ExactInputSingleParams.Recipient.MsgSender,
             amountIn = inputAmount,
             amountOutMinimum = minAmount,
-            sqrtPriceLimitX96 = BigInt.zero(),
+            sqrtPriceLimitX96 = BigInt.zero,
         )
         val router = IV3SwapRouter(Address.HexString(routerAddress(provider.network)))
         var callDatas: MutableList<ByteArray> = mutableListOf()
@@ -214,7 +214,7 @@ class DefaultUniswapService(): UniswapService {
             gasLimit = BigInt.from(300000),
             data = router.multicall(Clock.System.now() + 10.minutes, callDatas),
             value = if (inputCurrency.type == Currency.Type.NATIVE) inputAmount
-                else BigInt.zero()
+                else BigInt.zero
         )
         return withBgCxt { wallet!!.sendTransaction(request) }
     }
@@ -259,8 +259,8 @@ class DefaultUniswapService(): UniswapService {
             is OutputState.Loading -> OutputState.Loading(curr.quote, curr.request)
             is OutputState.Valid -> OutputState.Loading(curr.quote, curr.request)
             else -> OutputState.Loading(
-                BigInt.zero(),
-                QuoteRequest(input, output, BigInt.zero(), fees, provider)
+                BigInt.zero,
+                QuoteRequest(input, output, BigInt.zero, fees, provider)
             )
         }
         scope.launch {
@@ -303,7 +303,7 @@ class DefaultUniswapService(): UniswapService {
             return abiDecodeBigInt(quoteResult)
         } catch (err: Throwable) {
             println("Error fetching quote  $err, ${request.input}, ${request.output}, ${request.amountIn}, $fee")
-            return BigInt.zero()
+            return BigInt.zero
         }
     }
 
