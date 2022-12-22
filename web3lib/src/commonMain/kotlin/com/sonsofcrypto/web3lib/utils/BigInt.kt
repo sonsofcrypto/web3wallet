@@ -4,6 +4,8 @@ import com.ionspin.kotlin.bignum.integer.BigInteger
 import com.ionspin.kotlin.bignum.integer.Sign
 import com.ionspin.kotlin.bignum.integer.util.fromTwosComplementByteArray
 import com.ionspin.kotlin.bignum.integer.util.toTwosComplementByteArray
+import com.sonsofcrypto.web3lib.utils.extensions.toBooleanArray
+import com.sonsofcrypto.web3lib.utils.extensions.toByteArray
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Serializer
@@ -79,6 +81,19 @@ class BigInt {
         fun from(bool: Boolean): BigInt = BigInt(BigInteger.fromInt(if (bool) 1 else 0 ))
         fun min(a: BigInt, b: BigInt): BigInt = BigInt(BigInteger.min(a.storage, b.storage))
     }
+}
+
+/** Pads to `size` in twos complement, correctly handling negative integers */
+fun padTwosComplement(num: BigInt, size: Int): ByteArray {
+    val bitArray = num.toTwosComplement().toBooleanArray()
+    val result = BooleanArray(size * 8)
+    for (i in 0..result.size - bitArray.size) {
+        result.set(i, bitArray.get(0))
+    }
+    for (i in bitArray.size - 1 downTo 1) {
+        result.set(result.size - (bitArray.size - i), bitArray[i])
+    }
+    return result.toByteArray()
 }
 
 @Serializer(forClass = BigInt::class)

@@ -1,5 +1,7 @@
 package com.sonsofcrypto.web3lib.utils.extensions
 
+import com.ionspin.kotlin.bignum.integer.BigInteger
+import com.ionspin.kotlin.bignum.integer.util.toTwosComplementByteArray
 import kotlin.experimental.or
 
 /** Hex string */
@@ -61,7 +63,7 @@ fun ByteArray.toUInt_8(): UInt {
 
 /** BitArray */
 
-fun ByteArray.toBitArray(): BooleanArray {
+fun ByteArray.toBooleanArray(): BooleanArray {
     val bitArray = BooleanArray(size * 8)
     for (byteIdx in indices)
         for (bitIdx in 0..7) {
@@ -93,4 +95,3 @@ fun ByteArray.byteArrayWithByteAt(idx: Int): ByteArray {
 fun ByteArray.zeroOut() {
     for (idx in this.indices) { set(idx, 0) }
 }
-

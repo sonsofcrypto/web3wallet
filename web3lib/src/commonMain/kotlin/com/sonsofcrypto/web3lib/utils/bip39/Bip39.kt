@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib.utils.bip39
 
 import com.sonsofcrypto.web3lib.utils.HashFn
-import com.sonsofcrypto.web3lib.utils.extensions.toBitArray
+import com.sonsofcrypto.web3lib.utils.extensions.toBooleanArray
 import com.sonsofcrypto.web3lib.utils.extensions.toByteArray
 import com.sonsofcrypto.web3lib.utils.pbkdf2
 import com.sonsofcrypto.web3lib.utils.secureRand
@@ -62,7 +62,7 @@ class Bip39 {
         val entropyBits = bitArray.copyOfRange(0, entropyBitsCount)
         val checksumBits = bitArray.copyOfRange(entropyBitsCount, bitArray.size)
         val entropyBytes = entropyBits.toByteArray()
-        val entropyHash = sha256(entropyBytes).toBitArray()
+        val entropyHash = sha256(entropyBytes).toBooleanArray()
 
         for (idx in checksumBits.indices) {
             if (checksumBits[idx] != entropyHash[idx])
@@ -125,8 +125,8 @@ class Bip39 {
             if (!isValidEntropySize(entropy.size))
                 throw Error.InvalidEntropySize(entropy.size)
 
-            val hashBitArray = sha256(entropy).toBitArray()
-            val entropyBitArray = entropy.toBitArray()
+            val hashBitArray = sha256(entropy).toBooleanArray()
+            val entropyBitArray = entropy.toBooleanArray()
             val checkSum = hashBitArray.copyOfRange(0, entropy.size / 4 )
             val checkSumEntropy = entropyBitArray + checkSum
             var words: MutableList<String> = mutableListOf()

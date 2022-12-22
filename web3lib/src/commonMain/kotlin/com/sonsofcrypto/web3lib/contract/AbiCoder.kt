@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib.contract
 
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.extensions.toBitArray
+import com.sonsofcrypto.web3lib.utils.padTwosComplement
 import io.ktor.utils.io.*
 
 class AbiCoder {
@@ -85,8 +85,8 @@ class NumberCoder(val size: Int, val signed: Boolean, localName: String):
     override fun encode(writer: Writer, value: Any): Int {
         (value as? BigInt)?.let {
             checkValueBounds(it)
-            var num = it.toTwosComplement()
-            return writer.writeValue(it)
+            return if (signed) writer.writeBytes(padTwosComplement(it, size))
+            else writer.writeValue(it)
         }
         throw Error.UnexpectedType(this, value)
     }
