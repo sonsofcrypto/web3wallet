@@ -3,6 +3,7 @@ package com.sonsofcrypto.web3lib.contract
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.padTwosComplement
 import io.ktor.utils.io.*
+import io.ktor.utils.io.core.*
 
 class AbiCoder {
 }
@@ -171,6 +172,17 @@ class FixedBytesCoder(private val size: Int, localName : String):
 
 class StringCoder(localName: String): DynamicBytesCoder("string", localName) {
 
+    @Throws(Throwable::class)
+    override fun encode(writer: Writer, value: Any): Int {
+        val str = value as String
+        return if (str != null) super.encode(writer, str.toByteArray())
+        else throw Error.UnexpectedType(this, value)
+    }
+
+    @Throws(Throwable::class)
+    override fun decode(reader: Reader): Any {
+        return String(super.decode(reader) as ByteArray)
+    }
 }
 
 class ArrayCoder(coder: Coder, length: Int, localName: String):
