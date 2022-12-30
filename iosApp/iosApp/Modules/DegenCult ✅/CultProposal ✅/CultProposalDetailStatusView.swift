@@ -12,7 +12,7 @@ final class CultProposalDetailStatusView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         let statusView = CultProposalStatus()
-        statusView.backgroundColor = Theme.colour.separatorTransparent
+        statusView.backgroundColor = Theme.color.separatorSecondary
         statusView.label.apply(style: .headline)
         addSubview(statusView)
         self.statusView = statusView
@@ -30,13 +30,13 @@ final class CultProposalDetailStatusView: UIView {
         switch status {
         case CultProposalViewModel.ProposalDetailsStatus.pending:
             statusView.text = Localized("pending")
-            statusView.backgroundColor = Theme.colour.navBarTint
+            statusView.backgroundColor = Theme.color.navBarTint
         case CultProposalViewModel.ProposalDetailsStatus.closed:
             statusView.text = Localized("closed")
-            statusView.backgroundColor = Theme.colour.separator
+            statusView.backgroundColor = Theme.color.separatorPrimary
         default:
             statusView.text = Localized("unknown")
-            statusView.backgroundColor = Theme.colour.separator
+            statusView.backgroundColor = Theme.color.separatorPrimary
         }
     }
 }

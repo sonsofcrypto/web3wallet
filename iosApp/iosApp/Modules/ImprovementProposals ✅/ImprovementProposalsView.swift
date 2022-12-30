@@ -130,12 +130,12 @@ private extension ImprovementProposalsViewController {
     func layout() -> UICollectionViewCompositionalLayout {
         let item = NSCollectionLayoutItem(.fractional(1, estimatedH: 50))
         let groupSize = NSCollectionLayoutSize.absolute(
-            view.frame.size.width - Theme.constant.padding * 2,
+            view.frame.size.width - Theme.padding * 2,
             estimatedH: 100
         )
         let group = NSCollectionLayoutGroup.horizontal(groupSize, items: [item])
         let section = NSCollectionLayoutSection(group: group, insets: .padding)
-        section.interGroupSpacing = Theme.constant.padding
+        section.interGroupSpacing = Theme.padding
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: .fractional(1, estimatedH: 100),
             elementKind: UICollectionView.elementKindSectionHeader,

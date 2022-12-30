@@ -7,8 +7,8 @@ import UIKit
 extension CALayer {
 
     func applyShadow(
-        _ color: UIColor = Theme.colour.fillPrimary,
-        radius: CGFloat = Theme.constant.cornerRadiusSmall.half
+        _ color: UIColor = Theme.color.stroke,
+        radius: CGFloat = Theme.cornerRadiusSmall.half
     ) {
         shadowColor = color.cgColor
         shadowRadius = radius
@@ -18,20 +18,20 @@ extension CALayer {
     }
 
     func applyRectShadow(
-        _ color: UIColor = Theme.colour.fillPrimary,
-        radius: CGFloat = Theme.constant.cornerRadiusSmall.half,
-        cornerRadius: CGFloat = Theme.constant.cornerRadiusSmall
+        _ color: UIColor = Theme.color.stroke,
+        radius: CGFloat = Theme.cornerRadiusSmall.half,
+        cornerRadius: CGFloat = Theme.cornerRadiusSmall
     ) {
         applyShadowPath(bounds, radius: cornerRadius)
         applyShadow(color, radius: radius)
     }
 
-    func applyBorder(_ color: UIColor = Theme.colour.fillPrimary) {
+    func applyBorder(_ color: UIColor = Theme.color.stroke) {
         borderWidth = 1
         borderColor = color.cgColor
     }
 
-    func applyShadowPath(_ bounds: CGRect, radius: CGFloat = Theme.constant.cornerRadiusSmall) {
+    func applyShadowPath(_ bounds: CGRect, radius: CGFloat = Theme.cornerRadiusSmall) {
         cornerRadius = radius
         shadowPath = UIBezierPath(
             roundedRect: bounds,
@@ -45,8 +45,8 @@ extension CALayer {
     func applyHighlighted(_ highlighted: Bool) {
         // TODO: @Annon discussion
         borderColor = (highlighted
-            ? Theme.colour.fillPrimary
-            : Theme.colour.fillPrimary
+            ? Theme.color.stroke
+            : Theme.color.stroke
         ).cgColor
         shadowOpacity = highlighted ? 1 : 0
     }

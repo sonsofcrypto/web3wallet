@@ -6,12 +6,9 @@ import Foundation
 import web3walletcore
 
 final class DefaultSettingsServiceActionTrigger {
-
     let keyStoreService: KeyStoreService
 
-    init(
-        keyStoreService: KeyStoreService
-    ) {
+    init(keyStoreService: KeyStoreService) {
         self.keyStoreService = keyStoreService
     }
 }
@@ -20,11 +17,18 @@ extension DefaultSettingsServiceActionTrigger: SettingsServiceActionTrigger {
     
     func trigger(action: Setting.Action) {
         switch action {
-        case .themeMiamiLight,
-            .themeMiamiDark,
-            .themeIosLight,
-            .themeIosDark:
-            Theme = appTheme
+        case .themeMiamiLight:
+            AppDelegate.setUserInterfaceStyle(.light)
+            Theme = ThemeMiamiSunrise()
+        case .themeMiamiDark:
+            AppDelegate.setUserInterfaceStyle(.dark)
+            Theme = ThemeMiamiSunrise()
+        case .themeIosLight:
+            AppDelegate.setUserInterfaceStyle(.light)
+            Theme = ThemeVanilla()
+        case .themeIosDark:
+            AppDelegate.setUserInterfaceStyle(.dark)
+            Theme = ThemeVanilla()
         case .improvementProposals:
             guard let deepLink = DeepLink(identifier: DeepLink.improvementProposalsList.identifier) else { return }
             let deepLinkHandler: DeepLinkHandler = AppAssembler.resolve()

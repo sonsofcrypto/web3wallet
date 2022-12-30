@@ -27,8 +27,8 @@ extension UIView {
         toastView.alpha = 0.0
 
         let backgroundView = UIView()
-        backgroundView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        backgroundView.backgroundColor = Theme.colour.toastAlertBackgroundColor
+        backgroundView.layer.cornerRadius = Theme.cornerRadiusSmall
+        backgroundView.backgroundColor = Theme.color.tabBarBackground
         toastView.addSubview(backgroundView)
         backgroundView.addConstraints(
             [
@@ -38,13 +38,13 @@ extension UIView {
                 .layout(
                     anchor: .leadingAnchor,
                     constant: .greaterThanOrEqualTo(
-                        constant: Theme.constant.padding
+                        constant: Theme.padding
                     ),
                     priority: .defaultHigh
                 ),
                 .layout(
                     anchor: .trailingAnchor,
-                    constant: .greaterThanOrEqualTo(constant: Theme.constant.padding),
+                    constant: .greaterThanOrEqualTo(constant: Theme.padding),
                     priority: .defaultHigh
                 )
             ]
@@ -52,7 +52,7 @@ extension UIView {
 
         let label = UILabel()
         label.apply(style: .subheadline)
-        label.textColor = Theme.colour.labelPrimary
+        label.textColor = Theme.color.textPrimary
         label.textAlignment = textAlignment
         label.numberOfLines = 0
         label.text = message
@@ -61,18 +61,18 @@ extension UIView {
             [
                 .layout(
                     anchor: .leadingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 ),
                 .layout(
                     anchor: .trailingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 ),
                 .layout(
                     anchor: .topAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding * 0.75)),
+                    constant: .equalTo(constant: Theme.padding * 0.75)),
                 .layout(
                     anchor: .bottomAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding * 0.75)
+                    constant: .equalTo(constant: Theme.padding * 0.75)
                 )
             ]
         )
@@ -82,11 +82,11 @@ extension UIView {
             [
                 .layout(
                     anchor: .leadingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 ),
                 .layout(
                     anchor: .trailingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 ),
                 .layout(anchor: .bottomAnchor, constant: .equalTo(constant: bottomOffset))
             ]

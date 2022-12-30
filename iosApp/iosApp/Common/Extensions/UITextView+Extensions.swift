@@ -30,53 +30,52 @@ extension UITextView {
         switch style {
         case .navTitle:
             font = Theme.font.navTitle
-            textColor = Theme.colour.fillPrimary
+            textColor = Theme.color.textPrimary
         case .headlineGlow:
             font = Theme.font.headline
-            layer.applyShadow(Theme.colour.fillSecondary)
-            textColor = Theme.colour.labelPrimary
+//            layer.applyShadow(Theme.color.fillSecondary)
+            textColor = Theme.color.textPrimary
         case .callout:
             font = Theme.font.callout
-            //layer.applyShadow(Theme.colour.fillSecondary)
-            textColor = Theme.colour.labelPrimary
+            textColor = Theme.color.textPrimary
             update(lineSpacing: 6)
         case .subhead:
             font = Theme.font.subheadline
-            textColor = Theme.colour.labelSecondary
+            textColor = Theme.color.textSecondary
         case .subheadGlow:
             font = Theme.font.subheadline
-            layer.applyShadow(Theme.colour.fillSecondary)
-            textColor = Theme.colour.labelPrimary
+//            layer.applyShadow(Theme.color.fillSecondary)
+            textColor = Theme.color.textPrimary
             font = Theme.font.subheadline
-            layer.applyShadow(Theme.colour.fillSecondary)
-            textColor = Theme.colour.labelPrimary
+//            layer.applyShadow(Theme.color.fillSecondary)
+            textColor = Theme.color.textPrimary
         case .body:
             font = Theme.font.subheadline
-            textColor = Theme.colour.labelPrimary
+            textColor = Theme.color.textPrimary
             update(lineSpacing: 8)
         case .bodyGlow:
             font = Theme.font.body
-            layer.applyShadow(Theme.colour.fillSecondary)
-            textColor = Theme.colour.labelPrimary
+//            layer.applyShadow(Theme.color.fillSecondary)
+            textColor = Theme.color.textPrimary
         case.smallLabel:
             font = Theme.font.footnote
-            textColor = Theme.colour.labelTertiary
+            textColor = Theme.color.textTertiary
         case.smallerLabel:
             font = UIFont.font(.gothicA1, style: .medium, size: .caption1)
-            textColor = Theme.colour.labelSecondary
+            textColor = Theme.color.textSecondary
         case.smallestLabel:
             font = UIFont.font(.gothicA1, style: .medium, size: .caption2)
-            textColor = Theme.colour.labelTertiary
+            textColor = Theme.color.textTertiary
         case.smallestLabelGlow:
-            layer.applyShadow(
-                Theme.colour.fillSecondary,
-                radius: Theme.constant.cornerRadiusSmall.half / 2
-            )
+//            layer.applyShadow(
+//                Theme.color.fillSecondary,
+//                radius: Theme.cornerRadiusSmall.half / 2
+//            )
             font = Theme.font.caption2
-            textColor = Theme.colour.fillSecondary
+//            textColor = Theme.color.fillSecondary
         case .smallBody:
             font = Theme.font.footnote
-            textColor = Theme.colour.labelSecondary
+            textColor = Theme.color.textSecondary
         }
     }
 }

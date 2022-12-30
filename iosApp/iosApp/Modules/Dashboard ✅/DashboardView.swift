@@ -141,7 +141,7 @@ extension DashboardViewController: UICollectionViewDataSource {
                 .update(with: input.data[idxPath.item])
         }
         if let input = section.items as? DashboardViewModel.SectionItemsWallets {
-            if Theme.type.isThemeIOS {
+            if ThemeVanilla.isCurrent() {
                 let isLast = (section.items.count - 1) == indexPath.item
                 return cv.dequeue(DashboardTableWalletCell.self, for: indexPath)
                     .update(with: input.data[idxPath.item], showBottomSeparator: !isLast)
@@ -275,7 +275,7 @@ private extension DashboardViewController {
         collectionView.refreshControl = UIRefreshControl()
         collectionView.backgroundView = nil
         collectionView.layer.sublayerTransform = CATransform3D.m34(-1.0 / 500.0)
-        collectionView.refreshControl?.tintColor = Theme.colour.activityIndicator
+        collectionView.refreshControl?.tintColor = Theme.color.activityIndicator
         collectionView.refreshControl?.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
         
         NotificationCenter.default.addObserver(
@@ -313,25 +313,30 @@ private extension DashboardViewController {
 
     func compositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] idx, env in
-            guard let section = self?.viewModel?.sections[idx] else { return nil }
+            guard let `self` = self else {
+                return .empty()
+            }
+            guard let section = self.viewModel?.sections[idx] else {
+                return .empty()
+            }
             if section.items is DashboardViewModel.SectionItemsButtons {
-                return self?.buttonsCollectionLayoutSection()
+                return self.buttonsCollectionLayoutSection()
             }
             if section.items is DashboardViewModel.SectionItemsActions {
-                return self?.actionsCollectionLayoutSection()
+                return self.actionsCollectionLayoutSection()
             }
             if section.items is DashboardViewModel.SectionItemsWallets {
-                return Theme.type.isThemeIOS
-                    ? self?.walletsTableCollectionLayoutSection()
-                    : self?.walletsCollectionLayoutSection()
+                return ThemeVanilla.isCurrent()
+                    ? self.walletsTableCollectionLayoutSection()
+                    : self.walletsCollectionLayoutSection()
             }
             if section.items is DashboardViewModel.SectionItemsNfts {
-                return self?.nftsCollectionLayoutSection()
+                return self.nftsCollectionLayoutSection()
             }
             fatalError("Section not handled")
         }
         // TODO: Decouple this
-        if Theme.type.isThemeIOS {
+        if ThemeVanilla.isCurrent() {
             layout.register(
                 DgenCellBackgroundSupplementaryView.self,
                 forDecorationViewOfKind: "background"
@@ -341,7 +346,7 @@ private extension DashboardViewController {
     }
 
     func buttonsCollectionLayoutSection() -> NSCollectionLayoutSection {
-        let h = Theme.constant.buttonDashboardActionHeight
+        let h = Theme.buttonSmallHeight
         let group = NSCollectionLayoutGroup.horizontal(
             .fractional(estimatedH: 100),
             items: [.init(layoutSize: .fractional(estimatedH: h))]
@@ -358,32 +363,32 @@ private extension DashboardViewController {
     }
 
     func actionsCollectionLayoutSection() -> NSCollectionLayoutSection {
-        let width = floor((view.bounds.width - Theme.constant.padding * 3)  / 2)
+        let width = floor((view.bounds.width - Theme.padding * 3)  / 2)
         let group = NSCollectionLayoutGroup.horizontal(
             .estimated(view.bounds.width * 3, height: 64),
             items: [.init(layoutSize: .absolute(width, estimatedH: 64))]
         )
         let section = NSCollectionLayoutSection(group: group, insets: .padding)
-        section.interGroupSpacing = Theme.constant.padding
+        section.interGroupSpacing = Theme.padding
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         return section
     }
 
     func walletsCollectionLayoutSection() -> NSCollectionLayoutSection {
-        let width = floor((view.bounds.width - Theme.constant.padding * 3) / 2)
+        let width = floor((view.bounds.width - Theme.padding * 3) / 2)
         let height = round(width * 0.95)
         let group = NSCollectionLayoutGroup.horizontal(
             .fractional(absoluteH: height),
             items: [.init(.absolute(width, height: height))]
         )
-        group.interItemSpacing = .fixed(Theme.constant.padding)
+        group.interItemSpacing = .fixed(Theme.padding)
         let section = NSCollectionLayoutSection(group: group, insets: .padding)
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: .fractional(estimatedH: 100),
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
-        section.interGroupSpacing = Theme.constant.padding
+        section.interGroupSpacing = Theme.padding
         section.boundarySupplementaryItems = [headerItem]
         return section
     }
@@ -402,26 +407,26 @@ private extension DashboardViewController {
         let backgroundItem = NSCollectionLayoutDecorationItem.background(
             elementKind: "background"
         )
-        backgroundItem.contentInsets = .padding(top: Theme.constant.padding * 3)
+        backgroundItem.contentInsets = .padding(top: Theme.padding * 3)
         section.decorationItems = [backgroundItem]
         section.boundarySupplementaryItems = [headerItem]
         return section
     }
 
     func nftsCollectionLayoutSection() -> NSCollectionLayoutSection {
-        let width = floor((view.bounds.width - Theme.constant.padding * 3) / 2)
+        let width = floor((view.bounds.width - Theme.padding * 3) / 2)
         let group = NSCollectionLayoutGroup.horizontal(
             .estimated(view.bounds.width * 3, height: width),
             items: [.init(.absolute(width, height: width))]
         )
-        group.interItemSpacing = .fixed(Theme.constant.padding)
+        group.interItemSpacing = .fixed(Theme.padding)
         let section = NSCollectionLayoutSection(group: group, insets: .padding)
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: .fractional(estimatedH: 100),
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
-        section.interGroupSpacing = Theme.constant.padding
+        section.interGroupSpacing = Theme.padding
         section.boundarySupplementaryItems = [headerItem]
         section.orthogonalScrollingBehavior = .continuous
         return section

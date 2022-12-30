@@ -53,7 +53,7 @@ private extension NFTSendImageCollectionViewCell {
         )
         let containerView = UIView()
         let vStackView = VStackView(views)
-        vStackView.spacing = Theme.constant.padding.half
+        vStackView.spacing = Theme.padding.half
         vStackView.clipsToBounds = true
         containerView.addSubview(vStackView)
         vStackView.addConstraints(
@@ -61,20 +61,18 @@ private extension NFTSendImageCollectionViewCell {
                 .layout(anchor: .topAnchor),
                 .layout(
                     anchor: .bottomAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding.half)
+                    constant: .equalTo(constant: Theme.padding.half)
                 ),
                 .layout(anchor: .centerXAnchor)
             ]
         )
-        vStackView.backgroundColor = Theme.colour.cellBackground
-        vStackView.layer.cornerRadius = Theme.constant.cornerRadius
-        vStackView.layer.borderWidth = 1
-        vStackView.layer.borderColor = Theme.colour.fillTertiary.cgColor
+        vStackView.backgroundColor = Theme.color.bgPrimary
+        vStackView.layer.cornerRadius = Theme.cornerRadius
         return containerView
     }
     
     var nftImageSize: CGSize {
-        let width = frame.size.width - Theme.constant.padding * 2
+        let width = frame.size.width - Theme.padding * 2
         return .init(
             width: width * 0.5,
             height: width * 0.5

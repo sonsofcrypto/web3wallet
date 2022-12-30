@@ -19,8 +19,8 @@ final class DashboardTableWalletCell: CollectionViewCell {
         super.awakeFromNib()
         currencyImageView.layer.cornerRadius = currencyImageView.bounds.width.half
         currencyNameLabel.apply(style: .body)
-        pctChangeLabel.apply(style: .callout, colour: Theme.colour.candleRed)
-        chevronView.tintColor = Theme.colour.labelSecondary
+        pctChangeLabel.apply(style: .callout, colour: Theme.color.priceDown)
+        chevronView.tintColor = Theme.color.textSecondary
     }
     
     override func setSelected(_ selected: Bool) {}
@@ -45,14 +45,14 @@ extension DashboardTableWalletCell {
             ),
             font: Theme.font.callout,
             fontSmall: Theme.font.caption2,
-            foregroundColor: Theme.colour.labelSecondary
+            foregroundColor: Theme.color.textSecondary
         )
         currencyNameLabel.text = viewModel.name
         pctChangeLabel.text = viewModel.pctChange
         if viewModel.priceUp {
-            pctChangeLabel.apply(style: .callout, colour: Theme.colour.candleGreen)
+            pctChangeLabel.apply(style: .callout, colour: Theme.color.priceUp)
         } else {
-            pctChangeLabel.apply(style: .callout, colour: Theme.colour.candleRed)
+            pctChangeLabel.apply(style: .callout, colour: Theme.color.priceDown)
         }
         cryptoBalanceLabel.attributedText = .init(
             Formatters.Companion.shared.currency.format(
@@ -71,7 +71,7 @@ extension DashboardTableWalletCell {
             ),
             font: Theme.font.callout,
             fontSmall: Theme.font.caption2,
-            foregroundColor: Theme.colour.labelSecondary
+            foregroundColor: Theme.color.textSecondary
         )
         bottomSeparatorView.isHidden = !showBottomSeparator
         return self

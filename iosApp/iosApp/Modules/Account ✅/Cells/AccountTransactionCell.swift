@@ -16,10 +16,10 @@ final class AccountTransactionCell: CollectionViewCell {
         super.awakeFromNib()
         dateLabel.apply(style: .callout)
         addressLabel.apply(style: .callout)
-        addressLabel.textColor = Theme.colour.labelSecondary
-        chevronView.tintColor = Theme.colour.labelSecondary
+        addressLabel.textColor = Theme.color.textSecondary
+        chevronView.tintColor = Theme.color.textSecondary
         chevronView.image = .init(systemName: "chevron.right")
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
+        layer.cornerRadius = Theme.cornerRadiusSmall * 2
     }
     
     override func setSelected(_ selected: Bool) {}
@@ -31,8 +31,8 @@ extension AccountTransactionCell {
         dateLabel.text = viewModel.date
         addressLabel.text = viewModel.address
         amountLabel.textColor = viewModel.isReceive
-            ? Theme.colour.priceUp
-            : Theme.colour.priceDown
+            ? Theme.color.priceUp
+            : Theme.color.priceDown
         amountLabel.attributedText = .init(
             //viewModel.amount,
             viewModel.amount.addPrefix(viewModel.isReceive ? "+" : "-"),
@@ -44,7 +44,7 @@ extension AccountTransactionCell {
             viewModel.fiatPrice,
             font: Theme.font.subheadline,
             fontSmall: Theme.font.caption2,
-            foregroundColor: Theme.colour.labelSecondary
+            foregroundColor: Theme.color.textSecondary
         )
     }
 }

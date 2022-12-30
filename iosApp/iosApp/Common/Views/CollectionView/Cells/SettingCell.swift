@@ -12,11 +12,7 @@ final class SettingCell: CollectionViewCell {
         
         super.awakeFromNib()
         
-        titleLabel.textColor = Theme.colour.labelPrimary
+        titleLabel.textColor = Theme.color.textPrimary
         titleLabel.font = Theme.font.callout
-        titleLabel.layer.shadowColor = Theme.colour.fillSecondary.cgColor
-        titleLabel.layer.shadowOffset = .zero
-        titleLabel.layer.shadowRadius = Theme.constant.cornerRadiusSmall.half
-        titleLabel.layer.shadowOpacity = 1
     }
 }

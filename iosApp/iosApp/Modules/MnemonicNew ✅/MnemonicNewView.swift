@@ -235,9 +235,9 @@ extension MnemonicNewViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let width = view.bounds.width - Theme.constant.padding * 2
+        let width = view.bounds.width - Theme.padding * 2
         guard let viewModel = viewModel?.sections[indexPath.section].items[indexPath.item] else {
-            return CGSize(width: width, height: Theme.constant.cellHeight)
+            return CGSize(width: width, height: Theme.cellHeight)
         }
         if viewModel is MnemonicNewViewModel.SectionItemMnemonic {
             return CGSize(width: width, height: Constant.mnemonicCellHeight)
@@ -393,7 +393,7 @@ private extension MnemonicNewViewController {
         // TODO: Smell
         let window = UIApplication.shared.keyWindow
         ctaButtonBottomConstraint.constant = window?.safeAreaInsets.bottom == 0
-            ? -Theme.constant.padding
+            ? -Theme.padding
             : 0
     }
     
@@ -405,7 +405,7 @@ private extension MnemonicNewViewController {
             ] as? NSValue
         else { return }
         let frame = view.convert(firstResponder.bounds, from: firstResponder)
-        let y = frame.maxY + Theme.constant.padding * 2
+        let y = frame.maxY + Theme.padding * 2
         let keyboardY = keyboardFrame.cgRectValue.origin.y - 40
         guard y > keyboardY else { return }
         if

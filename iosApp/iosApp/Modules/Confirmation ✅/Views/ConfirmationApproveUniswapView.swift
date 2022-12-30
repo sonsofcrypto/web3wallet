@@ -34,10 +34,10 @@ private extension ConfirmationApproveUniswapView {
             confirmButton()
         ]
         let stackView = VStackView(views)
-        stackView.spacing = Theme.constant.padding.half
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[0])
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[1])
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[2])
+        stackView.spacing = Theme.padding.half
+        stackView.setCustomSpacing(Theme.padding, after: views[0])
+        stackView.setCustomSpacing(Theme.padding, after: views[1])
+        stackView.setCustomSpacing(Theme.padding, after: views[2])
         addSubview(stackView)
         stackView.addConstraints(
             [
@@ -52,7 +52,7 @@ private extension ConfirmationApproveUniswapView {
         let verticalStack = VStackView(
             [title(), body()]
         )
-        verticalStack.spacing = Theme.constant.padding
+        verticalStack.spacing = Theme.padding
         return verticalStack
     }
     
@@ -103,12 +103,12 @@ private extension ConfirmationApproveUniswapView {
             )
         ]
         let stack = VStackView(views)
-        stack.spacing = Theme.constant.padding * 0.5
+        stack.spacing = Theme.padding * 0.5
         let view = UIView()
-        view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.backgroundColor = Theme.colour.cellBackground
+        view.layer.cornerRadius = Theme.cornerRadius
+        view.backgroundColor = Theme.color.bgPrimary
         view.addSubview(stack)
-        stack.addConstraints(.toEdges(padding: Theme.constant.padding))
+        stack.addConstraints(.toEdges(padding: Theme.padding))
         return view
     }
     

@@ -23,15 +23,15 @@ final class KeyStoreCell: CollectionViewCell {
         super.awakeFromNib()
         titleLabel.apply(style: .title3)
         subtitleLabel.apply(style: .footnote)
-        subtitleLabel.textColor = Theme.colour.labelSecondary
+        subtitleLabel.textColor = Theme.color.textSecondary
         accessoryButton.addTarget(
             self,
             action: #selector(accessoryAction(_:)),
             for: .touchUpInside
         )
         arrowForward.image = "chevron.right".assetImage
-        accessoryButton.tintColor = Theme.colour.labelPrimary
-        arrowForward.tintColor = Theme.colour.labelPrimary
+        accessoryButton.tintColor = Theme.color.textPrimary
+        arrowForward.tintColor = Theme.color.textPrimary
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -51,8 +51,8 @@ extension KeyStoreCell {
         let image = "\(index + 1).square.fill".assetImage!
         let config = UIImage.SymbolConfiguration(
             paletteColors: [
-                Theme.colour.keystoreEnumText,
-                Theme.colour.keystoreEnumFill
+                Theme.color.textPrimary,
+                Theme.color.buttonBgPrimary
             ]
         )
         indexImage.image = image.applyingSymbolConfiguration(config)

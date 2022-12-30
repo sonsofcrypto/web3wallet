@@ -74,7 +74,7 @@ private extension MnemonicImportCell {
             string: textView.text,
             attributes: [
                 .font: Theme.font.body,
-                .foregroundColor: Theme.colour.labelPrimary
+                .foregroundColor: Theme.color.textPrimary
             ]
         )
         var location = 0
@@ -86,7 +86,7 @@ private extension MnemonicImportCell {
             }
             attributedText.setAttributes(
                 [
-                    .foregroundColor: Theme.colour.navBarTint,
+                    .foregroundColor: Theme.color.navBarTint,
                     .font: Theme.font.body
                 ],
                 range: .init(
@@ -99,7 +99,7 @@ private extension MnemonicImportCell {
         }
         textView.attributedText = attributedText
         layer.borderWidth = hasInvalidWords ? 2 : 0
-        layer.borderColor = hasInvalidWords ? Theme.colour.navBarTint.cgColor : nil
+        layer.borderColor = hasInvalidWords ? Theme.color.navBarTint.cgColor : nil
         textView.inputAccessoryView?.removeAllSubview()
         mnemonicImportHelper.addWords(viewModel.potentialWords, to: textView.inputAccessoryView)
         textView.selectedRange = selectedRange

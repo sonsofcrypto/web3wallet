@@ -12,20 +12,20 @@ class TabBarController: UITabBarController {
         let appearance = tabBar.standardAppearance
         let itemAppearance = appearance.inlineLayoutAppearance
 
-        appearance.backgroundColor = Theme.colour.tabBarBackground
+        appearance.backgroundColor = Theme.color.tabBarBackground
         
-        itemAppearance.normal.iconColor = Theme.colour.tabBarTint
+        itemAppearance.normal.iconColor = Theme.color.tabBarTint
         itemAppearance.normal.titleTextAttributes = [
-            .foregroundColor: Theme.colour.tabBarTint,
+            .foregroundColor: Theme.color.tabBarTint,
             .font: Theme.font.tabBar,
         ]
         
-        itemAppearance.selected.iconColor = Theme.colour.tabBarTintSelected
+        itemAppearance.selected.iconColor = Theme.color.tabBarTintSelected
         itemAppearance.selected.titleTextAttributes = [
-            .foregroundColor: Theme.colour.tabBarTintSelected,
+            .foregroundColor: Theme.color.tabBarTintSelected,
             .font: Theme.font.tabBar,
         ]
-        tabBar.tintColor = Theme.colour.tabBarTint
+        tabBar.tintColor = Theme.color.tabBarTint
 
         appearance.inlineLayoutAppearance = itemAppearance
         appearance.compactInlineLayoutAppearance = itemAppearance

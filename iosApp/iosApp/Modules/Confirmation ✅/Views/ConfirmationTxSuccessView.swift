@@ -38,7 +38,7 @@ private extension ConfirmationTxSuccessView {
             ctaButton()
         ]
         let stackView = VStackView(views)
-        stackView.spacing = Theme.constant.padding
+        stackView.spacing = Theme.padding
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.tag = 12
@@ -55,7 +55,7 @@ private extension ConfirmationTxSuccessView {
             label(with: .body, and: viewModel.message),
         ]
         let stackView = VStackView(views)
-        stackView.spacing = Theme.constant.padding
+        stackView.spacing = Theme.padding
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.tag = 12
@@ -74,8 +74,8 @@ private extension ConfirmationTxSuccessView {
         let image = UIImage(systemName: "checkmark.circle.fill")
         let config = UIImage.SymbolConfiguration(
             paletteColors: [
-                Theme.colour.labelPrimary,
-                Theme.colour.candleGreen
+                Theme.color.textPrimary,
+                Theme.color.priceUp
             ]
         )
         let imageView = UIImageView(image: image?.applyingSymbolConfiguration(config))

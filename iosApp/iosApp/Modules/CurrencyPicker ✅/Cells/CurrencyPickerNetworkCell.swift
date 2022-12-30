@@ -12,9 +12,9 @@ final class CurrencyPickerNetworkCell: CollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         clipsToBounds = false
-        backgroundColor = Theme.colour.cellBackground
-        layer.borderColor = Theme.colour.labelPrimary.cgColor
-        iconImageView.backgroundColor = Theme.colour.labelPrimary
+        backgroundColor = Theme.color.bgPrimary
+        layer.borderColor = Theme.color.textPrimary.cgColor
+        iconImageView.backgroundColor = Theme.color.textPrimary
         iconImageView.layer.cornerRadius = 15
         nameLabel.font = Theme.font.body
     }
@@ -23,6 +23,6 @@ final class CurrencyPickerNetworkCell: CollectionViewCell {
         iconImageView.image = viewModel.iconName.assetImage
         nameLabel.text = viewModel.name
         layer.borderWidth = viewModel.isSelected ? 1.0 : 0.0
-        nameLabel.textColor = viewModel.isSelected ? Theme.colour.labelPrimary : Theme.colour.labelSecondary
+        nameLabel.textColor = viewModel.isSelected ? Theme.color.textPrimary : Theme.color.textSecondary
     }
 }

@@ -113,7 +113,7 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
         fromView?.alpha = 0.0001
         toView?.alpha = 0
         toView?.layer.cornerRadius = (fromView?.layer.cornerRadius
-            ?? Theme.constant.padding) * 4
+            ?? Theme.padding) * 4
 
         UIView.animateKeyframes(transitionDuration(using: context), animations: {
             UIView.addKeyframe(0, duration: 0.04) { toView?.alpha = 0 }
@@ -217,7 +217,7 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
                     y: 1 - self.scaleAdjustment
                 )
                 fromView?.layer.cornerRadius = (toView?.layer.cornerRadius
-                    ?? Theme.constant.padding) * 4
+                    ?? Theme.padding) * 4
                 fromView?.transform = CGAffineTransform(
                     scaleX: snapScale.width,
                     y: snapScale.height

@@ -10,10 +10,10 @@ final class CurrencySwapLimitCollectionViewCell: UICollectionViewCell {
             image: "coming-soon-meme".assetImage!.withRenderingMode(
                 .alwaysTemplate
             ).withTintColor(
-                Theme.colour.labelPrimary
+                Theme.color.textPrimary
             )
         )
-        imageView.tintColor = Theme.colour.labelPrimary
+        imageView.tintColor = Theme.color.textPrimary
         addSubview(imageView)
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
@@ -32,13 +32,13 @@ final class CurrencySwapLimitCollectionViewCell: UICollectionViewCell {
         titleLabel.textAlignment = .center
         titleLabel.text = Localized("comingSoon").uppercased()
         let vStack = VStackView([wrapperView, titleLabel])
-        vStack.spacing = Theme.constant.padding
+        vStack.spacing = Theme.padding
         addSubview(vStack)
         vStack.addConstraints(
             [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.constant.padding * 2))
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.padding)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.padding)),
+                .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.padding * 2))
             ]
         )
     }

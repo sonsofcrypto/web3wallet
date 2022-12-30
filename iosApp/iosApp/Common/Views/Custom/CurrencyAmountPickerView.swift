@@ -37,11 +37,11 @@ final class CurrencyAmountPickerView: UIView {
         
         super.awakeFromNib()
         
-        backgroundColor = Theme.colour.cellBackground
-        layer.cornerRadius = Theme.constant.cornerRadius
+        backgroundColor = Theme.color.bgPrimary
+        layer.cornerRadius = Theme.cornerRadius
         
         fiatSymbol.font = Theme.font.title3
-        fiatSymbol.textColor = Theme.colour.labelPrimary
+        fiatSymbol.textColor = Theme.color.textPrimary
         fiatSymbol.isHidden = true
         amountTextField.font = Theme.font.title3
         amountTextField.delegate = self
@@ -51,18 +51,18 @@ final class CurrencyAmountPickerView: UIView {
         
         let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(flipMode))
         flipImageView.image = "arrow.left.arrow.right".assetImage
-        flipImageView.tintColor = Theme.colour.labelPrimary
+        flipImageView.tintColor = Theme.color.textPrimary
         flipImageView.isUserInteractionEnabled = true
         flipImageView.addGestureRecognizer(tapGesture1)
 
         let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(flipMode))
         amountLabel.font = Theme.font.footnote
-        amountLabel.textColor = Theme.colour.labelPrimary
+        amountLabel.textColor = Theme.color.textPrimary
         amountLabel.isUserInteractionEnabled = true
         amountLabel.addGestureRecognizer(tapGesture2)
         
-        currencyView.backgroundColor = Theme.colour.labelQuaternary
-        currencyView.layer.cornerRadius = Theme.constant.cornerRadius
+        currencyView.backgroundColor = Theme.color.bgPrimary
+        currencyView.layer.cornerRadius = Theme.cornerRadius
         let tapGesture = UITapGestureRecognizer(
             target: self, action: #selector(currencyTapped)
         )
@@ -70,10 +70,10 @@ final class CurrencyAmountPickerView: UIView {
         currencyIconImageView.layer.cornerRadius = currencyIconImageView.frame.size.width * 0.5
         currencyLabel.apply(style: .body)
         currencyDropdownImageView.image = "chevron.down".assetImage
-        currencyDropdownImageView.tintColor = Theme.colour.labelPrimary
+        currencyDropdownImageView.tintColor = Theme.color.textPrimary
 
         balanceLabel.font = Theme.font.footnote
-        balanceLabel.textColor = Theme.colour.labelPrimary
+        balanceLabel.textColor = Theme.color.textPrimary
         maxButton.style = .secondarySmall(leftImage: nil)
         maxButton.setTitle(Localized("max").uppercased(), for: .normal)
         maxButton.addTarget(self, action: #selector(maxAmountTapped), for: .touchUpInside)

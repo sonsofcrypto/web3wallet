@@ -17,8 +17,8 @@ final class ImprovementProposalsCell: CollectionViewCell {
         super.awakeFromNib()
         titleLabel.apply(style: .body, weight: .bold)
         subtitleLabel.apply(style: .subheadline)
-        subtitleLabel.textColor = Theme.colour.labelPrimary
-        chevronImageView.tintColor = Theme.colour.labelPrimary
+        subtitleLabel.textColor = Theme.color.textPrimary
+        chevronImageView.tintColor = Theme.color.textPrimary
         voteButton.style = .dashboardAction(leftImage: nil)
         voteButton.addTarget(self, action: #selector(voteTapped), for: .touchUpInside)
         voteButton.setTitle(Localized("proposals.button.title"), for: .normal)

@@ -23,7 +23,7 @@ final class DashboardButtonsCell: UICollectionViewCell {
         
     override func awakeFromNib() {
         super.awakeFromNib()
-        stack.spacing = Theme.constant.padding
+        stack.spacing = Theme.padding
         updateViews()
     }
     
@@ -46,17 +46,17 @@ private extension DashboardButtonsCell {
             switch $0.type {
             case .receive:
                 receiveButton.style = .dashboardAction(
-                    leftImage: $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary)
+                    leftImage: $0.imageName.assetImage?.withTintColor(Theme.color.textPrimary)
                 )
                 receiveButton.setTitle($0.title, for: .normal)
             case .send:
                 sendButton.style = .dashboardAction(
-                    leftImage: $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary)
+                    leftImage: $0.imageName.assetImage?.withTintColor(Theme.color.textPrimary)
                 )
                 sendButton.setTitle($0.title, for: .normal)
             case .swap:
                 tradeButton.style = .dashboardAction(
-                    leftImage: $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary)
+                    leftImage: $0.imageName.assetImage?.withTintColor(Theme.color.textPrimary)
                 )
                 tradeButton.setTitle($0.title, for: .normal)
             default:

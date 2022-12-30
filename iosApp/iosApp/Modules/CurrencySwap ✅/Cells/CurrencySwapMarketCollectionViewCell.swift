@@ -34,16 +34,16 @@ final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        imageView.superview?.layer.cornerRadius = Theme.constant.cornerRadius.half.half
-        imageView.superview?.backgroundColor = Theme.colour.cellBackground
-        imageView.tintColor = Theme.colour.labelSecondary
+        imageView.superview?.layer.cornerRadius = Theme.cornerRadius.half.half
+        imageView.superview?.backgroundColor = Theme.color.bgPrimary
+        imageView.tintColor = Theme.color.textSecondary
         imageView.image = "arrow.up.arrow.down".assetImage
         imageView.isHidden = false
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(flip))
         imageView.superview?.superview?.addGestureRecognizer(tapGesture)
         imageView.superview?.superview?.isUserInteractionEnabled = true
         loadingIndicator.isHidden = true
-        loadingIndicator.color = Theme.colour.activityIndicator
+        loadingIndicator.color = Theme.color.activityIndicator
         currencyTo.maxButton.isHidden = true
         approveButton.style = .primary
         approveButton.addTarget(self, action: #selector(approveButtonTapped), for: .touchUpInside)
@@ -53,11 +53,11 @@ final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
         approveButton.updateConfiguration()
         button.style = .primary
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        stackView.setCustomSpacing(Theme.constant.padding, after: currencyTo)
-        stackView.setCustomSpacing(Theme.constant.padding.half.half, after: currencySwapProviderView)
-        stackView.setCustomSpacing(Theme.constant.padding.half.half, after: currencySwapPriceView)
-        stackView.setCustomSpacing(Theme.constant.padding.half, after: currencySwapSlippageView)
-        stackView.setCustomSpacing(Theme.constant.padding, after: networkFeeView)
+        stackView.setCustomSpacing(Theme.padding, after: currencyTo)
+        stackView.setCustomSpacing(Theme.padding.half.half, after: currencySwapProviderView)
+        stackView.setCustomSpacing(Theme.padding.half.half, after: currencySwapPriceView)
+        stackView.setCustomSpacing(Theme.padding.half, after: currencySwapSlippageView)
+        stackView.setCustomSpacing(Theme.padding, after: networkFeeView)
     }
     
     override func resignFirstResponder() -> Bool {

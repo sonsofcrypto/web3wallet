@@ -27,15 +27,15 @@ final class CultProposalHeaderSupplementaryView: UICollectionReusableView {
             [
                 .layout(
                     anchor: .topAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 ),
                 .layout(
                     anchor: .leadingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 ),
                 .layout(
                     anchor: .trailingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 ),
                 .layout(anchor: .bottomAnchor)
             ]

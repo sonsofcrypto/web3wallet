@@ -192,7 +192,7 @@ private extension CultProposalsViewController {
     }
     
     func configureUI() {
-        activityIndicator.color = Theme.colour.activityIndicator
+        activityIndicator.color = Theme.color.activityIndicator
         collectionView.setCollectionViewLayout(
             compositionalLayout(),
             animated: false
@@ -211,7 +211,7 @@ private extension CultProposalsViewController {
         collectionView.delegate = self
         collectionView.alwaysBounceVertical = true
         collectionView.refreshControl = refreshControl
-        refreshControl.tintColor = Theme.colour.activityIndicator
+        refreshControl.tintColor = Theme.color.activityIndicator
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
 //        navigationItem.searchController = searchController
 //        searchController.searchResultsUpdater = self
@@ -237,7 +237,7 @@ private extension CultProposalsViewController {
         )
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(
-                view.frame.size.width - Theme.constant.padding * 2
+                view.frame.size.width - Theme.padding * 2
             ),
             heightDimension: .estimated(100)
         )
@@ -246,7 +246,7 @@ private extension CultProposalsViewController {
         )
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .padding
-        section.interGroupSpacing = Theme.constant.padding * 1.5
+        section.interGroupSpacing = Theme.padding * 1.5
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(100)

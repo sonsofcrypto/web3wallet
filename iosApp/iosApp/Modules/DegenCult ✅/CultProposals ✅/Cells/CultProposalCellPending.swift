@@ -32,14 +32,14 @@ final class CultProposalCellPending: CollectionViewCell {
         titleLabel.apply(style: .body, weight: .bold)
         approvedVotes.apply(style: .footnote)
         rejectedVotes.apply(style: .footnote)
-        chevronImageView.tintColor = Theme.colour.labelPrimary
+        chevronImageView.tintColor = Theme.color.textPrimary
         approveButton.style = .primary
         approveButton.addTarget(self, action: #selector(approveProposal), for: .touchUpInside)
         rejectButton.style = .primary
         rejectButton.addTarget(self, action: #selector(rejectProposal), for: .touchUpInside)
         clipsToBounds = false
         let statusView = CultProposalStatus()
-        statusView.backgroundColor = Theme.colour.navBarTint
+        statusView.backgroundColor = Theme.color.navBarTint
         addSubview(statusView)
         self.statusView = statusView
         statusView.addConstraints(
@@ -50,7 +50,7 @@ final class CultProposalCellPending: CollectionViewCell {
                 ),
                 .layout(
                     anchor: .trailingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 )
             ]
         )
@@ -79,9 +79,9 @@ final class CultProposalCellPending: CollectionViewCell {
         self.viewModel = viewModel
         self.handler = handler
         titleLabel.text = viewModel.title
-        approvedVoteView.update(viewModel: viewModel.approved, progressColor: Theme.colour.candleGreen)
+        approvedVoteView.update(viewModel: viewModel.approved, progressColor: Theme.color.priceUp)
         approvedVotes.text = viewModel.approved.total.format(maximumFractionDigits: 3)
-        rejectedVoteView.update(viewModel: viewModel.rejected, progressColor: Theme.colour.candleRed)
+        rejectedVoteView.update(viewModel: viewModel.rejected, progressColor: Theme.color.priceDown)
         rejectedVotes.text = viewModel.rejected.total.format(maximumFractionDigits: 3)
         date = Date(timeIntervalSince1970: viewModel.endDate)
         approveButton.setTitle(viewModel.approveButtonTitle, for: .normal)

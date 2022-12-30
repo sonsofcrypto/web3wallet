@@ -9,22 +9,20 @@ extension NFTsDashboardViewController {
         mainScrollView.showsVerticalScrollIndicator = false
         mainScrollView.showsHorizontalScrollIndicator = false
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = Theme.colour.activityIndicator
+        refreshControl.tintColor = Theme.color.activityIndicator
         refreshControl.addTarget(self, action: #selector(pullDownToRefresh), for: .valueChanged)
         mainScrollView.refreshControl = refreshControl
         let carousel = iCarousel(frame: .zero)
         carousel.type = .coverFlow
         carousel.dataSource = self
         carousel.delegate = self
-        carousel.layer.cornerRadius = Theme.constant.cornerRadius
-//        carousel.layer.borderWidth = 1
-//        carousel.layer.borderColor = Theme.colour.fillTertiary.cgColor
+        carousel.layer.cornerRadius = Theme.cornerRadius
         mainScrollView.addSubview(carousel)
         carousel.clipsToBounds = false
         self.carousel = carousel
         carousel.addConstraints(
             [
-                .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.padding)),
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: nftsCollectionHeight)),
                 .layout(anchor: .widthAnchor, constant: .equalTo(constant: carouselWidth)),
                 .layout(anchor: .centerXAnchor)
@@ -38,7 +36,7 @@ extension NFTsDashboardViewController {
                 .layout(
                     anchor: .topAnchor,
                     constant: .equalTo(
-                        constant: nftsCollectionHeight + Theme.constant.padding * 2
+                        constant: nftsCollectionHeight + Theme.padding * 2
                     )
                 ),
                 .layout(anchor: .bottomAnchor),
@@ -61,6 +59,6 @@ extension NFTsDashboardViewController {
     
     var carouselWidth: CGFloat {
         let width = navigationController?.view.frame.width ?? 0
-        return width - Theme.constant.padding * 2
+        return width - Theme.padding * 2
     }
 }

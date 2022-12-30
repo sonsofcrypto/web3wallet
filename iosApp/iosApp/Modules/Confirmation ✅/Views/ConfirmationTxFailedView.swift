@@ -38,7 +38,7 @@ private extension ConfirmationTxFailedView {
             ctaButton()
         ]
         let stackView = VStackView(views)
-        stackView.spacing = Theme.constant.padding
+        stackView.spacing = Theme.padding
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.tag = 12
@@ -55,15 +55,15 @@ private extension ConfirmationTxFailedView {
             label(with: .body, and: viewModel.error, numberOfLines: 4)
         ]
         let stackView = VStackView(views)
-        stackView.spacing = Theme.constant.padding.half
+        stackView.spacing = Theme.padding.half
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.tag = 12
         wrapperView.addSubview(stackView)
         stackView.addConstraints(
             [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.padding)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.padding)),
                 .layout(anchor: .centerYAnchor)
             ]
         )
@@ -74,8 +74,8 @@ private extension ConfirmationTxFailedView {
         let image = UIImage(systemName: "xmark.icloud.fill")
         let config = UIImage.SymbolConfiguration(
             paletteColors: [
-                Theme.colour.candleRed,
-                Theme.colour.labelPrimary
+                Theme.color.priceDown,
+                Theme.color.textPrimary
             ]
         )
         let imageView = UIImageView(image: image?.applyingSymbolConfiguration(config))

@@ -12,7 +12,7 @@ class NetworksSectionHeaderView: UICollectionReusableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         label.font = Theme.font.networkTitle
-        label.textColor = Theme.colour.labelPrimary
-        separatorView.backgroundColor = Theme.colour.separator
+        label.textColor = Theme.color.textPrimary
+        separatorView.backgroundColor = Theme.color.separatorPrimary
     }
 }

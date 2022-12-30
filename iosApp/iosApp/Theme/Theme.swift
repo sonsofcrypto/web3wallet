@@ -5,92 +5,71 @@
 import UIKit
 import web3walletcore
 
-var Theme: Themable = appTheme {
+var Theme: ThemeProtocol = initialize() {
     didSet { AppDelegate.rebootApp() }
 }
 
-enum ThemeStyle: String {
+enum ThemeVariant: String {
     case light
     case dark
 }
 
-var appTheme: Themable {
-    let service: SettingsService = AppAssembler.resolve()
-    if service.isSelected(setting: .init(group: .theme, action: .themeMiamiLight)) {
-        return ThemeMiami(style: .light)
-    } else if service.isSelected(setting: .init(group: .theme, action: .themeMiamiDark)) {
-        return ThemeMiami(style: .dark)
-    } else if service.isSelected(setting: .init(group: .theme, action: .themeIosLight)) {
-        return ThemeIOS(style: .light)
-    } else {
-        return ThemeIOS(style: .dark)
-    }
-}
-
-protocol Themable {
+protocol ThemeProtocol {
     var name: String { get }
-    var statusBarStyle: ThemeStatusBarStyle { get }
-    var type: ThemeType { get }
+    var color: ThemeColorProtocol { get }
     var font: ThemeFont { get }
-    var colour: ThemeColour { get }
-    var constant: ThemeConstant { get }
+    var supportedVariants: [ThemeVariant] { get }
+    var statusBarStyle: UIStatusBarStyle { get }
+    // TODO(Anon): To be consolidated further
+    var padding: CGFloat { get }
+    var cornerRadius: CGFloat { get }
+    var cornerRadiusSmall: CGFloat { get }
+    var shadowRadius: CGFloat { get }
+    var cellHeight: CGFloat { get }
+    var cellHeightSmall: CGFloat { get }
+    var buttonHeight: CGFloat { get }
+    var buttonSmallHeight: CGFloat { get }
+    var buttonHeightExtraSmall: CGFloat { get }
 }
 
-extension Themable {
-    
-    var isThemeIOSDarkSelected: Bool {
-        
-        let service: SettingsService = AppAssembler.resolve()
-        return service.isSelected(setting: .init(group: .theme, action: .themeIosDark))
-    }
+// TODO(Anon): This can be further consolidated
+protocol ThemeColorProtocol {
+    var textPrimary: UIColor { get }
+    var textSecondary: UIColor { get }
+    var textTertiary: UIColor { get }
+    var bgPrimary: UIColor { get }
+    var bgGradientTop: UIColor { get }
+    var bgGradientBtm: UIColor { get }
+    var navBarBackground: UIColor { get }
+    var navBarTint: UIColor { get }
+    var navBarTitle: UIColor { get }
+    var tabBarBackground: UIColor { get }
+    var tabBarTint: UIColor { get }
+    var tabBarTintSelected: UIColor { get }
+    var stroke: UIColor { get }
+    var separatorPrimary: UIColor { get }
+    var separatorSecondary: UIColor { get }
+    var buttonBgPrimary: UIColor { get }
+    var buttonBgPrimaryDisabled: UIColor { get }
+    var buttonTextPrimary: UIColor { get }
+    var buttonBgSecondary: UIColor { get }
+    var buttonTextSecondary: UIColor { get }
+    var switchOnTint: UIColor { get }
+    // TODO(Anon): Definitely dont need all this for segmented control
+    var segmentedControlBackground: UIColor { get }
+    var segmentedControlBackgroundSelected: UIColor { get }
+    var segmentedControlText: UIColor { get }
+    var segmentedControlTextSelected: UIColor { get }
+    var priceUp: UIColor { get }
+    var priceDown: UIColor { get }
+    var dashboardTVCryptoBalance: UIColor { get }
+    var activityIndicator: UIColor { get }
+    var destructive: UIColor { get }
 }
 
-struct ThemeStatusBarStyle {
-    let lightMode: Style
-    let darkMode: Style
-    
-    enum Style {
-        case light
-        case dark
-    }
-}
-
-extension ThemeStatusBarStyle {
-    
-    func statusBarStyle(for interfaceStyle: UIUserInterfaceStyle) -> UIStatusBarStyle {
-        switch interfaceStyle {
-        case .unspecified: return .default
-        case .light:
-            switch lightMode {
-            case .light: return .lightContent
-            case .dark: return .darkContent
-            }
-        case .dark:
-            switch darkMode {
-            case .light: return .lightContent
-            case .dark: return .darkContent
-            }
-        @unknown default: return .default
-        }
-    }
-}
-
-enum ThemeType {
-    
-    case themeMiami
-    case themeVanilla
-    
-    var isThemeMiami: Bool {
-        self == .themeMiami
-    }
-    
-    var isThemeIOS: Bool {
-        self == .themeVanilla
-    }
-}
-
+// TODO(Anon): This is way too many fonts. Need to consolidate.
+// TODO(Anon): Create font palette and move to protocol (like colors)
 struct ThemeFont {
-    
     let largeTitle: UIFont
     let largeTitleBold: UIFont
     let title1: UIFont
@@ -127,83 +106,21 @@ struct ThemeFont {
     let dashboardTVTokenBalanceSmall: UIFont
 }
 
-struct ThemeColour {
-        
-    let gradientTop: UIColor
-    let gradientBottom: UIColor
-
-    let navBarBackground: UIColor
-    let navBarTint: UIColor
-    let navBarTitle: UIColor
-
-    let tabBarBackground: UIColor
-    let tabBarTint: UIColor
-    let tabBarTintSelected: UIColor
-    
-    let backgroundBasePrimary: UIColor
-    let backgroundBaseSecondary: UIColor
-    
-    let fillPrimary: UIColor
-    let fillSecondary: UIColor
-    let fillTertiary: UIColor
-    let fillQuaternary: UIColor
-
-    let separator: UIColor
-    let separatorTransparent: UIColor
-        
-    let labelPrimary: UIColor
-    let labelSecondary: UIColor
-    let labelTertiary: UIColor
-    let labelQuaternary: UIColor
-    
-    let buttonBackgroundPrimary: UIColor
-    let buttonBackgroundPrimaryDisabled: UIColor
-    let buttonPrimaryText: UIColor
-    let buttonBackgroundSecondary: UIColor
-    let buttonSecondaryText: UIColor
-        
-    let switchThumbTintColor: UIColor
-    let switchBackgroundColor: UIColor
-    let switchOnTint: UIColor
-    let switchDisabledThumbTint: UIColor
-    let switchDisabledBackgroundColor: UIColor
-
-    let textFieldTextColour: UIColor
-    let textFieldPlaceholderColour: UIColor
-    let textFieldInputAccessoryViewBGColor: UIColor
-
-    let segmentedControlBackground: UIColor
-    let segmentedControlBackgroundSelected: UIColor
-    let segmentedControlText: UIColor
-    let segmentedControlTextSelected: UIColor
-
-    let cellBackground: UIColor
-    
-    let keystoreEnumFill: UIColor
-    let keystoreEnumText: UIColor
-    
-    let priceUp: UIColor
-    let priceDown: UIColor
-    let candleGreen: UIColor
-    let candleRed: UIColor
-    let dashboardTVCryptoBallance: UIColor
-    
-    let activityIndicator: UIColor
-    
-    let toastAlertBackgroundColor: UIColor
-    
-    let destructive: UIColor
-}
-
-struct ThemeConstant {
-    let cornerRadius: CGFloat
-    let cornerRadiusSmall: CGFloat
-    let shadowRadius: CGFloat
-    let cellHeight: CGFloat
-    let cellHeightSmall: CGFloat
-    let padding: CGFloat
-    let buttonPrimaryHeight: CGFloat
-    let buttonSecondaryHeight: CGFloat
-    let buttonSecondarySmallHeight: CGFloat
-    let buttonDashboardActionHeight: CGFloat
+// TODO: This is comment on settings. It should be `Settings.theme`
+// `Settings.variat` thi complexity is way too much and too hard to understand
+private func initialize() ->  ThemeProtocol {
+    let service: SettingsService = AppAssembler.resolve()
+    if service.isSelected(setting: .init(group: .theme, action: .themeMiamiLight)) {
+        AppDelegate.setUserInterfaceStyle(.light)
+        return ThemeMiamiSunrise()
+    } else if service.isSelected(setting: .init(group: .theme, action: .themeMiamiDark)) {
+        AppDelegate.setUserInterfaceStyle(.dark)
+        return ThemeMiamiSunrise()
+    } else if service.isSelected(setting: .init(group: .theme, action: .themeIosLight)) {
+        AppDelegate.setUserInterfaceStyle(.light)
+        return ThemeVanilla()
+    } else {
+        AppDelegate.setUserInterfaceStyle(.dark)
+        return ThemeVanilla()
+    }
 }

@@ -17,12 +17,12 @@ final class AccountMarketInfoCell: CollectionViewCell {
         super.awakeFromNib()
         [marketCapTitleLabel, priceTitleLabel, volumeTitleLabel].forEach {
             $0?.apply(style: .footnote)
-            $0?.textColor = Theme.colour.labelSecondary
+            $0?.textColor = Theme.color.textSecondary
         }
         marketCapTitleLabel.text = Localized("account.marketInfo.marketCap")
         priceTitleLabel.text = Localized("account.marketInfo.price")
         volumeTitleLabel.text = Localized("account.marketInfo.volume")
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
+        layer.cornerRadius = Theme.cornerRadiusSmall * 2
     }
     
     override func setSelected(_ selected: Bool) {}

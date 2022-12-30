@@ -8,7 +8,7 @@ extension NFTsCollectionViewController {
         let mainScrollView = ScrollView()
         mainScrollView.showsVerticalScrollIndicator = false
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = Theme.colour.activityIndicator
+        refreshControl.tintColor = Theme.color.activityIndicator
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         mainScrollView.refreshControl = refreshControl
         let scrollableContentView = UIView()
@@ -18,11 +18,11 @@ extension NFTsCollectionViewController {
             [
                 .layout(
                     anchor: .topAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 ),
                 .layout(
                     anchor: .bottomAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
+                    constant: .equalTo(constant: Theme.padding)
                 ),
                 .layout(anchor: .centerXAnchor),
                 .layout(anchor: .widthAnchor)

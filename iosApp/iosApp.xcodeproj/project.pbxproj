@@ -104,7 +104,7 @@
 		1C54DC5E28683DDA00E378F6 /* NaokoAA-Medium-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC5028683DDA00E378F6 /* NaokoAA-Medium-Italic.otf */; };
 		1C54DC662869A48A00E378F6 /* DashboardHeaderBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC652869A48A00E378F6 /* DashboardHeaderBalanceView.swift */; };
 		1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC672869BE6500E378F6 /* DashboardButtonsCell.swift */; };
-		1C54DC6A2869D60D00E378F6 /* ThemeMiami.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC692869D60D00E378F6 /* ThemeMiami.swift */; };
+		1C54DC6A2869D60D00E378F6 /* ThemeMiamiSunrise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC692869D60D00E378F6 /* ThemeMiamiSunrise.swift */; };
 		1C54DC74286A1D4C00E378F6 /* Assets-ThemeMiami.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC73286A1D4B00E378F6 /* Assets-ThemeMiami.xcassets */; };
 		1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5B603A284675B800ECBD79 /* Kingfisher */; };
 		1C5D24CA28E19F62007DA557 /* ImprovementProposalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B328E19F62007DA557 /* ImprovementProposalView.swift */; };
@@ -361,7 +361,7 @@
 		1CE0064028894F41002D1EB3 /* ConfirmationSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */; };
 		1CE0064628899D15002D1EB3 /* AlertSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064528899D15002D1EB3 /* AlertSheetPresentationController.swift */; };
 		1CE006482889A08A002D1EB3 /* Alert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CE006472889A08A002D1EB3 /* Alert.storyboard */; };
-		1CE0064C2889E0E6002D1EB3 /* ThemeIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064B2889E0E6002D1EB3 /* ThemeIOS.swift */; };
+		1CE0064C2889E0E6002D1EB3 /* ThemeVanilla.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064B2889E0E6002D1EB3 /* ThemeVanilla.swift */; };
 		1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BC92848EA9900AB6ACA /* ChatService.swift */; };
 		1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */; };
 		1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */; };
@@ -546,7 +546,7 @@
 		1C54DC5028683DDA00E378F6 /* NaokoAA-Medium-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Medium-Italic.otf"; sourceTree = "<group>"; };
 		1C54DC652869A48A00E378F6 /* DashboardHeaderBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardHeaderBalanceView.swift; sourceTree = "<group>"; };
 		1C54DC672869BE6500E378F6 /* DashboardButtonsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardButtonsCell.swift; sourceTree = "<group>"; };
-		1C54DC692869D60D00E378F6 /* ThemeMiami.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeMiami.swift; sourceTree = "<group>"; };
+		1C54DC692869D60D00E378F6 /* ThemeMiamiSunrise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeMiamiSunrise.swift; sourceTree = "<group>"; };
 		1C54DC73286A1D4B00E378F6 /* Assets-ThemeMiami.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-ThemeMiami.xcassets"; sourceTree = "<group>"; };
 		1C5D24B328E19F62007DA557 /* ImprovementProposalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalView.swift; sourceTree = "<group>"; };
 		1C5D24B528E19F62007DA557 /* ImprovementProposal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImprovementProposal.storyboard; sourceTree = "<group>"; };
@@ -802,7 +802,7 @@
 		1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSendView.swift; sourceTree = "<group>"; };
 		1CE0064528899D15002D1EB3 /* AlertSheetPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertSheetPresentationController.swift; sourceTree = "<group>"; };
 		1CE006472889A08A002D1EB3 /* Alert.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Alert.storyboard; sourceTree = "<group>"; };
-		1CE0064B2889E0E6002D1EB3 /* ThemeIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeIOS.swift; sourceTree = "<group>"; };
+		1CE0064B2889E0E6002D1EB3 /* ThemeVanilla.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeVanilla.swift; sourceTree = "<group>"; };
 		1CE66BC92848EA9900AB6ACA /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatService.swift; sourceTree = "<group>"; };
 		1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceAssembler.swift; sourceTree = "<group>"; };
@@ -2018,8 +2018,8 @@
 			isa = PBXGroup;
 			children = (
 				1C54DC292868193300E378F6 /* Theme.swift */,
-				1C54DC692869D60D00E378F6 /* ThemeMiami.swift */,
-				1CE0064B2889E0E6002D1EB3 /* ThemeIOS.swift */,
+				1C54DC692869D60D00E378F6 /* ThemeMiamiSunrise.swift */,
+				1CE0064B2889E0E6002D1EB3 /* ThemeVanilla.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -2345,7 +2345,7 @@
 				1C7F863028D20E490073FD95 /* UIView+Extensions.swift in Sources */,
 				1C6720122885D5AF00C5F044 /* CurrencySwapSlippageView.swift in Sources */,
 				1C5D24CA28E19F62007DA557 /* ImprovementProposalView.swift in Sources */,
-				1CE0064C2889E0E6002D1EB3 /* ThemeIOS.swift in Sources */,
+				1CE0064C2889E0E6002D1EB3 /* ThemeVanilla.swift in Sources */,
 				1C60C2D6285724D0003BE25D /* MnemonicNewWireframeFactory.swift in Sources */,
 				1C7FC9A528BCC5E900FC9175 /* MailServiceAssembler.swift in Sources */,
 				1CB8B0D0288FB76300024E7C /* DeepLinkHandlerAssembler.swift in Sources */,
@@ -2484,7 +2484,7 @@
 				1C60C2AD285724D0003BE25D /* CurrencyPickerWireframe.swift in Sources */,
 				1C7F863B28D20E490073FD95 /* UIView+Animations+Chat.swift in Sources */,
 				1CE0063B288884D2002D1EB3 /* ConfirmationSwapView.swift in Sources */,
-				1C54DC6A2869D60D00E378F6 /* ThemeMiami.swift in Sources */,
+				1C54DC6A2869D60D00E378F6 /* ThemeMiamiSunrise.swift in Sources */,
 				1CB8B0C0288DBEFF00024E7C /* CultProposalDetailSummaryView.swift in Sources */,
 				1CB8B0E62891346B00024E7C /* CultProposalFooterSupplementaryView.swift in Sources */,
 				1C60C2CD285724D0003BE25D /* AlertWireframeFactory.swift in Sources */,

@@ -11,8 +11,8 @@ final class AccountBonusCell: CollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.apply(style: .callout, weight: .bold)
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
-        chevronImage.tintColor = Theme.colour.labelPrimary
+        layer.cornerRadius = Theme.cornerRadiusSmall * 2
+        chevronImage.tintColor = Theme.color.textPrimary
     }
     
     override func setSelected(_ selected: Bool) {}

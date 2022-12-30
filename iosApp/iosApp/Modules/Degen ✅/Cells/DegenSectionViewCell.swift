@@ -20,7 +20,7 @@ extension DegenSectionViewCell {
     func update(with viewModel: DegenViewModel.SectionHeader) {
         label.text = viewModel.title
         label.textColor = viewModel.isEnabled ?
-        Theme.colour.labelPrimary :
-        Theme.colour.labelSecondary
+        Theme.color.textPrimary :
+        Theme.color.textSecondary
     }
 }

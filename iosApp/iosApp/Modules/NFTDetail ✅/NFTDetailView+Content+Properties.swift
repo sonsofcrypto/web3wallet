@@ -12,9 +12,9 @@ extension NFTDetailViewController {
         view.backgroundColor = .clear
         let content = makePropertiesContent(with: item.properties)
         view.addSubview(content)
-        content.addConstraints(.toEdges(padding: Theme.constant.padding))
-        view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.backgroundColor = Theme.colour.cellBackground
+        content.addConstraints(.toEdges(padding: Theme.padding))
+        view.layer.cornerRadius = Theme.cornerRadius
+        view.backgroundColor = Theme.color.bgPrimary
         return [view]
     }
 }
@@ -33,7 +33,7 @@ private extension NFTDetailViewController {
             let propertyName = UILabel()
             propertyName.numberOfLines = 1
             propertyName.apply(style: .subheadline)
-            propertyName.textColor = Theme.colour.labelSecondary
+            propertyName.textColor = Theme.color.textSecondary
             propertyName.textAlignment = .left
             propertyName.text = $0.name
             let propertyValue = UILabel()
@@ -42,12 +42,12 @@ private extension NFTDetailViewController {
             propertyValue.textAlignment = .left
             propertyValue.text = $0.value
             let hStack = HStackView([propertyName, propertyValue])
-            hStack.spacing = Theme.constant.padding.half
+            hStack.spacing = Theme.padding.half
             propertyName.setContentHuggingPriority(.required, for: .horizontal)
             rows.append(hStack)
         }
         let vStack = VStackView(rows)
-        vStack.spacing = Theme.constant.padding.half
+        vStack.spacing = Theme.padding.half
         return vStack
     }
 }

@@ -138,10 +138,10 @@ private extension NetworksViewController {
         let section = NSCollectionLayoutSection(
             group: group,
             insets: .init(
-                top: Theme.constant.padding,
-                leading: Theme.constant.padding,
+                top: Theme.padding,
+                leading: Theme.padding,
                 bottom: 0,
-                trailing: Theme.constant.padding
+                trailing: Theme.padding
             )
         )
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
@@ -151,11 +151,11 @@ private extension NetworksViewController {
             ),
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top,
-            leading: Theme.constant.padding / 4.0,
-            trailing: -Theme.constant.padding * 2
+            leading: Theme.padding / 4.0,
+            trailing: -Theme.padding * 2
         )
         section.boundarySupplementaryItems = [headerItem]
-        section.interGroupSpacing = Theme.constant.padding
+        section.interGroupSpacing = Theme.padding
         return UICollectionViewCompositionalLayout(section: section)
     }
 

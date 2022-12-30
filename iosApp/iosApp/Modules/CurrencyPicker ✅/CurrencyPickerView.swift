@@ -59,11 +59,11 @@ private extension CurrencyPickerViewController {
             name: UIApplication.keyboardWillHideNotification,
             object: nil
         )
-        view.backgroundColor = Theme.colour.gradientBottom
-        searchContainerBox.backgroundColor = Theme.colour.navBarBackground
-        searchTextFieldBox.backgroundColor = Theme.colour.fillQuaternary
-        searchTextFieldBox.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        searchImageView.tintColor = Theme.colour.labelSecondary
+        view.backgroundColor = Theme.color.bgGradientBtm
+        searchContainerBox.backgroundColor = Theme.color.navBarBackground
+        searchTextFieldBox.backgroundColor = Theme.color.bgPrimary
+        searchTextFieldBox.layer.cornerRadius = Theme.cornerRadiusSmall
+        searchImageView.tintColor = Theme.color.textSecondary
         searchTextField.backgroundColor = .clear
         searchTextField.text = nil
         searchTextField.delegate = self
@@ -295,12 +295,12 @@ private extension CurrencyPickerViewController {
         )
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.orthogonalScrollingBehavior = .continuous
-        section.interGroupSpacing = Theme.constant.padding.half
+        section.interGroupSpacing = Theme.padding.half
         section.contentInsets = .init(
             top: 0,
-            leading: Theme.constant.padding,
+            leading: Theme.padding,
             bottom: 0,
-            trailing: Theme.constant.padding
+            trailing: Theme.padding
         )
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),

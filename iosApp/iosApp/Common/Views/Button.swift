@@ -36,13 +36,13 @@ class Button: UIButton {
         var size = super.intrinsicContentSize
         switch style {
         case .primary:
-            size.height = Theme.constant.buttonPrimaryHeight
+            size.height = Theme.buttonHeight
         case .secondary:
-            size.height = Theme.constant.buttonSecondaryHeight
+            size.height = Theme.buttonHeight
         case .secondarySmall:
-            size.height = Theme.constant.buttonSecondarySmallHeight
+            size.height = Theme.buttonHeightExtraSmall
         case .dashboardAction:
-            size.height = Theme.constant.buttonDashboardActionHeight
+            size.height = Theme.buttonSmallHeight
         case .accountAction:
             break
         }
@@ -82,15 +82,15 @@ private extension Button {
                 outgoing.font = Theme.font.title3
                 return outgoing
             }
-            configuration.titlePadding = Theme.constant.padding * 0.5
-            configuration.imagePadding = Theme.constant.padding * 0.5
+            configuration.titlePadding = Theme.padding * 0.5
+            configuration.imagePadding = Theme.padding * 0.5
             self.configuration = configuration
             updateConfiguration()
             updateBackgroundColor()
-            tintColor = Theme.colour.buttonPrimaryText
-            layer.cornerRadius = Theme.constant.cornerRadiusSmall
-            setTitleColor(Theme.colour.buttonPrimaryText, for: .normal)
-            setTitleColor(Theme.colour.buttonPrimaryText.withAlpha(0.5), for: .disabled)
+            tintColor = Theme.color.buttonTextPrimary
+            layer.cornerRadius = Theme.cornerRadiusSmall
+            setTitleColor(Theme.color.buttonTextPrimary, for: .normal)
+            setTitleColor(Theme.color.buttonTextPrimary.withAlpha(0.5), for: .disabled)
         case .secondary:
             var configuration = UIButton.Configuration.plain()
             configuration.titleTextAttributesTransformer = .init{ incoming in
@@ -98,26 +98,26 @@ private extension Button {
                 outgoing.font = Theme.font.title3
                 return outgoing
             }
-            configuration.titlePadding = Theme.constant.padding * 0.5
-            configuration.imagePadding = Theme.constant.padding * 0.5
+            configuration.titlePadding = Theme.padding * 0.5
+            configuration.imagePadding = Theme.padding * 0.5
             self.configuration = configuration
             updateConfiguration()
             updateBackgroundColor()
-            tintColor = Theme.colour.buttonSecondaryText
-            layer.cornerRadius = Theme.constant.cornerRadiusSmall
+            tintColor = Theme.color.buttonTextSecondary
+            layer.cornerRadius = Theme.cornerRadiusSmall
             layer.borderWidth = 1
-            layer.borderColor = Theme.colour.buttonSecondaryText.cgColor
-            setTitleColor(Theme.colour.buttonSecondaryText, for: .normal)
+            layer.borderColor = Theme.color.buttonTextSecondary.cgColor
+            setTitleColor(Theme.color.buttonTextSecondary, for: .normal)
         case let .secondarySmall(leftImage):
             updateSecondaryStyle(leftImage: leftImage)
-            layer.cornerRadius = Theme.constant.buttonSecondarySmallHeight.half
+            layer.cornerRadius = Theme.buttonHeightExtraSmall.half
         case let .dashboardAction(leftImage):
             updateSecondaryStyle(leftImage: leftImage)
-            layer.cornerRadius = Theme.constant.buttonDashboardActionHeight.half
+            layer.cornerRadius = Theme.buttonSmallHeight.half
         case .accountAction:
             updateBackgroundColor()
-            tintColor = Theme.colour.labelPrimary
-            imageView?.tintColor = Theme.colour.labelPrimary
+            tintColor = Theme.color.textPrimary
+            imageView?.tintColor = Theme.color.textPrimary
         }
         invalidateIntrinsicContentSize()
     }
@@ -127,18 +127,18 @@ private extension Button {
         case let .primary(action):
             switch action {
             case .`default`:
-                backgroundColor = Theme.colour.buttonBackgroundPrimary.withAlpha(
+                backgroundColor = Theme.color.buttonBgPrimary.withAlpha(
                     isEnabled ? 1.0 : 0.5
                 )
             case .destructive:
-                backgroundColor = Theme.colour.destructive.withAlpha(
+                backgroundColor = Theme.color.destructive.withAlpha(
                     isEnabled ? 1.0 : 0.5
                 )
             }
         case .secondary, .secondarySmall, .dashboardAction:
             backgroundColor = .clear
         case .accountAction:
-            backgroundColor = Theme.colour.cellBackground
+            backgroundColor = Theme.color.bgPrimary
         }
     }
     
@@ -150,21 +150,21 @@ private extension Button {
             outgoing.font = Theme.font.footnote
             return outgoing
         }
-        configuration.titlePadding = Theme.constant.padding * 0.5
-        configuration.imagePadding = Theme.constant.padding * 0.5
+        configuration.titlePadding = Theme.padding * 0.5
+        configuration.imagePadding = Theme.padding * 0.5
         self.configuration = configuration
         updateConfiguration()
         updateBackgroundColor()
-        tintColor = Theme.colour.buttonSecondaryText
+        tintColor = Theme.color.buttonTextSecondary
         layer.borderWidth = 0.5
-        layer.borderColor = Theme.colour.buttonSecondaryText.cgColor
-        setTitleColor(Theme.colour.buttonSecondaryText, for: .normal)
+        layer.borderColor = Theme.color.buttonTextSecondary.cgColor
+        setTitleColor(Theme.color.buttonTextSecondary, for: .normal)
         titleLabel?.textAlignment = .natural
         
         if let leftImage = leftImage {
             setImage(
                 leftImage.withRenderingMode(.alwaysTemplate)
-                    .withTintColor(Theme.colour.buttonSecondaryText),
+                    .withTintColor(Theme.color.buttonTextSecondary),
                 for: .normal
             )
         }
@@ -229,15 +229,15 @@ final class CustomVerticalButton: UIView {
 
         super.awakeFromNib()
         
-        backgroundColor = Theme.colour.cellBackground
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        tintColor = Theme.colour.labelPrimary
+        backgroundColor = Theme.color.bgPrimary
+        layer.cornerRadius = Theme.cornerRadiusSmall
+        tintColor = Theme.color.textPrimary
         
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = Theme.colour.labelPrimary
+        imageView.tintColor = Theme.color.textPrimary
         self.iconImageView = imageView
         wrapperView.addSubview(imageView)
         imageView.addConstraints(
@@ -257,7 +257,7 @@ final class CustomVerticalButton: UIView {
         self.nameLabel = nameLabel
         
         let vStack = VStackView([wrapperView, nameLabel])
-        vStack.spacing = Theme.constant.padding.half
+        vStack.spacing = Theme.padding.half
         addSubview(vStack)
         
         vStack.addConstraints(

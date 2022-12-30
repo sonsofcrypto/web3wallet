@@ -24,11 +24,11 @@ final class DashboardWalletCell: CollectionViewCell {
         imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
         imageView.backgroundColor = UIColor(hexString: "3461BE")!
         currencyLabel.font = Theme.font.dashboardTVSymbol
-        currencyLabel.textColor = Theme.colour.labelPrimary
+        currencyLabel.textColor = Theme.color.textPrimary
         pctChangeLabel.font = Theme.font.dashboardTVPct
-        pctChangeLabel.textColor = Theme.colour.priceUp
+        pctChangeLabel.textColor = Theme.color.priceUp
         fiatBalanceLabel.font = Theme.font.dashboardTVTokenBalance
-        fiatBalanceLabel.textColor = Theme.colour.dashboardTVCryptoBallance
+        fiatBalanceLabel.textColor = Theme.color.dashboardTVCryptoBalance
         fiatBalanceLabel.isHidden = true
 //        contentStack.setCustomSpacing(0, after: fiatBalanceLabel)
     }
@@ -60,8 +60,8 @@ extension DashboardWalletCell {
         )
         pctChangeLabel.text = viewModel.pctChange
         pctChangeLabel.textColor = viewModel.priceUp
-            ? Theme.colour.priceUp
-            : Theme.colour.priceDown
+            ? Theme.color.priceUp
+            : Theme.color.priceDown
         pctChangeLabel.layer.shadowColor = pctChangeLabel.textColor.cgColor
         charView.update(viewModel.candles)
         cryptoBalanceLabel.attributedText = .init(
@@ -72,7 +72,7 @@ extension DashboardWalletCell {
             ),
             font: Theme.font.dashboardTVTokenBalance,
             fontSmall: Theme.font.dashboardTVTokenBalanceSmall,
-            foregroundColor: Theme.colour.dashboardTVCryptoBallance
+            foregroundColor: Theme.color.dashboardTVCryptoBalance
         )
         let colors = viewModel.colors
         let top = UIColor(hexString: colors.first ?? "#FFFFFF")!
@@ -109,7 +109,7 @@ class DashboardWalletCellBackgroundView: UIView {
         view.colors = [UIColor(hexString: "3461BE")!, UIColor(hexString: "223E7B")!]
         view.direction = .custom(CGPoint(x: 0, y: 0), CGPoint(x: 0, y: 1))
         insertSubview(view, at: 1)
-        view.layer.cornerRadius = Theme.constant.cornerRadius
+        view.layer.cornerRadius = Theme.cornerRadius
         view.layer.maskedCorners = .all
         return view
     }()
@@ -146,7 +146,7 @@ class DashboardWalletCellBackgroundView: UIView {
 
     func configUI() {
         clipsToBounds = true
-        layer.cornerRadius = Theme.constant.cornerRadius
+        layer.cornerRadius = Theme.cornerRadius
         layer.maskedCorners = CACornerMask.all
 //        noise.alpha = 0.5
 //        [highlight, highlightBtm].forEach { $0.alpha = 0.5 }

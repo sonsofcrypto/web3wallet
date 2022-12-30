@@ -141,7 +141,7 @@ private extension SettingsViewController{
         )
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .padding(
-            top: (hasHeader && sectionIndex == 0) ? Theme.constant.padding * 2 - 12 : Theme.constant.padding
+            top: (hasHeader && sectionIndex == 0) ? Theme.padding * 2 - 12 : Theme.padding
         )
         if hasHeader {
             let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
@@ -163,8 +163,8 @@ private extension SettingsViewController{
             elementKind: "background"
         )
         backgroundItem.contentInsets = .padding(
-            top: hasHeader ? Theme.constant.padding * (sectionIndex == 0 ? 3 : 2) : Theme.constant.padding,
-            bottom: hasFooter ? Theme.constant.padding * 2 : Theme.constant.padding
+            top: hasHeader ? Theme.padding * (sectionIndex == 0 ? 3 : 2) : Theme.padding,
+            bottom: hasFooter ? Theme.padding * 2 : Theme.padding
         )
         section.decorationItems = [backgroundItem]
         return section

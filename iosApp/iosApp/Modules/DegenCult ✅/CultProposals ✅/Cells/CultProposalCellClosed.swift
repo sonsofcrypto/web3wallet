@@ -21,7 +21,7 @@ final class CultProposalCellClosed: CollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.apply(style: .body, weight: .bold)
-        chevronImageView.tintColor = Theme.colour.labelPrimary
+        chevronImageView.tintColor = Theme.color.textPrimary
         clipsToBounds = false
         titleLabel.apply(style: .body, weight: .bold)
         approvedVotes.apply(style: .footnote)
@@ -29,7 +29,7 @@ final class CultProposalCellClosed: CollectionViewCell {
         result1Label.apply(style: .callout, weight: .bold)
         result2Label.apply(style: .callout)
         let statusView = CultProposalStatus()
-        statusView.backgroundColor = Theme.colour.separator
+        statusView.backgroundColor = Theme.color.separatorPrimary
         addSubview(statusView)
         self.statusView = statusView
         statusView.addConstraints(
@@ -41,7 +41,7 @@ final class CultProposalCellClosed: CollectionViewCell {
                 .layout(
                     anchor: .trailingAnchor,
                     constant: .equalTo(
-                        constant: Theme.constant.padding
+                        constant: Theme.padding
                     )
                 )
             ]
@@ -58,12 +58,12 @@ final class CultProposalCellClosed: CollectionViewCell {
         titleLabel.text = viewModel.title
         approvedVoteView.update(
             viewModel: viewModel.approved,
-            progressColor: Theme.colour.candleGreen
+            progressColor: Theme.color.priceUp
         )
         approvedVotes.text = viewModel.approved.total.format(maximumFractionDigits: 3)
         rejectedVoteView.update(
             viewModel: viewModel.rejected,
-            progressColor: Theme.colour.candleRed
+            progressColor: Theme.color.priceDown
         )
         rejectedVotes.text = viewModel.rejected.total.format(maximumFractionDigits: 3)
         if viewModel.approved.total > viewModel.rejected.total {

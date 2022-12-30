@@ -44,13 +44,13 @@ extension TextField {
                 )
             )
         )
-        view.backgroundColor = Theme.colour.textFieldInputAccessoryViewBGColor
+        view.backgroundColor = Theme.color.navBarBackground
         
         let doneAction = UIButton(type: .custom)
         doneAction.titleLabel?.font = Theme.font.bodyBold
         doneAction.titleLabel?.textAlignment = .right
         doneAction.setTitle(Localized("done"), for: .normal)
-        doneAction.setTitleColor(Theme.colour.labelPrimary, for: .normal)
+        doneAction.setTitleColor(Theme.color.textPrimary, for: .normal)
         doneAction.add(targetAction)
         view.addSubview(doneAction)
         doneAction.addConstraints(
@@ -69,7 +69,7 @@ private extension TextField {
     func configure() {
         
         font = Theme.font.body
-        textColor = Theme.colour.labelPrimary
+        textColor = Theme.color.textPrimary
         rightView = makeClearButton()
         rightViewMode = .whileEditing
         clipsToBounds = true
@@ -78,22 +78,22 @@ private extension TextField {
     func placeholder() -> [NSAttributedString.Key: Any] {
         [
             .font: font ?? Theme.font.body,
-            .foregroundColor: Theme.colour.labelSecondary
+            .foregroundColor: Theme.color.textSecondary
         ]
     }
     
     func body() -> [NSAttributedString.Key: Any] {
         [
             .font: font ?? Theme.font.body,
-            .foregroundColor: Theme.colour.labelPrimary,
-            .shadow: textShadow(Theme.colour.fillSecondary)
+            .foregroundColor: Theme.color.textPrimary,
+//            .shadow: textShadow(Theme.color.fillSecondary)
         ]
     }
     
     func textShadow(_ tint: UIColor) -> NSShadow {
         let shadow = NSShadow()
         shadow.shadowOffset = .zero
-        shadow.shadowBlurRadius = Theme.constant.cornerRadiusSmall.half
+        shadow.shadowBlurRadius = Theme.cornerRadiusSmall.half
         shadow.shadowColor = tint
         return shadow
     }
@@ -105,7 +105,7 @@ private extension TextField {
             .init(systemName: "xmark.circle.fill"),
             for: .normal
         )
-        button.tintColor = Theme.colour.labelSecondary
+        button.tintColor = Theme.color.textSecondary
         button.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
         button.addConstraints(
             [

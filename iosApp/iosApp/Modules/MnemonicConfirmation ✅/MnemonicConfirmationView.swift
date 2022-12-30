@@ -94,10 +94,10 @@ private extension MnemonicConfirmationViewController {
         )
         statusLabel.text = Localized("mnemonicConfirmation.confirm.wallet")
         statusLabel.font = Theme.font.body
-        statusLabel.textColor = Theme.colour.labelPrimary
+        statusLabel.textColor = Theme.color.textPrimary
         statusLabel.textAlignment = .left
-        textViewContainer.backgroundColor = Theme.colour.cellBackground
-        textViewContainer.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        textViewContainer.backgroundColor = Theme.color.bgPrimary
+        textViewContainer.layer.cornerRadius = Theme.cornerRadiusSmall
         textView.delegate = self
         textView.applyStyle(.body)
         textView.inputAccessoryView = mnemonicImportHelper.inputAccessoryView(
@@ -105,8 +105,8 @@ private extension MnemonicConfirmationViewController {
         )
         saltLabel.text = Localized("mnemonicConfirmation.salt")
         saltLabel.apply(style: .headline)
-        saltTextFieldView.backgroundColor = Theme.colour.cellBackground
-        saltTextFieldView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        saltTextFieldView.backgroundColor = Theme.color.bgPrimary
+        saltTextFieldView.layer.cornerRadius = Theme.cornerRadiusSmall
         saltTextField.backgroundColor = .clear
         saltTextField.text = nil
         saltTextField.delegate = self
@@ -140,7 +140,7 @@ private extension MnemonicConfirmationViewController {
             string: textView.text,
             attributes: [
                 .font: Theme.font.body,
-                .foregroundColor: Theme.colour.labelPrimary
+                .foregroundColor: Theme.color.textPrimary
             ]
         )
         var location = 0
@@ -152,7 +152,7 @@ private extension MnemonicConfirmationViewController {
             }
             attributedText.setAttributes(
                 [
-                    .foregroundColor: Theme.colour.navBarTint,
+                    .foregroundColor: Theme.color.navBarTint,
                     .font: Theme.font.body
                 ],
                 range: .init(
@@ -165,7 +165,7 @@ private extension MnemonicConfirmationViewController {
         }
         textView.attributedText = attributedText
         textViewContainer.layer.borderWidth = hasInvalidWords ? 2 : 0
-        textViewContainer.layer.borderColor = hasInvalidWords ? Theme.colour.navBarTint.cgColor : nil
+        textViewContainer.layer.borderColor = hasInvalidWords ? Theme.color.navBarTint.cgColor : nil
         textView.inputAccessoryView?.removeAllSubview()
         mnemonicImportHelper.addWords(viewModel.potentialWords, to: textView.inputAccessoryView)
         textView.selectedRange = selectedRange

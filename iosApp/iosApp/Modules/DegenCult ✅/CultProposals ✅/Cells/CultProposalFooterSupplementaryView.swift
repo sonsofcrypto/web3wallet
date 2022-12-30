@@ -51,7 +51,7 @@ final class CultProposalFooterSupplementaryView: UICollectionReusableView {
                 .layout(anchor: .topAnchor),
                 .layout(
                     anchor: .bottomAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding * 1.5)
+                    constant: .equalTo(constant: Theme.padding * 1.5)
                 )
             ]
         )

@@ -23,10 +23,10 @@ final class NetworkAddressPickerView: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        textFieldView.backgroundColor = Theme.colour.cellBackground
-        textFieldView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        textFieldView.backgroundColor = Theme.color.bgPrimary
+        textFieldView.layer.cornerRadius = Theme.cornerRadiusSmall
         qrCodeScanButton.setImage("qrcode.viewfinder".assetImage, for: .normal)
-        qrCodeScanButton.tintColor = Theme.colour.labelPrimary
+        qrCodeScanButton.tintColor = Theme.color.textPrimary
         qrCodeScanButton.addTarget(self, action: #selector(qrCodeScanTapped), for: .touchUpInside)
         textField.delegate = self
         textField.textContentType = .none
@@ -36,7 +36,7 @@ final class NetworkAddressPickerView: UIView {
         let pasteAction = UIButton(type: .custom)
         pasteAction.setTitle(Localized("paste"), for: .normal)
         pasteAction.titleLabel?.font = Theme.font.subheadlineBold
-        pasteAction.setTitleColor(Theme.colour.labelPrimary, for: .normal)
+        pasteAction.setTitleColor(Theme.color.textPrimary, for: .normal)
         pasteAction.addTarget(self, action: #selector(pasteTapped), for: .touchUpInside)
         pasteAction.addConstraints(
             [
@@ -50,7 +50,7 @@ final class NetworkAddressPickerView: UIView {
         self.pasteButton = pasteAction
         addContactView.isHidden = true
         addContactView.add(.targetAction(.init(target: self, selector: #selector(saveTapped))))
-        addContactIcon.tintColor = Theme.colour.labelPrimary
+        addContactIcon.tintColor = Theme.color.textPrimary
     }
     
     override func resignFirstResponder() -> Bool { textField.resignFirstResponder() }

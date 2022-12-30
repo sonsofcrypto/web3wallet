@@ -22,9 +22,9 @@ final class CultProposalStatus: UIView {
     }
     
     func configureUI() {
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        layer.cornerRadius = Theme.cornerRadiusSmall
         layer.borderWidth = 0.5
-        layer.borderColor = Theme.colour.fillQuaternary.cgColor
+        layer.borderColor = Theme.color.bgPrimary.cgColor
         
         let label = UILabel()
         label.apply(style: .footnote, weight: .bold)

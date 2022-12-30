@@ -12,8 +12,8 @@ final class AccountTransactionEmptyCell: CollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         label.apply(style: .callout)
-        label.textColor = Theme.colour.labelSecondary
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
+        label.textColor = Theme.color.textSecondary
+        layer.cornerRadius = Theme.cornerRadiusSmall * 2
     }
     
     func update(with viewModel: AccountViewModel.TransactionEmpty) {

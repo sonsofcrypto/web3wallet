@@ -59,8 +59,8 @@ final class NFTLoadingView: UIView {
 private extension NFTLoadingView {
     
     func commonInit() {
-        backgroundColor = Theme.colour.backgroundBaseSecondary
-        layer.cornerRadius = Theme.constant.cornerRadius
+        backgroundColor = Theme.color.bgPrimary
+        layer.cornerRadius = Theme.cornerRadius
         clipsToBounds = true
         let imageView = UIImageView()
         addSubview(imageView)

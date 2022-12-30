@@ -92,3 +92,18 @@ extension UIColor {
         return CGFloat(Double(hexComponent) / 255.0)
     }
 }
+
+extension UIColor {
+
+    convenience init(variants: [UIColor?]) {
+        self.init(
+            dynamicProvider: { traits in
+                (traits.isDarkMode
+                    ? ((variants.last ?? variants.first) ?? UIColor.white)
+                    : (variants.first ?? UIColor.black)) ?? UIColor.white
+            }
+        )
+    }
+
+    // public init(dynamicProvider: @escaping (UITraitCollection) -> UIColor)
+}

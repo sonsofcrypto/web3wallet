@@ -17,12 +17,12 @@ final class CultProposalDetailDocsView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = Theme.colour.cellBackground
-        layer.cornerRadius = Theme.constant.cornerRadius
+        backgroundColor = Theme.color.bgPrimary
+        layer.cornerRadius = Theme.cornerRadius
         titleLabel.apply(style: .headline, weight: .bold)
-        separatorView.backgroundColor = Theme.colour.separatorTransparent
-        stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: titleLabel)
-        stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: separatorView)
+        separatorView.backgroundColor = Theme.color.separatorSecondary
+        stackView.setCustomSpacing(Theme.padding * 0.75, after: titleLabel)
+        stackView.setCustomSpacing(Theme.padding * 0.75, after: separatorView)
     }
     
     func update(
@@ -47,14 +47,14 @@ private extension CultProposalDetailDocsView {
         var views = [UIView]()
         let titleLabel = UILabel()
         titleLabel.apply(style: .subheadline)
-        titleLabel.textColor = Theme.colour.labelSecondary
+        titleLabel.textColor = Theme.color.textSecondary
         titleLabel.text = documentInfo.title
         views.append(titleLabel)
         documentInfo.items.forEach {
             views.append(makeDocumentView(from: $0))
         }
         let vStack = VStackView(views)
-        vStack.spacing = Theme.constant.padding * 0.25
+        vStack.spacing = Theme.padding * 0.25
         return vStack
     }
     
@@ -64,7 +64,7 @@ private extension CultProposalDetailDocsView {
         if let input = item as? CultProposalViewModel.ProposalDetailsDocumentsInfoDocumentItemLink {
             let name = UILabel()
             name.apply(style: .subheadline)
-            name.textColor = Theme.colour.navBarTint
+            name.textColor = Theme.color.navBarTint
             name.text = input.displayName
             name.numberOfLines = 0
             let tag = addLinkToDirectory(url: input.url)

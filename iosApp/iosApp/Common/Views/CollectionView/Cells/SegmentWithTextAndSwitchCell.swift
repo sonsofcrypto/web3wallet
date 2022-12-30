@@ -91,10 +91,10 @@ private extension SegmentWithTextAndSwitchCell {
         bottomSeparatorView.isHidden = true
                 
         titleLabel.font = Theme.font.body
-        titleLabel.textColor = Theme.colour.labelPrimary
+        titleLabel.textColor = Theme.color.textPrimary
         
         switchLabel.font = Theme.font.body
-        switchLabel.textColor = Theme.colour.labelPrimary
+        switchLabel.textColor = Theme.color.textPrimary
         
         textField.delegate = self
         textField.keyboardType = .numberPad
@@ -116,7 +116,7 @@ private extension SegmentWithTextAndSwitchCell {
         )
         
         hintLabel.apply(style: .caption2)
-        hintLabel.textColor = Theme.colour.labelPrimary
+        hintLabel.textColor = Theme.color.textPrimary
     }
 }
 
@@ -135,7 +135,7 @@ extension SegmentWithTextAndSwitchCell {
             string: viewModel.placeholder,
             attributes: [
                 NSAttributedString.Key.font: Theme.font.body,
-                NSAttributedString.Key.foregroundColor: Theme.colour.textFieldPlaceholderColour
+                NSAttributedString.Key.foregroundColor: Theme.color.textSecondary
             ]
         )
 

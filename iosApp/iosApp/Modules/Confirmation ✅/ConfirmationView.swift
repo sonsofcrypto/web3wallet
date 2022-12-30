@@ -28,7 +28,7 @@ extension ConfirmationViewController {
         view.removeAllSubview()
         let content = contentView()
         view.addSubview(content)
-        content.addConstraints(.toEdges(padding: Theme.constant.padding))
+        content.addConstraints(.toEdges(padding: Theme.padding))
     }
 }
 
@@ -42,9 +42,9 @@ extension ConfirmationViewController: UIViewControllerTransitioningDelegate, Mod
         let navBarHeight: CGFloat = 44
         var contentHeight: CGFloat = 0
         contentHeight += navBarHeight
-        contentHeight += Theme.constant.padding
+        contentHeight += Theme.padding
         contentHeight += presenter.context().viewContentHeight
-        contentHeight += Theme.constant.padding
+        contentHeight += Theme.padding
         return ConfirmationSheetPresentationController(
             presentedViewController: presented,
             presenting: presenting,

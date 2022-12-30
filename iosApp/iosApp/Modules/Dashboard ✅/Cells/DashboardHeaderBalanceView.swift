@@ -12,8 +12,8 @@ final class DashboardHeaderBalanceView: UICollectionReusableView {
         
     override func awakeFromNib() {
         super.awakeFromNib()
-        labelHConstraints.forEach { $0.constant = Theme.constant.padding }
-        labelVConstraints.forEach { $0.constant = Theme.constant.padding * 1.25 }
+        labelHConstraints.forEach { $0.constant = Theme.padding }
+        labelVConstraints.forEach { $0.constant = Theme.padding * 1.25 }
     }
 }
 

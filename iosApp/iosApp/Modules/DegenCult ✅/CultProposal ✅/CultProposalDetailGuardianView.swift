@@ -20,21 +20,21 @@ final class CultProposalDetailGuardianView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = Theme.colour.cellBackground
-        layer.cornerRadius = Theme.constant.cornerRadius
+        backgroundColor = Theme.color.bgPrimary
+        layer.cornerRadius = Theme.cornerRadius
         titleLabel.apply(style: .headline, weight: .bold)
-        separatorView.backgroundColor = Theme.colour.separatorTransparent
-        stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: titleLabel)
-        stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: separatorView)
+        separatorView.backgroundColor = Theme.color.separatorSecondary
+        stackView.setCustomSpacing(Theme.padding * 0.75, after: titleLabel)
+        stackView.setCustomSpacing(Theme.padding * 0.75, after: separatorView)
         nameLabel.apply(style: .subheadline)
-        nameLabel.textColor = Theme.colour.labelSecondary
+        nameLabel.textColor = Theme.color.textSecondary
         nameValueLabel.apply(style: .subheadline, weight: .bold)
         socialLabel.apply(style: .subheadline)
-        socialLabel.textColor = Theme.colour.labelSecondary
+        socialLabel.textColor = Theme.color.textSecondary
         socialValueLabel.apply(style: .subheadline, weight: .bold)
 //        socialValueLabel.add(.targetAction(.init(target: self, selector: #selector(discordTapped))))
         walletLabel.apply(style: .subheadline)
-        walletLabel.textColor = Theme.colour.labelSecondary
+        walletLabel.textColor = Theme.color.textSecondary
         walletValueLabel.apply(style: .subheadline, weight: .bold)
     }
     

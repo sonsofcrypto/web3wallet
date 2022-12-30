@@ -52,8 +52,8 @@ private extension CurrencyReceiveViewController {
             target: self,
             action: #selector(navBarLeftActionTapped)
         )
-        cardView.backgroundColor = Theme.colour.cellBackground
-        cardView.layer.cornerRadius = Theme.constant.cornerRadius
+        cardView.backgroundColor = Theme.color.bgPrimary
+        cardView.layer.cornerRadius = Theme.cornerRadius
         cardView.add(
             .targetAction(.init(target: self, selector: #selector(onCopyAction)))
         )
@@ -75,7 +75,7 @@ private extension CurrencyReceiveViewController {
                 onTap: shareAction()
             )
         )
-        let spacingBetweenButtons = Theme.constant.padding * CGFloat(5)
+        let spacingBetweenButtons = Theme.padding * CGFloat(5)
         // TODO: Smell
         let windowWidth = UIApplication.shared.keyWindow?.frame.width ?? 0
         let height = (windowWidth - spacingBetweenButtons) / CGFloat(4)

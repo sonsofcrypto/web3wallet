@@ -12,8 +12,8 @@ final class AccountAddressCell: CollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.apply(style: .callout, weight: .regular)
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
-        copyImage.tintColor = Theme.colour.labelPrimary
+        layer.cornerRadius = Theme.cornerRadiusSmall * 2
+        copyImage.tintColor = Theme.color.textPrimary
     }
     
     override func setSelected(_ selected: Bool) {}

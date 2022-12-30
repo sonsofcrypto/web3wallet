@@ -17,7 +17,7 @@ class LineView: UIView {
     }
     
     func configureUI() {
-        backgroundColor = Theme.colour.separator
+        backgroundColor = Theme.color.separatorPrimary
     }
 
     override var intrinsicContentSize: CGSize {

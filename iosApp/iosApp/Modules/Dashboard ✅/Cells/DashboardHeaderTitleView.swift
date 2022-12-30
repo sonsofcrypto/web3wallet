@@ -11,7 +11,7 @@ final class DashboardHeaderTitleView: UICollectionReusableView {
     private lazy var lineView = LineView()
     private lazy var stack = HStackView(
         [label, UIView(), rightAction],
-        spacing: Theme.constant.padding
+        spacing: Theme.padding
     )
     
     private var handler: (()->Void)?
@@ -29,8 +29,8 @@ final class DashboardHeaderTitleView: UICollectionReusableView {
     override func layoutSubviews() {
         super.layoutSubviews()
         lineView.frame = CGRect(
-            origin: CGPoint(x: 0, y: (Theme.type.isThemeIOS ? bounds.maxY + 4 : bounds.maxY - 0.5)),
-            size: CGSize(width: bounds.width * (Theme.type.isThemeIOS ? 1 : 1.1), height: 0.33)
+            origin: CGPoint(x: 0, y: (ThemeVanilla.isCurrent() ? bounds.maxY + 4 : bounds.maxY - 0.5)),
+            size: CGSize(width: bounds.width * (ThemeVanilla.isCurrent() ? 1 : 1.1), height: 0.33)
         )
     }
 }
@@ -39,13 +39,13 @@ private extension DashboardHeaderTitleView {
     
     func configureUI() {
         label.font = Theme.font.networkTitle
-        label.textColor = Theme.colour.labelPrimary
+        label.textColor = Theme.color.textPrimary
         // TODO: This should be button of certain type
         rightAction.font = Theme.font.body
-        rightAction.textColor = Theme.colour.labelPrimary
+        rightAction.textColor = Theme.color.textPrimary
         rightAction.isHidden = true
         rightAction.add(.targetAction(.init(target: self, selector: #selector(moreTapped))))
-        let offset = Theme.type.isThemeIOS ? 0 : -Theme.constant.padding.half + 1
+        let offset = ThemeVanilla.isCurrent() ? 0 : -Theme.padding.half + 1
         stack.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stack)
         stack.contraintToSuperView(bottom: offset)

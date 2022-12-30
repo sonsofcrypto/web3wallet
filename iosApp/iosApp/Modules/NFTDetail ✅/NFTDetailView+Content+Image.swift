@@ -32,10 +32,10 @@ extension NFTDetailViewController {
         idLabel.textAlignment = .center
         idLabel.text = Localized("nft.detail.section.id", item.identifier)
         views.append(idLabel)
-        views.append(.vSpace(height: Theme.constant.padding.half * 0.75))
+        views.append(.vSpace(height: Theme.padding.half * 0.75))
         let containerView = UIView()
         let vStackView = VStackView(views)
-        vStackView.spacing = Theme.constant.padding.half
+        vStackView.spacing = Theme.padding.half
         vStackView.clipsToBounds = true
         containerView.addSubview(vStackView)
         vStackView.addConstraints(
@@ -45,10 +45,8 @@ extension NFTDetailViewController {
                 .layout(anchor: .centerXAnchor)
             ]
         )
-        vStackView.backgroundColor = Theme.colour.cellBackground
-        vStackView.layer.cornerRadius = Theme.constant.cornerRadius
-        vStackView.layer.borderWidth = 1
-        vStackView.layer.borderColor = Theme.colour.fillTertiary.cgColor
+        vStackView.backgroundColor = Theme.color.bgPrimary
+        vStackView.layer.cornerRadius = Theme.cornerRadius
         return containerView
     }
 }
@@ -65,7 +63,7 @@ private extension NFTDetailViewController {
     var nftImageSize: CGSize {
         let width: CGFloat
         if let view = navigationController?.view {
-            width = view.frame.size.width - Theme.constant.padding * 2
+            width = view.frame.size.width - Theme.padding * 2
         } else {
             width = 220
         }

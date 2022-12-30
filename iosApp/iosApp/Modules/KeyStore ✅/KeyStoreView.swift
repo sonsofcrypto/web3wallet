@@ -165,10 +165,10 @@ extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         
         .init(
-            width: view.bounds.width - Theme.constant.padding * 2,
+            width: view.bounds.width - Theme.padding * 2,
             height: collectionView == buttonsCollectionView
-            ? Theme.constant.buttonPrimaryHeight
-            : Theme.constant.cellHeight
+            ? Theme.buttonHeight
+            : Theme.cellHeight
         )
     }
 }
@@ -180,13 +180,13 @@ extension KeyStoreViewController {
         title = Localized("wallets")
         collectionView.showsVerticalScrollIndicator = false
         configureInsets()
-        buttonBackgroundView.layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
+        buttonBackgroundView.layer.cornerRadius = Theme.cornerRadiusSmall * 2
         buttonBackgroundView.layer.maskedCorners = [
             .layerMaxXMinYCorner,
             .layerMinXMinYCorner
         ]
-        buttonBackgroundView.contentView.backgroundColor = Theme.colour.gradientTop.withAlpha(0.4)
-        buttonHandleView.backgroundColor = Theme.colour.backgroundBasePrimary
+        buttonBackgroundView.contentView.backgroundColor = Theme.color.bgGradientTop.withAlpha(0.4)
+        buttonHandleView.backgroundColor = Theme.color.textTertiary
         buttonHandleView.layer.cornerRadius = buttonHandleView.frame.size.height.half
     }
 
@@ -248,8 +248,8 @@ extension KeyStoreViewController {
 
     func configureInsets() {
         let inset = view.bounds.height
-            - Theme.constant.buttonPrimaryHeight * 3
-            - Theme.constant.padding * 4
+            - Theme.buttonHeight * 3
+            - Theme.padding * 4
             - buttonsCollectionView.safeAreaInsets.top
             + 2
         buttonsCollectionView.contentInset.top = inset
@@ -266,9 +266,9 @@ extension KeyStoreViewController {
         let top = topCell.convert(topCell.bounds.minXminY, to: view)
         buttonBackgroundView.frame = CGRect(
             x: 0,
-            y: top.y - Theme.constant.padding * 2,
+            y: top.y - Theme.padding * 2,
             width: view.bounds.width,
-            height: view.bounds.height - top.y + Theme.constant.padding * 2
+            height: view.bounds.height - top.y + Theme.padding * 2
         )
         if let cv = buttonsCollectionView {
             let contentHeight = collectionView.contentSize.height

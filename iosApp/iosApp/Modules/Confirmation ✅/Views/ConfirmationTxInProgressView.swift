@@ -28,9 +28,9 @@ private extension ConfirmationTxInProgressView {
             label(with: .body, and: viewModel.message)
         ]
         let stackView = VStackView(views)
-        stackView.spacing = Theme.constant.padding
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[0])
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[1])
+        stackView.spacing = Theme.padding
+        stackView.setCustomSpacing(Theme.padding, after: views[0])
+        stackView.setCustomSpacing(Theme.padding, after: views[1])
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.tag = 12
@@ -39,7 +39,7 @@ private extension ConfirmationTxInProgressView {
             [
                 .layout(anchor: .leadingAnchor),
                 .layout(anchor: .trailingAnchor),
-                .layout(anchor: .centerYAnchor, constant: .equalTo(constant: Theme.constant.padding * 2))
+                .layout(anchor: .centerYAnchor, constant: .equalTo(constant: Theme.padding * 2))
             ]
         )
         addSubview(wrapperView)
@@ -48,11 +48,11 @@ private extension ConfirmationTxInProgressView {
     
     func animationView() -> UIView {
         let activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.color = Theme.colour.activityIndicator
+        activityIndicator.color = Theme.color.activityIndicator
         activityIndicator.startAnimating()
         let view = UIView()
-        view.backgroundColor = Theme.colour.cellBackground
-        view.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        view.backgroundColor = Theme.color.bgPrimary
+        view.layer.cornerRadius = Theme.cornerRadiusSmall
         view.addConstraints(
             [
                 .layout(anchor: .widthAnchor, constant: .equalTo(constant: 80)),

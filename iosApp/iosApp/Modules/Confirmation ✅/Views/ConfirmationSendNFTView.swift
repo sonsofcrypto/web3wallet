@@ -33,10 +33,10 @@ private extension ConfirmationSendNFTView {
             confirmButton()
         ]
         let stackView = VStackView(views)
-        stackView.spacing = Theme.constant.padding.half
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[0])
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[1])
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[2])
+        stackView.spacing = Theme.padding.half
+        stackView.setCustomSpacing(Theme.padding, after: views[0])
+        stackView.setCustomSpacing(Theme.padding, after: views[1])
+        stackView.setCustomSpacing(Theme.padding, after: views[2])
         addSubview(stackView)
         stackView.addConstraints(.toEdges)
     }
@@ -44,7 +44,7 @@ private extension ConfirmationSendNFTView {
     func imageView(with nftItem: NFTItem) -> UIView {
         let image = UIImageView()
         image.load(url: nftItem.image)
-        image.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        image.layer.cornerRadius = Theme.cornerRadiusSmall
         image.clipsToBounds = true
         let view = UIView()
         view.backgroundColor = .clear
@@ -74,27 +74,27 @@ private extension ConfirmationSendNFTView {
             )
         ]
         let stack = VStackView(views)
-        stack.spacing = Theme.constant.padding * 0.5
+        stack.spacing = Theme.padding * 0.5
         let view = UIView()
-        view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.backgroundColor = Theme.colour.cellBackground
+        view.layer.cornerRadius = Theme.cornerRadius
+        view.backgroundColor = Theme.color.bgPrimary
         view.addSubview(stack)
         stack.addConstraints(
-            .toEdges(padding: Theme.constant.padding)
+            .toEdges(padding: Theme.padding)
         )
         return view
     }
     
     func dividerLine() -> UIView {
         let divider = UIView()
-        divider.backgroundColor = Theme.colour.separatorTransparent
+        divider.backgroundColor = Theme.color.separatorSecondary
         let view = UIView()
         view.backgroundColor = .clear
         view.addSubview(divider)
         divider.addConstraints(
             [
                 .layout(anchor: .leadingAnchor),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: -Theme.constant.padding)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: -Theme.padding)),
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 1)),
                 .layout(anchor: .topAnchor),
                 .layout(anchor: .bottomAnchor)
@@ -114,13 +114,13 @@ private extension ConfirmationSendNFTView {
             )
         ]
         let stack = VStackView(views)
-        stack.spacing = Theme.constant.padding * 0.5
+        stack.spacing = Theme.padding * 0.5
         let view = UIView()
-        view.layer.cornerRadius = Theme.constant.cornerRadius
-        view.backgroundColor = Theme.colour.cellBackground
+        view.layer.cornerRadius = Theme.cornerRadius
+        view.backgroundColor = Theme.color.bgPrimary
         view.addSubview(stack)
         stack.addConstraints(
-            .toEdges(padding: Theme.constant.padding)
+            .toEdges(padding: Theme.padding)
         )
         return view
     }
