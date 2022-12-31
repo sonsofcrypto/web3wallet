@@ -185,6 +185,48 @@ class StringCoder(localName: String): DynamicBytesCoder("string", localName) {
     }
 }
 
+class TupleCoder(val coders: List<Coder>, localName: String):
+    Coder(
+        "tuple",
+        coders.map{ it.type }.joinToString(prefix = "tuple(", postfix = ")"),
+        localName,
+        coders.isNotEmpty() && coders.any { it.dynamic }
+    ) {
+
+    @Throws(Throwable::class)
+    override fun encode(writer: Writer, value: Any): Int {
+        TODO("Not yet implemented")
+    }
+
+    @Throws(Throwable::class)
+    override fun decode(reader: Reader): Any {
+        TODO("Not yet implemented")
+    }
+
+    @Throws(Throwable::class)
+    override fun defaultValue(): Any {
+        val values = coders.map { it.defaultValue() }
+        val uniqueNames: MutableMap<String, Int> = coders.reduce { acc, coder ->
+            name = coder.localName
+            if (name.isNotBlank()) {
+                acc[name] = acc.get
+            }
+        }
+
+
+        // We only output named properties for uniquely named coders
+//        const uniqueNames = this.coders.reduce((accum, coder) => {
+//            const name = coder.localName;
+//            if (name) {
+//                if (!accum[name]) { accum[name] = 0; }
+//                accum[name]++;
+//            }
+//            return accum;
+//        }, <{ [ name: string ]: number }>{ });
+
+    }
+}
+
 class ArrayCoder(coder: Coder, length: Int, localName: String):
     Coder(
         "array",
@@ -210,28 +252,6 @@ class ArrayCoder(coder: Coder, length: Int, localName: String):
 
     @Throws(Throwable::class)
     override fun defaultValue(): List<Any> {
-        TODO("Not yet implemented")
-    }
-}
-
-class TupleCoder: Coder {
-
-    constructor(coders: List<Coder>, localName: String) {
-        TODO("Not yet implemented")
-    }
-
-    @Throws(Throwable::class)
-    override fun encode(writer: Writer, value: Any): Int {
-        TODO("Not yet implemented")
-    }
-
-    @Throws(Throwable::class)
-    override fun decode(reader: Reader): Any {
-        TODO("Not yet implemented")
-    }
-
-    @Throws(Throwable::class)
-    override fun defaultValue(): Any {
         TODO("Not yet implemented")
     }
 }
