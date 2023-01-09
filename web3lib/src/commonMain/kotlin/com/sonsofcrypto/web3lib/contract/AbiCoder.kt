@@ -67,11 +67,13 @@ class NullCoder(localName: String): Coder("null", "", localName, false) {
     @Throws(Throwable::class)
     override fun decode(reader: Reader): Any {
         reader.readBytes(0)
-        return reader.coerceFunc(name, null)
+        return reader.coerceFunc(name, CoderNull())
     }
 
     @Throws(Throwable::class)
-    override fun defaultValue(): Any = null
+    override fun defaultValue(): Any = CoderNull()
+
+    class CoderNull()
 }
 
 class NumberCoder(val size: Int, val signed: Boolean, localName: String):
@@ -269,9 +271,8 @@ class ArrayCoder(val coder: Coder, val length: Int, localName: String):
     }
 
     @Throws(Throwable::class)
-    override fun defaultValue(): List<Any> {
-        val defaultChild = coder.defaultValue()
-    }
+    override fun defaultValue(): List<Any> =
+        (0..length).map { coder.defaultValue() }
 }
 
 @Throws(Throwable::class)
