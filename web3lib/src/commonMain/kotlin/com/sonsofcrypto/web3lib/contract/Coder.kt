@@ -146,7 +146,7 @@ class Reader(
 
     companion object {
 
-        private fun defaultCoerce(): ((name: String, value: Any) -> Any) {
+        fun defaultCoerce(): ((name: String, value: Any) -> Any) {
             return { name, value ->
                 val match = Regex("^u?int([0-9]+)\$").matchEntire(name)
                 if (match != null && match.groupValues[1].toInt() <= 48)

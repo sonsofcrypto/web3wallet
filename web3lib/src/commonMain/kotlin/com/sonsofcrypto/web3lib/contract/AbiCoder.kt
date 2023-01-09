@@ -5,7 +5,97 @@ import com.sonsofcrypto.web3lib.utils.padTwosComplement
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 
-class AbiCoder {
+typealias CoerceFunc = (type: String, value: Any) -> Any
+
+class AbiCoder(val coerceFunc: CoerceFunc? = null) {
+
+    fun coder(param: Param): Coder {
+        when(param.baseType) {
+            "address" -> return AddressCoder(param.name)
+            "bool" -> return BooleanCoder(param.name)
+            "string" -> return StringCoder(param.name)
+            "bytes" -> return BytesCoder(param.name)
+            "array" -> return ArrayCoder(
+                coder(param.arrayChildren!!),
+                param.arrayLength!!,
+                param.name
+            )
+            "tuple" -> return TupleCoder(
+                (param.components ?: emptyList()).map { coder(it) },
+                param.name
+            )
+            "" -> return NullCoder(param.name)
+        }
+        // numbers
+        var match = Regex("^(u?int)([0-9]*)\$").matchEntire(param.type)
+            ?.groupValues
+        if (match != null) {
+            val size = (match.getOrNull(2) ?: "256").toInt()
+            if (size == 0 || size > 256 || size % 8 != 0)
+                throw Error.InvalidBitLength(match.getOrNull(1) ?: "", param)
+            return NumberCoder(size / 8, (match[1] == "int"), param.name)
+        }
+        // bytes
+        match = Regex("^bytes([0-9]*)\$").matchEntire(param.type)?.groupValues
+        if (match != null) {
+            val size = (match.getOrNull(1) ?: "0").toInt()
+            if (size == 0 || size > 32)
+                throw Error.InvalidByteLength(size, param)
+            return FixedBytesCoder(size, param.name)
+        }
+        throw Error.InvalidParamType(param.type)
+    }
+
+    fun wordSize(): Int = 32
+
+    fun reader(data: ByteArray, loose: Boolean = false): Reader =
+        Reader(data, wordSize(), coerceFunc ?: Reader.defaultCoerce(), loose)
+
+    fun writer(): Writer = Writer(wordSize())
+
+    @Throws(Throwable::class)
+    fun defaultValue(types: List<Param>): List<Any> =
+        TupleCoder(types.map { coder(it) }, "_").defaultValue() as List<Any>
+
+    @Throws(Throwable::class)
+    fun encode(types: List<Param>, values: List<Any>): ByteArray {
+        if (types.size != values.size) throw Error.SizeMismatch(types, values)
+        val coder = TupleCoder(types.map { coder(it) }, "_")
+        val writer = writer()
+        coder.encode(writer, values)
+        return writer.data()
+    }
+
+    @Throws(Throwable::class)
+    fun decode(
+        types: List<Param>,
+        data: ByteArray,
+        loose: Boolean = false)
+    : List<Any> =
+        TupleCoder(types.map { coder(it) }, "_")
+            .decode(reader(data, loose)) as List<Any>
+
+
+    /** Errors */
+    sealed class Error(
+        message: String? = null,
+        cause: Throwable? = null
+    ) : Exception(message, cause) {
+
+        constructor(cause: Throwable) : this(null, cause)
+
+        data class InvalidBitLength(val length: String, val param: Param):
+            Error("Invalid $length  bit length, param $param")
+
+        data class InvalidByteLength(val length: Int, val param: Param):
+            Error("Invalid $length  bytes length, param $param")
+
+        data class InvalidParamType(val paramType: String):
+            Error("Invalid param type $paramType")
+
+        data class SizeMismatch(val types: List<Param>, val values: List<Any>):
+            Coder.Error("types/value length mismatch $types, $values")
+    }
 }
 
 class AddressCoder(localName: String):
@@ -276,14 +366,6 @@ class ArrayCoder(val coder: Coder, val length: Int, localName: String):
 }
 
 @Throws(Throwable::class)
-private fun checkArgumentCount(count: Int, expected: Int, message: String = "") {
-    if (count < expected)
-        throw Error("missing argument $count $expected: $message")
-    if (count > expected)
-        throw Error("too many arguments $count $expected: $message")
-}
-
-@Throws(Throwable::class)
 private fun pack(writer: Writer, coders: List<Coder>, value: List<Any>): Int {
     val arrayValues = value
     // TODO: Figure out named ones, from tests
@@ -308,7 +390,7 @@ private fun pack(writer: Writer, coders: List<Coder>, value: List<Any>): Int {
 
         } else coder.encode(staticWriter, value)
     }
-    // Backfill all the dynamic offsets, now that we know the static length
+    // Back-fill all the dynamic offsets, now that we know the static length
     updateFuncs.forEach { func -> func(staticWriter.length()) }
     return writer.appendWriter(staticWriter) + writer.appendWriter(dynamicWriter)
 }
@@ -351,4 +433,12 @@ private fun unpack(reader: Reader, coders: List<Coder>): Any {
     }
     // TODO: Figure out named ones, from tests
     return values
+}
+
+@Throws(Throwable::class)
+private fun checkArgumentCount(count: Int, expected: Int, message: String = "") {
+    if (count < expected)
+        throw Error("missing argument $count $expected: $message")
+    if (count > expected)
+        throw Error("too many arguments $count $expected: $message")
 }
