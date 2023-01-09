@@ -194,35 +194,39 @@ class TupleCoder(val coders: List<Coder>, localName: String):
     ) {
 
     @Throws(Throwable::class)
-    override fun encode(writer: Writer, value: Any): Int {
-        TODO("Not yet implemented")
-    }
+    override fun encode(writer: Writer, value: Any): Int =
+        pack(writer, coders, value as List<Any>)
 
     @Throws(Throwable::class)
-    override fun decode(reader: Reader): Any {
-        TODO("Not yet implemented")
-    }
+    override fun decode(reader: Reader): Any =
+        reader.coerce(name, unpack(reader, coders))
 
     @Throws(Throwable::class)
     override fun defaultValue(): Any {
         val values = coders.map { it.defaultValue() }
-        val uniqueNames: MutableMap<String, Int> = coders.reduce { acc, coder ->
-            name = coder.localName
-            if (name.isNotBlank()) {
-                acc[name] = acc.get
-            }
-        }
+//        val uniqueNames: MutableMap<String, Int> = mutableMapOf()
+//        coders.forEach { coder ->
+//            if (coder.name.isNotBlank())
+//                uniqueNames[coder.name] = ( uniqueNames[coder.name] ?: 0) + 1
+//        }
+//        coders.forEachIndexed { idx, coder ->
+//            var name = coder.localName
+//            if (name == null || uniqueNames[name] != 1)
+//                continue
+//            if (name == "length")
+//                name = "_length"
+//            if (values[name] != null)
+//                continue
+//            values[name] = values[idx]
+//        }
+        return values
+    }
 
+    private fun pack(writer: Writer, coders: List<Coder>, value: List<Any>): Int {
 
-        // We only output named properties for uniquely named coders
-//        const uniqueNames = this.coders.reduce((accum, coder) => {
-//            const name = coder.localName;
-//            if (name) {
-//                if (!accum[name]) { accum[name] = 0; }
-//                accum[name]++;
-//            }
-//            return accum;
-//        }, <{ [ name: string ]: number }>{ });
+    }
+
+    private fun unpack(reader: Reader, coders: List<Coder>): Any {
 
     }
 }

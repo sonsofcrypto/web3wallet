@@ -3,7 +3,7 @@
 # Android
 rm ./build/android/coreCrypto.aar
 rm ./build/android/coreCrypto-sources.jar
-gomobile bind -v -target=android -o ./build/android/coreCrypto.aar ./
+gomobile bind -v -target=android -androidapi 19 -o ./build/android/coreCrypto.aar ./
 
 # iOS
 if [[ "$OSTYPE" == "darwin"* ]]; then
