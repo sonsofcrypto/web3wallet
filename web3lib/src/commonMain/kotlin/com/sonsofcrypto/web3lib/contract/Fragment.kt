@@ -215,15 +215,15 @@ data class Param(
     /** The base type (e.g. "address", "tuple", "array") */
     val baseType: String,
     /** Indexable Paramters ONLY (otherwise null) */
-    val indexed: Boolean,
+    val indexed: Boolean = false,
     /** Tuples ONLY: (otherwise null)
      *  - sub-components */
-    val components: List<Param>?,
+    val components: List<Param>? = null,
     /** Arrays ONLY: (otherwise null)
      *  - length of the array (-1 for dynamic length)
      *  - child type */
-    val arrayLength: Int?,
-    var arrayChildren: Param?,
+    val arrayLength: Int? = null,
+    var arrayChildren: Param? = null,
 ) {
 
     fun format(format: Fragment.Format): String = when(format) {

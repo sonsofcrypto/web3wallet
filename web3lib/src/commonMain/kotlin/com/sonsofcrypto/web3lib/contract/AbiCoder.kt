@@ -204,6 +204,7 @@ class TupleCoder(val coders: List<Coder>, localName: String):
     @Throws(Throwable::class)
     override fun defaultValue(): Any {
         val values = coders.map { it.defaultValue() }
+        // TODO: Figure out named ones, from tests
 //        val uniqueNames: MutableMap<String, Int> = mutableMapOf()
 //        coders.forEach { coder ->
 //            if (coder.name.isNotBlank())
@@ -221,17 +222,9 @@ class TupleCoder(val coders: List<Coder>, localName: String):
 //        }
         return values
     }
-
-    private fun pack(writer: Writer, coders: List<Coder>, value: List<Any>): Int {
-
-    }
-
-    private fun unpack(reader: Reader, coders: List<Coder>): Any {
-
-    }
 }
 
-class ArrayCoder(coder: Coder, length: Int, localName: String):
+class ArrayCoder(val coder: Coder, val length: Int, localName: String):
     Coder(
         "array",
         coder.type + "[${if (length >= 0) length else ""}]",
@@ -241,21 +234,120 @@ class ArrayCoder(coder: Coder, length: Int, localName: String):
 
     @Throws(Throwable::class)
     fun encode(writer: Writer, value: List<Any>): Int {
-        TODO("Not yet implemented")
+        var count = length
+        if (count == -1) {
+            count = value.size
+            writer.writeValue(BigInt.from(value.size))
+        }
+        checkArgumentCount(value.size, count, "coder array $localName")
+        val coders: List<Coder> = (0..value.size).map { coder }
+        return pack(writer, coders, value)
     }
 
     @Throws(Throwable::class)
     override fun encode(writer: Writer, value: Any): Int {
-        TODO("Not yet implemented")
+        val listValue = value as? List<Any>
+        if (listValue != null) return encode(writer, listValue)
+        else throw Error.UnexpectedType(this, value)
     }
 
     @Throws(Throwable::class)
     override fun decode(reader: Reader): Any {
-        TODO("Not yet implemented")
+        var count = length
+        if (count == -1) {
+            count = reader.readValue().toString().toInt()
+            // Check that there is *roughly* enough data to ensure stray random
+            // data is not being read as a length. Each slot requires at least
+            // 32 bytes for their value (or 32 bytes as a link to the data).
+            // This could use a much tighter bound, but we are erroring on the
+            // side of safety.
+            if (count * 32 > reader.data.size)
+                throw Reader.Error.InsufficientDataSize(coder, reader.data.size)
+        }
+        val coders: List<Coder> = (0..count).map { AnonymousCoder(coder) }
+        return reader.coerceFunc(name, unpack(reader, coders))
     }
 
     @Throws(Throwable::class)
     override fun defaultValue(): List<Any> {
-        TODO("Not yet implemented")
+        val defaultChild = coder.defaultValue()
     }
+}
+
+@Throws(Throwable::class)
+private fun checkArgumentCount(count: Int, expected: Int, message: String = "") {
+    if (count < expected)
+        throw Error("missing argument $count $expected: $message")
+    if (count > expected)
+        throw Error("too many arguments $count $expected: $message")
+}
+
+@Throws(Throwable::class)
+private fun pack(writer: Writer, coders: List<Coder>, value: List<Any>): Int {
+    val arrayValues = value
+    // TODO: Figure out named ones, from tests
+    if (coders.size != arrayValues.size)
+        throw Coder.Error.SizeMismatch(coders, value)
+    val staticWriter = Writer()
+    val dynamicWriter = Writer()
+    var updateFuncs: MutableList<(baseOffset: Int) -> Unit> = mutableListOf()
+    coders.forEachIndexed { idx, coder ->
+        val value = arrayValues[idx]
+        if (coder.dynamic) {
+            // Get current dynamic offset (for the future pointer)
+            val dynamicOffset = dynamicWriter.length()
+            // Encode the dynamic value into the dynamicWriter
+            coder.encode(dynamicWriter, value)
+            // Prepare to populate the correct offset once we are done
+            val updateFunc = staticWriter.writeUpdatableValue()
+            // Prepare to populate the correct offset once we are done
+            updateFuncs.add { baseOffset: Int ->
+                updateFunc(BigInt.from(baseOffset + dynamicOffset))
+            }
+
+        } else coder.encode(staticWriter, value)
+    }
+    // Backfill all the dynamic offsets, now that we know the static length
+    updateFuncs.forEach { func -> func(staticWriter.length()) }
+    return writer.appendWriter(staticWriter) + writer.appendWriter(dynamicWriter)
+}
+
+@Throws(Throwable::class)
+private fun unpack(reader: Reader, coders: List<Coder>): Any {
+    var values: MutableList<Any> = mutableListOf()
+    val baseReader = reader.subReader(0)
+    coders.forEach { coder ->
+        var value: Any? = null
+        if (coder.dynamic) {
+            var offset = reader.readValue()
+            var offsetReader = baseReader.subReader(offset.toString().toInt())
+            try {
+                value = coder.decode(offsetReader)
+            } catch (error: Throwable) {
+                if (error is Reader.Error.OutOfBounds) throw error
+                value = Reader.Error.Decode(
+                    error,
+                    coder.localName,
+                    coder.type,
+                    coder.name
+                )
+            }
+        } else {
+            try {
+                value = coder.decode(reader)
+            } catch (error: Throwable) {
+                if (error is Reader.Error.OutOfBounds) throw error
+                value = Reader.Error.Decode(
+                    error,
+                    coder.localName,
+                    coder.type,
+                    coder.name
+                )
+            }
+        }
+        if (value != null)
+            values.add(value)
+    }
+    // TODO: Figure out named ones, from tests
+    return values
 }

@@ -38,6 +38,9 @@ abstract class Coder(
 
         data class OutOfBounds(val coder: Coder, val value: Any):
             Error("$coder encountered out of bounds value $value")
+
+        data class SizeMismatch(val coders: List<Coder>, val values: List<Any>):
+            Error("types/value length mismatch $coders, $values")
     }
 }
 
@@ -167,5 +170,16 @@ class Reader(
 
         data class OutOfBounds(val data: ByteArray, val offset: Int, val length: Int):
             Error("Out of bounds Range($offset, ${length}), Size ${data.size}")
+
+        data class InsufficientDataSize(val coder: Coder, val dataSize: Int):
+            Error("Insufficient data size $dataSize, $coder")
+
+        data class Decode(
+            val error: Throwable,
+            val name: String,
+            val type: String,
+            val baseType: String,
+        ): Error("Decode $error, $name, $type, $baseType")
+
     }
 }
