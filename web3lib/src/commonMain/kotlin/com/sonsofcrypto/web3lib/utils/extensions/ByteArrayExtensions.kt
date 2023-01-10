@@ -95,3 +95,11 @@ fun ByteArray.byteArrayWithByteAt(idx: Int): ByteArray {
 fun ByteArray.zeroOut() {
     for (idx in this.indices) { set(idx, 0) }
 }
+
+fun ByteArray.leftPadded(size: Int): ByteArray {
+    var byteArray = ByteArray(size)
+    for (i in 0..this.size) {
+        byteArray.set(byteArray.size - this.size + i, this.get(i))
+    }
+    return byteArray
+}

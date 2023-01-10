@@ -1,6 +1,8 @@
 package com.sonsofcrypto.web3lib.contract
 
+import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.isHexString
+import com.sonsofcrypto.web3lib.utils.extensions.leftPadded
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.keccak256
 import io.ktor.utils.io.core.*
@@ -195,7 +197,65 @@ class Interface {
         values: List<Any> = emptyList()
     ): ByteArray = encode(fragment.output ?: emptyList(), values)
 
+    /** Filter for the event with search criteria (e.g. for eth_filterLog) */
+    @Throws(Throwable::class)
+    fun encodeFilterTopic(
+        fragment: EventFragment,
+        values: List<Any?> = emptyList()
+    ): List<ByteArray?> {
+        if (values.size > fragment.inputs.size)
+            throw Error.ArgCountMismatch(fragment, values)
+        var topics: MutableList<ByteArray?> = mutableListOf()
+        if (fragment.anonymous)
+            topics.add(eventTopic(fragment))
 
+        @Throws(Throwable::class)
+        fun encodeTopic(param: Param, value: Any?): ByteArray {
+            if (param.type == "string")
+                return keccak256((value as String).toByteArray())
+            else if (param.type == "bytes")
+                return keccak256(value as ByteArray)
+
+            if (value == null)
+                return ByteArray(32)
+
+            var output = value
+            if (param.type == "bool")
+                 output = (if (value as Boolean) "0x01" else "0x00")
+                     .hexStringToByteArray()
+
+            if (Regex("^u?int").matchEntire(param.type) != null)
+                output = encode(listOf(param), listOf(value))
+
+            // Check addresses are valid ?? (I guess this would just throw)
+            if (param.type == "address")
+                encode(listOf(Param("","address", "address")), listOf(value))
+
+            return (value as ByteArray).leftPadded(32)
+        }
+
+        for (i in 0..values.size) {
+            val param = fragment.inputs[i]
+            val value = values[i]
+            val valueArray = values as? List<Any>
+            if (!param.indexed) {
+                if (value != null)
+                    throw Error.CannotFilterUnIndexed(param.name, value)
+                continue
+            }
+            if (value == null) {
+                topics.add(null)
+            } else if (param.baseType == "array" || param.baseType == "tuple") {
+
+            } else if (valueArray != null) {
+                topics.addAll(valueArray.map { encodeTopic(param, it) })
+            } else {
+                topics.add(encodeTopic(param, value))
+            }
+        }
+        while (topics.size > 0 && topics.last() == null) topics.removeLast()
+        return topics
+    }
 
     /** Override to provide custom coder */
     fun abiCoder(): AbiCoder = AbiCoder.default()
@@ -270,7 +330,12 @@ class Interface {
             val dataSig: String,
         ): Error("Data signature $dataSig does not match fragment signature " +
                 "$fragSig, $frag")
-
+        data class ArgCountMismatch(val frag: Fragment, val values: List<Any?>):
+            Error("Fragment params values mismatch ${frag.format()}, $values")
+        data class CannotFilterUnIndexed(val name: String, val value: Any):
+            Error("Can not filter un-indexed $name, $value")
+        data class FilteringWithCollection(val param: String, val value: Any):
+            Error("Filtering on tuples or arrays not supported $param, $value")
         data class Revert(
             val fragSig: String,
             val args: List<Any>,
