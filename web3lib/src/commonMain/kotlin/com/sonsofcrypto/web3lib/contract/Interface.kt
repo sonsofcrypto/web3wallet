@@ -11,7 +11,6 @@ class Interface {
     val events: Map<String, EventFragment>
     val functions: Map<String, FunctionFragment>
     val deploy: ConstructorFragment?
-//    private val _abiCoder: AbiCoder
 
     @Throws(Throwable::class)
     constructor(jsonString: String) {
@@ -118,14 +117,10 @@ class Interface {
         return errors[id] ?: throw Error.ErrorNotFound(id)
     }
 
-    @Throws(Throwable::class)
-    fun decodeEventLogs(
-        event: EventFragment,
-        data: ByteArray,
-        topics: List<String>
-    ) {
-        TODO("Implement")
-    }
+
+
+    /** Override to provide custom coder */
+    fun abiCoder(): AbiCoder = AbiCoder.default()
 
     /** Topic (the bytes32 hash) used by Solidity to identify an event from
      * signature (eg Transfer(address,uint256)) */
@@ -134,11 +129,20 @@ class Interface {
     /** Topic (the bytes32 hash) used by Solidity to identify an event */
     fun eventTopic(event: EventFragment): ByteArray = eventTopic(event.format())
 
+
     private fun sigHash(sig: String): ByteArray = keccak256(sig.toByteArray())
         .copyOfRange(0, 4)
 
     private fun sigHashString(sig: String): String = sigHash(sig)
         .toHexString(true)
+
+    @Throws(Throwable::class)
+    private fun decode(params: List<Param>, data: ByteArray): List<Any> =
+        abiCoder().decode(params, data)
+
+    @Throws(Throwable::class)
+    private fun encode(params: List<Param>, values: List<Any>): ByteArray =
+        abiCoder().encode(params, values)
 
     /** Errors */
     sealed class Error(

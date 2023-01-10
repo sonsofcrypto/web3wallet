@@ -75,6 +75,9 @@ class AbiCoder(val coerceFunc: CoerceFunc? = null) {
         TupleCoder(types.map { coder(it) }, "_")
             .decode(reader(data, loose)) as List<Any>
 
+    companion object {
+        fun default(): AbiCoder = defaultAbiCoder
+    }
 
     /** Errors */
     sealed class Error(
@@ -97,6 +100,9 @@ class AbiCoder(val coerceFunc: CoerceFunc? = null) {
             Coder.Error("types/value length mismatch $types, $values")
     }
 }
+
+private val defaultAbiCoder = AbiCoder()
+
 
 class AddressCoder(localName: String):
     Coder("address", "address", localName, false) {
