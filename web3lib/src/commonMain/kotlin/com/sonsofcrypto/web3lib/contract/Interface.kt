@@ -212,7 +212,7 @@ class Interface {
         @Throws(Throwable::class)
         fun encodeTopic(param: Param, value: Any?): ByteArray {
             if (param.type == "string")
-                return keccak256((value as String).toByteArray())
+                return id(value as String)
             else if (param.type == "bytes")
                 return keccak256(value as ByteArray)
 
@@ -257,6 +257,36 @@ class Interface {
         return topics
     }
 
+    /** Encode event log. Returns data, topics */
+    @Throws(Throwable::class)
+    fun encodeEventLog(
+        fragment: EventFragment,
+        values: List<Any> = emptyList()
+    ): Pair<ByteArray, List<ByteArray>> {
+        var topics: MutableList<ByteArray> = mutableListOf()
+        var dataTypes: MutableList<Param> = mutableListOf()
+        var dataValues: MutableList<Any> = mutableListOf()
+        if (fragment.anonymous)
+            topics.add(eventTopic(fragment))
+        if (values.size != fragment.inputs.size)
+            throw Error.ArgCountMismatch(fragment, values)
+        fragment.inputs.forEachIndexed{ idx, param ->
+            val value = values[idx]
+            if (param.indexed) {
+                when (param.type) {
+                    "string" -> topics.add(id(value as String))
+                    "bytes" -> topics.add(keccak256(value as ByteArray))
+                    "tuple", "array" -> throw Error.CollectionLog(param, value)
+                    else -> topics.add(encode(listOf(param), listOf(value)))
+                }
+            } else {
+                dataTypes.add(param)
+                dataValues.add(value)
+            }
+        }
+        return Pair(encode(dataTypes, dataValues), topics)
+    }
+
     /** Override to provide custom coder */
     fun abiCoder(): AbiCoder = AbiCoder.default()
 
@@ -272,6 +302,8 @@ class Interface {
 
     private fun sigHashString(sig: String): String = sigHash(sig)
         .toHexString(true)
+
+    private fun id(str: String): ByteArray = keccak256(str.toByteArray())
 
     @Throws(Throwable::class)
     private fun decode(params: List<Param>, data: ByteArray): List<Any> =
@@ -336,6 +368,8 @@ class Interface {
             Error("Can not filter un-indexed $name, $value")
         data class FilteringWithCollection(val param: String, val value: Any):
             Error("Filtering on tuples or arrays not supported $param, $value")
+        data class CollectionLog(val param: Param, val value: Any):
+            Error("Tuples or arrays logs not supported $param, $value")
         data class Revert(
             val fragSig: String,
             val args: List<Any>,
