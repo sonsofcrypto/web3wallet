@@ -154,17 +154,48 @@ class Interface {
     ): ByteArray = sigHash(fragment.format()) + encode(fragment.inputs, values)
 
     /** Decode the result from a function call (e.g. from eth_call) */
-//    @Throws(Throwable::class)
-//    fun decodeFunctionResult(
-//        fragment: FunctionFragment,
-//        data: ByteArray
-//    ): List<Any> {
-//        val dataSigStr = data.copyOfRange(0, 4).toHexString(true)
-//        val fragSigStr = sigHashString(fragment.format())
-//        if (fragSigStr != dataSigStr)
-//            throw Error.FragDataSigMismatch(fragment, fragSigStr, dataSigStr)
-//        return decode(fragment.inputs, data.copyOfRange(4, data.size))
-//    }
+    @Throws(Throwable::class)
+    fun decodeFunctionResult(
+        fragment: FunctionFragment,
+        data: ByteArray
+    ): List<Any> {
+        var args: List<Any> = emptyList()
+        var name = ""
+        var sig = ""
+        var reason = ""
+
+        when (data.size % abiCoder().wordSize()) {
+            0 -> try { return decode(fragment.output ?: emptyList(), data) }
+                catch (err: Throwable) {}
+            4 -> {
+                val selector = data.copyOfRange(0, 4).toHexString(true)
+                val error = EVMError.error(selector)
+                if (error != null) {
+                    args = decode(error.inputs, data.copyOfRange(4, data.size))
+                    name = error.name()
+                    sig = error.signature
+                    reason = "; VM ${error.name()}"
+                } else {
+                    try {
+                        val error = error(sigHashString(fragment.format()))
+                        args = decode(error.inputs, data.copyOfRange(4, data.size))
+                        name = error.name
+                        sig = error.format()
+                    } catch (err: Throwable) {}
+                }
+            }
+        }
+        throw Error.Revert(fragment.format(), args, name, sig, reason)
+    }
+
+    /** Encode the result for a function call (e.g. for eth_call) */
+    @Throws(Throwable::class)
+    fun encodeFunctionResult(
+        fragment: FunctionFragment,
+        values: List<Any> = emptyList()
+    ): ByteArray = encode(fragment.output ?: emptyList(), values)
+
+
 
     /** Override to provide custom coder */
     fun abiCoder(): AbiCoder = AbiCoder.default()
@@ -175,7 +206,6 @@ class Interface {
 
     /** Topic (the bytes32 hash) used by Solidity to identify an event */
     fun eventTopic(event: EventFragment): ByteArray = eventTopic(event.format())
-
 
     private fun sigHash(sig: String): ByteArray = keccak256(sig.toByteArray())
         .copyOfRange(0, 4)
@@ -190,6 +220,33 @@ class Interface {
     @Throws(Throwable::class)
     private fun encode(params: List<Param>, values: List<Any>): ByteArray =
         abiCoder().encode(params, values)
+
+    /** Built in Solidity errors */
+    sealed class EVMError(
+        val selector: String,
+        val signature: String,
+        val inputs: List<Param>,
+        val reason: Boolean = false,
+    ) {
+        object Error: EVMError("0x08c379a0", "Error(string)", errorParams, true)
+        object Panic: EVMError("0x4e487b71", "Panic(uint256)", panicParams)
+
+        fun name() = when(this) {
+            is Error -> "Error"
+            is Panic -> "Panic"
+        }
+
+        companion object {
+            private val panicParams = listOf(Param("code", "uint256", "uint256"))
+            private val errorParams = listOf(Param("message", "string", "string"))
+
+            fun error(selector: String): EVMError? = when (selector) {
+                Error.selector -> Error
+                Panic.selector -> Panic
+                else -> null
+            }
+        }
+    }
 
     /** Errors */
     sealed class Error(
@@ -213,5 +270,13 @@ class Interface {
             val dataSig: String,
         ): Error("Data signature $dataSig does not match fragment signature " +
                 "$fragSig, $frag")
+
+        data class Revert(
+            val fragSig: String,
+            val args: List<Any>,
+            val name: String,
+            val errorSig: String,
+            val reason: String,
+        ): Error("Call revert $fragSig, $args, $name, $errorSig, $reason")
     }
 }
