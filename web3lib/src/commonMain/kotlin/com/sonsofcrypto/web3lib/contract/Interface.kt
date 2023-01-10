@@ -117,7 +117,54 @@ class Interface {
         return errors[id] ?: throw Error.ErrorNotFound(id)
     }
 
+    @Throws(Throwable::class)
+    fun encodeDeploy(params: List<Param>, values: List<Any>) =
+        abiCoder().encode(params, values)
 
+    @Throws(Throwable::class)
+    fun decodeError(fragment: ErrorFragment, data: ByteArray): List<Any> {
+        val dataSigStr = data.copyOfRange(0, 4).toHexString(true)
+        val fragSigStr = sigHashString(fragment.format())
+        if (fragSigStr != dataSigStr)
+            throw Error.FragDataSigMismatch(fragment, fragSigStr, dataSigStr)
+        return decode(fragment.inputs, data.copyOfRange(4, data.size))
+    }
+
+    @Throws(Throwable::class)
+    fun encodeError(
+        fragment: ErrorFragment,
+        values: List<Any> = emptyList()
+    ): ByteArray = sigHash(fragment.format()) + encode(fragment.inputs, values)
+
+    /** Decode the data for a function call (e.g. tx.data) */
+    @Throws(Throwable::class)
+    fun decodeFunction(fragment: FunctionFragment, data: ByteArray): List<Any> {
+        val dataSigStr = data.copyOfRange(0, 4).toHexString(true)
+        val fragSigStr = sigHashString(fragment.format())
+        if (fragSigStr != dataSigStr)
+            throw Error.FragDataSigMismatch(fragment, fragSigStr, dataSigStr)
+        return decode(fragment.inputs, data.copyOfRange(4, data.size))
+    }
+
+    /** Encode the data for a function call (e.g. tx.data) */
+    @Throws(Throwable::class)
+    fun encodeFunction(
+        fragment: FunctionFragment,
+        values: List<Any> = emptyList()
+    ): ByteArray = sigHash(fragment.format()) + encode(fragment.inputs, values)
+
+    /** Decode the result from a function call (e.g. from eth_call) */
+//    @Throws(Throwable::class)
+//    fun decodeFunctionResult(
+//        fragment: FunctionFragment,
+//        data: ByteArray
+//    ): List<Any> {
+//        val dataSigStr = data.copyOfRange(0, 4).toHexString(true)
+//        val fragSigStr = sigHashString(fragment.format())
+//        if (fragSigStr != dataSigStr)
+//            throw Error.FragDataSigMismatch(fragment, fragSigStr, dataSigStr)
+//        return decode(fragment.inputs, data.copyOfRange(4, data.size))
+//    }
 
     /** Override to provide custom coder */
     fun abiCoder(): AbiCoder = AbiCoder.default()
@@ -160,5 +207,11 @@ class Interface {
             Error("Error with identifier $id not found")
         data class MultipleMatches(val matches: List<String>):
             Error("Multiple matches found $matches")
+        data class FragDataSigMismatch(
+            val frag: Fragment,
+            val fragSig: String,
+            val dataSig: String,
+        ): Error("Data signature $dataSig does not match fragment signature " +
+                "$fragSig, $frag")
     }
 }
