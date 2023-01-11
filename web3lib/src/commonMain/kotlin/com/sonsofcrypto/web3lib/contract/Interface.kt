@@ -162,32 +162,27 @@ class Interface {
         data: ByteArray
     ): List<Any> {
         var args: List<Any> = emptyList()
-        var name = ""
-        var sig = ""
-        var reason = ""
+        var error: Any? = null
 
         when (data.size % abiCoder().wordSize()) {
             0 -> try { return decode(fragment.output ?: emptyList(), data) }
-                catch (err: Throwable) {}
+                catch (err: Throwable) { error = err }
             4 -> {
                 val selector = data.copyOfRange(0, 4).toHexString(true)
-                val error = EVMError.error(selector)
-                if (error != null) {
-                    args = decode(error.inputs, data.copyOfRange(4, data.size))
-                    name = error.name()
-                    sig = error.signature
-                    reason = "; VM ${error.name()}"
+                val evmError = EVMError.error(selector)
+                if (evmError != null) {
+                    args = decode(evmError.inputs, data.copyOfRange(4, data.size))
+                    error = evmError
                 } else {
                     try {
-                        val error = error(sigHashString(fragment.format()))
-                        args = decode(error.inputs, data.copyOfRange(4, data.size))
-                        name = error.name
-                        sig = error.format()
-                    } catch (err: Throwable) {}
+                        val err = error(sigHashString(fragment.format()))
+                        args = decode(err.inputs, data.copyOfRange(4, data.size))
+                        error = err
+                    } catch (err: Throwable) { error = err }
                 }
             }
         }
-        throw Error.Revert(fragment.format(), args, name, sig, reason)
+        throw Error.Revert(error, args)
     }
 
     /** Encode the result for a function call (e.g. for eth_call) */
@@ -287,6 +282,20 @@ class Interface {
         return Pair(encode(dataTypes, dataValues), topics)
     }
 
+    /** Decode the result from a function call (e.g. from eth_call) */
+    @Throws(Throwable::class)
+    fun decodeEventLog(
+        fragment: EventFragment,
+        data: ByteArray,
+        topics: List<ByteArray> = emptyList()
+    ): List<Any> {
+        if (topics.isNotEmpty() && !fragment.anonymous) {
+            val topicHash = eventTopic(fragment)
+            if (topics[0].toHexString(false) != topicHash.toHexString(false))
+                throw Error.
+        }
+    }
+
     /** Override to provide custom coder */
     fun abiCoder(): AbiCoder = AbiCoder.default()
 
@@ -360,8 +369,7 @@ class Interface {
             val frag: Fragment,
             val fragSig: String,
             val dataSig: String,
-        ): Error("Data signature $dataSig does not match fragment signature " +
-                "$fragSig, $frag")
+        ): Error("Data sig $dataSig doesn't match fragment sig $fragSig, $frag")
         data class ArgCountMismatch(val frag: Fragment, val values: List<Any?>):
             Error("Fragment params values mismatch ${frag.format()}, $values")
         data class CannotFilterUnIndexed(val name: String, val value: Any):
@@ -370,12 +378,16 @@ class Interface {
             Error("Filtering on tuples or arrays not supported $param, $value")
         data class CollectionLog(val param: Param, val value: Any):
             Error("Tuples or arrays logs not supported $param, $value")
-        data class Revert(
-            val fragSig: String,
-            val args: List<Any>,
-            val name: String,
-            val errorSig: String,
-            val reason: String,
-        ): Error("Call revert $fragSig, $args, $name, $errorSig, $reason")
+        data class Revert(val error: Any?, val args: List<Any>):
+            Error(
+                "Call revert $error, " +
+                "${(error as? ErrorFragment)?.format() ?: ""}, " +
+                "$args"
+            )
+        data class TopicFragmentMismatch(
+            val frag: Fragment,
+            val exp: String,
+            val value: String
+        ): Error("Fragment topic mismatch $frag, expected: $exp, got: $value")
     }
 }
