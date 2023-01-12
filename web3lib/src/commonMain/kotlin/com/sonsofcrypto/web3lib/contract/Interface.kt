@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3lib.contract
 
+import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.*
 import com.sonsofcrypto.web3lib.utils.keccak256
 import io.ktor.utils.io.core.*
@@ -279,6 +280,8 @@ class Interface {
         return Pair(encode(dataTypes, dataValues), topics)
     }
 
+    data class Indexed(val isIndex: Boolean, val hash: ByteArray?)
+
     /** Decode the result from a function call (e.g. from eth_call) */
     @Throws(Throwable::class)
     fun decodeEventLog(
@@ -330,8 +333,6 @@ class Interface {
             (resultIdx?.size ?: 0) + resultNonIdx.size
         )
 
-        data class Indexed(val isIndex: Boolean, val hash: ByteArray?)
-
         for (i in 0..fragment.inputs.size) {
             val param = fragment.inputs[i]
             if (!param.indexed) {
@@ -354,6 +355,60 @@ class Interface {
 
         // TODO: Figure out keyword
         return result
+    }
+
+    data class TransactionDescription(
+        val args: List<Any>,
+        val fragment: FunctionFragment,
+        val name: String,
+        val signatre: String,
+        val sigHash: ByteArray,
+        val value: BigInt,
+    )
+
+    /** Given a transaction, find the matching function fragment (if any) and
+     * determine all its properties and call parameters */
+    fun parseTx(data: ByteArray, value: BigInt): TransactionDescription? {
+        try {
+            val fragment = function(data.copyOfRange(0, 4).toHexString(true))
+            return TransactionDescription(
+                decode(fragment.inputs, data.copyOfRange(4, data.size)),
+                fragment,
+                fragment.name,
+                fragment.format(),
+                sigHash(fragment.format()),
+                value,
+            )
+        } catch (err: Throwable) {
+            return null
+        }
+    }
+
+    data class LogDescription(
+        val args: List<Any>,
+        val fragment: EventFragment,
+        val name: String,
+        val signatre: String,
+        val topic: ByteArray,
+    )
+
+    fun parseLog(topics: List<ByteArray>, data: ByteArray): LogDescription? {
+        try {
+            val fragment = event(topics[0].toHexString(true))
+            // TODO: If anonymous, and the only method, and the input count
+            // matches, should we parse? Probably not, because if it is the
+            // only event in the ABI does not mean we have the full ABI; maybe
+            // just a fragment?
+            return LogDescription(
+                decodeEventLog(fragment, data, topics),
+                fragment,
+                fragment.name,
+                fragment.format(),
+                eventTopic(fragment)
+            )
+        } catch (err: Throwable) {
+            return null
+        }
     }
 
     /** Override to provide custom coder */
