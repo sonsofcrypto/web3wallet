@@ -20,6 +20,10 @@ private val json = Json {
 fun fragmentsFrom(jsonString: String): List<JsonFragment> = json
     .decodeFromString<List<JsonFragment>>(jsonString)
 
+@Throws(Throwable::class)
+fun fragmentTypesFrom(jsonString: String): List<JsonFragmentType> = json
+    .decodeFromString<List<JsonFragmentType>>(jsonString)
+
 @Serializable
 data class JsonFragmentType(
     val name: String? = null,
