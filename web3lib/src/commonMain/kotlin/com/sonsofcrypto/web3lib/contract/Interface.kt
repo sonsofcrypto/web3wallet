@@ -1,9 +1,6 @@
 package com.sonsofcrypto.web3lib.contract
 
-import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
-import com.sonsofcrypto.web3lib.utils.extensions.isHexString
-import com.sonsofcrypto.web3lib.utils.extensions.leftPadded
-import com.sonsofcrypto.web3lib.utils.extensions.toHexString
+import com.sonsofcrypto.web3lib.utils.extensions.*
 import com.sonsofcrypto.web3lib.utils.keccak256
 import io.ktor.utils.io.core.*
 
@@ -289,11 +286,74 @@ class Interface {
         data: ByteArray,
         topics: List<ByteArray> = emptyList()
     ): List<Any> {
+        var _topics = topics
         if (topics.isNotEmpty() && !fragment.anonymous) {
             val topicHash = eventTopic(fragment)
             if (topics[0].toHexString(false) != topicHash.toHexString(false))
-                throw Error.
+                throw Error.TopicFragmentMismatch(
+                    fragment,
+                    topicHash.toHexString(true),
+                    topics[0].toHexString(true)
+                )
+            _topics = topics.subList(1, topics.count())
         }
+
+        val indexed: MutableList<Param> = mutableListOf()
+        val nonIndexed: MutableList<Param> = mutableListOf()
+        val dynamic: MutableList<Boolean> = mutableListOf()
+
+        for (i in 0..fragment.inputs.size) {
+            val param = fragment.inputs[i]
+            if (!param.indexed) {
+                nonIndexed.add(param)
+                dynamic.add(false)
+                continue
+            }
+            if (
+                listOf("string", "bytes").contains(param.type) ||
+                listOf("tuple", "array").contains(param.baseType)
+            ) {
+                indexed.add(Param(param.name, "bytes32", ""))
+                dynamic.add(true)
+            } else {
+                indexed.add(param)
+                dynamic.add(false)
+            }
+        }
+
+        val resultIdx = if (_topics != null) decode(indexed, _topics.concant())
+                        else null
+        val resultNonIdx = decode(nonIndexed, data, true)
+        var indexedIdx: Int = 0
+        var nonIndexedIdx: Int = 0
+        var result: MutableList<Any> = mutableListOf(
+            (resultIdx?.size ?: 0) + resultNonIdx.size
+        )
+
+        data class Indexed(val isIndex: Boolean, val hash: ByteArray?)
+
+        for (i in 0..fragment.inputs.size) {
+            val param = fragment.inputs[i]
+            if (!param.indexed) {
+                try { result[i] = resultNonIdx[nonIndexedIdx++] }
+                catch (err: Throwable) { result[i] = err }
+            } else {
+                if (resultIdx == null) {
+                    result[i] = Indexed(true, null)
+                } else if (dynamic[i]) {
+                    result[i] = Indexed(
+                        true,
+                        resultIdx?.get(indexedIdx++) as? ByteArray
+                    )
+                } else {
+                    try { result[i] = resultIdx[indexedIdx++] }
+                    catch (err: Throwable) { result[i] = err }
+                }
+            }
+        }
+
+        // TODO: Figure out keyword
+        return result
     }
 
     /** Override to provide custom coder */
@@ -315,8 +375,11 @@ class Interface {
     private fun id(str: String): ByteArray = keccak256(str.toByteArray())
 
     @Throws(Throwable::class)
-    private fun decode(params: List<Param>, data: ByteArray): List<Any> =
-        abiCoder().decode(params, data)
+    private fun decode(
+        params: List<Param>,
+        data: ByteArray,
+        loose: Boolean = false
+    ): List<Any> = abiCoder().decode(params, data, loose)
 
     @Throws(Throwable::class)
     private fun encode(params: List<Param>, values: List<Any>): ByteArray =

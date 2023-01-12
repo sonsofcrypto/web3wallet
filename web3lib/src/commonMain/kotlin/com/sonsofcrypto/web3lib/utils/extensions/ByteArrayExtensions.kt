@@ -103,3 +103,9 @@ fun ByteArray.leftPadded(size: Int): ByteArray {
     }
     return byteArray
 }
+
+fun List<ByteArray>.concant(): ByteArray {
+    var result = ByteArray(0)
+    this.forEach { result += it }
+    return result
+}
