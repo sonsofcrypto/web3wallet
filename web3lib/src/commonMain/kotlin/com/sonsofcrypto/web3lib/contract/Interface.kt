@@ -411,6 +411,29 @@ class Interface {
         }
     }
 
+    data class ErrorDescription(
+        val args: List<Any>,
+        val fragment: ErrorFragment,
+        val name: String,
+        val signatre: String,
+        val sigHash: ByteArray,
+    )
+
+    fun parseError(data: ByteArray): ErrorDescription? {
+        try {
+            val fragm = error(data.copyOfRange(0, 4).toHexString(true))
+            return ErrorDescription(
+                decode(fragm.inputs, data.copyOfRange(4, data.size)),
+                fragm,
+                fragm.name,
+                fragm.format(),
+                sigHash(fragm.format())
+            )
+        } catch (err: Throwable) {
+            return null
+        }
+    }
+
     /** Override to provide custom coder */
     fun abiCoder(): AbiCoder = AbiCoder.default()
 
