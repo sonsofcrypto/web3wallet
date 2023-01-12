@@ -6,6 +6,7 @@ import com.sonsofcrypto.web3lib.utils.BundledAssetProvider
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
+import kotlinx.serialization.Serializable
 
 class InterfaceTests {
 
@@ -34,7 +35,11 @@ class InterfaceTests {
         }
     }
 
+    fun loadTestCases(fileName: String): ByteArray? =
+        BundledAssetProvider().file(fileName, "json")
+
     fun testAbiCoderEncoding() {
+        @Serializable
         data class TestCaseAbi(
             val name: String,
             val types: String,
@@ -43,12 +48,12 @@ class InterfaceTests {
             val normalizedValues: String,
         )
 
-        val bytes = BundledAssetProvider().file("contract_interface", "json")
+        val bytes = loadTestCases("contract_interface")
         val tests = jsonDecode<List<TestCaseAbi>>(String(bytes!!))
         val coder = AbiCoder.default()
 
         tests?.forEach {
-            val types = Param.from(fragmentTypesFrom(it.types)) ?: emptyList()
+            val types = Param.from(it.types) ?: listOf()
             val values = getValues(it.normalizedValues)
             val result = it.result
             val title = "${it.name} => ${it.types} = ${it.normalizedValues}"

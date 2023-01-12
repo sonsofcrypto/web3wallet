@@ -20,10 +20,6 @@ private val json = Json {
 fun fragmentsFrom(jsonString: String): List<JsonFragment> = json
     .decodeFromString<List<JsonFragment>>(jsonString)
 
-@Throws(Throwable::class)
-fun fragmentTypesFrom(jsonString: String): List<JsonFragmentType> = json
-    .decodeFromString<List<JsonFragmentType>>(jsonString)
-
 @Serializable
 data class JsonFragmentType(
     val name: String? = null,
@@ -284,6 +280,34 @@ data class Param(
         fun from(jsonFrags: List<JsonFragmentType>?): List<Param>? = jsonFrags
             ?.map { from(it) }
             ?.filterNotNull()
+
+        fun from(string: String, allowIndexed: Boolean = false): List<Param>? =
+            from(parseParamType(string, allowIndexed))
+
+        private fun from(parseNodes: List<ParseNode>): List<Param>? {
+            TODO("Implement")
+        }
+
+        private data class ParseNode(
+            val parent: Any?,
+            val type: String?,
+            val name: String?,
+            val state: State?,
+            val indexed: Boolean?,
+            val components: List<ParseNode>?,
+        ) {
+            data class State(
+                val allowArray: Boolean?,
+                val allowName: Boolean?,
+                val allowParams: Boolean?,
+                val allowType: Boolean?,
+                val readArray: Boolean?,
+            )
+        }
+
+        private fun parseParamType(string: String, allowIndexed: Boolean = false): List<ParseNode> {
+            TODO("Implement")
+        }
     }
 }
 

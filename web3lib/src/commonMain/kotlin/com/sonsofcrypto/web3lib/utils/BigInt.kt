@@ -18,6 +18,16 @@ import kotlinx.serialization.encoding.Encoder
 @Serializable(with = BigIntSerializer::class)
 class BigInt {
 
+    enum class Sign {
+        POSITIVE, NEGATIVE, ZERO;
+
+        internal fun toSign(): com.ionspin.kotlin.bignum.integer.Sign = when(this) {
+            POSITIVE -> com.ionspin.kotlin.bignum.integer.Sign.POSITIVE
+            NEGATIVE -> com.ionspin.kotlin.bignum.integer.Sign.NEGATIVE
+            ZERO -> com.ionspin.kotlin.bignum.integer.Sign.ZERO
+        }
+    }
+
     internal val storage: BigInteger
 
     internal constructor(storage: BigInteger) {
@@ -73,7 +83,7 @@ class BigInt {
         fun fromTwosComplement(byteArray: ByteArray): BigInt
             = BigInt(BigInteger.fromTwosComplementByteArray(byteArray))
         fun from(byteArray: ByteArray, sign: Sign = Sign.POSITIVE): BigInt
-            = BigInt(BigInteger.fromByteArray(byteArray, sign))
+            = BigInt(BigInteger.fromByteArray(byteArray, sign.toSign()))
         fun from(int: Int): BigInt = BigInt(BigInteger.fromInt(int))
         fun from(uint: UInt): BigInt = BigInt(BigInteger.fromUInt(uint))
         fun from(long: Long): BigInt = BigInt(BigInteger.fromLong(long))
