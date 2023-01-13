@@ -1,6 +1,8 @@
 package com.sonsofcrypto.web3lib.contract
 
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
+import com.sonsofcrypto.web3lib.utils.extensions.inv
 import com.sonsofcrypto.web3lib.utils.padTwosComplement
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
@@ -119,7 +121,7 @@ class Writer(val wordSize: Int = 32) {
     fun writeBytes(bytes: ByteArray): Int {
         val paddingOffset = bytes.size % wordSize
         return if (paddingOffset == 0) writeData(bytes)
-        else writeData(bytes + padding.copyOfRange(0, paddingOffset))
+        else writeData(bytes + padding.copyOfRange(paddingOffset, padding.size))
     }
 
     /** Padded on the left to wordSize */
@@ -127,9 +129,10 @@ class Writer(val wordSize: Int = 32) {
 
     fun writeSignedValue(value: BigInt, size: Int): Int {
         val bytes = padTwosComplement(value, size)
-        if (bytes.size > wordSize) {
+        var padding = if (value.isLessThan(BigInt.zero)) padding.inv()
+            else padding
+        if (bytes.size > wordSize)
             throw Error.OutOfBounds(value, wordSize)
-        }
         val result = if (bytes.size % wordSize == 0) bytes
         else padding.copyOfRange(bytes.size % wordSize, padding.size) + bytes
         return writeBytes(result)
@@ -141,7 +144,7 @@ class Writer(val wordSize: Int = 32) {
         dataLength += wordSize
         return { value: BigInt ->
             val bytes = this.getValue(value)
-            for (i in 0..bytes.size) {
+            for (i in bytes.indices) {
                 data[offset + i] = bytes[i]
             }
         }
@@ -300,7 +303,8 @@ class AddressCoder(localName: String):
 
     @Throws(Throwable::class)
     override fun encode(writer: Writer, value: Any): Int {
-        val data = value as? ByteArray
+        val data = (value as? ByteArray)
+            ?: (value as? String)?.hexStringToByteArray()
         return if (data != null) writer.writeValue(BigInt.from(data))
         else throw Error.UnexpectedType(this, value)
     }
@@ -529,7 +533,7 @@ class ArrayCoder(val coder: Coder, val length: Int, localName: String):
             writer.writeValue(BigInt.from(value.size))
         }
         checkArgumentCount(value.size, count, "coder array $localName")
-        val coders: List<Coder> = (0..value.size).map { coder }
+        val coders: List<Coder> = (0 until value.size).map { coder }
         return pack(writer, coders, value)
     }
 
@@ -553,7 +557,7 @@ class ArrayCoder(val coder: Coder, val length: Int, localName: String):
             if (count * 32 > reader.data.size)
                 throw Reader.Error.InsufficientDataSize(coder, reader.data.size)
         }
-        val coders: List<Coder> = (0..count).map { AnonymousCoder(coder) }
+        val coders: List<Coder> = (0 until count).map { AnonymousCoder(coder) }
         return reader.coerceFunc(name, unpack(reader, coders))
     }
 

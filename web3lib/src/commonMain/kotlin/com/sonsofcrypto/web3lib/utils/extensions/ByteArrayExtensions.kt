@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3lib.utils.extensions
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import com.ionspin.kotlin.bignum.integer.util.toTwosComplementByteArray
+import kotlin.experimental.inv
 import kotlin.experimental.or
 
 /** Hex string */
@@ -98,8 +99,16 @@ fun ByteArray.zeroOut() {
 
 fun ByteArray.leftPadded(size: Int): ByteArray {
     var byteArray = ByteArray(size)
-    for (i in 0..this.size) {
-        byteArray.set(byteArray.size - this.size + i, this.get(i))
+    this.indices.forEach {
+        byteArray.set(byteArray.size - this.size + it, this.get(it))
+    }
+    return byteArray
+}
+
+fun ByteArray.inv(): ByteArray {
+    var byteArray = ByteArray(size)
+    this.indices.forEach {
+        byteArray.set(it, this.get(it).inv())
     }
     return byteArray
 }

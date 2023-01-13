@@ -227,7 +227,7 @@ class Interface {
             return (value as ByteArray).leftPadded(32)
         }
 
-        for (i in 0..values.size) {
+        for (i in 0 until values.size) {
             val param = fragment.inputs[i]
             val value = values[i]
             val valueArray = values as? List<Any>
@@ -305,7 +305,7 @@ class Interface {
         val nonIndexed: MutableList<Param> = mutableListOf()
         val dynamic: MutableList<Boolean> = mutableListOf()
 
-        for (i in 0..fragment.inputs.size) {
+        for (i in 0 until fragment.inputs.size) {
             val param = fragment.inputs[i]
             if (!param.indexed) {
                 nonIndexed.add(param)
@@ -333,7 +333,7 @@ class Interface {
             (resultIdx?.size ?: 0) + resultNonIdx.size
         )
 
-        for (i in 0..fragment.inputs.size) {
+        for (i in 0 until fragment.inputs.size) {
             val param = fragment.inputs[i]
             if (!param.indexed) {
                 try { result[i] = resultNonIdx[nonIndexedIdx++] }

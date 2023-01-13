@@ -65,19 +65,18 @@ class InterfaceTests {
         val tests = jsonDecode<List<TestCaseAbi>>(String(bytes!!))
         val coder = AbiCoder.default()
 
-        tests?.subList(22, tests.size)?.forEachIndexed { i, t ->
-//        tests?.forEachIndexed { i, t ->
+//        tests?.subList(25, tests.size)?.forEachIndexed { i, t ->
+        tests?.forEachIndexed { i, t ->
             val types = Param.fromStringParams(t.types).mapNotNull { it }
             val strNormVals = t.normalizedValues.stringValue()
             val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
             val title = "${t.name} => ${t.types} = ${strNormVals}"
             println("testAbiCoderEncoding $i $title")
-//            println("$types $values")
             val encoded = coder.encode(types, values as List<Any>)
                 .toHexString(true)
             assertTrue(
                 encoded == t.result,
-                "encoded: $encoded, expected: ${t.result}"
+                "\nencoded:  $encoded,\nexpected: ${t.result}"
             )
         }
     }
