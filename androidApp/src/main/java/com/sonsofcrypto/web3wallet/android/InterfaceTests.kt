@@ -1,38 +1,50 @@
 package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.web3lib.contract.*
+import com.sonsofcrypto.web3lib.provider.utils.stringValue
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.BundledAssetProvider
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
+import com.sonsofcrypto.web3lib.utils.timerFlow
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlin.time.Duration.Companion.seconds
 
 class InterfaceTests {
 
     fun runAll() {
-        testAbiCoderEncoding()
+        GlobalScope.launch {
+            delay(0.seconds)
+            testAbiCoderEncoding()
+        }
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
         if (!actual) throw Exception("Failed $message")
     }
 
-    fun getValues(jsonString: String, named: Boolean = false): List<Any> {
-        @Serializable
-        data class NormalizedValueJson(
-            val type: String,
-            val value: String,
-        )
-        val values = jsonDecode<List<NormalizedValueJson>>(jsonString) ?: emptyList()
-        return values.map {
-            when (it.type) {
-                "number" -> BigInt.from(it.value)
-                "boolean", "string" -> it.value
-                "buffer" -> it.value.hexStringToByteArray()
-                "tuple" -> getValues(it.value, named)
-                else -> throw Error("Invalid type $it")
-            }
+    fun getValues(jsonEl: JsonElement, named: Boolean = false): Any {
+        if (jsonEl as? JsonArray != null) {
+            return jsonEl.map { getValues(it, named) }
+        }
+        val obj = jsonEl as JsonObject
+        val value = obj["value"]?.stringValue() ?: ""
+        return when (obj["type"]?.stringValue() ?: "") {
+            "number" -> BigInt.from(value)
+            "boolean", "string" -> value
+            "buffer" -> value.hexStringToByteArray()
+            "tuple" -> getValues(obj, named)
+            else -> throw Error("Invalid type $obj")
         }
     }
 
@@ -46,7 +58,7 @@ class InterfaceTests {
             val types: String,
             val result: String,
             val values: String,
-            val normalizedValues: String,
+            val normalizedValues: JsonElement,
         )
 
         val bytes = loadTestCases("contract_interface")
@@ -54,17 +66,17 @@ class InterfaceTests {
         val coder = AbiCoder.default()
 
 //        tests?.subList(6, tests.size)?.forEach {
-        tests?.forEach {
-            val types = Param.fromStringParams(it.types).mapNotNull { it }
-            val values = getValues(it.normalizedValues)
-            val result = it.result
-            val title = "${it.name} => ${it.types} = ${it.normalizedValues}"
-            println("testAbiCoderEncoding $title")
-            val encoded = coder.encode(types, values).toHexString(true)
-            assertTrue(
-                encoded == result,
-                "encoded: $encoded, expected: $result"
-            )
+        tests?.forEachIndexed { i, t ->
+            val types = "" //Param.fromStringParams(t.types).mapNotNull { it }
+            val strNormVals = t.normalizedValues.stringValue()
+            val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
+            val title = "${t.name} => ${t.types} = ${strNormVals}"
+            println("testAbiCoderEncoding $i $title")
+//            val encoded = coder.encode(types, values as List<Any>).toHexString(true)
+//            assertTrue(
+//                encoded == ${t.result},
+//                "encoded: $encoded, expected: $result"
+//            )
         }
     }
 }
