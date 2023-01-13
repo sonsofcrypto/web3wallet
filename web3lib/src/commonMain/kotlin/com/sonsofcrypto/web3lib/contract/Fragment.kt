@@ -289,24 +289,100 @@ data class Param(
         }
 
         private data class ParseNode(
-            val parent: Any?,
-            val type: String?,
-            val name: String?,
-            val state: State?,
-            val indexed: Boolean?,
-            val components: List<ParseNode>?,
+            var parent: ParseNode? = null,
+            var type: String? = null,
+            var name: String? = null,
+            var state: State? = null,
+            var indexed: Boolean? = null,
+            var components: List<ParseNode>? = null,
         ) {
             data class State(
-                val allowArray: Boolean?,
-                val allowName: Boolean?,
-                val allowParams: Boolean?,
-                val allowType: Boolean?,
-                val readArray: Boolean?,
+                var allowArray: Boolean = false,
+                var allowName: Boolean = false,
+                var allowParams: Boolean = false,
+                var allowType: Boolean = false,
+                var readArray: Boolean = false,
             )
         }
 
-        private fun parseParamType(string: String, allowIndexed: Boolean = false): List<ParseNode> {
-            TODO("Implement")
+        private fun parseParamType(
+            string: String,
+            allowIndexed: Boolean = false
+        ): List<ParseNode> {
+            val originalParam = string
+            var param = string
+
+            param = param.replace("\\s".toRegex(), " ")
+
+            fun newNode(parent: ParseNode): ParseNode {
+                val node = ParseNode(
+                    type = "",
+                    name = "",
+                    parent = parent,
+                    state = ParseNode.State(allowType = true)
+                )
+                if (allowIndexed)
+                    node.indexed = false
+                return node
+            }
+
+            var parent = ParseNode(
+                type = "",
+                name = "",
+                state = ParseNode.State(allowType = true)
+            )
+            var node = parent
+
+            for (i in 0..param.length) {
+                val c = param[i].toString()
+                when (c) {
+                    "(" -> {
+                        if (node.state?.allowType == true && node.type == "") {
+                            node.type = "tuple"
+                        } else if (node.state?.allowParams != true) {
+                            throw Error.UnexpectedChar(param, i, c)
+                        }
+                        node.state?.allowType = false
+                        node.type = verifiedType(node.type ?: "")
+                        node.components = listOf(node)
+                        node = node.components?.get(0) ?: node
+                    }
+                    ")" -> {
+                        node.state = null
+                        if (node.name == "indexed") {
+                            if (!allowIndexed)
+                                throw Error.UnexpectedChar(param, i, c)
+                            node.indexed = true
+                            node.name = ""
+                        }
+                        if (checkModifier(node.type ?: "", node.name ?: ""))
+                            node.name = ""
+                        node.type = verifiedType(node.type ?: "")
+
+                        var child: ParseNode = node
+                        if (node.parent != null) node = node.parent!!
+                        else throw Error.UnexpectedChar(param, i, c)
+                        child.parent = null
+                        node.state?.allowParams = false
+                        node.state?.allowName = true
+                        node.state?.allowArray = true
+                    }
+                    "," -> {
+                        node.state = null
+                        if (node.name == "indexed") {
+                            if (!allowIndexed)
+                                throw Error.UnexpectedChar(param, i, c)
+                            node.indexed = true
+                            node.name = ""
+                        }
+
+                    }
+                    " " -> {}
+                    "[" -> {}
+                    "]" -> {}
+                    else -> {}
+                }
+            }
         }
     }
 }
@@ -340,6 +416,9 @@ sealed class Error(
     /** Attempted unsupported operation */
     data class UnsupportedOp(val string: String):
         Error("Unsupported operation $string")
+    /** Errors during parsing params from string */
+    data class UnexpectedChar(val str: String, val idx: Int, val char: String):
+        Error("Unexpected char $char at idx $idx in $str during parsing node")
 }
 
 private const val ARRAY_PATTERN = "^(.*)\\[([0-9]*)\\]\$"
@@ -404,4 +483,25 @@ private fun verifiedState(value: JsonFragment): StateOutput {
     }
 
     return StateOutput(constant, payable, stateMutability)
+}
+
+private val modifiersBytes = listOf("calldata", "mememory", "storage")
+private val modifiersNest = listOf("calldata", "mememory")
+
+@Throws(Throwable::class)
+private fun checkModifier(type: String, name: String): Boolean {
+    if (type == "bytes" || type == "string") {
+        if (modifiersBytes.contains(name))
+            return true
+    } else if (type == "address") {
+        if (name == "payable")
+            return true
+    } else if (type.indexOf("[") >= 0 || type == "tuple") {
+        if (modifiersNest.contains(name))
+            return true
+    }
+    if(modifiersNest.contains(name) || name == "payable") {
+        throw Error("Invalid modifier name $name")
+    }
+    return false
 }
