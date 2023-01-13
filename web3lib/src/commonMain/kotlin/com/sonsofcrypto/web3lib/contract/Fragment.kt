@@ -287,103 +287,6 @@ data class Param(
         private fun from(parseNodes: List<ParseNode>): List<Param>? {
             TODO("Implement")
         }
-
-        private data class ParseNode(
-            var parent: ParseNode? = null,
-            var type: String? = null,
-            var name: String? = null,
-            var state: State? = null,
-            var indexed: Boolean? = null,
-            var components: List<ParseNode>? = null,
-        ) {
-            data class State(
-                var allowArray: Boolean = false,
-                var allowName: Boolean = false,
-                var allowParams: Boolean = false,
-                var allowType: Boolean = false,
-                var readArray: Boolean = false,
-            )
-        }
-
-        private fun parseParamType(
-            string: String,
-            allowIndexed: Boolean = false
-        ): List<ParseNode> {
-            val originalParam = string
-            var param = string
-
-            param = param.replace("\\s".toRegex(), " ")
-
-            fun newNode(parent: ParseNode): ParseNode {
-                val node = ParseNode(
-                    type = "",
-                    name = "",
-                    parent = parent,
-                    state = ParseNode.State(allowType = true)
-                )
-                if (allowIndexed)
-                    node.indexed = false
-                return node
-            }
-
-            var parent = ParseNode(
-                type = "",
-                name = "",
-                state = ParseNode.State(allowType = true)
-            )
-            var node = parent
-
-            for (i in 0..param.length) {
-                val c = param[i].toString()
-                when (c) {
-                    "(" -> {
-                        if (node.state?.allowType == true && node.type == "") {
-                            node.type = "tuple"
-                        } else if (node.state?.allowParams != true) {
-                            throw Error.UnexpectedChar(param, i, c)
-                        }
-                        node.state?.allowType = false
-                        node.type = verifiedType(node.type ?: "")
-                        node.components = listOf(node)
-                        node = node.components?.get(0) ?: node
-                    }
-                    ")" -> {
-                        node.state = null
-                        if (node.name == "indexed") {
-                            if (!allowIndexed)
-                                throw Error.UnexpectedChar(param, i, c)
-                            node.indexed = true
-                            node.name = ""
-                        }
-                        if (checkModifier(node.type ?: "", node.name ?: ""))
-                            node.name = ""
-                        node.type = verifiedType(node.type ?: "")
-
-                        var child: ParseNode = node
-                        if (node.parent != null) node = node.parent!!
-                        else throw Error.UnexpectedChar(param, i, c)
-                        child.parent = null
-                        node.state?.allowParams = false
-                        node.state?.allowName = true
-                        node.state?.allowArray = true
-                    }
-                    "," -> {
-                        node.state = null
-                        if (node.name == "indexed") {
-                            if (!allowIndexed)
-                                throw Error.UnexpectedChar(param, i, c)
-                            node.indexed = true
-                            node.name = ""
-                        }
-
-                    }
-                    " " -> {}
-                    "[" -> {}
-                    "]" -> {}
-                    else -> {}
-                }
-            }
-        }
     }
 }
 
@@ -504,4 +407,170 @@ private fun checkModifier(type: String, name: String): Boolean {
         throw Error("Invalid modifier name $name")
     }
     return false
+}
+
+private data class ParseNode(
+    var parent: ParseNode? = null,
+    var type: String? = null,
+    var name: String? = null,
+    var state: State? = null,
+    var indexed: Boolean? = null,
+    var components: List<ParseNode>? = null,
+) {
+    data class State(
+        var allowArray: Boolean = false,
+        var allowName: Boolean = false,
+        var allowParams: Boolean = false,
+        var allowType: Boolean = false,
+        var readArray: Boolean = false,
+    )
+}
+
+@Throws(Throwable::class)
+private fun parseParamType(
+    string: String,
+    allowIndexed: Boolean = false
+): ParseNode {
+    val originalParam = string
+    var param = string
+
+    param = param.replace("\\s".toRegex(), " ")
+
+    fun newNode(parent: ParseNode?): ParseNode {
+        val stt = ParseNode.State(allowType = true)
+        val node = ParseNode(type = "", name = "", parent = parent, state = stt)
+        if (allowIndexed)
+            node.indexed = false
+        return node
+    }
+
+    val state = ParseNode.State(allowType = true)
+    var parent = ParseNode(type = "", name = "", state = state)
+    var node = parent
+
+    for (i in 0..param.length) {
+        val c = param[i].toString()
+        when (c) {
+            "(" -> {
+                if (node.state?.allowType == true && node.type == "") {
+                    node.type = "tuple"
+                } else if (node.state?.allowParams != true) {
+                    throw Error.UnexpectedChar(param, i, c)
+                }
+                node.state?.allowType = false
+                node.type = verifiedType(node.type ?: "")
+                node.components = listOf(node)
+                node = node.components?.get(0) ?: node
+            }
+            ")" -> {
+                node.state = null
+                if (node.name == "indexed") {
+                    if (!allowIndexed)
+                        throw Error.UnexpectedChar(param, i, c)
+                    node.indexed = true
+                    node.name = ""
+                }
+                if (checkModifier(node.type ?: "", node.name ?: ""))
+                    node.name = ""
+                node.type = verifiedType(node.type ?: "")
+
+                var child: ParseNode = node
+                if (node.parent != null) node = node.parent!!
+                else throw Error.UnexpectedChar(param, i, c)
+                child.parent = null
+                node.state?.allowParams = false
+                node.state?.allowName = true
+                node.state?.allowArray = true
+            }
+            "," -> {
+                node.state = null
+                if (node.name == "indexed") {
+                    if (!allowIndexed)
+                        throw Error.UnexpectedChar(param, i, c)
+                    node.indexed = true
+                    node.name = ""
+                }
+                if (checkModifier(node.type ?: "", node.name ?: ""))
+                    node.name = ""
+                node.type = verifiedType(node.type ?: "")
+                val sibling: ParseNode = newNode(node.parent)
+                //{ type: "", name: "", parent: node.parent, state: { allowType: true } };
+                val comps = (node.parent?.components ?: emptyList()) +
+                        listOf(sibling)
+                node.parent?.components = comps
+                node.parent = null
+                node = sibling
+            }
+            " " -> {
+                // If reading type, type is done and may read a param or name
+                if (node.state?.allowType == true && node.type != "") {
+                    node.type = verifiedType(node.type ?: "")
+                    node.state?.allowType = false
+                    node.state?.allowName = true
+                    node.state?.allowParams = true
+                }
+                // If reading name, the name is done
+                if (node.state?.allowName == true && node.name != "") {
+                    if (node.name == "indexed") {
+                        if (!allowIndexed)
+                            throw Error.UnexpectedChar(param, i, c)
+                        if (node?.indexed == true)
+                            throw Error.UnexpectedChar(param, i, c)
+                        node.indexed = true
+                        node.name = ""
+                    } else if (checkModifier(node.type ?: "", node.name ?: "")) {
+                        node.name = ""
+                    } else {
+                        node.state?.allowName = false
+                    }
+                }
+            }
+            "[" -> {
+                if (node.state?.allowArray != true)
+                    throw Error.UnexpectedChar(param, i, c)
+                node.type += c
+                node.state?.allowArray = false
+                node.state?.allowName = false
+                node.state?.readArray = true
+            }
+            "]" -> {
+                if (node.state?.allowArray != true)
+                    throw Error.UnexpectedChar(param, i, c)
+                node.type += c
+                node.state?.readArray = false
+                node.state?.allowName = true
+                node.state?.allowArray = true
+            }
+            else -> {
+                if (node.state?.allowType == true) {
+                    node.type += c
+                    node.state?.allowParams = true
+                    node.state?.allowArray = true
+                } else if (node.state?.allowName == true) {
+                    node.type += c
+                    node.state?.allowArray = false
+                } else if (node.state?.readArray == true) {
+                    node.type += c
+                } else {
+                    throw Error.UnexpectedChar(param, i, c)
+                }
+            }
+        }
+    }
+
+    if (node.parent != null) throw Error("unexpected eof $param")
+
+    parent.state = null
+
+    if (node.name == "indexed") {
+        if (!allowIndexed || node.indexed == true)
+            throw Error.UnexpectedChar(param, originalParam.length - 7, "")
+        node.indexed = true
+        node.name = ""
+    } else if (checkModifier(node.type ?: "", node.name ?: "")) {
+        node.name = ""
+    }
+
+    parent.type = verifiedType(parent.type ?: "")
+    return parent
 }
