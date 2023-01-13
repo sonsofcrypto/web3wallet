@@ -583,7 +583,7 @@ private fun parseParam(
                 node.state?.readArray = true
             }
             "]" -> {
-                if (node.state?.allowArray != true)
+                if (node.state?.readArray != true)
                     throw Error.UnexpectedChar(param, i, c)
                 node.type += c
                 node.state?.readArray = false
