@@ -72,6 +72,7 @@ class InterfaceTests {
             val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
             val title = "${t.name} => ${t.types} = ${strNormVals}"
             println("testAbiCoderEncoding $i $title")
+            println("$types $values")
             val encoded = coder.encode(types, values as List<Any>)
                 .toHexString(true)
             assertTrue(
