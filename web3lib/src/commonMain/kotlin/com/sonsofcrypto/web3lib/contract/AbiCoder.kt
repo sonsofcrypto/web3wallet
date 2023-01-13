@@ -131,7 +131,7 @@ class Writer(val wordSize: Int = 32) {
             throw Error.OutOfBounds(value, wordSize)
         }
         val result = if (bytes.size % wordSize == 0) bytes
-        else padding.copyOfRange(0, bytes.size % wordSize) + bytes
+        else padding.copyOfRange(bytes.size % wordSize, padding.size) + bytes
         return writeBytes(result)
     }
 
@@ -149,6 +149,7 @@ class Writer(val wordSize: Int = 32) {
 
     private fun writeData(data: ByteArray): Int {
         this.data += data
+        this.data += data
         this.dataLength += data.size
         return data.size
     }
@@ -159,7 +160,7 @@ class Writer(val wordSize: Int = 32) {
             throw Error.OutOfBounds(value, wordSize)
         }
         return if (bytes.size % wordSize == 0) bytes
-        else padding.copyOfRange(0, bytes.size % wordSize) + bytes
+        else padding.copyOfRange(bytes.size % wordSize, padding.size) + bytes
     }
 
     /** Errors */
