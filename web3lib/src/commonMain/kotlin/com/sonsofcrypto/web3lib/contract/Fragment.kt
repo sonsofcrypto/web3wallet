@@ -22,11 +22,11 @@ fun fragmentsFrom(jsonString: String): List<JsonFragment> = json
 
 @Serializable
 data class JsonFragmentType(
-    val name: String? = null,
-    val indexed: Boolean? = null,
-    val type: String? = null,
-    val internalType: String? = null,
-    val components: List<JsonFragmentType>? = null,
+    var name: String? = null,
+    var indexed: Boolean? = null,
+    var type: String? = null,
+    var internalType: String? = null,
+    var components: List<JsonFragmentType>? = null,
 )
 
 @Serializable
@@ -226,6 +226,13 @@ data class Param(
     var arrayChildren: Param? = null,
 ) {
 
+    interface SourceObject {
+        val type: String?
+        val name: String?
+        val indexed: Boolean?
+        val components: List<SourceObject>?
+    }
+
     fun format(format: Fragment.Format): String = when(format) {
         Fragment.Format.STRING -> "Param(" +
             "name=$name, " +
@@ -281,12 +288,14 @@ data class Param(
             ?.map { from(it) }
             ?.filterNotNull()
 
-        fun from(string: String, allowIndexed: Boolean = false): List<Param>? =
-            from(parseParamType(string, allowIndexed))
+        fun from(string: String, allowIndexed: Boolean = false): Param? =
+            from(parseParam(string, allowIndexed).toJsonFragmentType())
 
-        private fun from(parseNodes: List<ParseNode>): List<Param>? {
-            TODO("Implement")
-        }
+        @Throws(Throwable::class)
+        fun fromStringParams(
+            value: String,
+            allowIndexed: Boolean
+        ): List<Param?> = splitNesting(value).map { from(it, allowIndexed) }
     }
 }
 
@@ -424,10 +433,45 @@ private data class ParseNode(
         var allowType: Boolean = false,
         var readArray: Boolean = false,
     )
+
+    fun toJsonFragmentType(): JsonFragmentType = JsonFragmentType(
+        name = this.name,
+        indexed = this.indexed,
+        type = this.type,
+        components = this.components?.map { it.toJsonFragmentType() },
+    )
 }
 
 @Throws(Throwable::class)
-private fun parseParamType(
+private fun splitNesting(value: String): List<String> {
+    var value = value.trim()
+    var result: MutableList<String> = mutableListOf()
+    var accum = ""
+    var depth = 0
+    for (i in 0..value.length) {
+        val c = value[i].toString()
+        if (c == "," && depth == 0) {
+            result.add(accum)
+            accum = ""
+        } else {
+            accum += c
+            if (c == "(") {
+                depth += 1
+            } else if (c == ")") {
+                depth -= 1
+                if (depth == -1) {
+                    throw Error("unbalanced parenthesis $value")
+                }
+            }
+        }
+    }
+    if (accum.isNotEmpty())
+        result.add(accum)
+    return result
+}
+
+@Throws(Throwable::class)
+private fun parseParam(
     string: String,
     allowIndexed: Boolean = false
 ): ParseNode {
