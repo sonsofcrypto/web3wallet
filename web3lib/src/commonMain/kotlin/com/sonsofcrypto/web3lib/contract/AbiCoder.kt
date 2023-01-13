@@ -149,7 +149,6 @@ class Writer(val wordSize: Int = 32) {
 
     private fun writeData(data: ByteArray): Int {
         this.data += data
-        this.data += data
         this.dataLength += data.size
         return data.size
     }
@@ -585,7 +584,6 @@ private fun pack(writer: Writer, coders: List<Coder>, value: List<Any>): Int {
             updateFuncs.add { baseOffset: Int ->
                 updateFunc(BigInt.from(baseOffset + dynamicOffset))
             }
-
         } else coder.encode(staticWriter, value)
     }
     // Back-fill all the dynamic offsets, now that we know the static length
