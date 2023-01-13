@@ -19,6 +19,7 @@ class InterfaceTests {
     }
 
     fun getValues(jsonString: String, named: Boolean = false): List<Any> {
+        @Serializable
         data class NormalizedValueJson(
             val type: String,
             val value: String,
@@ -53,13 +54,9 @@ class InterfaceTests {
         val coder = AbiCoder.default()
 
         tests?.forEach {
-            println("=== 1")
             val types = Param.fromStringParams(it.types).mapNotNull { it }
-            println("=== 2")
             val values = getValues(it.normalizedValues)
-            println("=== 3")
             val result = it.result
-            println("=== 4")
             val title = "${it.name} => ${it.types} = ${it.normalizedValues}"
             println("testAbiCoderEncoding $title")
             val encoded = coder.encode(types, values).toHexString(true)

@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3lib.contract
 
+import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -295,7 +296,9 @@ data class Param(
         fun fromStringParams(
             value: String,
             allowIndexed: Boolean = false
-        ): List<Param?> = splitNesting(value).map { from(it, allowIndexed) }
+        ): List<Param?> = (jsonDecode<List<String>>(value) ?: emptyList())
+            .map { from(it, allowIndexed) }
+        // NOTE: maybe splitNesting(value).map { from(it, allowIndexed) }
     }
 }
 
@@ -341,7 +344,7 @@ private fun verifiedType(type: String): String {
     if (Regex("^uint(\$|[^1-9])").matchEntire(type) != null) {
         return "uint256" + type.substring(4)
     }
-    if (Regex("^uint(\$|[^1-9])").matchEntire(type) != null) {
+    if (Regex("^int(\$|[^1-9])").matchEntire(type) != null) {
         return "int256" + type.substring(3)
     }
     return type
@@ -448,8 +451,9 @@ private fun splitNesting(value: String): List<String> {
     var result: MutableList<String> = mutableListOf()
     var accum = ""
     var depth = 0
-    for (i in 0..value.length) {
-        val c = value[i].toString()
+    println("=== split nesting 1")
+    value.forEach { char ->
+        val c = char.toString()
         if (c == "," && depth == 0) {
             result.add(accum)
             accum = ""
@@ -467,6 +471,7 @@ private fun splitNesting(value: String): List<String> {
     }
     if (accum.isNotEmpty())
         result.add(accum)
+    println("=== split nesting 2 $value $result")
     return result
 }
 
@@ -492,7 +497,7 @@ private fun parseParam(
     var parent = ParseNode(type = "", name = "", state = state)
     var node = parent
 
-    for (i in 0..param.length) {
+    for (i in 0 until param.length) {
         val c = param[i].toString()
         when (c) {
             "(" -> {
