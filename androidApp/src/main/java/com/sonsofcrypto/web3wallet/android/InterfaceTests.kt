@@ -53,6 +53,7 @@ class InterfaceTests {
         val tests = jsonDecode<List<TestCaseAbi>>(String(bytes!!))
         val coder = AbiCoder.default()
 
+//        tests?.subList(6, tests.size)?.forEach {
         tests?.forEach {
             val types = Param.fromStringParams(it.types).mapNotNull { it }
             val values = getValues(it.normalizedValues)

@@ -125,6 +125,16 @@ class Writer(val wordSize: Int = 32) {
     /** Padded on the left to wordSize */
     fun writeValue(value: BigInt): Int = writeData(getValue(value))
 
+    fun writeSignedValue(value: BigInt, size: Int): Int {
+        val bytes = padTwosComplement(value, size)
+        if (bytes.size > wordSize) {
+            throw Error.OutOfBounds(value, wordSize)
+        }
+        val result = if (bytes.size % wordSize == 0) bytes
+        else padding.copyOfRange(0, bytes.size % wordSize) + bytes
+        return writeBytes(result)
+    }
+
     fun writeUpdatableValue(): ((value: BigInt) -> Unit) {
         val offset = data.size
         data += padding
@@ -365,7 +375,7 @@ class NumberCoder(val size: Int, val signed: Boolean, localName: String):
     override fun encode(writer: Writer, value: Any): Int {
         (value as? BigInt)?.let {
             checkValueBounds(it)
-            return if (signed) writer.writeBytes(padTwosComplement(it, size))
+            return if (signed) writer.writeSignedValue(it, size)
             else writer.writeValue(it)
         }
         throw Error.UnexpectedType(this, value)
