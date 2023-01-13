@@ -294,7 +294,7 @@ data class Param(
         @Throws(Throwable::class)
         fun fromStringParams(
             value: String,
-            allowIndexed: Boolean
+            allowIndexed: Boolean = false
         ): List<Param?> = splitNesting(value).map { from(it, allowIndexed) }
     }
 }
