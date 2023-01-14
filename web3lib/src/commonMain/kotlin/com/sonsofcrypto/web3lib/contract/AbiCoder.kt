@@ -312,7 +312,7 @@ class AddressCoder(localName: String):
     }
 
     @Throws(Throwable::class)
-    override fun decode(reader: Reader): Any = reader.readValue()
+    override fun decode(reader: Reader): Any = reader.readValue().toByteArray()
 
     @Throws(Throwable::class)
     override fun defaultValue(): Any = ByteArray(40)

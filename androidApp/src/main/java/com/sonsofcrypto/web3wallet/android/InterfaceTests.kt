@@ -87,6 +87,12 @@ class InterfaceTests {
         val tests = jsonDecode<List<TestCaseAbi>>(String(bytes!!))
         val coder = AbiCoder.default()
 
+        fun stringify(value: Any?): String = when {
+            value is ByteArray -> value.toHexString(true)
+            value is List<Any?> -> value.map { stringify(it) }.toString()
+            else -> value.toString()
+        }
+
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
             val types = Param.fromStringParams(t.types).mapNotNull { it }
             val strNormVals = t.normalizedValues.stringValue()
@@ -94,11 +100,11 @@ class InterfaceTests {
             val result = t.result.hexStringToByteArray()
             val title = "${t.name} => ${t.types} = ${strNormVals}"
             println("testAbiCoderDecoding $i $title")
-//            val decoded = coder.decode(types, result)
-//            assertTrue(
-//                decoded == values,
-//                "\ndencoded:  $decoded,\nexpected: ${values}"
-//            )
+            val decoded = coder.decode(types, result)
+            assertTrue(
+                stringify(decoded).lowercase() == stringify(values).lowercase(),
+                "\ndencoded: ${stringify(decoded)},\nexpected: ${stringify(values)}"
+            )
         }
     }
 }
