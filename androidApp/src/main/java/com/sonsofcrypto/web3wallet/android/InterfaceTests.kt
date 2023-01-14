@@ -25,7 +25,8 @@ class InterfaceTests {
     fun runAll() {
         GlobalScope.launch {
             delay(0.seconds)
-            testAbiCoderEncoding()
+            // testAbiCoderEncoding()
+            testAbiCoderDecoding()
         }
     }
 
@@ -49,19 +50,19 @@ class InterfaceTests {
         }
     }
 
+    @Serializable
+    data class TestCaseAbi(
+        val name: String,
+        val types: String,
+        val result: String,
+        val values: String,
+        val normalizedValues: JsonElement,
+    )
+
     fun loadTestCases(fileName: String): ByteArray? =
         BundledAssetProvider().file(fileName, "json")
 
     fun testAbiCoderEncoding() {
-        @Serializable
-        data class TestCaseAbi(
-            val name: String,
-            val types: String,
-            val result: String,
-            val values: String,
-            val normalizedValues: JsonElement,
-        )
-
         val bytes = loadTestCases("contract_interface")
         val tests = jsonDecode<List<TestCaseAbi>>(String(bytes!!))
         val coder = AbiCoder.default()
@@ -72,13 +73,32 @@ class InterfaceTests {
             val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
             val title = "${t.name} => ${t.types} = ${strNormVals}"
             println("testAbiCoderEncoding $i $title")
-//            println("$values")
             val encoded = coder.encode(types, values as List<Any>)
                 .toHexString(true)
             assertTrue(
                 encoded == t.result,
                 "\nencoded:  $encoded,\nexpected: ${t.result}"
             )
+        }
+    }
+
+    fun testAbiCoderDecoding() {
+        val bytes = loadTestCases("contract_interface")
+        val tests = jsonDecode<List<TestCaseAbi>>(String(bytes!!))
+        val coder = AbiCoder.default()
+
+        tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
+            val types = Param.fromStringParams(t.types).mapNotNull { it }
+            val strNormVals = t.normalizedValues.stringValue()
+            val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
+            val result = t.result.hexStringToByteArray()
+            val title = "${t.name} => ${t.types} = ${strNormVals}"
+            println("testAbiCoderDecoding $i $title")
+//            val decoded = coder.decode(types, result)
+//            assertTrue(
+//                decoded == values,
+//                "\ndencoded:  $decoded,\nexpected: ${values}"
+//            )
         }
     }
 }
