@@ -232,7 +232,7 @@ class Reader(
 
         @Throws(Throwable::class)
         private fun bigIntToInt(value: Any): Any {
-            (value as? BigInt)?.let { return it.toString().toInt() }
+            (value as? BigInt)?.let { return it.toString().toLong() }
             return value
         }
     }
