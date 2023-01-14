@@ -41,7 +41,8 @@ class InterfaceTests {
         val value = obj["value"]?.stringValue() ?: ""
         return when (obj["type"]?.stringValue() ?: "") {
             "number" -> BigInt.from(value)
-            "boolean", "string" -> value
+            "boolean" -> value.toBoolean()
+            "string" -> value
             "buffer" -> value.hexStringToByteArray()
             "tuple" -> getValues(obj, named)
             else -> throw Error("Invalid type $obj")
@@ -65,13 +66,14 @@ class InterfaceTests {
         val tests = jsonDecode<List<TestCaseAbi>>(String(bytes!!))
         val coder = AbiCoder.default()
 
-//        tests?.subList(25, tests.size)?.forEachIndexed { i, t ->
+//        tests?.subList(45, tests.size)?.forEachIndexed { i, t ->
         tests?.forEachIndexed { i, t ->
             val types = Param.fromStringParams(t.types).mapNotNull { it }
             val strNormVals = t.normalizedValues.stringValue()
             val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
             val title = "${t.name} => ${t.types} = ${strNormVals}"
             println("testAbiCoderEncoding $i $title")
+//            println("$values")
             val encoded = coder.encode(types, values as List<Any>)
                 .toHexString(true)
             assertTrue(

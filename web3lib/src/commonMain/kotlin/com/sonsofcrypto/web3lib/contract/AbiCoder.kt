@@ -334,7 +334,7 @@ class BooleanCoder(localName: String): Coder("bool", "bool", localName, false) {
     @Throws(Throwable::class)
     override fun encode(writer: Writer, value: Any): Int {
         val bool = value as? Boolean
-        return if (bool != null) writer.writeValue(BigInt.from(value))
+        return if (bool != null) writer.writeValue(BigInt.from(bool))
         else throw Error.UnexpectedType(this, value)
     }
 

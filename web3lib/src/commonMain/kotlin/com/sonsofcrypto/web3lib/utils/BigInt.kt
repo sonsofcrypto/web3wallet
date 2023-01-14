@@ -29,6 +29,7 @@ class BigInt {
     }
 
     internal val storage: BigInteger
+    internal var fromBool: Boolean = false
 
     internal constructor(storage: BigInteger) {
         this.storage = storage
@@ -41,7 +42,9 @@ class BigInt {
     fun div(value: BigInt): BigInt = BigInt(storage.divide(value.storage))
     fun pow(value: Long): BigInt = BigInt(storage.pow(value))
 
-    fun toByteArray(): ByteArray = storage.toByteArray()
+    fun toByteArray(): ByteArray = if (fromBool && storage.toByteArray().isEmpty())
+            ByteArray(1)
+        else storage.toByteArray()
     fun toTwosComplement(): ByteArray = storage.toTwosComplementByteArray()
     fun toHexString(): String = storage.toString(16)
     fun toDecimalString(): String = toString()
@@ -88,7 +91,11 @@ class BigInt {
         fun from(uint: UInt): BigInt = BigInt(BigInteger.fromUInt(uint))
         fun from(long: Long): BigInt = BigInt(BigInteger.fromLong(long))
         fun from(ulong: ULong): BigInt = BigInt(BigInteger.fromULong(ulong))
-        fun from(bool: Boolean): BigInt = BigInt(BigInteger.fromInt(if (bool) 1 else 0 ))
+        fun from(bool: Boolean): BigInt {
+            val bigInt = BigInt(BigInteger.fromInt(if (bool) 1 else 0 ))
+            bigInt.fromBool = true
+            return bigInt
+        }
         fun min(a: BigInt, b: BigInt): BigInt = BigInt(BigInteger.min(a.storage, b.storage))
     }
 }
