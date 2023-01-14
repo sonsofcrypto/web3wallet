@@ -203,7 +203,7 @@ class Reader(
         return bytes.copyOfRange(0, length)
     }
 
-    fun readValue(): BigInt = BigInt.from(readBytes(wordSize))
+    fun readValue(): ByteArray = readBytes(wordSize)
 
     @Throws(Throwable::class)
     private fun peekBytes(length: Int, loose: Boolean): ByteArray {
@@ -312,7 +312,8 @@ class AddressCoder(localName: String):
     }
 
     @Throws(Throwable::class)
-    override fun decode(reader: Reader): Any = reader.readValue().toByteArray()
+    override fun decode(reader: Reader): Any = BigInt.from(reader.readValue())
+        .toByteArray()
 
     @Throws(Throwable::class)
     override fun defaultValue(): Any = ByteArray(40)
@@ -341,9 +342,10 @@ class BooleanCoder(localName: String): Coder("bool", "bool", localName, false) {
     }
 
     @Throws(Throwable::class)
-    override fun decode(reader: Reader): Any {
-        return reader.coerceFunc(this.type, !reader.readValue().isZero())
-    }
+    override fun decode(reader: Reader): Any = reader.coerceFunc(
+        this.type,
+        !BigInt.from(reader.readValue()).isZero()
+    )
 
     @Throws(Throwable::class)
     override fun defaultValue(): Any = false
@@ -404,11 +406,11 @@ class NumberCoder(val size: Int, val signed: Boolean, localName: String):
 
     @Throws(Throwable::class)
     override fun decode(reader: Reader): Any {
-        var num = reader.readValue() as? BigInt
-        if (num == null)
-            throw Error.UnexpectedType(this, num)
-        if (signed)
-            num = BigInt.fromTwosComplement(num.toByteArray())
+        var bytes = reader.readValue()
+        if (bytes == null)
+            throw Error.UnexpectedType(this, bytes)
+        val num = if (!signed) BigInt.from(bytes)
+            else BigInt.fromTwosComplement(bytes)
         return reader.coerce(name, num)
     }
 
@@ -429,9 +431,10 @@ open class DynamicBytesCoder(type: String, localName: String):
     }
 
     @Throws(Throwable::class)
-    override fun decode(reader: Reader): Any {
-        return reader.readBytes(reader.readValue().toString().toInt(), true)
-    }
+    override fun decode(reader: Reader): Any = reader.readBytes(
+        BigInt.from(reader.readValue()).toString().toInt(),
+        true
+    )
 
     @Throws(Throwable::class)
     override fun defaultValue(): Any = BigInt.zero
@@ -550,7 +553,7 @@ class ArrayCoder(val coder: Coder, val length: Int, localName: String):
     override fun decode(reader: Reader): Any {
         var count = length
         if (count == -1) {
-            count = reader.readValue().toString().toInt()
+            count = BigInt.from(reader.readValue()).toString().toInt()
             // Check that there is *roughly* enough data to ensure stray random
             // data is not being read as a length. Each slot requires at least
             // 32 bytes for their value (or 32 bytes as a link to the data).
@@ -604,7 +607,7 @@ private fun unpack(reader: Reader, coders: List<Coder>): Any {
     coders.forEach { coder ->
         var value: Any? = null
         if (coder.dynamic) {
-            var offset = reader.readValue()
+            var offset = BigInt.from(reader.readValue())
             var offsetReader = baseReader.subReader(offset.toString().toInt())
             try {
                 value = coder.decode(offsetReader)
