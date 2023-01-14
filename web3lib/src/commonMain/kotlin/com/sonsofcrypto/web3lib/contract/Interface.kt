@@ -292,6 +292,9 @@ class Interface {
         var _topics = topics
         if (topics.isNotEmpty() && !fragment.anonymous) {
             val topicHash = eventTopic(fragment)
+            println(fragment.format())
+            println("- ${topicHash.toHexString(false)}")
+            println("- ${topics[0].toHexString(false)}")
             if (topics[0].toHexString(false) != topicHash.toHexString(false))
                 throw Error.TopicFragmentMismatch(
                     fragment,

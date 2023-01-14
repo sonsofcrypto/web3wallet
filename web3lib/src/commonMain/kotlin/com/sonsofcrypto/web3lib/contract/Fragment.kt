@@ -55,7 +55,7 @@ open class Fragment(
     open fun format(format: Format = Format.SIGNATURE): String = when(format) {
         Format.STRING -> "Fragment(type=$type, name=$name, inputs=$inputs)"
         Format.SIGNATURE -> name + inputs.map { it.format(format) }
-            .joinToString(prefix = "(", postfix = ")")
+            .joinToString(",", prefix = "(", postfix = ")")
     }
 
     override fun toString(): String = this.format(Format.STRING)
@@ -250,7 +250,7 @@ data class Param(
                 (this.arrayChildren?.format(format) ?: "") + "[$length]"
             }
             "tuple" -> components?.map { it.format(format) }
-                ?.joinToString(prefix = "(", postfix = ")")
+                ?.joinToString(",", prefix = "(", postfix = ")")
                 ?: "()"
             else -> type
         }
