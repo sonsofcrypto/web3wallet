@@ -1,10 +1,7 @@
 package com.sonsofcrypto.web3lib.contract
 
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
-import com.sonsofcrypto.web3lib.utils.extensions.inv
-import com.sonsofcrypto.web3lib.utils.extensions.toBooleanArray
-import com.sonsofcrypto.web3lib.utils.extensions.toHexString
+import com.sonsofcrypto.web3lib.utils.extensions.*
 import com.sonsofcrypto.web3lib.utils.padTwosComplement
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
@@ -312,11 +309,13 @@ class AddressCoder(localName: String):
     }
 
     @Throws(Throwable::class)
-    override fun decode(reader: Reader): Any = BigInt.from(reader.readValue())
-        .toByteArray()
+    override fun decode(reader: Reader): Any {
+        val bytes = reader.readValue()
+        return bytes.copyOfRange(reader.wordSize - 20, bytes.size)
+    }
 
     @Throws(Throwable::class)
-    override fun defaultValue(): Any = ByteArray(40)
+    override fun defaultValue(): Any = ByteArray(20)
 }
 
 class AnonymousCoder(private val coder: Coder):

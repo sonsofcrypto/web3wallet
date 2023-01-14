@@ -25,7 +25,7 @@ class InterfaceTests {
     fun runAll() {
         GlobalScope.launch {
             delay(0.seconds)
-            // testAbiCoderEncoding()
+            testAbiCoderEncoding()
             testAbiCoderDecoding()
         }
     }
