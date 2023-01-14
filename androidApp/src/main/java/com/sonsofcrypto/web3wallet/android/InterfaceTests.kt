@@ -21,8 +21,8 @@ class InterfaceTests {
     fun runAll() {
         GlobalScope.launch {
             delay(0.seconds)
-//            testAbiCoderEncoding()
-//            testAbiCoderDecoding()
+            testAbiCoderEncoding()
+            testAbiCoderDecoding()
             testAbiV2CoderEncoding()
         }
     }
@@ -125,18 +125,5 @@ class InterfaceTests {
                 "\nencoded:  $encoded,\nexpected: ${t.result}"
             )
         }
-//        tests.forEach((test) => {
-//            let values = getValues(JSON.parse(test.values));
-//            //let namedValues = getValues(JSON.parse(test.values), true);
-//            let types = JSON.parse(test.types);
-//            let expected = test.result;
-//            let title = test.name + ' => (' + test.types + ') = (' + test.values + ')';
-//
-//            console.log('encodes ABIv2 parameters - ' + test.name + ' - ' + test.types)
-//            let encoded = coder.encode(types, values);
-//            assert.equal(encoded, expected, 'encoded positional parameters - ' + title);
-//            let namedEncoded = coder.encode(types, values);
-//            assert.equal(namedEncoded, expected, 'encoded named parameters - ' + title);
-//        });
     }
 }
