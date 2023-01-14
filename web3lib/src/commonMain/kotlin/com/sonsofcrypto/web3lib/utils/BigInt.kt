@@ -79,8 +79,8 @@ class BigInt {
         }
 
         @Throws(Throwable::class)
-        fun from(string: String, base: Int = 10): BigInt {
-            return BigInt(BigInteger.parseString(string, base))
+        fun from(string: String, base: Int = 10, byteForZeroVal: Boolean = false): BigInt {
+            return BigInt(BigInteger.parseString(string, base), byteForZeroVal)
         }
 
         fun fromTwosComplement(byteArray: ByteArray): BigInt

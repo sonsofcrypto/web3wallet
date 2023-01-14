@@ -40,7 +40,7 @@ class InterfaceTests {
         val obj = jsonEl as JsonObject
         val value = obj["value"]?.stringValue() ?: ""
         return when (obj["type"]?.stringValue() ?: "") {
-            "number" -> BigInt.from(value)
+            "number" -> BigInt.from(value, 10, true)
             "boolean" -> value.toBoolean()
             "string" -> value
             "buffer" -> value.hexStringToByteArray()
