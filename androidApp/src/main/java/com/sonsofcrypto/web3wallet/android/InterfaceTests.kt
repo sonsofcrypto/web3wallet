@@ -24,6 +24,7 @@ class InterfaceTests {
             testAbiCoderEncoding()
             testAbiCoderDecoding()
             testAbiV2CoderEncoding()
+            testAbiV2CoderDecoding()
         }
     }
 
@@ -49,6 +50,15 @@ class InterfaceTests {
         }
     }
 
+    fun stringify(value: Any?): String = when {
+        value is ByteArray -> value.toHexString(true)
+        value is List<Any?> -> value.map { stringify(it) }.toString()
+        else -> value.toString()
+    }
+
+    fun loadTestCases(fileName: String): ByteArray? =
+        BundledAssetProvider().file(fileName, "json")
+
     @Serializable
     data class TestCaseAbi(
         val name: String,
@@ -57,9 +67,6 @@ class InterfaceTests {
         val values: JsonElement,
         val normalizedValues: JsonElement?,
     )
-
-    fun loadTestCases(fileName: String): ByteArray? =
-        BundledAssetProvider().file(fileName, "json")
 
     fun testAbiCoderEncoding() {
         val bytes = loadTestCases("contract_interface")
@@ -86,12 +93,6 @@ class InterfaceTests {
         val tests = jsonDecode<List<TestCaseAbi>>(String(bytes!!))
         val coder = AbiCoder.default()
 
-        fun stringify(value: Any?): String = when {
-            value is ByteArray -> value.toHexString(true)
-            value is List<Any?> -> value.map { stringify(it) }.toString()
-            else -> value.toString()
-        }
-
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
             val types = Param.fromStringParams(t.types).mapNotNull { it }
             val strNormVals = t.normalizedValues?.stringValue() ?: ""
@@ -117,12 +118,32 @@ class InterfaceTests {
             val strVals = t.values.stringValue() ?: ""
             val values = getValues(jsonDecode<JsonArray>(strVals)!!)
             val title = "${t.name} => ${t.types} = ${strVals}"
-            println("testAbiCoderEncoding $i $title")
+            println("testAbiV2CoderEncoding $i $title")
             val encoded = coder.encode(types, values as List<Any>)
                 .toHexString(true)
             assertTrue(
                 encoded == t.result,
                 "\nencoded:  $encoded,\nexpected: ${t.result}"
+            )
+        }
+    }
+
+    fun testAbiV2CoderDecoding() {
+        val bytes = loadTestCases("contract_interface_abi2")
+        val tests = jsonDecode<List<TestCaseAbi>>(String(bytes!!))
+        val coder = AbiCoder.default()
+
+        tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
+            val types = Param.fromStringParams(t.types).mapNotNull { it }
+            val strVals = t.values.stringValue() ?: ""
+            val values = getValues(jsonDecode<JsonArray>(strVals)!!)
+            val result = t.result.hexStringToByteArray()
+            val title = "${t.name} => ${t.types} = ${strVals}"
+            println("testAbiV2CoderDecoding $i $title")
+            val decoded = coder.decode(types, result)
+            assertTrue(
+                stringify(decoded).lowercase() == stringify(values).lowercase(),
+                "\ndecoded: ${stringify(decoded)},\nexpected: ${stringify(values)}"
             )
         }
     }
