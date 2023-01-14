@@ -1,7 +1,6 @@
 package com.sonsofcrypto.web3lib.utils
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
-import com.ionspin.kotlin.bignum.integer.Sign
 import com.ionspin.kotlin.bignum.integer.util.fromTwosComplementByteArray
 import com.ionspin.kotlin.bignum.integer.util.toTwosComplementByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toBooleanArray
@@ -29,10 +28,11 @@ class BigInt {
     }
 
     internal val storage: BigInteger
-    internal var fromBool: Boolean = false
+    internal var byteForZeroVal: Boolean
 
-    internal constructor(storage: BigInteger) {
+    internal constructor(storage: BigInteger, byteForZeroVal: Boolean = false) {
         this.storage = storage
+        this.byteForZeroVal = byteForZeroVal
     }
 
     fun add(value: BigInt): BigInt = BigInt(storage.add(value.storage))
@@ -42,7 +42,7 @@ class BigInt {
     fun div(value: BigInt): BigInt = BigInt(storage.divide(value.storage))
     fun pow(value: Long): BigInt = BigInt(storage.pow(value))
 
-    fun toByteArray(): ByteArray = if (fromBool && storage.toByteArray().isEmpty())
+    fun toByteArray(): ByteArray = if (byteForZeroVal && storage.toByteArray().isEmpty())
             ByteArray(1)
         else storage.toByteArray()
     fun toTwosComplement(): ByteArray = storage.toTwosComplementByteArray()
@@ -87,15 +87,11 @@ class BigInt {
             = BigInt(BigInteger.fromTwosComplementByteArray(byteArray))
         fun from(byteArray: ByteArray, sign: Sign = Sign.POSITIVE): BigInt
             = BigInt(BigInteger.fromByteArray(byteArray, sign.toSign()))
-        fun from(int: Int): BigInt = BigInt(BigInteger.fromInt(int))
-        fun from(uint: UInt): BigInt = BigInt(BigInteger.fromUInt(uint))
-        fun from(long: Long): BigInt = BigInt(BigInteger.fromLong(long))
-        fun from(ulong: ULong): BigInt = BigInt(BigInteger.fromULong(ulong))
-        fun from(bool: Boolean): BigInt {
-            val bigInt = BigInt(BigInteger.fromInt(if (bool) 1 else 0 ))
-            bigInt.fromBool = true
-            return bigInt
-        }
+        fun from(int: Int): BigInt = BigInt(BigInteger.fromInt(int), true)
+        fun from(uint: UInt): BigInt = BigInt(BigInteger.fromUInt(uint), true)
+        fun from(long: Long): BigInt = BigInt(BigInteger.fromLong(long), true)
+        fun from(ulong: ULong): BigInt = BigInt(BigInteger.fromULong(ulong), true)
+        fun from(bool: Boolean): BigInt = BigInt(BigInteger.fromInt(if (bool) 1 else 0 ), true)
         fun min(a: BigInt, b: BigInt): BigInt = BigInt(BigInteger.min(a.storage, b.storage))
     }
 }

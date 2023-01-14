@@ -3,6 +3,8 @@ package com.sonsofcrypto.web3lib.contract
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.inv
+import com.sonsofcrypto.web3lib.utils.extensions.toBooleanArray
+import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.padTwosComplement
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
