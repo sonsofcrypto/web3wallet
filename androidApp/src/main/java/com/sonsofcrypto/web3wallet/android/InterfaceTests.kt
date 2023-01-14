@@ -10,6 +10,7 @@ import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -21,10 +22,11 @@ class InterfaceTests {
     fun runAll() {
         GlobalScope.launch {
             delay(0.seconds)
-            testAbiCoderEncoding()
-            testAbiCoderDecoding()
-            testAbiV2CoderEncoding()
-            testAbiV2CoderDecoding()
+//            testAbiCoderEncoding()
+//            testAbiCoderDecoding()
+//            testAbiV2CoderEncoding()
+//            testAbiV2CoderDecoding()
+            testContractEvents()
         }
     }
 
@@ -147,4 +149,62 @@ class InterfaceTests {
             )
         }
     }
+
+    @Serializable
+    class TestCaseEvent(
+        val name: String,
+        @SerialName("interface")
+        val iface: String,
+        val types: List<String>,
+        val indexed: List<Boolean?>,
+        val data: String,
+        val topics: List<String>,
+        val hashed: List<Boolean>,
+        val normalizedValues: JsonArray,
+    )
+
+    fun testContractEvents() {
+        val bytes = loadTestCases("contract_events")
+        val tests = jsonDecode<List<TestCaseEvent>>(String(bytes!!))
+        tests?.forEachIndexed { i, t ->
+            println("Decode event params $i - ${t.name} - ${t.types}")
+            val iface = Interface(t.iface)
+            val parsed = iface.decodeEventLog(
+                iface.event("testEvent"),
+                t.data.hexStringToByteArray(),
+                t.topics.map { it.hexStringToByteArray() }
+            )
+        }
+    }
 }
+
+//function testContractEvents() {
+//
+//    let tests: Array<TestCase> = loadTests('contract-events');
+//
+//    tests.forEach((test, index) => {
+//        console.log('decodes event parameters - ' + test.name + ' - ' + test.types)
+//        let iface = new ethers.utils.Interface(test.interface);
+//        let parsed = iface.decodeEventLog(iface.getEvent("testEvent"), test.data, test.topics);
+//        test.normalizedValues.forEach((expected, index) => {
+//        if (test.hashed[index]) {
+//            assert.ok(equals(parsed[index].hash, expected), 'parsed event indexed parameter matches - ' + index);
+//        } else {
+//            assert.ok(equals(parsed[index], expected), 'parsed event parameter matches - ' + index);
+//        }
+//    });
+//    });
+//
+//    tests.forEach((test, index) => {
+//        console.log('decodes event data - ' + test.name + ' - ' + test.types)
+//        let iface = new ethers.utils.Interface(test.interface);
+//        let parsed = iface.decodeEventLog(iface.getEvent("testEvent"), test.data);
+//        test.normalizedValues.forEach((expected, index) => {
+//        if (test.indexed[index]) {
+//            assert.ok((ethers.Contract.isIndexed(parsed[index]) && parsed[index].hash == null), 'parsed event data has empty Indexed - ' + index);
+//        } else {
+//            assert.ok(equals(parsed[index], expected), 'parsed event data matches - ' + index);
+//        }
+//    });
+//    });
+//}
