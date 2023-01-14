@@ -7,12 +7,8 @@ import com.sonsofcrypto.web3lib.utils.BundledAssetProvider
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
-import com.sonsofcrypto.web3lib.utils.timerFlow
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonArray
@@ -40,13 +36,15 @@ class InterfaceTests {
             return jsonEl.map { getValues(it, named) }
         }
         val obj = jsonEl as JsonObject
+        if (obj["value"] as? JsonArray != null)
+            return (obj["value"] as JsonArray).map { getValues(it, named) }
         val value = obj["value"]?.stringValue() ?: ""
         return when (obj["type"]?.stringValue() ?: "") {
             "number" -> BigInt.from(value, 10, true)
             "boolean" -> value.toBoolean()
             "string" -> value
             "buffer" -> value.hexStringToByteArray()
-            "tuple" -> getValues(obj, named)
+            "tuple" -> getValues(obj["value"]!!, named)
             else -> throw Error("Invalid type $obj")
         }
     }
@@ -116,16 +114,16 @@ class InterfaceTests {
 
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
             val types = Param.fromStringParams(t.types).mapNotNull { it }
-            val strNormVals = "" // t.values.stringValue() ?: ""
-//            val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
-            val title = "${t.name} => ${t.types} = ${strNormVals}"
+            val strVals = t.values.stringValue() ?: ""
+            val values = getValues(jsonDecode<JsonArray>(strVals)!!)
+            val title = "${t.name} => ${t.types} = ${strVals}"
             println("testAbiCoderEncoding $i $title")
-//            val encoded = coder.encode(types, values as List<Any>)
-//                .toHexString(true)
-//            assertTrue(
-//                encoded == t.result,
-//                "\nencoded:  $encoded,\nexpected: ${t.result}"
-//            )
+            val encoded = coder.encode(types, values as List<Any>)
+                .toHexString(true)
+            assertTrue(
+                encoded == t.result,
+                "\nencoded:  $encoded,\nexpected: ${t.result}"
+            )
         }
 //        tests.forEach((test) => {
 //            let values = getValues(JSON.parse(test.values));
