@@ -508,7 +508,7 @@ private fun parseParam(
                 }
                 node.state?.allowType = false
                 node.type = verifiedType(node.type ?: "")
-                node.components = listOf(node)
+                node.components = listOf(newNode(node))
                 node = node.components?.get(0) ?: node
             }
             ")" -> {

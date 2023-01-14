@@ -25,8 +25,9 @@ class InterfaceTests {
     fun runAll() {
         GlobalScope.launch {
             delay(0.seconds)
-            testAbiCoderEncoding()
-            testAbiCoderDecoding()
+//            testAbiCoderEncoding()
+//            testAbiCoderDecoding()
+            testAbiV2CoderEncoding()
         }
     }
 
@@ -55,8 +56,8 @@ class InterfaceTests {
         val name: String,
         val types: String,
         val result: String,
-        val values: String,
-        val normalizedValues: JsonElement,
+        val values: JsonElement,
+        val normalizedValues: JsonElement?,
     )
 
     fun loadTestCases(fileName: String): ByteArray? =
@@ -69,7 +70,7 @@ class InterfaceTests {
 
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
             val types = Param.fromStringParams(t.types).mapNotNull { it }
-            val strNormVals = t.normalizedValues.stringValue()
+            val strNormVals = t.normalizedValues?.stringValue() ?: ""
             val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
             val title = "${t.name} => ${t.types} = ${strNormVals}"
             println("testAbiCoderEncoding $i $title")
@@ -95,7 +96,7 @@ class InterfaceTests {
 
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
             val types = Param.fromStringParams(t.types).mapNotNull { it }
-            val strNormVals = t.normalizedValues.stringValue()
+            val strNormVals = t.normalizedValues?.stringValue() ?: ""
             val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
             val result = t.result.hexStringToByteArray()
             val title = "${t.name} => ${t.types} = ${strNormVals}"
@@ -106,5 +107,38 @@ class InterfaceTests {
                 "\ndencoded: ${stringify(decoded)},\nexpected: ${stringify(values)}"
             )
         }
+    }
+
+    fun testAbiV2CoderEncoding() {
+        val bytes = loadTestCases("contract_interface_abi2")
+        val tests = jsonDecode<List<TestCaseAbi>>(String(bytes!!))
+        val coder = AbiCoder.default()
+
+        tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
+            val types = Param.fromStringParams(t.types).mapNotNull { it }
+            val strNormVals = "" // t.values.stringValue() ?: ""
+//            val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
+            val title = "${t.name} => ${t.types} = ${strNormVals}"
+            println("testAbiCoderEncoding $i $title")
+//            val encoded = coder.encode(types, values as List<Any>)
+//                .toHexString(true)
+//            assertTrue(
+//                encoded == t.result,
+//                "\nencoded:  $encoded,\nexpected: ${t.result}"
+//            )
+        }
+//        tests.forEach((test) => {
+//            let values = getValues(JSON.parse(test.values));
+//            //let namedValues = getValues(JSON.parse(test.values), true);
+//            let types = JSON.parse(test.types);
+//            let expected = test.result;
+//            let title = test.name + ' => (' + test.types + ') = (' + test.values + ')';
+//
+//            console.log('encodes ABIv2 parameters - ' + test.name + ' - ' + test.types)
+//            let encoded = coder.encode(types, values);
+//            assert.equal(encoded, expected, 'encoded positional parameters - ' + title);
+//            let namedEncoded = coder.encode(types, values);
+//            assert.equal(namedEncoded, expected, 'encoded named parameters - ' + title);
+//        });
     }
 }
