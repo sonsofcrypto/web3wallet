@@ -166,7 +166,7 @@ class InterfaceTests {
     fun testContractEvents() {
         val bytes = loadTestCases("contract_events")
         val tests = jsonDecode<List<TestCaseEvent>>(String(bytes!!))
-        tests?.forEachIndexed { i, t ->
+        tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
             println("Decode event params $i - ${t.name} - ${t.types}")
             val iface = Interface(t.iface)
             val parsed = iface.decodeEventLog(

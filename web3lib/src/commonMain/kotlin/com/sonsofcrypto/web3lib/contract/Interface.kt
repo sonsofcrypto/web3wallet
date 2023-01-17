@@ -292,9 +292,6 @@ class Interface {
         var _topics = topics
         if (topics.isNotEmpty() && !fragment.anonymous) {
             val topicHash = eventTopic(fragment)
-            println(fragment.format())
-            println("- ${topicHash.toHexString(false)}")
-            println("- ${topics[0].toHexString(false)}")
             if (topics[0].toHexString(false) != topicHash.toHexString(false))
                 throw Error.TopicFragmentMismatch(
                     fragment,
@@ -332,9 +329,10 @@ class Interface {
         val resultNonIdx = decode(nonIndexed, data, true)
         var indexedIdx: Int = 0
         var nonIndexedIdx: Int = 0
-        var result: MutableList<Any> = mutableListOf(
-            (resultIdx?.size ?: 0) + resultNonIdx.size
-        )
+        val resultSize = (resultIdx?.size ?: 0) + resultNonIdx.size
+        var result: MutableList<Any> = (0 until resultSize)
+            .map { 0 }
+            .toMutableList()
 
         for (i in 0 until fragment.inputs.size) {
             val param = fragment.inputs[i]
