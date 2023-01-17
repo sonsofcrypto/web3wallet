@@ -316,7 +316,7 @@ class Interface {
                 listOf("string", "bytes").contains(param.type) ||
                 listOf("tuple", "array").contains(param.baseType)
             ) {
-                indexed.add(Param(param.name, "bytes32", ""))
+                indexed.add(Param(param.name, "bytes32", "bytes32"))
                 dynamic.add(true)
             } else {
                 indexed.add(param)
@@ -325,7 +325,7 @@ class Interface {
         }
 
         val resultIdx = if (_topics != null) decode(indexed, _topics.concant())
-                        else null
+                else null
         val resultNonIdx = decode(nonIndexed, data, true)
         var indexedIdx: Int = 0
         var nonIndexedIdx: Int = 0

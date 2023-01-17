@@ -451,7 +451,6 @@ private fun splitNesting(value: String): List<String> {
     var result: MutableList<String> = mutableListOf()
     var accum = ""
     var depth = 0
-    println("=== split nesting 1")
     value.forEach { char ->
         val c = char.toString()
         if (c == "," && depth == 0) {
@@ -471,7 +470,6 @@ private fun splitNesting(value: String): List<String> {
     }
     if (accum.isNotEmpty())
         result.add(accum)
-    println("=== split nesting 2 $value $result")
     return result
 }
 
