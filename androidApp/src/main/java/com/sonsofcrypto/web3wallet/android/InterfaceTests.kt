@@ -267,20 +267,33 @@ class InterfaceTests {
         println("derives correct description for human-readable ABI")
         val iface = Interface(transferJson)
         listOf("transfer", "transfer(address,uint256)").forEach {
-            val descr = iface.function(it)
-            assertTrue(descr.name == "transfer", "incorrect name key - $it")
+            val desc = iface.function(it)
+            assertTrue(desc.name == "transfer", "incorrect name key - $it")
             assertTrue(
-                descr.format() == "transfer(address,uint256)",
+                desc.format() == "transfer(address,uint256)",
                 "incorrect signature key - $it"
             )
             assertTrue(
-                iface.sigHashString(descr.format()) == "0xa9059cbb",
+                iface.sigHashString(desc.format()) == "0xa9059cbb",
                 "incorrect sighash key - $it"
             )
         }
 
         // See: https://github.com/ethers-io/ethers.js/issues/370
         println("parses transaction function")
+        val desc = iface.parseTx(txData, BigInt.zero)
+        assertTrue(
+            stringify(desc!!.args[0]) == "0x851b9167B7cbf772D38eFaf89705b35022880A07",
+            "tx - args[0]"
+        )
+        assertTrue(
+            stringify(desc!!.args[1]) == "1000000000000000000",
+            "tx - args[1]"
+        )
+        assertTrue(desc.name == "transfer", "tx - name")
+        assertTrue(desc.signatre == "transfer(address,uint256)", "tx - sig")
+        assertTrue(desc.sigHash.toHexString(true) == "0xa9059cbb", "tx - sighash")
+        assertTrue(desc.value.toString() == "0", "tx - value")
     }
 }
 
@@ -298,3 +311,5 @@ val transferJson = """
     }
 ] 
 """
+
+val txData = "0xa9059cbb000000000000000000000000851b9167b7cbf772d38efaf89705b35022880a070000000000000000000000000000000000000000000000000de0b6b3a7640000".hexStringToByteArray()
