@@ -23,10 +23,10 @@ class InterfaceTests {
     fun runAll() {
         GlobalScope.launch {
             delay(0.seconds)
-//            testAbiCoderEncoding()
-//            testAbiCoderDecoding()
-//            testAbiV2CoderEncoding()
-//            testAbiV2CoderDecoding()
+            testAbiCoderEncoding()
+            testAbiCoderDecoding()
+            testAbiV2CoderEncoding()
+            testAbiV2CoderDecoding()
             testContractEvents()
         }
     }
@@ -211,7 +211,7 @@ class InterfaceTests {
             }
         }
 
-        tests?.subList(1, tests.size)?.forEachIndexed { i, t ->
+        tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
             println("Decode event data $i - ${t.name} - ${t.types}")
             val iface = Interface(t.iface)
             val parsed = iface.decodeEventLog(
@@ -219,39 +219,22 @@ class InterfaceTests {
                 t.data.hexStringToByteArray(),
             )
             val values = getValues(t.normalizedValues!!)
-//            println("$values")
-//            (values as? List<Any>)?.forEachIndexed {idx, expected ->
-//                println("$idx $expected")
-//                val decoded = parsed.getOrNull(idx)
-//                val indexed = decoded as? Interface.Indexed
-//                if (t.indexed[idx] == true) {
-//                    assertTrue(
-//                        indexed?.hash?.toHexString(true) == expected.toString(),
-//                        "\ndecoded: ${indexed},\nexpected: $expected"
-//                    )
-//                } else {
-//                    val strigified = stringifyForEvent(decoded, i != 4)
-//                    assertTrue(
-//                         strigified == expected.toString(),
-//                        "\ndecoded:  $strigified,\nexpected: $expected"
-//                    )
-//                }
-//            }
+            (values as? List<Any>)?.forEachIndexed {idx, expected ->
+                val decoded = parsed.getOrNull(idx)
+                val indexed = decoded as? Interface.Indexed
+                if (t.indexed[idx] == true) {
+                    assertTrue(
+                        indexed?.isIndex == true && indexed?.hash == null,
+                        "\ndecoded: ${indexed},\nexpected: $expected"
+                    )
+                } else {
+                    val strigified = stringifyForEvent(decoded, i != 4)
+                    assertTrue(
+                         strigified == expected.toString(),
+                        "\ndecoded:  $strigified,\nexpected: $expected"
+                    )
+                }
+            }
         }
     }
 }
-
-//function testContractEvents() {
-//    tests.forEach((test, index) => {
-//        console.log('decodes event data - ' + test.name + ' - ' + test.types)
-//        let iface = new ethers.utils.Interface(test.interface);
-//        let parsed = iface.decodeEventLog(iface.getEvent("testEvent"), test.data);
-//        test.normalizedValues.forEach((expected, index) => {
-//        if (test.indexed[index]) {
-//            assert.ok((ethers.Contract.isIndexed(parsed[index]) && parsed[index].hash == null), 'parsed event data has empty Indexed - ' + index);
-//        } else {
-//            assert.ok(equals(parsed[index], expected), 'parsed event data matches - ' + index);
-//        }
-//    });
-//    });
-//}
