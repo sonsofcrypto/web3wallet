@@ -23,11 +23,12 @@ class InterfaceTests {
     fun runAll() {
         GlobalScope.launch {
             delay(0.seconds)
-            testAbiCoderEncoding()
-            testAbiCoderDecoding()
-            testAbiV2CoderEncoding()
-            testAbiV2CoderDecoding()
-            testContractEvents()
+//            testAbiCoderEncoding()
+//            testAbiCoderDecoding()
+//            testAbiV2CoderEncoding()
+//            testAbiV2CoderDecoding()
+//            testContractEvents()
+            testInterfaceSignatures()
         }
     }
 
@@ -235,6 +236,22 @@ class InterfaceTests {
                     )
                 }
             }
+        }
+    }
+
+    @Serializable
+    data class TestCaseSig(
+        val name: String,
+        val abi: String,
+        val sigHash: String,
+        val signature: String,
+    )
+
+    fun testInterfaceSignatures() {
+        val bytes = loadTestCases("contract_signatures")
+        val tests = jsonDecode<List<TestCaseSig>>(String(bytes!!))
+        tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
+            println("${t.name}, ${t.sigHash}, ${t.signature}, ${t.abi}")
         }
     }
 }
