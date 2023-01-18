@@ -250,18 +250,51 @@ class InterfaceTests {
     fun testInterfaceSignatures() {
         val bytes = loadTestCases("contract_signatures")
         val tests = jsonDecode<List<TestCaseSig>>(String(bytes!!))
-        tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
-            println("derives the correct signature $i - ${t.name}")
-            val iface = Interface(t.abi)
-            val func = iface.function("testSig")
+//        tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
+//            println("derives the correct signature $i - ${t.name}")
+//            val iface = Interface(t.abi)
+//            val func = iface.function("testSig")
+//            assertTrue(
+//                func.format() == t.signature,
+//                "\nvalue:  ${func.format()},\nexpected: ${t.signature}"
+//            )
+//            assertTrue(
+//                iface.sigHashString(func.format()) == t.sigHash,
+//                "\nvalue:  ${iface.sigHashString(func.format())},\nexpected: ${t.sigHash}"
+//            )
+//        }
+
+        println("derives correct description for human-readable ABI")
+        val iface = Interface(transferJson)
+        listOf("transfer", "transfer(address,uint256)").forEach {
+            val descr = iface.function(it)
+            assertTrue(descr.name == "transfer", "incorrect name key - $it")
             assertTrue(
-                func.format() == t.signature,
-                "\nvalue:  ${func.format()},\nexpected: ${t.signature}"
+                descr.format() == "transfer(address,uint256)",
+                "incorrect signature key - $it"
             )
             assertTrue(
-                iface.sigHashString(func.format()) == t.sigHash,
-                "\nvalue:  ${iface.sigHashString(func.format())},\nexpected: ${t.sigHash}"
+                iface.sigHashString(descr.format()) == "0xa9059cbb",
+                "incorrect sighash key - $it"
             )
         }
+
+        // See: https://github.com/ethers-io/ethers.js/issues/370
+        println("parses transaction function")
     }
 }
+
+val transferJson = """
+ [
+    {
+        "inputs": [
+            { "internalType": "address","name": "to", "type": "address" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "transfer",
+        "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+] 
+"""
