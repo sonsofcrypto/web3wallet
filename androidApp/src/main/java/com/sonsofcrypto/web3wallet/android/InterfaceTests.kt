@@ -15,7 +15,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
-import kotlin.math.exp
 import kotlin.time.Duration.Companion.seconds
 
 class InterfaceTests {
@@ -59,6 +58,13 @@ class InterfaceTests {
     fun stringify(value: Any?): String = when {
         value is ByteArray -> value.toHexString(true)
         value is List<Any?> -> value.map { stringify(it) }.toString()
+        else -> value.toString()
+    }
+
+    fun stringifyForEvent(value: Any?): String = when {
+        value is ByteArray -> value.toHexString(true)
+        value is BigInt -> value.toByteArray().toHexString(true)
+        value is List<Any?> -> value.map { stringifyForEvent(it) }.toString()
         else -> value.toString()
     }
 
@@ -170,7 +176,7 @@ class InterfaceTests {
     fun testContractEvents() {
         val bytes = loadTestCases("contract_events")
         val tests = jsonDecode<List<TestCaseEvent>>(String(bytes!!))
-        tests?.subList(6, tests.size)?.forEachIndexed { i, t ->
+        tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
             println("Decode event params $i - ${t.name} - ${t.types}")
             val iface = Interface(t.iface)
             val parsed = iface.decodeEventLog(
@@ -180,38 +186,29 @@ class InterfaceTests {
             )
             val values = getValues(t.normalizedValues!!)
             (values as? List<Any>)?.forEachIndexed {idx, expected ->
-                val decoded = parsed.getOrNull(idx) as? Interface.Indexed
+                val decoded = parsed.getOrNull(idx)
+                val indexed = decoded as? Interface.Indexed
+                println("${iface.event("testEvent")}")
 //                println("id       $idx")
+//                println("decoded  ${stringify(indexed)}")
 //                println("data     ${t.data}")
 //                println("topics   ${t.topics.map { it }}")
 //                println("expected $expected")
 //                println("hashed   ${t.hashed[idx]}")
-//                println("all pars $parsed")
+//                println("all pars ${stringify(parsed)}")
                 if (t.hashed[idx]) {
                     assertTrue(
-                        decoded?.hash?.toHexString(true) == expected.toString(),
-                        "\ndecoded: ${decoded},\nexpected: ${expected.toString()}"
+                        indexed?.hash?.toHexString(true) == expected.toString(),
+                        "\ndecoded: ${indexed},\nexpected: $expected"
                     )
                 } else {
-
+//                    println("decoded ${decoded!!::class.simpleName}  ${(decoded as? ByteArray)?.toHexString(true)}")
+                    assertTrue(
+                        stringifyForEvent(decoded) == expected.toString(),
+                        "\ndecoded:  ${stringifyForEvent(decoded)},\nexpected: $expected"
+                    )
                 }
             }
-
-//            values.forEachIndexed {idx, expected ->
-//                val decoded = parsed[i] as? Interface.Indexed
-//                println("$decoded")
-//                println("$expected")
-//                println("===")
-//                if (t.hashed[i]) {
-////                    assertTrue(
-////                        decoded?.hash?.toHexString(true) == expected.toString(),
-////                        "\ndecoded: ${decoded},\nexpected: ${expected.toString()}"
-////                    )
-//                } else {
-//
-//                }
-//            }
-
         }
     }
 }
