@@ -183,6 +183,7 @@ class InterfaceTests {
     fun testContractEvents() {
         val bytes = loadTestCases("contract_events")
         val tests = jsonDecode<List<TestCaseEvent>>(String(bytes!!))
+
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
             println("Decode event params $i - ${t.name} - ${t.types}")
             val iface = Interface(t.iface)
@@ -200,8 +201,6 @@ class InterfaceTests {
                         indexed?.hash?.toHexString(true) == expected.toString(),
                         "\ndecoded: ${indexed},\nexpected: $expected"
                     )
-                // NOTE: Skipping this test due to how negative vals are
-                // formatted in tests json vs BigInt. 0x-2b vs -0x2b
                 } else {
                     val strigified = stringifyForEvent(decoded, i != 4)
                     assertTrue(
@@ -211,26 +210,38 @@ class InterfaceTests {
                 }
             }
         }
+
+        tests?.subList(1, tests.size)?.forEachIndexed { i, t ->
+            println("Decode event data $i - ${t.name} - ${t.types}")
+            val iface = Interface(t.iface)
+            val parsed = iface.decodeEventLog(
+                iface.event("testEvent"),
+                t.data.hexStringToByteArray(),
+            )
+            val values = getValues(t.normalizedValues!!)
+//            println("$values")
+//            (values as? List<Any>)?.forEachIndexed {idx, expected ->
+//                println("$idx $expected")
+//                val decoded = parsed.getOrNull(idx)
+//                val indexed = decoded as? Interface.Indexed
+//                if (t.indexed[idx] == true) {
+//                    assertTrue(
+//                        indexed?.hash?.toHexString(true) == expected.toString(),
+//                        "\ndecoded: ${indexed},\nexpected: $expected"
+//                    )
+//                } else {
+//                    val strigified = stringifyForEvent(decoded, i != 4)
+//                    assertTrue(
+//                         strigified == expected.toString(),
+//                        "\ndecoded:  $strigified,\nexpected: $expected"
+//                    )
+//                }
+//            }
+        }
     }
 }
 
 //function testContractEvents() {
-//
-//    let tests: Array<TestCase> = loadTests('contract-events');
-//
-//    tests.forEach((test, index) => {
-//        console.log('decodes event parameters - ' + test.name + ' - ' + test.types)
-//        let iface = new ethers.utils.Interface(test.interface);
-//        let parsed = iface.decodeEventLog(iface.getEvent("testEvent"), test.data, test.topics);
-//        test.normalizedValues.forEach((expected, index) => {
-//        if (test.hashed[index]) {
-//            assert.ok(equals(parsed[index].hash, expected), 'parsed event indexed parameter matches - ' + index);
-//        } else {
-//            assert.ok(equals(parsed[index], expected), 'parsed event parameter matches - ' + index);
-//        }
-//    });
-//    });
-//
 //    tests.forEach((test, index) => {
 //        console.log('decodes event data - ' + test.name + ' - ' + test.types)
 //        let iface = new ethers.utils.Interface(test.interface);

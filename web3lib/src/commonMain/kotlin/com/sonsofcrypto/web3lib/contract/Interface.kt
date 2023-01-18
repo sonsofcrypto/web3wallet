@@ -324,7 +324,7 @@ class Interface {
             }
         }
 
-        val resultIdx = if (_topics != null) decode(indexed, _topics.concant())
+        val resultIdx = if (_topics.isNotEmpty()) decode(indexed, _topics.concant())
                 else null
         val resultNonIdx = decode(nonIndexed, data, true)
         var indexedIdx: Int = 0
@@ -337,19 +337,20 @@ class Interface {
         for (i in 0 until fragment.inputs.size) {
             val param = fragment.inputs[i]
             if (!param.indexed) {
-                try { result[i] = resultNonIdx[nonIndexedIdx++] }
-                catch (err: Throwable) { result[i] = err }
+                try { setAtIdx(i, resultNonIdx[nonIndexedIdx++], result) }
+                catch (err: Throwable) { result[i] = setAtIdx(i, err, result) }
             } else {
                 if (resultIdx == null) {
-                    result[i] = Indexed(true, null)
+                    setAtIdx(i, Indexed(true, null), result)
                 } else if (dynamic[i]) {
-                    result[i] = Indexed(
-                        true,
-                        resultIdx?.get(indexedIdx++) as? ByteArray
+                    setAtIdx(
+                        i,
+                        Indexed(true, resultIdx?.get(indexedIdx++) as? ByteArray),
+                        result,
                     )
                 } else {
-                    try { result[i] = resultIdx[indexedIdx++] }
-                    catch (err: Throwable) { result[i] = err }
+                    try { setAtIdx(i, resultIdx[indexedIdx++], result) }
+                    catch (err: Throwable) { setAtIdx(i, err, result) }
                 }
             }
         }
@@ -358,6 +359,15 @@ class Interface {
         return result
     }
 
+    private fun setAtIdx(
+        idx: Int,
+        value: Any,
+        list: MutableList<Any>
+    ): MutableList<Any> {
+        if (idx < list.size) list[idx] = value else list.add(value)
+        return list
+    }
+    
     data class TransactionDescription(
         val args: List<Any>,
         val fragment: FunctionFragment,
