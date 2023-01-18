@@ -251,7 +251,17 @@ class InterfaceTests {
         val bytes = loadTestCases("contract_signatures")
         val tests = jsonDecode<List<TestCaseSig>>(String(bytes!!))
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
-            println("${t.name}, ${t.sigHash}, ${t.signature}, ${t.abi}")
+            println("derives the correct signature $i - ${t.name}")
+            val iface = Interface(t.abi)
+            val func = iface.function("testSig")
+            assertTrue(
+                func.format() == t.signature,
+                "\nvalue:  ${func.format()},\nexpected: ${t.signature}"
+            )
+            assertTrue(
+                iface.sigHashString(func.format()) == t.sigHash,
+                "\nvalue:  ${iface.sigHashString(func.format())},\nexpected: ${t.sigHash}"
+            )
         }
     }
 }

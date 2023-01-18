@@ -32,9 +32,9 @@ class Interface {
             when (it) {
                 is ErrorFragment -> errors.add(it)
                 is EventFragment -> events.add(it)
-                is ConstructorFragment -> deploy = it
-                is FunctionFragment -> {
-                    if (it !is ConstructorFragment) functions.add(it)
+                is ConstructorFragment, is FunctionFragment -> {
+                    if (it.type == "constructor") deploy = it as ConstructorFragment
+                    else functions.add(it as FunctionFragment)
                 }
                 else -> Unit
             }
@@ -455,10 +455,10 @@ class Interface {
     /** Topic (the bytes32 hash) used by Solidity to identify an event */
     fun eventTopic(event: EventFragment): ByteArray = eventTopic(event.format())
 
-    private fun sigHash(sig: String): ByteArray = keccak256(sig.toByteArray())
+    fun sigHash(sig: String): ByteArray = keccak256(sig.toByteArray())
         .copyOfRange(0, 4)
 
-    private fun sigHashString(sig: String): String = sigHash(sig)
+    fun sigHashString(sig: String): String = sigHash(sig)
         .toHexString(true)
 
     private fun id(str: String): ByteArray = keccak256(str.toByteArray())
