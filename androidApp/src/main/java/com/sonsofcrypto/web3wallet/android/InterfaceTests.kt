@@ -73,7 +73,7 @@ class InterfaceTests {
             .toString()
         value is Long -> QuantityHexString(BigInt.from(value))
         else -> value.toString()
-    }
+    }.replace("0x-", "-0x")
 
     fun loadTestCases(fileName: String): ByteArray? =
         BundledAssetProvider().file(fileName, "json")
@@ -200,16 +200,14 @@ class InterfaceTests {
                         indexed?.hash?.toHexString(true) == expected.toString(),
                         "\ndecoded: ${indexed},\nexpected: $expected"
                     )
+                // NOTE: Skipping this test due to how negative vals are
+                // formatted in tests json vs BigInt. 0x-2b vs -0x2b
                 } else {
-                    val strip = !listOf(4).contains(i)
-                    // NOTE: Skipping this test due to how negative vals are
-                    // formatted in tests json vs BigInt. 0x-2b vs -0x2b
-                    if (idx != 473) {
-                        assertTrue(
-                            stringifyForEvent(decoded, strip) == expected.toString(),
-                            "\ndecoded:  ${stringifyForEvent(decoded, strip)},\nexpected: $expected"
-                        )
-                    }
+                    val strigified = stringifyForEvent(decoded, i != 4)
+                    assertTrue(
+                         strigified == expected.toString(),
+                        "\ndecoded:  $strigified,\nexpected: $expected"
+                    )
                 }
             }
         }
