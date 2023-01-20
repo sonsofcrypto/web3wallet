@@ -34,7 +34,8 @@ class InterfaceTests {
 //            testInterfaceSignatures()
 //            testNumberCoder()
 //            testFixedBytesCoder()
-            testParamTypeParser()
+//            testParamTypeParser()
+            additionalTestCases()
         }
     }
 
@@ -563,6 +564,20 @@ class InterfaceTests {
         }
     }
 
+    fun additionalTestCases() {
+        println("allows addresses without the 0x")
+        val iface = Interface(additionalTestJson)
+        val addressStr = "c1912fee45d61c87cc5ea59dae31190fffff232d"
+        val result = iface.encodeFunction(
+            iface.function("test"),
+            listOf(addressStr.hexStringToByteArray())
+        )
+        assertTrue(
+            stringify(result) == additionalResult,
+            "Additional unexpected reulst ${stringify(result)}"
+        )
+    }
+
     private fun paramsFromString(string: String): List<Param> =
         Param.fromStringParams(string).mapNotNull { it }
 }
@@ -581,5 +596,21 @@ val transferJson = """
     }
 ] 
 """
+
+val additionalTestJson = """
+ [
+    {
+        "inputs": [
+            { "internalType": "address", "name": "foo", "type": "address" }
+        ],
+        "name": "test",
+        "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+] 
+"""
+
+val additionalResult = "0xbb29998e000000000000000000000000c1912fee45d61c87cc5ea59dae31190fffff232d"
 
 val txData = "0xa9059cbb000000000000000000000000851b9167b7cbf772d38efaf89705b35022880a070000000000000000000000000000000000000000000000000de0b6b3a7640000".hexStringToByteArray()
