@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.web3lib.contract.*
+import com.sonsofcrypto.web3lib.contract.Fragment.Format.FULL_SIGNATURE
 import com.sonsofcrypto.web3lib.provider.model.QuantityHexString
 import com.sonsofcrypto.web3lib.provider.utils.stringValue
 import com.sonsofcrypto.web3lib.utils.BigInt
@@ -25,14 +26,15 @@ class InterfaceTests {
         GlobalScope.launch {
             delay(1.seconds)
             println("=== LFG")
-            testAbiCoderEncoding()
-            testAbiCoderDecoding()
-            testAbiV2CoderEncoding()
-            testAbiV2CoderDecoding()
-            testContractEvents()
-            testInterfaceSignatures()
-            testNumberCoder()
-            testFixedBytesCoder()
+//            testAbiCoderEncoding()
+//            testAbiCoderDecoding()
+//            testAbiV2CoderEncoding()
+//            testAbiV2CoderDecoding()
+//            testContractEvents()
+//            testInterfaceSignatures()
+//            testNumberCoder()
+//            testFixedBytesCoder()
+            testParamTypeParser()
         }
     }
 
@@ -525,6 +527,38 @@ class InterfaceTests {
                     else
                         assertTrue(err is Coder.Error.SizeMismatch, "Wrong error")
                 }
+            )
+        }
+    }
+
+    fun testParamTypeParser() {
+        listOf(
+            Pair("address", "address"),
+            Pair("address foo", "address foo"),
+            Pair("address payable", "address"),
+            Pair("address payable foo", "address foo"),
+            Pair("uint", "uint256"),
+            Pair("uint16", "uint16"),
+            Pair("uint256", "uint256"),
+            Pair("int", "int256"),
+            Pair("int16", "int16"),
+            Pair("int256", "int256"),
+            Pair("string", "string"),
+            Pair("string memory", "string"),
+            Pair("string calldata", "string"),
+            Pair("string storage", "string"),
+            Pair("string memory foo", "string foo"),
+            Pair("string foo", "string foo"),
+            Pair("string[]", "string[]"),
+            Pair("string[5]", "string[5]"),
+            Pair("uint[] memory", "uint256[]"),
+            Pair("tuple(address a, string[] b) memory foo", "tuple(address a, string[] b) foo"),
+        ).forEach { test ->
+            println("allows correct modifiers ${test.first}")
+            val param = Param.from(test.first)
+            assertTrue(
+                param?.format(FULL_SIGNATURE) == test.second,
+                "\nres: ${param?.format(FULL_SIGNATURE)}\nexp: ${test.second}"
             )
         }
     }

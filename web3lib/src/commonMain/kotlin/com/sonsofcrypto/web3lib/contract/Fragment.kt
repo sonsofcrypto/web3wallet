@@ -49,13 +49,14 @@ open class Fragment(
 ) {
 
     enum class Format {
-        SIGNATURE, STRING
+        SIGNATURE, STRING, FULL_SIGNATURE
     }
 
     open fun format(format: Format = Format.SIGNATURE): String = when(format) {
         Format.STRING -> "Fragment(type=$type, name=$name, inputs=$inputs)"
         Format.SIGNATURE -> name + inputs.map { it.format(format) }
             .joinToString(",", prefix = "(", postfix = ")")
+        Format.FULL_SIGNATURE -> throw Error.UnsupportedFormat
     }
 
     override fun toString(): String = this.format(Format.STRING)
@@ -75,6 +76,7 @@ class EventFragment : Fragment {
 
     override fun format(format: Format): String = when (format) {
         Format.SIGNATURE -> super.format(format)
+        Format.FULL_SIGNATURE -> throw Error.UnsupportedFormat
         Format.STRING -> "EventFragment(" +
             "type=$type, " +
             "name=$name, " +
@@ -113,6 +115,7 @@ open class ConstructorFragment : Fragment {
 
     override fun format(format: Format): String = when (format) {
         Format.SIGNATURE -> super.format(format)
+        Format.FULL_SIGNATURE -> throw Error.UnsupportedFormat
         Format.STRING -> "ConstructorFragment(" +
             "type=$type, " +
             "name=$name, " +
@@ -156,6 +159,7 @@ class FunctionFragment : ConstructorFragment {
 
     override fun format(format: Format): String = when (format) {
         Format.SIGNATURE -> super.format(format)
+        Format.FULL_SIGNATURE -> throw Error.UnsupportedFormat
         Format.STRING -> "FunctionFragment(" +
             "type=$type, " +
             "name=$name, " +
@@ -192,6 +196,7 @@ class ErrorFragment(
 
     override fun format(format: Format): String = when (format) {
         Format.SIGNATURE -> super.format(format)
+        Format.FULL_SIGNATURE -> throw Error.UnsupportedFormat
         Format.STRING -> "ErrorFragment(type=$type, name=$name, inputs=$inputs)"
     }
 
@@ -234,7 +239,9 @@ data class Param(
         val components: List<SourceObject>?
     }
 
-    fun format(format: Fragment.Format): String = when(format) {
+    fun format(
+        format: Fragment.Format = Fragment.Format.SIGNATURE
+    ): String = when(format) {
         Fragment.Format.STRING -> "Param(" +
             "name=$name, " +
             "type=$type, " +
@@ -253,6 +260,17 @@ data class Param(
                 ?.joinToString(",", prefix = "(", postfix = ")")
                 ?: "()"
             else -> type
+        }
+        Fragment.Format.FULL_SIGNATURE -> { when(baseType) {
+            "array" -> {
+                val length = if ((arrayLength ?: -1) < 0) "" else "$arrayLength"
+                (this.arrayChildren?.format(format) ?: "") + "[$length]"  +
+                    (if (name.isNotEmpty()) " $name" else "")
+            }
+            "tuple" -> "tuple" + (components ?: listOf()).map { it.format(format) }
+                .joinToString(", ", prefix = "(", postfix = ")") +
+                (if (name.isNotEmpty()) " $name" else "")
+            else -> type + (if (name.isNotEmpty()) " $name" else "" ) }
         }
     }
 
@@ -334,6 +352,8 @@ sealed class Error(
     /** Errors during parsing params from string */
     data class UnexpectedChar(val str: String, val idx: Int, val char: String):
         Error("Unexpected char $char at idx $idx in $str during parsing node")
+    /** Format.FULL_SIGNATURE is only supported to for `Param` */
+    object UnsupportedFormat: Error("Unsupported format")
 }
 
 private const val ARRAY_PATTERN = "^(.*)\\[([0-9]*)\\]\$"
@@ -400,8 +420,8 @@ private fun verifiedState(value: JsonFragment): StateOutput {
     return StateOutput(constant, payable, stateMutability)
 }
 
-private val modifiersBytes = listOf("calldata", "mememory", "storage")
-private val modifiersNest = listOf("calldata", "mememory")
+private val modifiersBytes = listOf("calldata", "memory", "storage")
+private val modifiersNest = listOf("calldata", "memory")
 
 @Throws(Throwable::class)
 private fun checkModifier(type: String, name: String): Boolean {
@@ -594,7 +614,7 @@ private fun parseParam(
                     node.state?.allowParams = true
                     node.state?.allowArray = true
                 } else if (node.state?.allowName == true) {
-                    node.type += c
+                    node.name += c
                     node.state?.allowArray = false
                 } else if (node.state?.readArray == true) {
                     node.type += c
