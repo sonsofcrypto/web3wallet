@@ -453,8 +453,11 @@ class FixedBytesCoder(private val size: Int, localName : String):
     @Throws(Throwable::class)
     override fun encode(writer: Writer, value: Any): Int {
         val data = value as ByteArray
-        return if (data != null) writer.writeBytes(data)
-        else throw Error.UnexpectedType(this, value)
+        if (data == null)
+            throw Error.UnexpectedType(this, value)
+        if (data.size != size)
+            throw Error.SizeMismatch(listOf(this), listOf(value))
+        return writer.writeBytes(data)
     }
 
     @Throws(Throwable::class)

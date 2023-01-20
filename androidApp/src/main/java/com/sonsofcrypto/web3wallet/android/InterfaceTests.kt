@@ -32,6 +32,7 @@ class InterfaceTests {
             testContractEvents()
             testInterfaceSignatures()
             testNumberCoder()
+            testFixedBytesCoder()
         }
     }
 
@@ -476,6 +477,54 @@ class InterfaceTests {
             assertThrows(
                 { coder.encode(paramsFromString("[int256]"), listOf(it)) },
                 { err -> assertTrue(err is Coder.Error.OutOfBounds, "int256 $err") }
+            )
+        }
+    }
+
+    fun testFixedBytesCoder() {
+        val coder = AbiCoder.default()
+        val zeroHexStr = "0x0000000000000000000000000000000000000000000000000000000000000000"
+
+        println("fails to encode out-of-range bytes4")
+        listOf(
+            "0x", "0x00000", "0x000", zeroHexStr, "0x12345", "0x123456",
+            "0x123", "0x12",
+        ).forEach { testVal ->
+            assertThrows(
+                {
+                    val data =  testVal.hexStringToByteArray()
+                    coder.encode(paramsFromString("[bytes4]"), listOf(data))
+                },
+                { err ->
+                    if (testVal.length % 2 != 0)
+                        assertTrue(err is IllegalStateException, "Wrong error")
+                    else
+                        assertTrue(err is Coder.Error.SizeMismatch, "Wrong error")
+                }
+            )
+        }
+
+        println("fails to encode out-of-range bytes32")
+        listOf(
+            "0x",
+            "0x00000",
+            "0x000",
+            "0x12345",
+            "0x123456",
+            zeroHexStr + "0",
+            zeroHexStr + "00",
+        ).forEach { testVal ->
+            assertThrows(
+                {
+                    val data =  testVal.hexStringToByteArray()
+                    coder.encode(paramsFromString("[bytes4]"), listOf(data))
+                },
+                { err ->
+                    if (testVal.length % 2 != 0)
+                        assertTrue(err is IllegalStateException, "Wrong error")
+                    else
+                        assertTrue(err is Coder.Error.SizeMismatch, "Wrong error")
+                }
             )
         }
     }
