@@ -73,15 +73,22 @@ class BigInt {
         }
 
         fun maxInt256(): BigInt {
-            var bytes = ByteArray(31)
-            for (idx in bytes.indices) { bytes.set(idx, 0xff.toByte()) }
+            var bytes = ByteArray(32)
+            for (idx in 0 until bytes.size - 1) {
+                bytes.set(idx, 0xff.toByte())
+            }
             return from(bytes)
         }
 
         @Throws(Throwable::class)
-        fun from(string: String, base: Int = 10, byteForZeroVal: Boolean = false): BigInt {
-            return BigInt(BigInteger.parseString(string, base), byteForZeroVal)
-        }
+        fun from(
+            string: String,
+            base: Int = 10,
+            byteForZeroVal: Boolean = false
+        ): BigInt = BigInt(
+                BigInteger.parseString(string.replace("0x", ""), base),
+                byteForZeroVal
+            )
 
         fun fromTwosComplement(byteArray: ByteArray): BigInt
             = BigInt(BigInteger.fromTwosComplementByteArray(byteArray))

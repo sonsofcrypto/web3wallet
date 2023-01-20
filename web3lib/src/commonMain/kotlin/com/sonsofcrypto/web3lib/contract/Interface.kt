@@ -39,9 +39,9 @@ class Interface {
                 else -> Unit
             }
         }
-        this.errors = errors.map { (it.name to it) }.toMap() as Map<String, ErrorFragment>
-        this.events = events.map { (it.name to it) }.toMap()
-        this.functions = functions.map { (it.name to it) }.toMap()
+        this.errors = errors.map { (it.format() to it) }.toMap() as Map<String, ErrorFragment>
+        this.events = events.map { (it.format() to it) }.toMap()
+        this.functions = functions.map { (it.format() to it) }.toMap()
         this.deploy = deploy
     }
 

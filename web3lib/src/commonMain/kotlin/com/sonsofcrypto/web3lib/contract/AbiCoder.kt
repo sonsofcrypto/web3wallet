@@ -157,9 +157,8 @@ class Writer(val wordSize: Int = 32) {
 
     private fun getValue(value: BigInt): ByteArray {
         var bytes = value.toByteArray()
-        if (bytes.size > wordSize) {
-            throw Error.OutOfBounds(value, wordSize)
-        }
+        if (bytes.isEmpty()) bytes = ByteArray(wordSize)
+        if (bytes.size > wordSize) throw Error.OutOfBounds(value, wordSize)
         return if (bytes.size % wordSize == 0) bytes
         else padding.copyOfRange(bytes.size % wordSize, padding.size) + bytes
     }
@@ -394,12 +393,12 @@ class NumberCoder(val size: Int, val signed: Boolean, localName: String):
             val maxInt256 = BigInt.maxInt256()
             val minInt256 = maxInt256.add(BigInt.one).mul(BigInt.negOne)
             if(num.isGreaterThan(maxInt256) || num.isLessThan(minInt256))
-                throw Error.UnexpectedType(this, num)
+                throw Error.OutOfBounds(this, num)
         } else {
             val maxUInt256 = BigInt.maxUInt256()
             val zero = BigInt.zero
-            if (num.isLessThan(zero) || num.isGreaterThan(maxUInt256))
-                throw Error.UnexpectedType(this, num)
+            if (num.isLessThan(zero) || num.isGreaterThan(mask(maxUInt256, size)))
+                throw Error.OutOfBounds(this, num)
         }
     }
 
@@ -415,6 +414,11 @@ class NumberCoder(val size: Int, val signed: Boolean, localName: String):
 
     @Throws(Throwable::class)
     override fun defaultValue(): Any = 0
+
+    private fun mask(bigInt: BigInt, byteCnt: Int): BigInt {
+        val bytes = bigInt.toTwosComplement()
+        return BigInt.from(bytes.copyOfRange(bytes.size - byteCnt, bytes.size))
+    }
 }
 
 open class DynamicBytesCoder(type: String, localName: String):
