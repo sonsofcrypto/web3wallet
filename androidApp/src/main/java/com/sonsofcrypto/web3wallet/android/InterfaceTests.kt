@@ -34,8 +34,9 @@ class InterfaceTests {
 //            testInterfaceSignatures()
 //            testNumberCoder()
 //            testFixedBytesCoder()
+            testFilters()
 //            testParamTypeParser()
-            additionalTestCases()
+//            additionalTestCases()
         }
     }
 
@@ -530,6 +531,75 @@ class InterfaceTests {
                 }
             )
         }
+    }
+
+    data class TestCaseFilter(
+        val name: String,
+        val args: List<Any?>,
+        val event: String,
+        val signature: String,
+        val expected: List<Any?>,
+    )
+
+    fun testFilters() {
+        fun test(test: TestCaseFilter) {
+            println(test.name)
+            val iface = Interface("[${test.signature}]")
+            val eventDescription = iface.event(test.event)
+            val filter = iface.encodeFilterTopic(eventDescription, test.args)
+            assertTrue(
+                filter.size == test.expected.size,
+                "filter length matches - ${test.name}"
+            )
+            filter.forEachIndexed { idx, value ->
+                assertTrue(
+                    stringify(value) == test.expected[idx],
+                    "signature topic matches - $idx - ${test.name}"
+                )
+            }
+        }
+
+        listOf(
+            // Skips null in non-indexed fields
+            // https://github.com/ethers-io/ethers.js/issues/305
+            TestCaseFilter(
+                "creates correct filters for null non-indexed fields",
+                listOf(null, BigInt.from(2), null, null),
+                "LogSomething",
+                "event LogSomething(int hup, int indexed two, bool three, address indexed four)",
+                listOf(
+                    "0xf6b983969813047dce97b9ff8a48cfb0a13306eb2caae2ef186b280bc27491c8",
+                    "0x0000000000000000000000000000000000000000000000000000000000000002"
+                )
+            ),
+            // https://etherscan.io/tx/0x820cc57bc77be44d8f4f024a18e18f64a8b6e62a82a3d7897db5970dbe181ba1
+            TestCaseFilter(
+                "transfer filtering from",
+                listOf(
+                    "0x59DEa134510ebce4a0c7146595dc8A61Eb9D0D79".hexStringToByteArray()
+                ),
+                "Transfer",
+                "event Transfer(address indexed from, address indexed to, uint value)",
+                listOf(
+                    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+                    "0x00000000000000000000000059dea134510ebce4a0c7146595dc8a61eb9d0d79"
+                )
+            ),
+            TestCaseFilter(
+                "transfer filtering to",
+                listOf(
+                    null,
+                    "0x851b9167B7cbf772D38eFaf89705b35022880A07".hexStringToByteArray()
+                ),
+                "Transfer",
+                "event Transfer(address indexed from, address indexed to, uint value)",
+                listOf(
+                    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+                    null,
+                    "0x000000000000000000000000851b9167b7cbf772d38efaf89705b35022880a07",
+                )
+            )
+        ).forEach { test(it) }
     }
 
     fun testParamTypeParser() {
