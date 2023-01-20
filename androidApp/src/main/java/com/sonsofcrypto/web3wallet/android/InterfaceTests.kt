@@ -25,12 +25,12 @@ class InterfaceTests {
         GlobalScope.launch {
             delay(1.seconds)
             println("=== LFG")
-//            testAbiCoderEncoding()
-//            testAbiCoderDecoding()
-//            testAbiV2CoderEncoding()
-//            testAbiV2CoderDecoding()
-//            testContractEvents()
-//            testInterfaceSignatures()
+            testAbiCoderEncoding()
+            testAbiCoderDecoding()
+            testAbiV2CoderEncoding()
+            testAbiV2CoderDecoding()
+            testContractEvents()
+            testInterfaceSignatures()
             testNumberCoder()
         }
     }
@@ -447,15 +447,37 @@ class InterfaceTests {
             BigInt.from(minSignedHex, 16).sub(one),
             BigInt.from(overflowAboveHex, 16), BigInt.from(overflowBelowHex, 16)
         ).forEach {
-            println(" ")
-            println("$it")
-            coder.encode(paramsFromString("[int8]"), listOf(it))
             assertThrows(
                 { coder.encode(paramsFromString("[int8]"), listOf(it)) },
                 { err -> assertTrue(err is Coder.Error.OutOfBounds, "int8 $err") }
             )
         }
 
+        println("fails to encode out-of-range uint256")
+        listOf(
+            BigInt.from(-128), BigInt.from(-127), BigInt.from(-2),
+            BigInt.from(-1), BigInt.from(maxHex, 16).add(one),
+            BigInt.from('-' + maxHex, 16), BigInt.from(overflowAboveHex, 16),
+            BigInt.from(overflowBelowHex, 16)
+        ).forEach {
+            assertThrows(
+                { coder.encode(paramsFromString("[uint256]"), listOf(it)) },
+                { err -> assertTrue(err is Coder.Error.OutOfBounds, "uint256 $err") }
+            )
+        }
+
+        println("fails to encode out-of-range int256")
+        listOf(
+            BigInt.from(maxHex, 16),
+            BigInt.from(maxSignedHex, 16).add(one),
+            BigInt.from(minSignedHex, 16).sub(one),
+            BigInt.from(overflowAboveHex, 16), BigInt.from(overflowBelowHex, 16)
+        ).forEach {
+            assertThrows(
+                { coder.encode(paramsFromString("[int256]"), listOf(it)) },
+                { err -> assertTrue(err is Coder.Error.OutOfBounds, "int256 $err") }
+            )
+        }
     }
 
     private fun paramsFromString(string: String): List<Param> =

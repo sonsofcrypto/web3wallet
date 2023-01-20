@@ -1,6 +1,10 @@
 package com.sonsofcrypto.web3lib.contract
 
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.BigInt.Companion.maxInt
+import com.sonsofcrypto.web3lib.utils.BigInt.Companion.maxUInt
+import com.sonsofcrypto.web3lib.utils.BigInt.Companion.minInt
+import com.sonsofcrypto.web3lib.utils.BigInt.Companion.zero
 import com.sonsofcrypto.web3lib.utils.extensions.*
 import com.sonsofcrypto.web3lib.utils.padTwosComplement
 import io.ktor.utils.io.*
@@ -128,7 +132,7 @@ class Writer(val wordSize: Int = 32) {
 
     fun writeSignedValue(value: BigInt, size: Int): Int {
         val bytes = padTwosComplement(value, size)
-        var padding = if (value.isLessThan(BigInt.zero)) padding.inv()
+        var padding = if (value.isLessThan(zero)) padding.inv()
             else padding
         if (bytes.size > wordSize)
             throw Error.OutOfBounds(value, wordSize)
@@ -390,14 +394,10 @@ class NumberCoder(val size: Int, val signed: Boolean, localName: String):
     @Throws(Throwable::class)
     private fun checkValueBounds(num: BigInt) {
         if (signed) {
-            val maxInt256 = BigInt.maxInt256()
-            val minInt256 = maxInt256.add(BigInt.one).mul(BigInt.negOne)
-            if(num.isGreaterThan(maxInt256) || num.isLessThan(minInt256))
+            if(num.isLessThan(minInt(size)) || num.isGreaterThan(maxInt(size)))
                 throw Error.OutOfBounds(this, num)
         } else {
-            val maxUInt256 = BigInt.maxUInt256()
-            val zero = BigInt.zero
-            if (num.isLessThan(zero) || num.isGreaterThan(mask(maxUInt256, size)))
+            if (num.isLessThan(zero) || num.isGreaterThan(maxUInt(size)))
                 throw Error.OutOfBounds(this, num)
         }
     }
@@ -414,11 +414,6 @@ class NumberCoder(val size: Int, val signed: Boolean, localName: String):
 
     @Throws(Throwable::class)
     override fun defaultValue(): Any = 0
-
-    private fun mask(bigInt: BigInt, byteCnt: Int): BigInt {
-        val bytes = bigInt.toTwosComplement()
-        return BigInt.from(bytes.copyOfRange(bytes.size - byteCnt, bytes.size))
-    }
 }
 
 open class DynamicBytesCoder(type: String, localName: String):
@@ -440,7 +435,7 @@ open class DynamicBytesCoder(type: String, localName: String):
     )
 
     @Throws(Throwable::class)
-    override fun defaultValue(): Any = BigInt.zero
+    override fun defaultValue(): Any = zero
 }
 
 class BytesCoder(localName: String):

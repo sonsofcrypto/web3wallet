@@ -5,6 +5,7 @@ import com.ionspin.kotlin.bignum.integer.util.fromTwosComplementByteArray
 import com.ionspin.kotlin.bignum.integer.util.toTwosComplementByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toBooleanArray
 import com.sonsofcrypto.web3lib.utils.extensions.toByteArray
+import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Serializer
@@ -65,20 +66,21 @@ class BigInt {
         val zero: BigInt get() = from(0)
         val one: BigInt get() = from(1)
         val negOne: BigInt get() = from(-1)
+        val maxUInt256: BigInt get() = maxUInt(32)
+        val maxInt256: BigInt get() = maxInt(32)
 
-        fun maxUInt256(): BigInt {
-            var bytes = ByteArray(32)
+        /** max unsigned integer of `size` 1 is uint8, 32 is uint256 */
+        fun maxUInt(size: Int): BigInt {
+            var bytes = ByteArray(size)
             for (idx in bytes.indices) { bytes.set(idx, 0xff.toByte()) }
             return from(bytes)
         }
 
-        fun maxInt256(): BigInt {
-            var bytes = ByteArray(32)
-            for (idx in 0 until bytes.size - 1) {
-                bytes.set(idx, 0xff.toByte())
-            }
-            return from(bytes)
-        }
+        /** max integer of `size` 1 is uint8, 32 is uint256 */
+        fun maxInt(size: Int): BigInt = maxUInt(size).div(from(2))
+
+        /** min integer of `size` 1 is uint8, 32 is uint256 */
+        fun minInt(size: Int): BigInt = maxUInt(size).div(from(-2)).add(negOne)
 
         @Throws(Throwable::class)
         fun from(
