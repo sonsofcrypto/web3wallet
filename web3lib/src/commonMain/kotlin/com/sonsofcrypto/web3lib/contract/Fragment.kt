@@ -193,7 +193,19 @@ open class ConstructorFragment : Fragment {
 
         @Throws(Throwable::class)
         fun from(signature: String): ConstructorFragment {
-            TODO("Implement")
+            val value = signature.trim()
+            val match = Regex(STRING_FRAGMENT_PATTERN).matchEntire(value)
+            val parens = match?.groupValues ?: emptyList()
+            if (match == null)
+                throw Error.InvalidFragmentString("constructor", value)
+            val state = parseModifiers(parens[3].trim())
+            return ConstructorFragment(
+                "constructor",
+                "",
+                parseParams(parens[2], false).filterNotNull(),
+                state.stateMutability,
+                state.payable
+            )
         }
     }
 }
@@ -303,7 +315,16 @@ class ErrorFragment(
 
         @Throws(Throwable::class)
         fun from(signature: String): ErrorFragment {
-            TODO("Implement")
+            val value = signature.trim()
+            val match = Regex(STRING_FRAGMENT_PATTERN).matchEntire(value)
+            val parens = match?.groupValues ?: emptyList()
+            if (match == null)
+                throw Error.InvalidFragmentString("error", value)
+            return  ErrorFragment(
+                "error",
+                verifiedIdentifier(parens[1].trim()),
+                parseParams(parens[2], false).filterNotNull(),
+            )
         }
     }
 }
