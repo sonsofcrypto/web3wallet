@@ -203,7 +203,7 @@ class Interface {
         if (values.size > fragment.inputs.size)
             throw Error.ArgCountMismatch(fragment, values)
         var topics: MutableList<ByteArray?> = mutableListOf()
-        if (fragment.anonymous)
+        if (!fragment.anonymous)
             topics.add(eventTopic(fragment))
 
         @Throws(Throwable::class)
@@ -216,25 +216,25 @@ class Interface {
             if (value == null)
                 return ByteArray(32)
 
-            var output = value
+            var output: Any = value
             if (param.type == "bool")
                  output = (if (value as Boolean) "0x01" else "0x00")
                      .hexStringToByteArray()
 
-            if (Regex("^u?int").matchEntire(param.type) != null)
+            if (Regex("^u?int").containsMatchIn(param.type))
                 output = encode(listOf(param), listOf(value))
 
             // Check addresses are valid ?? (I guess this would just throw)
             if (param.type == "address")
-                encode(listOf(Param("","address", "address")), listOf(value))
+                encode(listOf(Param("","address", "address")), listOf(output))
 
-            return (value as ByteArray).leftPadded(32)
+            return (output as ByteArray).leftPadded(32)
         }
 
         for (i in 0 until values.size) {
             val param = fragment.inputs[i]
             val value = values[i]
-            val valueArray = values as? List<Any>
+            val valueArray = value as? List<Any>
             if (!param.indexed) {
                 if (value != null)
                     throw Error.CannotFilterUnIndexed(param.name, value)
@@ -243,7 +243,7 @@ class Interface {
             if (value == null) {
                 topics.add(null)
             } else if (param.baseType == "array" || param.baseType == "tuple") {
-
+                throw Error.FilteringWithCollection(param.type, value)
             } else if (valueArray != null) {
                 topics.addAll(valueArray.map { encodeTopic(param, it) })
             } else {

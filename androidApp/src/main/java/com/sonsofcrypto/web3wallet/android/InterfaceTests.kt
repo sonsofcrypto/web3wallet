@@ -26,17 +26,17 @@ class InterfaceTests {
         GlobalScope.launch {
             delay(1.seconds)
             println("=== LFG")
-//            testAbiCoderEncoding()
-//            testAbiCoderDecoding()
-//            testAbiV2CoderEncoding()
-//            testAbiV2CoderDecoding()
-//            testContractEvents()
-//            testInterfaceSignatures()
-//            testNumberCoder()
-//            testFixedBytesCoder()
+            testAbiCoderEncoding()
+            testAbiCoderDecoding()
+            testAbiV2CoderEncoding()
+            testAbiV2CoderDecoding()
+            testContractEvents()
+            testInterfaceSignatures()
+            testNumberCoder()
+            testFixedBytesCoder()
             testFilters()
-//            testParamTypeParser()
-//            additionalTestCases()
+            testParamTypeParser()
+            additionalTestCases()
         }
     }
 
@@ -542,6 +542,14 @@ class InterfaceTests {
     )
 
     fun testFilters() {
+        val input = """
+            uint256 something
+            int256 another
+            ahh
+            int256
+            int
+        """.trimIndent()
+
         fun test(test: TestCaseFilter) {
             println("[TEST] ${test.name}")
             val iface = Interface.fromSignatures(listOf(test.signature))
@@ -549,11 +557,11 @@ class InterfaceTests {
             val filter = iface.encodeFilterTopic(eventDescription, test.args)
             assertTrue(
                 filter.size == test.expected.size,
-                "filter length matches - ${test.name}"
+                "filter length matches - ${filter.size} ${test.expected.size}  ${test.name}"
             )
             filter.forEachIndexed { idx, value ->
                 assertTrue(
-                    stringify(value) == test.expected[idx],
+                    stringify(value) == stringify(test.expected[idx]),
                     "signature topic matches - $idx - ${test.name}"
                 )
             }
