@@ -107,7 +107,7 @@ class InterfaceTests {
         val coder = AbiCoder.default()
 
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
-            val types = Param.fromJsonArrayString(t.types).mapNotNull { it }
+            val types = Param.fromJsonArrayString(t.types).filterNotNull()
             val strNormVals = t.normalizedValues?.stringValue() ?: ""
             val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
             val title = "${t.name} => ${t.types} = ${strNormVals}"
@@ -127,7 +127,7 @@ class InterfaceTests {
         val coder = AbiCoder.default()
 
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
-            val types = Param.fromJsonArrayString(t.types).mapNotNull { it }
+            val types = Param.fromJsonArrayString(t.types).filterNotNull()
             val strNormVals = t.normalizedValues?.stringValue() ?: ""
             val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
             val result = t.result.hexStringToByteArray()
@@ -147,7 +147,7 @@ class InterfaceTests {
         val coder = AbiCoder.default()
 
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
-            val types = Param.fromJsonArrayString(t.types).mapNotNull { it }
+            val types = Param.fromJsonArrayString(t.types).filterNotNull()
             val strVals = t.values.stringValue() ?: ""
             val values = getValues(jsonDecode<JsonArray>(strVals)!!)
             val title = "${t.name} => ${t.types} = ${strVals}"
@@ -167,7 +167,7 @@ class InterfaceTests {
         val coder = AbiCoder.default()
 
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
-            val types = Param.fromJsonArrayString(t.types).mapNotNull { it }
+            val types = Param.fromJsonArrayString(t.types).filterNotNull()
             val strVals = t.values.stringValue() ?: ""
             val values = getValues(jsonDecode<JsonArray>(strVals)!!)
             val result = t.result.hexStringToByteArray()
@@ -657,7 +657,7 @@ class InterfaceTests {
     }
 
     private fun paramsFromString(string: String): List<Param> =
-        Param.fromJsonArrayString(string).mapNotNull { it }
+        Param.fromJsonArrayString(string).filterNotNull()
 }
 
 val transferJson = """

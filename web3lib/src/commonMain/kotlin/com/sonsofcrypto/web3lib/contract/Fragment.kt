@@ -144,7 +144,7 @@ class EventFragment : Fragment {
             return EventFragment(
                 type = "event",
                 name = verifiedIdentifier(groups[1].trim()),
-                inputs = parseParams(groups[2], true).mapNotNull { it },
+                inputs = parseParams(groups[2], true).filterNotNull(),
                 anonymous = anonymous,
             )
         }
@@ -192,7 +192,7 @@ open class ConstructorFragment : Fragment {
         }
 
         @Throws(Throwable::class)
-        fun from(signature: String): EventFragment {
+        fun from(signature: String): ConstructorFragment {
             TODO("Implement")
         }
     }
@@ -245,8 +245,35 @@ class FunctionFragment : ConstructorFragment {
         }
 
         @Throws(Throwable::class)
-        fun from(signature: String): EventFragment {
-            TODO("Implement")
+        fun from(signature: String): FunctionFragment {
+            val value = signature.trim()
+            val comps = value.split(" returns ")
+            if (comps.size > 2) {
+                throw Error.InvalidFragmentString("function", value)
+            }
+            val match = Regex(STRING_FRAGMENT_PATTERN).matchEntire(comps[0])
+            val parens = match?.groupValues ?: emptyList()
+            if (match == null)
+                throw Error.InvalidFragmentString("function", value)
+            val state = parseModifiers(parens[3].trim())
+            var outputs = emptyList<Param>()
+            if (comps.size > 1) {
+                val returns = Regex(STRING_FRAGMENT_PATTERN)
+                    .matchEntire(comps[1])
+                    ?.groupValues ?: emptyList()
+                if (returns[1].trim() != "" || returns[3].trim() != "")
+                    throw Error.InvalidFragmentString("function", value)
+                outputs = parseParams(returns[2], false).filterNotNull()
+            }
+            return FunctionFragment(
+                "function",
+                verifiedIdentifier(parens[1].trim()),
+                parseParams(parens[2], false).filterNotNull(),
+                state.stateMutability,
+                state.payable,
+                state.constant,
+                outputs
+            )
         }
     }
 }
@@ -275,7 +302,7 @@ class ErrorFragment(
         }
 
         @Throws(Throwable::class)
-        fun from(signature: String): EventFragment {
+        fun from(signature: String): ErrorFragment {
             TODO("Implement")
         }
     }
@@ -424,6 +451,9 @@ sealed class Error(
     /** Failted to create fragment from string */
     data class UnsupportedFragment(val str: String):
         Error("Unsupported fragment: $str")
+    /** Error during parsing fragment from string */
+    data class InvalidFragmentString(val type: String, val str: String):
+        Error("Failed to parse fragment of type: $type from string: $str")
 }
 
 private const val ARRAY_PATTERN = "^(.*)\\[([0-9]*)\\]\$"
@@ -489,6 +519,25 @@ private fun verifiedState(value: JsonFragment): StateOutput {
     }
 
     return StateOutput(constant, payable, stateMutability)
+}
+
+@Throws(Throwable::class)
+private fun parseModifiers(value: String): StateOutput {
+    var constant = false;
+    var payable = false;
+    var mutability = "nonpayable";
+    value.split(" ").forEach { modifier ->
+        when (modifier.trim()) {
+            "constant" -> constant = true
+            "payable" -> { payable = true; mutability = "payable" }
+            "nonpayable" -> { payable = false; mutability = "nonpayable" }
+            "pure" -> { constant = true; mutability = "pure" }
+            "view" -> { constant = true; mutability = "view" }
+            "external" , "public" -> Unit
+            else -> println("[WARN] Unknown modifier $modifier")
+        }
+    }
+    return StateOutput(constant, payable, mutability)
 }
 
 private val modifiersBytes = listOf("calldata", "memory", "storage")
