@@ -60,6 +60,36 @@ open class Fragment(
     }
 
     override fun toString(): String = this.format(Format.STRING)
+
+    companion object {
+
+        fun from(jsonFrag: JsonFragment): Fragment? = when (jsonFrag.type) {
+            "function" -> FunctionFragment.from(jsonFrag)
+            "event" -> EventFragment.from(jsonFrag)
+            "constructor" -> ConstructorFragment.from(jsonFrag)
+            "error" -> ErrorFragment.from(jsonFrag)
+            "fallback", "receive" -> null
+            else -> null
+        }
+
+        @Throws(Throwable::class)
+        fun from(signature: String): Fragment? {
+            var value = signature.replace("\\s".toRegex(), " ")
+                .replace("\\(".toRegex(), " (")
+                .replace("\\)".toRegex(), ") ")
+                .replace("\\s+".toRegex(), " ")
+                .trim()
+            val split = value.split(" ")[0]
+            val splitB = value.split("(")[0]
+            return when {
+                split == "event" -> EventFragment.from(value.substring(5))
+                split == "function" -> FunctionFragment.from(value.substring(8))
+                splitB == "constructor" -> ConstructorFragment.from(value)
+                split == "error" -> ErrorFragment.from(value.substring(5))
+                else -> throw Error.UnsupportedFragment(signature)
+            }
+        }
+    }
 }
 
 class EventFragment : Fragment {
@@ -93,6 +123,29 @@ class EventFragment : Fragment {
                 name = verifiedIdentifier(jsonFrag.name),
                 inputs = Param.from(jsonFrag.inputs) ?: emptyList(),
                 anonymous = jsonFrag.anonymous ?: false,
+            )
+        }
+
+        @Throws(Throwable::class)
+        fun from(signature: String): EventFragment {
+            val value = signature.trim()
+            val match = Regex(STRING_FRAGMENT_PATTERN).matchEntire(value)
+            val groups = match?.groupValues ?: emptyList()
+            if (match == null)
+                throw Error.UnsupportedFragment(signature)
+            var anonymous = false
+            groups[3].split(" ").forEach {
+                when (it.trim()) {
+                    "anonymous" -> anonymous = true
+                    "" -> Unit
+                    else -> println("[WARN] Unknown modifier: $it")
+                }
+            }
+            return EventFragment(
+                type = "event",
+                name = verifiedIdentifier(groups[1].trim()),
+                inputs = parseParams(groups[2], true).mapNotNull { it },
+                anonymous = anonymous,
             )
         }
     }
@@ -136,6 +189,11 @@ open class ConstructorFragment : Fragment {
                 stateMutability = state.stateMutability,
                 payable = state.payable,
             )
+        }
+
+        @Throws(Throwable::class)
+        fun from(signature: String): EventFragment {
+            TODO("Implement")
         }
     }
 }
@@ -185,6 +243,11 @@ class FunctionFragment : ConstructorFragment {
                 output = Param.from(jsonFrag.output) ?: emptyList(),
             )
         }
+
+        @Throws(Throwable::class)
+        fun from(signature: String): EventFragment {
+            TODO("Implement")
+        }
     }
 }
 
@@ -209,6 +272,11 @@ class ErrorFragment(
                 name = verifiedIdentifier(jsonFrag.name),
                 inputs = Param.from(jsonFrag.inputs) ?: emptyList(),
             )
+        }
+
+        @Throws(Throwable::class)
+        fun from(signature: String): EventFragment {
+            TODO("Implement")
         }
     }
 }
@@ -311,12 +379,11 @@ data class Param(
             from(parseParam(string, allowIndexed).toJsonFragmentType())
 
         @Throws(Throwable::class)
-        fun fromStringParams(
+        fun fromJsonArrayString(
             value: String,
             allowIndexed: Boolean = false
         ): List<Param?> = (jsonDecode<List<String>>(value) ?: emptyList())
             .map { from(it, allowIndexed) }
-        // NOTE: maybe splitNesting(value).map { from(it, allowIndexed) }
     }
 }
 
@@ -354,10 +421,14 @@ sealed class Error(
         Error("Unexpected char $char at idx $idx in $str during parsing node")
     /** Format.FULL_SIGNATURE is only supported to for `Param` */
     object UnsupportedFormat: Error("Unsupported format")
+    /** Failted to create fragment from string */
+    data class UnsupportedFragment(val str: String):
+        Error("Unsupported fragment: $str")
 }
 
 private const val ARRAY_PATTERN = "^(.*)\\[([0-9]*)\\]\$"
 private const val ID_PATTERN = "^[a-zA-Z\$_][a-zA-Z0-9\$_]*\$"
+private const val STRING_FRAGMENT_PATTERN = "^([^)(]*)\\((.*)\\)([^)(]*)\$"
 
 
 private fun verifiedType(type: String): String {
@@ -492,6 +563,10 @@ private fun splitNesting(value: String): List<String> {
         result.add(accum)
     return result
 }
+
+@Throws(Throwable::class)
+fun parseParams(value: String, allowIndexed: Boolean): List<Param?> =
+    splitNesting(value).map { Param.from(it, allowIndexed) }
 
 @Throws(Throwable::class)
 private fun parseParam(

@@ -13,21 +13,11 @@ class Interface {
     val deploy: ConstructorFragment?
 
     @Throws(Throwable::class)
-    constructor(jsonString: String) {
+    constructor(fragments: List<Fragment>) {
         var errors = mutableListOf<ErrorFragment>()
         var events = mutableListOf<EventFragment>()
         var functions = mutableListOf<FunctionFragment>()
         var deploy: ConstructorFragment? = null
-        this.fragments = fragmentsFrom(jsonString).map {
-            when (it.type) {
-                "function" -> FunctionFragment.from(it)
-                "event" -> EventFragment.from(it)
-                "constructor" -> ConstructorFragment.from(it)
-                "error" -> ErrorFragment.from(it)
-                "fallback", "receive" -> null
-                else -> null
-            }
-        }.filterNotNull()
         fragments.forEach {
             when (it) {
                 is ErrorFragment -> errors.add(it)
@@ -39,10 +29,24 @@ class Interface {
                 else -> Unit
             }
         }
+        this.fragments = fragments
         this.errors = errors.map { (it.format() to it) }.toMap() as Map<String, ErrorFragment>
         this.events = events.map { (it.format() to it) }.toMap()
         this.functions = functions.map { (it.format() to it) }.toMap()
         this.deploy = deploy
+    }
+
+    companion object {
+
+        @Throws(Throwable::class)
+        fun fromJson(jsonString: String): Interface = Interface(
+            fragmentsFrom(jsonString).map { Fragment.from(it) }.filterNotNull()
+        )
+
+        @Throws(Throwable::class)
+        fun fromSignatures(signatures: List<String>): Interface = Interface(
+            signatures.map { Fragment.from(it) }.filterNotNull()
+        )
     }
 
     /** Find function by signature, selector/sighash, bare name if unambiguous */

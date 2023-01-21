@@ -27,7 +27,7 @@ class TmpTest {
         val bytes = BundledAssetProvider().file(name, "json")
         assertTrue(bytes != null, "Failed to load contract $name")
         val string = String(bytes!!)
-        val intf = Interface(string)
+        val intf = Interface.fromJson(string)
     }
 
 
@@ -68,7 +68,7 @@ class TmpTest {
         val bytes = BundledAssetProvider().file(name, "json")
         val tests = jsonDecode<List<TestCase>>(String(bytes!!))
         tests?.forEachIndexed { idx, test ->
-            val iface = Interface(test.iface)
+            val iface = Interface.fromJson(test.iface)
             val types = iface.event("testEvent")
                 .inputs.map { it.format(SIGNATURE) }
                 .joinToString(prefix = "[", postfix = "]")

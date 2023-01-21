@@ -107,7 +107,7 @@ class InterfaceTests {
         val coder = AbiCoder.default()
 
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
-            val types = Param.fromStringParams(t.types).mapNotNull { it }
+            val types = Param.fromJsonArrayString(t.types).mapNotNull { it }
             val strNormVals = t.normalizedValues?.stringValue() ?: ""
             val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
             val title = "${t.name} => ${t.types} = ${strNormVals}"
@@ -127,7 +127,7 @@ class InterfaceTests {
         val coder = AbiCoder.default()
 
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
-            val types = Param.fromStringParams(t.types).mapNotNull { it }
+            val types = Param.fromJsonArrayString(t.types).mapNotNull { it }
             val strNormVals = t.normalizedValues?.stringValue() ?: ""
             val values = getValues(jsonDecode<JsonArray>(strNormVals)!!)
             val result = t.result.hexStringToByteArray()
@@ -147,7 +147,7 @@ class InterfaceTests {
         val coder = AbiCoder.default()
 
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
-            val types = Param.fromStringParams(t.types).mapNotNull { it }
+            val types = Param.fromJsonArrayString(t.types).mapNotNull { it }
             val strVals = t.values.stringValue() ?: ""
             val values = getValues(jsonDecode<JsonArray>(strVals)!!)
             val title = "${t.name} => ${t.types} = ${strVals}"
@@ -167,7 +167,7 @@ class InterfaceTests {
         val coder = AbiCoder.default()
 
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
-            val types = Param.fromStringParams(t.types).mapNotNull { it }
+            val types = Param.fromJsonArrayString(t.types).mapNotNull { it }
             val strVals = t.values.stringValue() ?: ""
             val values = getValues(jsonDecode<JsonArray>(strVals)!!)
             val result = t.result.hexStringToByteArray()
@@ -200,7 +200,7 @@ class InterfaceTests {
 
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
             println("Decode event params $i - ${t.name} - ${t.types}")
-            val iface = Interface(t.iface)
+            val iface = Interface.fromJson(t.iface)
             val parsed = iface.decodeEventLog(
                 iface.event("testEvent"),
                 t.data.hexStringToByteArray(),
@@ -227,7 +227,7 @@ class InterfaceTests {
 
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
             println("Decode event data $i - ${t.name} - ${t.types}")
-            val iface = Interface(t.iface)
+            val iface = Interface.fromJson(t.iface)
             val parsed = iface.decodeEventLog(
                 iface.event("testEvent"),
                 t.data.hexStringToByteArray(),
@@ -265,7 +265,7 @@ class InterfaceTests {
         val tests = jsonDecode<List<TestCaseSig>>(String(bytes!!))
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
             println("derives the correct signature $i - ${t.name}")
-            val iface = Interface(t.abi)
+            val iface = Interface.fromJson(t.abi)
             val func = iface.function("testSig")
             assertTrue(
                 func.format() == t.signature,
@@ -278,7 +278,7 @@ class InterfaceTests {
         }
 
         println("derives correct description for human-readable ABI")
-        val iface = Interface(transferJson)
+        val iface = Interface.fromJson(transferJson)
         listOf("transfer", "transfer(address,uint256)").forEach {
             val desc = iface.function(it)
             assertTrue(desc.name == "transfer", "incorrect name key - $it")
@@ -543,8 +543,8 @@ class InterfaceTests {
 
     fun testFilters() {
         fun test(test: TestCaseFilter) {
-            println(test.name)
-            val iface = Interface("[${test.signature}]")
+            println("[TEST] ${test.name}")
+            val iface = Interface.fromSignatures(listOf(test.signature))
             val eventDescription = iface.event(test.event)
             val filter = iface.encodeFilterTopic(eventDescription, test.args)
             assertTrue(
@@ -636,7 +636,7 @@ class InterfaceTests {
 
     fun additionalTestCases() {
         println("allows addresses without the 0x")
-        val iface = Interface(additionalTestJson)
+        val iface = Interface.fromJson(additionalTestJson)
         val addressStr = "c1912fee45d61c87cc5ea59dae31190fffff232d"
         val result = iface.encodeFunction(
             iface.function("test"),
@@ -649,7 +649,7 @@ class InterfaceTests {
     }
 
     private fun paramsFromString(string: String): List<Param> =
-        Param.fromStringParams(string).mapNotNull { it }
+        Param.fromJsonArrayString(string).mapNotNull { it }
 }
 
 val transferJson = """
