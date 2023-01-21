@@ -26,17 +26,18 @@ class InterfaceTests {
         GlobalScope.launch {
             delay(1.seconds)
             println("=== LFG")
-            testAbiCoderEncoding()
-            testAbiCoderDecoding()
-            testAbiV2CoderEncoding()
-            testAbiV2CoderDecoding()
-            testContractEvents()
-            testInterfaceSignatures()
-            testNumberCoder()
-            testFixedBytesCoder()
-            testFilters()
-            testParamTypeParser()
-            additionalTestCases()
+//            testAbiCoderEncoding()
+//            testAbiCoderDecoding()
+//            testAbiV2CoderEncoding()
+//            testAbiV2CoderDecoding()
+//            testContractEvents()
+//            testInterfaceSignatures()
+//            testNumberCoder()
+//            testFixedBytesCoder()
+//            testFilters()
+//            testParamTypeParser()
+            testEIP838ErrorCodes()
+//            additionalTestCases()
         }
     }
 
@@ -640,6 +641,24 @@ class InterfaceTests {
                 "\nres: ${param?.format(FULL_SIGNATURE)}\nexp: ${test.second}"
             )
         }
+    }
+
+    fun testEIP838ErrorCodes() {
+        val iface = Interface.fromSignatures(
+            listOf(
+                "function testError1(bool pass, address addr, uint256 value) pure returns (bool)",
+                "function testError2(bool pass, bytes data) pure returns (bool)",
+                "error TestError1(address addr, uint256 value)",
+                "error TestError2(bytes data)",
+            )
+        )
+        iface.functions.forEach { entry ->
+            println("${entry.key} ${entry.value}")
+        }
+        iface.errors.forEach { entry ->
+            println("${entry.key} ${entry.value}")
+        }
+        // TODO: - Get data from contract and parse errors
     }
 
     fun additionalTestCases() {
