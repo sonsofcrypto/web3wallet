@@ -432,10 +432,10 @@ private const val STRING_FRAGMENT_PATTERN = "^([^)(]*)\\((.*)\\)([^)(]*)\$"
 
 
 private fun verifiedType(type: String): String {
-    if (Regex("^uint(\$|[^1-9])").matchEntire(type) != null) {
+    if (Regex("^uint(\$|[^1-9])").containsMatchIn(type)) {
         return "uint256" + type.substring(4)
     }
-    if (Regex("^int(\$|[^1-9])").matchEntire(type) != null) {
+    if (Regex("^int(\$|[^1-9])").containsMatchIn(type)) {
         return "int256" + type.substring(3)
     }
     return type
@@ -444,7 +444,7 @@ private fun verifiedType(type: String): String {
 /** See: https://github.com/ethereum/solidity/blob/1f8f1a3db93a548d0555e3e14cfc55a10e25b60e/docs/grammar/SolidityLexer.g4#L234 */
 @Throws(Throwable::class)
 private fun verifiedIdentifier(value: String?): String {
-    if (value == null || Regex(ID_PATTERN).matchEntire(value) == null)
+    if (value == null || Regex(ID_PATTERN).containsMatchIn(value) == false)
         throw Error.InvalidIdentifier(value)
     return value
 }
