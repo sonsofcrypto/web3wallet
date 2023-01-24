@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.web3lib.contract.*
 import com.sonsofcrypto.web3lib.contract.Fragment.Format.FULL_SIGNATURE
+import com.sonsofcrypto.web3lib.contract.Fragment.Format.SIGNATURE
 import com.sonsofcrypto.web3lib.provider.model.QuantityHexString
 import com.sonsofcrypto.web3lib.provider.utils.stringValue
 import com.sonsofcrypto.web3lib.utils.BigInt
@@ -31,12 +32,12 @@ class InterfaceTests {
 //            testAbiV2CoderEncoding()
 //            testAbiV2CoderDecoding()
 //            testContractEvents()
-//            testInterfaceSignatures()
+            testInterfaceSignatures()
 //            testNumberCoder()
 //            testFixedBytesCoder()
 //            testFilters()
 //            testParamTypeParser()
-            testEIP838ErrorCodes()
+//            testEIP838ErrorCodes()
 //            additionalTestCases()
         }
     }
@@ -267,7 +268,7 @@ class InterfaceTests {
         tests?.subList(0, tests.size)?.forEachIndexed { i, t ->
             println("derives the correct signature $i - ${t.name}")
             val iface = Interface.fromJson(t.abi)
-            val func = iface.function("testSig")
+            var func = iface.function("testSig")
             assertTrue(
                 func.format() == t.signature,
                 "\nvalue:  ${func.format()},\nexpected: ${t.signature}"
@@ -275,6 +276,17 @@ class InterfaceTests {
             assertTrue(
                 iface.sigHashString(func.format()) == t.sigHash,
                 "\nvalue:  ${iface.sigHashString(func.format())},\nexpected: ${t.sigHash}"
+            )
+            val fullStr = func.format(FULL_SIGNATURE)
+            val strIface = Interface.fromSignatures(listOf(fullStr))
+            func = strIface.function("testSig")
+            assertTrue(
+                func.format() == t.signature,
+                "\nvalue:  ${func.format()},\nexpected: ${t.signature}"
+            )
+            assertTrue(
+                func.format(FULL_SIGNATURE) == fullStr,
+                "\nvalue:  ${func.format(FULL_SIGNATURE)},\nexpected: ${fullStr}"
             )
         }
 
@@ -659,6 +671,7 @@ class InterfaceTests {
             println("${entry.key} ${entry.value}")
         }
         // TODO: - Get data from contract and parse errors
+        // 0x7f92a8ee0000000000000000000000009fc52a97e59aeea064d9c24a383b70e8475b3e0b000000000000000000000000000000000000000000000000000000000000002a
     }
 
     fun additionalTestCases() {
