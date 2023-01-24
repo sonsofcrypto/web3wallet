@@ -31,12 +31,13 @@ class InterfaceTests {
 //            testAbiV2CoderEncoding()
 //            testAbiV2CoderDecoding()
 //            testContractEvents()
+            testInterfaceSignaturesFromString()
 //            testInterfaceSignatures()
 //            testNumberCoder()
 //            testFixedBytesCoder()
 //            testFilters()
 //            testParamTypeParser()
-            testEIP838ErrorCodes()
+//            testEIP838ErrorCodes()
 //            additionalTestCases()
         }
     }
@@ -260,6 +261,19 @@ class InterfaceTests {
         val sigHash: String,
         val signature: String,
     )
+
+    fun testInterfaceSignaturesFromString() {
+        val sigs = signatures.split("\n")
+        sigs.forEachIndexed { idx, signature ->
+            println("$idx $signature")
+            val iface = Interface.fromSignatures(listOf(signature))
+            val formatted = iface.fragments.first().format(FULL_SIGNATURE)
+            assertTrue(
+                formatted == signature,
+                "Unexpected format:\n$formatted\n$signature"
+            )
+        }
+    }
 
     fun testInterfaceSignatures() {
         val bytes = loadTestCases("contract_signatures")
@@ -729,3 +743,99 @@ val additionalTestJson = """
 val additionalResult = "0xbb29998e000000000000000000000000c1912fee45d61c87cc5ea59dae31190fffff232d"
 
 val txData = "0xa9059cbb000000000000000000000000851b9167b7cbf772d38efaf89705b35022880a070000000000000000000000000000000000000000000000000de0b6b3a7640000".hexStringToByteArray()
+
+//constructor(address primaryReceiver_, address royaltiesReceiver, string baseTokenURI_)
+//function NUM_MAX() view returns (uint256)
+//function OPERATOR_FILTER_REGISTRY() view returns (address)
+//function PREMINT_READY_VERSION() view returns (string)
+
+val signatures = """
+    function approve(address operator, uint256 tokenId) payable
+    function balanceOf(address owner) view returns (uint256)
+    function baseTokenURI() view returns (string)
+    function burn(uint256 tokenId)
+    function burnEnabled() view returns (bool)
+    function commit(string attributesURL, bytes32 saltHash)
+    function domainSeparator() view returns (bytes32)
+    function entropy() view returns (bytes32)
+    function getApproved(uint256 tokenId) view returns (address)
+    function isApprovedForAll(address owner, address operator) view returns (bool)
+    function lockStage()
+    function name() view returns (string)
+    function owner() view returns (address)
+    function ownerMint(tuple(address to, uint16 num)[] receivers)
+    function ownerMintsRemaining() view returns (uint16)
+    function ownerOf(uint256 tokenId) view returns (address)
+    function pause()
+    function paused() view returns (bool)
+    function premint(tuple(tuple(bytes32 listId, address account, address target, uint256 startsAt, uint256 endsAt, uint256 unitPrice, uint256 amount) allowance, bytes allowanceSignature, address validator, bytes validatorAuthorizationSignature) config, uint256 amount) payable
+    function premintAllowanceUsed(address, bytes32) view returns (uint256)
+    function premintMax() view returns (uint256)
+    function premintSigner() view returns (address)
+    function premintWalletMinted(address) view returns (uint256)
+    function primaryReceiver() view returns (address)
+    function reduceOwnerMintAllocation(uint16 amount)
+    function renounceOwnership()
+    function revealEntropy(bytes32 salt)
+    function royaltyInfo(uint256 _tokenId, uint256 _salePrice) view returns (address, uint256)
+    function safeTransferFrom(address from, address to, uint256 tokenId) payable
+    function safeTransferFrom(address from, address to, uint256 tokenId, bytes data) payable
+    function setApprovalForAll(address operator, bool approved)
+    function setBaseTokenURI(string _baseTokenURI)
+    function setDefaultRoyalty(address receiver, uint96 basisPoints)
+    function setPremintSigner(address signer)
+    function setPrimaryReciever(address primaryReceiver_)
+    function setStage(uint8 stage_)
+    function stage() view returns (uint8)
+    function stageLocked() view returns (bool)
+    function supportsInterface(bytes4 interfaceId) view returns (bool)
+    function symbol() view returns (string)
+    function toggleBurn(bool enabled)
+    function tokenURI(uint256 tokenId) view returns (string)
+    function totalSupply() view returns (uint256)
+    function transferFrom(address from, address to, uint256 tokenId) payable
+    function transferOwnership(address newOwner)
+    function unpause()
+    function debug(uint256 one, int256 two, int160 three, int64 three) payable
+    event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)
+    event ApprovalForAll(address indexed owner, address indexed operator, bool approved)
+    event ConsecutiveTransfer(uint256 indexed fromTokenId, uint256 toTokenId, address indexed from, address indexed to)
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
+    event Paused(address account)
+    event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
+    event Unpaused(address account)
+    error ApprovalCallerNotOwnerNorApproved()
+    error ApprovalQueryForNonexistentToken()
+    error BalanceQueryForZeroAddress()
+    error BurnDisabled()
+    error CannotCommitAgain()
+    error DisallowedByCurrentStage(uint8 got, uint8 want)
+    error IllegalOperator()
+    error IncorrectPayment(uint256 got, uint256 want)
+    error InvalidAllowanceSignature()
+    error InvalidAmount()
+    error InvalidAmountZero()
+    error InvalidCommitment()
+    error InvalidPayment()
+    error InvalidValidatorAuthorizationSignature()
+    error ListHasEnded()
+    error ListNotStarted()
+    error MintERC2309QuantityExceedsLimit()
+    error MintToZeroAddress()
+    error MintZeroQuantity()
+    error NotAuthorized()
+    error OperatorNotAllowed(address operator)
+    error OwnerQueryForNonexistentToken()
+    error OwnershipNotInitializedForExtraData()
+    error PleaseImplementMe()
+    error PremintMaxPerWalletReached()
+    error StageLocked()
+    error TooManyMintsRequested()
+    error TooManyRequested()
+    error TransferCallerNotOwnerNorApproved()
+    error TransferFromIncorrectOwner()
+    error TransferToNonERC721ReceiverImplementer()
+    error TransferToZeroAddress()
+    error URIQueryForNonexistentToken()
+    error WrongTarget()    
+""".trimIndent()

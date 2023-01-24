@@ -1,0 +1,7 @@
+event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)
+event ApprovalForAll(address indexed owner, address indexed operator, bool approved)
+event ConsecutiveTransfer(uint256 indexed fromTokenId, uint256 toTokenId, address indexed from, address indexed to)
+event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
+event Paused(address account)
+event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
+event Unpaused(address account)
