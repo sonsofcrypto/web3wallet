@@ -32,14 +32,14 @@ class InterfaceTests {
 //            testAbiV2CoderEncoding()
 //            testAbiV2CoderDecoding()
 //            testContractEvents()
-            testInterfaceSignaturesFromString()
-//            testInterfaceSignatures()
+//            testInterfaceSignaturesFromString()
+            testInterfaceSignatures()
 //            testNumberCoder()
 //            testFixedBytesCoder()
 //            testFilters()
 //            testParamTypeParser()
 //            testEIP838ErrorCodes()
-//            additionalTestCases()
+            additionalTestCases()
         }
     }
 
@@ -305,7 +305,9 @@ class InterfaceTests {
         }
 
         println("derives correct description for human-readable ABI")
-        val iface = Interface.fromJson(transferJson)
+        val iface = Interface.fromSignatures(
+            listOf("function transfer(address from, uint amount)")
+        )
         listOf("transfer", "transfer(address,uint256)").forEach {
             val desc = iface.function(it)
             assertTrue(desc.name == "transfer", "incorrect name key - $it")
@@ -321,7 +323,10 @@ class InterfaceTests {
 
         // See: https://github.com/ethers-io/ethers.js/issues/370
         println("parses transaction function")
-        val desc = iface.parseTx(txData, BigInt.zero)
+        val txData = "0xa9059cbb" +
+            "000000000000000000000000851b9167b7cbf772d38efaf89705b35022880a07" +
+            "0000000000000000000000000000000000000000000000000de0b6b3a7640000"
+        val desc = iface.parseTx(txData.hexStringToByteArray(), BigInt.zero)
         assertTrue(
             stringify(desc!!.args[0]) == "0x851b9167B7cbf772D38eFaf89705b35022880A07"
                 .lowercase(),
@@ -696,14 +701,18 @@ class InterfaceTests {
 
     fun additionalTestCases() {
         println("allows addresses without the 0x")
-        val iface = Interface.fromJson(additionalTestJson)
+        val iface = Interface.fromSignatures(
+            listOf("function test(address foo) view returns (bool)")
+        )
         val addressStr = "c1912fee45d61c87cc5ea59dae31190fffff232d"
         val result = iface.encodeFunction(
             iface.function("test"),
             listOf(addressStr.hexStringToByteArray())
         )
+        val expected = "0xbb29998e000000000000000000000000" +
+            "c1912fee45d61c87cc5ea59dae31190fffff232d"
         assertTrue(
-            stringify(result) == additionalResult,
+            stringify(result) == expected,
             "Additional unexpected reulst ${stringify(result)}"
         )
     }
@@ -711,36 +720,3 @@ class InterfaceTests {
     private fun paramsFromString(string: String): List<Param> =
         Param.fromJsonArrayString(string).filterNotNull()
 }
-
-val transferJson = """
- [
-    {
-        "inputs": [
-            { "internalType": "address","name": "to", "type": "address" },
-            { "internalType": "uint256", "name": "amount", "type": "uint256" }
-        ],
-        "name": "transfer",
-        "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    }
-] 
-"""
-
-val additionalTestJson = """
- [
-    {
-        "inputs": [
-            { "internalType": "address", "name": "foo", "type": "address" }
-        ],
-        "name": "test",
-        "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    }
-] 
-"""
-
-val additionalResult = "0xbb29998e000000000000000000000000c1912fee45d61c87cc5ea59dae31190fffff232d"
-
-val txData = "0xa9059cbb000000000000000000000000851b9167b7cbf772d38efaf89705b35022880a070000000000000000000000000000000000000000000000000de0b6b3a7640000".hexStringToByteArray()
