@@ -177,7 +177,7 @@ class Interface {
                     error = evmError
                 } else {
                     try {
-                        val err = error(sigHashString(fragment.format()))
+                        val err = error(selector)
                         args = decode(err.inputs, data.copyOfRange(4, data.size))
                         error = err
                     } catch (err: Throwable) { error = err }

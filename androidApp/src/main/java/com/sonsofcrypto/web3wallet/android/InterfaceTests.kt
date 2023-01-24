@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.web3lib.contract.*
 import com.sonsofcrypto.web3lib.contract.Fragment.Format.FULL_SIGNATURE
-import com.sonsofcrypto.web3lib.contract.Fragment.Format.SIGNATURE
 import com.sonsofcrypto.web3lib.provider.model.QuantityHexString
 import com.sonsofcrypto.web3lib.provider.utils.stringValue
 import com.sonsofcrypto.web3lib.utils.BigInt
@@ -32,12 +31,12 @@ class InterfaceTests {
 //            testAbiV2CoderEncoding()
 //            testAbiV2CoderDecoding()
 //            testContractEvents()
-            testInterfaceSignatures()
+//            testInterfaceSignatures()
 //            testNumberCoder()
 //            testFixedBytesCoder()
 //            testFilters()
 //            testParamTypeParser()
-//            testEIP838ErrorCodes()
+            testEIP838ErrorCodes()
 //            additionalTestCases()
         }
     }
@@ -664,14 +663,20 @@ class InterfaceTests {
                 "error TestError2(bytes data)",
             )
         )
-        iface.functions.forEach { entry ->
-            println("${entry.key} ${entry.value}")
-        }
-        iface.errors.forEach { entry ->
-            println("${entry.key} ${entry.value}")
-        }
-        // TODO: - Get data from contract and parse errors
-        // 0x7f92a8ee0000000000000000000000009fc52a97e59aeea064d9c24a383b70e8475b3e0b000000000000000000000000000000000000000000000000000000000000002a
+        val data = "0x7f92a8ee0000000000000000000000009fc52a97e59aeea064d9c24a383b70e8475b3e0b000000000000000000000000000000000000000000000000000000000000002a"
+            .hexStringToByteArray()
+
+        assertThrows(
+            { iface.decodeFunctionResult(iface.function("testError1"), data) },
+            { err ->
+                val e = err as Interface.Error.Revert
+                val errStr = (e.error as? ErrorFragment)?.format() ?: ""
+                val argsStr = stringify(e.args)
+                val expArgs = "[0x9fc52a97e59aeea064d9c24a383b70e8475b3e0b, 42]"
+                assertTrue(errStr == "TestError1(address,uint256)", "$errStr")
+                assertTrue(argsStr == expArgs, "$argsStr")
+            }
+        )
     }
 
     fun additionalTestCases() {
