@@ -54,10 +54,14 @@ open class Fragment(
 
     open fun format(format: Format = Format.SIGNATURE): String = when(format) {
         Format.STRING -> "Fragment(type=$type, name=$name, inputs=$inputs)"
-        Format.SIGNATURE -> name + inputs.map { it.format(format) }
+        Format.SIGNATURE -> name + inputs
+            .map { it.format(format) }
             .joinToString(",", prefix = "(", postfix = ")")
-        Format.FULL_SIGNATURE -> "function " + name + inputs.map { it.format(format) }
-            .joinToString(", ", prefix = "(", postfix = ")") + " "
+        Format.FULL_SIGNATURE -> (
+                if (type == "constructor") "constructor" else "${this.type} "
+            ) + name + inputs
+                .map { it.format(format) }
+                .joinToString(", ", prefix = "(", postfix = ")")
     }
 
     override fun toString(): String = this.format(Format.STRING)
@@ -81,7 +85,7 @@ open class Fragment(
                 .replace("\\s+".toRegex(), " ")
                 .trim()
             val split = value.split(" ")[0]
-            val splitB = value.split("(")[0]
+            val splitB = value.split("(")[0].trim()
             return when {
                 split == "event" -> EventFragment.from(value.substring(5))
                 split == "function" -> FunctionFragment.from(value.substring(8))
@@ -106,8 +110,7 @@ class EventFragment : Fragment {
     }
 
     override fun format(format: Format): String = when (format) {
-        Format.SIGNATURE -> super.format(format)
-        Format.FULL_SIGNATURE -> throw Error.UnsupportedFormat
+        Format.SIGNATURE, Format.FULL_SIGNATURE -> super.format(format)
         Format.STRING -> "EventFragment(" +
             "type=$type, " +
             "name=$name, " +
@@ -168,8 +171,7 @@ open class ConstructorFragment : Fragment {
     }
 
     override fun format(format: Format): String = when (format) {
-        Format.SIGNATURE -> super.format(format)
-        Format.FULL_SIGNATURE -> super.format(format)
+        Format.SIGNATURE, Format.FULL_SIGNATURE -> super.format(format)
         Format.STRING -> "ConstructorFragment(" +
             "type=$type, " +
             "name=$name, " +
@@ -231,16 +233,16 @@ class FunctionFragment : ConstructorFragment {
     override fun format(format: Format): String = when (format) {
         Format.SIGNATURE -> super.format(format)
         Format.FULL_SIGNATURE -> {
-            var result = super.format(format) + " "
+            var result = super.format(format)
             if (stateMutability.isNotEmpty()) {
                 if (stateMutability != "nonpayable")
-                    result = "$result $stateMutability "
+                    result = "$result $stateMutability"
             } else {
-                result = "$result view "
+                result = "$result view"
             }
             if (output?.isNotEmpty() == true) {
-                result += "returns " + name + output.map { it.format(format) }
-                    .joinToString(", ", prefix = "(", postfix = ")") + " "
+                result += " returns " + output.map { it.format(format) }
+                    .joinToString(", ", prefix = "(", postfix = ")")
             }
             result
         }
@@ -311,8 +313,7 @@ class ErrorFragment(
 ) : Fragment(type, name, inputs) {
 
     override fun format(format: Format): String = when (format) {
-        Format.SIGNATURE -> super.format(format)
-        Format.FULL_SIGNATURE -> throw Error.UnsupportedFormat
+        Format.SIGNATURE, Format.FULL_SIGNATURE -> super.format(format)
         Format.STRING -> "ErrorFragment(type=$type, name=$name, inputs=$inputs)"
     }
 
@@ -391,7 +392,7 @@ data class Param(
                 ?: "()"
             else -> type
         }
-        Fragment.Format.FULL_SIGNATURE -> { when(baseType) {
+        Fragment.Format.FULL_SIGNATURE -> when(baseType) {
             "array" -> {
                 val length = if ((arrayLength ?: -1) < 0) "" else "$arrayLength"
                 (this.arrayChildren?.format(format) ?: "") + "[$length]"  +
@@ -400,7 +401,9 @@ data class Param(
             "tuple" -> "tuple" + (components ?: listOf()).map { it.format(format) }
                 .joinToString(", ", prefix = "(", postfix = ")") +
                 (if (name.isNotEmpty()) " $name" else "")
-            else -> type + (if (name.isNotEmpty()) " $name" else "" ) }
+            else -> type +
+                (if (indexed == true) " indexed" else "") +
+                (if (name.isNotEmpty()) " $name" else "" )
         }
     }
 
