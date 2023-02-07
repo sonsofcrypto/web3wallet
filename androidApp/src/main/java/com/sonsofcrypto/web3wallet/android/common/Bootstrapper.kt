@@ -5,6 +5,7 @@ import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.modules.cultproposal.CultProposalWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.cultproposals.CultProposalsWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.dashboard.DashboardWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.degen.DegenNewWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.degen.DegenWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.improvementproposal.ImprovementProposalWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.improvementproposals.ImprovementProposalsWireframeFactoryAssembler
@@ -54,6 +55,7 @@ private class AssemblerBootstrapper: Bootstrapper {
                 RootWireframeFactoryAssembler(),
                 DashboardWireframeFactoryAssembler(),
                 DegenWireframeFactoryAssembler(),
+                DegenNewWireframeFactoryAssembler(),
                 CultProposalsWireframeFactoryAssembler(),
                 CultProposalWireframeFactoryAssembler(),
                 ImprovementProposalsWireframeFactoryAssembler(),

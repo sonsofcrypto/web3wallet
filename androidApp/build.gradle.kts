@@ -34,6 +34,7 @@ dependencies {
     implementation(files("$rootDir/coreCrypto/build/android/coreCrypto.aar"))
     implementation(files("$rootDir/coreCrypto/build/android/coreCrypto-sources.jar"))
     implementation("com.google.android.material:material:1.7.0")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.0")
     implementation("androidx.appcompat:appcompat:1.6.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.0-alpha06")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
@@ -45,6 +46,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.ext["coroutines_version"]}") {
         version { strictly("${rootProject.ext["coroutines_version"]}") }
     }
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
     val composeVersion = "1.3.3"
     implementation("androidx.compose.runtime:runtime-livedata:$composeVersion")

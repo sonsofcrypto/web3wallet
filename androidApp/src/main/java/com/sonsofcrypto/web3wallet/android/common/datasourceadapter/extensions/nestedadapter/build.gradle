@@ -1,0 +1,20 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven-publish'
+
+ext {
+    LIB_ARTIFACT_NAME = 'SmartRecyclerAdapter NestedAdapter'
+    LIB_ARTIFACT_ID = 'smart-recycler-adapter-nestedadapter'
+    LIB_VERSION_CODE = 2
+    LIB_VERSION_NAME = '1.0.0-beta01'
+    LIB_DESCRIPTION = 'Nested Adapter extension library for SmartRecyclerAdapter'
+}
+
+apply from: '../../common-library-config.gradle'
+
+if (project.rootProject.file('local.properties').exists()) {
+    apply from: '../../maven-local-publish.gradle'
+    apply from: '../../maven-release-config.gradle'
+    apply from: '../../maven-release-script.gradle'
+}

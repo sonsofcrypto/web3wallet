@@ -8,6 +8,7 @@ import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.cultproposals.CultProposalsWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.dashboard.DashboardWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.degen.DegenNewWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.degen.DegenWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.nftsdashboard.NFTsDashboardWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsWireframe
@@ -18,7 +19,7 @@ import com.sonsofcrypto.web3walletcore.modules.root.RootWireframeDestination.*
 class DefaultRootWireframe(
     private var parent: AppCompatActivity?,
     private var dashboardWireframeFactory: DashboardWireframeFactory,
-    private var degenWireframeFactory: DegenWireframeFactory,
+    private var degenWireframeFactory: DegenNewWireframeFactory,
     private var nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
 ): RootWireframe {
 
@@ -39,8 +40,8 @@ class DefaultRootWireframe(
         when (destination) {
             DASHBOARD -> {
 //                dashboardWireframeFactory.make(fragment.get()).present()
-//                degenWireframeFactory.make(fragment.get()).present()
-                nftsDashboardWireframeFactory.make(fragment.get()).present()
+                degenWireframeFactory.make(fragment.get()).present()
+//                nftsDashboardWireframeFactory.make(fragment.get()).present()
             }
             NETWORKS -> {}
             KEYSTORE -> {}
