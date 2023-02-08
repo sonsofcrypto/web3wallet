@@ -20,7 +20,8 @@ extension BigInt {
                 let fullDecimals = "".addRemainingDecimals(upTo: decimals)
                 return try BigInt.Companion().from(
                     string: text.trimFinalDotIfNeeded + fullDecimals,
-                    base: Int32(10)
+                    base: Int32(10),
+                    byteForZeroVal: false
                 )
             }
             
@@ -29,7 +30,8 @@ extension BigInt {
             
             return try BigInt.Companion().from(
                 string: numberWithoutDecimals + fullDecimals,
-                base: Int32(10)
+                base: Int32(10),
+                byteForZeroVal: false
             )
             
         } catch {
