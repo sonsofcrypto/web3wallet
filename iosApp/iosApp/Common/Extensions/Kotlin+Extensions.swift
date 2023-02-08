@@ -5,7 +5,7 @@
 import Foundation
 import web3walletcore
 
-extension KotlinError: Error {}
+extension KotlinError: Swift.Error {}
 
 extension Network {
 
