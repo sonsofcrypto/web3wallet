@@ -62,6 +62,7 @@ Get simulator UUID by running `xcrun simctl list`. Boot simulator
 ```
 xcrun simctl spawn ${UUID} web3lib/build/bin/iosSimulatorArm64/debugTest/test.kexe
 ```
+To get UUID of booted simulator `xcrun simctl list | grep Booted`
 
 ## jsApp
 soon™

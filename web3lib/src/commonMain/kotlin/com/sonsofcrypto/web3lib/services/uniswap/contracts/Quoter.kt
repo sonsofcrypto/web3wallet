@@ -1,13 +1,13 @@
 package com.sonsofcrypto.web3lib.services.uniswap.contracts
 
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
-import com.sonsofcrypto.web3lib.signer.contracts.Contract
+import com.sonsofcrypto.web3lib.signer.contracts.ContractLegacy
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.abiEncode
 import com.sonsofcrypto.web3lib.utils.keccak256
 
-class Quoter(address: Address.HexString): Contract(address) {
+class Quoter(address: Address.HexString): ContractLegacy(address) {
 
     /**
      * /// @inheritdoc IQuoter

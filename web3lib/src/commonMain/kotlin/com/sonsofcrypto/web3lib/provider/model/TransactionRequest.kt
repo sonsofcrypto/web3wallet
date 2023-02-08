@@ -47,8 +47,8 @@ fun TransactionRequest.encodeEIP1559(): ByteArray {
             if (nonce == null || nonce.isZero() == true) ByteArray(0)
             else QuantityHexString(nonce).toByteArrayQnt()
         ),
-        RlpItem(QuantityHexString(maxPriorityFeePerGas ?: BigInt.zero()).toByteArrayQnt()),
-        RlpItem(QuantityHexString(maxFeePerGas ?: BigInt.zero()).toByteArrayQnt()),
+        RlpItem(QuantityHexString(maxPriorityFeePerGas ?: BigInt.zero).toByteArrayQnt()),
+        RlpItem(QuantityHexString(maxFeePerGas ?: BigInt.zero).toByteArrayQnt()),
         RlpItem(QuantityHexString(gasLimit!!).toByteArrayQnt()),
         RlpItem(to?.hexString?.toByteArrayData() ?: ByteArray(0)),
         RlpItem(

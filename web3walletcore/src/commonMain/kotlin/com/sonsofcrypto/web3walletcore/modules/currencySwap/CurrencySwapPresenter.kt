@@ -97,7 +97,7 @@ class DefaultCurrencySwapPresenter(
     }
 
     override fun handle(event: UniswapEvent) {
-        if (!interactor.isCurrentQuote(currencyFrom, currencyTo, amountFrom ?: BigInt.zero()))
+        if (!interactor.isCurrentQuote(currencyFrom, currencyTo, amountFrom ?: BigInt.zero))
             return
         invalidQuote = false
         updateView()
@@ -234,11 +234,11 @@ class DefaultCurrencySwapPresenter(
     }
 
     private val amountFromGreaterThanZero: Boolean get() =
-        amountFrom?.isGreaterThan(BigInt.zero()) ?: false
+        amountFrom?.isGreaterThan(BigInt.zero) ?: false
 
     private val insufficientFunds: Boolean get() {
-        return (amountFrom ?: BigInt.zero()).isGreaterThan(currencyFromBalance)
-                || currencyFromBalance == BigInt.zero()
+        return (amountFrom ?: BigInt.zero).isGreaterThan(currencyFromBalance)
+                || currencyFromBalance == BigInt.zero
     }
 
     private fun buttonState(): CurrencySwapViewModel.ButtonState {
@@ -274,16 +274,16 @@ class DefaultCurrencySwapPresenter(
 
     private fun onCurrencyFromChanged(currency: Currency) {
         currencyFrom = currency
-        amountFrom = BigInt.zero()
-        amountTo = BigInt.zero()
+        amountFrom = BigInt.zero
+        amountTo = BigInt.zero
         invalidQuote = true
-        getQuote(BigInt.zero())
+        getQuote(BigInt.zero)
         updateView(updateTextField = true, becomeFirstResponder = true)
     }
 
     private fun onCurrencyToChanged(currency: Currency) {
         currencyTo = currency
-        getQuote(amountFrom ?: BigInt.zero())
+        getQuote(amountFrom ?: BigInt.zero)
     }
 
     private fun getQuote(amount: BigInt) {
@@ -292,14 +292,14 @@ class DefaultCurrencySwapPresenter(
     }
 
     private fun flipCurrencies() {
-        amountFrom = BigInt.zero()
-        amountTo = BigInt.zero()
+        amountFrom = BigInt.zero
+        amountTo = BigInt.zero
         invalidQuote = true
         val currentCurrencyFrom = currencyFrom
         val currentCurrencyTo = currencyTo
         currencyFrom = currentCurrencyTo
         currencyTo = currentCurrencyFrom
-        getQuote(amountFrom ?: BigInt.zero())
+        getQuote(amountFrom ?: BigInt.zero)
         updateView(updateTextField =  true)
     }
 
@@ -323,8 +323,8 @@ class DefaultCurrencySwapPresenter(
         if (!amountFromGreaterThanZero) {
             return updateView(updateTextField = true, becomeFirstResponder = true)
         }
-        val amountFrom = amountFrom ?: BigInt.zero()
-        val amountTo = amountTo ?: BigInt.zero()
+        val amountFrom = amountFrom ?: BigInt.zero
+        val amountTo = amountTo ?: BigInt.zero
         val networkFee = networkFee ?: return
         if (!currencyFromBalance.isGreaterThan(amountFrom)) return
         if (interactor.swapState != SWAP) return

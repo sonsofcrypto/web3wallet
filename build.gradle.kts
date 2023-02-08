@@ -1,5 +1,5 @@
 buildscript {
-    val kotlinVersion = "1.7.10"
+    val kotlinVersion = "1.7.21"
     repositories {
         gradlePluginPortal()
         google()
@@ -15,17 +15,17 @@ buildscript {
 
 allprojects {
     ext["settings_version"] = "1.0.0-alpha01"
-    ext["serialization_version"] = "1.3.3"
+    ext["serialization_version"] = "1.4.1"
     ext["coroutines_version"] = "1.6.3-native-mt"
     ext["ktor_version"] = "2.1.3"
-    ext["bignum_version"] = "0.3.6"
+    ext["bignum_version"] = "0.3.7"
     ext["datetime_version"] = "0.4.0"
+    ext["kotlin_version"] = "1.7.21"
 
     repositories {
         google()
         mavenCentral()
         uri("https://oss.sonatype.org/content/repositories/snapshots")
-
     }
 
 }

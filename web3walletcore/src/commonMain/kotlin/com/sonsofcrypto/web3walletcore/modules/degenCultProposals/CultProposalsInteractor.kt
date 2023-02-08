@@ -22,6 +22,6 @@ class DefaultCultProposalsInteractor(
 
     override val hasCultBalance: Boolean get() {
         val balance = walletService.balance(Network.ethereum(), Currency.cult())
-        return balance.isGreaterThan(BigInt.zero())
+        return balance.isGreaterThan(BigInt.zero)
     }
 }
