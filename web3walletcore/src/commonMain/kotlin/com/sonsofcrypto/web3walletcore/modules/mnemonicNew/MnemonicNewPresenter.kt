@@ -82,6 +82,7 @@ class DefaultMnemonicNewPresenter(
                     password = interactor.generatePassword()
                 }
                 try {
+                    createDefaultNameIfNeeded()
                     val item = interactor.createKeyStoreItem(keyStoreItemData, password, salt)
                     context.handler(item)
                     wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
@@ -194,5 +195,13 @@ class DefaultMnemonicNewPresenter(
     private val passwordErrorMessage: String? get() {
         if (!ctaTapped) return null
         return interactor.validationError(password, passwordType)
+    }
+
+    private fun createDefaultNameIfNeeded() {
+        if (name.isEmpty()) {
+            name = "Wallet"
+            if (interactor.keyStoreItemsCount() > 0)
+                name = "$name ${interactor.keyStoreItemsCount()}"
+        }
     }
 }

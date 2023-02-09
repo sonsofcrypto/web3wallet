@@ -34,6 +34,7 @@ interface MnemonicNewInteractor {
     fun generatePassword(): String
     fun pasteToClipboard(text: String)
     fun validationError(password: String, type: KeyStoreItem.PasswordType): String?
+    fun keyStoreItemsCount(): Int
 }
 
 class DefaultMnemonicNewInteractor(
@@ -91,6 +92,10 @@ class DefaultMnemonicNewInteractor(
 
     override fun pasteToClipboard(text: String) = ClipboardService().paste(text)
 
-    override fun validationError(password: String, type: KeyStoreItem.PasswordType): String? =
-        passwordService.validationError(password, type)
+    override fun validationError(
+        password: String,
+        type: KeyStoreItem.PasswordType
+    ): String? = passwordService.validationError(password, type)
+
+    override fun keyStoreItemsCount(): Int = keyStoreService.items().count()
 }
