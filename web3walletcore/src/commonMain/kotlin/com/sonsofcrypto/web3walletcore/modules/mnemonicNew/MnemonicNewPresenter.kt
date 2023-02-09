@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicNew
 
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.common.viewModels.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
@@ -35,7 +36,7 @@ class DefaultMnemonicNewPresenter(
     private var iCloudSecretStorage = false
     private var saltMnemonicOn = false
     private var salt = ""
-    private var passwordType: KeyStoreItem.PasswordType = KeyStoreItem.PasswordType.PIN
+    private var passwordType: KeyStoreItem.PasswordType = BIO
     private var password = ""
     private var passUnlockWithBio = false
     private var selectedLocation = 0
@@ -77,7 +78,7 @@ class DefaultMnemonicNewPresenter(
             is MnemonicNewPresenterEvent.DidSelectCta -> {
                 ctaTapped = true
                 if (!isValidForm) return updateView()
-                if (passwordType == KeyStoreItem.PasswordType.BIO) {
+                if (passwordType == BIO) {
                     password = interactor.generatePassword()
                 }
                 try {
