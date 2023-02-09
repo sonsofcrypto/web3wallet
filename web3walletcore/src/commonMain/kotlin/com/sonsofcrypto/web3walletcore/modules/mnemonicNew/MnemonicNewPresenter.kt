@@ -199,7 +199,7 @@ class DefaultMnemonicNewPresenter(
 
     private fun createDefaultNameIfNeeded() {
         if (name.isEmpty()) {
-            name = "Wallet"
+            name = Localized("mnemonic.defaultWalletName")
             if (interactor.keyStoreItemsCount() > 0)
                 name = "$name ${interactor.keyStoreItemsCount()}"
         }

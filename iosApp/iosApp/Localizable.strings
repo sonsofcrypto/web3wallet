@@ -147,7 +147,7 @@
 "mnemonic.cta.update" = "Update";
 "mnemonic.cta.delete" = "Delete";
 "mnemonic.cta.import" = "Import";
-"mnemonic.defaultWalletName" = "Default wallet";
+"mnemonic.defaultWalletName" = "Wallet";
 "mnemonic.defaultNthWalletName" = "Wallet %d";
 "mnemonic.error.invalid.name" = "Please enter a name.";
 "mnemonic.update.failed.alert.title" = "Oops 😬";
