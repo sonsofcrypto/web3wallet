@@ -94,8 +94,12 @@ class DefaultCurrencyStoreService(
     ): Map<String, CurrencyMarketData>? = withContext(scope.coroutineContext) {
         val ids = currencies.mapNotNull{ it.coinGeckoId }
         val resultMap = mutableMapOf<String, CurrencyMarketData>()
-        coinGeckoService.market(ids, "usd", 0, "24h").forEach {
-            resultMap.put(it.id, it.toCurrencyMarketData())
+        try {
+            coinGeckoService.market(ids, "usd", 0, "24h").forEach {
+                resultMap.put(it.id, it.toCurrencyMarketData())
+            }
+        } catch (err: Throwable) {
+            println("[ERROR] $err")
         }
         withContext(uiDispatcher) {
             resultMap.forEach {
@@ -111,13 +115,18 @@ class DefaultCurrencyStoreService(
     override suspend fun fetchCandles(
         currency: Currency
     ): List<Candle>? = withContext(scope.coroutineContext) {
-        val result = coinGeckoService.candles(currency.id(), "usd", 30)
-        withContext(uiDispatcher) {
-            candleStore.set(currency.id(), jsonEncode(result))
-            candles.set(currency.id(), result)
-            emit(CurrencyStoreEvent.Candles(result, currency))
+        try {
+            val result = coinGeckoService.candles(currency.id(), "usd", 30)
+            withContext(uiDispatcher) {
+                candleStore.set(currency.id(), jsonEncode(result))
+                candles.set(currency.id(), result)
+                emit(CurrencyStoreEvent.Candles(result, currency))
+            }
+            return@withContext result
+        } catch (err: Throwable) {
+            println("[ERROR] $err")
+            return@withContext null
         }
-        return@withContext result
     }
 
     override fun currencies(network: Network, limit: Int): List<Currency> {
