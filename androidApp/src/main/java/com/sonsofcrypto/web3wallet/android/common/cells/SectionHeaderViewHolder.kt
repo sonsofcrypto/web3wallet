@@ -9,10 +9,6 @@ import smartadapter.viewholder.SmartViewHolder
 class SectionHeaderViewHolder(parentView: ViewGroup) :
     SmartViewHolder<String>(parentView, R.layout.view_holder_section_header) {
 
-    init {
-        itemView.setPadding(16, 16, 16, 16)
-    }
-
     val title: TextView? get() = itemView.byId(R.id.textView)
 
     override fun bind(viewModel: String) {

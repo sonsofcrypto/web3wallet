@@ -19,12 +19,9 @@ android {
             isMinifyEnabled = false
         }
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
-    }
+    // Compose
+    buildFeatures { compose = true }
+    composeOptions { kotlinCompilerExtensionVersion = "1.3.2" }
     namespace = "com.sonsofcrypto.web3wallet.android"
 }
 
@@ -48,6 +45,7 @@ dependencies {
     }
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
+    // Compose
     val composeVersion = "1.3.3"
     implementation("androidx.compose.runtime:runtime-livedata:$composeVersion")
     implementation("androidx.compose.ui:ui:$composeVersion")

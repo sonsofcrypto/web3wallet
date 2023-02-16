@@ -22,7 +22,9 @@ import coil.compose.SubcomposeAsyncImage
 
 @Composable
 fun backgroundGradient(): Brush {
-    return Brush.verticalGradient(listOf(theme().colors.bgGradientTop, theme().colors.bgGradientBtm))
+    return Brush.verticalGradient(
+        listOf(theme().colors.bgGradientTop, theme().colors.bgGradientBtm)
+    )
 }
 
 @Composable
@@ -86,9 +88,7 @@ fun W3WDivider() {
 @Composable
 fun W3WLoadingScreen() {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(backgroundGradient())
+        modifier = Modifier.fillMaxSize()
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),

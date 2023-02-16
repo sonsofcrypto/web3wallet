@@ -99,9 +99,7 @@ class ImprovementProposalsFragment: Fragment(), ImprovementProposalsView {
         selectedCategoryIdx: Int,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(backgroundGradient())
+            modifier = Modifier.fillMaxSize()
         ) {
             val category = viewModel[selectedCategoryIdx]
             ImprovementProposalsCategoryList(

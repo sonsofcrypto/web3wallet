@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SHAPES -->
+    <integer name="normal">400</integer>
+    <integer name="semibold">600</integer>
+    <integer name="bold">700</integer>
+    <attr name="padding" format="dimension" />
+    <attr name="paddingHalf" format="dimension" />
+    <attr name="cornerRadius" format="dimension" />
+    <attr name="cornerRadiusSmall" format="dimension" />
+    <attr name="shadowRadius" format="dimension" />
+    <attr name="cellHeight" format="dimension" />
+    <attr name="cellHeightSmall" format="dimension" />
+    <attr name="buttonHeight" format="dimension" />
+    <attr name="buttonSmallHeight" format="dimension" />
+    <attr name="buttonHeightExtraSmall" format="dimension" />
+    <!-- Semantic Colors -->
+    <attr name="textPrimary" format="color" />
+    <attr name="textSecondary" format="color" />
+    <attr name="textTertiary" format="color" />
+    <attr name="bgPrimary" format="color" />
+    <attr name="bgGradientTop" format="color" />
+    <attr name="bgGradientBtm" format="color" />
+    <attr name="navBarBackground" format="color" />
+    <attr name="navBarTint" format="color" />
+    <attr name="navBarTitle" format="color" />
+    <attr name="tabBarBackground" format="color" />
+    <attr name="tabBarTint" format="color" />
+    <attr name="tabBarTintSelected" format="color" />
+    <attr name="stroke" format="color" />
+    <attr name="separatorPrimary" format="color" />
+    <attr name="separatorSecondary" format="color" />
+    <attr name="buttonBgPrimary" format="color"/>
+    <attr name="buttonBgPrimaryDisabled" format="color" />
+    <attr name="buttonTextPrimary" format="color" />
+    <attr name="buttonBgSecondary" format="color" />
+    <attr name="buttonTextSecondary" format="color" />
+    <attr name="switchOnTint" format="color" />
+    <attr name="segmentedControlBackground" format="color" />
+    <attr name="segmentedControlBackgroundSelected" format="color" />
+    <attr name="segmentedControlText" format="color" />
+    <attr name="segmentedControlTextSelected" format="color" />
+    <attr name="priceUp" format="color" />
+    <attr name="priceDown" format="color" />
+    <attr name="dashboardTVCryptoBalance" format="color" />
+    <attr name="activityIndicator" format="color" />
+    <attr name="destructive" format="color" />
+</resources>

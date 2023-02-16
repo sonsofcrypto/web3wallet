@@ -88,9 +88,7 @@ class CultProposalsFragment : Fragment(), CultProposalsView {
     @Composable
     private fun CultProposalsLoaded(section: CultProposalsViewModel.Section) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(backgroundGradient()),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Row(

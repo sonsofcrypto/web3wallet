@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Miami.Dark" parent="W3WTheme">
+        <!-- Shapes -->
+        <item name="padding">8dp</item>
+        <!-- Semantic Colors -->
+        <item name="textPrimary">@color/miami.dark.color.white</item>
+        <item name="textSecondary">@color/miami.dark.color.white6</item>
+        <item name="textTertiary">@color/miami.dark.color.white3</item>
+        <item name="bgPrimary">@color/miami.dark.color.white18</item>
+        <item name="bgGradientTop">@color/miami.dark.color.pink</item>
+        <item name="bgGradientBtm">@color/miami.dark.color.purple</item>
+        <item name="navBarBackground">@color/miami.dark.color.lightBlack</item>
+        <item name="navBarTint">@color/miami.dark.color.orange</item>
+        <item name="navBarTitle">@color/miami.dark.color.white</item>
+        <item name="tabBarBackground">@color/miami.dark.color.lightBlack</item>
+        <item name="tabBarTint">@color/miami.dark.color.blue</item>
+        <item name="tabBarTintSelected">@color/miami.dark.color.pink</item>
+        <item name="stroke">@color/miami.dark.color.lightGray</item>
+        <item name="separatorPrimary">@color/miami.dark.color.lighterGray</item>
+        <item name="separatorSecondary">@color/miami.dark.color.white3</item>
+        <item name="buttonBgPrimary">@color/miami.dark.color.pink</item>
+        <item name="buttonBgPrimaryDisabled">@color/miami.dark.color.gray</item>
+        <item name="buttonTextPrimary">@color/miami.dark.color.white</item>
+        <item name="buttonBgSecondary">@color/miami.dark.color.lightGray</item>
+        <item name="buttonTextSecondary">@color/miami.dark.color.white</item>
+        <item name="switchOnTint">@color/miami.dark.color.orange</item>
+        <item name="segmentedControlBackground">@color/miami.dark.color.lighterGray</item>
+        <item name="segmentedControlBackgroundSelected">@color/miami.dark.color.white18</item>
+        <item name="segmentedControlText">@color/miami.dark.color.white</item>
+        <item name="segmentedControlTextSelected">@color/miami.dark.color.white</item>
+        <item name="priceUp">@color/miami.dark.color.teal</item>
+        <item name="priceDown">@color/miami.dark.color.pink</item>
+        <item name="dashboardTVCryptoBalance">@color/miami.dark.color.orange</item>
+        <item name="activityIndicator">@color/miami.dark.color.white</item>
+        <item name="destructive">@color/miami.dark.color.red</item>
+    </style>
+
+    <!-- Color Palette -->
+    <color name="miami.dark.color.black">#FF000000</color>
+    <color name="miami.dark.color.lightBlack">#FF1C1C1E</color>
+    <color name="miami.dark.color.white">#FFFFFFFF</color>
+    <color name="miami.dark.color.white6">#99FFFFFF</color>
+    <color name="miami.dark.color.white3">#4CFFFFFF</color>
+    <color name="miami.dark.color.white18">#2EFFFFFF</color>
+    <color name="miami.dark.color.red">#FFF0421D</color>
+    <color name="miami.dark.color.orange">#FFF08D1D</color>
+    <color name="miami.dark.color.teal">#FF10B0A8</color>
+    <color name="miami.dark.color.blue">#FF4E80E9</color>
+    <color name="miami.dark.color.purple">#FF852B9C</color>
+    <color name="miami.dark.color.pink">#FFF0328E</color>
+    <color name="miami.dark.color.pinkLight">#FFFC78A9</color>
+    <color name="miami.dark.color.gray">#FF8E8E92</color>
+    <color name="miami.dark.color.lightGray">#5B787880</color>
+    <color name="miami.dark.color.lighterGray">#FFC6C6C8</color>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="W3WTheme" parent="Theme.AppCompat">
+        <!-- Background -->
+        <item name="android:windowBackground">@drawable/gradient_background</item>
+        <!-- Shapes -->
+        <item name="padding">16dp</item>
+        <item name="paddingHalf">8dp</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="cornerRadiusSmall">16dp</item>
+        <item name="shadowRadius">16dp</item>
+        <item name="cellHeight">8dp</item>
+        <item name="cellHeightSmall">16dp</item>
+        <item name="buttonHeight">4dp</item>
+        <item name="buttonSmallHeight">64dp</item>
+        <item name="buttonHeightExtraSmall">46dp</item>
+    </style>
+</resources>

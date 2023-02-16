@@ -1,9 +1,87 @@
 <resources>
-
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="roundedImageViewRounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 
+    <style name="TextPrimary">
+        <item name="android:textColor">?attr/textPrimary</item>
+    </style>
+    <style name="TextSecondary">
+        <item name="android:textColor">?attr/textSecondary</item>
+    </style>
+    <style name="FontLarge" parent="TextPrimary">
+        <item name="android:textSize">28.sp</item>
+    </style>
+    <style name="FontTitle1" parent="TextPrimary">
+        <item name="android:textSize">28.sp</item>
+    </style>
+    <style name="FontTitle2" parent="TextPrimary">
+        <item name="android:textSize">22.sp</item>
+    </style>
+    <style name="FontTitle3" parent="TextPrimary">
+        <item name="android:textSize">20.sp</item>
+    </style>
+    <style name="FontHeadline" parent="TextPrimary">
+        <item name="android:textSize">17.sp</item>
+    </style>
+    <style name="FontSubheadline" parent="TextPrimary">
+        <item name="android:textSize">15.sp</item>
+    </style>
+    <style name="FontBody" parent="TextPrimary">
+        <item name="android:textSize">17.sp</item>
+    </style>
+    <style name="FontCallout" parent="TextPrimary">
+        <item name="android:textSize">16.sp</item>
+    </style>
+    <style name="FontFootnote" parent="TextPrimary">
+        <item name="android:textSize">13.sp</item>
+    </style>
+    <style name="FontCaption1" parent="TextPrimary">
+        <item name="android:textSize">12.sp</item>
+    </style>
+    <style name="FontCaption2" parent="TextPrimary">
+        <item name="android:textSize">11.sp</item>
+    </style>
+    <style name="FontExtraSmall" parent="TextPrimary">
+        <item name="android:textSize">8.sp</item>
+    </style>
+    <style name="FontNavTitle" parent="TextPrimary">
+        <item name="android:textSize">18.sp</item>
+    </style>
+    <style name="FontTabBar" parent="TextPrimary">
+        <item name="android:textSize">11.sp</item>
+    </style>
+    <style name="FontNetworkTitle" parent="TextPrimary">
+        <item name="android:fontFamily">@font/naokoaa_black_italic</item>
+        <item name="android:textSize">16.sp</item>
+    </style>
+    <style name="FontDashboardSectionFuel" parent="TextPrimary">
+        <item name="android:fontFamily">@font/naokoaa_regular_italic</item>
+        <item name="android:textSize">11.sp</item>
+    </style>
+    <style name="FontDashboardTVBalance" parent="TextPrimary">
+        <item name="android:fontFamily">@font/ocr_a_regular</item>
+        <item name="android:textSize">16.sp</item>
+    </style>
+    <style name="FontDashboardTVBalanceSmall" parent="TextPrimary">
+        <item name="android:fontFamily">@font/ocr_a_regular</item>
+        <item name="android:textSize">11.sp</item>
+    </style>
+    <style name="FontDashboardTVSymbol" parent="TextPrimary">
+        <item name="android:fontFamily">@font/naokoaa_semilight</item>
+        <item name="android:textSize">13.sp</item>
+    </style>
+    <style name="FontDashboardTVPct" parent="TextPrimary">
+        <item name="android:fontFamily">@font/ocr_a_regular</item>
+        <item name="android:textSize">10.sp</item>
+    </style>
+    <style name="FontDashboardTVTokenBalance" parent="TextPrimary">
+        <item name="android:fontFamily">@font/ocr_a_regular</item>
+        <item name="android:textSize">13.sp</item>
+    </style>
+    <style name="FontDashboardTVTokenBalanceSmall" parent="TextPrimary">
+        <item name="android:fontFamily">@font/ocr_a_regular</item>
+        <item name="android:textSize">8.sp</item>
+    </style>
 </resources>

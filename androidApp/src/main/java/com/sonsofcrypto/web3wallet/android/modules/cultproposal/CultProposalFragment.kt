@@ -73,7 +73,6 @@ class CultProposalFragment: Fragment(), CultProposalView {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(backgroundGradient())
                 .verticalScroll(ScrollState(0))
                 .padding(theme().shapes.padding),
             horizontalAlignment = Alignment.CenterHorizontally
