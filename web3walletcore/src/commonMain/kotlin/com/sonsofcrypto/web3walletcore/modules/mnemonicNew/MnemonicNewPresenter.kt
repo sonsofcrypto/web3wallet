@@ -88,6 +88,7 @@ class DefaultMnemonicNewPresenter(
                     wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
                 } catch (e: Throwable) {
                     // TODO: Handle error
+                    println("[ERROR] $e")
                 }
             }
             is MnemonicNewPresenterEvent.DidSelectDismiss -> {
