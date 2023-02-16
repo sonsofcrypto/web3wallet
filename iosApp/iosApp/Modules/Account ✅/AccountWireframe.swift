@@ -52,15 +52,18 @@ extension DefaultAccountWireframe {
     func present() {
         let vc = wireUp()
         self.vc = vc
-        if settingsService.isSelected(setting: .init(group: .developer, action: .developerTransitionsCardFlip)) {
+        print("[DefaultAccountWireframe] Presenting")
+        if settingsService.isSelected(
+            setting: .init(group: .developer, action: .developerTransitionsSheet)
+        ) {
+            vc.modalPresentationStyle = .automatic
+            parent?.show(vc, sender: self)
+        } else {
             let presentedTopVc = (vc as? UINavigationController)?.topVc
             let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = delegate
             parent?.present(vc, animated: true)
-        } else if settingsService.isSelected(setting: .init(group: .developer, action: .developerTransitionsSheet)) {
-            vc.modalPresentationStyle = .automatic
-            parent?.show(vc, sender: self)
         }
     }
 
