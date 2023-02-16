@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicImport
 
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.common.mnemonic.MnemonicPresenterCommon
@@ -47,9 +48,9 @@ class DefaultMnemonicImportPresenter(
     private var iCloudSecretStorage = false
     private var saltMnemonicOn = false
     private var salt = ""
-    private var passwordType: KeyStoreItem.PasswordType = PIN
+    private var passwordType: KeyStoreItem.PasswordType = BIO
     private var password = ""
-    private var passUnlockWithBio = false
+    private var passUnlockWithBio = true
     private var selectedLocation = 0
     private var ctaTapped = false
 
@@ -99,6 +100,7 @@ class DefaultMnemonicImportPresenter(
                     password = interactor.generatePassword()
                 }
                 try {
+                    createDefaultNameIfNeeded()
                     val item = interactor.createKeyStoreItem(keyStoreItemData, password, salt)
                     context.handler(item)
                     wireframe.navigate(Dismiss)
@@ -257,5 +259,13 @@ class DefaultMnemonicImportPresenter(
     private val passwordErrorMessage: String? get() {
         if (!ctaTapped) return null
         return interactor.validationError(password, passwordType)
+    }
+
+    private fun createDefaultNameIfNeeded() {
+        if (name.isEmpty()) {
+            name = Localized("mnemonic.defaultWalletName")
+            if (interactor.keyStoreItemsCount() > 0)
+                name = "$name ${interactor.keyStoreItemsCount()}"
+        }
     }
 }

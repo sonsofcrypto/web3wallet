@@ -38,7 +38,7 @@ class DefaultMnemonicNewPresenter(
     private var salt = ""
     private var passwordType: KeyStoreItem.PasswordType = BIO
     private var password = ""
-    private var passUnlockWithBio = false
+    private var passUnlockWithBio = true
     private var selectedLocation = 0
     private var ctaTapped = false
 
