@@ -83,17 +83,13 @@ class DefaultEtherScanService(
         nonce: String
     ): List<EtherScanTransaction> {
         val key = storageKey(address, network, nonce)
-        println("AA - Reading -> $key != $transactionsKey")
         if (key != transactionsKey) {
-            println("AA1 - Cleaning")
             clearCachedTransactions()
         }
         val transactions = cachedTransactions()
         if (transactions.isEmpty()) {
-            println("AA2 - Cleaning")
             clearCachedTransactions()
         }
-        println("AA - returning ${transactions.count()}")
         return transactions
     }
 

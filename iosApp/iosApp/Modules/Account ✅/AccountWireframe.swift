@@ -52,7 +52,6 @@ extension DefaultAccountWireframe {
     func present() {
         let vc = wireUp()
         self.vc = vc
-        print("[DefaultAccountWireframe] Presenting")
         if settingsService.isSelected(
             setting: .init(group: .developer, action: .developerTransitionsSheet)
         ) {
