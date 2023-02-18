@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3wallet.android.modules.degen
+package com.sonsofcrypto.web3wallet.android.modules.compose.degen
 
 import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
@@ -14,7 +14,7 @@ import com.sonsofcrypto.web3walletcore.modules.degen.DegenWireframe
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenWireframeDestination
 import com.sonsofcrypto.web3walletcore.services.degen.DegenService
 
-class DefaultDegenNewWireframe(
+class DefaultDegenWireframe(
     private val parent: WeakRef<Fragment>?,
     private val degenService: DegenService,
     private val networksService: NetworksService,

@@ -5,9 +5,8 @@ import com.sonsofcrypto.web3wallet.android.common.AssemblerComponent
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistry
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope
 import com.sonsofcrypto.web3wallet.android.modules.dashboard.DashboardWireframeFactory
-import com.sonsofcrypto.web3wallet.android.modules.degen.DegenNewWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.degen.DegenWireframeFactory
-import com.sonsofcrypto.web3wallet.android.modules.nftsdashboard.NFTsDashboardWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.nftsdashboard.NFTsDashboardWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.root.RootWireframe
 
 interface RootWireframeFactory {
@@ -16,7 +15,7 @@ interface RootWireframeFactory {
 
 class DefaultRootWireframeFactory(
     private var dashboardWireframeFactory: DashboardWireframeFactory,
-    private var degenWireframeFactory: DegenNewWireframeFactory,
+    private var degenWireframeFactory: DegenWireframeFactory,
     private var nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
 ): RootWireframeFactory {
 
@@ -34,7 +33,7 @@ class RootWireframeFactoryAssembler: AssemblerComponent {
         to.register("RootWireframeFactory", AssemblerRegistryScope.INSTANCE) {
             DefaultRootWireframeFactory(
                 it.resolve("DashboardWireframeFactory"),
-                it.resolve("DegenNewWireframeFactory"),
+                it.resolve("DegenWireframeFactory"),
                 it.resolve("NFTsDashboardWireframeFactory")
             )
         }

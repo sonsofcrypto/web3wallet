@@ -23,7 +23,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-            android:background="@color/orange"
+            android:background="?attr/navBarTint"
         />
 
         <LinearLayout

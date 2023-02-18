@@ -1,171 +1,68 @@
 package com.sonsofcrypto.web3wallet.android.modules.degen
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowRight
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import androidx.recyclerview.widget.RecyclerView
 import com.sonsofcrypto.web3wallet.android.R
-import com.sonsofcrypto.web3wallet.android.common.*
-import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3wallet.android.common.cells.SectionHeaderViewHolder
+import com.sonsofcrypto.web3wallet.android.common.datasourceadapter.DataSourceAdapter
+import com.sonsofcrypto.web3wallet.android.common.datasourceadapter.DataSourceAdapterDelegate
+import com.sonsofcrypto.web3wallet.android.common.datasourceadapter.IndexPath
+import com.sonsofcrypto.web3wallet.android.common.extenstion.byId
+import com.sonsofcrypto.web3wallet.android.modules.degen.cells.DegenViewHolder
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenPresenter
-import com.sonsofcrypto.web3walletcore.modules.degen.DegenPresenterEvent
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenView
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenViewModel
 
-class DegenFragment : Fragment(), DegenView {
+class DegenFragment:
+    Fragment(R.layout.fragment_degen_new), DegenView, DataSourceAdapterDelegate {
 
+    val recyclerView: RecyclerView get() = requireView().byId(R.id.recycler_view)
     lateinit var presenter: DegenPresenter
+    private lateinit var adapter: DataSourceAdapter
+    private lateinit var viewModel: DegenViewModel
 
-    private val liveData = MutableLiveData<DegenViewModel>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val map = hashMapOf(
+            DegenViewModel.Item::class to DegenViewHolder::class,
+            String::class to SectionHeaderViewHolder::class,
+        )
+        adapter = DataSourceAdapter(this, recyclerView, map)
         presenter.present()
-        return ComposeView(requireContext()).apply {
-            setContent {
-                val systemUiController = rememberSystemUiController()
-                systemUiController.setSystemBarsColor(
-                    color = theme().colors.navBarBackground
-                )
-
-                val viewModel by liveData.observeAsState()
-                viewModel?.let { DegenScreen(it) }
-            }
-        }
     }
 
     override fun update(viewModel: DegenViewModel) {
-        liveData.value = viewModel
+        this.viewModel = viewModel
+        val items = this.viewModel.sections
+            .map {
+                when (it) {
+                    is DegenViewModel.Section.Header -> { listOf(it.title) }
+                    is DegenViewModel.Section.Group -> { it.items }
+                }
+            }
+            .reduce { sum, elem -> sum + elem }
+        adapter?.reloadData(items.toMutableList())
     }
 
     override fun popToRootAndRefresh() {
-        navigationFragment()?.popToRoot()
-        presenter.present()
+
     }
 
-    @Composable
-    private fun DegenScreen(viewModel: DegenViewModel) {
-        W3WScreen(
-            navBar = { W3WNavigationBar(title = Localized("degen")) },
-            content = { DegenContent(viewModel) }
-        )
-    }
+    override fun numberOfSections(): Int = 2
 
-    @Composable
-    private fun DegenContent(viewModel: DegenViewModel) {
-        LazyColumn(
-            Modifier.padding(start = theme().shapes.padding, end = theme().shapes.padding)
-        ) {
-            items(viewModel.sections.size) { index ->
-                DegenSection(viewModel.sections[index])
-                if (viewModel.sections.count() - 1 == index) {
-                    W3WSpacerVertical()
-                }
-            }
-        }
-        W3WSpacerVertical()
-    }
+    override fun numberCellsIn(section: Int): Int
+        = viewModel?.sections?.get(section + 1)?.items()?.count() ?: 0
 
-    @Composable
-    private fun DegenSection(section: DegenViewModel.Section) {
-        W3WSpacerVertical()
-        when (section) {
-            is DegenViewModel.Section.Header -> {
-                Text(
-                    text = section.title,
-                    modifier = Modifier
-                        .padding(start = theme().shapes.padding, end = theme().shapes.padding),
-                    color = if(section.isEnabled) theme().colors.textPrimary else theme().colors.textSecondary,
-                    style = theme().fonts.bodyBold
-                )
-            }
-            is DegenViewModel.Section.Group -> {
-                DegenItems(section.items)
-                W3WSpacerVertical(height = 4.dp)
-            }
-        }
+    override fun didSelectCellAt(idxPath: IndexPath) {
+        println("Tapped indexAt: $idxPath")
+//        if (idxPath.section != 0) presenter.handle(ComingSoon)
+//            presenter.handle(DidSelectCategory(idxPath.item))
     }
-    
-    @Composable
-    private fun DegenItems(items: List<DegenViewModel.Item>) {
-        Column(
-            Modifier
-                .clip(RoundedCornerShape(theme().shapes.padding))
-                .background(theme().colors.bgPrimary)
-                .padding(theme().shapes.padding)
-        ) {
-            items.forEach {
-                DegenItem(item = it) {
-                    if (it.isEnabled) {
-                        val index = items.indexOf(it)
-                        presenter.handle(DegenPresenterEvent.DidSelectCategory(index))
-                    } else {
-                        presenter.handle(DegenPresenterEvent.ComingSoon)
-                    }
-                }
-                if (items.last() != it) {
-                    W3WSpacerVertical(height = 8.dp)
-                    W3WDivider()
-                    W3WSpacerVertical(height = 8.dp)
-                }
-            }
-        }
-    }
+}
 
-    @Composable
-    private fun DegenItem(item: DegenViewModel.Item, onClick: () -> Unit) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                    onClick = onClick,
-                ),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Column {
-                Text(
-                    item.title,
-                    color = if (item.isEnabled) theme().colors.textPrimary else theme().colors.textSecondary,
-                    style = theme().fonts.body,
-                )
-                Text(
-                    item.subtitle,
-                    color = theme().colors.textSecondary,
-                    style = theme().fonts.subheadline,
-                )
-            }
-            Icon(
-                Icons.Rounded.KeyboardArrowRight,
-                contentDescription = null,
-                tint = if (item.isEnabled) theme().colors.textPrimary else theme().colors.textSecondary,
-            )
-        }
-    }
+private fun DegenViewModel.Section.items(): List<Any>? = when (this) {
+    is DegenViewModel.Section.Header -> { null }
+    is DegenViewModel.Section.Group -> { this.items }
 }
