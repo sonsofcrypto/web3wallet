@@ -1,6 +1,6 @@
-val kotlinVersion = "1.7.20"
 
 buildscript {
+    val kotlinVersion = "1.7.20"
     repositories {
         gradlePluginPortal()
         google()
@@ -21,7 +21,7 @@ allprojects {
     ext["ktor_version"] = "2.1.3"
     ext["bignum_version"] = "0.3.7"
     ext["datetime_version"] = "0.4.0"
-    ext["kotlin_version"] = "$kotlinVersion"
+    ext["kotlin_version"] = "1.7.20"
 
     repositories {
         google()
