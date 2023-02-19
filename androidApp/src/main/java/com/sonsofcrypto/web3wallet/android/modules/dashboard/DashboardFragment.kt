@@ -8,7 +8,7 @@ import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardPresenter
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardView
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel
 
-class DashboardFragment : Fragment(R.layout.fragment_dashboard), DashboardView {
+class DashboardFragment : Fragment(R.layout.dashboard_fragment), DashboardView {
 
     lateinit var presenter: DashboardPresenter
 

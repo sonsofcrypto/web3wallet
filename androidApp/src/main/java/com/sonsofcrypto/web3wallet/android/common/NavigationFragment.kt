@@ -8,7 +8,7 @@ import com.sonsofcrypto.web3wallet.android.R
 
 class NavigationFragment(
     private val initialFragment: Fragment?
-) : Fragment(R.layout.fragment_navigation) {
+) : Fragment(R.layout.navigation_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

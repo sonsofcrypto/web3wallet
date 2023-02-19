@@ -9,7 +9,7 @@ import com.sonsofcrypto.web3walletcore.modules.degen.DegenViewModel
 import smartadapter.viewholder.SmartViewHolder
 
 class DegenViewHolder(parentView: ViewGroup) :
-    SmartViewHolder<DegenViewModel.Item>(parentView, R.layout.view_holder_degen) {
+    SmartViewHolder<DegenViewModel.Item>(parentView, R.layout.degen_cell_view) {
 
     val image: ImageView? get() = itemView.byId(R.id.imageView)
     val title: TextView? get() = itemView.byId(R.id.textView)

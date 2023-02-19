@@ -16,7 +16,7 @@ import com.sonsofcrypto.web3walletcore.modules.degen.DegenView
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenViewModel
 
 class DegenFragment:
-    Fragment(R.layout.fragment_degen_new), DegenView, DataSourceAdapterDelegate {
+    Fragment(R.layout.degen_fragment), DegenView, DataSourceAdapterDelegate {
 
     val recyclerView: RecyclerView get() = requireView().byId(R.id.recycler_view)
     lateinit var presenter: DegenPresenter
