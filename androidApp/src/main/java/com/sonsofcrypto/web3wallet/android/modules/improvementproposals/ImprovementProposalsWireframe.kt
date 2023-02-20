@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals
+package com.sonsofcrypto.web3wallet.android.modules.improvementproposals
 
 import android.content.Intent
 import android.net.Uri

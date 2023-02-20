@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="W3WTheme" parent="Theme.AppCompat">
+    <style name="W3WTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Background -->
         <item name="android:windowBackground">@drawable/gradient_background</item>
         <!-- Shapes -->

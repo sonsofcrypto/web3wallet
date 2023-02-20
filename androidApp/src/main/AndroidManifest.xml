@@ -6,7 +6,6 @@
         android:allowBackup="false"
         android:supportsRtl="true"
         android:theme="@style/Theme.Miami.Light"
-        android:label="@string/app_name"
         >
         <activity
             android:name=".MainActivity"
@@ -18,4 +17,4 @@
             </intent-filter>
         </activity>
     </application>
-</manifest> 
+</manifest>

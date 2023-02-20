@@ -12,6 +12,7 @@ import com.sonsofcrypto.web3wallet.android.common.datasourceadapter.IndexPath
 import com.sonsofcrypto.web3wallet.android.common.extenstion.byId
 import com.sonsofcrypto.web3wallet.android.modules.degen.cells.DegenViewHolder
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenPresenter
+import com.sonsofcrypto.web3walletcore.modules.degen.DegenPresenterEvent
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenView
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenViewModel
 
@@ -56,9 +57,8 @@ class DegenFragment:
         = viewModel?.sections?.get(section + 1)?.items()?.count() ?: 0
 
     override fun didSelectCellAt(idxPath: IndexPath) {
-        println("Tapped indexAt: $idxPath")
-//        if (idxPath.section != 0) presenter.handle(ComingSoon)
-//            presenter.handle(DidSelectCategory(idxPath.item))
+        if (idxPath.section != 0) presenter.handle(DegenPresenterEvent.ComingSoon)
+        else presenter.handle(DegenPresenterEvent.DidSelectCategory(idxPath.item))
     }
 }
 
