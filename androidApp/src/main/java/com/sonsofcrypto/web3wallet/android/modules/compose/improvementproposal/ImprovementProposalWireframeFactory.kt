@@ -7,6 +7,7 @@ import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistry
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope
 import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementProposalWireframe
 import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementProposalWireframeContext
+import smartadapter.internal.extension.name
 
 interface ImprovementProposalWireframeFactory {
     fun make(
@@ -34,7 +35,7 @@ class ImprovementProposalWireframeFactoryAssembler: AssemblerComponent {
 
     override fun register(to: AssemblerRegistry) {
 
-        to.register("ImprovementProposalWireframeFactory", AssemblerRegistryScope.INSTANCE) {
+        to.register(ImprovementProposalWireframeFactory::class.name, AssemblerRegistryScope.INSTANCE) {
             DefaultImprovementProposalWireframeFactory()
         }
     }

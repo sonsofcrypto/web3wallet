@@ -28,13 +28,3 @@ class DefaultKeyChainService: KeyChainService {
         TODO("Not yet implemented")
     }
 }
-
-class KeyChainServiceAssembler: AssemblerComponent {
-
-    override fun register(to: AssemblerRegistry) {
-
-        to.register("KeyChainService", AssemblerRegistryScope.SINGLETON) {
-            DefaultKeyChainService()
-        }
-    }
-}

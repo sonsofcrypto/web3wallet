@@ -10,6 +10,7 @@ import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposal.CultProposalWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsWireframe
 import com.sonsofcrypto.web3walletcore.services.cult.CultService
+import smartadapter.internal.extension.name
 
 interface CultProposalsWireframeFactory {
     fun make(parent: Fragment?): CultProposalsWireframe
@@ -35,12 +36,12 @@ class CultProposalsWireframeFactoryAssembler: AssemblerComponent {
 
     override fun register(to: AssemblerRegistry) {
 
-        to.register("CultProposalsWireframeFactory", AssemblerRegistryScope.INSTANCE) {
+        to.register(CultProposalsWireframeFactory::class.name, AssemblerRegistryScope.INSTANCE) {
             DefaultCultProposalsWireframeFactory(
-                it.resolve("CultService"),
-                it.resolve("WalletService"),
-                it.resolve("NetworksService"),
-                it.resolve("CultProposalWireframeFactory"),
+                it.resolve(CultService::class.name),
+                it.resolve(WalletService::class.name),
+                it.resolve(NetworksService::class.name),
+                it.resolve(CultProposalWireframeFactory::class.name),
             )
         }
     }

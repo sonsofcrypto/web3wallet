@@ -11,6 +11,7 @@ import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope.INSTANC
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframe
 import com.sonsofcrypto.web3walletcore.services.actions.ActionsService
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
+import smartadapter.internal.extension.name
 
 interface DashboardWireframeFactory {
     fun make(parent: Fragment?): DashboardWireframe
@@ -37,13 +38,13 @@ class DefaultDashboardWireframeFactory(
 class DashboardWireframeFactoryAssembler: AssemblerComponent {
 
     override fun register(to: AssemblerRegistry) {
-        to.register("DashboardWireframeFactory", INSTANCE) { resolver ->
+        to.register(DashboardWireframeFactory::class.name, INSTANCE) { resolver ->
             DefaultDashboardWireframeFactory(
-                resolver.resolve("NetworksService"),
-                resolver.resolve("CurrencyStoreService"),
-                resolver.resolve("WalletService"),
-                resolver.resolve("NFTsService"),
-                resolver.resolve("ActionsService"),
+                resolver.resolve(NetworksService::class.name),
+                resolver.resolve(CurrencyStoreService::class.name),
+                resolver.resolve(WalletService::class.name),
+                resolver.resolve(NFTsService::class.name),
+                resolver.resolve(ActionsService::class.name),
             )
         }
     }

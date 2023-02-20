@@ -8,8 +8,10 @@ import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistry
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftscollection.DefaultNFTsCollectionWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.nftscollection.NFTsCollectionWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardWireframe
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
+import smartadapter.internal.extension.name
 
 interface NFTsDashboardWireframeFactory {
     fun make(parent: Fragment?): NFTsDashboardWireframe
@@ -34,12 +36,12 @@ class DefaultNFTsDashboardWireframeFactory(
 class NFTsDashboardWireframeFactoryAssembler: AssemblerComponent {
 
     override fun register(to: AssemblerRegistry) {
-        to.register("NFTsDashboardWireframeFactory", AssemblerRegistryScope.INSTANCE) {
+        to.register(NFTsDashboardWireframeFactory::class.name, AssemblerRegistryScope.INSTANCE) {
             DefaultNFTsDashboardWireframeFactory(
-                it.resolve("NetworksService"),
-                it.resolve("NFTsService"),
-                it.resolve("NFTsCollectionWireframeFactory"),
-                it.resolve("NFTDetailWireframeFactory"),
+                it.resolve(NetworksService::class.name),
+                it.resolve(NFTsService::class.name),
+                it.resolve(NFTsCollectionWireframeFactory::class.name),
+                it.resolve(NFTDetailWireframeFactory::class.name),
             )
         }
     }

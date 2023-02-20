@@ -9,6 +9,7 @@ import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWi
 import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionWireframe
 import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionWireframeContext
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
+import smartadapter.internal.extension.name
 
 interface NFTsCollectionWireframeFactory {
     fun make(
@@ -37,11 +38,11 @@ class NFTsCollectionWireframeFactoryAssembler: AssemblerComponent {
 
     override fun register(to: AssemblerRegistry) {
 
-        to.register("NFTsCollectionWireframeFactory", AssemblerRegistryScope.INSTANCE) {
+        to.register(NFTsCollectionWireframeFactory::class.name, AssemblerRegistryScope.INSTANCE) {
 
             DefaultNFTsCollectionWireframeFactory(
-                it.resolve("NFTsService"),
-                it.resolve("NFTDetailWireframeFactory"),
+                it.resolve(NFTsService::class.name),
+                it.resolve(NFTDetailWireframeFactory::class.name),
             )
         }
     }

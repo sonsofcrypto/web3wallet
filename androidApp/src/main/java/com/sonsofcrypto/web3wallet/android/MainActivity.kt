@@ -53,7 +53,7 @@ class MainActivity : App() {
 //        EncryptTest().runAll()
 //        WalletCoreTests().runAll()
 //        InterfaceTests().runAll()
-        MultiCallTests().runAll()
+//        MultiCallTests().runAll()
         println("=== all tests executed ===")
     }
 }

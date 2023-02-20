@@ -9,6 +9,7 @@ import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposals.CultProposalsWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenWireframe
 import com.sonsofcrypto.web3walletcore.services.degen.DegenService
+import smartadapter.internal.extension.name
 
 interface DegenWireframeFactory {
     fun make(parent: Fragment?): DegenWireframe
@@ -32,11 +33,11 @@ class DefaultDegenNewWireframeFactory(
 class DegenWireframeFactoryAssembler: AssemblerComponent {
 
     override fun register(to: AssemblerRegistry) {
-        to.register("DegenWireframeFactory", AssemblerRegistryScope.INSTANCE) {
+        to.register(DegenWireframeFactory::class.name, AssemblerRegistryScope.INSTANCE) {
             DefaultDegenNewWireframeFactory(
-                it.resolve("DegenService"),
-                it.resolve("NetworksService"),
-                it.resolve("CultProposalsWireframeFactory")
+                it.resolve(DegenService::class.name),
+                it.resolve(NetworksService::class.name),
+                it.resolve(CultProposalsWireframeFactory::class.name)
             )
         }
     }

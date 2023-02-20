@@ -8,6 +8,7 @@ import com.sonsofcrypto.web3wallet.android.modules.dashboard.DashboardWireframeF
 import com.sonsofcrypto.web3wallet.android.modules.degen.DegenWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftsdashboard.NFTsDashboardWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.root.RootWireframe
+import smartadapter.internal.extension.name
 
 interface RootWireframeFactory {
     fun make(parent: AppCompatActivity?): RootWireframe
@@ -30,11 +31,11 @@ class DefaultRootWireframeFactory(
 class RootWireframeFactoryAssembler: AssemblerComponent {
 
     override fun register(to: AssemblerRegistry) {
-        to.register("RootWireframeFactory", AssemblerRegistryScope.INSTANCE) {
+        to.register(RootWireframeFactory::class.name, AssemblerRegistryScope.INSTANCE) {
             DefaultRootWireframeFactory(
-                it.resolve("DashboardWireframeFactory"),
-                it.resolve("DegenWireframeFactory"),
-                it.resolve("NFTsDashboardWireframeFactory")
+                it.resolve(DashboardWireframeFactory::class.name),
+                it.resolve(DegenWireframeFactory::class.name),
+                it.resolve(NFTsDashboardWireframeFactory::class.name)
             )
         }
     }

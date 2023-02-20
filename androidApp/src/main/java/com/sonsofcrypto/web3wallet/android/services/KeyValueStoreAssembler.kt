@@ -11,8 +11,8 @@ class KeyValueStoreAssembler: AssemblerComponent {
     override fun register(to: AssemblerRegistry) {
 
         val name = KeyValueStore::class.name
-        to.register("$name.Actions", AssemblerRegistryScope.SINGLETON) {
-            KeyValueStore("$name.Actions")
+        to.register("$name.ActionsService", AssemblerRegistryScope.SINGLETON) {
+            KeyValueStore("$name.ActionsService")
         }
         to.register("$name.CultService", AssemblerRegistryScope.SINGLETON) {
             KeyValueStore("$name.CultService")

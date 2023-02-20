@@ -4,17 +4,18 @@ import androidx.appcompat.app.AppCompatActivity
 import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposals.CultProposalsWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposal.CultProposalWireframeFactoryAssembler
-import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposal.ImprovementProposalWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftsdashboard.NFTsDashboardWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftscollection.NFTsCollectionWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.dashboard.DashboardWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.degen.DegenWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.improvementproposals.ImprovementProposalsWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.root.RootWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.root.RootWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.services.*
-import com.sonsofcrypto.web3wallet.android.services.keychain.KeyChainServiceAssembler
+import com.sonsofcrypto.web3wallet.android.services.KeyChainServiceAssembler
+import smartadapter.internal.extension.name
 
 interface Bootstrapper {
     fun boot()
@@ -74,7 +75,7 @@ private class UIBootstrapper(
 ): Bootstrapper {
 
     override fun boot() {
-        val rootWireframeFactory: RootWireframeFactory = assembler.resolve("RootWireframeFactory")
+        val rootWireframeFactory: RootWireframeFactory = assembler.resolve(RootWireframeFactory::class.name)
         rootWireframeFactory.make(parent).present()
     }
 }

@@ -1,5 +1,7 @@
 package com.sonsofcrypto.web3wallet.android.common
 
+import kotlin.reflect.KClass
+
 enum class AssemblerRegistryScope { SINGLETON, INSTANCE }
 
 interface Assembler {
