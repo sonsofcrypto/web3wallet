@@ -39,6 +39,7 @@ private class AssemblerBootstrapper: Bootstrapper {
         assembler.configure(
             listOf(
                 // Services
+                KeyValueStoreAssembler(),
                 KeyStoreServiceAssembler(),
                 KeyChainServiceAssembler(),
                 ActionsServiceAssembler(),
@@ -50,6 +51,7 @@ private class AssemblerBootstrapper: Bootstrapper {
                 DegenServiceAssembler(),
                 CultServiceAssembler(),
                 ImprovementProposalsServiceAssembler(),
+                CoinGeckoServiceAssembler(),
                 // Modules
                 RootWireframeFactoryAssembler(),
                 DashboardWireframeFactoryAssembler(),
