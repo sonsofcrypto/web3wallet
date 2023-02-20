@@ -122,9 +122,11 @@ class DefaultCurrencyPickerPresenter(
 
     private fun filterCurrencies(currencies: List<Currency>): List<Currency> =
         if (searchTerm.isEmpty()) currencies
-        else currencies.filter {
-            it.name.uppercase().contains(searchTerm.uppercase()) ||
-                    it.symbol.uppercase().contains(searchTerm.uppercase())
+        else {
+            currencies.filter {
+                it.name.contains(searchTerm, ignoreCase = true)
+                || it.symbol.contains(searchTerm, ignoreCase = true)
+            }
         }
 
     private fun updateView() {
