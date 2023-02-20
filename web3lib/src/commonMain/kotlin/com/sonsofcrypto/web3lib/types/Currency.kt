@@ -26,6 +26,13 @@ data class Currency(
         return (symbol + (address ?: name))
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Currency) return false
+        if (type != other.type) return false
+        return address == other.address
+    }
+
     fun decimals(): UInt = this.decimals ?: 18u
 
     val iconName: String get() = coinGeckoId ?: "currency_placeholder"

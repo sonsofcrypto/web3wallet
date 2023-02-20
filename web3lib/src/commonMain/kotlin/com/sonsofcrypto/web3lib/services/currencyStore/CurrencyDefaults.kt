@@ -31,7 +31,7 @@ val ethereumDefaultCurrencies = listOf(
         symbol = "uni",
         decimals = 18u,
         type = Currency.Type.ERC20,
-        address = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        address = "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
         coinGeckoId = "uniswap",
     ),
 )
