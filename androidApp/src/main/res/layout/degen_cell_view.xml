@@ -22,7 +22,7 @@
             android:id="@+id/imageView"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:shapeAppearanceOverlay="@style/ImageViewRounded"
             android:background="?attr/navBarTint"
         />
 

@@ -1,14 +1,14 @@
 <resources>
-    <style name="roundedImageViewRounded">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
+    <style name="TypefaceNormal">
+        <item name="android:typeface">monospace</item>
     </style>
-
-    <style name="TextPrimary">
+    <style name="TextPrimary" parent="TypefaceNormal">
         <item name="android:textColor">?attr/textPrimary</item>
+        <item name="android:fontWeight">?attr/textFontWeightNormal</item>
     </style>
-    <style name="TextSecondary">
+    <style name="TextSecondary" parent="TypefaceNormal">
         <item name="android:textColor">?attr/textSecondary</item>
+        <item name="android:fontWeight">?attr/textFontWeightNormal</item>
     </style>
     <style name="FontLarge" parent="TextPrimary">
         <item name="android:textSize">28.sp</item>

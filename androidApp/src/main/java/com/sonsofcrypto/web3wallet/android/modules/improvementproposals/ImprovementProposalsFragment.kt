@@ -1,7 +1,14 @@
 package com.sonsofcrypto.web3wallet.android.modules.improvementproposals
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.sonsofcrypto.web3wallet.android.R
@@ -12,14 +19,21 @@ import com.sonsofcrypto.web3wallet.android.common.datasourceadapter.IndexPath
 import com.sonsofcrypto.web3wallet.android.common.extenstion.byId
 import com.sonsofcrypto.web3wallet.android.modules.improvementproposals.cells.ImprovementProposalsItemViewHolder
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsPresenter
+import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsPresenterEvent.Category
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsView
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsViewModel
+import smartadapter.extension.setBackgroundAttribute
 
 class ImprovementProposalsFragment:
     Fragment(R.layout.improvement_proposals_fragment), ImprovementProposalsView, DataSourceAdapterDelegate {
 
     lateinit var presenter: ImprovementProposalsPresenter
     private lateinit var viewModel: ImprovementProposalsViewModel
+    private val segmentGroup: FrameLayout get() = requireView().byId(R.id.segmentGroup)
+    private val segment1: TextView get() = requireView().byId(R.id.segment1)
+    private val segment2: TextView get() = requireView().byId(R.id.segment2)
+    private val segment3: TextView get() = requireView().byId(R.id.segment3)
     private val recyclerView: RecyclerView get() = requireView().byId(R.id.recycler_view)
     private lateinit var adapter: DataSourceAdapter
 
@@ -31,13 +45,21 @@ class ImprovementProposalsFragment:
         )
         adapter = DataSourceAdapter(this, recyclerView, map)
         presenter.present()
+
+        segment1.setOnClickListener { presenter.handle(Category(0)) }
+        segment2.setOnClickListener { presenter.handle(Category(1)) }
+        segment3.setOnClickListener { presenter.handle(Category(2)) }
     }
 
     override fun update(viewModel: ImprovementProposalsViewModel) {
         this.viewModel = viewModel
+        refreshSegmentControl()
         if (viewModel.categories().isEmpty()) return
         val items = this.viewModel.categories()
-            .map { listOf(it.title) + it.items }
+            .filter {
+                it.title == viewModel.selectedCategory()?.title
+            }
+            .map { listOf(it.description) + it.items }
             .reduce { sum, elem -> sum + elem }
         adapter?.reloadData(items.toMutableList())
     }
@@ -51,7 +73,39 @@ class ImprovementProposalsFragment:
     }
 
     override fun didSelectCellAt(idxPath: IndexPath) {
-        TODO("Not yet implemented")
+        presenter.handle(ImprovementProposalsPresenterEvent.Proposal(idxPath.item))
+    }
+
+    private fun refreshSegmentControl() {
+        if (viewModel.categories().isEmpty()) {
+            segmentGroup.isVisible = false
+            return
+        }
+        segmentGroup.isVisible = true
+        refreshSegment(
+            viewModel.categories().getOrNull(0)?.title,
+            segment1,
+            viewModel.selectedCategory() == viewModel.categories().getOrNull(0)
+        )
+        refreshSegment(
+            viewModel.categories().getOrNull(1)?.title,
+            segment2,
+            viewModel.selectedCategory() == viewModel.categories().getOrNull(1)
+        )
+        refreshSegment(
+            viewModel.categories().getOrNull(2)?.title,
+            segment3,
+            viewModel.selectedCategory() == viewModel.categories().getOrNull(2)
+        )
+    }
+
+    private fun refreshSegment(title: String?, segment: TextView, isSelected: Boolean) {
+        segment.text = title
+        if (isSelected) {
+            segment.setBackgroundAttribute(R.attr.segmentedControlBackgroundSelected)
+        } else {
+            segment.setBackgroundColor(Color.TRANSPARENT)
+        }
     }
 }
 

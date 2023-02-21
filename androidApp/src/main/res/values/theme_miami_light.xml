@@ -23,7 +23,7 @@
         <item name="buttonBgSecondary">@color/miami.light.color.lightGray</item>
         <item name="buttonTextSecondary">@color/miami.light.color.white</item>
         <item name="switchOnTint">@color/miami.light.color.orange</item>
-        <item name="segmentedControlBackground">@color/miami.light.color.lighterGray</item>
+        <item name="segmentedControlBackground">@color/miami.light.color.lighterGray10</item>
         <item name="segmentedControlBackgroundSelected">@color/miami.light.color.white18</item>
         <item name="segmentedControlText">@color/miami.light.color.white</item>
         <item name="segmentedControlTextSelected">@color/miami.light.color.white</item>
@@ -51,4 +51,5 @@
     <color name="miami.light.color.gray">#FF8E8E92</color>
     <color name="miami.light.color.lightGray">#33787880</color>
     <color name="miami.light.color.lighterGray">#FFC6C6C8</color>
+    <color name="miami.light.color.lighterGray10">#25C6C6C8</color>
 </resources>

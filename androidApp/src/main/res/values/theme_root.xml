@@ -3,6 +3,19 @@
     <style name="W3WTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Background -->
         <item name="android:windowBackground">@drawable/gradient_background</item>
+        <!-- Text Weight (the comments below are possible mappings) -->
+        <!-- 100 Extra Light or Ultra Light-->
+        <!-- 200 Light or Thin-->
+        <!-- 300 Book or Demi-->
+        <!-- 400 Normal or Regular-->
+        <item name="textFontWeightNormal">400</item>
+        <!-- 500 Medium-->
+        <!-- 600 Semibold, Demibold-->
+        <item name="textFontWeightSemibold">600</item>
+        <!-- 700 Bold-->
+        <item name="textFontWeightBold">700</item>
+        <!-- 800 Black, Extra Bold or Heavy-->
+        <!-- 900 Extra Black, Fat, Poster or Ultra Black-->
         <!-- Shapes -->
         <item name="padding">16dp</item>
         <item name="paddingHalf">8dp</item>

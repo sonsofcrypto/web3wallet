@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- SHAPES -->
-    <integer name="normal">400</integer>
-    <integer name="semibold">600</integer>
-    <integer name="bold">700</integer>
+    <!-- Text -->
+    <attr name="textFontWeightNormal" format="integer" />
+    <attr name="textFontWeightSemibold" format="integer" />
+    <attr name="textFontWeightBold" format="integer" />
+    <!-- Shapes -->
     <attr name="padding" format="dimension" />
     <attr name="paddingHalf" format="dimension" />
     <attr name="cornerRadius" format="dimension" />

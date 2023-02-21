@@ -44,7 +44,7 @@ fun ImprovementProposal.Category.title(): String = when (this) {
     INFRASTRUCTURE -> Localized("proposals.integration.title")
     FEATURE -> Localized("proposals.feature.title")
     UNKNOWN -> Localized("proposals.unknown.title")
-} + " " + Localized("proposals")
+}
 
 fun ImprovementProposal.Category.description(): String = when (this) {
     INTEGRATION -> Localized("proposals.infrastructure.description")

@@ -123,7 +123,6 @@ class ImprovementProposalsFragment: Fragment(), ImprovementProposalsView {
             var selectedType by remember { mutableStateOf(INFRASTRUCTURE ) }
             ImprovementProposalsCategorySegmentItem(
                 title = Localized("proposals.infrastructure.title"),
-                type = INFRASTRUCTURE,
                 isSelected = selectedType == INFRASTRUCTURE,
             ) {
                 selectedType = INFRASTRUCTURE
@@ -131,7 +130,6 @@ class ImprovementProposalsFragment: Fragment(), ImprovementProposalsView {
             }
             ImprovementProposalsCategorySegmentItem(
                 title = Localized("proposals.integration.title"),
-                type = INTEGRATIONS,
                 isSelected = selectedType == INTEGRATIONS,
             ) {
                 selectedType = INTEGRATIONS
@@ -139,7 +137,6 @@ class ImprovementProposalsFragment: Fragment(), ImprovementProposalsView {
             }
             ImprovementProposalsCategorySegmentItem(
                 title = Localized("proposals.feature.title"),
-                type = FEATURES,
                 isSelected = selectedType == FEATURES,
             ) {
                 selectedType = FEATURES
@@ -151,7 +148,6 @@ class ImprovementProposalsFragment: Fragment(), ImprovementProposalsView {
     @Composable
     private fun RowScope.ImprovementProposalsCategorySegmentItem(
         title: String,
-        type: ImprovementProposalCategoryType,
         isSelected: Boolean,
         onClick: () -> Unit
     ) {
