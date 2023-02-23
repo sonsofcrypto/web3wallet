@@ -64,7 +64,6 @@ private extension CultProposalDetailDocsView {
         if let input = item as? CultProposalViewModel.ProposalDetailsDocumentsInfoDocumentItemLink {
             let name = UILabel()
             name.apply(style: .subheadline)
-            name.textColor = Theme.color.navBarTint
             name.text = input.displayName
             name.numberOfLines = 0
             let tag = addLinkToDirectory(url: input.url)
