@@ -20,7 +20,7 @@
         <item name="padding">16dp</item>
         <item name="paddingHalf">8dp</item>
         <item name="cornerRadius">16dp</item>
-        <item name="cornerRadiusSmall">16dp</item>
+        <item name="cornerRadiusSmall">8dp</item>
         <item name="shadowRadius">16dp</item>
         <item name="cellHeight">8dp</item>
         <item name="cellHeightSmall">16dp</item>

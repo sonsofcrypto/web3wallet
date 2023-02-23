@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.appContext
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
-import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposal.ImprovementProposalWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.improvementproposal.ImprovementProposalWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementProposalWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.DefaultImprovementProposalsInteractor
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.DefaultImprovementProposalsPresenter

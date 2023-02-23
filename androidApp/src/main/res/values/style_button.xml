@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ButtonPrimary" parent="TypefaceNormal">
+        <item name="android:textColor">?attr/textPrimary</item>
+        <item name="android:fontWeight">?attr/textFontWeightNormal</item>
+    </style>
+</resources>

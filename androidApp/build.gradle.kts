@@ -58,5 +58,9 @@ dependencies {
     implementation("com.google.accompanist:accompanist-swiperefresh:$accompanistVersion")
     implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-    implementation("io.coil-kt:coil-compose:2.2.2")
+
+    // Coil
+    val coilVersion = "2.2.2"
+    implementation("io.coil-kt:coil:$coilVersion")
+    implementation("io.coil-kt:coil-compose:$coilVersion")
 }

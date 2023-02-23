@@ -1,7 +1,4 @@
 <resources>
-    <style name="TypefaceNormal">
-        <item name="android:typeface">monospace</item>
-    </style>
     <style name="TextPrimary" parent="TypefaceNormal">
         <item name="android:textColor">?attr/textPrimary</item>
         <item name="android:fontWeight">?attr/textFontWeightNormal</item>

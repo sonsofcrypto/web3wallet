@@ -39,16 +39,8 @@ class ImprovementProposalsFragment:
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val map = hashMapOf(
-            ImprovementProposalsViewModel.Item::class to ImprovementProposalsItemViewHolder::class,
-            String::class to SectionHeaderViewHolder::class,
-        )
-        adapter = DataSourceAdapter(this, recyclerView, map)
+        configureUI()
         presenter.present()
-
-        segment1.setOnClickListener { presenter.handle(Category(0)) }
-        segment2.setOnClickListener { presenter.handle(Category(1)) }
-        segment3.setOnClickListener { presenter.handle(Category(2)) }
     }
 
     override fun update(viewModel: ImprovementProposalsViewModel) {
@@ -74,6 +66,17 @@ class ImprovementProposalsFragment:
 
     override fun didSelectCellAt(idxPath: IndexPath) {
         presenter.handle(ImprovementProposalsPresenterEvent.Proposal(idxPath.item))
+    }
+
+    private fun configureUI() {
+        segment1.setOnClickListener { presenter.handle(Category(0)) }
+        segment2.setOnClickListener { presenter.handle(Category(1)) }
+        segment3.setOnClickListener { presenter.handle(Category(2)) }
+        val map = hashMapOf(
+            ImprovementProposalsViewModel.Item::class to ImprovementProposalsItemViewHolder::class,
+            String::class to SectionHeaderViewHolder::class,
+        )
+        adapter = DataSourceAdapter(this, recyclerView, map)
     }
 
     private fun refreshSegmentControl() {
