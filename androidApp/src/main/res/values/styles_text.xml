@@ -22,7 +22,13 @@
     <style name="FontHeadline" parent="TextPrimary">
         <item name="android:textSize">17.sp</item>
     </style>
+    <style name="FontHeadlineSecondary" parent="TextSecondary">
+        <item name="android:textSize">17.sp</item>
+    </style>
     <style name="FontSubheadline" parent="TextPrimary">
+        <item name="android:textSize">15.sp</item>
+    </style>
+    <style name="FontSubheadlineSecondary" parent="TextSecondary">
         <item name="android:textSize">15.sp</item>
     </style>
     <style name="FontBody" parent="TextPrimary">

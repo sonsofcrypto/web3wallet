@@ -5,7 +5,7 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
-import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposal.CultProposalWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.cultproposal.CultProposalWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsWireframe
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsWireframeDestination

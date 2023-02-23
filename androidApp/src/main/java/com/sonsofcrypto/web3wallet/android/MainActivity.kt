@@ -1,6 +1,8 @@
 package com.sonsofcrypto.web3wallet.android
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import com.sonsofcrypto.web3lib.utils.BundledAssetProviderApplication
 import com.sonsofcrypto.web3wallet.android.common.*
