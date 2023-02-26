@@ -121,6 +121,7 @@ private extension NetworksViewController {
             makeCompositionalLayout(),
             animated: false
         )
+        (view as? ThemeGradientView)?.topClipEnabled = true
     }
     
     func makeCompositionalLayout() -> UICollectionViewLayout {
