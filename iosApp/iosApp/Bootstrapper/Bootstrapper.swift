@@ -31,9 +31,6 @@ final class UIBootstrapper {
     init(window: UIWindow?) {
         self.window = window
     }
-}
-
-extension UIBootstrapper: Bootstrapper {
 
     func boot() {
         let rootWireframeFactory: RootWireframeFactory = AppAssembler.resolve()

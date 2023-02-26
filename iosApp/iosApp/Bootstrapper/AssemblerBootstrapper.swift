@@ -2,7 +2,16 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class AssemblerBootstrapper {}
+final class AssemblerBootstrapper {
+
+    // NOTE: This is needed to get previews in storyboards working
+    func backupAssembler() -> Assembler {
+        let assembler = DefaultAssembler()
+        let components = makeComponents()
+        assembler.configure(components: components)
+        return assembler
+    }
+}
 
 extension AssemblerBootstrapper: Bootstrapper {
 

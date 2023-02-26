@@ -7,7 +7,14 @@ public enum AssemblerRegistryScope {
     case instance
 }
 
-var AppAssembler: Assembler { AppDelegate.assembler }
+var AppAssembler: Assembler {
+    // NOTE: Story boards previews were crashing on AppDelegate.assembler! nil
+    if AppDelegate.assembler != nil {
+        return AppDelegate.assembler
+    }
+    AppDelegate.assembler = AssemblerBootstrapper().backupAssembler()
+    return AppDelegate.assembler
+}
 
 protocol Assembler: AssemblerResolver {
     func configure(components: [AssemblerComponent])
