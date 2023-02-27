@@ -65,7 +65,8 @@ class AbiCoder(val coerceFunc: CoerceFunc? = null) {
 
     @Throws(Throwable::class)
     fun encode(types: List<Param>, values: List<Any>): ByteArray {
-        if (types.size != values.size) throw Error.SizeMismatch(types, values)
+        if (types.size != values.size)
+            throw Error.SizeMismatch(types, values)
         val coder = TupleCoder(types.map { coder(it) }, "_")
         val writer = writer()
         coder.encode(writer, values)
