@@ -7,7 +7,7 @@
     android:layout_marginRight="?attr/padding"
     android:padding="?attr/padding"
     android:layout_width="match_parent"
-    android:background="@drawable/card_background"
+    android:background="@drawable/card_background_corner_radious"
     android:layout_height="wrap_content">
 
     <LinearLayout

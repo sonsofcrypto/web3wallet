@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/segmentGroup"
+    android:layout_width="match_parent"
+    android:layout_height="62dp"
+    tools:context=".modules.degen.DegenFragment"
+    android:padding="?attr/padding"
+    android:background="?attr/navBarBackground"
+    >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@drawable/segment_control_background"
+        android:clipChildren="true"
+        >
+        <TextView
+            android:id="@+id/segment1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="hello"
+            android:textAlignment="center"
+            android:paddingVertical="4dp"
+            android:textColor="?attr/segmentedControlTextSelected"
+            />
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?attr/navBarBackground"
+            />
+        <TextView
+            android:id="@+id/segment2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="hello"
+            android:textAlignment="center"
+            android:paddingVertical="4dp"
+            android:textColor="?attr/segmentedControlText"
+            />
+    </LinearLayout>
+</FrameLayout>

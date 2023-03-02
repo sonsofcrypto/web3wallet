@@ -7,7 +7,7 @@ import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.improvementproposals.ImprovementProposalsWireframeFactory
-import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposals.CultProposalsWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.cultproposals.CultProposalsWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.degen.DefaultDegenInteractor
 import com.sonsofcrypto.web3walletcore.modules.degen.DefaultDegenPresenter
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenWireframe

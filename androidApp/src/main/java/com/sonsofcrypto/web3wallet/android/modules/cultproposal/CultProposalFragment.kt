@@ -1,10 +1,9 @@
 package com.sonsofcrypto.web3wallet.android.modules.cultproposal
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.LinearLayout.*
+import android.widget.LinearLayout.GONE
+import android.widget.LinearLayout.VISIBLE
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3wallet.android.R

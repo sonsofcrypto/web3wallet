@@ -256,7 +256,7 @@ class CultProposalsFragment : Fragment(), CultProposalsView {
             )
             val totalVotes = formatter.format(item.approved.total + item.rejected.total)
             Text(
-                Localized("cult.proposals.closed.totalVotes").replace("%1\$s", totalVotes),
+                Localized("cult.proposals.closed.totalVotes", totalVotes),
                 modifier = Modifier.fillMaxWidth(),
                 color = theme().colors.textPrimary,
                 style = theme().fonts.callout,
