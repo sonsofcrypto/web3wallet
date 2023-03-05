@@ -23,6 +23,7 @@ import androidx.lifecycle.MutableLiveData
 import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3wallet.android.common.*
+import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailPresenter
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailPresenterEvent
@@ -79,7 +80,12 @@ class NFTDetailFragment: Fragment(), NFTDetailView {
             W3WSpacerVertical()
             W3WCard(
                 title =  Localized("nft.detail.section.title.description"),
-                content = { W3WTextSubheadline(viewModel.collection.description) },
+                content = {
+                    W3WText(
+                        viewModel.collection.description,
+                        style = theme().fonts.subheadline,
+                    )
+                },
             )
             W3WSpacerVertical()
             W3WCard(
@@ -142,9 +148,16 @@ class NFTDetailFragment: Fragment(), NFTDetailView {
     @Composable
     private fun NFTDetailInfoRow(name: String, value: String) {
         Row {
-            W3WTextSubheadline(text = name, color = theme().colors.textSecondary)
+            W3WText(
+                text = name,
+                color = theme().colors.textSecondary,
+                style = theme().fonts.subheadline,
+            )
             W3WSpacerHorizontal(width = 8.dp)
-            W3WTextSubheadline(text = value)
+            W3WText(
+                text = value,
+                style = theme().fonts.subheadline,
+            )
         }
     }
 }

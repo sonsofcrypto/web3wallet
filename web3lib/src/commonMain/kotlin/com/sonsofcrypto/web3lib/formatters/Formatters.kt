@@ -9,7 +9,6 @@ class Formatters {
         val currency = CurrencyFormatter()
         val fiat = FiatFormatter()
         val pct = PctFormatter()
-        val number = NumberFormatter()
         val date = DateFormatter()
         val networkAddress = NetworkAddressFormatter()
 

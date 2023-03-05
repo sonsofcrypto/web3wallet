@@ -11,7 +11,12 @@ class CurrencyFormatter {
     private val placeholder = "-"
     private val formattersOutput = FormattersOutput()
 
-    fun format(amount: BigInt?, currency: Currency, style: Style = Style.Max): List<Output> {
+    fun format(
+        amount: BigInt?,
+        currency: Currency,
+        style: Style = Style.Max,
+        addCurrencySymbol: Boolean = true,
+    ): List<Output> {
         val amount = amount ?: return listOf(Normal(placeholder))
         val input = currencyAmountToString(amount, currency)
         val output: List<Output> = when (style) {
@@ -23,7 +28,7 @@ class CurrencyFormatter {
             }
             is Style.Max -> { listOf(Normal(input)) }
         }
-        return output.addCurrencySymbol(currency)
+        return if (addCurrencySymbol) { output.addCurrencySymbol(currency) } else { output }
     }
 
     private fun currencyAmountToString(amount: BigInt, currency: Currency): String {

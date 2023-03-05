@@ -140,15 +140,18 @@ class DefaultCurrencySwapPresenter(
         becomeFirstResponder: Boolean = false
     ): CurrencyAmountPickerViewModel =
         CurrencyAmountPickerViewModel(
-            amountFrom,
-            currencyFrom.iconName,
-            currencyFrom.symbol.uppercase(),
-            currencyFromBalance,
-            currencyFrom.decimals(),
-            interactor.fiatPrice(currencyFrom),
-            updateTextField,
-            becomeFirstResponder,
-            context.network.name
+            amount = amountFrom,
+            symbolIconName = currencyFrom.iconName,
+            symbol = currencyFrom.symbol.uppercase(),
+//            maxAmount = currencyFromBalance,
+            maxAmount = BigInt.from("8444452323423423423423423403810"),
+            maxDecimals = currencyFrom.decimals(),
+//            fiatPrice = interactor.fiatPrice(currencyFrom),
+            fiatPrice = 1560.54,
+            updateTextField = updateTextField,
+            becomeFirstResponder = becomeFirstResponder,
+            networkName = context.network.name,
+            currency = currencyFrom
         )
 
     private val currencyFromBalance: BigInt get() =
@@ -156,15 +159,17 @@ class DefaultCurrencySwapPresenter(
 
     private fun currencyToViewModel(): CurrencyAmountPickerViewModel =
         CurrencyAmountPickerViewModel(
-            amountTo,
-            currencyTo.iconName,
-            currencyTo.symbol.uppercase(),
-            currencyToBalance,
-            currencyTo.decimals(),
-            interactor.fiatPrice(currencyTo),
+            //amount = amountTo,
+            amount = BigInt.from("912798719823"),
+            symbolIconName = currencyTo.iconName,
+            symbol = currencyTo.symbol.uppercase(),
+            maxAmount = currencyToBalance,
+            maxDecimals = currencyTo.decimals(),
+            fiatPrice = interactor.fiatPrice(currencyTo),
             updateTextField = true,
             becomeFirstResponder = false,
-            context.network.name
+            networkName = context.network.name,
+            currency = currencyTo
         )
 
     private val currencyToBalance: BigInt get() =
@@ -187,9 +192,9 @@ class DefaultCurrencySwapPresenter(
         val symbolTo = currencyTo.symbol.uppercase()
         val fiatFrom = interactor.fiatPrice(currencyFrom)
         val fiatTo = interactor.fiatPrice(currencyTo)
-        if (fiatFrom == 0.toDouble() || fiatTo == 0.toDouble()) listOf(Normal("-"))
-        else if (fiatFrom == 0.toDouble()) listOf(Normal("? $symbolFrom ≈ 1 $symbolTo" ))
-        else if (fiatTo == 0.toDouble()) listOf(Normal("1 $symbolFrom ≈ ? $symbolTo" ))
+        if (fiatFrom == 0.toDouble() || fiatTo == 0.toDouble()) return listOf(Normal("-"))
+        else if (fiatFrom == 0.toDouble()) return listOf(Normal("? $symbolFrom ≈ 1 $symbolTo" ))
+        else if (fiatTo == 0.toDouble()) return listOf(Normal("1 $symbolFrom ≈ ? $symbolTo" ))
         val output = mutableListOf<Formatters.Output>(Normal("1 $symbolFrom ≈ "))
         val swapPriceString = BigDec.from(fiatFrom/fiatTo).toDecimalString()
         output.addAll(FormattersOutput().convert(swapPriceString, 10u, false))

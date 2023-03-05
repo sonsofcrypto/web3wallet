@@ -26,7 +26,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
-import com.sonsofcrypto.web3wallet.android.common.*
+import com.sonsofcrypto.web3wallet.android.common.theme
+import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalPresenter
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalView
@@ -46,7 +47,7 @@ class CultProposalFragment: Fragment(), CultProposalView {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         presenter.present()
         return ComposeView(requireContext()).apply { 
             setContent { 
@@ -95,7 +96,12 @@ class CultProposalFragment: Fragment(), CultProposalView {
             }
             W3WCard(
                 title = viewModel.summary.title,
-                content = { W3WTextSubheadline(text = viewModel.summary.summary) }
+                content = {
+                    W3WText(
+                        text = viewModel.summary.summary,
+                        style = theme().fonts.subheadline,
+                    )
+                }
             )
             W3WSpacerVertical()
             W3WCard(
@@ -132,19 +138,32 @@ class CultProposalFragment: Fragment(), CultProposalView {
     private fun CultProposalGuardianInfo(
         viewModel: CultProposalViewModel.ProposalDetails.GuardianInfo
     ) {
-        CultProposalGuardianInfoRow(name = viewModel.name, value = viewModel.nameValue)
+        CultProposalGuardianInfoRow(
+            name = viewModel.name,
+            value = viewModel.nameValue
+        )
         W3WSpacerVertical(height = 4.dp)
-        CultProposalGuardianInfoRow(name = viewModel.socialHandle, value = viewModel.socialHandleValue)
+        CultProposalGuardianInfoRow(
+            name = viewModel.socialHandle,
+            value = viewModel.socialHandleValue
+        )
         W3WSpacerVertical(height = 4.dp)
-        CultProposalGuardianInfoRow(name = viewModel.wallet, value = viewModel.walletValue)
+        CultProposalGuardianInfoRow(
+            name = viewModel.wallet,
+            value = viewModel.walletValue
+        )
     }
 
     @Composable
     private fun CultProposalGuardianInfoRow(name: String, value: String) {
         Row {
-            W3WTextSubheadline(text = name, color = theme().colors.textSecondary)
+            W3WText(
+                text = name,
+                color = theme().colors.textSecondary,
+                style = theme().fonts.subheadline
+            )
             W3WSpacerHorizontal(width = 8.dp)
-            W3WTextSubheadline(text = value)
+            W3WText(text = value, style = theme().fonts.subheadline)
         }
     }
 
@@ -161,12 +180,16 @@ class CultProposalFragment: Fragment(), CultProposalView {
     private fun CultProposalProductDocsDocument(
         viewModel: CultProposalViewModel.ProposalDetails.DocumentsInfo.Document
     ) {
-        W3WTextSubheadline(text = viewModel.title, color = theme().colors.textSecondary)
+        W3WText(
+            text = viewModel.title,
+            color = theme().colors.textSecondary,
+            style = theme().fonts.subheadline
+        )
         viewModel.items.forEach {
             when (it) {
                 is Link -> {
                     val uriHandler = LocalUriHandler.current
-                    W3WTextSubheadline(
+                    W3WText(
                         text = it.displayName,
                         textDecoration = TextDecoration.Underline,
                         modifier = Modifier.clickable(
@@ -175,9 +198,15 @@ class CultProposalFragment: Fragment(), CultProposalView {
                         ) {
                             uriHandler.openUri(it.url)
                         },
+                        style = theme().fonts.subheadline,
                     )
                 }
-                is Note -> { W3WTextSubheadline(text = it.text) }
+                is Note -> {
+                    W3WText(
+                        text = it.text,
+                        style = theme().fonts.subheadline,
+                    )
+                }
             }
 
         }
@@ -206,9 +235,16 @@ class CultProposalFragment: Fragment(), CultProposalView {
     @Composable
     private fun CultProposalTokenomicsRow(name: String, value: String) {
         Column {
-            W3WTextSubheadline(text = name, color = theme().colors.textSecondary)
+            W3WText(
+                text = name,
+                color = theme().colors.textSecondary,
+                style = theme().fonts.subheadline,
+            )
             W3WSpacerHorizontal(width = 4.dp)
-            W3WTextSubheadline(text = value)
+            W3WText(
+                text = value,
+                style = theme().fonts.subheadline,
+            )
         }
     }
 }

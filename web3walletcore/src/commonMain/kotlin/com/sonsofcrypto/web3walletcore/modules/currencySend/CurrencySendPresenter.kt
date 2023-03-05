@@ -199,7 +199,8 @@ class DefaultCurrencySendPresenter(
             interactor.fiatPrice(currency),
             updateTextField,
             becomeFirstResponder,
-            context.network.name
+            context.network.name,
+            currency = currency
         )
         return CurrencySendViewModel.Item.Currency(data)
     }

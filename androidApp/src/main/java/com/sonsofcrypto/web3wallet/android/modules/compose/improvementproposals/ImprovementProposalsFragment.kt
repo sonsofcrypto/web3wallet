@@ -27,6 +27,10 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.sonsofcrypto.web3wallet.android.common.*
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WLoading
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WNavigationBar
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WScreen
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WSpacerVertical
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsFragment.ImprovementProposalCategoryType.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsPresenter
@@ -79,7 +83,7 @@ class ImprovementProposalsFragment: Fragment(), ImprovementProposalsView {
     private fun ImprovementProposalsContent(viewModel: ImprovementProposalsViewModel) {
         when (viewModel) {
             is ImprovementProposalsViewModel.Loading -> {
-                W3WLoadingScreen()
+                W3WLoading()
             }
             is ImprovementProposalsViewModel.Loaded -> {
                 ImprovementProposalsLoaded(

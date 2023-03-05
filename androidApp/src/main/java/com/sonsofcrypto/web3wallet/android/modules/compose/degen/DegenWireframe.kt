@@ -2,12 +2,16 @@ package com.sonsofcrypto.web3wallet.android.modules.compose.degen
 
 import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
+import com.sonsofcrypto.web3lib.types.Currency
+import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposals.CultProposalsWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.currencyswap.CurrencySwapWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsWireframeFactory
+import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.degen.DefaultDegenInteractor
 import com.sonsofcrypto.web3walletcore.modules.degen.DefaultDegenPresenter
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenWireframe
@@ -18,6 +22,7 @@ class DefaultDegenWireframe(
     private val parent: WeakRef<Fragment>?,
     private val degenService: DegenService,
     private val networksService: NetworksService,
+    private val currencySwapWireframeFactory: CurrencySwapWireframeFactory,
     private val cultProposalsWireframeFactory: CultProposalsWireframeFactory,
 ): DegenWireframe {
 
@@ -36,9 +41,10 @@ class DefaultDegenWireframe(
     override fun navigate(destination: DegenWireframeDestination) {
         when (destination) {
             is DegenWireframeDestination.Swap -> {
-                println("Present SWAP!")
-                val factory: ImprovementProposalsWireframeFactory = assembler.resolve("ImprovementProposalsWireframeFactory")
-                factory.make(fragment.get()).present()
+                val context = CurrencySwapWireframeContext(
+                    Network.ethereum(), Currency.ethereum(), Currency.usdt()
+                )
+                currencySwapWireframeFactory.make(fragment.get(), context).present()
             }
             is DegenWireframeDestination.Cult -> {
                 cultProposalsWireframeFactory.make(fragment.get()).present()

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.sonsofcrypto.web3wallet.android.common.*
+import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardPresenter
 import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardPresenterEvent
@@ -67,7 +68,7 @@ class NFTsDashboardFragment: Fragment(), NFTsDashboardView {
     private fun NFTsDashboardContent(viewModel: NFTsDashboardViewModel) {
         when (viewModel) {
             is NFTsDashboardViewModel.Loading -> {
-                W3WLoadingScreen()
+                W3WLoading()
             }
             is NFTsDashboardViewModel.Loaded -> {
                 Column(

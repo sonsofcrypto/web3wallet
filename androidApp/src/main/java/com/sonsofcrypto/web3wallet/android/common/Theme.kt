@@ -75,6 +75,7 @@ data class ThemeFonts(
 )
 
 data class ThemeColors(
+    var clear: Color = Color.Transparent,
     var textPrimary: Color,
     var textSecondary: Color,
     var textTertiary: Color,

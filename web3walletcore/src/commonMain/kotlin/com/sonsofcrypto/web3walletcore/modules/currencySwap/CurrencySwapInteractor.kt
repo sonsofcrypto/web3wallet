@@ -46,7 +46,7 @@ class DefaultCurrencySwapInteractor(
     private val walletService: WalletService,
     private val networksService: NetworksService,
     private val swapService: UniswapService,
-    private val currencyStoreService: CurrencyStoreService
+    private val currencyStoreService: CurrencyStoreService,
 ): CurrencySwapInteractor, UniswapListener {
     private var listener: CurrencyInteractorLister? = null
 

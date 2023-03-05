@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.sonsofcrypto.web3wallet.android.common.*
+import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsPresenter
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsPresenterEvent
@@ -74,13 +75,13 @@ class CultProposalsFragment : Fragment(), CultProposalsView {
     private fun CultProposalsContent(viewModel: CultProposalsViewModel) {
         when (viewModel) {
             is CultProposalsViewModel.Loading -> {
-                W3WLoadingScreen()
+                W3WLoading()
             }
             is CultProposalsViewModel.Loaded -> {
                 viewModel.sections.firstOrNull()?.let { CultProposalsLoaded(it) }
             }
             is CultProposalsViewModel.Error -> {
-                W3WLoadingScreen()
+                W3WLoading()
             }
         }
     }

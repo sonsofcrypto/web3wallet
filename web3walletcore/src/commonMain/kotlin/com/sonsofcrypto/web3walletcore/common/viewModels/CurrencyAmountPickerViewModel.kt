@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3walletcore.common.viewModels
 
+import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.utils.BigInt
 
 data class CurrencyAmountPickerViewModel(
@@ -13,4 +14,5 @@ data class CurrencyAmountPickerViewModel(
     val becomeFirstResponder: Boolean,
     val networkName: String,
     val inputEnabled: Boolean = true,
+    val currency: Currency,
 )

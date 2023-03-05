@@ -14,10 +14,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +25,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.sonsofcrypto.web3wallet.android.common.*
+import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenPresenter
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenPresenterEvent
@@ -111,6 +110,7 @@ class DegenFragment : Fragment(), DegenView {
     
     @Composable
     private fun DegenItems(items: List<DegenViewModel.Item>) {
+        var showUnderConstruction by remember { mutableStateOf(false) }
         Column(
             Modifier
                 .clip(RoundedCornerShape(theme().shapes.padding))
@@ -123,7 +123,7 @@ class DegenFragment : Fragment(), DegenView {
                         val index = items.indexOf(it)
                         presenter.handle(DegenPresenterEvent.DidSelectCategory(index))
                     } else {
-                        presenter.handle(DegenPresenterEvent.ComingSoon)
+                        showUnderConstruction = true
                     }
                 }
                 if (items.last() != it) {
@@ -132,6 +132,9 @@ class DegenFragment : Fragment(), DegenView {
                     W3WSpacerVertical(height = 8.dp)
                 }
             }
+        }
+        if (showUnderConstruction) {
+            W3WUnderConstructionAlert { showUnderConstruction = false }
         }
     }
 
@@ -149,7 +152,7 @@ class DegenFragment : Fragment(), DegenView {
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Column {
-                Text(
+                W3WText(
                     item.title,
                     color = if (item.isEnabled) theme().colors.textPrimary else theme().colors.textSecondary,
                     style = theme().fonts.body,

@@ -5,7 +5,7 @@ import com.sonsofcrypto.web3wallet.android.common.AssemblerComponent
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistry
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope
 import com.sonsofcrypto.web3wallet.android.modules.dashboard.DashboardWireframeFactory
-import com.sonsofcrypto.web3wallet.android.modules.degen.DegenWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.degen.DegenWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftsdashboard.NFTsDashboardWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.root.RootWireframe
 import smartadapter.internal.extension.name

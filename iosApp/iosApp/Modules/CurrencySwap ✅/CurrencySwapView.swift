@@ -58,15 +58,6 @@ extension CurrencySwapViewController {
         )
     }
     
-    func loading() {
-        collectionView.visibleCells.forEach {
-            switch $0 {
-            case let cell as CurrencySwapMarketCollectionViewCell: cell.showLoading()
-            default: break
-            }
-        }
-    }
-    
     @objc func dismissKeyboard() {
         collectionView.visibleCells.forEach { $0.resignFirstResponder() }
     }

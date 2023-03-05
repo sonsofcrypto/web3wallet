@@ -5,6 +5,4 @@ import com.sonsofcrypto.web3lib.types.NetworkFee
 interface CurrencySwapView {
     fun update(viewModel: CurrencySwapViewModel)
     fun presentNetworkFeePicker(networkFees: List<NetworkFee>)
-    fun loading()
-    fun dismissKeyboard()
 }

@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.sonsofcrypto.web3wallet.android.common.*
+import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionPresenter
 import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionPresenterEvent
 import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionView
