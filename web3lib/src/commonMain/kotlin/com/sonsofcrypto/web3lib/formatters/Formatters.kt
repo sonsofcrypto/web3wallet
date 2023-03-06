@@ -13,9 +13,15 @@ class Formatters {
         val networkAddress = NetworkAddressFormatter()
 
         fun crypto(amount: BigInt, decimals: UInt, mul: Double): Double {
+            // Once we calculate the crypto amount, since the result will be in FIAT we are only
+            // interested in 2 decimal places precision.
             return BigDec.from(amount)
                 .div(BigDec.from(BigInt.from(10).pow(decimals.toLong())))
                 .mul(BigDec.from(mul))
+                .mul(BigDec.from(100))
+                .toBigInt()
+                .toBigDec()
+                .div(BigDec.from(100))
                 .toDouble()
         }
     }

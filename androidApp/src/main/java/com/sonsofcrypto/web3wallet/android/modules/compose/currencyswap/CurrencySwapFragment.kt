@@ -4,35 +4,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.text.style.BaselineShift
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.NetworkFee
 import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.*
+import com.sonsofcrypto.web3wallet.android.common.extensions.*
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.common.viewModels.CurrencyAmountPickerViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.NetworkFeeViewModel
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapPresenter
-import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.currencySwap.*
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapPresenterEvent.CurrencyFromChanged
-import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapView
-import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapViewModel
 import java.text.NumberFormat
 
 class CurrencySwapFragment: Fragment(), CurrencySwapView {
@@ -95,15 +91,7 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                         val newValue = applyTextValidation(
                             it.currencyFrom, value.text, newTextFieldValue.text
                         )
-                        value = if (value.text.length + 2 == newValue.length) {
-                            TextFieldValue(newValue, TextRange(newValue.length))
-                        } else if (value.text == newValue && value.text != newTextFieldValue.text) {
-                            TextFieldValue(newValue, TextRange(value.selection.start))
-                        } else if (value.text.length == newValue.length && value.text != newValue) {
-                            TextFieldValue(newValue, TextRange(value.selection.start))
-                        } else {
-                            TextFieldValue(newValue, newTextFieldValue.selection)
-                        }
+                        value = updateTextFieldValueSelection(value, newTextFieldValue, newValue)
                         val bigInt = newValue.toBigInt(it.currencyFrom.maxDecimals)
                         presenter.handle(CurrencyFromChanged(bigInt))
                     },
@@ -125,12 +113,48 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                 W3WCurrencyView(viewModel = it.currencyTo,) {
                     presenter.handle(CurrencySwapPresenterEvent.CurrencyToTapped)
                 }
+                W3WSpacerVertical()
+                SwapProviderRow(
+                    viewModel = it.currencySwapProviderViewModel,
+                    onClick = { showUnderConstruction = true }
+                )
+                W3WSpacerVertical(theme().shapes.padding.half)
+                SwapPriceRow(
+                    viewModel = it.currencySwapPriceViewModel
+                )
+                W3WSpacerVertical(theme().shapes.padding.half)
+                SwapSlippageRow(
+                    viewModel = it.currencySwapSlippageViewModel,
+                    onClick = { showUnderConstruction = true }
+                )
+                W3WSpacerVertical(theme().shapes.padding.half)
+                W3WNetworkFeeRowView(
+                    viewModel = it.currencyNetworkFeeViewModel,
+                    onClick = { showUnderConstruction = true }
+                )
             }
             if (showUnderConstruction) {
                 W3WUnderConstructionAlert { showUnderConstruction = false }
             }
         }
     }
+
+    /** This method updates the selection (TextRange) so the cursor is at the correct position
+     *  since sometimes we modify the (newValue) string result of some validation. */
+    private fun updateTextFieldValueSelection(
+        value: TextFieldValue,
+        newTextFieldValue: TextFieldValue,
+        newValue: String,
+    ): TextFieldValue =
+        if (value.text.length + 2 == newValue.length) {
+            TextFieldValue(newValue, TextRange(newValue.length))
+        } else if (value.text == newValue && value.text != newTextFieldValue.text) {
+            TextFieldValue(newValue, TextRange(value.selection.start))
+        } else if (value.text.length == newValue.length && value.text != newValue) {
+            TextFieldValue(newValue, TextRange(value.selection.start))
+        } else {
+            TextFieldValue(newValue, newTextFieldValue.selection)
+        }
 
     private fun BigInt.string(currency: Currency): String = BigDec.from(this)
         .div(BigDec.from(BigInt.from(10).pow(currency.decimals().toLong())))
@@ -155,6 +179,64 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
         if (viewModel.maxDecimals == 0u && value == "00") { return "0.0" }
         if (value.any { it == ',' }) { return value.replace(',', '.') }
         return value.trim().replace("-", "")
+    }
+
+    @Composable
+    private fun SwapProviderRow(
+        viewModel: CurrencySwapProviderViewModel,
+        onClick: () -> Unit,
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(start = theme().shapes.padding, end = theme().shapes.padding)
+        ) {
+            W3WText(
+                text = Localized("currencySwap.cell.provider"),
+                style = theme().fonts.footnote,
+                modifier = Modifier.weight(1.0f),
+            )
+            W3WButtonSecondarySmall(
+                title = viewModel.name.firstLetterCapital,
+                onClick = onClick,
+            )
+        }
+    }
+
+    @Composable
+    private fun SwapPriceRow(viewModel: CurrencySwapPriceViewModel) {
+        Row(
+            modifier = Modifier
+                .padding(start = theme().shapes.padding, end = theme().shapes.padding)
+        ) {
+            W3WText(
+                text = Localized("currencySwap.cell.price"),
+                style = theme().fonts.footnote,
+                modifier = Modifier.weight(1.0f),
+            )
+            W3WText(
+                text = viewModel.value.annotatedStringFootnote(),
+            )
+        }
+    }
+    @Composable
+    private fun SwapSlippageRow(
+        viewModel: CurrencySwapSlippageViewModel,
+        onClick: () -> Unit,
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(start = theme().shapes.padding, end = theme().shapes.padding)
+        ) {
+            W3WText(
+                text = Localized("currencySwap.cell.slippage"),
+                style = theme().fonts.footnote,
+                modifier = Modifier.weight(1.0f),
+            )
+            W3WButtonSecondarySmall(
+                title = viewModel.value,
+                onClick = onClick,
+            )
+        }
     }
 }
 

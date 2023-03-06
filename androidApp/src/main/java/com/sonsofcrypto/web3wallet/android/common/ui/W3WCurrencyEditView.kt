@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3wallet.android.common.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -10,7 +9,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
@@ -20,15 +18,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
@@ -41,8 +35,8 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CurrencyAmountPickerVie
 import com.sonsofcrypto.web3walletcore.extensions.App
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 
-
 @Composable
+
 fun W3WCurrencyEditView(
     viewModel: CurrencyAmountPickerViewModel,
     value: TextFieldValue,
@@ -158,114 +152,49 @@ private fun CurrencyFiatView(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         W3WText(
-            text = fiatPrice(
-                viewModel,
-                normalTextStyle = theme().fonts.callout,
-                smallTextStyle = theme().fonts.caption2,
-            ),
+            text = fiatPrice(viewModel),
             style = theme().fonts.callout,
             modifier = Modifier.weight(1f),
             textAlign = TextAlign.Start,
         )
         W3WSpacerHorizontal(theme().shapes.padding)
         W3WText(
-            text = balance(
-                viewModel,
-                normalTextStyle = theme().fonts.callout,
-                smallTextStyle = theme().fonts.caption2,
-            ),
+            text = balance(viewModel),
             style = theme().fonts.subheadline,
             modifier = Modifier.weight(1f),
             textAlign = TextAlign.End,
         )
         onMaxClick?.let { onClick ->
             W3WSpacerHorizontal(theme().shapes.padding.half)
-            var size by remember { mutableStateOf(IntSize.Zero) }
-            Box(
-                modifier = Modifier
-                    .onSizeChanged { size = it }
-                    .width(44.dp)
-                    .height(24.dp)
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                        onClick = onClick,
-                    )
-                    .border(
-                        width = 0.5.dp,
-                        color = theme().colors.textPrimary,
-                        shape = RoundedCornerShape(size.height.dp.half)
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    Localized("max").uppercase(),
-                    color = theme().colors.buttonTextSecondary,
-                    style = theme().fonts.footnote,
-                )
-            }
+            W3WButtonSecondarySmall(
+                title = Localized("max").uppercase(),
+                onClick = onClick
+            )
         }
     }
 }
 
+@Composable
 private fun fiatPrice(
     viewModel: CurrencyAmountPickerViewModel,
-    normalTextStyle: TextStyle,
-    smallTextStyle: TextStyle,
 ): AnnotatedString {
     val amount = viewModel.amount ?: BigInt.zero
     val value = Formatters.crypto(amount, viewModel.maxDecimals, viewModel.fiatPrice)
     return Formatters.fiat.format(
         BigDec.from(value),
         style = Formatters.Style.Custom(12u)
-    ).annotatedString(
-        spanStylePrefix = SpanStyle(
-            fontSize = normalTextStyle.fontSize,
-            baselineShift = BaselineShift(-0.2f),
-        ),
-        spanStyleNormal = SpanStyle(
-            fontSize = normalTextStyle.fontSize,
-            baselineShift = BaselineShift(-0.2f),
-        ),
-        spanStyleUp = SpanStyle(
-            fontSize = smallTextStyle.fontSize,
-            baselineShift = BaselineShift(0.3f),
-        ),
-        spanStyleDown = SpanStyle(
-            fontSize = smallTextStyle.fontSize,
-            baselineShift = BaselineShift(-0.5f),
-        ),
-    )
+    ).annotatedStringFootnote()
 }
 
+@Composable
 private fun balance(
     viewModel: CurrencyAmountPickerViewModel,
-    normalTextStyle: TextStyle,
-    smallTextStyle: TextStyle,
 ): AnnotatedString = Formatters.currency.format(
     viewModel.maxAmount,
     viewModel.currency,
     Formatters.Style.Custom(12u),
     addCurrencySymbol = false,
-).annotatedString(
-    prefix = Localized("balance").plus(": "),
-    spanStylePrefix = SpanStyle(
-        fontSize = normalTextStyle.fontSize,
-        baselineShift = BaselineShift(-0.2f),
-    ),
-    spanStyleNormal = SpanStyle(
-        fontSize = normalTextStyle.fontSize,
-        baselineShift = BaselineShift(-0.2f),
-    ),
-    spanStyleUp = SpanStyle(
-        fontSize = smallTextStyle.fontSize,
-        baselineShift = BaselineShift(0.3f),
-    ),
-    spanStyleDown = SpanStyle(
-        fontSize = smallTextStyle.fontSize,
-        baselineShift = BaselineShift(-0.5f),
-    ),
-)
+).annotatedStringCallout()
 
 @Composable
 private fun CurrencyPickerView(viewModel: CurrencyAmountPickerViewModel, onClick: () -> Unit) {
@@ -281,7 +210,11 @@ private fun CurrencyPickerView(viewModel: CurrencyAmountPickerViewModel, onClick
                 top = theme().shapes.padding.half.threeQuarter,
                 bottom = theme().shapes.padding.half.threeQuarter,
             )
-            .clickable { onClick() },
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClick,
+            ),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {

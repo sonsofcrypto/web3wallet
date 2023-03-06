@@ -144,7 +144,7 @@ class DefaultCurrencySwapPresenter(
             symbolIconName = currencyFrom.iconName,
             symbol = currencyFrom.symbol.uppercase(),
 //            maxAmount = currencyFromBalance,
-            maxAmount = BigInt.from("8444452323423423423423423403810"),
+            maxAmount = BigInt.from("32460000000000000000"),
             maxDecimals = currencyFrom.decimals(),
 //            fiatPrice = interactor.fiatPrice(currencyFrom),
             fiatPrice = 1560.54,
@@ -159,12 +159,13 @@ class DefaultCurrencySwapPresenter(
 
     private fun currencyToViewModel(): CurrencyAmountPickerViewModel =
         CurrencyAmountPickerViewModel(
-            //amount = amountTo,
-            amount = BigInt.from("912798719823"),
+            amount = amountTo,
+//            amount = BigInt.from("91279871982"),
             symbolIconName = currencyTo.iconName,
             symbol = currencyTo.symbol.uppercase(),
             maxAmount = currencyToBalance,
             maxDecimals = currencyTo.decimals(),
+//            fiatPrice = 1.0,
             fiatPrice = interactor.fiatPrice(currencyTo),
             updateTextField = true,
             becomeFirstResponder = false,

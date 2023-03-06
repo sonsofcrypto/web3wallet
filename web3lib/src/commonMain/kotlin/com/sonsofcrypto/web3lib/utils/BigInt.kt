@@ -54,6 +54,7 @@ class BigInt {
     fun isLessThan(other: BigInt): Boolean = storage.compare(other.storage) == -1
     fun isGreaterThan(other: BigInt): Boolean = storage.compare(other.storage) == 1
     fun isZero(): Boolean = storage.isZero()
+    fun toBigDec(): BigDec = BigDec.from(this)
 
     override fun toString(): String = storage.toString(10)
 

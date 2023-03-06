@@ -3,19 +3,20 @@ package com.sonsofcrypto.web3wallet.android.common.ui
 import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextLayoutResult
@@ -27,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
@@ -36,7 +38,9 @@ import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
 import coil.size.Size
+import com.sonsofcrypto.web3wallet.android.common.extensions.half
 import com.sonsofcrypto.web3wallet.android.common.theme
+import com.sonsofcrypto.web3walletcore.extensions.Localized
 
 @Composable
 fun W3WSpacerVertical(height: Dp = theme().shapes.padding) {
@@ -140,6 +144,41 @@ fun W3WButtonPrimary(
             color = theme().colors.textPrimary,
             style = theme().fonts.title3,
         )
+    }
+}
+
+@Composable
+fun W3WButtonSecondarySmall(
+    title: String,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    var size by remember { mutableStateOf(IntSize.Zero) }
+    Row(
+        modifier = Modifier
+            .onSizeChanged { size = it }
+            .wrapContentWidth()
+            .height(24.dp)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClick,
+            )
+            .border(
+                width = 0.5.dp,
+                color = theme().colors.textPrimary,
+                shape = RoundedCornerShape(size.height.dp.half)
+            )
+            .then(modifier),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        W3WSpacerHorizontal(theme().shapes.padding.half)
+        Text(
+            title,
+            color = theme().colors.buttonTextSecondary,
+            style = theme().fonts.footnote,
+        )
+        W3WSpacerHorizontal(theme().shapes.padding.half)
     }
 }
 
@@ -249,6 +288,8 @@ fun W3WGifImage(
             }).build(), imageLoader = imageLoader
         ),
         contentDescription = null,
-        modifier = modifier.fillMaxWidth().then(modifier),
+        modifier = modifier
+            .fillMaxWidth()
+            .then(modifier),
     )
 }
