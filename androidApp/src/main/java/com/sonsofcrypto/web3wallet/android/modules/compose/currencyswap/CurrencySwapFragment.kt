@@ -4,31 +4,44 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.BaselineShift
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
-import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.NetworkFee
 import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.*
-import com.sonsofcrypto.web3wallet.android.common.extensions.*
+import com.sonsofcrypto.web3wallet.android.common.extensions.annotatedStringFootnote
+import com.sonsofcrypto.web3wallet.android.common.extensions.drawableResource
+import com.sonsofcrypto.web3wallet.android.common.extensions.half
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.common.viewModels.CurrencyAmountPickerViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.NetworkFeeViewModel
+import com.sonsofcrypto.web3walletcore.extensions.App
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.*
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapPresenterEvent.CurrencyFromChanged
+import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapViewModel.ApproveState
+import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapViewModel.ButtonState
 import java.text.NumberFormat
 
 class CurrencySwapFragment: Fragment(), CurrencySwapView {
@@ -79,7 +92,8 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(theme().shapes.padding)
+                .padding(theme().shapes.padding),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             var value by remember { mutableStateOf(TextFieldValue("")) }
             var showUnderConstruction by remember { mutableStateOf(false) }
@@ -109,7 +123,12 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                         presenter.handle(CurrencyFromChanged(bigInt))
                     }
                 )
-                W3WSpacerVertical()
+                W3WSpacerVertical(theme().shapes.padding.half.half)
+                SwapIndicatorElement(isCalculating = it.isCalculating) {
+                    value = TextFieldValue("")
+                    presenter.handle(CurrencySwapPresenterEvent.SwapFlip)
+                }
+                W3WSpacerVertical(theme().shapes.padding.half.half)
                 W3WCurrencyView(viewModel = it.currencyTo,) {
                     presenter.handle(CurrencySwapPresenterEvent.CurrencyToTapped)
                 }
@@ -132,6 +151,12 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                     viewModel = it.currencyNetworkFeeViewModel,
                     onClick = { showUnderConstruction = true }
                 )
+                approvalState(it)?.let { approvalState ->
+                    W3WSpacerVertical()
+                    SwapApproveButton(approvalState)
+                }
+                W3WSpacerVertical()
+                SwapButton(it)
             }
             if (showUnderConstruction) {
                 W3WUnderConstructionAlert { showUnderConstruction = false }
@@ -179,6 +204,39 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
         if (viewModel.maxDecimals == 0u && value == "00") { return "0.0" }
         if (value.any { it == ',' }) { return value.replace(',', '.') }
         return value.trim().replace("-", "")
+    }
+    
+    @Composable
+    private fun SwapIndicatorElement(
+        isCalculating: Boolean,
+        onClick: () -> Unit
+    ) {
+        Row(
+            modifier = Modifier
+                .size(24.dp)
+                .then(CardBackgroundModifier(theme().shapes.cornerRadiusSmall.half))
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = if (isCalculating) {->} else onClick,
+                ),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            if (isCalculating) {
+                W3WLoading(
+                    modifier = Modifier.size(16.dp),
+                    strokeWidth = 2.dp,
+                    strokeCap = StrokeCap.Butt,
+                )
+            } else {
+                Icon(
+                    Icons.Default.KeyboardArrowDown,
+                    contentDescription = "swap",
+                    tint = theme().colors.textPrimary,
+                )
+            }
+        }
     }
 
     @Composable
@@ -237,6 +295,91 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                 onClick = onClick,
             )
         }
+    }
+
+    private fun approvalState(viewModel: CurrencySwapViewModel.SwapData): ApproveState? {
+        return when (viewModel.approveState) {
+            ApproveState.APPROVE -> ApproveState.APPROVE
+            ApproveState.APPROVING -> ApproveState.APPROVING
+            ApproveState.APPROVED -> null
+        }
+    }
+
+    @Composable
+    private fun SwapApproveButton(viewModel: ApproveState) {
+        when (viewModel) {
+            ApproveState.APPROVE -> {
+                W3WButtonPrimary(
+                    title = Localized("currencySwap.cell.button.state.approve"),
+                    onClick = {
+                        presenter.handle(CurrencySwapPresenterEvent.Approve)
+                    }
+                )
+            }
+            ApproveState.APPROVING -> {
+                W3WButtonPrimary(
+                    title = Localized("currencySwap.cell.button.state.approving"),
+                    isLoading = true,
+                    onClick = {
+                        presenter.handle(CurrencySwapPresenterEvent.Approve)
+                    }
+                )
+            }
+            ApproveState.APPROVED -> {}
+        }
+    }
+
+    @Composable
+    private fun SwapButton(viewModel: CurrencySwapViewModel.SwapData) {
+        when (val buttonState = viewModel.buttonState) {
+            is ButtonState.Loading -> {
+                W3WButtonPrimary(
+                    title = Localized("currencySwap.cell.button.state.swap"),
+                    onRightIcon = { onRightSwapIcon() },
+                    isEnabled = false,
+                    isLoading = true,
+                )
+            }
+            is ButtonState.Invalid -> {
+                W3WButtonPrimary(
+                    title = buttonState.text,
+                    onRightIcon = { onRightSwapIcon() },
+                    isEnabled = false,
+                )
+            }
+            is ButtonState.Swap -> {
+                W3WButtonPrimary(
+                    title = Localized("currencySwap.cell.button.state.swap"),
+                    isEnabled = viewModel.approveState == ApproveState.APPROVED,
+                    onRightIcon = { onRightSwapIcon() },
+                    onClick = {
+                        presenter.handle(CurrencySwapPresenterEvent.Review)
+                    }
+                )
+            }
+            is ButtonState.SwapAnyway -> {
+                W3WButtonPrimary(
+                    title = buttonState.text,
+                    isEnabled = viewModel.approveState == ApproveState.APPROVED,
+                    isDestructive = true,
+                    onRightIcon = { onRightSwapIcon() },
+                    onClick = {
+                        presenter.handle(CurrencySwapPresenterEvent.Review)
+                    }
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun onRightSwapIcon() {
+        Image(
+            painter = painterResource(id = R.drawable.uniswap_icon),
+            contentDescription = "uniswap",
+            modifier = Modifier
+                .size(24.dp)
+                .clip(CircleShape)
+        )
     }
 }
 

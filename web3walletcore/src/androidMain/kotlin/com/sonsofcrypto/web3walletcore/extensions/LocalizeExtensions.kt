@@ -16,7 +16,7 @@ actual fun Localized(fmt: String, vararg args: Any?): String {
     val resId = resources.getIdentifier(fmt, "string", context.packageName)
     return when (args.size) {
         0 -> fmt
-        1 -> { resources.getString(resId, args[0]) }
+        1 -> resources.getString(resId, args[0])
         2 -> resources.getString(resId, args[0], args[1])
         3 -> resources.getString(resId, args[0], args[1], args[2])
         4 -> resources.getString(resId, args[0], args[1], args[2], args[3])

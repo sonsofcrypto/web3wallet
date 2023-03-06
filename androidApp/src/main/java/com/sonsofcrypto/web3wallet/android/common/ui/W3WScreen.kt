@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun W3WScreen(
-    navBar: @Composable() (() -> Unit)? = null,
-    content: @Composable() (() -> Unit),
+    navBar: @Composable (() -> Unit)? = null,
+    content: @Composable (() -> Unit),
 ) {
     Column(
         modifier = Modifier

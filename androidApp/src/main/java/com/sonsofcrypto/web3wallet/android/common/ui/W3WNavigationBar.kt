@@ -16,7 +16,7 @@ fun W3WNavigationBar(
     title: String,
     preModifier: Modifier = Modifier,
     modifier: Modifier = Modifier,
-    content: @Composable() (() -> Unit)? = null,
+    content: @Composable (() -> Unit)? = null,
 ) {
     Column(
         modifier =

@@ -36,7 +36,7 @@ struct ThemeVanilla: ThemeProtocol {
         var separatorPrimary: UIColor { .tertiaryLabel }
         var separatorSecondary: UIColor { .quaternaryLabel }
         var buttonBgPrimary: UIColor { Palette.blue }
-        var buttonBgPrimaryDisabled: UIColor { .systemGray }
+        var buttonBgPrimaryDisabled: UIColor { Palette.blue.withAlpha(0.5) }
         var buttonTextPrimary: UIColor { .label }
         var buttonBgSecondary: UIColor { .secondarySystemBackground }
         var buttonTextSecondary: UIColor { .label }

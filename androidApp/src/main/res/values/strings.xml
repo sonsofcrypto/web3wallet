@@ -318,7 +318,7 @@
     <string name="currencySwap.enterAmount">Enter an amount</string>
     <string name="currencySwap.insufficientBalance">Insufficient %1$s balance</string>
     <string name="currencySwap.noPoolsFound">No pools found</string>
-    <string name="currencySwap.swapAnyway">Swap anyway (-%1$s\%)</string>
+    <string name="currencySwap.swapAnyway">Swap anyway (-%1$s%%)</string>
 
     <string name="authenticate.title.unlock">Unlock</string>
     <string name="authenticate.title.swap">Swap</string>

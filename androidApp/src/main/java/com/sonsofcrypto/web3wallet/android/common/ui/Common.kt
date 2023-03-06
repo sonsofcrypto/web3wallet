@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
@@ -83,7 +84,7 @@ fun W3WImage(
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-                onClick = onClick?.let { it } ?: {},
+                onClick = onClick ?: {},
             )
             .then(modifier),
         loading = {
@@ -127,23 +128,41 @@ fun W3WCard(
 fun W3WButtonPrimary(
     title: String,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    isEnabled: Boolean = true,
+    isLoading: Boolean = false,
+    isDestructive: Boolean = false,
+    onRightIcon: @Composable (() -> Unit)? = null,
+    onClick: () -> Unit = {},
 ) {
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(theme().shapes.cornerRadiusSmall))
             .then(modifier),
+        enabled = if (isLoading) false else isEnabled,
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = theme().colors.buttonBgPrimary
+            disabledBackgroundColor = theme().colors.buttonBgPrimaryDisabled,
+            backgroundColor = if (isDestructive)
+                theme().colors.destructive else theme().colors.buttonBgPrimary,
         )
     ) {
+        if (isLoading) {
+            W3WLoading(
+                modifier = Modifier.size(16.dp),
+                strokeWidth = 2.dp,
+            )
+            W3WSpacerHorizontal(theme().shapes.padding.half)
+        }
         Text(
             title,
             color = theme().colors.textPrimary,
             style = theme().fonts.title3,
         )
+        onRightIcon?.let {
+            W3WSpacerHorizontal(theme().shapes.padding.half)
+            it()
+        }
     }
 }
 
@@ -273,13 +292,7 @@ fun W3WGifImage(
 ) {
     val context = LocalContext.current
     val imageLoader = ImageLoader.Builder(context)
-        .components {
-            if (Build.VERSION.SDK_INT >= 28) {
-                add(ImageDecoderDecoder.Factory())
-            } else {
-                add(GifDecoder.Factory())
-            }
-        }
+        .components { add(ImageDecoderDecoder.Factory()) }
         .build()
     Image(
         painter = rememberAsyncImagePainter(

@@ -68,7 +68,7 @@ class NFTsDashboardFragment: Fragment(), NFTsDashboardView {
     private fun NFTsDashboardContent(viewModel: NFTsDashboardViewModel) {
         when (viewModel) {
             is NFTsDashboardViewModel.Loading -> {
-                W3WLoading()
+                W3WLoadingInMaxSizeContainer()
             }
             is NFTsDashboardViewModel.Loaded -> {
                 Column(

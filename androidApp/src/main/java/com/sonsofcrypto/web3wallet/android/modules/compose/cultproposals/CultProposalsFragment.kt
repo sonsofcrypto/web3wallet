@@ -75,13 +75,13 @@ class CultProposalsFragment : Fragment(), CultProposalsView {
     private fun CultProposalsContent(viewModel: CultProposalsViewModel) {
         when (viewModel) {
             is CultProposalsViewModel.Loading -> {
-                W3WLoading()
+                W3WLoadingInMaxSizeContainer()
             }
             is CultProposalsViewModel.Loaded -> {
                 viewModel.sections.firstOrNull()?.let { CultProposalsLoaded(it) }
             }
             is CultProposalsViewModel.Error -> {
-                W3WLoading()
+                W3WLoadingInMaxSizeContainer()
             }
         }
     }

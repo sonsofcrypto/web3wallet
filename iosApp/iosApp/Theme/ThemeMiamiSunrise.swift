@@ -36,7 +36,7 @@ struct ThemeMiamiSunrise: ThemeProtocol {
         var separatorPrimary: UIColor { Palette.lighterGray }
         var separatorSecondary: UIColor { Palette.white3 }
         var buttonBgPrimary: UIColor { .init(variants: [Palette.blue, Palette.pink]) }
-        var buttonBgPrimaryDisabled: UIColor { Palette.gray }
+        var buttonBgPrimaryDisabled: UIColor { .init(variants: [Palette.blue, Palette.pink]) }.withAlpha(0.5)
         var buttonTextPrimary: UIColor { Palette.white }
         var buttonBgSecondary: UIColor { Palette.lightGray }
         var buttonTextSecondary: UIColor { Palette.white }
