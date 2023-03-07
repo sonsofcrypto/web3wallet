@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -304,5 +306,17 @@ fun W3WGifImage(
         modifier = modifier
             .fillMaxWidth()
             .then(modifier),
+    )
+}
+
+@Composable
+fun W3WClearIcon(onClear: () -> Unit) {
+    Icon(
+        Icons.Default.Clear,
+        contentDescription = "clear text",
+        modifier = Modifier
+            .clickable { onClear() }
+            .size(24.dp),
+        tint = theme().colors.textSecondary,
     )
 }

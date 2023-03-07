@@ -109,32 +109,11 @@ private fun CurrencyEditTop(
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
             singleLine = true,
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = theme().colors.textPrimary,
-                backgroundColor = theme().colors.clear,
-                unfocusedIndicatorColor = theme().colors.clear,
-                disabledIndicatorColor = theme().colors.clear,
-                disabledTextColor = theme().colors.textPrimary,
-                focusedIndicatorColor = theme().colors.clear,
-            ),
-            trailingIcon = if (onClear != null) {
-                { CurrencyEditClearAction(onClear) }
-            } else { null }
+            colors = W3WTextFieldColors(),
+            trailingIcon = if (onClear != null) { { W3WClearIcon(onClear) } } else { null }
         )
         CurrencyPickerView(viewModel, onCurrencyClick)
     }
-}
-
-@Composable
-private fun CurrencyEditClearAction(onClear: () -> Unit) {
-    Icon(
-        Icons.Default.Clear,
-        contentDescription = "clear text",
-        modifier = Modifier
-            .clickable { onClear() }
-            .size(24.dp),
-        tint = theme().colors.textSecondary,
-    )
 }
 
 @Composable

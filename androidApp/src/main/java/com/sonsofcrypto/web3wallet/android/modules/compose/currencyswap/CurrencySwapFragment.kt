@@ -32,11 +32,10 @@ import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.*
 import com.sonsofcrypto.web3wallet.android.common.extensions.annotatedStringFootnote
-import com.sonsofcrypto.web3wallet.android.common.extensions.drawableResource
 import com.sonsofcrypto.web3wallet.android.common.extensions.half
+import com.sonsofcrypto.web3wallet.android.common.extensions.string
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.common.viewModels.CurrencyAmountPickerViewModel
-import com.sonsofcrypto.web3walletcore.extensions.App
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.*
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapPresenterEvent.CurrencyFromChanged
@@ -49,13 +48,6 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
     lateinit var presenter: CurrencySwapPresenter
 
     private val liveData = MutableLiveData<CurrencySwapViewModel>()
-    private val formatter = NumberFormat.getCurrencyInstance()
-
-    init {
-        formatter.currency = java.util.Currency.getInstance("USD")
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -118,7 +110,7 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                     },
                     onMaxClick = {
                         val bigInt = it.currencyFrom.maxAmount
-                        val newValue = bigInt.string(it.currencyFrom.currency)
+                        val newValue = bigInt.string(it.currencyFrom.maxDecimals)
                         value = TextFieldValue(newValue, TextRange(newValue.length))
                         presenter.handle(CurrencyFromChanged(bigInt))
                     }
@@ -164,48 +156,6 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
         }
     }
 
-    /** This method updates the selection (TextRange) so the cursor is at the correct position
-     *  since sometimes we modify the (newValue) string result of some validation. */
-    private fun updateTextFieldValueSelection(
-        value: TextFieldValue,
-        newTextFieldValue: TextFieldValue,
-        newValue: String,
-    ): TextFieldValue =
-        if (value.text.length + 2 == newValue.length) {
-            TextFieldValue(newValue, TextRange(newValue.length))
-        } else if (value.text == newValue && value.text != newTextFieldValue.text) {
-            TextFieldValue(newValue, TextRange(value.selection.start))
-        } else if (value.text.length == newValue.length && value.text != newValue) {
-            TextFieldValue(newValue, TextRange(value.selection.start))
-        } else {
-            TextFieldValue(newValue, newTextFieldValue.selection)
-        }
-
-    private fun BigInt.string(currency: Currency): String = BigDec.from(this)
-        .div(BigDec.from(BigInt.from(10).pow(currency.decimals().toLong())))
-        .toDecimalString()
-
-    private fun applyTextValidation(
-        viewModel: CurrencyAmountPickerViewModel,
-        old: String,
-        value: String
-    ): String {
-        val totalOldDots = old.count { it == '.' || it == ',' }
-        val totalNewDots = value.count { it == '.' || it == ',' }
-        if ((value.decimals?.length?.toUInt() ?: 0u) > viewModel.maxDecimals) { return old }
-        if (totalOldDots == 1 && totalNewDots == 2) { return old }
-        if (viewModel.maxDecimals > 0u && (value == "." || value == ",")) { return "0." }
-        if (old.startsWith("0.") && !value.startsWith("0.")) { return value.drop(1) }
-        if (value.startsWith("0") && value.nonDecimals.count() > 1) { return value.drop(1) }
-        if (totalNewDots > 1 && ( value.last() == '.' || value.last() == ',')) {
-            return value.dropLast(1)
-        }
-        if (viewModel.maxDecimals == 0u && value == "0") { return "" }
-        if (viewModel.maxDecimals == 0u && value == "00") { return "0.0" }
-        if (value.any { it == ',' }) { return value.replace(',', '.') }
-        return value.trim().replace("-", "")
-    }
-    
     @Composable
     private fun SwapIndicatorElement(
         isCalculating: Boolean,
