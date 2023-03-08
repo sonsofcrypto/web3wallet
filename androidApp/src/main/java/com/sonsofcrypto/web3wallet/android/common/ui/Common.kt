@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3wallet.android.common.ui
 
+import android.graphics.Bitmap
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.DefaultAlpha
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
@@ -66,6 +69,28 @@ fun W3WDivider(
         color,
         thickness,
         startIndent,
+    )
+}
+
+@Composable
+fun W3WImage(
+    bitmap: ImageBitmap,
+    contentDescription: String? = null,
+    modifier: Modifier = Modifier,
+    alignment: Alignment = Alignment.Center,
+    contentScale: ContentScale = ContentScale.Fit,
+    alpha: Float = DefaultAlpha,
+    colorFilter: ColorFilter? = null,
+    onClick: () -> Unit = {},
+) {
+    Image(
+        bitmap,
+        contentDescription,
+        modifier.then(ModifierClickable(onClick = onClick)),
+        alignment,
+        contentScale,
+        alpha,
+        colorFilter,
     )
 }
 

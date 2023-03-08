@@ -64,4 +64,7 @@ dependencies {
     implementation("io.coil-kt:coil:$coilVersion")
     implementation("io.coil-kt:coil-compose:$coilVersion")
     implementation("io.coil-kt:coil-gif:$coilVersion")
+
+    // QRCode - Core barcode encoding/decoding library
+    implementation("com.google.zxing:core:3.5.1")
 }
