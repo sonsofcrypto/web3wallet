@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3wallet.android.common.ui
 
+import androidx.compose.foundation.Indication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -19,8 +20,14 @@ fun CardBackgroundModifier(
     .background(theme().colors.bgPrimary)
 
 @Composable
-fun ClickableModifier(onClick: () -> Unit): Modifier = Modifier.clickable(
-        interactionSource = remember { MutableInteractionSource() },
-        indication = null,
-        onClick = onClick,
-    )
+fun ModifierClickable(
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    indication: Indication? = null,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+): Modifier = Modifier.clickable(
+    interactionSource = interactionSource,
+    indication = indication,
+    enabled = enabled,
+    onClick = onClick,
+)

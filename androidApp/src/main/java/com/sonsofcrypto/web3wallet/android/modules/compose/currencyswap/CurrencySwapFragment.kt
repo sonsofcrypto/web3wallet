@@ -121,7 +121,7 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                     presenter.handle(CurrencySwapPresenterEvent.SwapFlip)
                 }
                 W3WSpacerVertical(theme().shapes.padding.half.half)
-                W3WCurrencyView(viewModel = it.currencyTo,) {
+                W3WCurrencyView(viewModel = it.currencyTo) {
                     presenter.handle(CurrencySwapPresenterEvent.CurrencyToTapped)
                 }
                 W3WSpacerVertical()
@@ -168,7 +168,7 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
-                    onClick = if (isCalculating) {->} else onClick,
+                    onClick = if (isCalculating) { -> } else onClick,
                 ),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
@@ -323,8 +323,8 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
 
     @Composable
     fun onRightSwapIcon() {
-        Image(
-            painter = painterResource(id = R.drawable.uniswap_icon),
+        W3WIcon(
+            id = R.drawable.uniswap_icon,
             contentDescription = "uniswap",
             modifier = Modifier
                 .size(24.dp)

@@ -40,7 +40,3 @@ class NavigationFragment(
         TODO("Implement")
     }
 }
-
-fun Fragment.navigationFragment(): NavigationFragment? {
-    TODO("Implement")
-}

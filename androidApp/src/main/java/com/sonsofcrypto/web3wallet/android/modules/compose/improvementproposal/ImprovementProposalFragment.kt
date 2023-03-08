@@ -77,7 +77,7 @@ class ImprovementProposalFragment: Fragment(), ImprovementProposalView {
                 contentDescription = viewModel.name,
             )
             W3WSpacerVertical()
-            W3WCard(
+            W3WCardWithTitle(
                 title = Localized("proposal.summary.header"),
                 content = { ImprovementProposalSummaryContent(viewModel.body) }
             )
@@ -101,11 +101,10 @@ class ImprovementProposalFragment: Fragment(), ImprovementProposalView {
                 .background(theme().colors.navBarTint),
             contentAlignment = Alignment.Center
         ) {
-            Text(
+            W3WText(
                 value,
                 Modifier
                     .padding(start = 8.dp, top = 4.dp, end = 8.dp, bottom = 4.dp),
-                color = theme().colors.textPrimary,
                 style = theme().fonts.headline
             )
         }
@@ -113,9 +112,8 @@ class ImprovementProposalFragment: Fragment(), ImprovementProposalView {
 
     @Composable
     private fun ImprovementProposalSummaryContent(viewModel: String) {
-        Text(
+        W3WText(
             viewModel,
-            color = theme().colors.textPrimary,
             style = theme().fonts.subheadline,
         )
     }

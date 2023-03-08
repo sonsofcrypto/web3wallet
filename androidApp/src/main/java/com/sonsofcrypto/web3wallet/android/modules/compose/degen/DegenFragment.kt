@@ -19,12 +19,15 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.*
+import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenPresenter
@@ -61,7 +64,7 @@ class DegenFragment : Fragment(), DegenView {
     }
 
     override fun popToRootAndRefresh() {
-        navigationFragment()?.popToRoot()
+        navigationFragment?.popToRoot()
         presenter.present()
     }
 
@@ -155,18 +158,17 @@ class DegenFragment : Fragment(), DegenView {
                 W3WText(
                     item.title,
                     color = if (item.isEnabled) theme().colors.textPrimary else theme().colors.textSecondary,
-                    style = theme().fonts.body,
                 )
-                Text(
+                W3WText(
                     item.subtitle,
                     color = theme().colors.textSecondary,
                     style = theme().fonts.subheadline,
                 )
             }
-            Icon(
-                Icons.Rounded.KeyboardArrowRight,
-                contentDescription = null,
-                tint = if (item.isEnabled) theme().colors.textPrimary else theme().colors.textSecondary,
+            val tint = if (item.isEnabled) theme().colors.textPrimary else theme().colors.textSecondary
+            W3WIcon(
+                id = R.drawable.icon_keyboard_arrow_right_24,
+                colorFilter = ColorFilter.tint(tint)
             )
         }
     }

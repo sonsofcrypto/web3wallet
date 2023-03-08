@@ -28,7 +28,7 @@ fun W3WNavigationBar(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(theme().shapes.padding))
-        Text(
+        W3WText(
             title,
             color = theme().colors.navBarTitle,
             style = theme().fonts.navTitle,

@@ -76,7 +76,7 @@ class DefaultCurrencySwapPresenter(
                 getQuote(event.value)
             }
             is CurrencyToTapped -> wireframe.navigate(
-                SelectCurrencyFrom { onCurrencyToChanged(it) }
+                SelectCurrencyTo { onCurrencyToChanged(it) }
             )
             is SwapFlip -> flipCurrencies()
             is ProviderTapped -> wireframe.navigate(UnderConstructionAlert)
@@ -144,10 +144,8 @@ class DefaultCurrencySwapPresenter(
             symbolIconName = currencyFrom.iconName,
             symbol = currencyFrom.symbol.uppercase(),
             maxAmount = currencyFromBalance,
-//            maxAmount = BigInt.from("32460000000000000000"),
             maxDecimals = currencyFrom.decimals(),
             fiatPrice = interactor.fiatPrice(currencyFrom),
-//            fiatPrice = 1560.54,
             updateTextField = updateTextField,
             becomeFirstResponder = becomeFirstResponder,
             networkName = context.network.name,
@@ -160,12 +158,10 @@ class DefaultCurrencySwapPresenter(
     private fun currencyToViewModel(): CurrencyAmountPickerViewModel =
         CurrencyAmountPickerViewModel(
             amount = amountTo,
-//            amount = BigInt.from("91279871982"),
             symbolIconName = currencyTo.iconName,
             symbol = currencyTo.symbol.uppercase(),
             maxAmount = currencyToBalance,
             maxDecimals = currencyTo.decimals(),
-//            fiatPrice = 1.0,
             fiatPrice = interactor.fiatPrice(currencyTo),
             updateTextField = true,
             becomeFirstResponder = false,

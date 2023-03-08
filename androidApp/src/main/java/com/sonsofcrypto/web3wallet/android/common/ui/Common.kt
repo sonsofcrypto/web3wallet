@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3wallet.android.common.ui
 
-import android.os.Build
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,10 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
@@ -37,13 +38,11 @@ import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.rememberAsyncImagePainter
-import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
 import coil.size.Size
 import com.sonsofcrypto.web3wallet.android.common.extensions.half
 import com.sonsofcrypto.web3wallet.android.common.theme
-import com.sonsofcrypto.web3walletcore.extensions.Localized
 
 @Composable
 fun W3WSpacerVertical(height: Dp = theme().shapes.padding) {
@@ -101,7 +100,7 @@ fun W3WImage(
 }
 
 @Composable
-fun W3WCard(
+fun W3WCardWithTitle(
     title: String,
     content: @Composable() (() -> Unit)? = null,
 ) {
@@ -112,7 +111,7 @@ fun W3WCard(
             .padding(theme().shapes.padding),
         horizontalAlignment = Alignment.Start
     ) {
-        Text(
+        W3WText(
             title,
             color = theme().colors.textPrimary,
             style = theme().fonts.headlineBold,
@@ -200,6 +199,36 @@ fun W3WButtonSecondarySmall(
             style = theme().fonts.footnote,
         )
         W3WSpacerHorizontal(theme().shapes.padding.half)
+    }
+}
+
+@Composable
+fun W3WButtonSquare(
+    @DrawableRes iconId: Int,
+    title: String,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .size(80.dp)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClick,
+            )
+            .clip(RoundedCornerShape(theme().shapes.cornerRadiusSmall))
+            .background(theme().colors.bgPrimary)
+            .then(modifier),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        W3WIcon(id = iconId)
+        W3WSpacerVertical(theme().shapes.padding.half)
+        W3WText(
+            title,
+            style = theme().fonts.subheadline,
+        )
     }
 }
 
@@ -306,6 +335,21 @@ fun W3WGifImage(
         modifier = modifier
             .fillMaxWidth()
             .then(modifier),
+    )
+}
+
+@Composable
+fun W3WIcon(
+    @DrawableRes id: Int,
+    contentDescription: String? = null,
+    modifier: Modifier = Modifier.size(24.dp),
+    colorFilter: ColorFilter? = null,
+) {
+    Image(
+        painter = painterResource(id = id),
+        contentDescription = contentDescription,
+        modifier = modifier,
+        colorFilter = colorFilter
     )
 }
 

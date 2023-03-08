@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.sonsofcrypto.web3wallet.android.common.*
+import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardPresenter
@@ -52,7 +53,7 @@ class NFTsDashboardFragment: Fragment(), NFTsDashboardView {
     }
 
     override fun popToRootAndRefresh() {
-        navigationFragment()?.popToRoot()
+        navigationFragment?.popToRoot()
         presenter.present(true)
     }
 

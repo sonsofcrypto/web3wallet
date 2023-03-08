@@ -31,11 +31,11 @@ fun W3WAddressSelectorView(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.qr_code_scanner_24),
+            painter = painterResource(id = R.drawable.icon_qr_code_scanner_24),
             contentDescription = "qr code scanner",
             modifier = Modifier
                 .size(24.dp)
-                .then(ClickableModifier(onClick = onQRCodeClick))
+                .then(ModifierClickable(onClick = onQRCodeClick))
         )
         TextField(
             value = value,

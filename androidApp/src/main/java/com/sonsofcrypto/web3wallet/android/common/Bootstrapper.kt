@@ -10,6 +10,7 @@ import com.sonsofcrypto.web3wallet.android.modules.compose.nftscollection.NFTsCo
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposals.CultProposalsWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposal.CultProposalWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.currencyreceive.CurrencyReceiveWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencysend.CurrencySendWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposal.ImprovementProposalWireframeFactoryAssembler
@@ -60,14 +61,15 @@ private class AssemblerBootstrapper: Bootstrapper {
                 RootWireframeFactoryAssembler(),
                 DashboardWireframeFactoryAssembler(),
                 DegenWireframeFactoryAssembler(),
-                NFTsDashboardWireframeFactoryAssembler(),
                 // Compose
                 CultProposalsWireframeFactoryAssembler(),
                 CultProposalWireframeFactoryAssembler(),
                 ImprovementProposalsWireframeFactoryAssembler(),
                 ImprovementProposalWireframeFactoryAssembler(),
+                NFTsDashboardWireframeFactoryAssembler(),
                 NFTsCollectionWireframeFactoryAssembler(),
                 NFTDetailWireframeFactoryAssembler(),
+                CurrencyReceiveWireframeFactoryAssembler(),
                 CurrencySendWireframeFactoryAssembler(),
                 CurrencySwapWireframeFactoryAssembler(),
             )

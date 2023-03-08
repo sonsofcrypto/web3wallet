@@ -26,15 +26,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.*
-import com.sonsofcrypto.web3wallet.android.common.ui.W3WLoadingInMaxSizeContainer
-import com.sonsofcrypto.web3wallet.android.common.ui.W3WNavigationBar
-import com.sonsofcrypto.web3wallet.android.common.ui.W3WScreen
-import com.sonsofcrypto.web3wallet.android.common.ui.W3WSpacerVertical
+import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsFragment.ImprovementProposalCategoryType.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsPresenter
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsPresenterEvent.Proposal
+import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsPresenterEvent.Vote
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsView
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsViewModel
 
@@ -155,21 +155,15 @@ class ImprovementProposalsFragment: Fragment(), ImprovementProposalsView {
         isSelected: Boolean,
         onClick: () -> Unit
     ) {
-
         val bgColor = theme().colors.segmentedControlBackground
         val bgSelectedColor = theme().colors.segmentedControlBackgroundSelected
         val textColor = theme().colors.segmentedControlText
         val textSelectedColor = theme().colors.segmentedControlTextSelected
-        Text(
+        W3WText(
             text = title,
-            modifier = Modifier
+            modifier = ModifierClickable(onClick = onClick)
                 .weight(1f)
                 .fillMaxHeight()
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                    onClick = onClick,
-                )
                 .background(if (isSelected) bgSelectedColor else bgColor)
                 .padding(start = 8.dp, top = 4.dp, end = 8.dp),
             color = if (isSelected) textSelectedColor else textColor,
@@ -202,12 +196,8 @@ class ImprovementProposalsFragment: Fragment(), ImprovementProposalsView {
                 val item = items[index]
                 ImprovementProposalsCategoryItem(
                     item = item,
-                    onSelect = {
-                        presenter.handle(ImprovementProposalsPresenterEvent.Proposal(index))
-                    },
-                    onVote = {
-                        presenter.handle(ImprovementProposalsPresenterEvent.Vote(index))
-                    }
+                    onSelect = { presenter.handle(Proposal(index)) },
+                    onVote = { presenter.handle(Vote(index)) }
                 )
                 if (item == items.last()) {
                     W3WSpacerVertical()
@@ -223,42 +213,27 @@ class ImprovementProposalsFragment: Fragment(), ImprovementProposalsView {
         onVote: () -> Unit,
     ) {
         Row(
-            modifier = Modifier
+            modifier = ModifierClickable(onClick = onSelect)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(theme().shapes.padding))
                 .background(theme().colors.bgPrimary)
-                .padding(theme().shapes.padding)
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                    onClick = onSelect,
-                ),
+                .padding(theme().shapes.padding),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                Text(
+                W3WText(
                     item.title,
-                    color = theme().colors.textPrimary,
                     style = theme().fonts.bodyBold,
                 )
-                Text(
-                    item.subtitle,
-                    color = theme().colors.textPrimary,
-                    style = theme().fonts.body,
-                )
+                W3WText(item.subtitle,)
             }
             Box(
-                modifier = Modifier
+                modifier = ModifierClickable(onClick = onVote)
                     .width(80.dp)
                     .height(32.dp)
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                        onClick = onVote,
-                    )
                     .border(
                         width = 0.5.dp,
                         color = theme().colors.textPrimary,
@@ -266,18 +241,13 @@ class ImprovementProposalsFragment: Fragment(), ImprovementProposalsView {
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
+                W3WText(
                     Localized("proposals.button.title"),
                     color = theme().colors.buttonTextSecondary,
                     style = theme().fonts.footnote,
                 )
             }
-            Icon(
-                Icons.Rounded.KeyboardArrowRight,
-                contentDescription = null,
-                tint = theme().colors.textPrimary,
-                modifier = Modifier.width(24.dp)
-            )
+            W3WIcon(R.drawable.icon_keyboard_arrow_right_24)
         }
     }
 }

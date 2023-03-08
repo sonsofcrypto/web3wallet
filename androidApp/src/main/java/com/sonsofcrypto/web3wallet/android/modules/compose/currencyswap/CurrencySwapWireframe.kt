@@ -10,7 +10,9 @@ import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
+import com.sonsofcrypto.web3wallet.android.modules.compose.currencyreceive.CurrencyReceiveWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencysend.CurrencySendWireframeFactory
+import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceiveWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.*
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.DefaultCultProposalsPresenter
@@ -31,14 +33,27 @@ class DefaultCurrencySwapWireframe(
     }
 
     override fun navigate(destination: CurrencySwapWireframeDestination) {
-
-        val factory: CurrencySendWireframeFactory = assembler.resolve(
-            CurrencySendWireframeFactory::class.name
-        )
-        val context = CurrencySendWireframeContext(
-            Network.ethereum(), null, Currency.usdt()
-        )
-        factory.make(parent?.get(), context).present()
+        when (destination) {
+            is CurrencySwapWireframeDestination.SelectCurrencyFrom -> {
+                val factory: CurrencySendWireframeFactory = assembler.resolve(
+                    CurrencySendWireframeFactory::class.name
+                )
+                val context = CurrencySendWireframeContext(
+                    Network.ethereum(), null, Currency.usdt()
+                )
+                factory.make(parent?.get(), context).present()
+            }
+            is CurrencySwapWireframeDestination.SelectCurrencyTo -> {
+                val factory: CurrencyReceiveWireframeFactory = assembler.resolve(
+                    CurrencyReceiveWireframeFactory::class.name
+                )
+                val context = CurrencyReceiveWireframeContext(
+                    Network.ethereum(), Currency.usdt()
+                )
+                factory.make(parent?.get(), context).present()
+            }
+            else -> { println("[AA] Handle action...") }
+        }
     }
 
     private fun wireUp(): Fragment {

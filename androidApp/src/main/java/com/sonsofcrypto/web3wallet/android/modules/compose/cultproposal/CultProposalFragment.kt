@@ -11,7 +11,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -88,13 +87,13 @@ class CultProposalFragment: Fragment(), CultProposalView {
             CultProposalStatus(viewModel = viewModel.status)
             W3WSpacerVertical()
             viewModel.guardianInfo?.let {
-                W3WCard(
+                W3WCardWithTitle(
                     title = it.title,
                     content = { CultProposalGuardianInfo(viewModel = it) }
                 )
                 W3WSpacerVertical()
             }
-            W3WCard(
+            W3WCardWithTitle(
                 title = viewModel.summary.title,
                 content = {
                     W3WText(
@@ -104,12 +103,12 @@ class CultProposalFragment: Fragment(), CultProposalView {
                 }
             )
             W3WSpacerVertical()
-            W3WCard(
+            W3WCardWithTitle(
                 title = viewModel.documentsInfo.title,
                 content = { CultProposalProjectDocs(viewModel = viewModel.documentsInfo) }
             )
             W3WSpacerVertical()
-            W3WCard(
+            W3WCardWithTitle(
                 title = viewModel.tokenomics.title,
                 content = { CultProposalTokenomics(viewModel = viewModel.tokenomics) }
             )
@@ -124,7 +123,7 @@ class CultProposalFragment: Fragment(), CultProposalView {
                 //.padding(8.dp)
                 .background(theme().colors.separatorSecondary),
         ) {
-            Text(
+            W3WText(
                 viewModel.value,
                 modifier = Modifier.padding(start = 8.dp, top = 4.dp, end = 8.dp, bottom = 4.dp),
                 color = theme().colors.textPrimary,

@@ -78,7 +78,7 @@ class NFTDetailFragment: Fragment(), NFTDetailView {
                 modifier = Modifier.requiredSize(imageSize)
             )
             W3WSpacerVertical()
-            W3WCard(
+            W3WCardWithTitle(
                 title =  Localized("nft.detail.section.title.description"),
                 content = {
                     W3WText(
@@ -88,12 +88,12 @@ class NFTDetailFragment: Fragment(), NFTDetailView {
                 },
             )
             W3WSpacerVertical()
-            W3WCard(
+            W3WCardWithTitle(
                 title = Localized("nft.detail.section.title.properties"),
                 content = { NFTDetailProperties(viewModel = viewModel.nft) }
             )
             W3WSpacerVertical()
-            W3WCard(
+            W3WCardWithTitle(
                 title = Localized("nft.detail.section.title.other"),
                 content = { NFTDetailOther(viewModel = viewModel.nft) }
             )

@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.*
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
@@ -127,43 +128,37 @@ class CultProposalsFragment : Fragment(), CultProposalsView {
             val bgSelectedColor = theme().colors.segmentedControlBackgroundSelected
             val textColor = theme().colors.segmentedControlText
             val textSelectedColor = theme().colors.segmentedControlTextSelected
-            Text(
+            val onPendingSelected = {
+                pendingSelected = true
+                presenter.handle(CultProposalsPresenterEvent.SelectPendingProposals)
+            }
+            val onClosedSelected = {
+                pendingSelected = false
+                presenter.handle(CultProposalsPresenterEvent.SelectClosedProposals)
+            }
+            W3WText(
                 text = Localized("cult.proposals.segmentedControl.pending"),
-                modifier = Modifier
+                modifier = ModifierClickable(onClick = onPendingSelected)
                     .width(100.dp)
                     .height(30.dp)
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                    ) {
-                        pendingSelected = true
-                        presenter.handle(CultProposalsPresenterEvent.SelectPendingProposals)
-                    }
                     .background(if (pendingSelected) bgSelectedColor else bgColor)
                     .padding(start = 8.dp, top = 4.dp, end = 8.dp)
                     .align(Alignment.CenterStart),
                 color = if (pendingSelected) textSelectedColor else textColor,
-                style = theme().fonts.footnote,
                 textAlign = TextAlign.Center,
+                style = theme().fonts.footnote,
             )
-            Text(
+            W3WText(
                 text = Localized("cult.proposals.segmentedControl.closed"),
-                modifier = Modifier
+                modifier = ModifierClickable(onClick = onClosedSelected)
                     .width(100.dp)
                     .height(30.dp)
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                    ) {
-                        pendingSelected = false
-                        presenter.handle(CultProposalsPresenterEvent.SelectClosedProposals)
-                    }
                     .background(if (!pendingSelected) bgSelectedColor else bgColor)
                     .padding(start = 8.dp, top = 4.dp, end = 8.dp)
                     .align(Alignment.CenterEnd),
                 color = if (!pendingSelected) textSelectedColor else textColor,
-                style = theme().fonts.footnote,
                 textAlign = TextAlign.Center,
+                style = theme().fonts.footnote,
             )
         }
     }
@@ -175,7 +170,7 @@ class CultProposalsFragment : Fragment(), CultProposalsView {
         footer: CultProposalsViewModel.Footer,
     ) {
         LazyColumn(
-            Modifier
+            modifier = Modifier
                 .padding(start = theme().shapes.padding, end = theme().shapes.padding)
         ) {
             items(if(items.isEmpty()) 1 else items.size) { index ->
@@ -199,7 +194,7 @@ class CultProposalsFragment : Fragment(), CultProposalsView {
 
     @Composable
     private fun Title3BoldText(text: String, textAlign: TextAlign) {
-        Text(
+        W3WText(
             text,
             color = theme().colors.textPrimary,
             modifier = Modifier
@@ -227,10 +222,9 @@ class CultProposalsFragment : Fragment(), CultProposalsView {
                     onClick = onClick,
                 )
         ) {
-            Text(
+            W3WText(
                 item.title,
                 modifier = Modifier.fillMaxWidth(),
-                color = theme().colors.textPrimary,
                 style = theme().fonts.bodyBold,
                 overflow = TextOverflow.Ellipsis,
                 //maxLines = 1,
@@ -241,25 +235,19 @@ class CultProposalsFragment : Fragment(), CultProposalsView {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 CultProposalClosedResults(item)
-                Icon(
-                    Icons.Rounded.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = theme().colors.textPrimary,
-                )
+                W3WIcon(id = R.drawable.icon_keyboard_arrow_right_24)
             }
             W3WSpacerVertical()
-            Text(
+            W3WText(
                 item.stateName,
                 modifier = Modifier.fillMaxWidth(),
-                color = theme().colors.textPrimary,
                 style = theme().fonts.calloutBold,
                 textAlign = TextAlign.Center,
             )
             val totalVotes = formatter.format(item.approved.total + item.rejected.total)
-            Text(
+            W3WText(
                 Localized("cult.proposals.closed.totalVotes", totalVotes),
                 modifier = Modifier.fillMaxWidth(),
-                color = theme().colors.textPrimary,
                 style = theme().fonts.callout,
                 textAlign = TextAlign.Center,
             )
@@ -306,22 +294,20 @@ class CultProposalsFragment : Fragment(), CultProposalsView {
                         .background(color),
                 )
                 W3WSpacerVertical()
-                Text(
+                W3WText(
                     vote.name + " " + formatter.format(vote.value * 100) + "%",
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.Center)
                         .padding(start = 8.dp),
-                    color = theme().colors.textPrimary,
                     style = theme().fonts.footnote,
                 )
             }
             W3WSpacerHorizontal()
             val approvedVotes = formatter.format(vote.total)
-            Text(
+            W3WText(
                 approvedVotes,
                 modifier = Modifier.weight(1f),
-                color = theme().colors.textPrimary,
                 style = theme().fonts.footnote,
             )
         }
