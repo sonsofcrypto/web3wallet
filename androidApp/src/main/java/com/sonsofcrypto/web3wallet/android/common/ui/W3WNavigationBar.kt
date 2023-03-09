@@ -19,21 +19,22 @@ fun W3WNavigationBar(
     content: @Composable (() -> Unit)? = null,
 ) {
     Column(
-        modifier =
-        preModifier.then(
-            Modifier
-                .background(theme().colors.navBarBackground)
-                .fillMaxWidth()
-        ).then(modifier),
+        modifier = preModifier
+            .then(
+                Modifier
+                    .background(theme().colors.navBarBackground)
+                    .fillMaxWidth()
+            )
+            .then(modifier),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Spacer(modifier = Modifier.height(theme().shapes.padding))
+        W3WSpacerVertical()
         W3WText(
             title,
             color = theme().colors.navBarTitle,
             style = theme().fonts.navTitle,
         )
-        Spacer(modifier = Modifier.height(theme().shapes.padding))
+        W3WSpacerVertical()
         content?.let { it() }
     }
 }

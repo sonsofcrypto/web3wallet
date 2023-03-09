@@ -79,7 +79,7 @@ class DefaultCurrencySendPresenter(
                 updateView()
             }
             is CurrencySendPresenterEvent.NetworkFeeTapped -> {
-                view.get()?.presentNetworkFeePicker(networkFees)
+                view.get()?.presentNetworkFeePicker(networkFees, networkFee)
             }
             is CurrencySendPresenterEvent.NetworkFeeChanged -> {
                 networkFee = event.value

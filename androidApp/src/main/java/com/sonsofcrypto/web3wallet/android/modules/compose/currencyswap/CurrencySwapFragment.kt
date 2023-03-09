@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -19,15 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
-import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.NetworkFee
-import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.*
@@ -35,30 +31,31 @@ import com.sonsofcrypto.web3wallet.android.common.extensions.annotatedStringFoot
 import com.sonsofcrypto.web3wallet.android.common.extensions.half
 import com.sonsofcrypto.web3wallet.android.common.extensions.string
 import com.sonsofcrypto.web3wallet.android.common.ui.*
-import com.sonsofcrypto.web3walletcore.common.viewModels.CurrencyAmountPickerViewModel
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.*
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapPresenterEvent.CurrencyFromChanged
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapViewModel.ApproveState
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapViewModel.ButtonState
-import java.text.NumberFormat
 
 class CurrencySwapFragment: Fragment(), CurrencySwapView {
 
     lateinit var presenter: CurrencySwapPresenter
 
     private val liveData = MutableLiveData<CurrencySwapViewModel>()
+    private val networkFeesData = MutableLiveData<DialogNetworkFee>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        container?.clearDisappearingChildren()
         presenter.present()
         return ComposeView(requireContext()).apply {
             setContent {
                 val viewModel by liveData.observeAsState()
-                viewModel?.let { CurrencySwapScreen(it) }
+                val dialogNetworkFees by networkFeesData.observeAsState()
+                viewModel?.let { CurrencySwapScreen(it, dialogNetworkFees) }
             }
         }
     }
@@ -67,20 +64,26 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
         liveData.value = viewModel
     }
 
-    override fun presentNetworkFeePicker(networkFees: List<NetworkFee>) {
-        println("presentNetworkFeePicker called")
+    override fun presentNetworkFeePicker(networkFees: List<NetworkFee>, selected: NetworkFee?) {
+        networkFeesData.value = DialogNetworkFee(networkFees, selected)
     }
 
     @Composable
-    private fun CurrencySwapScreen(viewModel: CurrencySwapViewModel) {
+    private fun CurrencySwapScreen(
+        viewModel: CurrencySwapViewModel,
+        dialogNetworkFees: DialogNetworkFee?,
+    ) {
         W3WScreen(
             navBar = { W3WNavigationBar(title = viewModel.title) },
-            content = { CurrencySwapContent(viewModel) }
+            content = { CurrencySwapContent(viewModel, dialogNetworkFees) }
         )
     }
 
     @Composable
-    private fun CurrencySwapContent(viewModel: CurrencySwapViewModel) {
+    private fun CurrencySwapContent(
+        viewModel: CurrencySwapViewModel,
+        dialogNetworkFees: DialogNetworkFee?,
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -140,8 +143,8 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                 )
                 W3WSpacerVertical(theme().shapes.padding.half)
                 W3WNetworkFeeRowView(
-                    viewModel = it.currencyNetworkFeeViewModel,
-                    onClick = { showUnderConstruction = true }
+                    viewModel = it.networkFeeViewModel,
+                    onClick = { presenter.handle(CurrencySwapPresenterEvent.NetworkFeeTapped) }
                 )
                 approvalState(it)?.let { approvalState ->
                     W3WSpacerVertical()
@@ -151,7 +154,17 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                 SwapButton(it)
             }
             if (showUnderConstruction) {
-                W3WUnderConstructionAlert { showUnderConstruction = false }
+                W3WDialogUnderConstruction { showUnderConstruction = false }
+            }
+            if (dialogNetworkFees != null) {
+                W3WDialogNetworkFeePicker(
+                    onDismissRequest = { networkFeesData.value = null },
+                    networkFees = dialogNetworkFees.networkFees,
+                    networkFeeSelected = dialogNetworkFees.networkFee,
+                    onNetworkFeeSelected = {
+                        presenter.handle(CurrencySwapPresenterEvent.NetworkFeeChanged(it))
+                    }
+                )
             }
         }
     }

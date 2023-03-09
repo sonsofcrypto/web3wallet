@@ -17,7 +17,7 @@ data class CurrencySwapViewModel(
         val currencySwapProviderViewModel: CurrencySwapProviderViewModel,
         val currencySwapPriceViewModel: CurrencySwapPriceViewModel,
         val currencySwapSlippageViewModel: CurrencySwapSlippageViewModel,
-        val currencyNetworkFeeViewModel: NetworkFeeViewModel,
+        val networkFeeViewModel: NetworkFeeViewModel,
         val isCalculating: Boolean,
         val providerAsset: String,
         val approveState: ApproveState,

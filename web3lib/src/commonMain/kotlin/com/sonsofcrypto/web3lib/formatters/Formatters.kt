@@ -6,6 +6,7 @@ import com.sonsofcrypto.web3lib.utils.BigInt
 class Formatters {
 
     companion object {
+        val bigDec = BigDecNumberFormatter()
         val currency = CurrencyFormatter()
         val fiat = FiatFormatter()
         val pct = PctFormatter()

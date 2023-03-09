@@ -35,6 +35,8 @@ data class ThemeShapes(
     val padding: Dp = 16.dp,
     val cornerRadius: Dp = 16.dp,
     val cornerRadiusSmall: Dp = 8.dp,
+    val cellHeight: Dp = 64.dp,
+    val cellHeightSmall: Dp = 46.dp,
 )
 
 data class ThemeFonts(

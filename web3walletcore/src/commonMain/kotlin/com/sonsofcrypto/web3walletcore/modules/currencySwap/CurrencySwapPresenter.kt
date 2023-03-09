@@ -85,7 +85,7 @@ class DefaultCurrencySwapPresenter(
                 networkFee = event.value
                 updateView()
             }
-            is NetworkFeeTapped -> view?.get()?.presentNetworkFeePicker(networkFees)
+            is NetworkFeeTapped -> view?.get()?.presentNetworkFeePicker(networkFees, networkFee)
             is Approve -> confirmSwapApprovalIfNeeded()
             is Review -> reviewSwap()
             is CurrencySwapPresenterEvent.Dismiss -> wireframe.navigate(Dismiss)

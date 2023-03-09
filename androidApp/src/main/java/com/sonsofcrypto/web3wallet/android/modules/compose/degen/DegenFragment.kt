@@ -10,10 +10,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -137,7 +134,7 @@ class DegenFragment : Fragment(), DegenView {
             }
         }
         if (showUnderConstruction) {
-            W3WUnderConstructionAlert { showUnderConstruction = false }
+            W3WDialogUnderConstruction { showUnderConstruction = false }
         }
     }
 

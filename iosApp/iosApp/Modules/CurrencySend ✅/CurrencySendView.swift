@@ -29,7 +29,7 @@ extension CurrencySendViewController {
         else { updateCells() }
     }
     
-    func presentNetworkFeePicker(networkFees: [NetworkFee]) {
+    func presentNetworkFeePicker(networkFees: [NetworkFee], selected: NetworkFee?) {
         dismissKeyboard()
         let cell = collectionView.visibleCells.first {
             $0 is CurrencySendCTACollectionViewCell

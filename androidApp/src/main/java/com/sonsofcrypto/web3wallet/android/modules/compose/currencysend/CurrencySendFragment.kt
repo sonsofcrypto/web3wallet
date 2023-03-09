@@ -34,11 +34,13 @@ import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendView
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendViewModel
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendViewModel.ButtonState
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendViewModel.Item.*
+import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapPresenterEvent
 
 class CurrencySendFragment: Fragment(), CurrencySendView {
 
     lateinit var presenter: CurrencySendPresenter
     private var liveData = MutableLiveData<CurrencySendViewModel>()
+    private val networkFeesData = MutableLiveData<DialogNetworkFee>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +51,8 @@ class CurrencySendFragment: Fragment(), CurrencySendView {
         return ComposeView(requireContext()).apply {
             setContent {
                 val viewModel by liveData.observeAsState()
-                viewModel?.let { CurrencySendScreen(it) }
+                val dialogNetworkFees by networkFeesData.observeAsState()
+                viewModel?.let { CurrencySendScreen(it, dialogNetworkFees) }
             }
         }
     }
@@ -58,22 +61,28 @@ class CurrencySendFragment: Fragment(), CurrencySendView {
         liveData.value = viewModel
     }
 
-    override fun presentNetworkFeePicker(networkFees: List<NetworkFee>) {
-        println("Present fee picker")
+    override fun presentNetworkFeePicker(networkFees: List<NetworkFee>, selected: NetworkFee?) {
+        networkFeesData.value = DialogNetworkFee(networkFees, selected)
     }
 
     override fun dismissKeyboard() {}
 
     @Composable
-    private fun CurrencySendScreen(viewModel: CurrencySendViewModel) {
+    private fun CurrencySendScreen(
+        viewModel: CurrencySendViewModel,
+        dialogNetworkFees: DialogNetworkFee?,
+    ) {
         W3WScreen(
             navBar = { W3WNavigationBar(title = viewModel.title) },
-            content = { CurrencySendContent(viewModel) }
+            content = { CurrencySendContent(viewModel, dialogNetworkFees) }
         )
     }
 
     @Composable
-    private fun CurrencySendContent(viewModel: CurrencySendViewModel) {
+    private fun CurrencySendContent(
+        viewModel: CurrencySendViewModel,
+        dialogNetworkFees: DialogNetworkFee?,
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -134,7 +143,7 @@ class CurrencySendFragment: Fragment(), CurrencySendView {
                 W3WSpacerVertical()
                 W3WNetworkFeeRowView(
                     viewModel = it,
-                    onClick = { showUnderConstruction = true }
+                    onClick = { presenter.handle(CurrencySendPresenterEvent.NetworkFeeTapped) }
                 )
             }
             viewModel.buttonData()?.let {
@@ -142,7 +151,17 @@ class CurrencySendFragment: Fragment(), CurrencySendView {
                 SendButton(it)
             }
             if (showUnderConstruction) {
-                W3WUnderConstructionAlert { showUnderConstruction = false }
+                W3WDialogUnderConstruction { showUnderConstruction = false }
+            }
+            if (dialogNetworkFees != null) {
+                W3WDialogNetworkFeePicker(
+                    onDismissRequest = { networkFeesData.value = null },
+                    networkFees = dialogNetworkFees.networkFees,
+                    networkFeeSelected = dialogNetworkFees.networkFee,
+                    onNetworkFeeSelected = {
+                        presenter.handle(CurrencySendPresenterEvent.NetworkFeeChanged(it))
+                    }
+                )
             }
         }
     }

@@ -17,7 +17,7 @@ import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 
 @Composable
-fun W3WUnderConstructionAlert(onDismissRequest: (() -> Unit)) {
+fun W3WDialogUnderConstruction(onDismissRequest: (() -> Unit)) {
     Dialog(
         onDismissRequest = onDismissRequest,
     ) {
@@ -26,7 +26,6 @@ fun W3WUnderConstructionAlert(onDismissRequest: (() -> Unit)) {
             preModifier = Modifier
                 .clip(RoundedCornerShape(theme().shapes.cornerRadius))
         ) {
-
             Column(
                 modifier = Modifier
                     .background(backgroundGradient())

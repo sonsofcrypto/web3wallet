@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.sonsofcrypto.web3wallet.android.R
+import smartadapter.internal.extension.name
 
 class NavigationFragment(
     private val initialFragment: Fragment?
@@ -22,8 +23,9 @@ class NavigationFragment(
             if (animated) {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             }
-            replace(R.id.container, fragment)
-            //addToBackStack(null)
+            add(R.id.container, fragment)
+            //replace(R.id.container, fragment)
+            addToBackStack("a")
             commitNow()
         }
     }
