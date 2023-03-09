@@ -1,11 +1,15 @@
 package com.sonsofcrypto.web3wallet.android.modules.compose.currencyreceive
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
@@ -22,6 +26,8 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.zxing.BarcodeFormat
@@ -34,6 +40,7 @@ import com.sonsofcrypto.web3wallet.android.common.extensions.oneAndHalf
 import com.sonsofcrypto.web3wallet.android.common.extensions.threeQuarter
 import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
+import com.sonsofcrypto.web3walletcore.extensions.App
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceivePresenter
 import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceiveView
@@ -91,7 +98,7 @@ class CurrencyReceiveFragment: Fragment(), CurrencyReceiveView {
                 textAlign = TextAlign.Center,
             )
             W3WSpacerVertical(theme().shapes.padding.double)
-            ActionsView()
+            ActionsView(viewModel.address)
         }
     }
 
@@ -133,20 +140,23 @@ class CurrencyReceiveFragment: Fragment(), CurrencyReceiveView {
     }
 
     @Composable
-    private fun ActionsView() {
+    private fun ActionsView(address: String) {
         Row {
             W3WButtonSquare(
                 iconId = R.drawable.icon_copy_24,
                 title = Localized("currencyReceive.action.copy")
             ) {
-                println("Copy to clipboard")
+                App.copyToClipboard(address)
+                Toast.makeText(
+                    context, Localized("currencyReceive.action.copy.toast"), Toast.LENGTH_LONG
+                ).show()
             }
             W3WSpacerHorizontal(theme().shapes.padding * 2)
             W3WButtonSquare(
                 iconId = R.drawable.icon_ios_share_24,
                 title = Localized("currencyReceive.action.share")
             ) {
-                println("Copy to clipboard")
+                App.share(address)
             }
         }
     }
@@ -162,5 +172,4 @@ class CurrencyReceiveFragment: Fragment(), CurrencyReceiveView {
             }
         }
     }
-
 }

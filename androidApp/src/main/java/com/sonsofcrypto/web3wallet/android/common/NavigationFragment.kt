@@ -25,7 +25,7 @@ class NavigationFragment(
             }
             add(R.id.container, fragment)
             //replace(R.id.container, fragment)
-            addToBackStack("a")
+            //addToBackStack("a")
             commitNow()
         }
     }
