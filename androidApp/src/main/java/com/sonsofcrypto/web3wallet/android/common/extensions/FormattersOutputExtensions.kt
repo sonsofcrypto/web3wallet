@@ -88,3 +88,19 @@ fun List<Formatters.Output>.annotatedStringFootnote(): AnnotatedString = annotat
     ),
 )
 
+@Composable
+fun List<Formatters.Output>.annotatedStringBody(): AnnotatedString = annotatedString(
+    spanStyleNormal = SpanStyle(
+        fontSize = theme().fonts.body.fontSize,
+        baselineShift = BaselineShift(-0.2f),
+    ),
+    spanStyleUp = SpanStyle(
+        fontSize = theme().fonts.caption2.fontSize,
+        baselineShift = BaselineShift(0.3f),
+    ),
+    spanStyleDown = SpanStyle(
+        fontSize = theme().fonts.caption2.fontSize,
+        baselineShift = BaselineShift(-0.5f),
+    ),
+)
+

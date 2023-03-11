@@ -34,6 +34,11 @@ class NavigationFragment(
         //childFragmentManager.popBackStack()
     }
 
+    fun popOrDismiss() {
+        // pop if we are in a NavigationController and we can pop otherwise dismiss the module
+        // if modal
+    }
+
     fun popToRoot() {
         //TODO("Implement")
     }

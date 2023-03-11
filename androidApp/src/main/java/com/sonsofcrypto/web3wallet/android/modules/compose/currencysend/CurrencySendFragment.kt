@@ -34,7 +34,6 @@ import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendView
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendViewModel
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendViewModel.ButtonState
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendViewModel.Item.*
-import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapPresenterEvent
 
 class CurrencySendFragment: Fragment(), CurrencySendView {
 

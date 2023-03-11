@@ -10,8 +10,12 @@ import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
+import com.sonsofcrypto.web3wallet.android.modules.compose.currencypicker.CurrencyPickerWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyreceive.CurrencyReceiveWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencysend.CurrencySendWireframeFactory
+import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframe
+import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext
+import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext.NetworkData
 import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceiveWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.*
@@ -35,11 +39,17 @@ class DefaultCurrencySwapWireframe(
     override fun navigate(destination: CurrencySwapWireframeDestination) {
         when (destination) {
             is CurrencySwapWireframeDestination.SelectCurrencyFrom -> {
-                val factory: CurrencySendWireframeFactory = assembler.resolve(
-                    CurrencySendWireframeFactory::class.name
+                val factory: CurrencyPickerWireframeFactory = assembler.resolve(
+                    CurrencyPickerWireframeFactory::class.name
                 )
-                val context = CurrencySendWireframeContext(
-                    Network.ethereum(), null, Currency.usdt()
+                val context = CurrencyPickerWireframeContext(
+                    isMultiSelect = false,
+                    showAddCustomCurrency = true,
+                    networksData = listOf(
+                        NetworkData(Network.ethereum(), null, null)
+                    ),
+                    selectedNetwork = Network.ethereum(),
+                    handler = { result -> navigateToCurrencySend(result)}
                 )
                 factory.make(parent?.get(), context).present()
             }
@@ -72,5 +82,17 @@ class DefaultCurrencySwapWireframe(
         )
         view.presenter = presenter
         return view
+    }
+
+    private fun navigateToCurrencySend(result: List<CurrencyPickerWireframeContext.Result>) {
+        val network = result.firstOrNull()?.network ?: return
+        val currency = result.firstOrNull()?.selectedCurrencies?.firstOrNull() ?: return
+        val factory: CurrencySendWireframeFactory = assembler.resolve(
+            CurrencySendWireframeFactory::class.name
+        )
+        val context = CurrencySendWireframeContext(
+            network, null, currency
+        )
+        factory.make(parent?.get(), context).present()
     }
 }

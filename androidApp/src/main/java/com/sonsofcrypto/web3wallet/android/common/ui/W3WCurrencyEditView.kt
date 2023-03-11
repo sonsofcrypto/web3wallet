@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
-import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
@@ -27,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.extensions.*
 import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3walletcore.common.viewModels.CurrencyAmountPickerViewModel
@@ -96,7 +96,7 @@ private fun CurrencyEditTop(
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        TextField(
+        W3WTextField(
             value = value,
             onValueChange = onValueChanged,
             modifier = Modifier.weight(1f),
@@ -106,9 +106,7 @@ private fun CurrencyEditTop(
                 W3WText("0", color = theme().colors.textSecondary, style = theme().fonts.title3)
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-            singleLine = true,
-            colors = W3WTextFieldColors(),
-            trailingIcon = if (onClear != null) { { W3WClearIcon(onClear) } } else { null }
+            trailingIcon = if (onClear != null) { { W3WClearIcon(onClear = onClear) } } else { null }
         )
         CurrencyPickerView(viewModel, onCurrencyClick)
     }
@@ -197,7 +195,7 @@ private fun CurrencyPickerView(viewModel: CurrencyAmountPickerViewModel, onClick
     ) {
         Image(
             painter = painterResource(
-                id = App.activity.drawableResource(viewModel.symbolIconName)
+                id = App.activity.drawableId(viewModel.symbolIconName) ?: R.drawable.icon_default_currency_24
             ),
             contentDescription = "currency from ${viewModel.symbolIconName}",
             modifier = Modifier

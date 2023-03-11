@@ -51,7 +51,7 @@ fun W3WAddressSelectorView(
             },
             singleLine = true,
             colors = W3WTextFieldColors(),
-            trailingIcon = if (onClear != null) { { W3WClearIcon(onClear) } } else { null }
+            trailingIcon = if (onClear != null) { { W3WClearIcon(onClear = onClear) } } else { null }
         )
     }
 }
