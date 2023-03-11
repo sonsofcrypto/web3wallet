@@ -6,11 +6,9 @@ import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.R
-import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposals.CultProposalsWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyswap.CurrencySwapWireframeFactory
-import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.degen.DefaultDegenInteractor
 import com.sonsofcrypto.web3walletcore.modules.degen.DefaultDegenPresenter

@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.utils.WeakRef
-import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.*
 

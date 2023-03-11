@@ -1,8 +1,5 @@
 package com.sonsofcrypto.web3wallet.android.modules.compose.currencyreceive
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
@@ -11,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -19,15 +15,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.zxing.BarcodeFormat
@@ -35,9 +25,7 @@ import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
 import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.extensions.double
-import com.sonsofcrypto.web3wallet.android.common.extensions.half
 import com.sonsofcrypto.web3wallet.android.common.extensions.oneAndHalf
-import com.sonsofcrypto.web3wallet.android.common.extensions.threeQuarter
 import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.App

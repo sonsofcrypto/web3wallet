@@ -22,7 +22,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3wallet.android.common.*
+import com.sonsofcrypto.web3wallet.android.common.firstLetterCapital
+import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailPresenter

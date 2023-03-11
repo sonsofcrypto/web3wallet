@@ -13,13 +13,11 @@ import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencypicker.CurrencyPickerWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyreceive.CurrencyReceiveWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencysend.CurrencySendWireframeFactory
-import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframe
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext.NetworkData
 import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceiveWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.*
-import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.DefaultCultProposalsPresenter
 import smartadapter.internal.extension.name
 
 class DefaultCurrencySwapWireframe(

@@ -9,7 +9,10 @@ import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWi
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftscollection.DefaultNFTsCollectionWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionWireframeContext
-import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.*
+import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.DefaultNFTsDashboardInteractor
+import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.DefaultNFTsDashboardPresenter
+import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardWireframe
+import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardWireframeDestination
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
 
 class DefaultNFTsDashboardWireframe(
