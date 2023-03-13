@@ -177,7 +177,7 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
         Row(
             modifier = Modifier
                 .size(24.dp)
-                .then(CardBackgroundModifier(theme().shapes.cornerRadiusSmall.half))
+                .then(ModifierCardBackground(theme().shapes.cornerRadiusSmall.half))
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,

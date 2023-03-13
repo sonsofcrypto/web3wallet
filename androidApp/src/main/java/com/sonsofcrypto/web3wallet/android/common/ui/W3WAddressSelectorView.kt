@@ -25,7 +25,7 @@ fun W3WAddressSelectorView(
     onQRCodeClick: (() -> Unit) = {},
 ) {
     Row(
-        modifier = CardBackgroundModifier()
+        modifier = ModifierCardBackground()
             .fillMaxWidth()
             .padding(start = theme().shapes.padding),
         verticalAlignment = Alignment.CenterVertically,

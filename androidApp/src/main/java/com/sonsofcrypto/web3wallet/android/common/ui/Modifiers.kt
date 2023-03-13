@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.Dp
 import com.sonsofcrypto.web3wallet.android.common.theme
 
 @Composable
-fun CardBackgroundModifier(
+fun ModifierCardBackground(
     cornerRadius: Dp = theme().shapes.cornerRadius
 ): Modifier = Modifier
     .clip(RoundedCornerShape(cornerRadius))

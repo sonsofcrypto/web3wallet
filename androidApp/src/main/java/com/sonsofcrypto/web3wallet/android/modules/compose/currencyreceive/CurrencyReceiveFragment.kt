@@ -100,7 +100,7 @@ class CurrencyReceiveFragment: Fragment(), CurrencyReceiveView {
                     start = theme().shapes.padding.oneAndHalf,
                     end = theme().shapes.padding.oneAndHalf,
                 )
-                .then(CardBackgroundModifier())
+                .then(ModifierCardBackground())
                 .padding(theme().shapes.padding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

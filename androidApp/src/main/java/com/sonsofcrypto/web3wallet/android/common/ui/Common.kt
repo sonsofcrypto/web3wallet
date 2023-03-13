@@ -1,6 +1,5 @@
 package com.sonsofcrypto.web3wallet.android.common.ui
 
-import android.graphics.Bitmap
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,7 +29,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -222,6 +220,100 @@ fun W3WTextField(
     colors: TextFieldColors = W3WTextFieldColors(),
 ) {
     TextField(
+        value,
+        onValueChange,
+        modifier,
+        enabled,
+        readOnly,
+        textStyle,
+        label,
+        placeholder,
+        leadingIcon,
+        trailingIcon,
+        isError,
+        visualTransformation,
+        keyboardOptions,
+        keyboardActions,
+        singleLine,
+        maxLines,
+        minLines,
+        interactionSource,
+        shape,
+        colors,
+    )
+}
+
+@Composable
+fun W3WTextFieldOutlined(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    readOnly: Boolean = false,
+    textStyle: TextStyle = theme().fonts.body,
+    label: @Composable (() -> Unit)? = null,
+    placeholder: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    isError: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions(),
+    singleLine: Boolean = true,
+    maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
+    minLines: Int = 1,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    shape: Shape = TextFieldDefaults.TextFieldShape,
+    colors: TextFieldColors = W3WTextFieldColorsOutlined(),
+) {
+    OutlinedTextField(
+        value,
+        onValueChange,
+        modifier,
+        enabled,
+        readOnly,
+        textStyle,
+        label,
+        placeholder,
+        leadingIcon,
+        trailingIcon,
+        isError,
+        visualTransformation,
+        keyboardOptions,
+        keyboardActions,
+        singleLine,
+        maxLines,
+        minLines,
+        interactionSource,
+        shape,
+        colors,
+    )
+}
+
+@Composable
+fun W3WTextFieldOutlined(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    readOnly: Boolean = false,
+    textStyle: TextStyle = theme().fonts.body,
+    label: @Composable (() -> Unit)? = null,
+    placeholder: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    isError: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions(),
+    singleLine: Boolean = true,
+    maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
+    minLines: Int = 1,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    shape: Shape = TextFieldDefaults.TextFieldShape,
+    colors: TextFieldColors = W3WTextFieldColorsOutlined(),
+) {
+    OutlinedTextField(
         value,
         onValueChange,
         modifier,
@@ -464,11 +556,14 @@ fun W3WIcon(
     contentDescription: String? = null,
     modifier: Modifier = Modifier,
     colorFilter: ColorFilter? = null,
+    onClick: () -> Unit = {}
 ) {
     Image(
         painter = painterResource(id = id),
         contentDescription = contentDescription,
-        modifier = Modifier.size(24.dp).then(modifier),
+        modifier = ModifierClickable(onClick = onClick)
+            .size(24.dp)
+            .then(modifier),
         colorFilter = colorFilter
     )
 }

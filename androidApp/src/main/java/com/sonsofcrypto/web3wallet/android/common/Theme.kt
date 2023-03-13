@@ -108,6 +108,7 @@ data class ThemeColors(
     var dashboardTVCryptoBalance: Color,
     var activityIndicator: Color,
     var destructive: Color,
+    var textFieldError: Color,
 )
 
 val themeMiamiSunriseLight = Theme(
@@ -158,6 +159,7 @@ class ThemeMiamiSunrise {
         dashboardTVCryptoBalance = paletteLight.orange,
         activityIndicator = paletteLight.white,
         destructive = paletteLight.red,
+        textFieldError = Color(0xFF7D1935),
     )
 
     val darkColors: ThemeColors get() = ThemeColors(
@@ -191,6 +193,7 @@ class ThemeMiamiSunrise {
         dashboardTVCryptoBalance = paletteDark.orange,
         activityIndicator = paletteDark.white,
         destructive = paletteDark.red,
+        textFieldError = Color(0xFF7D1935),
     )
 
     private data class ColorPaletteLight(

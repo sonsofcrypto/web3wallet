@@ -12,6 +12,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -59,9 +60,22 @@ class CurrencyPickerFragment: Fragment(), CurrencyPickerView {
     private fun CurrencyPickerScreen(viewModel: CurrencyPickerViewModel) {
         W3WScreen(
             navBar = {
-                W3WNavigationBar(title = viewModel.title, content = { SearchBar() })
+                W3WNavigationBar(
+                    title = viewModel.title,
+                    leadingIcon = if (viewModel.showAddCustomCurrency) ({ AddCurrency() })
+                                  else null,
+                    content = { SearchBar() }
+                )
             },
             content = { CurrencyPickerContent(viewModel) }
+        )
+    }
+    @Composable
+    private fun AddCurrency() {
+        W3WIcon(
+            id = R.drawable.icon_add_24,
+            colorFilter = ColorFilter.tint(theme().colors.navBarTint),
+            onClick = { presenter.handle(CurrencyPickerPresenterEvent.AddCustomCurrency) }
         )
     }
 

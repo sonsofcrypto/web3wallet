@@ -5,6 +5,8 @@ import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.modules.compose.currencyadd.CurrencyAddWireframeFactory
+import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.*
 
 class DefaultCurrencyPickerWireframe(
@@ -12,6 +14,7 @@ class DefaultCurrencyPickerWireframe(
     private val context: CurrencyPickerWireframeContext,
     private val walletService: WalletService,
     private val currencyStoreService: CurrencyStoreService,
+    private val currencyAddWireframeFactory: CurrencyAddWireframeFactory,
 ): CurrencyPickerWireframe {
 
     override fun present() {
@@ -21,7 +24,10 @@ class DefaultCurrencyPickerWireframe(
 
     override fun navigate(destination: CurrencyPickerWireframeDestination) {
         when (destination) {
-            is CurrencyPickerWireframeDestination.AddCustomCurrency -> {}
+            is CurrencyPickerWireframeDestination.AddCustomCurrency -> {
+                val context = CurrencyAddWireframeContext(destination.network)
+                currencyAddWireframeFactory.make(parent?.get(), context).present()
+            }
             is CurrencyPickerWireframeDestination.Dismiss -> {
                 parent?.get()?.navigationFragment?.popOrDismiss()
             }

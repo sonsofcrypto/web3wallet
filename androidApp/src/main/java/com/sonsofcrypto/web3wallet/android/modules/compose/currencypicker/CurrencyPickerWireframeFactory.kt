@@ -7,6 +7,7 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.AssemblerComponent
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistry
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope
+import com.sonsofcrypto.web3wallet.android.modules.compose.currencyadd.CurrencyAddWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframe
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext
 import smartadapter.internal.extension.name
@@ -18,6 +19,7 @@ interface CurrencyPickerWireframeFactory {
 class DefaultCurrencyPickerWireframeFactory(
     private val walletService: WalletService,
     private val currencyStoreService: CurrencyStoreService,
+    private val currencyAddWireframeFactory: CurrencyAddWireframeFactory,
 ): CurrencyPickerWireframeFactory {
 
     override fun make(
@@ -27,6 +29,7 @@ class DefaultCurrencyPickerWireframeFactory(
         context,
         walletService,
         currencyStoreService,
+        currencyAddWireframeFactory,
     )
 }
 
@@ -38,6 +41,7 @@ class CurrencyPickerWireframeFactoryAssembler: AssemblerComponent {
             DefaultCurrencyPickerWireframeFactory(
                 it.resolve(WalletService::class.name),
                 it.resolve(CurrencyStoreService::class.name),
+                it.resolve(CurrencyAddWireframeFactory::class.name),
             )
         }
     }
