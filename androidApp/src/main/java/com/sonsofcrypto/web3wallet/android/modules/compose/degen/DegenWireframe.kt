@@ -45,15 +45,14 @@ class DefaultDegenWireframe(
     override fun navigate(destination: DegenWireframeDestination) {
         when (destination) {
             is DegenWireframeDestination.Swap -> {
-                navigateToTmpModule()
-//                val context = CurrencySwapWireframeContext(
-//                    Network.ethereum(), Currency.ethereum(), Currency.usdt()
-//                )
-//                currencySwapWireframeFactory.make(fragment.get(), context).present()
+                val context = CurrencySwapWireframeContext(
+                    Network.ethereum(), Currency.ethereum(), Currency.usdt()
+                )
+                currencySwapWireframeFactory.make(fragment.get(), context).present()
             }
             is DegenWireframeDestination.Cult -> {
-                navigateToTmpModule()
-                //cultProposalsWireframeFactory.make(fragment.get()).present()
+//                navigateToTmpModule()
+                cultProposalsWireframeFactory.make(fragment.get()).present()
             }
             is DegenWireframeDestination.ComingSoon -> {}
         }
