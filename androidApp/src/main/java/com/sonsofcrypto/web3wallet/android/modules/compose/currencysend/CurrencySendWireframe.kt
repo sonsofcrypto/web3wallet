@@ -6,6 +6,7 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
+import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
 import com.sonsofcrypto.web3walletcore.modules.currencySend.*
 
 class DefaultCurrencySendWireframe(
@@ -18,7 +19,7 @@ class DefaultCurrencySendWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        (parent?.get() as? NavigationFragment)?.push(fragment, animated = true)
+        parent?.get()?.navigationFragment?.push(fragment, animated = true)
     }
 
     override fun navigate(destination: CurrencySendWireframeDestination) {

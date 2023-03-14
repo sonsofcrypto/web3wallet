@@ -3,6 +3,7 @@ package com.sonsofcrypto.web3wallet.android.modules.compose.nftscollection
 import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
+import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.nftsCollection.*
@@ -17,7 +18,7 @@ class DefaultNFTsCollectionWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        (parent?.get() as? NavigationFragment)?.push(fragment, true)
+        parent?.get()?.navigationFragment?.push(fragment, true)
     }
 
     override fun navigate(destination: NFTsCollectionWireframeDestination) {
@@ -32,7 +33,7 @@ class DefaultNFTsCollectionWireframe(
                 ).present()
             }
             is NFTsCollectionWireframeDestination.Dismiss -> {
-                (parent?.get() as? NavigationFragment)?.pop()
+                parent?.get()?.navigationFragment?.pop()
             }
         }
     }

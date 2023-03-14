@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.appContext
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
+import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.improvementproposal.ImprovementProposalWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementProposalWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.DefaultImprovementProposalsInteractor
@@ -23,7 +24,7 @@ class DefaultImprovementProposalsWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        (parent?.get() as? NavigationFragment)?.push(fragment, true)
+        parent?.get()?.navigationFragment?.push(fragment, true)
     }
 
     override fun navigate(destination: ImprovementProposalsWireframeDestination) {
@@ -40,7 +41,7 @@ class DefaultImprovementProposalsWireframe(
                 ContextCompat.startActivity(appContext, browserIntent, null)
             }
             is ImprovementProposalsWireframeDestination.Dismiss -> {
-                (parent?.get() as? NavigationFragment)?.pop()
+                parent?.get()?.navigationFragment?.pop()
             }
         }
     }

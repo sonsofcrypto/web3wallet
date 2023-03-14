@@ -23,8 +23,8 @@ class NavigationFragment(
             if (animated) {
                 setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             }
-            add(R.id.container, fragment)
-            //replace(R.id.container, fragment)
+//            add(R.id.container, fragment)
+            replace(R.id.container, fragment)
             //addToBackStack("a")
             commitNow()
         }

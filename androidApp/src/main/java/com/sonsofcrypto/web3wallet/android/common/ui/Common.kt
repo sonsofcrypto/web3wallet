@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,6 +47,8 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.sonsofcrypto.web3wallet.android.common.extensions.half
 import com.sonsofcrypto.web3wallet.android.common.theme
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
 fun W3WSpacerVertical(height: Dp = theme().shapes.padding) {
@@ -581,4 +584,32 @@ fun W3WClearIcon(
             .size(24.dp),
         tint = tint,
     )
+}
+
+@Composable
+fun W3WSwitch(
+    checked: Boolean,
+    onCheckedChange: ((Boolean) -> Unit)?,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource = NoRippleInteractionSource(),
+    colors: SwitchColors = W3WSwitchColors()
+) {
+    Switch(
+        checked,
+        onCheckedChange,
+        Modifier.height(24.dp).then(modifier),
+        enabled,
+        interactionSource,
+        colors,
+    )
+}
+
+class NoRippleInteractionSource : MutableInteractionSource {
+
+    override val interactions: Flow<Interaction> = emptyFlow()
+
+    override suspend fun emit(interaction: Interaction) {}
+
+    override fun tryEmit(interaction: Interaction) = true
 }

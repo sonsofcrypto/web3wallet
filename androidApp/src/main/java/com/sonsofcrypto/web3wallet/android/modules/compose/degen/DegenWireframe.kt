@@ -6,15 +6,21 @@ import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.R
+import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposals.CultProposalsWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.currencysend.CurrencySendWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyswap.CurrencySwapWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.networks.NetworksWireframeFactory
+import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext
+import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.degen.DefaultDegenInteractor
 import com.sonsofcrypto.web3walletcore.modules.degen.DefaultDegenPresenter
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenWireframe
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenWireframeDestination
 import com.sonsofcrypto.web3walletcore.services.degen.DegenService
+import smartadapter.internal.extension.name
 
 class DefaultDegenWireframe(
     private val parent: WeakRef<Fragment>?,
@@ -39,17 +45,17 @@ class DefaultDegenWireframe(
     override fun navigate(destination: DegenWireframeDestination) {
         when (destination) {
             is DegenWireframeDestination.Swap -> {
-                val context = CurrencySwapWireframeContext(
-                    Network.ethereum(), Currency.ethereum(), Currency.usdt()
-                )
-                currencySwapWireframeFactory.make(fragment.get(), context).present()
+                navigateToTmpModule()
+//                val context = CurrencySwapWireframeContext(
+//                    Network.ethereum(), Currency.ethereum(), Currency.usdt()
+//                )
+//                currencySwapWireframeFactory.make(fragment.get(), context).present()
             }
             is DegenWireframeDestination.Cult -> {
-                cultProposalsWireframeFactory.make(fragment.get()).present()
+                navigateToTmpModule()
+                //cultProposalsWireframeFactory.make(fragment.get()).present()
             }
-            is DegenWireframeDestination.ComingSoon -> {
-                println("Present coming soon!")
-            }
+            is DegenWireframeDestination.ComingSoon -> {}
         }
     }
 
@@ -67,4 +73,12 @@ class DefaultDegenWireframe(
         view.presenter = presenter
         return NavigationFragment(view)
     }
+
+    private fun navigateToTmpModule() {
+        val factory: NetworksWireframeFactory = assembler.resolve(
+            NetworksWireframeFactory::class.name
+        )
+        factory.make(fragment?.get()).present()
+    }
+
 }
