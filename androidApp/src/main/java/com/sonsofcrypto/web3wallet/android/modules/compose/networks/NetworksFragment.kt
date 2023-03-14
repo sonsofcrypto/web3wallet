@@ -1,16 +1,12 @@
 package com.sonsofcrypto.web3wallet.android.modules.compose.networks
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -122,6 +118,7 @@ class NetworksFragment: Fragment(), NetworksView {
     ) {
         Row(
             modifier = ModifierCardBackground()
+                .then(if (viewModel.isSelected) ModifierBorder() else Modifier)
                 .padding(theme().shapes.padding)
                 .then(
                     ModifierClickable(onClick = { onNetworkClick(viewModel.chainId) })
