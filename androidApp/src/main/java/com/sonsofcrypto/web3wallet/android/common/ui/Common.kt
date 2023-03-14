@@ -559,12 +559,12 @@ fun W3WIcon(
     contentDescription: String? = null,
     modifier: Modifier = Modifier,
     colorFilter: ColorFilter? = null,
-    onClick: () -> Unit = {}
+    onClick: (() -> Unit)? = null
 ) {
     Image(
         painter = painterResource(id = id),
         contentDescription = contentDescription,
-        modifier = ModifierClickable(onClick = onClick)
+        modifier = if (onClick != null) ModifierClickable(onClick = onClick) else Modifier
             .size(24.dp)
             .then(modifier),
         colorFilter = colorFilter

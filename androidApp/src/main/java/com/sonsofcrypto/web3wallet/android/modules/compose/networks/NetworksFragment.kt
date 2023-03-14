@@ -117,12 +117,10 @@ class NetworksFragment: Fragment(), NetworksView {
         onSettingsClick: (UInt) -> Unit,
     ) {
         Row(
-            modifier = ModifierCardBackground()
+            modifier = ModifierClickable(onClick = { onNetworkClick(viewModel.chainId) })
+                .then(ModifierCardBackground())
                 .then(if (viewModel.isSelected) ModifierBorder() else Modifier)
-                .padding(theme().shapes.padding)
-                .then(
-                    ModifierClickable(onClick = { onNetworkClick(viewModel.chainId) })
-                ),
+                .padding(theme().shapes.padding),
             verticalAlignment = Alignment.Top
         ) {
             W3WIcon(
