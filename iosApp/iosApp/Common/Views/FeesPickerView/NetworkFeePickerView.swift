@@ -81,7 +81,10 @@ private extension NetworkFeePickerView {
         valueLabel?.font = Theme.font.body
         valueLabel?.textColor = Theme.color.textPrimary
         let output = Formatters.Companion.shared.currency.format(
-            amount: fee.amount, currency: fee.currency, style: Formatters.StyleCustom(maxLength: 10)
+            amount: fee.amount,
+            currency: fee.currency,
+            style: Formatters.StyleCustom(maxLength: 10),
+            addCurrencySymbol: true
         )
         valueLabel?.attributedText = NSAttributedString(
             output,

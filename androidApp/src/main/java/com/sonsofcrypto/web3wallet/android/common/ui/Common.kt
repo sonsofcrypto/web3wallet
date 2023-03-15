@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
@@ -90,6 +91,27 @@ fun W3WImage(
         bitmap,
         contentDescription,
         modifier.then(ModifierClickable(onClick = onClick)),
+        alignment,
+        contentScale,
+        alpha,
+        colorFilter,
+    )
+}
+
+@Composable
+fun W3WImage(
+    painter: Painter,
+    contentDescription: String? = null,
+    modifier: Modifier = Modifier,
+    alignment: Alignment = Alignment.Center,
+    contentScale: ContentScale = ContentScale.Fit,
+    alpha: Float = DefaultAlpha,
+    colorFilter: ColorFilter? = null
+) {
+    Image(
+        painter,
+        contentDescription,
+        modifier,
         alignment,
         contentScale,
         alpha,

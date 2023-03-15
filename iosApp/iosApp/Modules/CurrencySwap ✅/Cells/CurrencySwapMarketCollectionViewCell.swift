@@ -108,7 +108,7 @@ extension CurrencySwapMarketCollectionViewCell {
             handler: .init(onSlippageTapped: handler.onSlippageTapped)
         )
         networkFeeView.update(
-            with: viewModel.currencyNetworkFeeViewModel,
+            with: viewModel.networkFeeViewModel,
             handler: handler.onNetworkFeesTapped
         )
         if viewModel.isCalculating { showLoading() }

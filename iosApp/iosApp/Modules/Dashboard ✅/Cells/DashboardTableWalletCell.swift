@@ -58,7 +58,8 @@ extension DashboardTableWalletCell {
             Formatters.Companion.shared.currency.format(
                 amount: viewModel.cryptoBalance,
                 currency: viewModel.currency,
-                style: Formatters.StyleCustom(maxLength: 10.uint32)
+                style: Formatters.StyleCustom(maxLength: 10.uint32),
+                addCurrencySymbol: true
             ),
             font: Theme.font.body,
             fontSmall: Theme.font.footnote

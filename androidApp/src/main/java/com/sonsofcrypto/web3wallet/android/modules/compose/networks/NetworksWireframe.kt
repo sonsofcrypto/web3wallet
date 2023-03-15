@@ -16,7 +16,6 @@ class DefaultNetworksWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        println("[AA] Present networks module")
         parent?.get()?.navigationFragment?.push(fragment, animated = true)
     }
 

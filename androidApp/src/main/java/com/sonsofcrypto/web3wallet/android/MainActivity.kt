@@ -10,7 +10,7 @@ import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3wallet.android.common.Assembler
 import com.sonsofcrypto.web3wallet.android.common.DefaultAssembler
 import com.sonsofcrypto.web3wallet.android.common.MainBootstrapper
-import com.sonsofcrypto.web3walletcore.extensions.App
+import com.sonsofcrypto.web3walletcore.app.App
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import smartadapter.internal.extension.name

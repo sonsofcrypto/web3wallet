@@ -28,7 +28,7 @@ import com.sonsofcrypto.web3wallet.android.common.extensions.double
 import com.sonsofcrypto.web3wallet.android.common.extensions.oneAndHalf
 import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
-import com.sonsofcrypto.web3walletcore.extensions.App
+import com.sonsofcrypto.web3walletcore.app.App
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceivePresenter
 import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceiveView

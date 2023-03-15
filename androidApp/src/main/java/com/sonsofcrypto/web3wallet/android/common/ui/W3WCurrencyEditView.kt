@@ -29,8 +29,8 @@ import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.extensions.*
 import com.sonsofcrypto.web3wallet.android.common.theme
+import com.sonsofcrypto.web3walletcore.app.App
 import com.sonsofcrypto.web3walletcore.common.viewModels.CurrencyAmountPickerViewModel
-import com.sonsofcrypto.web3walletcore.extensions.App
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 
 @Composable
