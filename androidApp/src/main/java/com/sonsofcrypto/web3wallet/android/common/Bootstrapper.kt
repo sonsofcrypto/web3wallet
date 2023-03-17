@@ -2,26 +2,26 @@ package com.sonsofcrypto.web3wallet.android.common
 
 import androidx.appcompat.app.AppCompatActivity
 import com.sonsofcrypto.web3wallet.android.assembler
-import com.sonsofcrypto.web3wallet.android.modules.dashboard.DashboardWireframeFactoryAssembler
-import com.sonsofcrypto.web3wallet.android.modules.compose.degen.DegenWireframeFactoryAssembler
-import com.sonsofcrypto.web3wallet.android.modules.compose.currencyswap.CurrencySwapWireframeFactoryAssembler
-import com.sonsofcrypto.web3wallet.android.modules.compose.nftsdashboard.NFTsDashboardWireframeFactoryAssembler
-import com.sonsofcrypto.web3wallet.android.modules.compose.nftscollection.NFTsCollectionWireframeFactoryAssembler
-import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWireframeFactoryAssembler
-import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposals.CultProposalsWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposal.CultProposalWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposals.CultProposalsWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyadd.CurrencyAddWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencypicker.CurrencyPickerWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyreceive.CurrencyReceiveWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencysend.CurrencySendWireframeFactoryAssembler
-import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.currencyswap.CurrencySwapWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.degen.DegenWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposal.ImprovementProposalWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.keystore.KeyStoreWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicnew.MnemonicNewWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.networks.NetworksWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.nftscollection.NFTsCollectionWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.nftsdashboard.NFTsDashboardWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.dashboard.DashboardWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.root.RootWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.root.RootWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.services.*
-import com.sonsofcrypto.web3wallet.android.services.KeyChainServiceAssembler
 import smartadapter.internal.extension.name
 
 interface Bootstrapper {
@@ -61,6 +61,7 @@ private class AssemblerBootstrapper: Bootstrapper {
                 ImprovementProposalsServiceAssembler(),
                 CoinGeckoServiceAssembler(),
                 UniswapServiceAssembler(),
+                PasswordServiceAssembler(),
                 // Modules
                 RootWireframeFactoryAssembler(),
                 DashboardWireframeFactoryAssembler(),
@@ -68,6 +69,7 @@ private class AssemblerBootstrapper: Bootstrapper {
                 // Compose
                 KeyStoreWireframeFactoryAssembler(),
                 NetworksWireframeFactoryAssembler(),
+                MnemonicNewWireframeFactoryAssembler(),
                 CultProposalsWireframeFactoryAssembler(),
                 CultProposalWireframeFactoryAssembler(),
                 ImprovementProposalsWireframeFactoryAssembler(),

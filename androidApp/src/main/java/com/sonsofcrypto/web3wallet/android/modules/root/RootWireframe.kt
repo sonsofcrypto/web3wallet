@@ -6,16 +6,18 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.modules.dashboard.DashboardWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.degen.DegenWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.keystore.KeyStoreWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftsdashboard.NFTsDashboardWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.root.RootWireframe
 import com.sonsofcrypto.web3walletcore.modules.root.RootWireframeDestination
 import com.sonsofcrypto.web3walletcore.modules.root.RootWireframeDestination.*
 
 class DefaultRootWireframe(
-    private var parent: AppCompatActivity?,
-    private var dashboardWireframeFactory: DashboardWireframeFactory,
-    private var degenWireframeFactory: DegenWireframeFactory,
-    private var nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
+    private val parent: AppCompatActivity?,
+    private val keyStoreWireframeFactory: KeyStoreWireframeFactory,
+    private val dashboardWireframeFactory: DashboardWireframeFactory,
+    private val degenWireframeFactory: DegenWireframeFactory,
+    private val nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
 ): RootWireframe {
 
     private lateinit var fragment: WeakRef<Fragment>
@@ -39,7 +41,9 @@ class DefaultRootWireframe(
 //                nftsDashboardWireframeFactory.make(fragment.get()).present()
             }
             NETWORKS -> {}
-            KEYSTORE -> {}
+            KEYSTORE -> {
+                keyStoreWireframeFactory.make(fragment.get()).present()
+            }
             OVERVIEW -> {}
             OVERVIEWNETWORKS -> {}
             OVERVIEWKEYSTORE -> {}

@@ -15,6 +15,6 @@ class DefaultRootPresenter(
 ): RootPresenter {
 
     override fun present() {
-        wireframe.navigate(RootWireframeDestination.DASHBOARD)
+        wireframe.navigate(RootWireframeDestination.KEYSTORE)
     }
 }

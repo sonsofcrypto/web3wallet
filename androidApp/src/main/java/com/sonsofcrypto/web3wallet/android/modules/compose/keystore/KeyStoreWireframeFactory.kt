@@ -7,6 +7,7 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.AssemblerComponent
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistry
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope
+import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicnew.MnemonicNewWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreWireframe
 import smartadapter.internal.extension.name
 
@@ -17,12 +18,14 @@ interface KeyStoreWireframeFactory {
 class DefaultKeyStoreWireframeFactory(
     private val keyStoreService: KeyStoreService,
     private val networksService: NetworksService,
+    private val mnemonicNewWireframeFactory: MnemonicNewWireframeFactory
 ): KeyStoreWireframeFactory {
 
     override fun make(parent: Fragment?): KeyStoreWireframe = DefaultKeyStoreWireframe(
         parent?.let { WeakRef(it) },
         keyStoreService,
         networksService,
+        mnemonicNewWireframeFactory
     )
 }
 
@@ -34,6 +37,7 @@ class KeyStoreWireframeFactoryAssembler: AssemblerComponent {
             DefaultKeyStoreWireframeFactory(
                 it.resolve(KeyStoreService::class.name),
                 it.resolve(NetworksService::class.name),
+                it.resolve(MnemonicNewWireframeFactory::class.name),
             )
         }
     }

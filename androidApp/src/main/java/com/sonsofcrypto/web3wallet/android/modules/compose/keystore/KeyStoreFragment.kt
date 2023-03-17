@@ -4,15 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.sonsofcrypto.web3wallet.android.R
@@ -21,8 +27,7 @@ import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStorePresenter
-import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStorePresenterEvent
-import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStorePresenterEvent.DidSelectButtonAt
+import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStorePresenterEvent.*
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreView
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel
 
@@ -46,11 +51,12 @@ class KeyStoreFragment: Fragment(), KeyStoreView {
     }
 
     override fun update(viewModel: KeyStoreViewModel) {
+        println("[AA] Refreshing KeyStoreViewModel.items -> ${viewModel.items.size}")
         liveData.value = viewModel
     }
 
     override fun updateTargetView(targetView: KeyStoreViewModel.TransitionTargetView) {
-        print("TODO: needed?")
+        println("[AA] updateTargetView - needed?")
     }
 
     @Composable
@@ -64,15 +70,21 @@ class KeyStoreFragment: Fragment(), KeyStoreView {
     @Composable
     private fun KeyStoreContent(viewModel: KeyStoreViewModel) {
         Column(
-            modifier = Modifier.fillMaxSize()
-                .padding(theme().shapes.padding),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    bottom = theme().shapes.padding,
+                    start = theme().shapes.padding,
+                    end = theme().shapes.padding,
+                ),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (viewModel.items.isEmpty()) {
                 KeyStoreEmptyListContent()
             } else {
-                KeyStoreItemsListContent(viewModel.items)
+                KeyStoreItemsListContent(viewModel)
             }
+            W3WSpacerVertical()
             KeyStoreButtonActions(viewModel.buttons)
         }
     }
@@ -80,7 +92,9 @@ class KeyStoreFragment: Fragment(), KeyStoreView {
     @Composable
     private fun ColumnScope.KeyStoreEmptyListContent() {
         Column(
-            modifier = Modifier.fillMaxHeight().weight(1f),
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
@@ -91,8 +105,73 @@ class KeyStoreFragment: Fragment(), KeyStoreView {
     }
 
     @Composable
-    private fun KeyStoreItemsListContent(items: List<KeyStoreViewModel.Item>) {
-        
+    private fun ColumnScope.KeyStoreItemsListContent(viewModel: KeyStoreViewModel) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f)
+                .verticalScroll(ScrollState(0)),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            W3WSpacerVertical()
+            viewModel.items.forEach {
+                val idx = viewModel.items.indexOf(it)
+                KeyStoreItem(
+                    viewModel = it,
+                    idx = idx,
+                    isSelected = viewModel.selectedIdxs.contains(idx),
+                )
+                if (viewModel.items.last() != it) { W3WSpacerVertical() }
+            }
+        }
+    }
+
+    @Composable
+    private fun KeyStoreItem(
+        viewModel: KeyStoreViewModel.Item,
+        idx: Int,
+        isSelected: Boolean,
+    ) {
+        Row(
+            modifier = ModifierClickable(
+                onClick = { presenter.handle(DidSelectKeyStoreItemtAt(idx)) }
+            )
+                .fillMaxWidth()
+                .then(ModifierCardBackground())
+                .then(if (isSelected) ModifierBorder() else Modifier)
+                .padding(theme().shapes.padding),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            W3WText(
+                text = (idx + 1).toString(),
+                style = theme().fonts.footnote,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .size(20.dp)
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(theme().colors.navBarTint)
+            )
+            W3WSpacerHorizontal(theme().shapes.padding)
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                W3WText(text = viewModel.title)
+                viewModel.address?.let {
+                    W3WText(
+                        text = it,
+                        style = theme().fonts.footnote,
+                        color = theme().colors.textSecondary,
+                    )
+                }
+            }
+            W3WSpacerHorizontal(theme().shapes.padding)
+            W3WIcon(
+                id = R.drawable.icon_settings_24,
+                onClick = { presenter.handle(DidSelectAccessory(idx)) }
+            )
+            W3WSpacerHorizontal(theme().shapes.padding)
+            W3WIcon(id = R.drawable.icon_keyboard_arrow_right_24)
+        }
     }
 
     @Composable

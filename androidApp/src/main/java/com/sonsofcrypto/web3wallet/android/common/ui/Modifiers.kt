@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.sonsofcrypto.web3wallet.android.common.theme
+import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicnew.MnemonicNewFragment
 
 @Composable
 fun ModifierCardBackground(
@@ -46,3 +47,30 @@ fun ModifierClickable(
     enabled = enabled,
     onClick = onClick,
 )
+
+@Composable
+fun ModifierMnemonicBg(idx: Int, total: Int): Modifier = when (idx) {
+    0 -> {
+        Modifier
+            .clip(
+                RoundedCornerShape(
+                    topStart = theme().shapes.cornerRadius,
+                    topEnd = theme().shapes.cornerRadius,
+                )
+            )
+            .background(theme().colors.bgPrimary)
+    }
+    total - 1 -> {
+        Modifier
+            .clip(
+                RoundedCornerShape(
+                    bottomStart = theme().shapes.cornerRadius,
+                    bottomEnd = theme().shapes.cornerRadius,
+                )
+            )
+            .background(theme().colors.bgPrimary)
+    }
+    else -> {
+        Modifier.background(theme().colors.bgPrimary)
+    }
+}

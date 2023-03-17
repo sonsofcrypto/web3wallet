@@ -4,25 +4,41 @@ import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.utils.WeakRef
-import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.R
+import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
+import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicnew.MnemonicNewWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.keyStore.DefaultKeyStoreInteractor
 import com.sonsofcrypto.web3walletcore.modules.keyStore.DefaultKeyStorePresenter
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreWireframe
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreWireframeDestination
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewWireframeContext
 
 class DefaultKeyStoreWireframe(
     private val parent: WeakRef<Fragment>?,
     private val keyStoreService: KeyStoreService,
     private val networksService: NetworksService,
+    private val mnemonicNewWireframeFactory: MnemonicNewWireframeFactory,
 ): KeyStoreWireframe {
+
+    private lateinit var fragment: WeakRef<Fragment>
 
     override fun present() {
         val fragment = wireUp()
-        parent?.get()?.navigationFragment?.push(fragment, animated = true)
+        this.fragment = WeakRef(fragment)
+        parent?.get()?.childFragmentManager?.beginTransaction()?.apply {
+            add(R.id.container, fragment)
+            commitNow()
+        }
     }
 
     override fun navigate(destination: KeyStoreWireframeDestination) {
-        println("Implement navigation to $destination")
+        when (destination) {
+            is KeyStoreWireframeDestination.NewMnemonic -> {
+                val context = MnemonicNewWireframeContext(destination.handler)
+                mnemonicNewWireframeFactory.make(fragment?.get(), context).present()
+            }
+            else -> { println("[AA] handle event $destination") }
+        }
     }
 
     private fun wireUp(): Fragment {
@@ -37,6 +53,6 @@ class DefaultKeyStoreWireframe(
             interactor,
         )
         view.presenter = presenter
-        return view
+        return NavigationFragment(view)
     }
 }

@@ -5,7 +5,7 @@ class SegmentWithTextAndSwitchCellViewModel(
     val segmentOptions: List<String>,
     val selectedSegment: Int,
     val password: String,
-    val passwordKeyboardType: KeyboardType, // move to not UIKit...,
+    val passwordKeyboardType: KeyboardType,
     val placeholder: String,
     val errorMessage: String?,
     val onOffTitle: String,

@@ -137,7 +137,7 @@ class DefaultKeyStorePresenter(
         interactor.items.isEmpty(),
         state,
         interactor.items.map { Item(it.name, it.addressFormatted) },
-        listOf(selectedIdxs()).filterNotNull(),
+        listOfNotNull(selectedIdxs()),
         buttonsSheet,
         targetView
     )
