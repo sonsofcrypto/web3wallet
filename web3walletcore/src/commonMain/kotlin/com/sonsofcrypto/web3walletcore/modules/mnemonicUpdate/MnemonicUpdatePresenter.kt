@@ -15,6 +15,7 @@ sealed class MnemonicUpdatePresenterEvent {
     object DidTapMnemonic: MnemonicUpdatePresenterEvent()
     object Update: MnemonicUpdatePresenterEvent()
     object Dismiss: MnemonicUpdatePresenterEvent()
+    object ConfirmDelete: MnemonicUpdatePresenterEvent()
     object Delete: MnemonicUpdatePresenterEvent()
 }
 
@@ -62,8 +63,13 @@ class DefaultMnemonicUpdatePresenter(
             is MnemonicUpdatePresenterEvent.Dismiss -> {
                 wireframe.navigate(Dismiss)
             }
-            is MnemonicUpdatePresenterEvent.Delete -> {
+            is MnemonicUpdatePresenterEvent.ConfirmDelete -> {
                 wireframe.navigate(Alert(deleteConfirmationAlertContext()))
+            }
+            is MnemonicUpdatePresenterEvent.Delete -> {
+                interactor.delete(context.keyStoreItem)
+                context.onDeleteHandler()
+                wireframe.navigate(Dismiss)
             }
         }
     }
@@ -112,9 +118,7 @@ class DefaultMnemonicUpdatePresenter(
         ),
         { idx ->
             if (idx == 0) {
-                interactor.delete(context.keyStoreItem)
-                context.onDeleteHandler()
-                wireframe.navigate(Dismiss)
+                handle(MnemonicUpdatePresenterEvent.Delete)
             }
         },
         350.toDouble()

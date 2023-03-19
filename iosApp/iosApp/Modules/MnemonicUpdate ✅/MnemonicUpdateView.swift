@@ -365,7 +365,7 @@ private extension MnemonicUpdateViewController {
     }
     
     func mnemonicUpdateDeleteCellOnDelete() -> () -> Void {
-        { [weak self] in self?.presenter.handle(event: MnemonicUpdatePresenterEvent.Delete()) }
+        { [weak self] in self?.presenter.handle(event: MnemonicUpdatePresenterEvent.ConfirmDelete()) }
     }
 }
 
