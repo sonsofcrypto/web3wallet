@@ -90,7 +90,10 @@ class DefaultMnemonicService(): MnemonicService {
         mnemonicErrorMnemonic = mnemonic
         mnemonicErrorSalt = salt
         val words = mnemonic.trim().split(" ")
-        if (!Bip39.isValidWordsCount(words.count())) return INVALID_WORD_COUNT
+        if (!Bip39.isValidWordsCount(words.count())) {
+            mnemonicErrorResult = INVALID_WORD_COUNT
+            return INVALID_WORD_COUNT
+        }
         return try {
             val bip39 = Bip39(words, salt ?: "", WordList.ENGLISH)
             Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)

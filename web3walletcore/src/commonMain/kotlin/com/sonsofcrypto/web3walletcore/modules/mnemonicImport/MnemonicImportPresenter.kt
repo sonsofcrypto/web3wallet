@@ -254,7 +254,11 @@ class DefaultMnemonicImportPresenter(
         return if (index == -1) return 2 else index
     }
 
-    private val isValidForm: Boolean get() = passwordErrorMessage == null
+    private val isValidForm: Boolean get() {
+        val isMnemonicValid = interactor.isMnemonicValid(mnemonic.trim(), salt)
+        val isPasswordValid = passwordErrorMessage == null
+        return isMnemonicValid && isPasswordValid
+    }
 
     private val passwordErrorMessage: String? get() {
         if (!ctaTapped) return null
