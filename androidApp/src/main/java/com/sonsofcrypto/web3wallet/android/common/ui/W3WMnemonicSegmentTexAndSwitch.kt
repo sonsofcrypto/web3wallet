@@ -88,6 +88,7 @@ private fun W3WMnemonicError(error: String?) {
     error?.let {
         W3WText(
             text = it,
+            color = theme().colors.textFieldError,
             modifier = Modifier.padding(
                 start = theme().shapes.padding,
                 end = theme().shapes.padding,

@@ -13,6 +13,7 @@ import com.sonsofcrypto.web3wallet.android.modules.compose.degen.DegenWireframeF
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposal.ImprovementProposalWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.keystore.KeyStoreWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicimport.MnemonicImportWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicnew.MnemonicNewWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.networks.NetworksWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWireframeFactoryAssembler
@@ -62,6 +63,7 @@ private class AssemblerBootstrapper: Bootstrapper {
                 CoinGeckoServiceAssembler(),
                 UniswapServiceAssembler(),
                 PasswordServiceAssembler(),
+                MnemonicServiceAssembler(),
                 // Modules
                 RootWireframeFactoryAssembler(),
                 DashboardWireframeFactoryAssembler(),
@@ -70,6 +72,7 @@ private class AssemblerBootstrapper: Bootstrapper {
                 KeyStoreWireframeFactoryAssembler(),
                 NetworksWireframeFactoryAssembler(),
                 MnemonicNewWireframeFactoryAssembler(),
+                MnemonicImportWireframeFactoryAssembler(),
                 CultProposalsWireframeFactoryAssembler(),
                 CultProposalWireframeFactoryAssembler(),
                 ImprovementProposalsWireframeFactoryAssembler(),

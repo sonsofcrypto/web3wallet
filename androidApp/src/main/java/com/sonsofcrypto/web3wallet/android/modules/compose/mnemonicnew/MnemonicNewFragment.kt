@@ -64,7 +64,10 @@ class MnemonicNewFragment: Fragment(), MnemonicNewView {
                 .padding(theme().shapes.padding)
         ) {
             MnemonicNewContentInfo(viewModel.sections)
-            MnemonicNewContentCTA(viewModel.cta)
+            W3WButtonPrimary(
+                title = viewModel.cta,
+                onClick = { presenter.handle(DidSelectCta) }
+            )
         }
     }
 
@@ -77,23 +80,15 @@ class MnemonicNewFragment: Fragment(), MnemonicNewView {
         ) {
             viewModel.forEach { section ->
                 MnemonicNewSectionContent(section)
-                section.footer?.let {
+                section.footer?.let { footer ->
                     W3WSpacerVertical(theme().shapes.padding.half)
-                    MnemonicNewFooter(it)
+                    W3WText(text = footer.annotatedString())
                 }
                 if (viewModel.last() != section) {
                     W3WSpacerVertical(theme().shapes.padding)
                 }
             }
         }
-    }
-
-    @Composable
-    private fun MnemonicNewContentCTA(viewModel: String) {
-        W3WButtonPrimary(
-            title = viewModel,
-            onClick = { presenter.handle(DidSelectCta) }
-        )
     }
 
     @Composable
@@ -141,13 +136,6 @@ class MnemonicNewFragment: Fragment(), MnemonicNewView {
                 }
             }
         }
-    }
-
-    @Composable
-    private fun MnemonicNewFooter(viewModel: SectionFooterViewModel) {
-        W3WText(
-            text = viewModel.annotatedString()
-        )
     }
 
     @Composable

@@ -144,6 +144,7 @@
     <string name="mnemonic.error.invalid.name">Please enter a name.</string>
     <string name="mnemonic.update.failed.alert.title">Oops 😬</string>
     <string name="mnemonic.update.failed.alert.message">Unable to update your wallet. Please try again.</string>
+    <string name="mnemonic.invalid.word">is an invalid word.</string>
 
     <string name="networks.header.l1s">Layer #1s</string>
     <string name="networks.header.l2s">Layer #2s</string>
