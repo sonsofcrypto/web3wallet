@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3walletcore.modules.mnemonicNew
+package com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate
 
 import com.sonsofcrypto.web3walletcore.common.viewModels.*
 

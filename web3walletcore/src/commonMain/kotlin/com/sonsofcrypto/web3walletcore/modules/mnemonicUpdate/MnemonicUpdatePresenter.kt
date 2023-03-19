@@ -7,7 +7,6 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.TextInputCollectionView
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWireframeContext
-import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicUpdateViewModel
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination.*
 
 sealed class MnemonicUpdatePresenterEvent {
