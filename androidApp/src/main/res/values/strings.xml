@@ -135,6 +135,7 @@
     <string name="mnemonic.passType.placeholder">Enter password</string>
     <string name="mnemonic.passType.allowFaceId">Allow unlock with FaceID</string>
     <string name="mnemonic.pasteboard">Mnemonic copied to pasteboard\n(for 30 seconds)</string>
+    <string name="mnemonic.pasteboard.generic">Mnemonic copied to pasteboard</string>
     <string name="mnemonic.cta.new">Create new wallet</string>
     <string name="mnemonic.cta.update">Update</string>
     <string name="mnemonic.cta.delete">Delete</string>

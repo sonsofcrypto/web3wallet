@@ -432,6 +432,48 @@ fun W3WButtonPrimary(
 }
 
 @Composable
+fun W3WButtonSecondary(
+    title: String,
+    modifier: Modifier = Modifier,
+    isEnabled: Boolean = true,
+    isLoading: Boolean = false,
+    onRightIcon: @Composable (() -> Unit)? = null,
+    onClick: () -> Unit = {},
+) {
+    Button(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(theme().shapes.cornerRadiusSmall))
+            .then(ModifierBorder(cornerRadius = theme().shapes.cornerRadiusSmall))
+            .then(modifier),
+        elevation = null,
+        enabled = if (isLoading) false else isEnabled,
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            disabledBackgroundColor = theme().colors.clear,
+            backgroundColor = theme().colors.clear,
+        )
+    ) {
+        if (isLoading) {
+            W3WLoading(
+                modifier = Modifier.size(16.dp),
+                strokeWidth = 2.dp,
+            )
+            W3WSpacerHorizontal(theme().shapes.padding.half)
+        }
+        Text(
+            title,
+            color = theme().colors.textPrimary,
+            style = theme().fonts.title3,
+        )
+        onRightIcon?.let {
+            W3WSpacerHorizontal(theme().shapes.padding.half)
+            it()
+        }
+    }
+}
+
+@Composable
 fun W3WButtonSecondarySmall(
     title: String,
     modifier: Modifier = Modifier,
@@ -647,7 +689,9 @@ fun W3WSwitch(
     Switch(
         checked,
         onCheckedChange,
-        Modifier.height(24.dp).then(modifier),
+        Modifier
+            .height(24.dp)
+            .then(modifier),
         enabled,
         interactionSource,
         colors,

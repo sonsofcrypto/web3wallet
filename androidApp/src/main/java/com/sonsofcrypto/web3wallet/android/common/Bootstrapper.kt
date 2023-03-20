@@ -15,6 +15,7 @@ import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.
 import com.sonsofcrypto.web3wallet.android.modules.compose.keystore.KeyStoreWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicimport.MnemonicImportWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicnew.MnemonicNewWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicupdate.MnemonicUpdateWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.networks.NetworksWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftscollection.NFTsCollectionWireframeFactoryAssembler
@@ -73,6 +74,7 @@ private class AssemblerBootstrapper: Bootstrapper {
                 NetworksWireframeFactoryAssembler(),
                 MnemonicNewWireframeFactoryAssembler(),
                 MnemonicImportWireframeFactoryAssembler(),
+                MnemonicUpdateWireframeFactoryAssembler(),
                 CultProposalsWireframeFactoryAssembler(),
                 CultProposalWireframeFactoryAssembler(),
                 ImprovementProposalsWireframeFactoryAssembler(),

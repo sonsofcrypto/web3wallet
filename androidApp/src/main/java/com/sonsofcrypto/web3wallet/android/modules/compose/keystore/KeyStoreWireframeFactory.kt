@@ -9,6 +9,7 @@ import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistry
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicimport.MnemonicImportWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicnew.MnemonicNewWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicupdate.MnemonicUpdateWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreWireframe
 import smartadapter.internal.extension.name
 
@@ -21,6 +22,7 @@ class DefaultKeyStoreWireframeFactory(
     private val networksService: NetworksService,
     private val mnemonicNewWireframeFactory: MnemonicNewWireframeFactory,
     private val mnemonicImportWireframeFactory: MnemonicImportWireframeFactory,
+    private val mnemonicUpdateWireframeFactory: MnemonicUpdateWireframeFactory,
 ): KeyStoreWireframeFactory {
 
     override fun make(parent: Fragment?): KeyStoreWireframe = DefaultKeyStoreWireframe(
@@ -28,7 +30,8 @@ class DefaultKeyStoreWireframeFactory(
         keyStoreService,
         networksService,
         mnemonicNewWireframeFactory,
-        mnemonicImportWireframeFactory
+        mnemonicImportWireframeFactory,
+        mnemonicUpdateWireframeFactory,
     )
 }
 
@@ -42,6 +45,7 @@ class KeyStoreWireframeFactoryAssembler: AssemblerComponent {
                 it.resolve(NetworksService::class.name),
                 it.resolve(MnemonicNewWireframeFactory::class.name),
                 it.resolve(MnemonicImportWireframeFactory::class.name),
+                it.resolve(MnemonicUpdateWireframeFactory::class.name),
             )
         }
     }
