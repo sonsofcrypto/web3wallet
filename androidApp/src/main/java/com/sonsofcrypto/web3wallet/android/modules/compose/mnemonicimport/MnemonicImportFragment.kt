@@ -9,12 +9,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -31,7 +27,6 @@ import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPres
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportView
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportViewModel
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportViewModel.Section.Mnemonic
-import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportViewModel.Section.Mnemonic.WordInfo
 
 class MnemonicImportFragment: Fragment(), MnemonicImportView {
 
@@ -171,7 +166,7 @@ class MnemonicImportFragment: Fragment(), MnemonicImportView {
         Column(
             modifier = ModifierCardBackground()
                 .height(110.dp)
-                .then(viewModel.mnemonicBorderModifier())
+                .then(ModifierMnemonicValidationBorder(viewModel.wordsInfo, viewModel.isValid))
         ) {
             var value by remember { mutableStateOf(TextFieldValue("")) }
             W3WTextField(
@@ -188,7 +183,10 @@ class MnemonicImportFragment: Fragment(), MnemonicImportView {
                 minLines = 3,
                 maxLines = 3,
             )
-            errorMessage(viewModel = viewModel)?.let { text ->
+            W3WMnemonicError(
+                viewModel = viewModel.wordsInfo,
+                isValid = viewModel.isValid ?: false
+            )?.let { text ->
                 W3WText(
                     text = text,
                     modifier = Modifier
@@ -203,58 +201,4 @@ class MnemonicImportFragment: Fragment(), MnemonicImportView {
             }
         }
     }
-
-    @Composable
-    private fun errorMessage(viewModel: Mnemonic): AnnotatedString? {
-        val font = theme().fonts.subheadline
-        viewModel.wordsInfo.invalidWords.firstOrNull()?.let {wordInfo ->
-            return buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        color = theme().colors.textFieldError,
-                        fontSize = font.fontSize,
-                        fontStyle = font.fontStyle,
-                        fontWeight = font.fontWeight,
-                    )
-                ) {
-                    append(wordInfo.word)
-                }
-                withStyle(
-                    style = SpanStyle(
-                        color = theme().colors.textPrimary,
-                        fontSize = font.fontSize,
-                        fontStyle = font.fontStyle,
-                        fontWeight = font.fontWeight,
-                    )
-                ) {
-                    append(" ${Localized("mnemonic.invalid.word")}")
-                }
-            }
-        }
-        if (viewModel.isValid == false) {
-            return buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        color = theme().colors.textFieldError,
-                        fontSize = font.fontSize,
-                        fontStyle = font.fontStyle,
-                        fontWeight = font.fontWeight,
-                    )
-                ) {
-                    append(" ${Localized("mnemonic.error.invalid")}")
-                }
-            }
-        }
-        return null
-    }
 }
-
-@Composable
-private fun Mnemonic.mnemonicBorderModifier(): Modifier {
-    val modifierInvalid = ModifierBorder(width = 2.dp, color = theme().colors.textFieldError)
-    if (wordsInfo.invalidWords.isNotEmpty()) { return modifierInvalid }
-    if (isValid == false) { return modifierInvalid }
-    return Modifier
-}
-
-private val List<WordInfo>.invalidWords: List<WordInfo> get() = filter { it.isInvalid }

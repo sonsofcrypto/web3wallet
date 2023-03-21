@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicnew.MnemonicNewFragment
+import com.sonsofcrypto.web3walletcore.common.viewModels.MnemonicWordInfo
+import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationViewModel
 
 @Composable
 fun ModifierCardBackground(
@@ -73,4 +75,15 @@ fun ModifierMnemonicBg(idx: Int, total: Int): Modifier = when (idx) {
     else -> {
         Modifier.background(theme().colors.bgPrimary)
     }
+}
+
+@Composable
+fun ModifierMnemonicValidationBorder(
+    wordsInfo: List<MnemonicWordInfo>,
+    isValid: Boolean?
+): Modifier {
+    val modifierInvalid = ModifierBorder(width = 2.dp, color = theme().colors.textFieldError)
+    if (wordsInfo.invalidWords.isNotEmpty()) { return modifierInvalid }
+    if (isValid == false) { return modifierInvalid }
+    return Modifier
 }

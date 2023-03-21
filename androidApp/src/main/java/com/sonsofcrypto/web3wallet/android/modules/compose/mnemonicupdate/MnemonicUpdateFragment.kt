@@ -100,7 +100,7 @@ class MnemonicUpdateFragment: Fragment(), MnemonicUpdateView {
         viewModel.items.forEach { item ->
             when (item) {
                 is Section.Item.Mnemonic -> {
-                    MnemonicUpdateMnemonic("this is a great mnemonic")
+                    MnemonicUpdateMnemonic(item.mnemonic)
                 }
                 is Section.Item.TextInput -> {
                     W3WMnemonicTextInput(

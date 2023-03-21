@@ -5,8 +5,6 @@ interface MnemonicConfirmationWireframe {
     fun navigate(destination: MnemonicConfirmationWireframeDestination)
 }
 
-enum class MnemonicConfirmationWireframeContext { IMPORT, RECOVER }
-
 sealed class MnemonicConfirmationWireframeDestination {
     object Dismiss: MnemonicConfirmationWireframeDestination()
 }

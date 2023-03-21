@@ -49,7 +49,7 @@ fun W3WMnemonicSegmentTexAndSwitch(
                     onPasswordChange = onPasswordChange,
                     keyboardOptions = KeyboardOptions(keyboardType = NumberPassword)
                 )
-                W3WMnemonicError(viewModel.errorMessage)
+                W3WMnemonicValidationError(viewModel.errorMessage)
                 W3WMnemonicSwitch(
                     title = viewModel.onOffTitle,
                     onOff = viewModel.onOff,
@@ -67,7 +67,7 @@ fun W3WMnemonicSegmentTexAndSwitch(
                     onPasswordChange = onPasswordChange,
                     keyboardOptions = KeyboardOptions(keyboardType = Password)
                 )
-                W3WMnemonicError(viewModel.errorMessage)
+                W3WMnemonicValidationError(viewModel.errorMessage)
                 W3WMnemonicSwitch(
                     title = viewModel.onOffTitle,
                     onOff = viewModel.onOff,
@@ -84,7 +84,7 @@ fun W3WMnemonicSegmentTexAndSwitch(
 }
 
 @Composable
-private fun W3WMnemonicError(error: String?) {
+private fun W3WMnemonicValidationError(error: String?) {
     error?.let {
         W3WText(
             text = it,
