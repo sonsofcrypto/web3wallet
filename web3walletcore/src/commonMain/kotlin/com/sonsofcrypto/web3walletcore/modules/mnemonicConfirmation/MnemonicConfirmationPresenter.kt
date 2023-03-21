@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation
 
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.common.mnemonic.MnemonicPresenterCommon
-import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationViewModel.WordInfo
+import com.sonsofcrypto.web3walletcore.common.viewModels.MnemonicWordInfo
 import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationWireframeDestination.Dismiss
 
 sealed class MnemonicConfirmationPresenterEvent {
@@ -75,7 +75,7 @@ class DefaultMnemonicConfirmationPresenter(
         val isMnemonicValid = interactor.isMnemonicValid(mnemonic.trim(), salt)
         return MnemonicConfirmationViewModel(
             potentialWords,
-            wordsInfo.map { WordInfo(it.word, it.isInvalid) },
+            wordsInfo.map { MnemonicWordInfo(it.word, it.isInvalid) },
             if (ctaTapped) isMnemonicValid else null,
             if (updateMnemonic) mnemonic else null,
             interactor.showSalt()
