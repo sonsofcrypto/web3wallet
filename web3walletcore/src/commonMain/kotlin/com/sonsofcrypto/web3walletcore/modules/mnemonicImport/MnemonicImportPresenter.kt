@@ -13,7 +13,6 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.SwitchCollectionViewMod
 import com.sonsofcrypto.web3walletcore.common.viewModels.TextInputCollectionViewModel
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportViewModel.Section
-import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportViewModel.Section.Mnemonic.WordInfo
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportWireframeDestination.Dismiss
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError
 
@@ -160,7 +159,7 @@ class DefaultMnemonicImportPresenter(
         return Section.Item.Mnemonic(
             Section.Mnemonic(
                 potentialWords,
-                wordsInfo.map { WordInfo(it.word, it.isInvalid) },
+                wordsInfo.map { MnemonicWordInfo(it.word, it.isInvalid) },
                 if (ctaTapped) isMnemonicValid else null,
                 if (updateMnemonic) mnemonic else null,
             )

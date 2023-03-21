@@ -32,14 +32,9 @@ data class MnemonicImportViewModel(
 
         data class Mnemonic(
             val potentialWords: List<String>,
-            val wordsInfo: List<WordInfo>,
+            val wordsInfo: List<MnemonicWordInfo>,
             val isValid: Boolean?,
             val mnemonicToUpdate: String?,
-        ) {
-            data class WordInfo(
-                val word: String,
-                val isInvalid: Boolean,
-            )
-        }
+        )
     }
 }
