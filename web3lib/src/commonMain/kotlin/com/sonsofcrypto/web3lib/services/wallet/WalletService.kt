@@ -1,6 +1,10 @@
 package com.sonsofcrypto.web3lib.services.wallet
 
+import com.sonsofcrypto.web3lib.contract.ERC20
+import com.sonsofcrypto.web3lib.contract.Interface
+import com.sonsofcrypto.web3lib.contract.Multicall3
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.model.*
 import com.sonsofcrypto.web3lib.services.currencyStore.*
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
@@ -106,6 +110,9 @@ class DefaultWalletService(
     private var didReloadOnLastBlock: Boolean = false
     private var pollingJob: Job? = null
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
+    private val ifaceMulticall = Interface.Multicall3()
+    private val ifaceERC20 = Interface.ERC20()
+
 
     init {
         networkService.add(this)
@@ -513,5 +520,29 @@ class DefaultWalletService(
 
         /** Unable to sent transactions */
         object UnableToSendTransaction : Error("Unable to sent transactions")
+    }
+
+
+    data class PollResult(
+        val baseFee: BigInt,
+        val gasPrice: BigInt,
+        val blockNumber: BigInt,
+        val timestamp: Long,
+        val ethBalance: Int,
+        val erc20Balances: List<Pair<Currency, Int>>,
+    )
+
+    fun poll2(wallet: Wallet, currencies: List<Currency>) {
+        // getBasefee
+        // getGasPriCe
+        // getBlockNumber
+        // getCurrentBlockTimestamp
+        // getEthBalance
+        // balances
+    }
+
+    fun processPollResult(result: PollResult) {
+        // getTransactionCountIfNeeded
+
     }
 }

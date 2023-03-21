@@ -45,6 +45,14 @@ data class Network(
         else -> false
     }
 
+    fun multicall3Address(): String = when (chainId) {
+        1u -> "0xcA11bde05977b3631167028862bE2a173976CA11"
+        3u -> "0xcA11bde05977b3631167028862bE2a173976CA11"
+        4u -> "0xcA11bde05977b3631167028862bE2a173976CA11"
+        5u -> "0xcA11bde05977b3631167028862bE2a173976CA11"
+        else -> throw Error("This network id $this does not have multicall")
+    }
+
     companion object {
         fun ethereum() = Network("Ethereum", 1u, Type.L1, null, Currency.ethereum())
         fun ropsten() = Network("Ropsten", 3u, Type.L1_TEST, null, Currency.ethereum())

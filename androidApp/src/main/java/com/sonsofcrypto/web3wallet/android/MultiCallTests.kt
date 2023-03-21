@@ -10,6 +10,7 @@ import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.Network
+import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -64,6 +65,13 @@ class MultiCallTests {
         //          [true, [B@de3ae3c]
         //      ]
         // ]
-        println("${results?.get(0)}")
+        results?.forEach {
+            val balance = (it as? List<Any>)?.get(1) as? ByteArray
+            if (balance != null) {
+                val balance = BigInt.fromTwosComplement(balance)
+                println("balance $balance")
+            } else println("=== did not decode")
+        }
     }
+
 }
