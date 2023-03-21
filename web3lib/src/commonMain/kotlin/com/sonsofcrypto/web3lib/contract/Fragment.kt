@@ -39,7 +39,7 @@ data class JsonFragment(
     val constant: Boolean?,
     val stateMutability: String?,
     val inputs: List<JsonFragmentType>?,
-    val output: List<JsonFragmentType>?
+    val outputs: List<JsonFragmentType>?
 )
 
 open class Fragment(
@@ -215,7 +215,7 @@ open class ConstructorFragment : Fragment {
 
 class FunctionFragment : ConstructorFragment {
     val constant: Boolean
-    val output: List<Param>?
+    val outputs: List<Param>?
 
     constructor(
         type: String,
@@ -224,10 +224,10 @@ class FunctionFragment : ConstructorFragment {
         stateMutability: String,
         payable: Boolean,
         constant: Boolean,
-        output: List<Param>?,
+        outputs: List<Param>?,
     ) : super(type, name, inputs, stateMutability, payable) {
         this.constant = constant
-        this.output = output
+        this.outputs = outputs
     }
 
     override fun format(format: Format): String = when (format) {
@@ -240,8 +240,8 @@ class FunctionFragment : ConstructorFragment {
             } else {
                 result = "$result view"
             }
-            if (output?.isNotEmpty() == true) {
-                result += " returns " + output.map { it.format(format) }
+            if (outputs?.isNotEmpty() == true) {
+                result += " returns " + outputs.map { it.format(format) }
                     .joinToString(", ", prefix = "(", postfix = ")")
             }
             result
@@ -253,7 +253,7 @@ class FunctionFragment : ConstructorFragment {
             "stateMutability=$stateMutability, " +
             "payable=$payable, " +
             "constant=$constant, " +
-            "output=$output)"
+            "output=$outputs)"
     }
 
     companion object {
@@ -268,7 +268,7 @@ class FunctionFragment : ConstructorFragment {
                 stateMutability = state.stateMutability,
                 payable = state.payable,
                 constant = state.constant,
-                output = Param.from(jsonFrag.output) ?: emptyList(),
+                outputs = Param.from(jsonFrag.outputs) ?: emptyList(),
             )
         }
 

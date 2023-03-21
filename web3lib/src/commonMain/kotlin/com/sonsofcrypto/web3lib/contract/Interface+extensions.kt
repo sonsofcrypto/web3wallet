@@ -191,7 +191,7 @@ fun Interface.Companion.ERC20(): Interface {
     return Interface.fromJson(jsonString)
 }
 
-fun Interface.Companion.UniswapInterfaceMulticall(): Interface {
+fun Interface.Companion.Multicall3(): Interface {
     val jsonStr = """
       [
         {

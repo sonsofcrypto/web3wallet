@@ -167,7 +167,7 @@ class Interface {
         var error: Any? = null
 
         when (data.size % abiCoder().wordSize()) {
-            0 -> try { return decode(fragment.output ?: emptyList(), data) }
+            0 -> try { return decode(fragment.outputs ?: emptyList(), data) }
                 catch (err: Throwable) { error = err }
             4 -> {
                 val selector = data.copyOfRange(0, 4).toHexString(true)
@@ -192,7 +192,7 @@ class Interface {
     fun encodeFunctionResult(
         fragment: FunctionFragment,
         values: List<Any> = emptyList()
-    ): ByteArray = encode(fragment.output ?: emptyList(), values)
+    ): ByteArray = encode(fragment.outputs ?: emptyList(), values)
 
     /** Filter for the event with search criteria (e.g. for eth_filterLog) */
     @Throws(Throwable::class)
