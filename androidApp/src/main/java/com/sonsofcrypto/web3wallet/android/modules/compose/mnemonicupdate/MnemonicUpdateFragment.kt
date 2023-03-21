@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
@@ -21,7 +21,6 @@ import com.sonsofcrypto.web3wallet.android.common.extensions.annotatedString
 import com.sonsofcrypto.web3wallet.android.common.extensions.half
 import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
-import com.sonsofcrypto.web3walletcore.app.App
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenter
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.*
@@ -101,7 +100,7 @@ class MnemonicUpdateFragment: Fragment(), MnemonicUpdateView {
         viewModel.items.forEach { item ->
             when (item) {
                 is Section.Item.Mnemonic -> {
-                    MnemonicUpdateMnemonic(item.mnemonic)
+                    MnemonicUpdateMnemonic("this is a great mnemonic")
                 }
                 is Section.Item.TextInput -> {
                     W3WMnemonicTextInput(
@@ -150,21 +149,49 @@ class MnemonicUpdateFragment: Fragment(), MnemonicUpdateView {
 
     @Composable
     private fun MnemonicUpdateMnemonic(mnemonic: String) {
+        var showMnemonic by remember { mutableStateOf(false) }
+        if (showMnemonic) {
+            MnemonicUpdateMnemonicPlain(mnemonic = mnemonic) {
+                // TODO: Implement copy action since this should have an expiration time like ios
+//                App.copyToClipboard(mnemonic)
+//                Toast.makeText(
+//                    context, Localized("mnemonic.pasteboard.generic"), Toast.LENGTH_LONG
+//                ).show()
+                showMnemonic = false
+            }
+        } else {
+            MnemonicUpdateMnemonicHidden {
+                showMnemonic = true
+            }
+        }
+    }
+
+    @Composable
+    private fun MnemonicUpdateMnemonicPlain(mnemonic: String, onClick: () -> Unit) {
         Column(
             modifier = ModifierCardBackground()
                 .fillMaxWidth()
                 .padding(theme().shapes.padding)
                 .heightIn(min = theme().shapes.cellHeight)
+                .then(ModifierClickable(onClick = onClick))
         ) {
-            W3WText(
-                text = mnemonic,
-                modifier = ModifierClickable {
-                    App.copyToClipboard(mnemonic)
-                    Toast.makeText(
-                        context, Localized("mnemonic.pasteboard.generic"), Toast.LENGTH_LONG
-                    ).show()
-                }
-            )
+            W3WText(text = mnemonic)
+        }
+    }
+
+    @Composable
+    private fun MnemonicUpdateMnemonicHidden(onClick: () -> Unit) {
+        Column(
+            modifier = ModifierCardBackground()
+                .background(theme().colors.bgPrimary)
+                .fillMaxWidth()
+                .padding(theme().shapes.padding)
+                .heightIn(min = theme().shapes.cellHeight)
+                .then(ModifierClickable(onClick = onClick)),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            W3WText(text = Localized("mnemonic.tapToReveal"))
         }
     }
 

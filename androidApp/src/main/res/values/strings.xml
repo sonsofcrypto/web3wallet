@@ -115,7 +115,7 @@
     <string name="mnemonic.title.new">New wallet</string>
     <string name="mnemonic.title.import">Import wallet</string>
     <string name="mnemonic.title.update">Edit wallet</string>
-    <string name="mnemonic.tapToReveal">Tap to reveal mnemonic</string>
+    <string name="mnemonic.tapToReveal">Tap to show or hide mnemonic</string>
     <string name="mnemonic.footer">Write down mnemonic above. Never share it with anyone. All of the accounts/wallets are derived from it. If lost crypto is unrecoverable</string>
     <string name="mnemonic.footerHighlightWord0">Never</string>
     <string name="mnemonic.footerHighlightWord1">unrecoverable</string>
