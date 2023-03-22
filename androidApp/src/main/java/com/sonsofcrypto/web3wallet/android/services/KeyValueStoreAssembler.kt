@@ -50,5 +50,8 @@ class KeyValueStoreAssembler: AssemblerComponent {
         to.register("$name.WalletService.TransferLogsCache", AssemblerRegistryScope.SINGLETON) {
             KeyValueStore("$name.WalletService.TransferLogsCache")
         }
+        to.register("$name.SettingsService", AssemblerRegistryScope.SINGLETON) {
+            KeyValueStore("$name.SettingsService")
+        }
     }
 }

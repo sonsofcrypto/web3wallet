@@ -51,7 +51,6 @@ class DefaultDegenWireframe(
                 currencySwapWireframeFactory.make(fragment.get(), context).present()
             }
             is DegenWireframeDestination.Cult -> {
-//                navigateToTmpModule()
                 cultProposalsWireframeFactory.make(fragment.get()).present()
             }
             is DegenWireframeDestination.ComingSoon -> {}
@@ -72,12 +71,4 @@ class DefaultDegenWireframe(
         view.presenter = presenter
         return NavigationFragment(view)
     }
-
-    private fun navigateToTmpModule() {
-        val factory: NetworksWireframeFactory = assembler.resolve(
-            NetworksWireframeFactory::class.name
-        )
-        factory.make(fragment?.get()).present()
-    }
-
 }

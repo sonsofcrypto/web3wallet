@@ -51,13 +51,10 @@ class KeyStoreFragment: Fragment(), KeyStoreView {
     }
 
     override fun update(viewModel: KeyStoreViewModel) {
-        println("[AA] Refreshing KeyStoreViewModel.items -> ${viewModel.items.size}")
         liveData.value = viewModel
     }
 
-    override fun updateTargetView(targetView: KeyStoreViewModel.TransitionTargetView) {
-        println("[AA] updateTargetView - needed?")
-    }
+    override fun updateTargetView(targetView: KeyStoreViewModel.TransitionTargetView) {}
 
     @Composable
     private fun KeyStoreScreen(viewModel: KeyStoreViewModel) {

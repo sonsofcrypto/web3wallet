@@ -7,10 +7,12 @@ import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.utils.BundledAssetProviderApplication
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
-import com.sonsofcrypto.web3wallet.android.common.Assembler
-import com.sonsofcrypto.web3wallet.android.common.DefaultAssembler
-import com.sonsofcrypto.web3wallet.android.common.MainBootstrapper
+import com.sonsofcrypto.web3wallet.android.common.*
 import com.sonsofcrypto.web3walletcore.app.App
+import com.sonsofcrypto.web3walletcore.services.settings.Setting
+import com.sonsofcrypto.web3walletcore.services.settings.Setting.Action.*
+import com.sonsofcrypto.web3walletcore.services.settings.Setting.Group.THEME
+import com.sonsofcrypto.web3walletcore.services.settings.SettingsService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import smartadapter.internal.extension.name
@@ -28,11 +30,7 @@ class MainActivity : App() {
         appContext = this
         BundledAssetProviderApplication.setInstance(application)
 
-        //AppTheme.value = themeMiamiSunriseLight//themeMiamiSunriseDark
-
-        // Test on how to set a new theme
-        //setTheme(R.style.Miami_Dark)
-        //recreate()
+        // TODO: Review if this is really needed
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         setContentView(R.layout.activity_main)
@@ -41,7 +39,8 @@ class MainActivity : App() {
             MainBootstrapper(this).boot()
         }
 
-         bootServices()
+        bootServices()
+        configureTheme()
 
         //val tv: TextView = findViewById(R.id.text_view)
         //tv.text = secureRand(128).toString()
@@ -63,7 +62,21 @@ class MainActivity : App() {
             currencyStoreService.fetchMarketData(allCurrencies)
             //nftsService.fetchNFTs()
         }
+    }
 
+    private fun configureTheme() {
+        val settingsService: SettingsService = assembler.resolve(SettingsService::class.name)
+        if (settingsService.isSelected(Setting(THEME, THEME_MIAMI_LIGHT))) {
+            AppTheme.value = themeMiamiSunriseLight
+        } else if (settingsService.isSelected(Setting(THEME, THEME_MIAMI_DARK))) {
+            AppTheme.value = themeMiamiSunriseDark
+        } else if (settingsService.isSelected(Setting(THEME, THEME_IOS_LIGHT))) {
+            AppTheme.value = themeMiamiSunriseLight
+        } else if (settingsService.isSelected(Setting(THEME, THEME_IOS_DARK))) {
+            AppTheme.value = themeMiamiSunriseLight
+        } else {
+            AppTheme.value = themeMiamiSunriseLight
+        }
     }
 
     override fun onResume() {
