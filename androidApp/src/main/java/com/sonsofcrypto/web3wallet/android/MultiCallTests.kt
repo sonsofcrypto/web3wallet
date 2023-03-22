@@ -40,10 +40,16 @@ class MultiCallTests {
         val iface = Interface.ERC20()
         val data = iface.encodeFunction(iface.function("balanceOf"), listOf(address))
         val ifaceMulticall = Interface.Multicall3()
+        val baseFeeData = ifaceMulticall.encodeFunction(
+            ifaceMulticall.function("getBasefee")
+        )
         val multicallFunc = ifaceMulticall.function("aggregate3")
         val multucallData = ifaceMulticall.encodeFunction(
             multicallFunc,
-            listOf(erc20s.map { listOf(it, true, data) })
+            listOf(
+                listOf(listOf(multiCallAddress, true, baseFeeData)) +
+                erc20s.map { listOf(it, true, data) }
+            )
         )
         val provider = ProviderPocket(Network.ethereum())
         val result = provider.call(
@@ -65,13 +71,13 @@ class MultiCallTests {
         //          [true, [B@de3ae3c]
         //      ]
         // ]
-        results?.forEach {
-            val balance = (it as? List<Any>)?.get(1) as? ByteArray
-            if (balance != null) {
-                val balance = BigInt.fromTwosComplement(balance)
-                println("balance $balance")
-            } else println("=== did not decode")
-        }
+//        results?.forEach {
+//            val balance = (it as? List<Any>)?.get(1) as? ByteArray
+//            if (balance != null) {
+//                val balance = BigInt.fromTwosComplement(balance)
+//                println("balance $balance")
+//            } else println("=== did not decode")
+//        }
     }
 
 }

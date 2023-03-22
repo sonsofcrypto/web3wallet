@@ -532,16 +532,45 @@ class DefaultWalletService(
         val erc20Balances: List<Pair<Currency, Int>>,
     )
 
-    fun poll2(wallet: Wallet, currencies: List<Currency>) {
-        // getBasefee
-        // getGasPriCe
-        // getBlockNumber
-        // getCurrentBlockTimestamp
-        // getEthBalance
-        // balances
+    private suspend fun poll2() = withContext(SupervisorJob() + uiDispatcher) {
+        val network = selectedNetwork() ?: return@withContext
+        val wallet = networkService.wallet(network) ?: return@withContext
+        val currencies = currencies(network)
+        // TODO: Only update unselected network once per minute
+        executePoll2(wallet, currencies)
     }
 
-    fun processPollResult(result: PollResult) {
+    /** Call optimization to fetch:
+     * getBasefee
+     *     getGasPrice (from chainlink ??)
+     * getBlockNumber
+     * getCurrentBlockTimestamp
+     * getEthBalance
+     * balances
+     * all in one RPC call */
+    fun executePoll2(wallet: Wallet, currencies: List<Currency>) {
+        val multicallAddress = wallet.network()!!.multicall3Address()
+        val walletAddress = wallet.address().toHexStringAddress()
+        val currenciesAddresses = currencies.mapNotNull { it.address }
+        val aggregateFn = ifaceMulticall.function("aggregate3")
+        val balanceOfFn = ifaceERC20.function("balanceOf")
+        val balanaceOfData = ifaceERC20.encodeFunction(
+            balanceOfFn,
+            listOf(walletAddress)
+        )
+        val data = listOf(
+            multicallAddress, true, ifaceMulticall.function("getBasefee")
+        )
+        val encodedData = ifaceMulticall.encodeFunction(
+            aggregateFn,
+            listOf(
+                data + currenciesAddresses.map { listOf(it, true, balanaceOfData) }
+            )
+        )
+
+    }
+
+    fun handlePollResult(result: PollResult) {
         // getTransactionCountIfNeeded
 
     }

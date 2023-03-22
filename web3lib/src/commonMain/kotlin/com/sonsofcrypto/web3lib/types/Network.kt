@@ -45,6 +45,7 @@ data class Network(
         else -> false
     }
 
+    // TODO: Get address for Georly
     fun multicall3Address(): String = when (chainId) {
         1u -> "0xcA11bde05977b3631167028862bE2a173976CA11"
         3u -> "0xcA11bde05977b3631167028862bE2a173976CA11"
