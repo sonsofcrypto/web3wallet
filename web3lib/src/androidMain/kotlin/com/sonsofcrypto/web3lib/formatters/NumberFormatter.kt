@@ -1,31 +1,25 @@
 package com.sonsofcrypto.web3lib.formatters
 
-import android.icu.text.DecimalFormat
 import android.icu.text.NumberFormat
 import java.util.*
 
 actual class NumberFormatter {
 
     actual fun format(amount: Double?, style: NumberFormatterStyle): String? {
-        return  numberFormat(style).format(amount)
+        return numberFormat(style).format(amount)
     }
 
-    private fun numberFormat(style: NumberFormatterStyle): NumberFormat {
-        val numberFormat = NumberFormat.getInstance(Locale(style.locale))
-        when (style) {
-            is NumberFormatterStyle.Currency -> {
-                // numberStyle = NSNumberFormatterCurrencyStyle
-                // numberFormat.currency = Currency.getInstance(curencyCode = style.currencyCode)
-            }
-            is NumberFormatterStyle.Percentage -> {
-                numberFormat.maximumFractionDigits = style.maximumFractionDigits.toInt()
-            }
+    private fun numberFormat(style: NumberFormatterStyle): NumberFormat = when (style) {
+        is NumberFormatterStyle.Currency -> { NumberFormat.getInstance(Locale(style.locale)) }
+        is NumberFormatterStyle.Percentage -> {
+            val percentFormat = NumberFormat.getPercentInstance()
+            percentFormat.maximumFractionDigits = style.maximumFractionDigits.toInt()
+            percentFormat
         }
-        return numberFormat
     }
 
     private val NumberFormatterStyle.locale: String get() = when(this) {
-        is NumberFormatterStyle.Currency -> { this.locale }
-        is NumberFormatterStyle.Percentage -> { this.locale }
+        is NumberFormatterStyle.Currency -> { Locale.getDefault().displayName }
+        is NumberFormatterStyle.Percentage -> { Locale.getDefault().displayName }
     }
 }

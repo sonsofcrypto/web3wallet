@@ -3,9 +3,7 @@ package com.sonsofcrypto.web3wallet.android.services.settings
 import com.sonsofcrypto.web3wallet.android.BuildConfig
 import com.sonsofcrypto.web3wallet.android.BuildConfig.VERSION_NAME
 import com.sonsofcrypto.web3wallet.android.assembler
-import com.sonsofcrypto.web3wallet.android.common.AppTheme
-import com.sonsofcrypto.web3wallet.android.common.themeMiamiSunriseDark
-import com.sonsofcrypto.web3wallet.android.common.themeMiamiSunriseLight
+import com.sonsofcrypto.web3wallet.android.common.*
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.networks.NetworksWireframeFactory
@@ -21,8 +19,8 @@ class DefaultSettingsServiceActionTrigger: SettingsServiceActionTrigger {
         when (action) {
             Setting.Action.THEME_MIAMI_LIGHT -> { AppTheme.value = themeMiamiSunriseLight }
             Setting.Action.THEME_MIAMI_DARK -> { AppTheme.value = themeMiamiSunriseDark }
-            Setting.Action.THEME_IOS_LIGHT -> {}
-            Setting.Action.THEME_IOS_DARK -> {}
+            Setting.Action.THEME_IOS_LIGHT -> { AppTheme.value = themeVanillaLight }
+            Setting.Action.THEME_IOS_DARK -> { AppTheme.value = themeVanillaDark }
             Setting.Action.IMPROVEMENT_PROPOSALS -> {
 //                val factory: ImprovementProposalsWireframeFactory = assembler.resolve(
 //                    ImprovementProposalsWireframeFactory::class.name

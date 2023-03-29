@@ -68,12 +68,16 @@ class NFTDetailFragment: Fragment(), NFTDetailView {
     private fun NFTDetailContent(viewModel: NFTDetailViewModel) {
         Column(
             modifier = Modifier
-                .padding(theme().shapes.padding)
+                .padding(
+                    start = theme().shapes.padding,
+                    end = theme().shapes.padding,
+                )
                 .verticalScroll(ScrollState(0)),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             val screenWidth = LocalConfiguration.current.screenWidthDp
             val imageSize = (screenWidth * 0.6).dp
+            W3WSpacerVertical()
             W3WImage(
                 url = viewModel.nft.image,
                 modifier = Modifier.requiredSize(imageSize)
@@ -104,6 +108,7 @@ class NFTDetailFragment: Fragment(), NFTDetailView {
             ) {
                 presenter.handle(NFTDetailPresenterEvent.Send)
             }
+            W3WSpacerVertical()
         }
     }
 

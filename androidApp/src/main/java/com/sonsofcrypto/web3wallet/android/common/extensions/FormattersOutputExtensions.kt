@@ -25,7 +25,7 @@ fun List<Formatters.Output>.addAll(
     return list
 }
 
-private fun List<Formatters.Output>.annotatedString(
+fun List<Formatters.Output>.annotatedString(
     prefix: String? = null,
     spanStylePrefix: SpanStyle? = null,
     spanStyleNormal: SpanStyle,
@@ -100,6 +100,26 @@ fun List<Formatters.Output>.annotatedStringBody(): AnnotatedString = annotatedSt
     ),
     spanStyleDown = SpanStyle(
         fontSize = theme().fonts.caption2.fontSize,
+        baselineShift = BaselineShift(-0.5f),
+    ),
+)
+
+@Composable
+fun List<Formatters.Output>.annotatedStringLargeTitle(): AnnotatedString = annotatedString(
+    spanStylePrefix = SpanStyle(
+        fontSize = theme().fonts.largeTitleBold.fontSize,
+        baselineShift = BaselineShift(-0.2f),
+    ),
+    spanStyleNormal = SpanStyle(
+        fontSize = theme().fonts.largeTitleBold.fontSize,
+        baselineShift = BaselineShift(-0.2f),
+    ),
+    spanStyleUp = SpanStyle(
+        fontSize = theme().fonts.headlineBold.fontSize,
+        baselineShift = BaselineShift(0.7f),
+    ),
+    spanStyleDown = SpanStyle(
+        fontSize = theme().fonts.headlineBold.fontSize,
         baselineShift = BaselineShift(-0.5f),
     ),
 )

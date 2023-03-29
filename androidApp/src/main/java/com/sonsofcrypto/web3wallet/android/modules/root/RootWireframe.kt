@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.R
-import com.sonsofcrypto.web3wallet.android.modules.dashboard.DashboardWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.dashboard.DashboardWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.degen.DegenWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.keystore.KeyStoreWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftsdashboard.NFTsDashboardWireframeFactory

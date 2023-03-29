@@ -66,14 +66,6 @@ data class ThemeFonts(
     val extraSmallBold: TextStyle = TextStyle(fontSize = TextUnit(8.toFloat(), TextUnitType.Sp), fontWeight = FontWeight.SemiBold),
     val navTitle: TextStyle = TextStyle(fontSize = TextUnit(18.toFloat(), TextUnitType.Sp), fontWeight = FontWeight.Normal), // line_height = 20),
     val tabBar: TextStyle = TextStyle(fontSize = TextUnit(11.toFloat(), TextUnitType.Sp), fontWeight = FontWeight.SemiBold), // line_height = 13),
-//    val networkTitle: TextStyle = TextStyle(.init(name: "NaokoAA-BlackItalic", size: 16)!,),
-//    val dashboardSectionFuel: TextStyle = TextStyle(.init(name: "NaokoAA-RegularItalic", size: 11)!,),
-//    val dashboardTVBalance: TextStyle = TextStyle(.init(name: "OCR-A", size: 16)!,),
-//    val dashboardTVBalanceSmall: TextStyle = TextStyle(.init(name: "OCR-A", size: 11)!,),
-//    val dashboardTVSymbol: TextStyle = TextStyle(.init(name: "NaokoAA-Semilight", size: 13)!,),
-//    val dashboardTVPct: TextStyle = TextStyle(.init(name: "OCR-A", size: 10)!,),
-//    val dashboardTVTokenBalance: TextStyle = TextStyle(.init(name: "OCR-A", size: 13)!,),
-//    val dashboardTVTokenBalanceSmall: TextStyle = TextStyle(.init(name: "OCR-A", size: 8)!),
 )
 
 data class ThemeColors(
@@ -126,7 +118,137 @@ val themeMiamiSunriseDark = Theme(
     ThemeShapes(),
 )
 
+val themeVanillaLight = Theme(
+    ThemeFonts(),
+    ThemeVanilla().lightColors,
+    ThemeShapes(),
+)
+
+val themeVanillaDark = Theme(
+    ThemeFonts(),
+    ThemeVanilla().darkColors,
+    ThemeShapes(),
+)
+
 class ThemeMiamiSunrise {
+
+    private val paletteLight = ColorPaletteLight()
+    private val paletteDark = ColorPaletteDark()
+
+    val lightColors: ThemeColors get() = ThemeColors(
+        textPrimary = paletteLight.white,
+        textSecondary = paletteLight.white6,
+        textTertiary = paletteLight.white3,
+        bgPrimary = paletteLight.white18,
+        bgGradientTop = paletteLight.blue,
+        bgGradientBtm = paletteLight.pinkLight,
+        navBarBackground = paletteLight.lightBlack,
+        navBarTint = paletteLight.orange,
+        navBarTitle = paletteLight.white,
+        tabBarBackground = paletteLight.lightBlack,
+        tabBarTint = paletteLight.blue,
+        tabBarTintSelected = paletteLight.pink,
+        stroke = paletteLight.lightGray,
+        separatorPrimary = paletteLight.lighterGray,
+        separatorSecondary = paletteLight.white3,
+        buttonBgPrimary = paletteLight.blue,
+        buttonBgPrimaryDisabled = paletteLight.blue.copy(alpha = 0.5f),
+        buttonTextPrimary = paletteLight.white,
+        buttonBgSecondary = paletteLight.lightGray,
+        buttonTextSecondary = paletteLight.white,
+        switchOnThumb = paletteLight.white,
+        switchOnTint = paletteLight.orange,
+        switchOffThumb = paletteLight.white,
+        switchOffTint = paletteLight.white6,
+        segmentedControlBackground = paletteLight.lighterGray.copy(alpha = 0.1f),
+        segmentedControlBackgroundSelected = paletteLight.white18,
+        segmentedControlText = paletteLight.white,
+        segmentedControlTextSelected = paletteLight.white,
+        priceUp = paletteLight.teal,
+        priceDown = paletteLight.pink,
+        dashboardTVCryptoBalance = paletteLight.orange,
+        activityIndicator = paletteLight.white,
+        destructive = paletteLight.red,
+        textFieldError = Color(0xFF7D1935),
+    )
+
+    val darkColors: ThemeColors get() = ThemeColors(
+        textPrimary = paletteDark.white,
+        textSecondary = paletteDark.white6,
+        textTertiary = paletteDark.white3,
+        bgPrimary = paletteDark.white18,
+        bgGradientTop = paletteDark.pink,
+        bgGradientBtm = paletteDark.purple,
+        navBarBackground = paletteDark.lightBlack,
+        navBarTint = paletteDark.orange,
+        navBarTitle = paletteDark.white,
+        tabBarBackground = paletteDark.lightBlack,
+        tabBarTint = paletteDark.blue,
+        tabBarTintSelected = paletteDark.pink,
+        stroke = paletteDark.lightGray,
+        separatorPrimary = paletteDark.lighterGray,
+        separatorSecondary = paletteDark.white3,
+        buttonBgPrimary = paletteDark.pink,
+        buttonBgPrimaryDisabled = paletteDark.pink.copy(alpha = 0.5f),
+        buttonTextPrimary = paletteDark.white,
+        buttonBgSecondary = paletteDark.lightGray,
+        buttonTextSecondary = paletteDark.white,
+        switchOnThumb = paletteLight.white,
+        switchOnTint = paletteLight.orange,
+        switchOffThumb = paletteLight.white,
+        switchOffTint = paletteLight.white6,
+        segmentedControlBackground = paletteDark.lighterGray.copy(alpha = 0.1f),
+        segmentedControlBackgroundSelected = paletteDark.white18,
+        segmentedControlText = paletteDark.white,
+        segmentedControlTextSelected = paletteDark.white,
+        priceUp = paletteDark.teal,
+        priceDown = paletteDark.pink,
+        dashboardTVCryptoBalance = paletteDark.orange,
+        activityIndicator = paletteDark.white,
+        destructive = paletteDark.red,
+        textFieldError = Color(0xFF7D1935),
+    )
+
+    private data class ColorPaletteLight(
+        val black: Color = Color(0xFF000000),
+        val lightBlack: Color = Color(0xFF1C1C1E),
+        val white: Color = Color(0xFFFFFFFF),
+        val white6: Color =  Color(0x9CFFFFFF).copy(alpha = 0.6f),
+        val white3: Color = Color(0x4CFFFFFF).copy(alpha = 0.3f),
+        val white18: Color = Color(0x2EFFFFFF).copy(alpha = 0.18f),
+        val red: Color = Color(0xFFE6350F),
+        val orange: Color = Color(0xFFF29A36),
+        val teal: Color = Color(0xFF13CEC4),
+        val blue: Color = Color(0xFF3770E6),
+        val purple: Color = Color(0xFF9630B0),
+        val pink: Color = Color(0xFFF24A9B),
+        val pinkLight: Color = Color(0xFFFC78A9),
+        val gray: Color = Color(0xFF8E8E92),
+        val lightGray: Color = Color(0xFF787880).copy(alpha = 0.2f),
+        val lighterGray: Color = Color(0xFFC6C6C8),
+    )
+
+    private data class ColorPaletteDark(
+        val black: Color = Color(0xFF000000),
+        val lightBlack: Color = Color(0xFF1C1C1E),
+        val white: Color = Color(0xFFFFFFFF),
+        val white6: Color =  Color(0x9CFFFFFF).copy(alpha = 0.6f),
+        val white3: Color = Color(0x4CFFFFFF).copy(alpha = 0.3f),
+        val white18: Color = Color(0x2EFFFFFF).copy(alpha = 0.18f),
+        val red: Color = Color(0xFFF0421D),
+        val orange: Color = Color(0xFFF08D1D),
+        val teal: Color = Color(0xFF10B0A8),
+        val blue: Color = Color(0xFF4E80E9),
+        val purple: Color = Color(0xFF852B9C),
+        val pink: Color = Color(0xFFF0328E),
+        val pinkLight: Color = Color(0xFFFC78A9),
+        val gray: Color = Color(0xFF8E8E92),
+        val lightGray: Color = Color(0xFF787880).copy(alpha = 0.36f),
+        val lighterGray: Color = Color(0xFFC6C6C8),
+    )
+}
+
+class ThemeVanilla {
 
     private val paletteLight = ColorPaletteLight()
     private val paletteDark = ColorPaletteDark()

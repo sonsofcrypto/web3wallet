@@ -477,6 +477,7 @@ fun W3WButtonSecondary(
 fun W3WButtonSecondarySmall(
     title: String,
     modifier: Modifier = Modifier,
+    modifierText: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
     var size by remember { mutableStateOf(IntSize.Zero) }
@@ -500,9 +501,11 @@ fun W3WButtonSecondarySmall(
     ) {
         W3WSpacerHorizontal(theme().shapes.padding.half)
         Text(
-            title,
+            text = title,
+            textAlign = TextAlign.Center,
             color = theme().colors.buttonTextSecondary,
             style = theme().fonts.footnote,
+            modifier = modifierText,
         )
         W3WSpacerHorizontal(theme().shapes.padding.half)
     }

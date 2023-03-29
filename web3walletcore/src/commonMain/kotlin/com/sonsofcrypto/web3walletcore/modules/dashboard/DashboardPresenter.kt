@@ -208,18 +208,18 @@ class DefaultDashboardPresenter(
         val fiatBalance = interactor.fiatBalance(network, currency)
         val cryptoBalance = interactor.cryptoBalance(network, currency)
         return Wallet(
-            currency.name,
-            currency.symbol.uppercase(),
-            metadata?.colors ?: listOf("#FFFFFF", "#000000"),
-            currency.iconName,
-            fiatPrice,
-            fiatBalance,
-            cryptoBalance,
-            currency,
-            Formatters.pct.format(market?.priceChangePercentage24h, true),
-            (market?.priceChangePercentage24h ?: 0.toDouble()) >= 0,
-            walletCandles(interactor.candles(currency)),
-            "usd",
+            name = currency.name,
+            ticker = currency.symbol.uppercase(),
+            colors = metadata?.colors ?: listOf("#FFFFFF", "#000000"),
+            imageName = currency.iconName,
+            fiatPrice = fiatPrice,
+            fiatBalance = fiatBalance,
+            cryptoBalance = cryptoBalance,
+            currency = currency,
+            pctChange = Formatters.pct.format(market?.priceChangePercentage24h, true),
+            priceUp = (market?.priceChangePercentage24h ?: 0.toDouble()) >= 0,
+            candles = walletCandles(interactor.candles(currency)),
+            fiatCurrencyCode = "usd",
         )
     }
 
