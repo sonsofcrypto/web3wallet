@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3lib
 
-import com.sonsofcrypto.web3lib.utils.bip39.Bip39
+//import com.sonsofcrypto.web3lib.utils.bip39.Bip39
+import go.foolib.Foolib
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -9,8 +10,8 @@ class AndroidGreetingTest {
     @Test
     fun testExample() {
         println("=== Running android test")
-        val bip39 = Bip39.from(Bip39.EntropySize.ES128)
-        println(bip39.worldList)
+        val result = Foolib.Hello("YEEEEEEEs")
+        println("=== RESULT $result")
         assertTrue("Check Android is mentioned", "Android".contains("Android"))
     }
 }
