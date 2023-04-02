@@ -90,6 +90,7 @@ kotlin {
         val androidTest by getting {
             dependencies {
                 implementation(files("$rootDir/coreCrypto/build/tests/foolib.jar"))
+//                implementation(files("$rootDir/coreCrypto/build/tests/coreCrypto.jar"))
             }
         }
         val iosX64Main by getting
@@ -160,13 +161,14 @@ buildkonfig {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 29
         targetSdk = 32
     }
     namespace = "com.sonsofcrypto.web3lib"
+    buildToolsVersion = "30.0.3"
 
 
 }

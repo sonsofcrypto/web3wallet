@@ -2,11 +2,10 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("plugin.serialization")
-
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
     defaultConfig {
         applicationId = "com.sonsofcrypto.web3wallet.android"
         minSdk = 29
@@ -20,6 +19,7 @@ android {
         }
     }
     namespace = "com.sonsofcrypto.web3wallet.android"
+    buildToolsVersion = "30.0.3"
 }
 
 dependencies {

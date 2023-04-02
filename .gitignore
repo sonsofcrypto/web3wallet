@@ -207,3 +207,7 @@ coreCrypto/build/android/coreCrypto-sources.jar
 geth/geth.aar
 geth/geth-sources.jar
 geth/Geth.xcframework
+
+gradle/*
+gradlew
+gradlew.bat

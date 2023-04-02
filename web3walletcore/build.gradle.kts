@@ -106,6 +106,7 @@ android {
         minSdk = 21
         targetSdk = 32
     }
+    buildToolsVersion = "30.0.3"
 }
 
 dependencies {
