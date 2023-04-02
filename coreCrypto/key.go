@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"crypto/elliptic"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
+	"golang.org/x/crypto/pbkdf2"
+	"golang.org/x/crypto/scrypt"
 	"log"
 	"math/big"
 )
@@ -15,7 +17,8 @@ const (
 
 const compressedPubKeyLen = 33
 
-// CompressedPubKey for given curve, user CurveXYZ constants above. (Not type due to `go bind` interop)
+// CompressedPubKey for given curve, user CurveXYZ constants above.
+// (Not type due to `go bind` interop)
 func CompressedPubKey(curve int, priv []byte) []byte {
 	c := curveFor(curve)
 	x, y := c.ScalarBaseMult(priv)
@@ -28,6 +31,17 @@ func CompressedPubKey(curve int, priv []byte) []byte {
 	pub = append(pub, prefix)
 
 	return paddedAppend(compressedPubKeyLen-1, pub, x.Bytes())
+}
+
+// UncompressedPubKey for given curve, decompresses compressed put key
+// Returns empty byte array on error. (Not type due to `go bind` interop)
+func UncompressedPubKey(curve int, pubKey []byte) []byte {
+	x, y := secp256k1.DecompressPubkey(pubKey)
+	if x == nil {
+		return make([]byte, 0)
+	}
+	prefix := []byte{0x4}
+	return append(append(prefix, x.Bytes()...), y.Bytes()...)
 }
 
 // AddPrivKeys Add key to key on a curve
@@ -134,4 +148,30 @@ func compressPublicKey(x *big.Int, y *big.Int) []byte {
 	key.Write(xBytes)
 
 	return key.Bytes()
+}
+
+// Secret storage constants
+const (
+	SecretStorageHeaderKDF        = "scrypt"
+	SecretStorageCipherAes128Crt  = "aes-128-ctr"
+	SecretStorageScryptN          = 1 << 18
+	SecretStorageScryptP          = 1
+	SecretStorageScryptR          = 8
+	SecretStorageScryptDKLen      = 32
+	SecretStoragePrivateKeyMinLen = 32
+)
+
+// ScryptKey derivation
+func ScryptKey(pswd, salt []byte, N, r, p, keyLen int) []byte {
+	dk, err := scrypt.Key(pswd, salt, N, r, p, keyLen)
+	if err != nil {
+		log.Panicln("Failed to derive key from password", err)
+	}
+	return dk
+}
+
+// Pbkdf2 pass one of the hash constants from top of the file. (`HashFnSha256`,
+// `HashFnSha512`, ...) Enum not used due to `go bind` (does not support enums)
+func Pbkdf2(password, salt []byte, iter, keyLen, hashFn int) []byte {
+	return pbkdf2.Key(password, salt, iter, keyLen, HashFunc(hashFn))
 }

@@ -4,7 +4,6 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"crypto/sha512"
-	"golang.org/x/crypto/pbkdf2"
 	"golang.org/x/crypto/ripemd160"
 	"golang.org/x/crypto/sha3"
 	"hash"
@@ -55,12 +54,6 @@ func HmacSha512(key []byte, data []byte) []byte {
 	mac := hmac.New(sha512.New, key)
 	mac.Write(data)
 	return mac.Sum(nil)
-}
-
-// Pbkdf2 pass one of the hash constants from top of the file. (`HashFnSha256`,
-// `HashFnSha512`, ...) Enum not used due to `go bind` (does not support enums)
-func Pbkdf2(password, salt []byte, iter, keyLen, hashFn int) []byte {
-	return pbkdf2.Key(password, salt, iter, keyLen, HashFunc(hashFn))
 }
 
 const hashLength = 32
