@@ -89,8 +89,8 @@ kotlin {
         }
         val androidTest by getting {
             dependencies {
-                implementation(files("$rootDir/coreCrypto/build/tests/foolib.jar"))
-//                implementation(files("$rootDir/coreCrypto/build/tests/coreCrypto.jar"))
+//                implementation(files("$rootDir/coreCrypto/build/tests/foolib.jar"))
+                implementation(files("$rootDir/coreCrypto/build/tests/coreCrypto.jar"))
             }
         }
         val iosX64Main by getting
