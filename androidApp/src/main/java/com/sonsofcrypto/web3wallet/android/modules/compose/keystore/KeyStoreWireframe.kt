@@ -5,7 +5,9 @@ import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.R
+import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
+import com.sonsofcrypto.web3wallet.android.modules.compose.dashboard.DashboardWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicimport.MnemonicImportWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicnew.MnemonicNewWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicupdate.MnemonicUpdateWireframeFactory
@@ -16,6 +18,7 @@ import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreWireframeDestina
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeContext
+import smartadapter.internal.extension.name
 
 class DefaultKeyStoreWireframe(
     private val parent: WeakRef<Fragment>?,
@@ -52,6 +55,12 @@ class DefaultKeyStoreWireframe(
                     destination.item, destination.handler, destination.onDeleted
                 )
                 mnemonicUpdateWireframeFactory.make(fragment?.get(), context).present()
+            }
+            is KeyStoreWireframeDestination.Networks -> {
+                val factory: DashboardWireframeFactory = assembler.resolve(
+                    DashboardWireframeFactory::class.name
+                )
+                factory.make(fragment?.get()).present()
             }
             else -> { println("[AA] handle event $destination") }
         }

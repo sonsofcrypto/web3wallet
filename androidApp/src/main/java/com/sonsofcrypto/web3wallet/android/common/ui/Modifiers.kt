@@ -14,9 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.sonsofcrypto.web3wallet.android.common.theme
-import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicnew.MnemonicNewFragment
 import com.sonsofcrypto.web3walletcore.common.viewModels.MnemonicWordInfo
-import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationViewModel
 
 @Composable
 fun ModifierCardBackground(
@@ -51,8 +49,12 @@ fun ModifierClickable(
 )
 
 @Composable
-fun ModifierMnemonicBg(idx: Int, total: Int): Modifier = when (idx) {
-    0 -> {
+fun ModifierDynamicBg(idx: Int, total: Int): Modifier {
+    return if (total == 1) {
+        Modifier
+            .clip(RoundedCornerShape(theme().shapes.cornerRadius))
+            .background(theme().colors.bgPrimary)
+    } else if (idx == 0) {
         Modifier
             .clip(
                 RoundedCornerShape(
@@ -61,8 +63,7 @@ fun ModifierMnemonicBg(idx: Int, total: Int): Modifier = when (idx) {
                 )
             )
             .background(theme().colors.bgPrimary)
-    }
-    total - 1 -> {
+    } else if (idx == total - 1) {
         Modifier
             .clip(
                 RoundedCornerShape(
@@ -71,8 +72,7 @@ fun ModifierMnemonicBg(idx: Int, total: Int): Modifier = when (idx) {
                 )
             )
             .background(theme().colors.bgPrimary)
-    }
-    else -> {
+    } else {
         Modifier.background(theme().colors.bgPrimary)
     }
 }

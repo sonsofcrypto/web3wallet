@@ -53,5 +53,8 @@ class KeyValueStoreAssembler: AssemblerComponent {
         to.register("$name.SettingsService", AssemblerRegistryScope.SINGLETON) {
             KeyValueStore("$name.SettingsService")
         }
+        to.register("$name.EtherScanService", AssemblerRegistryScope.SINGLETON) {
+            KeyValueStore("$name.EtherScanService")
+        }
     }
 }

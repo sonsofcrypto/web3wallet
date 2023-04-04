@@ -8,6 +8,7 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.AssemblerComponent
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistry
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope
+import com.sonsofcrypto.web3wallet.android.modules.compose.account.AccountWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencypicker.CurrencyPickerWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyreceive.CurrencyReceiveWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencysend.CurrencySendWireframeFactory
@@ -34,6 +35,7 @@ class DefaultDashboardWireframeFactory(
     private val currencySendWireframeFactory: CurrencySendWireframeFactory,
     private val currencySwapWireframeFactory: CurrencySwapWireframeFactory,
     private val currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
+    private val accountWireframeFactory: AccountWireframeFactory,
     private val nftDetailWireframeFactory: NFTDetailWireframeFactory,
     private val mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
     private val improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory,
@@ -50,6 +52,7 @@ class DefaultDashboardWireframeFactory(
         currencySendWireframeFactory,
         currencySwapWireframeFactory,
         currencyPickerWireframeFactory,
+        accountWireframeFactory,
         nftDetailWireframeFactory,
         mnemonicConfirmationWireframeFactory,
         improvementProposalsWireframeFactory,
@@ -71,6 +74,7 @@ class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 it.resolve(CurrencySendWireframeFactory::class.name),
                 it.resolve(CurrencySwapWireframeFactory::class.name),
                 it.resolve(CurrencyPickerWireframeFactory::class.name),
+                it.resolve(AccountWireframeFactory::class.name),
                 it.resolve(NFTDetailWireframeFactory::class.name),
                 it.resolve(MnemonicConfirmationWireframeFactory::class.name),
                 it.resolve(ImprovementProposalsWireframeFactory::class.name),

@@ -107,7 +107,7 @@ class MnemonicUpdateFragment: Fragment(), MnemonicUpdateView {
                         title = item.viewModel.title,
                         value = item.viewModel.value,
                         placeholder = item.viewModel.placeholder,
-                        modifier = ModifierMnemonicBg(
+                        modifier = ModifierDynamicBg(
                             viewModel.items.indexOf(item),
                             viewModel.items.count()
                         ).padding(start = theme().shapes.padding),
@@ -118,7 +118,7 @@ class MnemonicUpdateFragment: Fragment(), MnemonicUpdateView {
                     W3WMnemonicSwitch(
                         title = item.viewModel.title,
                         onOff = item.viewModel.onOff,
-                        modifier = ModifierMnemonicBg(
+                        modifier = ModifierDynamicBg(
                             viewModel.items.indexOf(item),
                             viewModel.items.count()
                         ).padding(theme().shapes.padding),

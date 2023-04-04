@@ -106,7 +106,7 @@ class MnemonicImportFragment: Fragment(), MnemonicImportView {
                         title = item.viewModel.title,
                         value = item.viewModel.value,
                         placeholder = item.viewModel.placeholder,
-                        modifier = ModifierMnemonicBg(
+                        modifier = ModifierDynamicBg(
                             viewModel.items.indexOf(item),
                             viewModel.items.count()
                         ).padding(start = theme().shapes.padding),
@@ -121,7 +121,7 @@ class MnemonicImportFragment: Fragment(), MnemonicImportView {
                     W3WMnemonicSwitch(
                         title = item.viewModel.title,
                         onOff = item.viewModel.onOff,
-                        modifier = ModifierMnemonicBg(
+                        modifier = ModifierDynamicBg(
                             viewModel.items.indexOf(item),
                             viewModel.items.count()
                         ).padding(theme().shapes.padding),
@@ -136,7 +136,7 @@ class MnemonicImportFragment: Fragment(), MnemonicImportView {
                 is MnemonicImportViewModel.Section.Item.SegmentWithTextAndSwitchInput -> {
                     W3WMnemonicSegmentTexAndSwitch(
                         viewModel = item.viewModel,
-                        modifier = ModifierMnemonicBg(
+                        modifier = ModifierDynamicBg(
                             viewModel.items.indexOf(item),
                             viewModel.items.count()
                         ),
@@ -185,7 +185,7 @@ class MnemonicImportFragment: Fragment(), MnemonicImportView {
             )
             W3WMnemonicError(
                 viewModel = viewModel.wordsInfo,
-                isValid = viewModel.isValid ?: false
+                isValid = viewModel.isValid ?: true
             )?.let { text ->
                 W3WText(
                     text = text,

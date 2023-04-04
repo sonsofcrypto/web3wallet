@@ -16,7 +16,6 @@ import com.sonsofcrypto.web3wallet.android.common.extensions.annotatedString
 import com.sonsofcrypto.web3wallet.android.common.extensions.half
 import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
-import com.sonsofcrypto.web3walletcore.common.viewModels.SectionFooterViewModel
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenter
 import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.*
@@ -103,7 +102,7 @@ class MnemonicNewFragment: Fragment(), MnemonicNewView {
                         title = item.viewModel.title,
                         value = item.viewModel.value,
                         placeholder = item.viewModel.placeholder,
-                        modifier = ModifierMnemonicBg(
+                        modifier = ModifierDynamicBg(
                             viewModel.items.indexOf(item),
                             viewModel.items.count()
                         ).padding(start = theme().shapes.padding),
@@ -114,7 +113,7 @@ class MnemonicNewFragment: Fragment(), MnemonicNewView {
                     W3WMnemonicSwitch(
                         title = item.viewModel.title,
                         onOff = item.viewModel.onOff,
-                        modifier = ModifierMnemonicBg(
+                        modifier = ModifierDynamicBg(
                             viewModel.items.indexOf(item),
                             viewModel.items.count()
                         ).padding(theme().shapes.padding),
@@ -125,7 +124,7 @@ class MnemonicNewFragment: Fragment(), MnemonicNewView {
                 is Item.SegmentWithTextAndSwitchInput -> {
                     W3WMnemonicSegmentTexAndSwitch(
                         viewModel = item.viewModel,
-                        modifier = ModifierMnemonicBg(
+                        modifier = ModifierDynamicBg(
                             viewModel.items.indexOf(item),
                             viewModel.items.count()
                         ),

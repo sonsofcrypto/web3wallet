@@ -6,6 +6,7 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.modules.compose.account.AccountWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencypicker.CurrencyPickerWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyreceive.CurrencyReceiveWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencysend.CurrencySendWireframeFactory
@@ -13,6 +14,7 @@ import com.sonsofcrypto.web3wallet.android.modules.compose.currencyswap.Currency
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicconfirmation.MnemonicConfirmationWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWireframeFactory
+import com.sonsofcrypto.web3walletcore.modules.account.AccountWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext.NetworkData
 import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceiveWireframeContext
@@ -37,6 +39,7 @@ class DefaultDashboardWireframe(
     private val currencySendWireframeFactory: CurrencySendWireframeFactory,
     private val currencySwapWireframeFactory: CurrencySwapWireframeFactory,
     private val currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
+    private val accountWireframeFactory: AccountWireframeFactory,
     private val nftDetailWireframeFactory: NFTDetailWireframeFactory,
     private val mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
     private val improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory,
@@ -50,7 +53,8 @@ class DefaultDashboardWireframe(
     override fun navigate(destination: DashboardWireframeDestination) {
         when (destination) {
             is DashboardWireframeDestination.Wallet -> {
-                println("[AA] navigate to Account for -> ${destination.network.name}/${destination.currency.name}")
+                val context = AccountWireframeContext(destination.network, destination.currency)
+                accountWireframeFactory.make(parent?.get(), context).present()
             }
             is DashboardWireframeDestination.KeyStoreNetworkSettings -> {
                 println("[AA] navigate to KeyStoreNetworkSettings")

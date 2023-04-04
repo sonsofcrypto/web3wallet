@@ -40,8 +40,6 @@ import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardPresenterEvent
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Header
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.*
-import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardPresenterEvent
-import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardViewModel
 
 class DashboardFragment: Fragment(), DashboardView {
 
@@ -289,7 +287,7 @@ class DashboardFragment: Fragment(), DashboardView {
                     start = theme().shapes.padding,
                     end = theme().shapes.padding,
                 )
-                .then(ModifierMnemonicBg(idx = idx, total = total))
+                .then(ModifierDynamicBg(idx = idx, total = total))
                 .padding(
                     start = theme().shapes.padding,
                     end = theme().shapes.padding,
