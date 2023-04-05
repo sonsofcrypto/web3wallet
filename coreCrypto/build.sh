@@ -79,6 +79,12 @@ export GOOS=linux
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export GOOS=darwin
+  export GOARCH=amd64
+  SEARCH="-I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux"
+  REPLACE="-I$JAVA_HOME/include -I$JAVA_HOME/include/darwin"
+  ESCAPED_SEARCH=$(printf '%s\n' "$SEARCH" | sed -e 's/[]\/$*.^[]/\\&/g');
+  ESCAPED_REPLACE=$(printf '%s\n' "$REPLACE" | sed -e 's/[]\/$*.^[]/\\&/g');
+  sed -i "s/$ESCAPED_SEARCH/$ESCAPED_REPLACE/" src/gobind/seq.go
 fi
 
 cd src
