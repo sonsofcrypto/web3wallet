@@ -89,8 +89,7 @@ kotlin {
         }
         val androidTest by getting {
             dependencies {
-//                implementation(files("$rootDir/coreCrypto/build/tests/foolib.jar"))
-                implementation(files("$rootDir/coreCrypto/build/tests/coreCrypto.jar"))
+                implementation(files("$rootDir/coreCrypto/build/hostOS/coreCrypto.jar"))
             }
         }
         val iosX64Main by getting
@@ -169,8 +168,6 @@ android {
     }
     namespace = "com.sonsofcrypto.web3lib"
     buildToolsVersion = "30.0.3"
-
-
 }
 
 dependencies {
