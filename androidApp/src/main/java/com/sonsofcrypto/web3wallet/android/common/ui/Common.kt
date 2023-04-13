@@ -652,14 +652,19 @@ fun W3WIcon(
     @DrawableRes id: Int,
     contentDescription: String? = null,
     modifier: Modifier = Modifier,
+    size: Dp = 24.dp,
     colorFilter: ColorFilter? = null,
     onClick: (() -> Unit)? = null
 ) {
     Image(
         painter = painterResource(id = id),
         contentDescription = contentDescription,
-        modifier = if (onClick != null) ModifierClickable(onClick = onClick) else Modifier
-            .size(24.dp)
+        modifier = if (onClick != null)
+            ModifierClickable(onClick = onClick)
+                .size(size)
+                .then(modifier)
+        else Modifier
+            .size(size)
             .then(modifier),
         colorFilter = colorFilter
     )

@@ -30,6 +30,18 @@ class NavigationFragment(
         }
     }
 
+    fun presentOver(fragment: Fragment, animated: Boolean = true) {
+        childFragmentManager.beginTransaction().apply {
+            if (animated) {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            }
+            add(R.id.container, fragment)
+//            replace(R.id.container, fragment)
+//            addToBackStack("a")
+            commitNow()
+        }
+    }
+
     fun pop() {
         //childFragmentManager.popBackStack()
     }

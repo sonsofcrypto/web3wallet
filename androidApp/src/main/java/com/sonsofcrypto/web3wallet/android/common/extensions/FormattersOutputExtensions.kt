@@ -76,15 +76,15 @@ fun List<Formatters.Output>.annotatedStringCallout(): AnnotatedString = annotate
 fun List<Formatters.Output>.annotatedStringFootnote(): AnnotatedString = annotatedString(
     spanStyleNormal = SpanStyle(
         fontSize = theme().fonts.footnote.fontSize,
-        baselineShift = BaselineShift(-0.2f),
+        baselineShift = BaselineShift(0f),
     ),
     spanStyleUp = SpanStyle(
         fontSize = theme().fonts.extraSmall.fontSize,
-        baselineShift = BaselineShift(0.3f),
+        baselineShift = BaselineShift(0.5f),
     ),
     spanStyleDown = SpanStyle(
         fontSize = theme().fonts.extraSmall.fontSize,
-        baselineShift = BaselineShift(-0.5f),
+        baselineShift = BaselineShift(-0.3f),
     ),
 )
 
@@ -92,15 +92,15 @@ fun List<Formatters.Output>.annotatedStringFootnote(): AnnotatedString = annotat
 fun List<Formatters.Output>.annotatedStringSubheadline(): AnnotatedString = annotatedString(
     spanStyleNormal = SpanStyle(
         fontSize = theme().fonts.subheadline.fontSize,
-        baselineShift = BaselineShift(-0.2f),
+        baselineShift = BaselineShift(0f),
     ),
     spanStyleUp = SpanStyle(
         fontSize = theme().fonts.caption2.fontSize,
-        baselineShift = BaselineShift(0.3f),
+        baselineShift = BaselineShift(0.5f),
     ),
     spanStyleDown = SpanStyle(
         fontSize = theme().fonts.caption2.fontSize,
-        baselineShift = BaselineShift(-0.5f),
+        baselineShift = BaselineShift(-0.3f),
     ),
 )
 
@@ -108,15 +108,15 @@ fun List<Formatters.Output>.annotatedStringSubheadline(): AnnotatedString = anno
 fun List<Formatters.Output>.annotatedStringBody(): AnnotatedString = annotatedString(
     spanStyleNormal = SpanStyle(
         fontSize = theme().fonts.body.fontSize,
-        baselineShift = BaselineShift(-0.2f),
+        baselineShift = BaselineShift(0f),
     ),
     spanStyleUp = SpanStyle(
         fontSize = theme().fonts.caption2.fontSize,
-        baselineShift = BaselineShift(0.3f),
+        baselineShift = BaselineShift(0.5f),
     ),
     spanStyleDown = SpanStyle(
         fontSize = theme().fonts.caption2.fontSize,
-        baselineShift = BaselineShift(-0.5f),
+        baselineShift = BaselineShift(-0.3f),
     ),
 )
 
@@ -124,11 +124,11 @@ fun List<Formatters.Output>.annotatedStringBody(): AnnotatedString = annotatedSt
 fun List<Formatters.Output>.annotatedStringLargeTitle(): AnnotatedString = annotatedString(
     spanStylePrefix = SpanStyle(
         fontSize = theme().fonts.largeTitleBold.fontSize,
-        baselineShift = BaselineShift(-0.2f),
+        baselineShift = BaselineShift(0f),
     ),
     spanStyleNormal = SpanStyle(
         fontSize = theme().fonts.largeTitleBold.fontSize,
-        baselineShift = BaselineShift(-0.2f),
+        baselineShift = BaselineShift(0f),
     ),
     spanStyleUp = SpanStyle(
         fontSize = theme().fonts.headlineBold.fontSize,

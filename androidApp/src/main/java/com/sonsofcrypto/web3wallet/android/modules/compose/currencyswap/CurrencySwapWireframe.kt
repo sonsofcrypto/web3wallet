@@ -10,6 +10,7 @@ import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.modules.compose.confirmation.ConfirmationWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencypicker.CurrencyPickerWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext.NetworkData
@@ -23,6 +24,7 @@ class DefaultCurrencySwapWireframe(
     private val networksService: NetworksService,
     private val swapService: UniswapService,
     private val currencyStoreService: CurrencyStoreService,
+    private val confirmationWireframeFactory: ConfirmationWireframeFactory,
 ): CurrencySwapWireframe {
 
     override fun present() {
@@ -37,6 +39,12 @@ class DefaultCurrencySwapWireframe(
             }
             is CurrencySwapWireframeDestination.SelectCurrencyTo -> {
                 navigateToCurrencyPicker(destination.onCompletion)
+            }
+            is CurrencySwapWireframeDestination.ConfirmSwap -> {
+                confirmationWireframeFactory.make(
+                    parent = parent?.get(),
+                    context = destination.context
+                ).present()
             }
             else -> { println("[AA] Handle action -> $destination") }
         }

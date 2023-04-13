@@ -53,6 +53,7 @@ class CurrencyPickerFragment: Fragment(), CurrencyPickerView {
     }
 
     override fun update(viewModel: CurrencyPickerViewModel) {
+        println("[AA] -> viewModel -> ${viewModel.sections.size}")
         liveData.value = viewModel
     }
 

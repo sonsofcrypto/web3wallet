@@ -22,6 +22,7 @@ import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWirefram
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframe
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.EditCurrencies
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DefaultDashboardInteractor
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DefaultDashboardPresenter
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeContext
@@ -72,73 +73,18 @@ class DefaultDashboardWireframe(
                 improvementProposalsWireframeFactory.make(parent?.get()).present()
             }
             is DashboardWireframeDestination.Receive -> {
-                val context = CurrencyPickerWireframeContext(
-                    isMultiSelect = false,
-                    showAddCustomCurrency = false,
-                    networksData = networksService.enabledNetworks().map {
-                        NetworkData(it, null, null)
-                     },
-                    selectedNetwork = null,
-                    handler = {
-                        it.firstOrNull()?.let { result ->
-                            result.selectedCurrencies.firstOrNull()?.let { currency ->
-                                val context = CurrencyReceiveWireframeContext(
-                                    network = result.network,
-                                    currency= currency,
-                                )
-                                currencyReceiveWireframeFactory.make(
-                                    parent?.get(), context
-                                ).present()
-                            }
-                        }
-                    }
-                )
-                currencyPickerWireframeFactory.make(parent?.get(), context).present()
+                navigateToReceive()
             }
             is DashboardWireframeDestination.Send -> {
-                if (destination.addressTo != null) {
-                    val network = networksService.network ?: return
-                    val context = CurrencySendWireframeContext(
-                        network = network,
-                        address = destination.addressTo,
-                        currency= null,
-                    )
-                    currencySendWireframeFactory.make(
-                        parent?.get(), context
-                    ).present()
-                } else {
-                    val context = CurrencyPickerWireframeContext(
-                        isMultiSelect = false,
-                        showAddCustomCurrency = false,
-                        networksData = networksService.enabledNetworks().map {
-                            NetworkData(it, null, null)
-                        },
-                        selectedNetwork = null,
-                        handler = {
-                            it.firstOrNull()?.let { result ->
-                                result.selectedCurrencies.firstOrNull()?.let { currency ->
-                                    val context = CurrencySendWireframeContext(
-                                        network = result.network,
-                                        address = null,
-                                        currency= currency,
-                                    )
-                                    currencySendWireframeFactory.make(
-                                        parent?.get(), context
-                                    ).present()
-                                }
-                            }
-                        }
-                    )
-                    currencyPickerWireframeFactory.make(parent?.get(), context).present()
-                }
+                navigateToSend(destination)
             }
             is DashboardWireframeDestination.Swap -> {
                 val network = networksService.network ?: return
                 val context = CurrencySwapWireframeContext(network, null, null)
                 currencySwapWireframeFactory.make(parent?.get(), context).present()
             }
-            is DashboardWireframeDestination.EditCurrencies -> {
-
+            is EditCurrencies -> {
+                navigateToEditCurrencies(destination)
             }
             is DashboardWireframeDestination.NftItem -> {
                 val context = NFTDetailWireframeContext(
@@ -146,7 +92,7 @@ class DefaultDashboardWireframe(
                 )
                 nftDetailWireframeFactory.make(parent?.get(), context).present()
             }
-            else -> { println("") }
+            else -> { println("[AA] navigate to $destination") }
         }
     }
 
@@ -166,5 +112,82 @@ class DefaultDashboardWireframe(
         )
         view.presenter = presenter
         return view
+    }
+
+    private fun navigateToReceive() {
+        val context = CurrencyPickerWireframeContext(
+            isMultiSelect = false,
+            showAddCustomCurrency = false,
+            networksData = networksService.enabledNetworks().map {
+                NetworkData(it, null, null)
+            },
+            selectedNetwork = null,
+            handler = {
+                it.firstOrNull()?.let { result ->
+                    result.selectedCurrencies.firstOrNull()?.let { currency ->
+                        val context = CurrencyReceiveWireframeContext(
+                            network = result.network,
+                            currency= currency,
+                        )
+                        currencyReceiveWireframeFactory.make(
+                            parent?.get(), context
+                        ).present()
+                    }
+                }
+            }
+        )
+        currencyPickerWireframeFactory.make(parent?.get(), context).present()
+    }
+
+    private fun navigateToSend(destination: DashboardWireframeDestination.Send) {
+        if (destination.addressTo != null) {
+            val network = networksService.network ?: return
+            val context = CurrencySendWireframeContext(
+                network = network,
+                address = destination.addressTo,
+                currency= null,
+            )
+            currencySendWireframeFactory.make(parent?.get(), context).present()
+        } else {
+            val context = CurrencyPickerWireframeContext(
+                isMultiSelect = false,
+                showAddCustomCurrency = false,
+                networksData = networksService.enabledNetworks().map {
+                    NetworkData(it, null, null)
+                },
+                selectedNetwork = null,
+                handler = {
+                    it.firstOrNull()?.let { result ->
+                        result.selectedCurrencies.firstOrNull()?.let { currency ->
+                            val context = CurrencySendWireframeContext(
+                                network = result.network,
+                                address = null,
+                                currency= currency,
+                            )
+                            currencySendWireframeFactory.make(parent?.get(), context).present()
+                        }
+                    }
+                }
+            )
+            currencyPickerWireframeFactory.make(parent?.get(), context).present()
+        }
+    }
+
+    private fun navigateToEditCurrencies(destination: EditCurrencies) {
+
+        val context = CurrencyPickerWireframeContext(
+            isMultiSelect = true,
+            showAddCustomCurrency = true,
+            networksData = listOf(
+                NetworkData(destination.network, destination.selectedCurrencies, null)
+            ),
+            selectedNetwork = null,
+            handler = {
+                if (it.firstOrNull() != null) {
+                    destination.onCompletion(it.first().selectedCurrencies)
+                }
+            }
+        )
+        currencyPickerWireframeFactory.make(parent?.get(), context).present()
     }
 }

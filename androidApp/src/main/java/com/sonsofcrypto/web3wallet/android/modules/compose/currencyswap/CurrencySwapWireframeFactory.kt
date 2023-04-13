@@ -9,6 +9,7 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.AssemblerComponent
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistry
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope
+import com.sonsofcrypto.web3wallet.android.modules.compose.confirmation.ConfirmationWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapWireframe
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapWireframeContext
 import smartadapter.internal.extension.name
@@ -22,6 +23,7 @@ class DefaultCurrencySwapWireframeFactory(
     private val networksService: NetworksService,
     private val swapService: UniswapService,
     private val currencyStoreService: CurrencyStoreService,
+    private val confirmationWireframeFactory: ConfirmationWireframeFactory,
 ): CurrencySwapWireframeFactory {
 
     override fun make(
@@ -34,6 +36,7 @@ class DefaultCurrencySwapWireframeFactory(
         networksService,
         swapService,
         currencyStoreService,
+        confirmationWireframeFactory,
     )
 }
 
@@ -47,6 +50,7 @@ class CurrencySwapWireframeFactoryAssembler: AssemblerComponent {
                 it.resolve(NetworksService::class.name),
                 it.resolve(UniswapService::class.name),
                 it.resolve(CurrencyStoreService::class.name),
+                it.resolve(ConfirmationWireframeFactory::class.name),
             )
         }
     }

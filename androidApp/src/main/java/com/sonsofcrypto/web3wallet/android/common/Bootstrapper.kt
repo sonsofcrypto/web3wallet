@@ -3,6 +3,7 @@ package com.sonsofcrypto.web3wallet.android.common
 import androidx.appcompat.app.AppCompatActivity
 import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.account.AccountWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.confirmation.ConfirmationWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposal.CultProposalWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposals.CultProposalsWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyadd.CurrencyAddWireframeFactoryAssembler
@@ -96,6 +97,7 @@ private class AssemblerBootstrapper: Bootstrapper {
                 CurrencySendWireframeFactoryAssembler(),
                 CurrencySwapWireframeFactoryAssembler(),
                 SettingsWireframeFactoryAssembler(),
+                ConfirmationWireframeFactoryAssembler()
             )
         )
     }

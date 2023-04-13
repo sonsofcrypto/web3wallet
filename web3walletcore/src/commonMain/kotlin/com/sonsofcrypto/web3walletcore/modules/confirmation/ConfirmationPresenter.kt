@@ -48,7 +48,9 @@ class DefaultConfirmationPresenter(
 
     override fun handle(event: ConfirmationPresenterEvent) {
         when (event) {
-            is Confirm -> wireframe.navigate(Authenticate(authenticateContext()))
+            is Confirm -> {
+                wireframe.navigate(Authenticate(authenticateContext()))
+            }
             is TxSuccessCTATapped -> {
                 when (context) {
                     is Send -> wireframe.navigate(Dismiss { wireframe.navigate(Account) })
@@ -103,7 +105,7 @@ class DefaultConfirmationPresenter(
     private fun failedViewModel(error: Throwable): ConfirmationViewModel.Content {
         val data = ConfirmationTxFailedViewModel(
             Localized("confirmation.tx.failed.${context.localized}.title"),
-            Localized(error.message ?: Localized("confirmation.tx.failed.generic.error")),
+            Localized(error.message ?: "confirmation.tx.failed.generic.error"),
             Localized("confirmation.tx.failed.${context.localized}.cta"),
             Localized("confirmation.tx.failed.report"),
         )
