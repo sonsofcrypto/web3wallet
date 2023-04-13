@@ -2,6 +2,8 @@ package com.sonsofcrypto.web3lib
 
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.*
+import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
+import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -9,13 +11,15 @@ class AndroidGreetingTest {
 
     @Test
     fun testExample() {
-        println("=== Running android test")
-//        var result = Foolib.Hello("your mum")
-//        var result = Foolib.Hello("your mum")
-//        val result = CoreCrypto.secureRand(12)
-        var bip39 = Bip39.from()
-        val result = bip39.mnemonic
-        println("=== RESULT $result")
-        assertTrue("Check Android is mentioned", "Android".contains("Android"))
+        val entropy = "0x0daee99c02cea52888763ea8443e6c4e".hexStringToByteArray()
+        var bip39 = Bip39.from(entropy)
+        val expectation = listOf(
+            "asset", "jar", "grow", "airport", "tumble", "nephew", "canyon",
+            "sick", "portion", "capable", "only", "oven"
+        )
+        assertTrue(
+            "Unexpected mnemonic ${bip39.mnemonic}, expected $expectation",
+            expectation.joinToString() == bip39.mnemonic.joinToString(),
+        )
     }
 }

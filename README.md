@@ -43,6 +43,17 @@ supported platform provides native UI.
 ## androidApp
 Compile using Android Studio
 
+## Run commonTests on host OS
+
+``` 
+./gradlew :web3lib:cleanTestDebugUnitTest :web3lib:testDebugUnitTest
+```
+
+## Run android specific tests 
+```
+./gradlew :web3lib:testDebugUnitTest --tests com.sonsofcrypto.web3lib.AndroidGreetingTest.testExample
+```
+
 ## iosApp
 Build web3walletcore library ```./gradlew :web3walletcore:assembleXCFramework```
 and run normally from Xcode. Alternatively add iosApp configuration in Android 

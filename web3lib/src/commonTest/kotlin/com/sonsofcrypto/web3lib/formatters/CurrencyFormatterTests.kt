@@ -98,6 +98,8 @@ class CurrencyFormatterTests {
         val expected: List<Output> = listOf(
             Normal("1K ETH")
         )
+        println(actual)
+        println(expected)
         assertEquals(expected, actual)
     }
     @Test
