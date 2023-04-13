@@ -1,9 +1,12 @@
-package com.sonsofcrypto.web3wallet.android
+package com.sonsofcrypto.web3lib
 
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
+import kotlin.test.DefaultAsserter.assertTrue
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class Bip39Test {
 
@@ -21,49 +24,42 @@ class Bip39Test {
     )
     val entropyString = "d39162739a7879018108d9f5ffea50a2"
 
-    fun runAll() {
-//        testBip39Seed()
-//        testBip39Entropy()
-        debugMnemonic()
-    }
-
-    fun assertTrue(actual: Boolean, message: String? = null) {
-        if (!actual) throw Exception("Failed $message")
-    }
-
-    fun debugMnemonic() {
-        val invalid =  listOf("faith","rabbit","damp","raccoon","erode","raccoon","race","raccoon","early","raccoon","early","yellow")
-        val bip39 = Bip39(invalid, "", WordList.ENGLISH)
-        val seed = bip39.seed()
-        bip39.entropy()
-
-        val men = Bip39.from(bip39.entropy(), "", WordList.ENGLISH)
-        println("=== $seed")
-        println("=== ${men.mnemonic}")
-    }
-
+    @Test
     fun testBip39Seed() {
         val bip39 = Bip39(words, "", WordList.ENGLISH)
         val seed = bip39.seed()
-
-        assertTrue(expectedSeed == seed.toHexString(), "Seed does match")
+        assertEquals(expectedSeed, seed.toHexString(), "Seed does match")
 
         val bip39Salted = Bip39(words, "testsalt", WordList.ENGLISH)
         val seedSalted = bip39Salted.seed()
-
-        assertTrue(expectedSeedSalted == seedSalted.toHexString(), "Seed does match")
+        assertEquals(expectedSeedSalted, seedSalted.toHexString(), "Seed does match")
     }
 
+    @Test
     fun testBip39Entropy() {
         val entropy = entropyString.hexStringToByteArray()
         val bip39 = Bip39.from(entropy, "", WordList.ENGLISH)
-
-        assertTrue(bip39.mnemonic == words, "Words do not match")
-        assertTrue(bip39.entropy().toHexString() == entropyString, "Entropy do not match")
-        assertTrue(bip39.seed().toHexString() == expectedSeed, "Seed does not match")
+        assertEquals(bip39.mnemonic, words, "Words do not match")
+        assertEquals(bip39.entropy().toHexString(), entropyString, "Entropy do not match")
+        assertEquals(bip39.seed().toHexString(), expectedSeed, "Seed does not match")
 
         val randomBip39 = Bip39.from(Bip39.EntropySize.ES128, "", WordList.ENGLISH)
+        assertEquals(randomBip39.entropy().size, 16, "Unexpected 16 bytes")
+    }
 
-        assertTrue(randomBip39.entropy().size == 16, "Unexpected 16 bytes")
+    @Test
+    fun testInvalidMnemonic() {
+        val invalid =  listOf(
+            "faith","rabbit","damp","raccoon","erode","raccoon","race",
+            "raccoon","early","raccoon","early","yellow"
+        )
+        try {
+            val bip39 = Bip39(invalid, "", WordList.ENGLISH)
+            val seed = bip39.seed()
+            val men = Bip39.from(bip39.entropy(), "", WordList.ENGLISH)
+            assertTrue("Should throw invalid mnem $seed ${men.mnemonic}", false)
+        } catch (err: Throwable) {
+            assertTrue("We caught error $err", true)
+        }
     }
 }
