@@ -1,10 +1,14 @@
-package com.sonsofcrypto.web3wallet.android
+package com.sonsofcrypto.web3lib
 
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 class Bip44Test {
 
@@ -31,185 +35,219 @@ class Bip44Test {
         testVector5()
         testExtKeyFromString()
 //        test1000SeedDerivations()
-//        println("=== passed")
     }
-
-    fun assertTrue(actual: Boolean, message: String? = null) {
-        if (!actual) throw Exception("Failed $message")
-    }
-
+    
+    @Test
     fun testBip44MasterKey() {
         val bip44 = Bip44(seed.hexStringToByteArray(), ExtKey.Version.MAINNETPRV)
-        assertTrue(
-            bip44.masterExtKey.base58WithChecksumString() == xprv,
+        assertEquals(
+            bip44.masterExtKey.base58WithChecksumString(), 
+            xprv, 
             "xprv does not match expected \n ${bip44.masterExtKey.base58WithChecksumString()}\n$xprv"
         )
     }
 
+    @Test
     fun testVector1() {
         val seed = "000102030405060708090a0b0c0d0e0f".hexStringToByteArray()
         val bip44 = Bip44(seed, ExtKey.Version.MAINNETPRV)
         // m
-        assertTrue(
-            bip44.masterExtKey.base58WithChecksumString() == "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi",
+        assertEquals(
+            bip44.masterExtKey.base58WithChecksumString(),
+            "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi",
             "unexpected master prv key "
         )
-        assertTrue(
-            bip44.masterExtKey.xpub().base58WithChecksumString() == "xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8",
+        assertEquals(
+            bip44.masterExtKey.xpub().base58WithChecksumString(),
+            "xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8",
             "unexpected master pub key "
         )
         // m/0'
-        assertTrue(
-            bip44.deriveChildKey("m/0'").base58WithChecksumString() == "xprv9uHRZZhk6KAJC1avXpDAp4MDc3sQKNxDiPvvkX8Br5ngLNv1TxvUxt4cV1rGL5hj6KCesnDYUhd7oWgT11eZG7XnxHrnYeSvkzY7d2bhkJ7",
+        assertEquals(
+            bip44.deriveChildKey("m/0'").base58WithChecksumString(),
+            "xprv9uHRZZhk6KAJC1avXpDAp4MDc3sQKNxDiPvvkX8Br5ngLNv1TxvUxt4cV1rGL5hj6KCesnDYUhd7oWgT11eZG7XnxHrnYeSvkzY7d2bhkJ7",
             "unexpected prv key at m/0'"
         )
-        assertTrue(
-            bip44.deriveChildKey("m/0'").xpub().base58WithChecksumString() == "xpub68Gmy5EdvgibQVfPdqkBBCHxA5htiqg55crXYuXoQRKfDBFA1WEjWgP6LHhwBZeNK1VTsfTFUHCdrfp1bgwQ9xv5ski8PX9rL2dZXvgGDnw",
+        assertEquals(
+            bip44.deriveChildKey("m/0'").xpub().base58WithChecksumString(),
+            "xpub68Gmy5EdvgibQVfPdqkBBCHxA5htiqg55crXYuXoQRKfDBFA1WEjWgP6LHhwBZeNK1VTsfTFUHCdrfp1bgwQ9xv5ski8PX9rL2dZXvgGDnw",
             "unexpected pub key at m/0'"
         )
         // m/0'/1
-        assertTrue(
-            bip44.deriveChildKey("m/0'/1").base58WithChecksumString() == "xprv9wTYmMFdV23N2TdNG573QoEsfRrWKQgWeibmLntzniatZvR9BmLnvSxqu53Kw1UmYPxLgboyZQaXwTCg8MSY3H2EU4pWcQDnRnrVA1xe8fs",
+        assertEquals(
+            bip44.deriveChildKey("m/0'/1").base58WithChecksumString(),
+            "xprv9wTYmMFdV23N2TdNG573QoEsfRrWKQgWeibmLntzniatZvR9BmLnvSxqu53Kw1UmYPxLgboyZQaXwTCg8MSY3H2EU4pWcQDnRnrVA1xe8fs",
             "unexpected prv key at m/0'/1"
         )
-        assertTrue(
-            bip44.deriveChildKey("m/0'/1").xpub().base58WithChecksumString() == "xpub6ASuArnXKPbfEwhqN6e3mwBcDTgzisQN1wXN9BJcM47sSikHjJf3UFHKkNAWbWMiGj7Wf5uMash7SyYq527Hqck2AxYysAA7xmALppuCkwQ",
+        assertEquals(
+            bip44.deriveChildKey("m/0'/1").xpub().base58WithChecksumString(),
+            "xpub6ASuArnXKPbfEwhqN6e3mwBcDTgzisQN1wXN9BJcM47sSikHjJf3UFHKkNAWbWMiGj7Wf5uMash7SyYq527Hqck2AxYysAA7xmALppuCkwQ",
             "unexpected pub key at m/0'/1"
         )
         // m/0'/1/2'
-        assertTrue(
-            bip44.deriveChildKey("m/0'/1/2'").base58WithChecksumString() == "xprv9z4pot5VBttmtdRTWfWQmoH1taj2axGVzFqSb8C9xaxKymcFzXBDptWmT7FwuEzG3ryjH4ktypQSAewRiNMjANTtpgP4mLTj34bhnZX7UiM",
+        assertEquals(
+            bip44.deriveChildKey("m/0'/1/2'").base58WithChecksumString(),
+            "xprv9z4pot5VBttmtdRTWfWQmoH1taj2axGVzFqSb8C9xaxKymcFzXBDptWmT7FwuEzG3ryjH4ktypQSAewRiNMjANTtpgP4mLTj34bhnZX7UiM",
             "unexpected prv key at m/0'/1/2'"
         )
-        assertTrue(
-            bip44.deriveChildKey("m/0'/1/2'").xpub().base58WithChecksumString() == "xpub6D4BDPcP2GT577Vvch3R8wDkScZWzQzMMUm3PWbmWvVJrZwQY4VUNgqFJPMM3No2dFDFGTsxxpG5uJh7n7epu4trkrX7x7DogT5Uv6fcLW5",
+        assertEquals(
+            bip44.deriveChildKey("m/0'/1/2'").xpub().base58WithChecksumString(),
+            "xpub6D4BDPcP2GT577Vvch3R8wDkScZWzQzMMUm3PWbmWvVJrZwQY4VUNgqFJPMM3No2dFDFGTsxxpG5uJh7n7epu4trkrX7x7DogT5Uv6fcLW5",
             "unexpected pub key at m/0'/1/2'"
         )
         // m/0'/1/2'/2
-        assertTrue(
-            bip44.deriveChildKey("m/0'/1/2'/2").base58WithChecksumString() == "xprvA2JDeKCSNNZky6uBCviVfJSKyQ1mDYahRjijr5idH2WwLsEd4Hsb2Tyh8RfQMuPh7f7RtyzTtdrbdqqsunu5Mm3wDvUAKRHSC34sJ7in334",
+        assertEquals(
+            bip44.deriveChildKey("m/0'/1/2'/2").base58WithChecksumString(),
+            "xprvA2JDeKCSNNZky6uBCviVfJSKyQ1mDYahRjijr5idH2WwLsEd4Hsb2Tyh8RfQMuPh7f7RtyzTtdrbdqqsunu5Mm3wDvUAKRHSC34sJ7in334",
             "unexpected prv key at m/0'/1/2'/2"
         )
-        assertTrue(
-            bip44.deriveChildKey("m/0'/1/2'/2").xpub().base58WithChecksumString() == "xpub6FHa3pjLCk84BayeJxFW2SP4XRrFd1JYnxeLeU8EqN3vDfZmbqBqaGJAyiLjTAwm6ZLRQUMv1ZACTj37sR62cfN7fe5JnJ7dh8zL4fiyLHV",
+        assertEquals(
+            bip44.deriveChildKey("m/0'/1/2'/2").xpub().base58WithChecksumString(),
+            "xpub6FHa3pjLCk84BayeJxFW2SP4XRrFd1JYnxeLeU8EqN3vDfZmbqBqaGJAyiLjTAwm6ZLRQUMv1ZACTj37sR62cfN7fe5JnJ7dh8zL4fiyLHV",
             "unexpected pub key at m/0'/1/2'/2'"
         )
         // m/0'/1/2'/2/1000000000
-        assertTrue(
-            bip44.deriveChildKey("m/0'/1/2'/2/1000000000").base58WithChecksumString() == "xprvA41z7zogVVwxVSgdKUHDy1SKmdb533PjDz7J6N6mV6uS3ze1ai8FHa8kmHScGpWmj4WggLyQjgPie1rFSruoUihUZREPSL39UNdE3BBDu76",
+        assertEquals(
+            bip44.deriveChildKey("m/0'/1/2'/2/1000000000").base58WithChecksumString(),
+            "xprvA41z7zogVVwxVSgdKUHDy1SKmdb533PjDz7J6N6mV6uS3ze1ai8FHa8kmHScGpWmj4WggLyQjgPie1rFSruoUihUZREPSL39UNdE3BBDu76",
             "unexpected prv key at m/0'/1/2'/2/1000000000"
         )
-        assertTrue(
-            bip44.deriveChildKey("m/0'/1/2'/2/1000000000").xpub().base58WithChecksumString() == "xpub6H1LXWLaKsWFhvm6RVpEL9P4KfRZSW7abD2ttkWP3SSQvnyA8FSVqNTEcYFgJS2UaFcxupHiYkro49S8yGasTvXEYBVPamhGW6cFJodrTHy",
+        assertEquals(
+            bip44.deriveChildKey("m/0'/1/2'/2/1000000000").xpub().base58WithChecksumString(),
+            "xpub6H1LXWLaKsWFhvm6RVpEL9P4KfRZSW7abD2ttkWP3SSQvnyA8FSVqNTEcYFgJS2UaFcxupHiYkro49S8yGasTvXEYBVPamhGW6cFJodrTHy",
             "unexpected pub key at m/0'/1/2'/2/1000000000"
         )
     }
 
+    @Test
     fun testVector2() {
         val seed = "fffcf9f6f3f0edeae7e4e1dedbd8d5d2cfccc9c6c3c0bdbab7b4b1aeaba8a5a29f9c999693908d8a8784817e7b7875726f6c696663605d5a5754514e4b484542".hexStringToByteArray()
         val bip44 = Bip44(seed, ExtKey.Version.MAINNETPRV)
         // Chain m
-        assertTrue(
-            bip44.masterExtKey.base58WithChecksumString() == "xprv9s21ZrQH143K31xYSDQpPDxsXRTUcvj2iNHm5NUtrGiGG5e2DtALGdso3pGz6ssrdK4PFmM8NSpSBHNqPqm55Qn3LqFtT2emdEXVYsCzC2U",
+        assertEquals(
+            bip44.masterExtKey.base58WithChecksumString(),
+            "xprv9s21ZrQH143K31xYSDQpPDxsXRTUcvj2iNHm5NUtrGiGG5e2DtALGdso3pGz6ssrdK4PFmM8NSpSBHNqPqm55Qn3LqFtT2emdEXVYsCzC2U",
             "unexpected master prv key "
         )
-        assertTrue(
-            bip44.masterExtKey.xpub().base58WithChecksumString() == "xpub661MyMwAqRbcFW31YEwpkMuc5THy2PSt5bDMsktWQcFF8syAmRUapSCGu8ED9W6oDMSgv6Zz8idoc4a6mr8BDzTJY47LJhkJ8UB7WEGuduB",
+        assertEquals(
+            bip44.masterExtKey.xpub().base58WithChecksumString(),
+            "xpub661MyMwAqRbcFW31YEwpkMuc5THy2PSt5bDMsktWQcFF8syAmRUapSCGu8ED9W6oDMSgv6Zz8idoc4a6mr8BDzTJY47LJhkJ8UB7WEGuduB",
             "unexpected master pub key "
         )
         // m/0
-        assertTrue(
-            bip44.deriveChildKey("m/0").base58WithChecksumString() == "xprv9vHkqa6EV4sPZHYqZznhT2NPtPCjKuDKGY38FBWLvgaDx45zo9WQRUT3dKYnjwih2yJD9mkrocEZXo1ex8G81dwSM1fwqWpWkeS3v86pgKt",
+        assertEquals(
+            bip44.deriveChildKey("m/0").base58WithChecksumString(),
+            "xprv9vHkqa6EV4sPZHYqZznhT2NPtPCjKuDKGY38FBWLvgaDx45zo9WQRUT3dKYnjwih2yJD9mkrocEZXo1ex8G81dwSM1fwqWpWkeS3v86pgKt",
             "unexpected prv key at m/0"
         )
-        assertTrue(
-            bip44.deriveChildKey("m/0").xpub().base58WithChecksumString() == "xpub69H7F5d8KSRgmmdJg2KhpAK8SR3DjMwAdkxj3ZuxV27CprR9LgpeyGmXUbC6wb7ERfvrnKZjXoUmmDznezpbZb7ap6r1D3tgFxHmwMkQTPH",
+        assertEquals(
+            bip44.deriveChildKey("m/0").xpub().base58WithChecksumString(),
+            "xpub69H7F5d8KSRgmmdJg2KhpAK8SR3DjMwAdkxj3ZuxV27CprR9LgpeyGmXUbC6wb7ERfvrnKZjXoUmmDznezpbZb7ap6r1D3tgFxHmwMkQTPH",
             "unexpected pub key at m/0"
         )
         // m/0/2147483647'
-        assertTrue(
-            bip44.deriveChildKey("m/0/2147483647'").base58WithChecksumString() == "xprv9wSp6B7kry3Vj9m1zSnLvN3xH8RdsPP1Mh7fAaR7aRLcQMKTR2vidYEeEg2mUCTAwCd6vnxVrcjfy2kRgVsFawNzmjuHc2YmYRmagcEPdU9",
+        assertEquals(
+            bip44.deriveChildKey("m/0/2147483647'").base58WithChecksumString(),
+            "xprv9wSp6B7kry3Vj9m1zSnLvN3xH8RdsPP1Mh7fAaR7aRLcQMKTR2vidYEeEg2mUCTAwCd6vnxVrcjfy2kRgVsFawNzmjuHc2YmYRmagcEPdU9",
             "unexpected prv key at m/0/2147483647'"
         )
-        assertTrue(
-            bip44.deriveChildKey("m/0/2147483647'").xpub().base58WithChecksumString() == "xpub6ASAVgeehLbnwdqV6UKMHVzgqAG8Gr6riv3Fxxpj8ksbH9ebxaEyBLZ85ySDhKiLDBrQSARLq1uNRts8RuJiHjaDMBU4Zn9h8LZNnBC5y4a",
+        assertEquals(
+            bip44.deriveChildKey("m/0/2147483647'").xpub().base58WithChecksumString(),
+            "xpub6ASAVgeehLbnwdqV6UKMHVzgqAG8Gr6riv3Fxxpj8ksbH9ebxaEyBLZ85ySDhKiLDBrQSARLq1uNRts8RuJiHjaDMBU4Zn9h8LZNnBC5y4a",
             "unexpected pub key at m/0/2147483647'"
         )
         // m/0/2147483647'/1/2147483646'
-        assertTrue(
-            bip44.deriveChildKey("m/0/2147483647'/1/2147483646'").base58WithChecksumString() == "xprvA1RpRA33e1JQ7ifknakTFpgNXPmW2YvmhqLQYMmrj4xJXXWYpDPS3xz7iAxn8L39njGVyuoseXzU6rcxFLJ8HFsTjSyQbLYnMpCqE2VbFWc",
+        assertEquals(
+            bip44.deriveChildKey("m/0/2147483647'/1/2147483646'").base58WithChecksumString(),
+            "xprvA1RpRA33e1JQ7ifknakTFpgNXPmW2YvmhqLQYMmrj4xJXXWYpDPS3xz7iAxn8L39njGVyuoseXzU6rcxFLJ8HFsTjSyQbLYnMpCqE2VbFWc",
             "unexpected prv key at m/0/2147483647'/1/2147483646'"
         )
-        assertTrue(
-            bip44.deriveChildKey("m/0/2147483647'/1/2147483646'").xpub().base58WithChecksumString() == "xpub6ERApfZwUNrhLCkDtcHTcxd75RbzS1ed54G1LkBUHQVHQKqhMkhgbmJbZRkrgZw4koxb5JaHWkY4ALHY2grBGRjaDMzQLcgJvLJuZZvRcEL",
+        assertEquals(
+            bip44.deriveChildKey("m/0/2147483647'/1/2147483646'").xpub().base58WithChecksumString(),
+            "xpub6ERApfZwUNrhLCkDtcHTcxd75RbzS1ed54G1LkBUHQVHQKqhMkhgbmJbZRkrgZw4koxb5JaHWkY4ALHY2grBGRjaDMzQLcgJvLJuZZvRcEL",
             "unexpected pub key at m/0/2147483647'/1/2147483646'"
         )
         // m/0/2147483647'/1/2147483646'/2
-        assertTrue(
-            bip44.deriveChildKey("m/0/2147483647'/1/2147483646'/2").base58WithChecksumString() == "xprvA2nrNbFZABcdryreWet9Ea4LvTJcGsqrMzxHx98MMrotbir7yrKCEXw7nadnHM8Dq38EGfSh6dqA9QWTyefMLEcBYJUuekgW4BYPJcr9E7j",
+        assertEquals(
+            bip44.deriveChildKey("m/0/2147483647'/1/2147483646'/2").base58WithChecksumString(),
+            "xprvA2nrNbFZABcdryreWet9Ea4LvTJcGsqrMzxHx98MMrotbir7yrKCEXw7nadnHM8Dq38EGfSh6dqA9QWTyefMLEcBYJUuekgW4BYPJcr9E7j",
             "unexpected prv key at m/0/2147483647'/1/2147483646'/2"
         )
-        assertTrue(
-            bip44.deriveChildKey("m/0/2147483647'/1/2147483646'/2").xpub().base58WithChecksumString() == "xpub6FnCn6nSzZAw5Tw7cgR9bi15UV96gLZhjDstkXXxvCLsUXBGXPdSnLFbdpq8p9HmGsApME5hQTZ3emM2rnY5agb9rXpVGyy3bdW6EEgAtqt",
+        assertEquals(
+            bip44.deriveChildKey("m/0/2147483647'/1/2147483646'/2").xpub().base58WithChecksumString(),
+            "xpub6FnCn6nSzZAw5Tw7cgR9bi15UV96gLZhjDstkXXxvCLsUXBGXPdSnLFbdpq8p9HmGsApME5hQTZ3emM2rnY5agb9rXpVGyy3bdW6EEgAtqt",
             "unexpected pub key at m/0/2147483647'/1/2147483646'/2"
         )
     }
 
+    @Test
     fun testVector3() {
         val seed = "4b381541583be4423346c643850da4b320e46a87ae3d2a4e6da11eba819cd4acba45d239319ac14f863b8d5ab5a0d0c64d2e8a1e7d1457df2e5a3c51c73235be".hexStringToByteArray()
         val bip44 = Bip44(seed, ExtKey.Version.MAINNETPRV)
         // Chain m
-        assertTrue(
-            bip44.masterExtKey.base58WithChecksumString() == "xprv9s21ZrQH143K25QhxbucbDDuQ4naNntJRi4KUfWT7xo4EKsHt2QJDu7KXp1A3u7Bi1j8ph3EGsZ9Xvz9dGuVrtHHs7pXeTzjuxBrCmmhgC6",
+        assertEquals(
+            bip44.masterExtKey.base58WithChecksumString(),
+            "xprv9s21ZrQH143K25QhxbucbDDuQ4naNntJRi4KUfWT7xo4EKsHt2QJDu7KXp1A3u7Bi1j8ph3EGsZ9Xvz9dGuVrtHHs7pXeTzjuxBrCmmhgC6",
             "unexpected master prv key "
         )
-        assertTrue(
-            bip44.masterExtKey.xpub().base58WithChecksumString() == "xpub661MyMwAqRbcEZVB4dScxMAdx6d4nFc9nvyvH3v4gJL378CSRZiYmhRoP7mBy6gSPSCYk6SzXPTf3ND1cZAceL7SfJ1Z3GC8vBgp2epUt13",
+        assertEquals(
+            bip44.masterExtKey.xpub().base58WithChecksumString(),
+            "xpub661MyMwAqRbcEZVB4dScxMAdx6d4nFc9nvyvH3v4gJL378CSRZiYmhRoP7mBy6gSPSCYk6SzXPTf3ND1cZAceL7SfJ1Z3GC8vBgp2epUt13",
             "unexpected master pub key "
         )
         // m/0
-        assertTrue(
-            bip44.deriveChildKey("m/0'").base58WithChecksumString() == "xprv9uPDJpEQgRQfDcW7BkF7eTya6RPxXeJCqCJGHuCJ4GiRVLzkTXBAJMu2qaMWPrS7AANYqdq6vcBcBUdJCVVFceUvJFjaPdGZ2y9WACViL4L",
+        assertEquals(
+            bip44.deriveChildKey("m/0'").base58WithChecksumString(),
+            "xprv9uPDJpEQgRQfDcW7BkF7eTya6RPxXeJCqCJGHuCJ4GiRVLzkTXBAJMu2qaMWPrS7AANYqdq6vcBcBUdJCVVFceUvJFjaPdGZ2y9WACViL4L",
             "unexpected prv key at m/0'"
         )
-        assertTrue(
-            bip44.deriveChildKey("m/0'").xpub().base58WithChecksumString() == "xpub68NZiKmJWnxxS6aaHmn81bvJeTESw724CRDs6HbuccFQN9Ku14VQrADWgqbhhTHBaohPX4CjNLf9fq9MYo6oDaPPLPxSb7gwQN3ih19Zm4Y",
+        assertEquals(
+            bip44.deriveChildKey("m/0'").xpub().base58WithChecksumString(),
+            "xpub68NZiKmJWnxxS6aaHmn81bvJeTESw724CRDs6HbuccFQN9Ku14VQrADWgqbhhTHBaohPX4CjNLf9fq9MYo6oDaPPLPxSb7gwQN3ih19Zm4Y",
             "unexpected pub key at m/0'"
         )
     }
 
+    @Test
     fun testVector4() {
         val seed = "3ddd5602285899a946114506157c7997e5444528f3003f6134712147db19b678".hexStringToByteArray()
         val bip44 = Bip44(seed, ExtKey.Version.MAINNETPRV)
         // Chain m
-        assertTrue(
-            bip44.masterExtKey.base58WithChecksumString() == "xprv9s21ZrQH143K48vGoLGRPxgo2JNkJ3J3fqkirQC2zVdk5Dgd5w14S7fRDyHH4dWNHUgkvsvNDCkvAwcSHNAQwhwgNMgZhLtQC63zxwhQmRv",
+        assertEquals(
+            bip44.masterExtKey.base58WithChecksumString(),
+            "xprv9s21ZrQH143K48vGoLGRPxgo2JNkJ3J3fqkirQC2zVdk5Dgd5w14S7fRDyHH4dWNHUgkvsvNDCkvAwcSHNAQwhwgNMgZhLtQC63zxwhQmRv",
             "unexpected master prv key "
         )
-        assertTrue(
-            bip44.masterExtKey.xpub().base58WithChecksumString() == "xpub661MyMwAqRbcGczjuMoRm6dXaLDEhW1u34gKenbeYqAix21mdUKJyuyu5F1rzYGVxyL6tmgBUAEPrEz92mBXjByMRiJdba9wpnN37RLLAXa",
+        assertEquals(
+            bip44.masterExtKey.xpub().base58WithChecksumString(),
+            "xpub661MyMwAqRbcGczjuMoRm6dXaLDEhW1u34gKenbeYqAix21mdUKJyuyu5F1rzYGVxyL6tmgBUAEPrEz92mBXjByMRiJdba9wpnN37RLLAXa",
             "unexpected master pub key "
         )
         // m/0'
-        assertTrue(
-            bip44.deriveChildKey("m/0'").base58WithChecksumString() == "xprv9vB7xEWwNp9kh1wQRfCCQMnZUEG21LpbR9NPCNN1dwhiZkjjeGRnaALmPXCX7SgjFTiCTT6bXes17boXtjq3xLpcDjzEuGLQBM5ohqkao9G",
+        assertEquals(
+            bip44.deriveChildKey("m/0'").base58WithChecksumString(),
+            "xprv9vB7xEWwNp9kh1wQRfCCQMnZUEG21LpbR9NPCNN1dwhiZkjjeGRnaALmPXCX7SgjFTiCTT6bXes17boXtjq3xLpcDjzEuGLQBM5ohqkao9G",
             "unexpected prv key at m/0'"
         )
-        assertTrue(
-            bip44.deriveChildKey("m/0'").xpub().base58WithChecksumString() == "xpub69AUMk3qDBi3uW1sXgjCmVjJ2G6WQoYSnNHyzkmdCHEhSZ4tBok37xfFEqHd2AddP56Tqp4o56AePAgCjYdvpW2PU2jbUPFKsav5ut6Ch1m",
+        assertEquals(
+            bip44.deriveChildKey("m/0'").xpub().base58WithChecksumString(),
+            "xpub69AUMk3qDBi3uW1sXgjCmVjJ2G6WQoYSnNHyzkmdCHEhSZ4tBok37xfFEqHd2AddP56Tqp4o56AePAgCjYdvpW2PU2jbUPFKsav5ut6Ch1m",
             "unexpected pub key at m/0'"
         )
         // m/0'/1'
-        assertTrue(
-            bip44.deriveChildKey("m/0'/1'").base58WithChecksumString() == "xprv9xJocDuwtYCMNAo3Zw76WENQeAS6WGXQ55RCy7tDJ8oALr4FWkuVoHJeHVAcAqiZLE7Je3vZJHxspZdFHfnBEjHqU5hG1Jaj32dVoS6XLT1",
+        assertEquals(
+            bip44.deriveChildKey("m/0'/1'").base58WithChecksumString(),
+            "xprv9xJocDuwtYCMNAo3Zw76WENQeAS6WGXQ55RCy7tDJ8oALr4FWkuVoHJeHVAcAqiZLE7Je3vZJHxspZdFHfnBEjHqU5hG1Jaj32dVoS6XLT1",
             "unexpected prv key at m/0'/1'"
         )
-        assertTrue(
-            bip44.deriveChildKey("m/0'/1'").xpub().base58WithChecksumString() == "xpub6BJA1jSqiukeaesWfxe6sNK9CCGaujFFSJLomWHprUL9DePQ4JDkM5d88n49sMGJxrhpjazuXYWdMf17C9T5XnxkopaeS7jGk1GyyVziaMt",
+        assertEquals(
+            bip44.deriveChildKey("m/0'/1'").xpub().base58WithChecksumString(),
+            "xpub6BJA1jSqiukeaesWfxe6sNK9CCGaujFFSJLomWHprUL9DePQ4JDkM5d88n49sMGJxrhpjazuXYWdMf17C9T5XnxkopaeS7jGk1GyyVziaMt",
             "unexpected pub key at m/0'/1'"
         )
     }
 
+    @Test
     fun testVector5() {
         val keyStrings = listOf(
             // (pubkey version / prvkey mismatch)
@@ -251,17 +289,23 @@ class Bip44Test {
             var err: Exception? = null
             try {
                 val key = ExtKey.fromString(keyString)
-                assertTrue(
-                    "Expected to catch error invalid $keyString" != keyString,
+                assertNotEquals(
+                    "Expected to catch error invalid $keyString",
+                    keyString,
                     "Failed to decode extKey $keyString"
                 )
             } catch (error: Exception) {
                 err = error
             }
-            assertTrue(err != null, "Expected to catch error invalid $idx $keyString")
+            assertNotEquals(
+                err,
+                null,
+                "Expected to catch error invalid $idx $keyString"
+            )
         }
     }
 
+    @Test
     fun testExtKeyFromString() {
         val keyStrings = listOf(
             "xpub661MyMwAqRbcFW31YEwpkMuc5THy2PSt5bDMsktWQcFF8syAmRUapSCGu8ED9W6oDMSgv6Zz8idoc4a6mr8BDzTJY47LJhkJ8UB7WEGuduB",
@@ -281,13 +325,15 @@ class Bip44Test {
         for (idx in keyStrings.indices) {
             val keyString = keyStrings[idx]
             val key = ExtKey.fromString(keyString)
-            assertTrue(
-                key.base58WithChecksumString() == keyString,
+            assertEquals(
+                key.base58WithChecksumString(),
+                keyString,
                 "Failed to decode key\n$idx\n$keyString\n${key.base58WithChecksumString()}"
             )
         }
     }
 
+    @Test
     fun test1000SeedDerivations() {
         val salts = listOf("SomeSalt", "")
         val sizes = listOf(
@@ -312,8 +358,9 @@ class Bip44Test {
                 val masterKeyStr = bip44.masterExtKey.base58WithChecksumString()
                 val deserializedKey = ExtKey.fromString(masterKeyStr)
                     .base58WithChecksumString()
-                assertTrue(
-                    deserializedKey == masterKeyStr,
+                assertEquals(
+                    deserializedKey,
+                    masterKeyStr,
                     "Failed to serialize/deserialized master key \n" +
                             "seed ${bip39.seed().toHexString()}\n" +
                             "words ${bip39.mnemonic}\n" +
@@ -332,8 +379,9 @@ class Bip44Test {
                 val childKeyStr = childKey.base58WithChecksumString()
                 val deserializedKey = ExtKey.fromString(childKeyStr)
                     .base58WithChecksumString()
-                assertTrue(
-                    deserializedKey == childKeyStr,
+                assertEquals(
+                    deserializedKey,
+                    childKeyStr,
                     "Failed to serialize / deserialized child key" +
                             "seed ${bip39.seed().toHexString()}\n" +
                             "words ${bip39.mnemonic}\n" +
