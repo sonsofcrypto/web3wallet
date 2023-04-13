@@ -7,7 +7,6 @@ import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class Bip44Test {
