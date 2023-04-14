@@ -59,7 +59,7 @@ class DefaultNFTSendPresenter(
             }
             is NFTSendPresenterEvent.SaveAddress -> wireframe.navigate(UnderConstructionAlert)
             is NFTSendPresenterEvent.NetworkFeeTapped -> {
-                view.get()?.presentNetworkFeePicker(networkFees)
+                view.get()?.presentNetworkFeePicker(networkFees, networkFee)
             }
             is NFTSendPresenterEvent.NetworkFeeChanged -> {
                 networkFee = event.value

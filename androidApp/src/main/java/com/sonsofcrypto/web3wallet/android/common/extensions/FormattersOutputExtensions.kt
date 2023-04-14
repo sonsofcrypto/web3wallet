@@ -89,6 +89,22 @@ fun List<Formatters.Output>.annotatedStringFootnote(): AnnotatedString = annotat
 )
 
 @Composable
+fun List<Formatters.Output>.annotatedStringFootnoteNetworkFee(): AnnotatedString = annotatedString(
+    spanStyleNormal = SpanStyle(
+        fontSize = theme().fonts.footnote.fontSize,
+        baselineShift = BaselineShift(-0.2f),
+    ),
+    spanStyleUp = SpanStyle(
+        fontSize = theme().fonts.extraSmall.fontSize,
+        baselineShift = BaselineShift(0.3f),
+    ),
+    spanStyleDown = SpanStyle(
+        fontSize = theme().fonts.extraSmall.fontSize,
+        baselineShift = BaselineShift(-0.5f),
+    ),
+)
+
+@Composable
 fun List<Formatters.Output>.annotatedStringSubheadline(): AnnotatedString = annotatedString(
     spanStyleNormal = SpanStyle(
         fontSize = theme().fonts.subheadline.fontSize,

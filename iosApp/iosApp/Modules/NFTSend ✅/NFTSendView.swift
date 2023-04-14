@@ -30,7 +30,7 @@ extension NFTSendViewController {
         else { updateCells() }
     }
     
-    func presentNetworkFeePicker(networkFees: [NetworkFee]) {
+    func presentNetworkFeePicker(networkFees: [NetworkFee], selected: NetworkFee?) {
         dismissKeyboard()
         let cell = collectionView.visibleCells.first { $0 is NFTSendCTACollectionViewCell } as! NFTSendCTACollectionViewCell
         let fromFrame = feesPickerView.convert(

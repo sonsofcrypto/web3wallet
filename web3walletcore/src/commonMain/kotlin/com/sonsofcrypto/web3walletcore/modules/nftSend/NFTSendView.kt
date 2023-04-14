@@ -4,6 +4,6 @@ import com.sonsofcrypto.web3lib.types.NetworkFee
 
 interface NFTSendView {
     fun update(viewModel: NFTSendViewModel)
-    fun presentNetworkFeePicker(networkFees: List<NetworkFee>)
+    fun presentNetworkFeePicker(networkFees: List<NetworkFee>, selected: NetworkFee?)
     fun dismissKeyboard()
 }

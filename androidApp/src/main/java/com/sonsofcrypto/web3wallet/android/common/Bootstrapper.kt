@@ -11,6 +11,7 @@ import com.sonsofcrypto.web3wallet.android.modules.compose.currencypicker.Curren
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyreceive.CurrencyReceiveWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencysend.CurrencySendWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyswap.CurrencySwapWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.dashboard.DashboardWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.degen.DegenWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposal.ImprovementProposalWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsWireframeFactoryAssembler
@@ -23,8 +24,8 @@ import com.sonsofcrypto.web3wallet.android.modules.compose.networks.NetworksWire
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftscollection.NFTsCollectionWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftsdashboard.NFTsDashboardWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.nftsend.NFTSendWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.settings.SettingsWireframeFactoryAssembler
-import com.sonsofcrypto.web3wallet.android.modules.compose.dashboard.DashboardWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.root.RootWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.root.RootWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.services.*
@@ -91,13 +92,14 @@ private class AssemblerBootstrapper: Bootstrapper {
                 NFTsDashboardWireframeFactoryAssembler(),
                 NFTsCollectionWireframeFactoryAssembler(),
                 NFTDetailWireframeFactoryAssembler(),
+                NFTSendWireframeFactoryAssembler(),
                 CurrencyAddWireframeFactoryAssembler(),
                 CurrencyPickerWireframeFactoryAssembler(),
                 CurrencyReceiveWireframeFactoryAssembler(),
                 CurrencySendWireframeFactoryAssembler(),
                 CurrencySwapWireframeFactoryAssembler(),
                 SettingsWireframeFactoryAssembler(),
-                ConfirmationWireframeFactoryAssembler()
+                ConfirmationWireframeFactoryAssembler(),
             )
         )
     }

@@ -6,14 +6,18 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.compose.confirmation.ConfirmationWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.nftsend.NFTSendWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.confirmation.ConfirmationWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.*
+import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeContext
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
 
 class DefaultNFTDetailWireframe(
     private val parent: WeakRef<Fragment>?,
     private val context: NFTDetailWireframeContext,
     private val nftsService: NFTsService,
+    private val nftSendWireframeFactory: NFTSendWireframeFactory,
+    private val networksService: NetworksService,
 ): NFTDetailWireframe {
 
     override fun present() {
@@ -24,7 +28,15 @@ class DefaultNFTDetailWireframe(
     override fun navigate(destination: NFTDetailWireframeDestination) {
         when (destination) {
             is NFTDetailWireframeDestination.Send -> {
-                println("[AA] DefaultNFTDetailWireframe.navigate($destination)")
+                val network = networksService.network ?: return
+                val context = NFTSendWireframeContext(
+                    network = network,
+                    nftItem = destination.nft
+                )
+                nftSendWireframeFactory.make(
+                    parent = parent?.get(),
+                    context = context
+                ).present()
             }
             is NFTDetailWireframeDestination.Dismiss -> {
                 println("[AA] DefaultNFTDetailWireframe.navigate($destination)")
