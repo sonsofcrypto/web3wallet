@@ -11,6 +11,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 
 private val testJson = Json {
@@ -79,7 +80,7 @@ class CoinGeckoTest(val context: Context) {
 
         var markets = mutableListOf<Market>()
         for (i in 1..53) {
-            delay(Duration.seconds(2))
+            delay(2.seconds)
             println("=== starting $i")
             val marketsPage = coinGeckoService.market(
                 ids = null,

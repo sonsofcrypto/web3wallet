@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
         val tv: TextView = findViewById(R.id.text_view)
         tv.text = secureRand(128).toString()
+        println("what in the world")
     }
 
     override fun onResume() {
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 //        EncryptTest().runAll()
 //        WalletCoreTests().runAll()
 //        InterfaceTests().runAll()
+        println("WTF")
         MultiCallTests().runAll()
         println("=== all tests executed ===")
     }

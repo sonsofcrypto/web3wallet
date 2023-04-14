@@ -20,8 +20,11 @@ import kotlin.time.Duration.Companion.seconds
 class MultiCallTests {
 
     fun runAll() {
+        println("we are starting")
         GlobalScope.launch {
+            println("before delay")
             delay(1.seconds)
+            println("after delay")
             testER20Balances()
         }
     }
