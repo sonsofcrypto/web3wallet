@@ -3,6 +3,7 @@ package com.sonsofcrypto.web3lib.keyValueStore
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
+import android.app.Instrumentation
 import android.app.Service
 import android.app.backup.BackupAgent
 import android.content.ContentProvider
@@ -11,6 +12,8 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.database.Cursor
 import android.net.Uri
+import androidx.test.core.app.ApplicationProvider;
+
 
 @SuppressLint("StaticFieldLeak")
 private var appContext: Context? = null
@@ -41,10 +44,17 @@ fun Context.canLeakMemory(): Boolean = when (this) {
 @SuppressLint("PrivateApi")
 private fun initAndGetAppCtxWithReflection(): Context {
     // Fallback, should only run once per non default process.
-    val activityThread = Class.forName("android.app.ActivityThread")
-    val ctx = activityThread.getDeclaredMethod("currentApplication").invoke(null) as Context
-    appContext = ctx
-    return ctx
+    try {
+        val activityThread = Class.forName("android.app.ActivityThread")
+        appContext = activityThread.getDeclaredMethod("currentApplication").invoke(null) as Context
+    } catch (err: Throwable) {
+        val registry = Class.forName("androidx.test.core.app.ApplicationProvider")
+        println("=== registry $registry")
+        val instrumentation = registry.getDeclaredMethod("getApplicationContext").invoke(null) as Context
+        println("===context $instrumentation")
+        appContext = instrumentation
+    }
+    return appContext!!
 }
 
 class AppContextProvider : ContentProvider() {

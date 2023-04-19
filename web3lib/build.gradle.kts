@@ -90,6 +90,10 @@ kotlin {
         val androidTest by getting {
             dependencies {
                 implementation(files("$rootDir/coreCrypto/build/hostOS/coreCrypto.jar"))
+                implementation("androidx.test:runner:1.5.2")
+                implementation("androidx.test:rules:1.5.0")
+                implementation("androidx.test:monitor:1.6.1")
+                implementation("androidx.test:core-ktx:1.5.0")
             }
         }
         val iosX64Main by getting
