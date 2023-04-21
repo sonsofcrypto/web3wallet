@@ -67,6 +67,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:${rootProject.ext["datetime_version"]}")
                 implementation("com.ionspin.kotlin:bignum:${rootProject.ext["bignum_version"]}")
                 implementation("com.russhwolf:multiplatform-settings:${rootProject.ext["settings_version"]}")
+                implementation("com.russhwolf:multiplatform-settings-test:${rootProject.ext["settings_version"]}")
                 implementation("io.ktor:ktor-client-core:${rootProject.ext["ktor_version"]}")
                 implementation("io.ktor:ktor-client-logging:${rootProject.ext["ktor_version"]}")
                 implementation("io.ktor:ktor-client-content-negotiation:${rootProject.ext["ktor_version"]}")
@@ -90,10 +91,29 @@ kotlin {
         val androidTest by getting {
             dependencies {
                 implementation(files("$rootDir/coreCrypto/build/hostOS/coreCrypto.jar"))
+                // Core library
+                implementation("androidx.test:core-ktx:1.5.0")
+                // AndroidJUnitRunner and JUnit Rules
                 implementation("androidx.test:runner:1.5.2")
                 implementation("androidx.test:rules:1.5.0")
-                implementation("androidx.test:monitor:1.6.1")
-                implementation("androidx.test:core-ktx:1.5.0")
+                // Assertions
+//                implementation("androidx.test.ext:junit:1.1.5")
+//                implementation("androidx.test.ext:truth-ktx:1.1.5")
+                // Espresso dependencies
+                implementation( "androidx.test.espresso:espresso-core:3.4.0")
+                implementation( "androidx.test.espresso:espresso-contrib:3.4.0")
+                implementation( "androidx.test.espresso:espresso-intents:3.4.0")
+                implementation( "androidx.test.espresso:espresso-accessibility:3.4.0")
+                implementation( "androidx.test.espresso:espresso-web:3.4.0")
+                implementation( "androidx.test.espresso.idling:idling-concurrent:3.4.0")
+                // The following Espresso dependency can be either "implementation",
+                // or "androidTestImplementation", depending on whether you want the
+                // dependency to appear on your APK"s compile classpath or the test APK
+                // classpath.
+                implementation( "androidx.test.espresso:espresso-idling-resource:3.4.0")
+
+                implementation("junit:junit:4.13.2")
+                implementation("org.robolectric:robolectric:4.10")
             }
         }
         val iosX64Main by getting
@@ -169,9 +189,14 @@ android {
     defaultConfig {
         minSdk = 29
         targetSdk = 32
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     namespace = "com.sonsofcrypto.web3lib"
-    buildToolsVersion = "30.0.3"
+    buildToolsVersion = "33.0.2"
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 dependencies {

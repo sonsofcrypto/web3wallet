@@ -53,7 +53,7 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
     @Test
     fun testSearch() {
         val currencies = service.search("E", Network.ethereum(), 0)
-        assertEquals(currencies.size, 237, "Search error ${currencies.size}")
+        assertEquals(237, currencies.size,"Search error ${currencies.size}")
     }
 
     override fun handle(event: CurrencyStoreEvent) {

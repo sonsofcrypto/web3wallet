@@ -101,12 +101,12 @@ kotlin {
 
 android {
     namespace = "com.sonsofcrypto.web3walletcore"
-    compileSdk = 32
+    compileSdk = 33
     defaultConfig {
         minSdk = 21
         targetSdk = 32
     }
-    buildToolsVersion = "30.0.3"
+    buildToolsVersion = "33.0.2"
 }
 
 dependencies {

@@ -1,3 +1,4 @@
+val compileSdkVersion by extra(33)
 buildscript {
     val kotlinVersion = "1.8.20"
     repositories {
@@ -14,7 +15,7 @@ buildscript {
 }
 
 allprojects {
-    ext["settings_version"] = "1.0.0-alpha01"
+    ext["settings_version"] = "1.0.0"
     ext["serialization_version"] = "1.5.0"
     ext["coroutines_version"] = "1.6.3-native-mt"
     ext["ktor_version"] = "2.2.4"

@@ -1,9 +1,7 @@
 package com.sonsofcrypto.web3lib
 
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
-import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
-import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -23,3 +21,4 @@ class AndroidGreetingTest {
         )
     }
 }
+

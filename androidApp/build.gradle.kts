@@ -19,7 +19,7 @@ android {
         }
     }
     namespace = "com.sonsofcrypto.web3wallet.android"
-    buildToolsVersion = "30.0.3"
+    buildToolsVersion = "33.0.2"
 }
 
 dependencies {

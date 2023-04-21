@@ -43,5 +43,5 @@ actual class Node {
     actual fun getPeersInfo(): PeerInfos = PeerInfos(coreNode.peersInfo)
 
     private fun defaultPath(): String =
-        application.getDir("geth", MODE_PRIVATE).path
+        application!!.getDir("geth", MODE_PRIVATE).path
 }

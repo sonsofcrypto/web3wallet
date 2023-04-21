@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3lib.keyValueStore
 
 import android.content.Context.MODE_PRIVATE
 import com.russhwolf.settings.Settings
+import com.russhwolf.settings.MapSettings
 import com.russhwolf.settings.SharedPreferencesSettings
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.json.Json
@@ -15,9 +16,14 @@ actual class KeyValueStore {
     val settings: Settings
 
     actual constructor(name: String) {
-        settings = SharedPreferencesSettings(
-            application.getSharedPreferences(name, MODE_PRIVATE)
-        )
+        if (application != null) {
+            settings = SharedPreferencesSettings(
+                application!!.getSharedPreferences(name, MODE_PRIVATE)
+            )
+        } else {
+            settings = MapSettings()
+            println("[WARN] MapSettings (in memory) only $name, will not persist, context is null")
+        }
     }
 
     @OptIn(InternalSerializationApi::class)
