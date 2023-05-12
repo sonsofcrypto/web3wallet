@@ -16,6 +16,7 @@ import com.sonsofcrypto.web3wallet.android.modules.compose.currencyswap.Currency
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicconfirmation.MnemonicConfirmationWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.qrcodescan.QRCodeScanWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframe
 import com.sonsofcrypto.web3walletcore.services.actions.ActionsService
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
@@ -39,6 +40,7 @@ class DefaultDashboardWireframeFactory(
     private val nftDetailWireframeFactory: NFTDetailWireframeFactory,
     private val mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
     private val improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory,
+    private val qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
 ): DashboardWireframeFactory {
 
     override fun make(parent: Fragment?): DashboardWireframe = DefaultDashboardWireframe(
@@ -56,6 +58,7 @@ class DefaultDashboardWireframeFactory(
         nftDetailWireframeFactory,
         mnemonicConfirmationWireframeFactory,
         improvementProposalsWireframeFactory,
+        qrCodeScanWireframeFactory,
     )
 }
 
@@ -78,6 +81,7 @@ class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 it.resolve(NFTDetailWireframeFactory::class.name),
                 it.resolve(MnemonicConfirmationWireframeFactory::class.name),
                 it.resolve(ImprovementProposalsWireframeFactory::class.name),
+                it.resolve(QRCodeScanWireframeFactory::class.name),
             )
         }
     }

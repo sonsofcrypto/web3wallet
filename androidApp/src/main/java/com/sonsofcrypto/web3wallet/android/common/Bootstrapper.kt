@@ -25,6 +25,7 @@ import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWi
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftscollection.NFTsCollectionWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftsdashboard.NFTsDashboardWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftsend.NFTSendWireframeFactoryAssembler
+import com.sonsofcrypto.web3wallet.android.modules.compose.qrcodescan.QRCodeScanWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.compose.settings.SettingsWireframeFactoryAssembler
 import com.sonsofcrypto.web3wallet.android.modules.root.RootWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.root.RootWireframeFactoryAssembler
@@ -100,6 +101,7 @@ private class AssemblerBootstrapper: Bootstrapper {
                 CurrencySwapWireframeFactoryAssembler(),
                 SettingsWireframeFactoryAssembler(),
                 ConfirmationWireframeFactoryAssembler(),
+                QRCodeScanWireframeFactoryAssembler(),
             )
         )
     }

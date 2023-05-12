@@ -14,6 +14,7 @@ import com.sonsofcrypto.web3wallet.android.modules.compose.currencyswap.Currency
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicconfirmation.MnemonicConfirmationWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.qrcodescan.QRCodeScanWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.account.AccountWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext.NetworkData
@@ -23,9 +24,11 @@ import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapWirefram
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframe
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.EditCurrencies
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.Send
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DefaultDashboardInteractor
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DefaultDashboardPresenter
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeContext
+import com.sonsofcrypto.web3walletcore.modules.qrCodeScan.QRCodeScanWireframeContext
 import com.sonsofcrypto.web3walletcore.services.actions.ActionsService
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
 
@@ -44,6 +47,7 @@ class DefaultDashboardWireframe(
     private val nftDetailWireframeFactory: NFTDetailWireframeFactory,
     private val mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
     private val improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory,
+    private val qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
 ): DashboardWireframe {
 
     override fun present() {
@@ -61,7 +65,12 @@ class DefaultDashboardWireframe(
                 println("[AA] navigate to KeyStoreNetworkSettings")
             }
             is DashboardWireframeDestination.ScanQRCode -> {
-                println("[AA] navigate to ScanQRCode")
+                val network = networksService.network ?: return
+                val context = QRCodeScanWireframeContext(
+                    type = QRCodeScanWireframeContext.Type.Network(network),
+                    handler = { addressTo -> navigate(Send(addressTo)) }
+                )
+                qrCodeScanWireframeFactory.make(parent?.get(), context).present()
             }
             is DashboardWireframeDestination.MnemonicConfirmation -> {
                 mnemonicConfirmationWireframeFactory.make(parent?.get()).present()
@@ -75,7 +84,7 @@ class DefaultDashboardWireframe(
             is DashboardWireframeDestination.Receive -> {
                 navigateToReceive()
             }
-            is DashboardWireframeDestination.Send -> {
+            is Send -> {
                 navigateToSend(destination)
             }
             is DashboardWireframeDestination.Swap -> {
@@ -139,7 +148,7 @@ class DefaultDashboardWireframe(
         currencyPickerWireframeFactory.make(parent?.get(), context).present()
     }
 
-    private fun navigateToSend(destination: DashboardWireframeDestination.Send) {
+    private fun navigateToSend(destination: Send) {
         if (destination.addressTo != null) {
             val network = networksService.network ?: return
             val context = CurrencySendWireframeContext(

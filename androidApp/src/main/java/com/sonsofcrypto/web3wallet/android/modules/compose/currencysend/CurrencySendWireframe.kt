@@ -11,9 +11,11 @@ import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.compose.confirmation.ConfirmationWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencypicker.CurrencyPickerWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.qrcodescan.QRCodeScanWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencySend.*
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeDestination.*
+import com.sonsofcrypto.web3walletcore.modules.qrCodeScan.QRCodeScanWireframeContext
 import smartadapter.internal.extension.name
 
 class DefaultCurrencySendWireframe(
@@ -24,6 +26,7 @@ class DefaultCurrencySendWireframe(
     private val currencyStoreService: CurrencyStoreService,
     private val currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
     private val confirmationWireframeFactory: ConfirmationWireframeFactory,
+    private val qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
 ): CurrencySendWireframe {
 
     override fun present() {
@@ -34,7 +37,11 @@ class DefaultCurrencySendWireframe(
     override fun navigate(destination: CurrencySendWireframeDestination) {
         when (destination) {
             is QrCodeScan -> {
-                println("[AA] Implement -> $destination")
+                val context = QRCodeScanWireframeContext(
+                    type = QRCodeScanWireframeContext.Type.Network(network = context.network),
+                    handler = onPopWrapped(onCompletion = destination.onCompletion)
+                )
+                qrCodeScanWireframeFactory.make(parent?.get(), context).present()
             }
             is SelectCurrency -> {
                 val context = CurrencyPickerWireframeContext(
@@ -54,7 +61,9 @@ class DefaultCurrencySendWireframe(
             is Dismiss -> {
                 println("[AA] Implement -> $destination")
             }
-            else -> { println("[AA] Implement -> $destination") }
+            else -> {
+                println("[AA] Implement -> $destination")
+            }
         }
     }
 
@@ -73,6 +82,13 @@ class DefaultCurrencySendWireframe(
         )
         view.presenter = presenter
         return view
+    }
+
+    private fun onPopWrapped(onCompletion: (String) -> Unit): (String) -> Unit = { addressTo ->
+        parent?.get().navigationFragment?.pop(
+            animated = true,
+            onCompletion = { onCompletion(addressTo) }
+        )
     }
 }
 

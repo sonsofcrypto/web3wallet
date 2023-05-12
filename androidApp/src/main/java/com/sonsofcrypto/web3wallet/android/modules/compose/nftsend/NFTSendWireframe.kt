@@ -6,8 +6,11 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
+import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.compose.confirmation.ConfirmationWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.qrcodescan.QRCodeScanWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.nftSend.*
+import com.sonsofcrypto.web3walletcore.modules.qrCodeScan.QRCodeScanWireframeContext
 
 class DefaultNFTSendWireframe(
     private val parent: WeakRef<Fragment>?,
@@ -15,6 +18,7 @@ class DefaultNFTSendWireframe(
     private val networksService: NetworksService,
     private val currencyStoreService: CurrencyStoreService,
     private val confirmationWireframeFactory: ConfirmationWireframeFactory,
+    private val qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
 ): NFTSendWireframe {
 
     private lateinit var fragment: WeakRef<Fragment>
@@ -32,7 +36,11 @@ class DefaultNFTSendWireframe(
         when (destination) {
             is NFTSendWireframeDestination.UnderConstructionAlert -> {}
             is NFTSendWireframeDestination.QRCodeScan -> {
-                println("[AA] Implement -> navigateTo $destination")
+                val context = QRCodeScanWireframeContext(
+                    type = QRCodeScanWireframeContext.Type.Network(network = context.network),
+                    handler = onPopWrapped(onCompletion = destination.onCompletion)
+                )
+                qrCodeScanWireframeFactory.make(parent?.get(), context).present()
             }
             is NFTSendWireframeDestination.ConfirmSendNFT -> {
                 confirmationWireframeFactory.make(
@@ -60,5 +68,12 @@ class DefaultNFTSendWireframe(
         )
         view.presenter = presenter
         return NavigationFragment(view)
+    }
+
+    private fun onPopWrapped(onCompletion: (String) -> Unit): (String) -> Unit = { addressTo ->
+        parent?.get().navigationFragment?.pop(
+            animated = true,
+            onCompletion = { onCompletion(addressTo) }
+        )
     }
 }

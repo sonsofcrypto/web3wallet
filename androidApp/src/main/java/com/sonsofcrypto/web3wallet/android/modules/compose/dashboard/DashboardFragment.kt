@@ -67,8 +67,23 @@ class DashboardFragment: Fragment(), DashboardView {
     @Composable
     private fun DashboardScreen(viewModel: DashboardViewModel) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = Localized("web3wallet").uppercase()) },
+            navBar = {
+                W3WNavigationBar(
+                    title = Localized("web3wallet").uppercase(),
+                    trailingIcon = { NavBarTrailingIcon() }
+                )
+             },
             content = { DashboardContent(viewModel) }
+        )
+    }
+
+    @Composable
+    private fun NavBarTrailingIcon() {
+        W3WIcon(
+            id = R.drawable.icon_qr_code_scanner_24,
+            onClick = {
+                presenter.handle(DashboardPresenterEvent.DidScanQRCode)
+            }
         )
     }
 

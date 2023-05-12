@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">web3wallet</string>
     <string name="OK">OK</string>
+    <string name="ok">Ok</string>
     <string name="balance">Balance</string>
     <string name="web3wallet">web3wallet</string>
     <string name="wallets">Wallets</string>

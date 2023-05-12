@@ -65,6 +65,15 @@ dependencies {
     implementation("io.coil-kt:coil-compose:$coilVersion")
     implementation("io.coil-kt:coil-gif:$coilVersion")
 
-    // QRCode - Core barcode encoding/decoding library
-    implementation("com.google.zxing:core:3.5.1")
+    // QRCodeScan - Core barcode encoding/decoding library (CameraX & Zxing)
+    val cameraX = "1.2.2"
+    implementation("androidx.camera:camera-camera2:$cameraX")
+    implementation("androidx.camera:camera-lifecycle:$cameraX")
+    implementation("androidx.camera:camera-view:$cameraX")
+    val zxing = "3.5.1"
+    implementation("com.google.zxing:core:$zxing")
+
+    // AppPermission handling
+    val accompanistPermissions = "0.30.1"
+    implementation("com.google.accompanist:accompanist-permissions:$accompanistPermissions")
 }

@@ -10,6 +10,7 @@ import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistry
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope
 import com.sonsofcrypto.web3wallet.android.modules.compose.confirmation.ConfirmationWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencypicker.CurrencyPickerWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.qrcodescan.QRCodeScanWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframe
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeContext
 import smartadapter.internal.extension.name
@@ -24,6 +25,7 @@ class DefaultCurrencySendWireframeFactory(
     private val currencyStoreService: CurrencyStoreService,
     private val currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
     private val confirmationWireframeFactory: ConfirmationWireframeFactory,
+    private val qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
 ): CurrencySendWireframeFactory {
 
     override fun make(
@@ -36,6 +38,7 @@ class DefaultCurrencySendWireframeFactory(
             currencyStoreService,
             currencyPickerWireframeFactory,
             confirmationWireframeFactory,
+            qrCodeScanWireframeFactory,
         )
     }
 
@@ -50,6 +53,7 @@ class CurrencySendWireframeFactoryAssembler: AssemblerComponent {
                 it.resolve(CurrencyStoreService::class.name),
                 it.resolve(CurrencyPickerWireframeFactory::class.name),
                 it.resolve(ConfirmationWireframeFactory::class.name),
+                it.resolve(QRCodeScanWireframeFactory::class.name),
             )
         }
     }

@@ -8,6 +8,7 @@ import com.sonsofcrypto.web3wallet.android.common.AssemblerComponent
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistry
 import com.sonsofcrypto.web3wallet.android.common.AssemblerRegistryScope
 import com.sonsofcrypto.web3wallet.android.modules.compose.confirmation.ConfirmationWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.qrcodescan.QRCodeScanWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframe
 import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeContext
 import smartadapter.internal.extension.name
@@ -20,6 +21,7 @@ class DefaultNFTSendWireframeFactory(
     private val networksService: NetworksService,
     private val currencyStoreService: CurrencyStoreService,
     private val confirmationWireframeFactory: ConfirmationWireframeFactory,
+    private val qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
 ): NFTSendWireframeFactory {
 
     override fun make(
@@ -30,6 +32,7 @@ class DefaultNFTSendWireframeFactory(
         networksService,
         currencyStoreService,
         confirmationWireframeFactory,
+        qrCodeScanWireframeFactory,
     )
 }
 
@@ -41,6 +44,7 @@ class NFTSendWireframeFactoryAssembler: AssemblerComponent {
                 it.resolve(NetworksService::class.name),
                 it.resolve(CurrencyStoreService::class.name),
                 it.resolve(ConfirmationWireframeFactory::class.name),
+                it.resolve(QRCodeScanWireframeFactory::class.name),
             )
         }
     }

@@ -28,6 +28,12 @@ class NavigationFragment(
             //addToBackStack("a")
             commitNow()
         }
+
+//        childFragmentManager.beginTransaction()
+//            .replace(R.id.container, fragment)
+//            .addToBackStack(fragment.toString())
+//            .commit()
+
     }
 
     fun presentOver(fragment: Fragment, animated: Boolean = true) {
@@ -42,8 +48,9 @@ class NavigationFragment(
         }
     }
 
-    fun pop() {
+    fun pop(animated: Boolean = true, onCompletion: (() -> Unit)? = null) {
         //childFragmentManager.popBackStack()
+        onCompletion?.let { it() }
     }
 
     fun popOrDismiss() {
