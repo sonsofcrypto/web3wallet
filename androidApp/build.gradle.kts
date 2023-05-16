@@ -20,6 +20,15 @@ android {
     }
     namespace = "com.sonsofcrypto.web3wallet.android"
     buildToolsVersion = "33.0.2"
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    dependenciesInfo {
+        includeInApk = true
+        includeInBundle = true
+    }
+    ndkVersion = "25.2.9519653"
 }
 
 dependencies {

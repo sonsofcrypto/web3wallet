@@ -107,6 +107,11 @@ android {
         targetSdk = 32
     }
     buildToolsVersion = "33.0.2"
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    ndkVersion = "25.2.9519653"
 }
 
 dependencies {
