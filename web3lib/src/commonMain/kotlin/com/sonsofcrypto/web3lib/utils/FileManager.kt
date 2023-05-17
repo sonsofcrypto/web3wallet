@@ -13,17 +13,17 @@ expect class FileManager {
     fun readBundleSync(path: String): ByteArray
     /** Reads data from app's workspace file synchronously */
     @Throws(Throwable::class)
-    fun readWorkspaceSync(path: String): ByteArray
+    fun readSync(path: String): ByteArray
     /** Write data to app's workspace file synchronously */
     @Throws(Throwable::class)
-    fun writeWorkspaceSync(data: ByteArray, path: String)
+    fun writeSync(data: ByteArray, path: String)
     /** Reads data from app bundle file asynchronously */
     @Throws(Throwable::class)
     suspend fun readBundle(path: String): ByteArray
     /** Reads data from app's workspace file asynchronously */
     @Throws(Throwable::class)
-    suspend fun readWorkspace(path: String): ByteArray
+    suspend fun read(path: String): ByteArray
     /** Write data to app's workspace file asynchronously */
     @Throws(Throwable::class)
-    suspend fun writeWorkspace(data: ByteArray, path: String)
+    suspend fun write(data: ByteArray, path: String)
 }

@@ -46,8 +46,8 @@ class MainActivity : AppCompatActivity() {
         val filesDir = getFilesDir()
         println("Absolute ${filesDir.absolutePath}")
         try {
-            fm.writeWorkspaceSync("Testing".toByteArray(), "test.txt")
-            val result = fm.readWorkspaceSync("test.txt").decodeToString()
+            fm.writeSync("Testing".toByteArray(), "test.txt")
+            val result = fm.readSync("test.txt").decodeToString()
             print("RESULT $result")
         } catch (err: Throwable) {
             println("FAILED $err")

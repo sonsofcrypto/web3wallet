@@ -3,7 +3,6 @@ package com.sonsofcrypto.web3lib
 import com.sonsofcrypto.web3lib.utils.FileManager
 import io.ktor.utils.io.core.toByteArray
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class FileMangerTest {
@@ -20,9 +19,9 @@ class FileMangerTest {
     @Test
     fun testReadWorkspaceFile() {
         val fm = FileManager()
-        fm.writeWorkspaceSync("Testing".toByteArray(), "test.txt")
+        fm.writeSync("Testing".toByteArray(), "test.txt")
         assertTrue(
-            fm.readWorkspaceSync("test.txt").decodeToString() == "Testing",
+            fm.readSync("test.txt").decodeToString() == "Testing",
             "Failed to load  test.txt"
         )
     }

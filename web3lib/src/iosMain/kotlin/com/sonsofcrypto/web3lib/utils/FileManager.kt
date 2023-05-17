@@ -18,13 +18,13 @@ actual class FileManager {
 
     /** Reads data from app's workspace file synchronously */
     @Throws(Throwable::class)
-    actual fun readWorkspaceSync(path: String): ByteArray {
+    actual fun readSync(path: String): ByteArray {
         TODO("Implement")
     }
 
     /** Write data to app's workspace file synchronously */
     @Throws(Throwable::class)
-    actual fun writeWorkspaceSync(data: ByteArray, path: String) {
+    actual fun writeSync(data: ByteArray, path: String) {
         TODO("Implement")
     }
 
@@ -36,13 +36,13 @@ actual class FileManager {
 
     /** Reads data from app's workspace file asynchronously */
     @Throws(Throwable::class)
-    actual suspend fun readWorkspace(path: String): ByteArray {
+    actual suspend fun read(path: String): ByteArray {
         TODO("Implement")
     }
 
     /** Write data to app's workspace file asynchronously */
     @Throws(Throwable::class)
-    actual suspend fun writeWorkspace(data: ByteArray, path: String) {
+    actual suspend fun write(data: ByteArray, path: String) {
         TODO("Implement")
     }
 }
