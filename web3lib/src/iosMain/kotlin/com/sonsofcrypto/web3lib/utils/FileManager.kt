@@ -10,39 +10,33 @@ actual class FileManager {
 
     actual constructor(){}
 
-    /** Reads data from app bundle file synchronously */
+    /** Reads data from file synchronously */
     @Throws(Throwable::class)
-    actual fun readBundleSync(path: String): ByteArray {
+    actual fun readSync(path: String, location: Location): ByteArray {
         TODO("Implement")
     }
 
-    /** Reads data from app's workspace file synchronously */
-    @Throws(Throwable::class)
-    actual fun readSync(path: String): ByteArray {
-        TODO("Implement")
-    }
-
-    /** Write data to app's workspace file synchronously */
+    /** Write data to file synchronously */
     @Throws(Throwable::class)
     actual fun writeSync(data: ByteArray, path: String) {
         TODO("Implement")
     }
 
-    /** Reads data from app bundle file asynchronously */
+    /** Reads data from file asynchronously */
     @Throws(Throwable::class)
-    actual suspend fun readBundle(path: String): ByteArray {
+    actual suspend fun read(path: String, location: Location): ByteArray {
         TODO("Implement")
     }
 
-    /** Reads data from app's workspace file asynchronously */
-    @Throws(Throwable::class)
-    actual suspend fun read(path: String): ByteArray {
-        TODO("Implement")
-    }
-
-    /** Write data to app's workspace file asynchronously */
+    /** Write data to file asynchronously */
     @Throws(Throwable::class)
     actual suspend fun write(data: ByteArray, path: String) {
         TODO("Implement")
+    }
+
+
+    /** Different locations file manger supports */
+    actual enum class Location {
+        BUNDLE, APPFILES;
     }
 }

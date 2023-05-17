@@ -8,22 +8,21 @@ package com.sonsofcrypto.web3lib.utils
  */
 expect class FileManager {
     constructor()
-    /** Reads data from app bundle file synchronously */
+    /** Reads data from file synchronously */
     @Throws(Throwable::class)
-    fun readBundleSync(path: String): ByteArray
-    /** Reads data from app's workspace file synchronously */
-    @Throws(Throwable::class)
-    fun readSync(path: String): ByteArray
-    /** Write data to app's workspace file synchronously */
+    fun readSync(path: String, location: Location = Location.APPFILES): ByteArray
+    /** Write data to file synchronously */
     @Throws(Throwable::class)
     fun writeSync(data: ByteArray, path: String)
-    /** Reads data from app bundle file asynchronously */
+    /** Reads data from file asynchronously */
     @Throws(Throwable::class)
-    suspend fun readBundle(path: String): ByteArray
-    /** Reads data from app's workspace file asynchronously */
-    @Throws(Throwable::class)
-    suspend fun read(path: String): ByteArray
-    /** Write data to app's workspace file asynchronously */
+    suspend fun read(path: String, location: Location = Location.APPFILES): ByteArray
+    /** Write data to file asynchronously */
     @Throws(Throwable::class)
     suspend fun write(data: ByteArray, path: String)
+
+    /** Different locations file manger supports */
+    enum class Location {
+        BUNDLE, APPFILES;
+    }
 }

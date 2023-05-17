@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         try {
             fm.writeSync("Testing".toByteArray(), "test.txt")
             val result = fm.readSync("test.txt").decodeToString()
-            print("RESULT $result")
+            println("RESULT $result")
         } catch (err: Throwable) {
             println("FAILED $err")
         }

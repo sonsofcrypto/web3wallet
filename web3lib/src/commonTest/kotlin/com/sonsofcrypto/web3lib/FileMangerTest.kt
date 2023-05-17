@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3lib
 
 import com.sonsofcrypto.web3lib.utils.FileManager
+import com.sonsofcrypto.web3lib.utils.FileManager.Location.BUNDLE
 import io.ktor.utils.io.core.toByteArray
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -9,7 +10,7 @@ class FileMangerTest {
 
     @Test
     fun testReadBundlesFile() {
-        val bytes: ByteArray = FileManager().readBundleSync("bitcoin_white_paper.md")
+        val bytes: ByteArray = FileManager().readSync("bitcoin_white_paper.md", BUNDLE)
         assertTrue(
             bytes.decodeToString().length == 21896,
             "Failed to load bitcoin_white_paper.md"
