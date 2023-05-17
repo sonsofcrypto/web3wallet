@@ -8,22 +8,22 @@ package com.sonsofcrypto.web3lib.utils
  */
 expect class FileManager {
     constructor()
-    /** Reads data from app bundle file asynchronously */
-    @Throws(Throwable::class)
-    fun bundleData(path: String, handler: (ByteArray)->Unit)
     /** Reads data from app bundle file synchronously */
     @Throws(Throwable::class)
-    fun bundleData(path: String): ByteArray
-    /** Reads data from app's workspace file asynchronously */
-    @Throws(Throwable::class)
-    fun workspaceData(path: String, handler: (ByteArray)->Unit)
+    fun readBundleSync(path: String): ByteArray
     /** Reads data from app's workspace file synchronously */
     @Throws(Throwable::class)
-    fun workspaceData(path: String): ByteArray
-    /** Write data to app's workspace file asynchronously */
-    @Throws(Throwable::class)
-    fun writeWorkspace(data: ByteArray, path: String, handler: ()->Unit)
+    fun readWorkspaceSync(path: String): ByteArray
     /** Write data to app's workspace file synchronously */
     @Throws(Throwable::class)
-    fun writeWorkspace(data: ByteArray, path: String)
+    fun writeWorkspaceSync(data: ByteArray, path: String)
+    /** Reads data from app bundle file asynchronously */
+    @Throws(Throwable::class)
+    suspend fun readBundle(path: String): ByteArray
+    /** Reads data from app's workspace file asynchronously */
+    @Throws(Throwable::class)
+    suspend fun readWorkspace(path: String): ByteArray
+    /** Write data to app's workspace file asynchronously */
+    @Throws(Throwable::class)
+    suspend fun writeWorkspace(data: ByteArray, path: String)
 }

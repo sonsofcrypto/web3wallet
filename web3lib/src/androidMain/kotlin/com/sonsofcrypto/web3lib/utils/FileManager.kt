@@ -1,13 +1,10 @@
 package com.sonsofcrypto.web3lib.utils
 
-import android.os.Build
 import com.sonsofcrypto.web3lib.appContextProvider.application
-import com.sonsofcrypto.web3lib.types.ExtKey
+import okio.BufferedSource
 import okio.FileSystem
 import okio.Path.Companion.toPath
-import okio.Source
 import okio.buffer
-import java.lang.Error
 
 
 /**
@@ -24,49 +21,67 @@ actual class FileManager {
 
     actual constructor(){}
 
-    /** Reads data from app bundle file asynchronously */
-    @Throws(Throwable::class)
-    actual fun bundleData(path: String, handler: (ByteArray)->Unit) {
-
-    }
-
     /** Reads data from app bundle file synchronously */
     @Throws(Throwable::class)
-    actual fun bundleData(path: String): ByteArray {
-        val filePath = if (isUnitTestEnv) this.basePath() + "/$path" else path
+    actual fun readBundleSync(path: String): ByteArray {
+        val filePath = if (isUnitTestEnv) this.basePathBundle() + "/$path" else path
         return read(filePath)
-    }
-
-    /** Reads data from app's workspace file asynchronously */
-    @Throws(Throwable::class)
-    actual fun workspaceData(path: String, handler: (ByteArray)->Unit) {
-
     }
 
     /** Reads data from app's workspace file synchronously */
     @Throws(Throwable::class)
-    actual fun workspaceData(path: String): ByteArray {
-        return ByteArray(0)
-    }
-
-    /** Write data to app's workspace file asynchronously */
-    @Throws(Throwable::class)
-    actual fun writeWorkspace(data: ByteArray, path: String, handler: ()->Unit) {
-
+    actual fun readWorkspaceSync(path: String): ByteArray {
+        val filePath = this.basePathWorkspace() + "/$path"
+        return read(filePath, Location.Workspace)
     }
 
     /** Write data to app's workspace file synchronously */
     @Throws(Throwable::class)
-    actual fun writeWorkspace(data: ByteArray, path: String) {
-
+    actual fun writeWorkspaceSync(data: ByteArray, path: String) {
+        val filePath = this.basePathWorkspace() + "/$path"
+        write(data, filePath)
     }
 
-    private fun read(path: String): ByteArray {
+    private fun write(data: ByteArray, path: String) {
+        val filePath = path.toPath(false)
+        println("writing $path")
+        println("writing ${filePath.segments}")
+        val handle = FileSystem.SYSTEM.openReadWrite(filePath)
+        handle.write(0, data, 0, data.size)
+        handle.close()
+    }
+
+    /** Reads data from app bundle file asynchronously */
+    @Throws(Throwable::class)
+    actual suspend fun readBundle(path: String): ByteArray = withBgCxt {
+        return@withBgCxt readBundleSync(path)
+    }
+
+    /** Reads data from app's workspace file asynchronously */
+    @Throws(Throwable::class)
+    actual suspend fun readWorkspace(path: String): ByteArray = withBgCxt {
+        return@withBgCxt readWorkspaceSync(path)
+    }
+
+    /** Write data to app's workspace file asynchronously */
+    @Throws(Throwable::class)
+    actual suspend fun writeWorkspace(data: ByteArray, path: String) = withBgCxt {
+        writeWorkspaceSync(data, path)
+        return@withBgCxt Unit
+    }
+
+    private fun read(path: String, location: Location = Location.Bundle): ByteArray {
         var result: ByteArray = ByteArray(0)
         if (isUnitTestEnv) {
             val source = FileSystem.SYSTEM.source(path.toPath(false))
             source.use { result = it.buffer().readByteArray() }
         } else {
+            if (location == Location.Workspace) {
+                println("READING $path")
+                val source = FileSystem.SYSTEM.source(path.toPath(false))
+                source.use { result = it.buffer().readByteArray() }
+                return result
+            }
             val stream = application?.assets?.open(path)
             stream?.let {
                 result = it.readBytes()
@@ -76,7 +91,7 @@ actual class FileManager {
         return result
     }
 
-    private fun basePath(): String {
+    private fun basePathBundle(): String {
         if (isUnitTestEnv) {
             val pathComps = System.getProperty("user.dir")
                 ?.split("/")
@@ -89,6 +104,26 @@ actual class FileManager {
         } else {
             return "file:///android_asset"
         }
+    }
+
+    private fun basePathWorkspace(): String {
+        if (isUnitTestEnv) {
+            val pathComps = System.getProperty("user.dir")
+                ?.split("/")
+                ?.toMutableList()
+                ?: return "android.resource://com.sonsofcrypto.web3wallet.android/raw/"
+            while (pathComps.last() != "web3wallet") {
+                pathComps.removeLast()
+            }
+            return pathComps.joinToString("/") + "/tmp"
+        } else {
+            return application?.getFilesDir()?.absolutePath ?: "/"
+        }
+    }
+
+    sealed class Location() {
+        object Bundle: Location()
+        object Workspace: Location()
     }
 
     /** Exceptions */

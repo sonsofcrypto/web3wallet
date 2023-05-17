@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.sonsofcrypto.web3lib.utils.BundledAssetProviderApplication
+import com.sonsofcrypto.web3lib.utils.FileManager
 import com.sonsofcrypto.web3lib.utils.secureRand
 
 
@@ -40,8 +41,21 @@ class MainActivity : AppCompatActivity() {
 //        WalletCoreTests().runAll()
 //        InterfaceTests().runAll()
         println("WTF")
-        MultiCallTests().runAll()
+//        MultiCallTests().runAll()
+        val fm = FileManager()
+        val filesDir = getFilesDir()
+        println("Absolute ${filesDir.absolutePath}")
+        try {
+            fm.writeWorkspaceSync("Testing".toByteArray(), "test.txt")
+            val result = fm.readWorkspaceSync("test.txt").decodeToString()
+            print("RESULT $result")
+        } catch (err: Throwable) {
+            println("FAILED $err")
+        }
+
+
         println("=== all tests executed ===")
+
     }
 }
 
