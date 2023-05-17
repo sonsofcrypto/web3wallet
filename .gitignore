@@ -212,3 +212,6 @@ geth/Geth.xcframework
 gradle/*
 gradlew
 gradlew.bat
+
+androidApp/debug.keystore
+androidApp/release.jks

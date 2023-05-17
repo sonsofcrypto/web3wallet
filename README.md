@@ -77,3 +77,10 @@ To get UUID of booted simulator `xcrun simctl list | grep Booted`
 
 ## jsApp
 soon™
+
+Generate keys for local runs
+
+```
+keytool -genkey -v -keystore androidApp/debug.keystore -storepass android -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000
+keytool -genkey -v -keystore androidApp/release.jks -storepass android -alias androidreleasekey -keyalg RSA -keysize 2048 -validity 10000
+```

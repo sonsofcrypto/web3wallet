@@ -24,6 +24,7 @@ allprojects {
     ext["kotlin_version"] = "1.8.20"
 
     repositories {
+        gradlePluginPortal()
         google()
         mavenCentral()
         uri("https://oss.sonatype.org/content/repositories/snapshots")

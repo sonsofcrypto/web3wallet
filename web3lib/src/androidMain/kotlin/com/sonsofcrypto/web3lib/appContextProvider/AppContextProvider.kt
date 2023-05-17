@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.keyValueStore
+package com.sonsofcrypto.web3lib.appContextProvider
 
 import android.annotation.SuppressLint
 import android.app.Activity

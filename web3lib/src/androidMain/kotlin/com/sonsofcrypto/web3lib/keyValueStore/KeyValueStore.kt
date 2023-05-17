@@ -4,6 +4,7 @@ import android.content.Context.MODE_PRIVATE
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.MapSettings
 import com.russhwolf.settings.SharedPreferencesSettings
+import com.sonsofcrypto.web3lib.appContextProvider.application
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer

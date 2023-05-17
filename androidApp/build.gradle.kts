@@ -5,6 +5,20 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+        create("release") {
+            storeFile = file("release.jks")
+            storePassword = "android"
+            keyAlias = "androidreleasekey"
+            keyPassword = "android"
+        }
+    }
     compileSdk = 33
     defaultConfig {
         applicationId = "com.sonsofcrypto.web3wallet.android"
@@ -14,8 +28,13 @@ android {
         versionName = "1.0"
     }
     buildTypes {
+        getByName("debug") {
+            isMinifyEnabled = false
+            signingConfigs.getByName("debug")
+        }
         getByName("release") {
             isMinifyEnabled = false
+            signingConfigs.getByName("release")
         }
     }
     namespace = "com.sonsofcrypto.web3wallet.android"

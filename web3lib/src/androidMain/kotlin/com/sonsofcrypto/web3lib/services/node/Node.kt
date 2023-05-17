@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib.services.node
 
 import android.content.Context.MODE_PRIVATE
-import com.sonsofcrypto.web3lib.keyValueStore.application
+import com.sonsofcrypto.web3lib.appContextProvider.application
 import coreCrypto.CoreCrypto.newGethNode
 
 actual class NodeConfig(

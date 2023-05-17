@@ -5,7 +5,7 @@ import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class CommonGreetingTest {
+class CommonTest {
 
     @Test
     fun testCoreCryptoLinking() {

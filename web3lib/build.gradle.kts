@@ -73,6 +73,8 @@ kotlin {
                 implementation("io.ktor:ktor-client-content-negotiation:${rootProject.ext["ktor_version"]}")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:${rootProject.ext["ktor_version"]}")
                 implementation("io.ktor:ktor-client-auth:${rootProject.ext["ktor_version"]}")
+                implementation("com.squareup.okio:okio:3.3.0")
+
             }
         }
         val commonTest by getting {
@@ -159,7 +161,6 @@ kotlin {
 //        systemProperty("java.library.path", "/Users/blockexplorer/Development/soc/web3wallet/coreCrypto/build/android/coreCrypto/jni/x86/")
 //    }
 
-
     val testBinary = kotlin.targets.getByName<KotlinNativeTarget>("iosSimulatorArm64").binaries.getTest("DEBUG")
     val runIosTests by project.tasks.creating(IosSimulatorTestsTask::class) {
         dependsOn(testBinary.linkTask)
@@ -180,6 +181,8 @@ buildkonfig {
         buildConfigField(Type.STRING, "poktPublicKey", properties["com.sonsofcrypto.pokt.publicKey"] as String)
         buildConfigField(Type.STRING, "alchemyKey", properties["com.sonsofcrypto.alchemyKey"] as String)
         buildConfigField(Type.STRING, "etherscanKey", properties["com.sonsofcrypto.etherscanKey"] as String)
+        buildConfigField(Type.STRING, "sourceSet", "default")
+
     }
 }
 
