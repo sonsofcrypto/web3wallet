@@ -76,7 +76,7 @@ actual class FileManager {
             BUNDLE -> throw Error.NonUnitTestBasePath(location)
             APPFILES -> {
                 return NSSearchPathForDirectoriesInDomains(
-                    NSLibraryDirectory, NSUserDomainMask, false
+                    NSLibraryDirectory, NSUserDomainMask, true
                 ).last() as? String ?: throw Error.LibraryPath("")
             }
         }
