@@ -23,6 +23,26 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         print(documents.last ?? "")
 #endif
         MainBootstrapper().boot()
+//        let url = NSURL(string: "http://www.sonsofcrypto.com")
+//        let url2 = url?.appendingPathComponent("hello")
+//        print(url2?.absoluteString)
+//        let data = try! web3walletcore.FileManager()
+//            .readSync(path: "bitcoin_white_paper.md", location: .bundle)
+//        let str = String(data: data.toDataFull(), encoding: .utf8)
+//        print(str)
+        
+        let fm = web3walletcore.FileManager()
+        let data = try! fm.readSync(path: "bitcoin_white_paper.md", location: .bundle)
+        let str = String(data: data.toDataFull(), encoding: .utf8)
+        print(str)
+        
+        try! fm.writeSync(data: "Testing".data(.utf8, false), path: "test.txt")
+        let data2 = fm.readSync(path: "test.txt", location: .appfiles)
+        let str2 = String(data: data2.toDataFull(), encoding: .utf8)
+        print(str2)
+        
+
+        
         return true
     }
 

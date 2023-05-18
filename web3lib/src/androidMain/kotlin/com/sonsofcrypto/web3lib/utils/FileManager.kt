@@ -108,7 +108,7 @@ actual class FileManager {
         val comps = (System.getProperty("user.dir") ?: "")
             .split("/")
             .toMutableList()
-        while (comps.last() != "web3wallet") {
+        while (comps.isNotEmpty() && comps.last() != "web3wallet") {
             comps.removeLast()
         }
         return comps.joinToString("/")
