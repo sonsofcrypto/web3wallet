@@ -80,10 +80,7 @@ class DefaultCoinGeckoService : CoinGeckoService {
         page: Int,
         change: String
     ): List<Market> = withContext(dispatcher) {
-        if (ids == null || ids.isEmpty())
-            return@withContext emptyList()
-
-        val idsStr = if (ids != null) {
+        val idsStr = if (ids != null && ids.isNotEmpty()) {
             "&ids=" + ids.reduce { acc, s -> "$acc,$s" }.removeSuffix(",")
         } else ""
 
