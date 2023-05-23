@@ -1,38 +1,18 @@
 package com.sonsofcrypto.web3lib
 
-import com.sonsofcrypto.web3lib.provider.providerJson
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Market
 import com.sonsofcrypto.web3lib.utils.FileManager
-import io.ktor.client.HttpClient
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logger
-import io.ktor.client.plugins.logging.Logging
-import io.ktor.client.plugins.logging.SIMPLE
-import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsText
-import io.ktor.client.utils.EmptyContent.contentType
-import io.ktor.http.ContentType
-import io.ktor.http.withCharset
-import io.ktor.serialization.kotlinx.json.json
-import io.ktor.utils.io.charsets.Charsets
-import io.ktor.utils.io.core.String
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import okio.FileSystem
-import kotlin.native.concurrent.SharedImmutable
 import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
-import com.sonsofcrypto.web3lib.BuildKonfig
 import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
+import com.sonsofcrypto.web3lib.services.coinGecko.model.Coin
+import io.ktor.utils.io.core.toByteArray
+import kotlinx.coroutines.delay
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
 import kotlin.test.assertTrue
-import kotlin.time.ExperimentalTime
+import kotlin.time.Duration.Companion.seconds
 
 
 private val testJson = Json {
@@ -102,18 +82,19 @@ class CoinGeckoTest() {
         )
     }
 
-    @OptIn(ExperimentalTime::class)
     @Test
     fun constructCoinData() = runBlocking {
+        val fm = FileManager()
         val coinGeckoService = DefaultCoinGeckoService()
         val coins = coinGeckoService.coinsList()
-        val fileCoins = File(context.getFilesDir(), "coins.json")
-        fileCoins.writeText(testJson.encodeToString(coins))
-        println("=== dowloaded ${coins.count()} coins, ${fileCoins.path}")
+        val coinsJson = testJson.encodeToString(coins)
+        fm.writeSync(coinsJson.toByteArray(), "coins.json")
+        assertTrue(coins.isNotEmpty(), "No coins download expected some")
 
         var markets = mutableListOf<Market>()
-        for (i in 1..53) {
+        for (i in 1..3) {
             delay(2.seconds)
+
             println("=== starting $i")
             val marketsPage = coinGeckoService.market(
                 ids = null,
@@ -124,9 +105,9 @@ class CoinGeckoTest() {
             markets.addAll(marketsPage)
         }
 
-        val fileMarkets = File(context.getFilesDir(), "markets.json")
-        fileMarkets.writeText(testJson.encodeToString(markets))
-        println("=== dowloaded ${markets.count()} markets, ${fileMarkets.path}")
+        val marketsJson = testJson.encodeToString(markets)
+        fm.writeSync(marketsJson.toByteArray(), "markets.json")
+        assertTrue(markets.isNotEmpty(), "No markets download expected some")
 
         var storeCoins = mutableListOf<StoreCoin>()
         for (coin in coins) {
@@ -144,16 +125,14 @@ class CoinGeckoTest() {
 
         storeCoins.sortWith(StoreCoin.CompareStoreCoin)
 
-        val fileStoreCoin = File(context.getFilesDir(), "storeCoins.json")
-        fileStoreCoin.writeText(testJson.encodeToString(storeCoins))
-        println("=== processed ${storeCoins.count()} coins, ${fileStoreCoin.path}")
+        val storeCoinsJson = testJson.encodeToString(storeCoins)
+        fm.writeSync(storeCoinsJson.toByteArray(), "storeCoins.json")
+        assertTrue(storeCoins.isNotEmpty(), "No store coins expected some")
 
         val filteredCoins = storeCoins.filter { it.platforms?.ethereum != null }
-        val fileFilteredCoins = File(context.getFilesDir(), "filteredCoins.json")
-        fileFilteredCoins.writeText(testJson.encodeToString(filteredCoins))
-        println("=== filtered ${filteredCoins.count()} coins, ${fileFilteredCoins.path}")
-
-        // Download image for top thousands
+        val filteredCoinsJson = testJson.encodeToString(filteredCoins)
+        fm.writeSync(filteredCoinsJson.toByteArray(), "filteredCoins.json")
+        assertTrue(filteredCoins.isNotEmpty(), "No filtred coins expected some")
     }
 
 }
@@ -174,7 +153,7 @@ data class StoreCoin(
     ) {
         companion object {
 
-            fun from(platforms: Platforms?): Platforms? {
+            fun from(platforms: Coin.Platforms?): Platforms? {
                 return if (platforms != null) {
                     return Platforms(platforms.ethereum)
                 } else null
