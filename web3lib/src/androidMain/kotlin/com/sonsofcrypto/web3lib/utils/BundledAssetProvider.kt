@@ -12,13 +12,13 @@ actual class BundledAssetProvider {
     }
 
     actual fun file(name: String, ext: String): ByteArray? {
-        with(BundledAssetProviderApplication.instance()) {
-            val resourceId = resources.getIdentifier(
-                "$name.$ext".substringBefore("."), "raw", packageName
-            )
-            return resources.openRawResource(resourceId).readBytes()
-        }
-
+//        with(BundledAssetProviderApplication.instance()) {
+//            val resourceId = resources.getIdentifier(
+//                "$name.$ext".substringBefore("."), "raw", packageName
+//            )
+//            return resources.openRawResource(resourceId).readBytes()
+//        }
+        return FileManager().readSync("$name.$ext", FileManager.Location.BUNDLE)
     }
 }
 

@@ -231,7 +231,7 @@ class DefaultCurrencyStoreService(
         currencyCache: List<CurrencyCache>,
         metadataCache: Map<String, CurrencyMetadata>,
         marketDataCache: Map<String, CurrencyMarketData>,
-    ) = withContext(uiDispatcher) {
+    ) = withUICxt {
         metadatas = metadataCache
         bundledMarkets = marketDataCache
         currencyCache.forEach {
