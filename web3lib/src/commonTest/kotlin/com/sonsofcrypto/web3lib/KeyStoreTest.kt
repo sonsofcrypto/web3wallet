@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3wallet.android
+package com.sonsofcrypto.web3lib
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.keyStore.*
@@ -12,21 +12,12 @@ import com.sonsofcrypto.web3lib.utils.secureRand
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class KeyStoreTest {
 
-    fun runAll() {
-        testSecretStorageEncryptDecrypt()
-        testSecretStorageDecrypt()
-        testKeyStore()
-        testKeyStoreSelected()
-        testSecretStorageEncryptDecryptMnemonic()
-    }
-
-    fun assertTrue(actual: Boolean, message: String? = null) {
-        if (!actual) throw Exception("Failed $message")
-    }
-
+    @Test
     fun testSecretStorageEncryptDecrypt() {
         val data = secureRand(32)
         val password = "testpass"
@@ -48,6 +39,7 @@ class KeyStoreTest {
         )
     }
 
+    @Test
     fun testSecretStorageDecrypt() {
         val password = "testpass"
         val secretStorage = Json.decodeFromString<SecretStorage>(mockSecretStorageString)
@@ -58,6 +50,7 @@ class KeyStoreTest {
         )
     }
 
+    @Test
     fun testKeyStore() {
         val keyStore = DefaultKeyStoreService(
             KeyValueStore("KeyStoreItemsTest2"),
@@ -93,6 +86,7 @@ class KeyStoreTest {
         assertTrue(keyStore.items().size == 0, "Failed to remove items")
     }
 
+    @Test
     fun testKeyStoreSelected() {
         val keyStore = DefaultKeyStoreService(
             KeyValueStore("KeyStoreItemsTest2"),
@@ -106,6 +100,7 @@ class KeyStoreTest {
         )
     }
 
+    @Test
     fun testSecretStorageEncryptDecryptMnemonic() {
         val bip39 = Bip39(testMnemonic, "", WordList.ENGLISH)
         val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)

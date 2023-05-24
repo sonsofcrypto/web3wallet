@@ -1,6 +1,5 @@
-package com.sonsofcrypto.web3wallet.android
+package com.sonsofcrypto.web3lib
 
-import androidx.annotation.Keep
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.types.Network
@@ -9,11 +8,12 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlin.test.Test
+import kotlin.test.assertTrue
 
-
-@Keep @Serializable @OptIn(InternalSerializationApi::class)
+@Serializable @OptIn(InternalSerializationApi::class)
 class TestSerializable {
-    @Keep @Serializable
+    @Serializable
     val foo: String
 
     constructor(foo: String) {
@@ -24,24 +24,13 @@ class TestSerializable {
 @OptIn(InternalSerializationApi::class)
 class KeyValueStoreTest {
 
-    fun runAll() {
-        testKeyValueStore()
-        testStoreNetworks()
-    }
-
-    fun assertTrue(actual: Boolean, message: String? = null) {
-        if (!actual) throw Exception("Failed $message")
-    }
-
+    @Test
     fun testKeyValueStore() {
         KeyValueStore.default()
         val store = KeyValueStore.default()
 
         store.set("int", 42)
-        assertTrue(
-            KeyValueStore.default().get<Int>("int") == 42,
-            "Unexpected value in int test",
-        )
+        assertTrue(store.get<Int>("int") == 42, "Unexpected value in int test")
 
         store.set("serKey", TestSerializable("foo"))
         assertTrue(
@@ -50,6 +39,7 @@ class KeyValueStoreTest {
         )
     }
 
+    @Test
     fun testStoreNetworks() {
         val networks: List<Network> = NetworksService.supportedNetworks()
         val encoded = Json.encodeToString(networks)
