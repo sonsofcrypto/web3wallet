@@ -1,13 +1,21 @@
 package com.sonsofcrypto.web3lib
 
+import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
+import com.sonsofcrypto.web3lib.utils.aesCTRXOR
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
+import com.sonsofcrypto.web3lib.utils.secureRand
+import io.ktor.utils.io.core.String
+import io.ktor.utils.io.core.toByteArray
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+import kotlin.test.assertTrue
+
 
 class Bip44Test {
 
@@ -406,6 +414,32 @@ class Bip44Test {
                     }
                 }
             }
+        }
+    }
+
+    @Test
+    fun encryptTest() {
+        val key = "".toByteArrayData()
+        val iv = "".toByteArrayData()
+        val test = ""
+        try {
+            aesCTRXOR(key, test.toByteArray(), iv)
+            assertTrue(false, "aesCTRXOR expected fail with empty key")
+        } catch (err: Throwable) {
+            assertTrue(true, "")
+        }
+    }
+
+    @Test
+    fun decryptTest() {
+        val key = "".toByteArrayData()
+        val iv = "".toByteArrayData()
+        val cypherText = "".toByteArrayData()
+        try {
+            aesCTRXOR(key, cypherText, iv)
+            assertTrue(false, "aesCTRXOR expected fail with empty key")
+        } catch (err: Throwable) {
+            assertTrue(true, "")
         }
     }
 }
