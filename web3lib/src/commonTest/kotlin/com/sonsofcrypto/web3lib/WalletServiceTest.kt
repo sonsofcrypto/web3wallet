@@ -1,6 +1,8 @@
 package com.sonsofcrypto.web3wallet.android
 
+import com.sonsofcrypto.web3lib.KeyStoreTest
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.mockKeyStoreItem
 import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
 import com.sonsofcrypto.web3lib.services.currencyStore.DefaultCurrencyStoreService
 import com.sonsofcrypto.web3lib.services.currencyStore.ethereumDefaultCurrencies
@@ -15,29 +17,16 @@ import com.sonsofcrypto.web3lib.signer.contracts.CultGovernor
 import com.sonsofcrypto.web3lib.signer.contracts.ERC721
 import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.bip39.localeString
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class WalletServiceTest {
 
-    val scope = CoroutineScope(bgDispatcher)
-
-    fun runAll() {
-//        testCurrenciesStoring()
-//        testNativeSend()
-//        testERC20Send()
-//        testCultVote()
-        testNFTSend()
-    }
-
-    fun assertTrue(actual: Boolean, message: String? = null) {
-        if (!actual) throw Exception("Failed $message")
-    }
-
+    @Test
     fun testCurrenciesStoring() {
         var currencyStoreService = DefaultCurrencyStoreService(
             DefaultCoinGeckoService(),
@@ -77,6 +66,7 @@ class WalletServiceTest {
         )
     }
 
+    @Test
     fun testNativeSend() {
         // 0x58aEBEC033A2D55e35e44E6d7B43725b069F6Abc
         val mnemonic = "ignore such face concert soccer above topple flavor kiwi salad online peace"
@@ -139,7 +129,7 @@ class WalletServiceTest {
         )
         walletService.setCurrencies(ropstenDefaultCurrencies, Network.ropsten())
         walletService.unlock(password, "", Network.ropsten())
-        scope.launch {
+        runBlocking {
             val result = walletService.transfer(
                 "0xdbf95f925A4FfA270f9a4B5FC55F8d72cCb5a98f",
                 Currency.ethereum(),
@@ -150,6 +140,7 @@ class WalletServiceTest {
         }
     }
 
+    @Test
     fun testERC20Send() {
         // 0x58aEBEC033A2D55e35e44E6d7B43725b069F6Abc
         val mnemonic = "ignore such face concert soccer above topple flavor kiwi salad online peace"
@@ -211,7 +202,7 @@ class WalletServiceTest {
             KeyValueStore("WalletServiceTest.transferLogCache"),
         )
         walletService.setCurrencies(ropstenDefaultCurrencies, Network.ropsten())
-        scope.launch {
+        runBlocking {
             val job = currencyStoreService.loadCaches(listOf(Network.ropsten()))
             job.join()
             walletService.unlock(password, "", Network.ropsten())
@@ -228,6 +219,7 @@ class WalletServiceTest {
         }
     }
 
+    @Test
     fun testCultVote() {
         // 0x58aEBEC033A2D55e35e44E6d7B43725b069F6Abc
         val mnemonic = "ignore such face concert soccer above topple flavor kiwi salad online peace"
@@ -289,7 +281,7 @@ class WalletServiceTest {
             KeyValueStore("WalletServiceTest.transferLogCache"),
         )
         walletService.setCurrencies(ethereumDefaultCurrencies, Network.ropsten())
-        scope.launch {
+        runBlocking {
             walletService.unlock(password, "", Network.ethereum())
             val contract = CultGovernor()
             val result = walletService.contractSend(
@@ -301,6 +293,7 @@ class WalletServiceTest {
         }
     }
 
+    @Test
     fun testNFTSend() {
         // 0x58aEBEC033A2D55e35e44E6d7B43725b069F6Abc
         val mnemonic = "ignore such face concert soccer above topple flavor kiwi salad online peace"
@@ -362,7 +355,7 @@ class WalletServiceTest {
             KeyValueStore("WalletServiceTest.transferLogCache"),
         )
         walletService.setCurrencies(ethereumDefaultCurrencies, Network.ropsten())
-        scope.launch {
+        runBlocking {
             walletService.unlock(password, "", Network.ethereum())
             val contract = ERC721(Address.HexString("0xf79E73dE6934B767De0fAa120d059811A40276d9"))
             val result = walletService.contractSend(

@@ -15,12 +15,16 @@ import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.keccak256
 import com.sonsofcrypto.web3lib.utils.sign
+import io.ktor.utils.io.core.toByteArray
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import kotlin.time.ExperimentalTime
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 private val providerJson = Json {
     isLenient = true
@@ -33,7 +37,7 @@ private val providerJson = Json {
 
 class ProviderTest {
 
-    fun runAll() {
+//    fun runAll() {
 //        testQuantityHexString()
 //        testBlockNumber()
 //        testGasPrice()
@@ -52,22 +56,20 @@ class ProviderTest {
 //        testGetTransactionByBlockIndex()
 //        testGetTransactionReceipt()
 //        testGetUncleBlock()
-        testGetLogs()
+//        testGetLogs()
 //        testSendTransaction()
 //        testNewFilter()
 //        testSendTransaction2()
 //        testGetTransactionReceipt2()
-    }
+//    }
 
-    fun assertTrue(actual: Boolean, message: String? = null) {
-        if (!actual) throw Exception("Failed $message")
-    }
-
+    @Test
     fun testBlockNumber() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
 
         val blockNumber = provider.blockNumber()
         println("block number $blockNumber")
+        // 17331340
     }
 
     fun testGasPrice() = runBlocking {

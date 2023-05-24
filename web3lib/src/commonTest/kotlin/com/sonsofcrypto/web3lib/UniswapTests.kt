@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3wallet.android
 
+import com.sonsofcrypto.web3lib.KeyStoreTest
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
@@ -24,7 +25,12 @@ import com.sonsofcrypto.web3lib.utils.bip39.localeString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlin.time.Duration.Companion.seconds
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+
 
 val FACTORY_ADDRESS = "0x1F98431c8aD98523631AE4a59f267346ea31F984";
 val ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
@@ -39,20 +45,17 @@ class UniswapTests {
     val password: String = "SomeLongPassword"
     val scope = CoroutineScope(bgDispatcher)
 
-    fun runAll() {
+//    fun runAll() {
 //        testGetPoolAddress()
 //        testGetPoolData()
 //        testGetAllPoolData()
 //        testInitState()
 //        testSwapTokenToken()
 //        testSwapNativeToken()
-        testSwapTokenNative()
-    }
+//        testSwapTokenNative()
+//    }
 
-    fun assertTrue(actual: Boolean, message: String? = null) {
-        if (!actual) throw Exception("Failed $message")
-    }
-
+    @Test
     fun testGetPoolAddress() {
         val service = DefaultUniswapService()
         val address = service.poolAddress(
@@ -86,6 +89,7 @@ class UniswapTests {
         )
     }
 
+    @Test
     fun testGetPoolData() {
         val service = DefaultUniswapService()
         val address = service.poolAddress(
@@ -96,7 +100,7 @@ class UniswapTests {
             "0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54"
         )
         val poolState = UniswapV3PoolState(Address.HexString(address))
-        scope.launch {
+        runBlocking {
             val wallet = networksService.wallet(Network.ethereum())
             wallet?.unlock(password, "")
             val provider = wallet!!.provider()!!
@@ -124,6 +128,7 @@ class UniswapTests {
         }
     }
 
+    @Test
     fun testGetAllPoolData() {
         println(networksService)
         val network = Network.ethereum()
@@ -137,7 +142,7 @@ class UniswapTests {
             val output = service.outputCurrency
             service.poolAddress(input, output, it, network)
         }
-        scope.launch {
+        runBlocking {
             val result = service.fetchPoolsStates(addresses)
             result.forEach { (key, value) ->
                 println("$key")
@@ -153,6 +158,7 @@ class UniswapTests {
         }
     }
 
+    @Test
     fun testInitState() {
         println(networksService)
         val network = Network.ethereum()
@@ -164,6 +170,7 @@ class UniswapTests {
         service.inputAmount = BigInt.from("1000000000000000000")
     }
 
+    @Test
     fun testApproval() {
         println(networksService)
         val network = Network.ethereum()
@@ -181,6 +188,7 @@ class UniswapTests {
         }
     }
 
+    @Test
     fun testSwapTokenToken() {
         println(networksService)
         val network = Network.ethereum()
@@ -198,6 +206,7 @@ class UniswapTests {
         }
     }
 
+    @Test
     fun testSwapNativeToken() {
         println(networksService)
         val network = Network.ethereum()
@@ -215,6 +224,7 @@ class UniswapTests {
         }
     }
 
+    @Test
     fun testSwapTokenNative() {
         println(networksService)
         val network = Network.ethereum()

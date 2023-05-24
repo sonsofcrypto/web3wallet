@@ -1,38 +1,17 @@
-package com.sonsofcrypto.web3wallet.android
+package com.sonsofcrypto.web3lib.contract
 
-import com.sonsofcrypto.web3lib.contract.ERC20
-import com.sonsofcrypto.web3lib.contract.FunctionFragment
-import com.sonsofcrypto.web3lib.contract.Interface
-import com.sonsofcrypto.web3lib.contract.Multicall3
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.utils.BigInt
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlin.time.Duration.Companion.seconds
+import kotlin.test.Test
 
 class MultiCallTests {
 
-    fun runAll() {
-        println("we are starting")
-        GlobalScope.launch {
-            println("before delay")
-            delay(1.seconds)
-            println("after delay")
-            testER20Balances()
-        }
-    }
-
-    fun assertTrue(actual: Boolean, message: String? = null) {
-        if (!actual) throw Exception("Failed $message")
-    }
-
+    @Test
     fun testER20Balances() = runBlocking {
         val address = "0x9aA80dCeD760224d59BEFe358c7C66C45e3BEA1C"
         val multiCallAddress = "0xcA11bde05977b3631167028862bE2a173976CA11"

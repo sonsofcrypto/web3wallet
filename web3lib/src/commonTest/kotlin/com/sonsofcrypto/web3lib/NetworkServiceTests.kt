@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3wallet.android
+package com.sonsofcrypto.web3lib
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
@@ -7,17 +7,12 @@ import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
 import com.sonsofcrypto.web3lib.types.Network
+import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class NetworkServiceTests {
 
-    fun runAll() {
-        testProviderStore()
-    }
-
-    fun assertTrue(actual: Boolean, message: String? = null) {
-        if (!actual) throw Exception("Failed $message")
-    }
-
+    @Test
     fun testProviderStore() {
         val keyStoreService = DefaultKeyStoreService(
             KeyValueStore("KeyStoreItemsTest2"),
@@ -34,6 +29,10 @@ class NetworkServiceTests {
 
         val provider = ProviderPocket(Network.ropsten())
         networksService.setProvider(provider, Network.ropsten())
+        assertTrue(
+            networksService.provider(Network.ropsten()) is ProviderPocket,
+            "Unexpected provider ${networksService.provider(Network.ropsten())}"
+        )
     }
 
     private val mockKeyStoreItem = KeyStoreItem(
