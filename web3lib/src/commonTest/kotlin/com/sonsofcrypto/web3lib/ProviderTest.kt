@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3wallet.android
 
+import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.provider.JsonRpcErrorResponse
 import com.sonsofcrypto.web3lib.provider.ProviderAlchemy
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
@@ -66,26 +67,33 @@ class ProviderTest {
     @Test
     fun testBlockNumber() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
-
         val blockNumber = provider.blockNumber()
-        println("block number $blockNumber")
-        // 17331340
+        assertTrue(
+            blockNumber.isGreaterThan(BigInt.from(17331340)),
+            "Expected greater block number $blockNumber"
+        )
     }
 
+    @Test
     fun testGasPrice() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
-        val gasPrice = provider.blockNumber()
-        println("gas price ${gasPrice.toString()}")
+        val gasPrice = provider.gasPrice()
+        assertTrue(
+            gasPrice.isGreaterThan(BigInt.Companion.from(635539324)),
+            "Gas appears to be too cheap ${gasPrice.toString()}"
+        )
     }
 
+    @Test
     fun testGetBalance() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
         val balance = provider.getBalance(
             Address.HexString("0x9fFd5aEFd25E18bb8AaA171b8eC619d94AD6AAf0")
         )
-        println("balance $balance")
+        assertTrue(balance.isGreaterThan(BigInt.zero), "Zero balance")
     }
 
+    @Test
     fun testGetStorageAt() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
         val storage = provider.getStorageAt(
@@ -93,16 +101,17 @@ class ProviderTest {
             0uL,
             BlockTag.Latest
         )
-        println("storage $storage")
+        assertTrue(storage.isNotEmpty(), "Storeage empty $storage")
     }
 
+    @Test
     fun testGetTransactionCount() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
-        val storage = provider.getTransactionCount(
+        val txcount = provider.getTransactionCount(
             Address.HexString("0x9fFd5aEFd25E18bb8AaA171b8eC619d94AD6AAf0"),
             BlockTag.Latest
         )
-        println("transaction count $storage")
+        assertTrue(txcount.isGreaterThan(BigInt.zero), "Tx expected $txcount")
     }
 
     fun testGetCode() = runBlocking {
