@@ -5,7 +5,10 @@ import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticatePresenterEvent.*
+import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticatePresenterEvent.DidCancel
+import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticatePresenterEvent.DidChangePassword
+import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticatePresenterEvent.DidChangeSalt
+import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticatePresenterEvent.DidConfirm
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWireframeDestination.Dismiss
 
 sealed class AuthenticatePresenterEvent {

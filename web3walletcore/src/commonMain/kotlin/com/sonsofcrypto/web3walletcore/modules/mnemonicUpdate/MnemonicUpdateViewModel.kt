@@ -1,6 +1,10 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate
 
-import com.sonsofcrypto.web3walletcore.common.viewModels.*
+import com.sonsofcrypto.web3walletcore.common.viewModels.SectionFooterViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.SegmentWithTextAndSwitchCellViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.SwitchCollectionViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.SwitchTextInputCollectionViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.TextInputCollectionViewModel
 
 data class MnemonicUpdateViewModel(
     val sections : List<Section>,

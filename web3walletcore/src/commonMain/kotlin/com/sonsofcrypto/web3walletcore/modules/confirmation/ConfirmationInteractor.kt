@@ -8,7 +8,6 @@ import com.sonsofcrypto.web3lib.signer.contracts.CultGovernor
 import com.sonsofcrypto.web3lib.signer.contracts.ERC721
 import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.types.Address.HexString
-import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
 

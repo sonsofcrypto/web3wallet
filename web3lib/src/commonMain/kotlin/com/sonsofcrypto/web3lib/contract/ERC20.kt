@@ -4,7 +4,6 @@ import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.signer.Signer
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
-import kotlin.contracts.contract
 
 /** Standard ERC20 https://eips.ethereum.org/EIPS/eip-20 */
 class ERC20: Contract {

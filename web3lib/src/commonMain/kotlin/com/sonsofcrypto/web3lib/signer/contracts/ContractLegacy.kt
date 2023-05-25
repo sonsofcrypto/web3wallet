@@ -2,7 +2,11 @@ package com.sonsofcrypto.web3lib.signer.contracts
 
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.types.Address
-import com.sonsofcrypto.web3lib.utils.*
+import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.abiDecodeAddress
+import com.sonsofcrypto.web3lib.utils.abiDecodeBigInt
+import com.sonsofcrypto.web3lib.utils.abiEncode
+import com.sonsofcrypto.web3lib.utils.keccak256
 
 
 open class ContractLegacy(

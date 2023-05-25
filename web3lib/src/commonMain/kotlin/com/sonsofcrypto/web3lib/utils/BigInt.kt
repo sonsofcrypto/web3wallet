@@ -5,7 +5,6 @@ import com.ionspin.kotlin.bignum.integer.util.fromTwosComplementByteArray
 import com.ionspin.kotlin.bignum.integer.util.toTwosComplementByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toBooleanArray
 import com.sonsofcrypto.web3lib.utils.extensions.toByteArray
-import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Serializer

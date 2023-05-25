@@ -1,7 +1,6 @@
 package com.sonsofcrypto.web3lib.abi.types
 
 import com.sonsofcrypto.web3lib.abi.AbiEncode
-import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 
 class AbiArray(override val type: String, override val value: Array<*>) : AbiType {
     override fun encode(): ByteArray {

@@ -1,7 +1,6 @@
 package com.sonsofcrypto.web3lib.contract
 
 import com.sonsofcrypto.web3lib.provider.Provider
-import com.sonsofcrypto.web3lib.provider.model.Transaction
 import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
 import com.sonsofcrypto.web3lib.signer.Signer
 import com.sonsofcrypto.web3lib.types.Address

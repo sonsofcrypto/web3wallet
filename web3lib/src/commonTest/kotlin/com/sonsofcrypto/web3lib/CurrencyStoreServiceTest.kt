@@ -10,14 +10,10 @@ import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import kotlin.test.Test
 import kotlin.test.assertTrue
-import kotlin.time.Duration
 
 
 class CurrencyStoreServiceTest: CurrencyStoreListener {

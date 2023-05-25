@@ -1,7 +1,5 @@
 package com.sonsofcrypto.web3lib.utils.extensions
 
-import com.ionspin.kotlin.bignum.integer.BigInteger
-import com.ionspin.kotlin.bignum.integer.util.toTwosComplementByteArray
 import kotlin.experimental.inv
 import kotlin.experimental.or
 

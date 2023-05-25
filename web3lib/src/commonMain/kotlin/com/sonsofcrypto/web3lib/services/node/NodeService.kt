@@ -1,14 +1,6 @@
 package com.sonsofcrypto.web3lib.services.node
 
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.utils.bgDispatcher
-import com.sonsofcrypto.web3lib.utils.timerFlow
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlin.time.Duration.Companion.seconds
 
 /** Manages lifecycle for of geth LES nodes for networks */
 interface NodeService {

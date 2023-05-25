@@ -10,7 +10,10 @@ import com.sonsofcrypto.web3walletcore.extensions.toNetworkFeeViewModel
 import com.sonsofcrypto.web3walletcore.modules.confirmation.ConfirmationWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendViewModel.ButtonState.INVALID_DESTINATION
 import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendViewModel.ButtonState.READY
-import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeDestination.*
+import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeDestination.ConfirmSendNFT
+import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeDestination.Dismiss
+import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeDestination.QRCodeScan
+import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeDestination.UnderConstructionAlert
 
 sealed class NFTSendPresenterEvent {
     object QrCodeScan: NFTSendPresenterEvent()

@@ -14,7 +14,9 @@ import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Sect
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Header.Balance
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Header.Title
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.*
-import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.Button.Type.*
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.Button.Type.RECEIVE
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.Button.Type.SEND
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.Button.Type.SWAP
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.KeyStoreNetworkSettings
 import com.sonsofcrypto.web3walletcore.services.actions.Action
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem

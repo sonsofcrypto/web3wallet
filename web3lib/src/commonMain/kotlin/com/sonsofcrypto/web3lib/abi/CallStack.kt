@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3lib.abi
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
-import io.ktor.utils.io.core.*
+import io.ktor.utils.io.core.toByteArray
 
 
 val REGEX_ARGS = "\\((.*)\\)".toRegex()

@@ -2,7 +2,14 @@ package com.sonsofcrypto.web3walletcore.services.degen
 
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.*
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.BRIDGE
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.CULT
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.DERIVATIVE
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.GOVERNANCE
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.LAND_BORROW
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.MIXER
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.STAKE_YIELD
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.SWAP
 
 interface DegenService {
     fun categoriesActive(): List<DAppCategory>

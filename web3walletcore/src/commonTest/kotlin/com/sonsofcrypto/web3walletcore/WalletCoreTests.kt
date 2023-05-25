@@ -14,7 +14,6 @@ import com.sonsofcrypto.web3walletcore.modules.root.RootWireframeDestination
 import com.sonsofcrypto.web3walletcore.services.improvementProposals.DefaultImprovementProposalsService
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import kotlin.test.Test
 
 class WalletCoreTests {

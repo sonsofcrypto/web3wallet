@@ -7,7 +7,9 @@ import com.sonsofcrypto.web3lib.provider.ProviderLocal
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
-import com.sonsofcrypto.web3lib.services.networks.ProviderInfo.Type.*
+import com.sonsofcrypto.web3lib.services.networks.ProviderInfo.Type.ALCHEMY
+import com.sonsofcrypto.web3lib.services.networks.ProviderInfo.Type.LOCAL
+import com.sonsofcrypto.web3lib.services.networks.ProviderInfo.Type.POCKET
 import com.sonsofcrypto.web3lib.services.node.NodeService
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.types.Currency

@@ -9,7 +9,10 @@ import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframeContext.Action.Type.PRIMARY
 import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframeContext.Action.Type.SECONDARY
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsViewModel.Loading
-import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsWireframeDestination.*
+import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsWireframeDestination.Alert
+import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsWireframeDestination.CastVote
+import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsWireframeDestination.GetCult
+import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsWireframeDestination.Proposal
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.DefaultCultProposalsPresenter.SectionType.CLOSED
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.DefaultCultProposalsPresenter.SectionType.PENDING
 import com.sonsofcrypto.web3walletcore.services.cult.CultProposal

@@ -4,7 +4,10 @@ import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3walletcore.common.viewModels.CandlesViewModel
-import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.*
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.Actions
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.Buttons
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.Nfts
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.Wallets
 
 data class DashboardViewModel(
     val sections: List<Section>,

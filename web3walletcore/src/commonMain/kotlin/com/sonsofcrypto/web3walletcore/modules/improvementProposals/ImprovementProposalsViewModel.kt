@@ -1,10 +1,12 @@
 package com.sonsofcrypto.web3walletcore.modules.improvementProposals
 
 import com.sonsofcrypto.web3walletcore.common.viewModels.ErrorViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.SectionHeaderViewModel
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal
-import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal.Category.*
+import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal.Category.FEATURE
+import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal.Category.INFRASTRUCTURE
+import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal.Category.INTEGRATION
+import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal.Category.UNKNOWN
 
 sealed class ImprovementProposalsViewModel {
     /** Loading proposals */

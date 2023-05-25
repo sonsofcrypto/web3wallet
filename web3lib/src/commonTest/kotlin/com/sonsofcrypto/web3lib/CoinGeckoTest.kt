@@ -1,16 +1,16 @@
 package com.sonsofcrypto.web3lib
 
-import com.sonsofcrypto.web3lib.services.coinGecko.model.Market
-import com.sonsofcrypto.web3lib.utils.FileManager
-import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.json.Json
-import kotlin.test.Test
 import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Coin
+import com.sonsofcrypto.web3lib.services.coinGecko.model.Market
+import com.sonsofcrypto.web3lib.utils.FileManager
 import io.ktor.utils.io.core.toByteArray
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import kotlin.test.Test
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 

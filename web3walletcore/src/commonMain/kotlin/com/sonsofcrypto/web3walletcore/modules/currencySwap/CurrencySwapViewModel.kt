@@ -1,7 +1,8 @@
 package com.sonsofcrypto.web3walletcore.modules.currencySwap
 
 import com.sonsofcrypto.web3lib.formatters.Formatters
-import com.sonsofcrypto.web3walletcore.common.viewModels.*
+import com.sonsofcrypto.web3walletcore.common.viewModels.CurrencyAmountPickerViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.NetworkFeeViewModel
 
 data class CurrencySwapViewModel(
     val title: String,

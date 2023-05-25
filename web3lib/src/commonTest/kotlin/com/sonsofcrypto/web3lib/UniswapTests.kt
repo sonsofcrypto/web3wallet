@@ -16,7 +16,12 @@ import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
 import com.sonsofcrypto.web3lib.services.uniswap.DefaultUniswapService
 import com.sonsofcrypto.web3lib.services.uniswap.PoolFee
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.UniswapV3PoolState
-import com.sonsofcrypto.web3lib.types.*
+import com.sonsofcrypto.web3lib.types.Address
+import com.sonsofcrypto.web3lib.types.Bip44
+import com.sonsofcrypto.web3lib.types.Currency
+import com.sonsofcrypto.web3lib.types.ExtKey
+import com.sonsofcrypto.web3lib.types.Network
+import com.sonsofcrypto.web3lib.types.toHexStringAddress
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
@@ -26,10 +31,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlin.time.Duration.Companion.seconds
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.seconds
 
 
 val FACTORY_ADDRESS = "0x1F98431c8aD98523631AE4a59f267346ea31F984";

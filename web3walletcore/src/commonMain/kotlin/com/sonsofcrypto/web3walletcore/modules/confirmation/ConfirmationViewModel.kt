@@ -1,7 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.confirmation
 
 import com.sonsofcrypto.web3lib.formatters.Formatters
-import com.sonsofcrypto.web3lib.formatters.FormattersOutput
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
 
 data class ConfirmationViewModel(

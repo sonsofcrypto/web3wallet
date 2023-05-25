@@ -6,7 +6,10 @@ import com.sonsofcrypto.web3lib.provider.ProviderLocal
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.types.Network.Type.*
+import com.sonsofcrypto.web3lib.types.Network.Type.L1
+import com.sonsofcrypto.web3lib.types.Network.Type.L1_TEST
+import com.sonsofcrypto.web3lib.types.Network.Type.L2
+import com.sonsofcrypto.web3lib.types.Network.Type.L2_TEST
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import com.sonsofcrypto.web3walletcore.extensions.Localized

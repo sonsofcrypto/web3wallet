@@ -8,8 +8,13 @@ import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerViewModel.Position
-import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerViewModel.Position.*
-import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerViewModel.Section.*
+import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerViewModel.Position.FIRST
+import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerViewModel.Position.LAST
+import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerViewModel.Position.MIDDLE
+import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerViewModel.Position.SINGLE
+import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerViewModel.Section.Currencies
+import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerViewModel.Section.FavouriteCurrencies
+import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerViewModel.Section.Networks
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext.Result
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeDestination.AddCustomCurrency
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeDestination.Dismiss

@@ -3,7 +3,6 @@ package com.sonsofcrypto.web3lib.formatters
 import com.sonsofcrypto.web3lib.formatters.Formatters.Output.Normal
 import com.sonsofcrypto.web3lib.utils.BigDec
 import kotlin.math.max
-import kotlin.math.min
 
 class FiatFormatter {
     private val placeholder = "-"

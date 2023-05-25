@@ -8,10 +8,18 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.common.viewModels.CurrencyAmountPickerViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.NetworkAddressPickerViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.NetworkFeeViewModel
-import com.sonsofcrypto.web3walletcore.extensions.*
+import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3walletcore.extensions.toNetworkFeeViewModel
 import com.sonsofcrypto.web3walletcore.modules.confirmation.ConfirmationWireframeContext
-import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendViewModel.ButtonState.*
-import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeDestination.*
+import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendViewModel.ButtonState.ENTER_FUNDS
+import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendViewModel.ButtonState.INSUFFICIENT_FUNDS
+import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendViewModel.ButtonState.INVALID_DESTINATION
+import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendViewModel.ButtonState.READY
+import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeDestination.ConfirmSend
+import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeDestination.Dismiss
+import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeDestination.QrCodeScan
+import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeDestination.SelectCurrency
+import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeDestination.UnderConstructionAlert
 
 sealed class CurrencySendPresenterEvent {
     object QrCodeScan: CurrencySendPresenterEvent()

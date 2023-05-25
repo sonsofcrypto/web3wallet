@@ -1,6 +1,5 @@
 package com.sonsofcrypto.web3walletcore.modules.networkSettings
 
-import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.services.networks.ProviderInfo
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef

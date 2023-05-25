@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3walletcore.modules.account
 
 import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.formatters.Formatters.Style.Custom
-import com.sonsofcrypto.web3walletcore.common.viewModels.CandlesViewModel.*
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.WeakRef
@@ -14,7 +13,10 @@ import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.account.AccountViewModel.Header.Button
 import com.sonsofcrypto.web3walletcore.modules.account.AccountViewModel.Transaction.Empty
 import com.sonsofcrypto.web3walletcore.modules.account.AccountViewModel.Transaction.Loading
-import com.sonsofcrypto.web3walletcore.modules.account.AccountWireframeDestination.*
+import com.sonsofcrypto.web3walletcore.modules.account.AccountWireframeDestination.More
+import com.sonsofcrypto.web3walletcore.modules.account.AccountWireframeDestination.Receive
+import com.sonsofcrypto.web3walletcore.modules.account.AccountWireframeDestination.Send
+import com.sonsofcrypto.web3walletcore.modules.account.AccountWireframeDestination.Swap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

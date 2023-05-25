@@ -1,7 +1,5 @@
 package com.sonsofcrypto.web3lib.types
 
-import com.sonsofcrypto.web3lib.utils.BigDec
-import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

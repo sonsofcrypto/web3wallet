@@ -7,7 +7,9 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.TextInputCollectionView
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWireframeContext
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination.*
+import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination.Alert
+import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination.Authenticate
+import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination.Dismiss
 
 sealed class MnemonicUpdatePresenterEvent {
     data class DidChangeName(val name: String): MnemonicUpdatePresenterEvent()

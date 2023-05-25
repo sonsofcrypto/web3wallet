@@ -1,7 +1,11 @@
 package com.sonsofcrypto.web3lib.formatters
 
 import com.sonsofcrypto.web3lib.formatters.NumberFormatterStyle.Currency
-import platform.Foundation.*
+import platform.Foundation.NSLocale
+import platform.Foundation.NSNumber
+import platform.Foundation.NSNumberFormatter
+import platform.Foundation.NSNumberFormatterCurrencyStyle
+import platform.Foundation.NSNumberFormatterPercentStyle
 
 actual class NumberFormatter: NSNumberFormatter() {
 

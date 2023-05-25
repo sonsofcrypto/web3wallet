@@ -4,8 +4,13 @@ import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel.*
-import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel.TextFieldType.*
+import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel.NetworkItem
+import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel.TextFieldItem
+import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel.TextFieldType
+import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel.TextFieldType.CONTRACT_ADDRESS
+import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel.TextFieldType.DECIMALS
+import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel.TextFieldType.NAME
+import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel.TextFieldType.SYMBOL
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddWireframeDestination.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddWireframeDestination.NetworkPicker
 

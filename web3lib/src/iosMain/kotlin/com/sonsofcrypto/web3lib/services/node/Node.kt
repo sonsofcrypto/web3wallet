@@ -1,10 +1,10 @@
 package com.sonsofcrypto.web3lib.services.node
 
+import CoreCrypto.CoreCryptoNewGethNodeFataln
+import CoreCrypto.CoreCryptoNode
 import CoreCrypto.CoreCryptoNodeConfig
 import CoreCrypto.CoreCryptoNodeInfo
 import CoreCrypto.CoreCryptoPeerInfos
-import CoreCrypto.CoreCryptoNode
-import CoreCrypto.CoreCryptoNewGethNodeFataln
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSSearchPathForDirectoriesInDomains
 import platform.Foundation.NSUserDomainMask

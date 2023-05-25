@@ -6,7 +6,7 @@ import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.keccak256
-import io.ktor.utils.io.core.*
+import io.ktor.utils.io.core.toByteArray
 
 
 // uint->uint256, int->int256, address->uint160, bool->uint8, bytes->hex32, function->bytes24 (function&address)

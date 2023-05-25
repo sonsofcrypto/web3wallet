@@ -3,7 +3,10 @@ package com.sonsofcrypto.web3walletcore.modules.mnemonicNew
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.utils.WeakRef
-import com.sonsofcrypto.web3walletcore.common.viewModels.*
+import com.sonsofcrypto.web3walletcore.common.viewModels.SectionFooterViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.SegmentWithTextAndSwitchCellViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.SwitchCollectionViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.TextInputCollectionViewModel
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 
 sealed class MnemonicNewPresenterEvent {

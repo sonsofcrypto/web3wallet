@@ -1,12 +1,9 @@
 package com.sonsofcrypto.web3lib.abi.integrations
 
 import com.sonsofcrypto.web3lib.abi.AbiEncode
-import com.sonsofcrypto.web3lib.abi.CallStack
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
-import io.ktor.utils.io.core.*
 
 class UniswapV3 {
     companion object {

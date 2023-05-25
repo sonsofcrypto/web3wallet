@@ -17,7 +17,13 @@ import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
-import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardInteractorEvent.*
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardInteractorEvent.DidChangeNetworks
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardInteractorEvent.DidUpdateActions
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardInteractorEvent.DidUpdateBalance
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardInteractorEvent.DidUpdateBlock
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardInteractorEvent.DidUpdateCandles
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardInteractorEvent.DidUpdateMarketData
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardInteractorEvent.DidUpdateNFTs
 import com.sonsofcrypto.web3walletcore.services.actions.Action
 import com.sonsofcrypto.web3walletcore.services.actions.ActionsListener
 import com.sonsofcrypto.web3walletcore.services.actions.ActionsService

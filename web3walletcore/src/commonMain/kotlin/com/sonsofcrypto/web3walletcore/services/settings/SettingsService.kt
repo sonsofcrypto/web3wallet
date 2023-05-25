@@ -1,9 +1,12 @@
 package com.sonsofcrypto.web3walletcore.services.settings
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
-import com.sonsofcrypto.web3walletcore.services.settings.Setting.Action.*
-import com.sonsofcrypto.web3walletcore.services.settings.Setting.Group.*
+import com.sonsofcrypto.web3walletcore.services.settings.Setting.Action.DEVELOPER_APIS_NFTS_OPEN_SEA
+import com.sonsofcrypto.web3walletcore.services.settings.Setting.Action.DEVELOPER_TRANSITIONS_CARD_FLIP
+import com.sonsofcrypto.web3walletcore.services.settings.Setting.Action.THEME_MIAMI_LIGHT
+import com.sonsofcrypto.web3walletcore.services.settings.Setting.Group.DEVELOPER_APIS_NFTS
+import com.sonsofcrypto.web3walletcore.services.settings.Setting.Group.DEVELOPER_TRANSITIONS
+import com.sonsofcrypto.web3walletcore.services.settings.Setting.Group.THEME
 
 data class Setting(
     val group: Group,

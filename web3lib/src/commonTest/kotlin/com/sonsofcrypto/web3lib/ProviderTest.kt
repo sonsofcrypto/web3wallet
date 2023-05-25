@@ -1,6 +1,5 @@
 package com.sonsofcrypto.web3wallet.android
 
-import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.provider.JsonRpcErrorResponse
 import com.sonsofcrypto.web3lib.provider.ProviderAlchemy
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
@@ -22,10 +21,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
-import kotlin.time.ExperimentalTime
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.time.ExperimentalTime
 
 private val providerJson = Json {
     isLenient = true
@@ -37,32 +35,6 @@ private val providerJson = Json {
 }
 
 class ProviderTest {
-
-//    fun runAll() {
-//        testQuantityHexString()
-//        testBlockNumber()
-//        testGasPrice()
-//        testGetBalance()
-//        testGetStorageAt()
-//        testGetTransactionCount()
-//        testGetCode()
-//        testErrorHandling()
-//        testCall()
-//        testEstimateGas()
-//        testGetBlockTransactionHashCount()
-//        testGetBlockTransactionNumberCount()
-//        testGetUncleCount()
-//        testGetBlock()
-//        testGetTransaction()
-//        testGetTransactionByBlockIndex()
-//        testGetTransactionReceipt()
-//        testGetUncleBlock()
-//        testGetLogs()
-//        testSendTransaction()
-//        testNewFilter()
-//        testSendTransaction2()
-//        testGetTransactionReceipt2()
-//    }
 
     @Test
     fun testBlockNumber() = runBlocking {
@@ -114,6 +86,7 @@ class ProviderTest {
         assertTrue(txcount.isGreaterThan(BigInt.zero), "Tx expected $txcount")
     }
 
+    @Test
     fun testGetCode() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
         val code = provider.getCode(
@@ -123,6 +96,7 @@ class ProviderTest {
         println("code $code")
     }
 
+    @Test
     fun testCall() = runBlocking {
         val expected = "0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000004000000000000000000000000d9c9cd5f6779558b6e0ed4e6acf6b1947e7fa1f300000000000000000000000078d1ad571a1a09d60d9bbf25894b44e4c8859595000000000000000000000000286834935f4a8cfb4ff4c77d5770c2775ae2b0e7000000000000000000000000b86e2b0ab5a4b1373e40c51a7c712c70ba2f9f8e"
         val data = "0x45848dfc"

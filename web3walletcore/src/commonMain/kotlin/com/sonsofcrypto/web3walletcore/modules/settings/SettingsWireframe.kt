@@ -1,7 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.settings
 
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.modules.settings.SettingsWireframeContext.Group
 import com.sonsofcrypto.web3walletcore.services.settings.Setting
 
 sealed class SettingsWireframeDestination {

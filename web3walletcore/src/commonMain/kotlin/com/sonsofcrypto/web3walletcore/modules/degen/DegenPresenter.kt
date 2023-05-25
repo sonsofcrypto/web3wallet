@@ -6,9 +6,18 @@ import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenViewModel.Section.Group
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenViewModel.Section.Header
-import com.sonsofcrypto.web3walletcore.modules.degen.DegenWireframeDestination.*
+import com.sonsofcrypto.web3walletcore.modules.degen.DegenWireframeDestination.ComingSoon
+import com.sonsofcrypto.web3walletcore.modules.degen.DegenWireframeDestination.Cult
+import com.sonsofcrypto.web3walletcore.modules.degen.DegenWireframeDestination.Swap
 import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory
-import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.*
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.BRIDGE
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.CULT
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.DERIVATIVE
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.GOVERNANCE
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.LAND_BORROW
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.MIXER
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.STAKE_YIELD
+import com.sonsofcrypto.web3walletcore.services.degen.DAppCategory.SWAP
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
