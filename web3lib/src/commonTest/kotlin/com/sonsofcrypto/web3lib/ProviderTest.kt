@@ -90,7 +90,7 @@ class ProviderTest {
     fun testGetCode() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
         val code = provider.getCode(
-            Address.HexString("0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b"),
+            Address.HexString("0xf79E73dE6934B767De0fAa120d059811A40276d9"),
             BlockTag.Latest
         )
         println("code $code")
