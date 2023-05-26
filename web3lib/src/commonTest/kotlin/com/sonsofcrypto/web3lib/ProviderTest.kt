@@ -639,7 +639,7 @@ class ProviderTest {
     }
 
     @OptIn(ExperimentalTime::class)
-    fun testSendTransaction() = CoroutineScope(Dispatchers.Default).launch {
+    fun testSendTransaction() = runBlocking {
 //        print("=== about to sleep")
 //        var cnt = 3
 //        while (cnt > 0) {
@@ -717,7 +717,7 @@ class ProviderTest {
     }
 
     @OptIn(ExperimentalTime::class)
-    fun testSendTransaction2() = CoroutineScope(Dispatchers.Default).launch {
+    fun testSendTransaction2() = runBlocking {
         val provider = ProviderPocket(Network.ropsten())
         val bip39 = Bip39(
             listOf(),
@@ -779,12 +779,22 @@ class ProviderTest {
         println("=== $result")
     }
 
-    fun testGetTransactionReceipt2() = CoroutineScope(Dispatchers.Default).launch {
+    @Test
+    fun testHandleNullTransactionReceipt() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
-        val result = provider.getTransactionReceipt("0x35da27fad7ed4af1dcaf336c2a166d2949d05d15a6d89409a45c05a09064899d")
-        println("=== r $result")
+        provider.debugLogs = true
+        try {
+            val result = provider.getTransactionReceipt(
+                "0x35da27fad7ed4af1dcaf336c2a166d2949d05d15a6d89409a45c05a09064899d"
+            )
+        } catch (err: Throwable) {
+            assertTrue(true, "expected exception")
+            return
+        }
+        assertTrue(false, "Expected to throw with null result")
     }
 
+    @Test
     fun testErrorHandling() {
         val errorString = """
             {"error":{"code":-32602,"message":"test"},"id":2101504395,"jsonrpc":"2.0"}
@@ -798,6 +808,7 @@ class ProviderTest {
         assertTrue(error == expected, "Unexpected error $error")
     }
 
+    @Test
     fun testQuantityHexString() {
         val str = "0xe78a3b" as QuantityHexString
 

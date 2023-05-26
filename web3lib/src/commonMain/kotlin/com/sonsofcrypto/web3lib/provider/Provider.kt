@@ -14,6 +14,8 @@ abstract class Provider {
 
     abstract val network: Network
 
+    var debugLogs: Boolean = false
+
     /** Gossip */
 
     @Throws(Throwable::class)

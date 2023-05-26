@@ -76,7 +76,7 @@ data class JsonRpcResponse(
 
 @Serializable
 data class JsonRpcErrorResponse(
-    val error: Error,
+    val error: Error? = null,
     val id: UInt
 ) {
     @Serializable

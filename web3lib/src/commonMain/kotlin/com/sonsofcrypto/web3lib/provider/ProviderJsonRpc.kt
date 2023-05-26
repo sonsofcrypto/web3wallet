@@ -337,6 +337,7 @@ abstract class ProviderJsonRpc(
                 contentType(ContentType.Application.Json)
                 setBody(providerJson.encodeToString(req))
             }.bodyAsText()
+            if (debugLogs) println("[RPC RESPONSE]$respBody")
             return@withBgCxt providerJson.decodeFromString(respBody)
         } catch (err: Throwable) {
             throw processJsonRpcError(err, respBody)
