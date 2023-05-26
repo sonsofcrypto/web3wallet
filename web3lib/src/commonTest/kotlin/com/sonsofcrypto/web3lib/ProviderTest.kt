@@ -136,6 +136,7 @@ class ProviderTest {
         assertTrue(result == 358uL , "Unexpected getBlockTransactionCount")
     }
 
+    @Test
     fun testGetBlockTransactionNumberCount() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
         val result = provider.getBlockTransactionCount(
@@ -144,6 +145,7 @@ class ProviderTest {
         assertTrue(result == 358uL , "Unexpected getBlockTransactionCount")
     }
 
+    @Test
     fun testGetUncleCount() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
         val resultByHash = provider.getUncleCount(
@@ -157,6 +159,7 @@ class ProviderTest {
         assertTrue(resultByHash == 1uL , "Unexpected getUncleCountByNumber")
     }
 
+    @Test
     fun testGetBlock() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
         val result = provider.getBlock(
@@ -191,9 +194,8 @@ class ProviderTest {
         assertTrue(result.transactions.count() == 61, "Unexpected transactions count ${result.transactions.count()}")
     }
 
-    @OptIn(ExperimentalTime::class)
-    fun testGetTransaction() = CoroutineScope(Dispatchers.Default).launch {
-
+    @Test
+    fun testGetTransaction() = runBlocking {
         val items = listOf(
             "0x3f74c155e2a8314a14201cc6cd88501e6c8d57495e5b679c89db14a301e6dc60",
              "0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0"
@@ -389,8 +391,8 @@ class ProviderTest {
         }
     }
 
-    @OptIn(ExperimentalTime::class)
-    fun testGetTransactionByBlockIndex() = CoroutineScope(Dispatchers.Default).launch {
+    @Test
+    fun testGetTransactionByBlockIndex() = runBlocking {
         val expected = Transaction(
             hash = "0x3f74c155e2a8314a14201cc6cd88501e6c8d57495e5b679c89db14a301e6dc60",
             to = Address.HexString("0x4f81a24ceda0753adafb58c6aa7c227fa06c2507"),
@@ -482,8 +484,8 @@ class ProviderTest {
         )
     }
 
-    @OptIn(ExperimentalTime::class)
-    fun testGetTransactionReceipt() = CoroutineScope(Dispatchers.Default).launch {
+    @Test
+    fun testGetTransactionReceipt() = runBlocking {
         val data = """
             {"blockHash":"0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec","blockNumber":"0xe7be7b","contractAddress":null,"cumulativeGasUsed":"0x2d082","effectiveGasPrice":"0x2f0bc39df","from":"0x26ce7c1976c5eec83ea6ac22d83cb341b08850af","gasUsed":"0x2d082","logs":[{"address":"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","blockHash":"0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec","blockNumber":"0xe7be7b","data":"0x0000000000000000000000000000000000000000000000023482399000000000","logIndex":"0x0","removed":false,"topics":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef","0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40","0x000000000000000000000000454f11d58e27858926d7a4ece8bfea2c33e97b13"],"transactionHash":"0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0","transactionIndex":"0x0"},{"address":"0x5a98fcbea516cf06857215779fd812ca3bef1b32","blockHash":"0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec","blockNumber":"0xe7be7b","data":"0x0000000000000000000000000000000000000000000004dc6716096283f2386e","logIndex":"0x1","removed":false,"topics":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef","0x000000000000000000000000454f11d58e27858926d7a4ece8bfea2c33e97b13","0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40"],"transactionHash":"0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0","transactionIndex":"0x0"},{"address":"0x454f11d58e27858926d7a4ece8bfea2c33e97b13","blockHash":"0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec","blockNumber":"0xe7be7b","data":"0x00000000000000000000000000000000000000000000065b908fbfa84299fddb000000000000000000000000000000000000000000000005149e8e76220a421d","logIndex":"0x2","removed":false,"topics":["0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1"],"transactionHash":"0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0","transactionIndex":"0x0"},{"address":"0x454f11d58e27858926d7a4ece8bfea2c33e97b13","blockHash":"0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec","blockNumber":"0xe7be7b","data":"0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000234823990000000000000000000000000000000000000000000000000000004dc6716096283f2386e0000000000000000000000000000000000000000000000000000000000000000","logIndex":"0x3","removed":false,"topics":["0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822","0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40","0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40"],"transactionHash":"0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0","transactionIndex":"0x0"}],"logsBloom":"0x00200000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000002000100080008000000000000000000000000000000000010000008000000200000000000000000000000000000000010000040000000000000000000000000000000000000400000000010000000000000000000000000000000000000000000000000000000080000006000000000000000000000000000000040000000000000004000000000000000000000000000000006000000000000000000000000000000000000001000000000000000000000200000000000000100000000000000000000000000000000000000000020","status":"0x1","to":"0x00000000003b3cc22af3ae1eac0440bcee416b40","transactionHash":"0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0","transactionIndex":"0x0","type":"0x2"}
         """.trimIndent()
@@ -579,23 +581,20 @@ class ProviderTest {
         )
     }
 
+    @Test
     fun testGetUncleBlock() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
         val result = provider.getUncleBlock(
             BlockTag.Hash("0x4fafadf15c7dee7da50b9ff1d2ec4f31de422a196e334c699749839cc7db41a1"),
             BigInt.from(0)
         )
-
         val data = """
             {"baseFeePerGas":"0x39d39afcf","difficulty":"0x2b2a48781d6ff1","extraData":"0x457468657265756d50504c4e532f326d696e6572735f4153494134","gasLimit":"0x1c9c380","gasUsed":"0x147711","hash":"0xdec21564875f2d0232c1a1ddbb09fc5b209b4d5d65626f5763e9a09e0c78eca5","logsBloom":"0x082000008000008840480000800001000000000000110002000400000000180000000002040000000900010200000121020000000820200000000000002000040700060004010018280000080000002020000000008010000000000080200202020800001a0280020000000080000800008500c000081000320000100008400400500000008000000018008000020010400000010100000800000040201000000211010801c860000000088000200800000000002010000000000c820000000000001882010000000000200001000000004080100021001002002980000020200010248800000000000000100001080800000000000000400000028000000800","miner":"0x00192fb10df37c9fb26829eb2cc623cd1bf599e8","mixHash":"0x68f574bbae1847c69e61194c99a98f47d2ca74b572ce6441df39bc701b857de6","nonce":"0xd482b0266a625cd9","number":"0xe7ecdf","parentHash":"0xe6f5ec355764c5d11b51c1000d3062f2dc1e802b4df37696bf9f9f1aee9dfe31","receiptsRoot":"0x05a5587aa968c7f251475354cb6c8185945c8c923779621d6fcc9681a7fb4ac3","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","size":"0x22b","stateRoot":"0xf716aa2ba8917562334e70ca106af1acdb62586fed7032a3e71887cf3f96815b","timestamp":"0x62dc05a7","transactionsRoot":"0x6bec08c4b519d9b271eacf7d3d216c0f933ec69dcbd7922a6e6424c8e9685db4","uncles":[]}
         """.trimIndent()
-
-//        val json = Json.decodeFromString(JsonObject.serializer(), data)
-//        val result = Block.fromHexifiedJsonObject(json)
-
-        println("=== result $result")
+        assertTrue(result.hash == "0xdec21564875f2d0232c1a1ddbb09fc5b209b4d5d65626f5763e9a09e0c78eca5")
     }
 
+    @Test
     fun testGetLogs() = runBlocking {
         val provider = ProviderAlchemy(Network.ropsten())
         val hash = keccak256("Transfer(address,address,uint256)".toByteArray())
