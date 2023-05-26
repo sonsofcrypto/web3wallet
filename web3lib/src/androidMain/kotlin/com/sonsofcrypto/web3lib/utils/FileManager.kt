@@ -55,6 +55,7 @@ actual class FileManager {
     /** Write data to file synchronously */
     @Throws(Throwable::class)
     actual fun writeSync(data: ByteArray, path: String) {
+        createDirectoriesIfNeeded(path)
         val filePath = (this.basePath() + "/$path").toPath(false)
         val handle = FileSystem.SYSTEM.openReadWrite(filePath)
         handle.write(0, data, 0, data.size)
@@ -112,5 +113,16 @@ actual class FileManager {
             comps.removeLast()
         }
         return comps.joinToString("/")
+    }
+
+    private fun createDirectoriesIfNeeded(path: String) {
+        val comps = path.split("/").toMutableList()
+        var dirPath = basePath(APPFILES)
+        comps.removeLast()
+        comps.forEach {
+            dirPath = "$dirPath/$it"
+            FileSystem.SYSTEM.createDirectory(dirPath.toPath(false))
+
+        }
     }
 }

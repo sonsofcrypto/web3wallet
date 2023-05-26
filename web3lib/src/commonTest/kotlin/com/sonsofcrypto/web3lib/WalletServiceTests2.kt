@@ -10,8 +10,18 @@ import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.types.Network
+import kotlin.test.Test
 
 class WalletServiceTests2 {
+
+    @Test
+    fun testPooling() {
+        val service = testWalletService()
+        val store = KeyValueStore("KeyValueTest")
+//        store["ee"] = "yo"
+        println(store.get<String>("ee"))
+
+    }
 
 }
 

@@ -1,7 +1,6 @@
 package com.sonsofcrypto.web3lib.keyValueStore
 
 import android.content.Context.MODE_PRIVATE
-import com.russhwolf.settings.MapSettings
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings
 import com.sonsofcrypto.web3lib.appContextProvider.application
@@ -22,8 +21,8 @@ actual class KeyValueStore {
                 application!!.getSharedPreferences(name, MODE_PRIVATE)
             )
         } else {
-            settings = MapSettings()
-            println("[WARN] MapSettings (in memory) only $name, will not persist, context is null")
+            settings = UnitTestSettings(name)
+//            println("[WARN] MapSettings (in memory) only $name, will not persist, context is null")
         }
     }
 
