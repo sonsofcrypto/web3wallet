@@ -10,11 +10,14 @@ import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
+import kotlin.test.DefaultAsserter.assertTrue
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+import kotlin.test.assertTrue
 
 class CurrencyStoreServiceTest: CurrencyStoreListener {
+
+    private var event: CurrencyStoreEvent? = null
 
     private val service = DefaultCurrencyStoreService(
         DefaultCoinGeckoService(),
@@ -33,8 +36,9 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
             val job = service.loadCaches(NetworksService.supportedNetworks())
             job.join()
             val end = Clock.System.now().toEpochMilliseconds()
-            val count = service.currencies(Network.ethereum(), 0).count()
-            println("=== Load time ${end - start} ${count}")
+            assertTrue(end - start < 300, "Took too long to load")
+            val currencies = service.search("E", Network.ethereum(), 0)
+            assertTrue(currencies.count() >= 237,"Search error ${currencies.size}")
         }
     }
 
@@ -50,15 +54,8 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
         }
     }
 
-    @Test
-    fun testSearch() {
-        val currencies = service.search("E", Network.ethereum(), 0)
-        assertEquals(237, currencies.size,"Search error ${currencies.size}")
-    }
-
     override fun handle(event: CurrencyStoreEvent) {
-        println("=== event $event")
-        testSearch()
+        this.event = event
     }
 }
 

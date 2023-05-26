@@ -8,6 +8,7 @@ import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
 import com.sonsofcrypto.web3lib.types.Network
+import com.sonsofcrypto.web3lib.types.toHexString
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.abiEncode
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
@@ -596,28 +597,42 @@ class ProviderTest {
 
     @Test
     fun testGetLogs() = runBlocking {
-        val provider = ProviderAlchemy(Network.ropsten())
+        val provider = ProviderAlchemy(Network.ethereum())
         val hash = keccak256("Transfer(address,address,uint256)".toByteArray())
         val signature = DataHexString(hash)
-        val address = DataHexString(abiEncode(Address.HexString("0x58aEBEC033A2D55e35e44E6d7B43725b069F6Abc")))
-
+        val erc20 = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+        val sender = "0x769380d02ec0f022b610a907abdd090db23c46f3"
+        val recipient = "0x69D9934bB65CF7B39C5baC913d12F8D140d9796E"
+        println("[Signature] $signature")
+        provider.debugLogs = true
         val result = provider.getLogs(
             FilterRequest(
-//                BlockTag.Number(15201128),
-                BlockTag.Number(0),
-                BlockTag.Number(15201130),
-                Address.HexString("0xB404c51BBC10dcBE948077F18a4B8E553D160084"),
+                BlockTag.Number(17343534),
+                BlockTag.Number(17343539),
+                Address.HexString(erc20),
                 listOf(
                     Topic.TopicValue(signature),
-                    Topic.TopicValue(address),
+                    Topic.TopicValue(DataHexString(abiEncode(Address.HexString(sender)))),
                     Topic.TopicValue(null),
                 )
             )
         )
-        println("=== result ${result.size}")
-        result.forEach {
-            println("$it")
-        }
+        val log = result.first() as Log
+        assertTrue(result.firstOrNull() as? Log != null, "Expected log $result")
+        assertTrue(result.size == 1, "Expected 1 log")
+        assertTrue(
+            log.blockHash == "0xb370022f33b200e306f92fcbe8e376d58fc7cf315d4420ebb7beea4972d70e86",
+            "Wrong block hash ${log.blockHash}"
+        )
+        assertTrue(
+            log.address.toHexString() == erc20,
+            "Wrong address ${log.address.toHexString()}"
+        )
+        assertTrue(
+            log.data == "0x0000000000000000000000000000000000000000000000000000000059b87c56",
+            "Wrong data ${log.data}"
+        )
+        assertTrue(log.topics != null && log.topics!!.isNotEmpty(), "Expected topics")
     }
 
     fun testNewFilter() = runBlocking {
@@ -789,7 +804,7 @@ class ProviderTest {
             )
         } catch (err: Throwable) {
             assertTrue(true, "expected exception")
-            return
+            return@runBlocking
         }
         assertTrue(false, "Expected to throw with null result")
     }
