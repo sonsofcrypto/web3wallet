@@ -17,9 +17,7 @@ class WalletServiceTests2 {
     @Test
     fun testPooling() {
         val service = testWalletService()
-        val store = KeyValueStore("KeyValueTest")
-//        store["ee"] = "yo"
-        println(store.get<String>("ee"))
+
 
     }
 
