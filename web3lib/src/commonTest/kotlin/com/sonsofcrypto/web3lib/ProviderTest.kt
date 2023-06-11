@@ -715,7 +715,7 @@ class ProviderTest {
         val rlpHexStringSigned = rlpDataSigned.toHexString()
         println("=== rlp2 signed encoded $rlpHexStringSigned")
 
-        val provider = ProviderPocket(Network.ropsten())
+        val provider = ProviderPocket(Network.sepolia())
         val result = provider.sendRawTransaction(DataHexString(rlpDataSigned))
         println("=== $result")
 
@@ -729,7 +729,7 @@ class ProviderTest {
 
     @OptIn(ExperimentalTime::class)
     fun testSendTransaction2() = runBlocking {
-        val provider = ProviderPocket(Network.ropsten())
+        val provider = ProviderPocket(Network.sepolia())
         val bip39 = Bip39(
             listOf(),
             "",

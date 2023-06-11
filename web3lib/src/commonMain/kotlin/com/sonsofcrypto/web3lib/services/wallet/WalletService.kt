@@ -112,6 +112,8 @@ class DefaultWalletService(
     private val ifaceMulticall = Interface.Multicall3()
     private val ifaceERC20 = Interface.ERC20()
 
+    var v2Polling: Boolean = false
+
 
     init {
         networkService.add(this)
@@ -502,8 +504,7 @@ class DefaultWalletService(
     private fun defaultCurrencies(network: Network): List<Currency> {
         return when (network) {
             Network.ethereum() -> ethereumDefaultCurrencies
-            Network.ropsten() -> ropstenDefaultCurrencies
-            Network.rinkeby() -> rinkebyDefaultCurrencies
+            Network.sepolia() -> sepoliaDefaultCurrencies
             Network.goerli() -> goerliDefaultCurrencies
             else -> emptyList()
         }

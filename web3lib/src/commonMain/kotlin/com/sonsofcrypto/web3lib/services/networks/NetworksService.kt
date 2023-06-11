@@ -68,16 +68,14 @@ interface NetworksService {
     companion object {
         /** Currently supported networks */
         fun supportedNetworks(): List<Network> = listOf(
-            Network.ethereum(), Network.ropsten(), Network.rinkeby(),
-            Network.goerli(),
+            Network.ethereum(), Network.goerli(), Network.sepolia()
         )
         /** Supported provider types for network */
         fun supportedProviderTypes(network: Network): List<ProviderInfo.Type> =
             when (network.chainId) {
                 Network.ethereum().chainId -> listOf(LOCAL, POCKET, ALCHEMY)
                 Network.goerli().chainId -> listOf(POCKET, ALCHEMY)
-                Network.rinkeby().chainId -> listOf(POCKET, ALCHEMY)
-                Network.ropsten().chainId -> listOf(POCKET)
+                Network.sepolia().chainId -> listOf(POCKET, ALCHEMY)
                 else -> listOf()
             }
     }
@@ -215,9 +213,8 @@ class DefaultNetworksService(
         if (provider != null)
             return provider
         return when(network.chainId) {
-            Network.ropsten().chainId -> ProviderAlchemy(network)
-            Network.rinkeby().chainId -> ProviderAlchemy(network)
             Network.goerli().chainId -> ProviderAlchemy(network)
+            Network.sepolia().chainId -> ProviderAlchemy(network)
             else -> ProviderPocket(network)
         }
     }
