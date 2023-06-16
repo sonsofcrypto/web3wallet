@@ -29,7 +29,7 @@ class DefaultCurrencyPickerWireframe(
                 currencyAddWireframeFactory.make(parent?.get(), context).present()
             }
             is CurrencyPickerWireframeDestination.Dismiss -> {
-                parent?.get()?.navigationFragment?.popOrDismiss()
+                parent?.get()?.navigationFragment?.dismiss()
             }
         }
     }

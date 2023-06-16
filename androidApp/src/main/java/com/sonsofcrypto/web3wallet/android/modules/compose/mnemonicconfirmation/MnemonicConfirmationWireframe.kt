@@ -4,10 +4,13 @@ import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
+import com.sonsofcrypto.web3walletcore.app.App
 import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.DefaultMnemonicConfirmationInteractor
 import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.DefaultMnemonicConfirmationPresenter
 import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationWireframe
 import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationWireframeDestination
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportWireframeDestination
 import com.sonsofcrypto.web3walletcore.services.actions.ActionsService
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicService
 
@@ -20,11 +23,15 @@ class DefaultMnemonicConfirmationWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.get()?.navigationFragment?.push(fragment, animated = true)
+        parent?.navigationFragment?.present(fragment, animated = true)
     }
 
     override fun navigate(destination: MnemonicConfirmationWireframeDestination) {
-        println("[AA] Implement navigation to $destination")
+        when (destination) {
+            is MnemonicConfirmationWireframeDestination.Dismiss -> {
+                parent?.navigationFragment?.dismiss()
+            }
+        }
     }
 
     private fun wireUp(): Fragment {

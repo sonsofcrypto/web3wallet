@@ -4,6 +4,8 @@ import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
+import com.sonsofcrypto.web3walletcore.app.App
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.*
 import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.*
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicService
@@ -19,11 +21,18 @@ class DefaultMnemonicImportWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.get()?.navigationFragment?.push(fragment, animated = true)
+        parent?.navigationFragment?.present(fragment, animated = true)
     }
 
     override fun navigate(destination: MnemonicImportWireframeDestination) {
-        println("Implement navigation to $destination")
+        when (destination) {
+            is MnemonicImportWireframeDestination.Dismiss -> {
+                parent?.navigationFragment?.dismiss()
+            }
+            is MnemonicImportWireframeDestination.LearnMoreSalt -> {
+                App.openUrl("https://www.youtube.com/watch?v=XqB5xA62gLw")
+            }
+        }
     }
 
     private fun wireUp(): Fragment {

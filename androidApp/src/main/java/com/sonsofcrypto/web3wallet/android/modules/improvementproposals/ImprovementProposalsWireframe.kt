@@ -41,7 +41,7 @@ class DefaultImprovementProposalsWireframe(
                 ContextCompat.startActivity(appContext, browserIntent, null)
             }
             is ImprovementProposalsWireframeDestination.Dismiss -> {
-                parent?.get()?.navigationFragment?.pop()
+                parent?.get()?.navigationFragment?.dismiss()
             }
         }
     }

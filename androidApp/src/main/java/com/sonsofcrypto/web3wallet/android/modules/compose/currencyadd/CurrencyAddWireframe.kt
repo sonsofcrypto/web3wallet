@@ -23,8 +23,7 @@ class DefaultCurrencyAddWireframe(
                 println("Implement navigation to $destination")
             }
             is CurrencyAddWireframeDestination.Dismiss -> {
-                println("DISMISS")
-                parent?.get()?.navigationFragment?.popOrDismiss()
+                parent?.get()?.navigationFragment?.dismiss()
             }
         }
     }

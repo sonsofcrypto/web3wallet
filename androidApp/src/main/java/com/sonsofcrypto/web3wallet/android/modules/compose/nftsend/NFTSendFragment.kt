@@ -85,7 +85,6 @@ class NFTSendFragment: Fragment(), NFTSendView {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             var value by remember { mutableStateOf(TextFieldValue("")) }
-            var showUnderConstruction by remember { mutableStateOf(false) }
             viewModel.nftData()?.let {
                 val screenWidth = LocalConfiguration.current.screenWidthDp
                 val imageSize = (screenWidth * 0.6).dp
@@ -127,9 +126,6 @@ class NFTSendFragment: Fragment(), NFTSendView {
             viewModel.buttonData()?.let {
                 W3WSpacerVertical()
                 SendButton(it)
-            }
-            if (showUnderConstruction) {
-                W3WDialogUnderConstruction { showUnderConstruction = false }
             }
             if (dialogNetworkFees != null) {
                 W3WDialogNetworkFeePicker(

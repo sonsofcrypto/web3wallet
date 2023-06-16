@@ -71,8 +71,7 @@ class DefaultNFTSendWireframe(
     }
 
     private fun onPopWrapped(onCompletion: (String) -> Unit): (String) -> Unit = { addressTo ->
-        parent?.get().navigationFragment?.pop(
-            animated = true,
+        parent?.get().navigationFragment?.dismiss(
             onCompletion = { onCompletion(addressTo) }
         )
     }

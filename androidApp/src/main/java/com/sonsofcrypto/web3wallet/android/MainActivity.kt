@@ -79,8 +79,8 @@ class MainActivity : App() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+//    override fun onResume() {
+//        super.onResume()
 //        Bip39Test().runAll()
 //        Bip44Test().runAll()
 //        KeyValueStoreTest().runAll()
@@ -99,7 +99,7 @@ class MainActivity : App() {
 //        WalletCoreTests().runAll()
 //        InterfaceTests().runAll()
 //        MultiCallTests().runAll()
-        println("=== all tests executed ===")
-    }
+//        println("=== all tests executed ===")
+//    }
 }
 

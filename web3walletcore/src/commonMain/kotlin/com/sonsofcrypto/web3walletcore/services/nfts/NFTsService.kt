@@ -95,7 +95,11 @@ class OpenSeaNFTsService(
             yourNFTs()
         } catch (err: Throwable) {
             broadcastNFTsChanged()
-            yourNFTs().ifEmpty { throw err }
+            val nfts = yourNFTs()
+            if (nfts.isEmpty()) {
+                println("[AAA] Error fetching NFTs -> $err")
+            }
+            return nfts
         }
     }
 

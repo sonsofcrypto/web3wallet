@@ -8,10 +8,13 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
+import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.modules.compose.alert.AlertWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposals.CultProposalsWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencysend.CurrencySendWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyswap.CurrencySwapWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.networks.NetworksWireframeFactory
+import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapWireframeContext
@@ -28,6 +31,7 @@ class DefaultDegenWireframe(
     private val networksService: NetworksService,
     private val currencySwapWireframeFactory: CurrencySwapWireframeFactory,
     private val cultProposalsWireframeFactory: CultProposalsWireframeFactory,
+    private val alertWireframeFactory: AlertWireframeFactory
 ): DegenWireframe {
 
     private lateinit var fragment: WeakRef<Fragment>
@@ -53,7 +57,10 @@ class DefaultDegenWireframe(
             is DegenWireframeDestination.Cult -> {
                 cultProposalsWireframeFactory.make(fragment.get()).present()
             }
-            is DegenWireframeDestination.ComingSoon -> {}
+            is DegenWireframeDestination.ComingSoon -> {
+                val context = AlertWireframeContext.underConstructionAlert()
+                alertWireframeFactory.make(fragment.get(), context).present()
+            }
         }
     }
 

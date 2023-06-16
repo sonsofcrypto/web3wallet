@@ -110,7 +110,6 @@ class DegenFragment : Fragment(), DegenView {
     
     @Composable
     private fun DegenItems(items: List<DegenViewModel.Item>) {
-        var showUnderConstruction by remember { mutableStateOf(false) }
         Column(
             Modifier
                 .clip(RoundedCornerShape(theme().shapes.padding))
@@ -123,7 +122,7 @@ class DegenFragment : Fragment(), DegenView {
                         val index = items.indexOf(it)
                         presenter.handle(DegenPresenterEvent.DidSelectCategory(index))
                     } else {
-                        showUnderConstruction = true
+                        presenter.handle(DegenPresenterEvent.ComingSoon)
                     }
                 }
                 if (items.last() != it) {
@@ -132,9 +131,6 @@ class DegenFragment : Fragment(), DegenView {
                     W3WSpacerVertical(height = 8.dp)
                 }
             }
-        }
-        if (showUnderConstruction) {
-            W3WDialogUnderConstruction { showUnderConstruction = false }
         }
     }
 

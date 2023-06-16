@@ -17,12 +17,18 @@ import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 
 @Composable
-fun W3WDialogUnderConstruction(onDismissRequest: (() -> Unit)) {
+fun W3WDialog(
+    title: String?,
+    media: @Composable (() -> Unit)? = null,
+    message: String?,
+    actions: @Composable (() -> Unit),
+    onDismissRequest: (() -> Unit)
+) {
     Dialog(
         onDismissRequest = onDismissRequest,
     ) {
         W3WNavigationBar(
-            Localized("alert.underConstruction.title"),
+            title ?: "",
             preModifier = Modifier
                 .clip(RoundedCornerShape(theme().shapes.cornerRadius))
         ) {
@@ -32,21 +38,40 @@ fun W3WDialogUnderConstruction(onDismissRequest: (() -> Unit)) {
                     .padding(theme().shapes.padding)
                     .fillMaxWidth()
             ) {
-                W3WGifImage(
-                    R.drawable.under_construction,
-                    modifier = Modifier.height(300.dp)
-                )
-                W3WSpacerVertical()
+                media?.let {
+                    media()
+                    W3WSpacerVertical()
+                }
                 W3WText(
-                    Localized("alert.underConstruction.message"),
+                    message ?: "",
+                    modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                 )
                 W3WSpacerVertical()
-                W3WButtonPrimary(
-                    title = Localized("OK"),
-                    onClick = onDismissRequest
-                )
+                actions()
             }
         }
     }
 }
+
+@Composable
+fun W3WDialogUnderConstruction(onDismissRequest: (() -> Unit)) {
+    W3WDialog(
+        title = Localized("alert.underConstruction.title"),
+        media = {
+            W3WGifImage(
+                R.drawable.under_construction,
+                modifier = Modifier.height(300.dp)
+            )
+        },
+        message = Localized("alert.underConstruction.message"),
+        actions = {
+            W3WButtonPrimary(
+                title = Localized("OK"),
+                onClick = onDismissRequest
+            )
+        },
+        onDismissRequest = onDismissRequest
+    )
+}
+

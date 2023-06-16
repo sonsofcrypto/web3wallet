@@ -34,10 +34,14 @@ class DefaultKeyStoreWireframe(
     override fun present() {
         val fragment = wireUp()
         this.fragment = WeakRef(fragment)
-        parent?.get()?.childFragmentManager?.beginTransaction()?.apply {
-            add(R.id.container, fragment)
-            commitNow()
-        }
+        parent?.get()?.childFragmentManager
+            ?.beginTransaction()
+            ?.replace(R.id.container, fragment)
+            ?.commit()
+//            ?.apply {
+//            add(R.id.container, fragment)
+//            commitNow()
+//        }
     }
 
     override fun navigate(destination: KeyStoreWireframeDestination) {

@@ -28,9 +28,12 @@ class DefaultRootWireframe(
         // NOTE: doing this directly here as it is a root. For all the rest
         // parent would be do if `if (parent is NavigationFragment)` or
         // TabBarFragment, or do `showFragment` exactly like we do on iOS
-        parent?.supportFragmentManager?.beginTransaction()
+        parent?.supportFragmentManager
+            ?.beginTransaction()
             ?.replace(R.id.main_activity_container, fragment)
-            ?.commitNow()
+            ?.setReorderingAllowed(true)
+            //?.addToBackStack("name")
+            ?.commit()
     }
 
     override fun navigate(destination: RootWireframeDestination) {

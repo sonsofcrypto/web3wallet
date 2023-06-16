@@ -6,15 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.window.Dialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.sonsofcrypto.web3wallet.android.common.extensions.annotatedString
@@ -96,7 +92,6 @@ class MnemonicUpdateFragment: Fragment(), MnemonicUpdateView {
 
     @Composable
     private fun MnemonicUpdateSectionContent(viewModel: Section) {
-        var showDeleteConfirmationAlert by remember { mutableStateOf(false) }
         viewModel.items.forEach { item ->
             when (item) {
                 is Section.Item.Mnemonic -> {
@@ -131,19 +126,10 @@ class MnemonicUpdateFragment: Fragment(), MnemonicUpdateView {
                     W3WButtonPrimary(
                         title = item.title,
                         isDestructive = true,
-                        onClick = { showDeleteConfirmationAlert = true }
+                        onClick = { presenter.handle(ConfirmDelete) }
                     )
                 }
             }
-        }
-        if (showDeleteConfirmationAlert) {
-            DeleteConfirmationAlert(
-                onDelete = {
-                    showDeleteConfirmationAlert = false
-                    presenter.handle(Delete)
-                },
-                onDismissRequest = { showDeleteConfirmationAlert = false },
-            )
         }
     }
 
@@ -192,45 +178,6 @@ class MnemonicUpdateFragment: Fragment(), MnemonicUpdateView {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             W3WText(text = Localized("mnemonic.tapToReveal"))
-        }
-    }
-
-    @Composable
-    private fun DeleteConfirmationAlert(
-        onDelete: () -> Unit,
-        onDismissRequest: () -> Unit,
-    ) {
-        Dialog(
-            onDismissRequest = onDismissRequest,
-        ) {
-            W3WNavigationBar(
-                Localized("alert.deleteWallet.title"),
-                preModifier = Modifier
-                    .clip(RoundedCornerShape(theme().shapes.cornerRadius))
-            ) {
-                Column(
-                    modifier = Modifier
-                        .background(backgroundGradient())
-                        .padding(theme().shapes.padding)
-                        .fillMaxWidth()
-                ) {
-                    W3WText(
-                        Localized("alert.deleteWallet.message"),
-                        textAlign = TextAlign.Center,
-                    )
-                    W3WSpacerVertical()
-                    W3WButtonPrimary(
-                        title = Localized("alert.deleteWallet.action.confirm"),
-                        isDestructive = true,
-                        onClick = onDelete,
-                    )
-                    W3WSpacerVertical()
-                    W3WButtonSecondary(
-                        title = Localized("cancel"),
-                        onClick = onDismissRequest
-                    )
-                }
-            }
         }
     }
 }

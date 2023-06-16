@@ -27,7 +27,7 @@ class DefaultAccountWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.get()?.navigationFragment?.push(fragment, animated = true)
+        parent?.get()?.navigationFragment?.present(fragment, animated = true)
     }
 
     override fun navigate(destination: AccountWireframeDestination) {
