@@ -3,6 +3,7 @@ package com.sonsofcrypto.web3wallet.android.modules.compose.alert
 import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
 import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframe
 import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframeDestination
@@ -15,13 +16,13 @@ class DefaultAlertWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.get()?.navigationFragment?.present(fragment)
+        parent?.navigationFragment?.present(fragment)
     }
 
     override fun navigate(destination: AlertWireframeDestination) {
         when (destination) {
             is AlertWireframeDestination.Dismiss -> {
-                parent?.get()?.navigationFragment?.dismiss()
+                parent?.navigationFragment?.dismiss()
             }
         }
     }

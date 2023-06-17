@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.*
 
 class DefaultCurrencyAddWireframe(
@@ -14,7 +15,7 @@ class DefaultCurrencyAddWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.get()?.navigationFragment?.push(fragment, animated = true)
+        parent?.navigationFragment?.push(fragment, animated = true)
     }
 
     override fun navigate(destination: CurrencyAddWireframeDestination) {
@@ -23,7 +24,7 @@ class DefaultCurrencyAddWireframe(
                 println("Implement navigation to $destination")
             }
             is CurrencyAddWireframeDestination.Dismiss -> {
-                parent?.get()?.navigationFragment?.dismiss()
+                parent?.navigationFragment?.dismiss()
             }
         }
     }

@@ -5,6 +5,7 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
 import com.sonsofcrypto.web3walletcore.modules.nftSend.*
 import com.sonsofcrypto.web3walletcore.modules.qrCodeScan.*
 
@@ -17,7 +18,7 @@ class DefaultQRCodeScanWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.get()?.navigationFragment?.push(fragment, animated = true)
+        parent?.navigationFragment?.push(fragment, animated = true)
         println("[AA] Pushing DefaultQRCodeScanWireframe")
     }
 

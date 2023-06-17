@@ -5,6 +5,7 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.compose.confirmation.ConfirmationWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftsend.NFTSendWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.confirmation.ConfirmationWireframeContext
@@ -22,7 +23,7 @@ class DefaultNFTDetailWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.get()?.navigationFragment?.push(fragment, true)
+        parent?.navigationFragment?.push(fragment, true)
     }
 
     override fun navigate(destination: NFTDetailWireframeDestination) {
