@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalWireframe
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalWireframeDestination
@@ -16,13 +17,13 @@ class DefaultCultProposalWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.get()?.navigationFragment?.push(fragment, true)
+        parent?.navigationFragment?.push(fragment, true)
     }
 
     override fun navigate(destination: CultProposalWireframeDestination) {
         when (destination) {
             is CultProposalWireframeDestination.Dismiss -> {
-                parent?.get()?.navigationFragment?.dismiss()
+                parent?.navigationFragment?.dismiss()
             }
         }
     }

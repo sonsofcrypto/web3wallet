@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
 import com.sonsofcrypto.web3walletcore.modules.networks.DefaultNetworksInteractor
 import com.sonsofcrypto.web3walletcore.modules.networks.DefaultNetworksPresenter
 import com.sonsofcrypto.web3walletcore.modules.networks.NetworksWireframe
@@ -16,11 +17,20 @@ class DefaultNetworksWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.get()?.navigationFragment?.push(fragment, animated = true)
+        parent?.navigationFragment?.push(fragment, animated = true)
     }
 
     override fun navigate(destination: NetworksWireframeDestination) {
-        println("Implement navigation to $destination")
+        when (destination) {
+            is NetworksWireframeDestination.Dashboard -> {
+                // TODO: Navigate to dashboard
+                println("Implement navigation to $destination")
+            }
+            is NetworksWireframeDestination.EditNetwork -> {
+                // TODO: Navigate to EditNetwork
+                println("Implement navigation to $destination")
+            }
+        }
     }
 
     private fun wireUp(): Fragment {

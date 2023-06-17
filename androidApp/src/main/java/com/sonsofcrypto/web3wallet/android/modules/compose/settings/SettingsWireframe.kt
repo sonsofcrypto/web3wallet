@@ -3,6 +3,7 @@ package com.sonsofcrypto.web3wallet.android.modules.compose.settings
 import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
 import com.sonsofcrypto.web3walletcore.modules.settings.*
 import com.sonsofcrypto.web3walletcore.services.settings.SettingsService
 import com.sonsofcrypto.web3walletcore.services.settings.SettingsServiceActionTrigger
@@ -16,17 +17,17 @@ class DefaultSettingsWireframe(
 
     override fun present() {
         val fragment = wireUp(context)
-        parent?.get()?.navigationFragment?.push(fragment, animated = true)
+        parent?.navigationFragment?.push(fragment, animated = true)
     }
 
     override fun navigate(destination: SettingsWireframeDestination) {
         when (destination) {
             is SettingsWireframeDestination.Settings -> {
                 val fragment = wireUp(destination.context)
-                parent?.get()?.navigationFragment?.push(fragment, animated = true)
+                parent?.navigationFragment?.push(fragment, animated = true)
             }
             is SettingsWireframeDestination.Dismiss -> {
-                println("[AA] SettingsWireframe.Dismiss()")
+                parent?.navigationFragment?.dismiss()
             }
         }
     }

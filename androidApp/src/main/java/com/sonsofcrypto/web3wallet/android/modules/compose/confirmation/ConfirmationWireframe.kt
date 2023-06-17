@@ -5,6 +5,7 @@ import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
 import com.sonsofcrypto.web3walletcore.modules.confirmation.*
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
 
@@ -18,7 +19,7 @@ class DefaultConfirmationWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.get()?.navigationFragment?.push(fragment, animated = true)
+        parent?.navigationFragment?.push(fragment, animated = true)
     }
 
     override fun navigate(destination: ConfirmationWireframeDestination) {

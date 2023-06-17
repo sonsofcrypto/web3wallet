@@ -28,7 +28,8 @@ class DefaultMnemonicUpdateWireframe(
             is MnemonicUpdateWireframeDestination.Dismiss -> {
                 parent?.navigationFragment?.dismiss()
             }
-            else -> {
+            is MnemonicUpdateWireframeDestination.Authenticate -> {
+                // TODO: Implement authentication
                 println("[AAA] Implement -> $destination")
             }
         }
