@@ -51,15 +51,15 @@ val sepoliaDefaultCurrencies = listOf(
         decimals = 18u,
         type = Currency.Type.ERC20,
         address = "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14",
-        coinGeckoId = "tether",
+        coinGeckoId = "weth",
     ),
     Currency(
-        name = "Sepolia Tether",
+        name = "Sepolia UNI Token",
         symbol = "uni",
         decimals = 18u,
         type = Currency.Type.ERC20,
         address = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
-        coinGeckoId = "tether",
+        coinGeckoId = "uniswap",
     ),
 )
 

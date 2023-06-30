@@ -5,6 +5,7 @@ import com.sonsofcrypto.web3lib.contract.Interface
 import com.sonsofcrypto.web3lib.contract.Multicall3
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.call
+import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.services.currencyStore.DefaultCurrencyStoreService
@@ -16,7 +17,9 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
+import com.sonsofcrypto.web3lib.types.Currency.Companion.ethereum
 import com.sonsofcrypto.web3lib.types.Network
+import com.sonsofcrypto.web3lib.types.Network.Companion.sepolia
 import com.sonsofcrypto.web3lib.types.toHexStringAddress
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import kotlinx.coroutines.runBlocking
@@ -31,7 +34,7 @@ class WalletServiceTests2 {
         val keyStoreService = services.keyStoreService
         val networksService = services.networksService
         val walletService = services.walletService as DefaultWalletService
-        val network = walletService.selectedNetwork()
+        val network = sepolia()
             ?: throw Throwable("No selected network")
         val wallet = networksService.wallet(network)
             ?: throw Throwable("No wallet for network")
@@ -51,6 +54,9 @@ class WalletServiceTests2 {
         service.executePoll2(wallet, currencies)
 
         val currencies = walletService.currencies(network)
+        currencies.forEach {
+            println("${it.name} ${it.address}")
+        }
         val currenciesAddresses = currencies.mapNotNull { it.address }
 
         val ifaceERC20 = Interface.ERC20()
@@ -59,7 +65,7 @@ class WalletServiceTests2 {
         val aggregateFn = ifaceMulticall.function("aggregate3")
         val balanaceOfData = ifaceERC20.encodeFunction(
             balanceOfFn,
-            listOf(wallet.address().toHexStringAddress())
+            listOf(wallet.address().toHexStringAddress().hexString)
         )
         val encodedData = ifaceMulticall.encodeFunction(
             aggregateFn,
@@ -67,14 +73,39 @@ class WalletServiceTests2 {
                 currenciesAddresses.map { listOf(it, true, balanaceOfData) }
             )
         )
-        val result = provider.call(
+        val resultData = provider.call(
             network.multicall3Address(),
             encodedData.toHexString(true)
         )
-        println(result)
+        val resultDecoded = ifaceMulticall.decodeFunctionResult(
+            aggregateFn,
+            resultData.toByteArrayData()
+        )
+        resultDecoded.forEach {
+            println("$it")
+        }
     }
 
+    @Test
+    fun testTmp() {
+        val resultData = "0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000"
+
+        val ifaceERC20 = Interface.ERC20()
+        val ifaceMulticall = Interface.Multicall3()
+        val balanceOfFn = ifaceERC20.function("balanceOf")
+        val aggregateFn = ifaceMulticall.function("aggregate3")
+
+        val resultDecoded = ifaceMulticall.decodeFunctionResult(
+            aggregateFn,
+            resultData.toByteArrayData()
+        )
+        resultDecoded.forEach {
+            ifaceERC20.decodeFunctionResult(balanceOfFn, it as ByteArray)
+            println("$it")
+        }
+    }
 }
+
 
 // "club aspect deposit protect arrest leader zone crash west strong tent hammer"
 
