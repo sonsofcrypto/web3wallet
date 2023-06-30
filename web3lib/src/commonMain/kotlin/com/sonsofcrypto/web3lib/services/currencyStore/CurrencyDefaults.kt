@@ -36,9 +36,9 @@ val ethereumDefaultCurrencies = listOf(
     ),
 )
 
-val ropstenDefaultCurrencies = listOf(
+val sepoliaDefaultCurrencies = listOf(
     Currency(
-        name = "Ropsten Ethereum",
+        name = "Sepolia Ethereum",
         symbol = "eth",
         decimals = 18u,
         type = Currency.Type.NATIVE,
@@ -46,31 +46,20 @@ val ropstenDefaultCurrencies = listOf(
         coinGeckoId = "ethereum",
     ),
     Currency(
-        name = "Ropsten Tether",
-        symbol = "usdt",
-        decimals = 6u,
-        type = Currency.Type.ERC20,
-        address = "0xB404c51BBC10dcBE948077F18a4B8E553D160084",
-        coinGeckoId = "tether",
-    ),
-)
-
-val rinkebyDefaultCurrencies = listOf(
-    Currency(
-        name = "Rinkeby Ethereum",
-        symbol = "eth",
+        name = "Sepolia WETH",
+        symbol = "weth",
         decimals = 18u,
-        type = Currency.Type.NATIVE,
-        address = null,
-        coinGeckoId = "ethereum",
+        type = Currency.Type.ERC20,
+        address = "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14",
+        coinGeckoId = "weth",
     ),
     Currency(
-        name = "Rinkeby Tether",
-        symbol = "usdt",
-        decimals = 6u,
+        name = "Sepolia UNI Token",
+        symbol = "uni",
+        decimals = 18u,
         type = Currency.Type.ERC20,
-        address = "0x3B00Ef435fA4FcFF5C209a37d1f3dcff37c705aD",
-        coinGeckoId = "tether",
+        address = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        coinGeckoId = "uniswap",
     ),
 )
 

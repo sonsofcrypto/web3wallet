@@ -47,9 +47,8 @@ class ProviderAlchemy: ProviderJsonRpc {
     @Throws(Throwable::class)
     override fun url(): String = when (network.chainId) {
         1u -> "https://eth-mainnet.g.alchemy.com/v2/${apiKeys.key}"
-        3u -> "https://eth-ropsten.g.alchemy.com/v2/${apiKeys.key}"
-        4u -> "https://eth-rinkeby.g.alchemy.com/v2/${apiKeys.key}"
         5u -> "https://eth-goerli.g.alchemy.com/v2/${apiKeys.key}"
+        11155111u -> "https://eth-sepolia.g.alchemy.com/v2/${apiKeys.key}"
         else -> throw  Error.UnsupportedNetwork(network)
     }
 

@@ -26,8 +26,7 @@ data class Network(
 
     fun l1(network: Network): Network {
         return when (network.chainId) {
-            ropsten().chainId,
-            rinkeby().chainId,
+            sepolia().chainId,
             goerli().chainId -> {
                ethereum()
             }
@@ -47,23 +46,20 @@ data class Network(
 
     // TODO: Get address for Georly
     fun multicall3Address(): String = when (chainId) {
-        1u -> "0xcA11bde05977b3631167028862bE2a173976CA11"
-        3u -> "0xcA11bde05977b3631167028862bE2a173976CA11"
-        4u -> "0xcA11bde05977b3631167028862bE2a173976CA11"
-        5u -> "0xcA11bde05977b3631167028862bE2a173976CA11"
+        ethereum().chainId,
+        goerli().chainId,
+        sepolia().chainId -> "0xcA11bde05977b3631167028862bE2a173976CA11"
         else -> throw Error("This network id $this does not have multicall")
     }
 
     companion object {
         fun ethereum() = Network("Ethereum", 1u, Type.L1, null, Currency.ethereum())
-        fun ropsten() = Network("Ropsten", 3u, Type.L1_TEST, null, Currency.ethereum())
-        fun rinkeby() = Network("Rinkeby", 4u, Type.L1_TEST, null, Currency.ethereum())
         fun goerli() = Network("Goerli", 5u, Type.L1_TEST, null, Currency.ethereum())
+        fun sepolia() = Network("Goerli", 11155111u, Type.L1_TEST, null, Currency.ethereum())
 
         fun fromChainId(chainId: UInt): Network = when(chainId) {
-            3u -> ropsten()
-            4u -> rinkeby()
             5u -> goerli()
+            11155111u -> sepolia()
             else -> ethereum()
         }
     }

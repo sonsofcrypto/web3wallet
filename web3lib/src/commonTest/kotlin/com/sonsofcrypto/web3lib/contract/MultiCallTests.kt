@@ -49,8 +49,8 @@ class MultiCallTests {
         println("[DECODED] $decoded")
         // [
         //      [
-        //          [true, [B@998782f],
-        //          [true, [B@de3ae3c]
+        //          [true, [B@998782f]],
+        //          [true, [B@de3ae3c]]
         //      ]
         // ]
 //        results?.forEach {

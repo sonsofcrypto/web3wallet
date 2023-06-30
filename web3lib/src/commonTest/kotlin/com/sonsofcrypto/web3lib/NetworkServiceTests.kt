@@ -27,11 +27,11 @@ class NetworkServiceTests {
         )
         networksService.keyStoreItem = mockKeyStoreItem
 
-        val provider = ProviderPocket(Network.ropsten())
-        networksService.setProvider(provider, Network.ropsten())
+        val provider = ProviderPocket(Network.sepolia())
+        networksService.setProvider(provider, Network.sepolia())
         assertTrue(
-            networksService.provider(Network.ropsten()) is ProviderPocket,
-            "Unexpected provider ${networksService.provider(Network.ropsten())}"
+            networksService.provider(Network.sepolia()) is ProviderPocket,
+            "Unexpected provider ${networksService.provider(Network.sepolia())}"
         )
     }
 
