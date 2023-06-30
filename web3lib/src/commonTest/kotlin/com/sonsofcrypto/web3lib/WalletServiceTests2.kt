@@ -40,6 +40,15 @@ class WalletServiceTests2 {
         provider.debugLogs = true
         // TODO: Only update unselected network once per minute
         // walletService.executePoll2(wallet, currencies)
+    fun testPooling() {
+        val walletServices = testWalletServices()
+        val service = walletServices.walletService as DefaultWalletService
+        val network = service.selectedNetwork()!!
+        val wallet = walletServices.networksService.wallet(network)!!
+        val currencies = service.currencies(network)
+
+        // TODO: Only update unselected network once per minute
+        service.executePoll2(wallet, currencies)
 
         val currencies = walletService.currencies(network)
         val currenciesAddresses = currencies.mapNotNull { it.address }
@@ -106,6 +115,7 @@ fun testWalletService(): TestWalletServices {
     return TestWalletServices(
         currencyStoreService,
         keyStoreService,
+        currencyStoreService,
         networksService,
         walletService,
     )
@@ -114,6 +124,12 @@ fun testWalletService(): TestWalletServices {
 class TestWalletServices(
     val currencyStoreService: CurrencyStoreService,
     val keyStoreService: KeyStoreService,
+    val networksService: NetworksService,
+    val walletService: WalletService,
+)
+
+class WalletServices(
+    val currencyStoreService: CurrencyStoreService,
     val networksService: NetworksService,
     val walletService: WalletService,
 )
