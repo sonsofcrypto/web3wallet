@@ -55,7 +55,7 @@ data class Network(
     companion object {
         fun ethereum() = Network("Ethereum", 1u, Type.L1, null, Currency.ethereum())
         fun goerli() = Network("Goerli", 5u, Type.L1_TEST, null, Currency.ethereum())
-        fun sepolia() = Network("Goerli", 11155111u, Type.L1_TEST, null, Currency.ethereum())
+        fun sepolia() = Network("Sepolia", 11155111u, Type.L1_TEST, null, Currency.ethereum())
 
         fun fromChainId(chainId: UInt): Network = when(chainId) {
             5u -> goerli()

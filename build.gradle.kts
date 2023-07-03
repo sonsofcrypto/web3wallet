@@ -35,28 +35,28 @@ tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
 
-task("printProps") {
-    setGroup("help")
-    val props = listOf(
-        "org.gradle.java.home",
-        "org.gradle.jvmargs",
-        "javax.net.ssl.trustStore",
-        "javax.net.ssl.keyStore",
-    )
-    val sysProps = listOf(
-        "file.encoding",
-        "user.country",
-        "user.language",
-        "java.io.tmpdir",
-        "user.variant",
-        "javax.net.ssl.trustStore",
-        "javax.net.ssl.keyStore",
-    )
-    println("JAVA_HOME=${System.getenv("JAVA_HOME")}")
-    props.forEach { println("$it=${ project.findProperty(it)}") }
-    sysProps.forEach { println("$it=${ System.getProperty(it) }") }
-//    println("All props")
-//    System.getProperties().keys.forEach{ println("$it ${System.getProperty(it as? String ?: "")}") }
-//    println("All env")
-//    System.getenv().keys.forEach{ println("$it ${System.getenv()[it]}") }
-}
+//task("printProps") {
+//    setGroup("help")
+//    val props = listOf(
+//        "org.gradle.java.home",
+//        "org.gradle.jvmargs",
+//        "javax.net.ssl.trustStore",
+//        "javax.net.ssl.keyStore",
+//    )
+//    val sysProps = listOf(
+//        "file.encoding",
+//        "user.country",
+//        "user.language",
+//        "java.io.tmpdir",
+//        "user.variant",
+//        "javax.net.ssl.trustStore",
+//        "javax.net.ssl.keyStore",
+//    )
+//    println("JAVA_HOME=${System.getenv("JAVA_HOME")}")
+//    props.forEach { println("$it=${ project.findProperty(it)}") }
+//    sysProps.forEach { println("$it=${ System.getProperty(it) }") }
+////    println("All props")
+////    System.getProperties().keys.forEach{ println("$it ${System.getProperty(it as? String ?: "")}") }
+////    println("All env")
+////    System.getenv().keys.forEach{ println("$it ${System.getenv()[it]}") }
+//}

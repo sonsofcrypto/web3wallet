@@ -181,8 +181,8 @@ buildkonfig {
         buildConfigField(Type.STRING, "poktPublicKey", properties["com.sonsofcrypto.pokt.publicKey"] as String)
         buildConfigField(Type.STRING, "alchemyKey", properties["com.sonsofcrypto.alchemyKey"] as String)
         buildConfigField(Type.STRING, "etherscanKey", properties["com.sonsofcrypto.etherscanKey"] as String)
+        buildConfigField(Type.STRING, "testMnemonic", properties["com.sonsofcrypto.testMnemonic"] as String)
         buildConfigField(Type.STRING, "sourceSet", "default")
-
     }
 }
 
