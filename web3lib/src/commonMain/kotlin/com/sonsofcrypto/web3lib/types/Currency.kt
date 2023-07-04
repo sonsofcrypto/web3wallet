@@ -33,6 +33,8 @@ data class Currency(
 
     fun decimals(): UInt = this.decimals ?: 18u
 
+    fun isNative(): Boolean = this.type == Type.NATIVE
+
     val iconName: String get() = coinGeckoId ?: "currency_placeholder"
 
     companion object {

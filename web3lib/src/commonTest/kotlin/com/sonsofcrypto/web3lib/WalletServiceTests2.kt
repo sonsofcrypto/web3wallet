@@ -20,6 +20,7 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
+import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Currency.Type.NATIVE
 import com.sonsofcrypto.web3lib.types.Network
@@ -83,20 +84,15 @@ class WalletServiceTests2 {
         val network = Network.sepolia()
         val walletAddress = "0xA52fD940629625371775d2D7271A35a09BC2B49e"
         val provider = ProviderPocket(network)
-        val currencies = sepoliaDefaultCurrencies.filter { it.type != NATIVE }
-
+        val currencies = sepoliaDefaultCurrencies
         val aggregateFn = ifaceMulticall.function("aggregate3")
-        val getBlockNumberFn = ifaceMulticall.function("getBlockNumber")
         val callData = ifaceMulticall.encodeFunction(
             aggregateFn,
             listOf(
-                listOf(
-                    listOf(network.multicall3Address(), true, ifaceMulticall.encodeFunction(getBlockNumberFn))
-                ) +
-                balancesCallData(currencies, walletAddress)
+                networkInfoCallData(network.multicall3Address()) +
+                balancesCallData(currencies, walletAddress, network)
             )
         )
-
         val resultData = provider.call(
             network.multicall3Address(),
             callData.toHexString(true)
@@ -106,54 +102,66 @@ class WalletServiceTests2 {
             resultData.toByteArrayData()
         ).first() as List<List<Any>>
 
-        result.forEach {
-            println("=itm= $it")
-        }
+        val networkInfo = decodeNetworkInfoCallData(result)
+        println("networkInfo ${networkInfo}")
 
-        val blockNumber = ifaceMulticall.decodeFunctionResult(
-            getBlockNumberFn,
-            result.first().last() as ByteArray
-        )
-        val balances = decodeBalancesCallData(result.subList(1, result.count()))
+        val balances = decodeBalancesCallData(result.subList(3, result.count()))
         println("balances $balances")
-        println("blockNumber $blockNumber")
 
         for (i in 0 until currencies.count()) {
-            val formatted = Formatters.currency.format(balances[i] as BigInt, currencies[i])
+            val formatted = Formatters.currency.format(balances[i], currencies[i])
             println("${currencies[i].name} $formatted")
         }
     }
 
     data class NetworkInfo(
-        val blockNumber: BigInt
+        val blockNumber: BigInt,
+        val blockTimestamp: BigInt,
+        val getBasefee: BigInt,
     )
 
     fun networkInfoCallData(multicall3Address: String): List<Any> = listOf(
-        listOf(
-            multicall3Address,
-            true,
-            ifaceMulticall.encodeFunction(
-                ifaceMulticall.function("getBlockNumber")
-            )
-        )
+        call3List(multicall3Address, ifaceMulticall, "getBlockNumber"),
+        call3List(multicall3Address, ifaceMulticall, "getCurrentBlockTimestamp"),
+        call3List(multicall3Address, ifaceMulticall, "getBasefee"),
     )
 
-
-
     fun decodeNetworkInfoCallData(data: List<List<Any>>): NetworkInfo {
-
+        val blockNumber = ifaceMulticall.decodeFunctionResult(
+            ifaceMulticall.function("getBlockNumber"), data[0].last() as ByteArray
+        )
+        val blockTimestamp = ifaceMulticall.decodeFunctionResult(
+            ifaceMulticall.function("getCurrentBlockTimestamp"), data[1].last() as ByteArray
+        )
+        val basefee = ifaceMulticall.decodeFunctionResult(
+            ifaceMulticall.function("getBasefee"), data[2].last() as ByteArray
+        )
+        return NetworkInfo(
+            blockNumber.first() as BigInt,
+            blockTimestamp.first() as BigInt,
+            basefee.first() as BigInt,
+        )
     }
 
     fun balancesCallData(
         currencies: List<Currency>,
-        walletAddress: String
+        walletAddress: String,
+        network: Network
     ): List<Any> {
-        val currencies = currencies.filter { it.type != NATIVE }
-        val balanceOfData = ifaceERC20.encodeFunction(
+        val balanceOfCallData = ifaceERC20.encodeFunction(
             ifaceERC20.function("balanceOf"),
             listOf(walletAddress)
         )
-        return currencies.map { listOf(it.address, true, balanceOfData) }
+        val nativeBalanceCallData = ifaceMulticall.encodeFunction(
+            ifaceMulticall.function("getEthBalance"),
+            listOf(walletAddress)
+        )
+        return currencies.map {
+            if (it.isNative())
+                listOf(network.multicall3Address(), true, nativeBalanceCallData)
+            else
+                listOf(it.address, true, balanceOfCallData)
+        }
     }
 
     fun decodeBalancesCallData(data: List<List<Any>>): List<BigInt> = data.map {
@@ -162,6 +170,16 @@ class WalletServiceTests2 {
             it.last() as ByteArray
         ).first() as BigInt
     }
+
+    private fun call3List(
+        address: AddressHexString,
+        iface: Interface,
+        fnName: String,
+        allowFailure: Boolean = true
+    ): List<Any> = listOf(
+        address, allowFailure, iface.encodeFunction(iface.function(fnName))
+    )
+
 }
 
 fun testWalletServices(network: Network = Network.sepolia()): WalletServices {
