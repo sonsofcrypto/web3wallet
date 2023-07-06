@@ -19,8 +19,7 @@ import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
 import com.sonsofcrypto.web3lib.services.root.NetworkInfo
-import com.sonsofcrypto.web3lib.services.root.decodeNetworkInfoCallData
-import com.sonsofcrypto.web3lib.services.root.networkInfoCallData
+import com.sonsofcrypto.web3lib.services.wallet.DefaultRootService
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.types.AddressHexString
@@ -81,70 +80,23 @@ class WalletServiceTests2 {
     private val ifaceMulticall = Interface.Multicall3()
     private val ifaceERC20 = Interface.ERC20()
 
-    // transaction count
-    //
+
     @Test
     fun testTmp() = runBlocking {
-        val network = Network.sepolia()
-        val walletAddress = "0xA52fD940629625371775d2D7271A35a09BC2B49e"
-        val provider = ProviderPocket(network)
+        val provider = ProviderPocket(Network.sepolia())
+        val rootService = DefaultRootService()
         val currencies = sepoliaDefaultCurrencies
-        val aggregateFn = ifaceMulticall.function("aggregate3")
-        val callData = ifaceMulticall.encodeFunction(
-            aggregateFn,
-            listOf(
-                NetworkInfo.callData(network.multicall3Address()) +
-                balancesCallData(currencies, walletAddress, network)
-            )
-        )
-        val resultData = provider.call(
-            network.multicall3Address(),
-            callData.toHexString(true)
-        )
-        val result = ifaceMulticall.decodeFunctionResult(
-            aggregateFn,
-            resultData.toByteArrayData()
-        ).first() as List<List<Any>>
+        val walletAddress = "0xA52fD940629625371775d2D7271A35a09BC2B49e"
+        val result = rootService.executePool(walletAddress, currencies, provider)
 
-        val networkInfo = NetworkInfo.decodeCallData(result)
+        val networkInfo = result.second
         println("networkInfo ${networkInfo}")
 
-        val balances = decodeBalancesCallData(result.subList(3, result.count()))
-        println("balances $balances")
-
+        val balances = result.first
         for (i in 0 until currencies.count()) {
             val formatted = Formatters.currency.format(balances[i], currencies[i])
             println("${currencies[i].name} $formatted")
         }
-    }
-
-
-    fun balancesCallData(
-        currencies: List<Currency>,
-        walletAddress: String,
-        network: Network
-    ): List<Any> {
-        val balanceOfCallData = ifaceERC20.encodeFunction(
-            ifaceERC20.function("balanceOf"),
-            listOf(walletAddress)
-        )
-        val nativeBalanceCallData = ifaceMulticall.encodeFunction(
-            ifaceMulticall.function("getEthBalance"),
-            listOf(walletAddress)
-        )
-        return currencies.map {
-            if (it.isNative())
-                listOf(network.multicall3Address(), true, nativeBalanceCallData)
-            else
-                listOf(it.address, true, balanceOfCallData)
-        }
-    }
-
-    fun decodeBalancesCallData(data: List<List<Any>>): List<BigInt> = data.map {
-        ifaceERC20.decodeFunctionResult(
-            ifaceERC20.function("balanceOf"),
-            it.last() as ByteArray
-        ).first() as BigInt
     }
 
 }
