@@ -3,66 +3,91 @@ package com.sonsofcrypto.web3lib.services.wallet
 import com.sonsofcrypto.web3lib.contract.ERC20
 import com.sonsofcrypto.web3lib.contract.Interface
 import com.sonsofcrypto.web3lib.contract.Multicall3
-import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.provider.Provider
-import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.provider.call
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
-import com.sonsofcrypto.web3lib.services.currencyStore.sepoliaDefaultCurrencies
 import com.sonsofcrypto.web3lib.services.root.NetworkInfo
-import com.sonsofcrypto.web3lib.types.Address
+import com.sonsofcrypto.web3lib.services.root.PollLoopRequest
+import com.sonsofcrypto.web3lib.services.root.callData
+import com.sonsofcrypto.web3lib.services.root.count
+import com.sonsofcrypto.web3lib.services.root.decodeCallData
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
-import kotlinx.coroutines.runBlocking
 
-interface RootService {
+
+interface NetworkPollService {
 
     /** Fetches balances for address & network info for `Provider.network` */
-    suspend fun executePool(
+    suspend fun executePoll(
         walletAddress: AddressHexString,
         currencies: List<Currency>,
+        pollLoopRequests: List<PollLoopRequest>,
         provider: Provider,
-    ): Pair<List<BigInt>, NetworkInfo>
-
+    ): Pair<NetworkInfo, List<BigInt>>
 }
 
-class DefaultRootService: RootService {
+class DefaultNetworkPollService: NetworkPollService {
 
     private val ifaceMulticall = Interface.Multicall3()
     private val ifaceERC20 = Interface.ERC20()
+    private val pollLoopRequests: MutableList<PollLoopRequest> = mutableListOf()
 
-    // GasPrice
-    // Optional transacitonCount
-
-    override suspend fun executePool(
+    override suspend fun executePoll(
         walletAddress: AddressHexString,
         currencies: List<Currency>,
+        requests: List<PollLoopRequest>,
         provider: Provider,
-    ): Pair<List<BigInt>, NetworkInfo> {
+    ): Pair<NetworkInfo, List<BigInt>> {
         val aggregateFn = ifaceMulticall.function("aggregate3")
-        val callData = ifaceMulticall.encodeFunction(
-            aggregateFn,
-            listOf(
-                NetworkInfo.callData(provider.network.multicall3Address()) +
-                balancesCallData(currencies, walletAddress, provider.network)
-            )
+        val callData = listOf(
+            NetworkInfo.callData(provider.network.multicall3Address()) +
+            balancesCallData(currencies, walletAddress, provider.network) +
+            requests.map { it.toMultiCall3List() }
         )
         val resultData = provider.call(
             provider.network.multicall3Address(),
-            callData.toHexString(true)
+            ifaceMulticall.encodeFunction(aggregateFn, callData).toHexString(true)
         )
         val result = ifaceMulticall.decodeFunctionResult(
             aggregateFn,
             resultData.toByteArrayData()
         ).first() as List<List<Any>>
 
+        var reqRng = NetworkInfo.count() + currencies.count() to result.count()
+
+        handleNetworkInfo(result)
+        handleBalances(result.subList(NetworkInfo.count(), NetworkInfo.count() + currencies.count()))
+        handlePollLoopRequests(requests, result.subList(reqRng.first, reqRng.second))
+
         return Pair(
-            decodeBalancesCallData(result.subList(4, result.count())),
             NetworkInfo.decodeCallData(result),
+            decodeBalancesCallData(
+                result.subList(NetworkInfo.count(), NetworkInfo.count() + currencies.count())
+            ),
         )
+    }
+
+    private fun handleNetworkInfo(data: List<List<Any>>) {
+        NetworkInfo.decodeCallData(data)
+    }
+
+    private fun handleBalances(data: List<List<Any>>) {
+        data.map {
+            ifaceERC20.decodeFunctionResult(
+                ifaceERC20.function("balanceOf"),
+                it.last() as ByteArray
+            ).first() as BigInt
+        }
+    }
+
+    private fun handlePollLoopRequests(
+        requests: List<PollLoopRequest>,
+        results: List<List<Any>>
+    ){
+
     }
 
     fun balancesCallData(

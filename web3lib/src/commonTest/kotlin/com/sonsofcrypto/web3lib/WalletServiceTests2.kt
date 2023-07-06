@@ -18,15 +18,11 @@ import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
-import com.sonsofcrypto.web3lib.services.root.NetworkInfo
-import com.sonsofcrypto.web3lib.services.wallet.DefaultRootService
+import com.sonsofcrypto.web3lib.services.wallet.DefaultNetworkPollService
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
-import com.sonsofcrypto.web3lib.types.AddressHexString
-import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.toHexStringAddress
-import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
@@ -84,15 +80,15 @@ class WalletServiceTests2 {
     @Test
     fun testTmp() = runBlocking {
         val provider = ProviderPocket(Network.sepolia())
-        val rootService = DefaultRootService()
+        val rootService = DefaultNetworkPollService()
         val currencies = sepoliaDefaultCurrencies
         val walletAddress = "0xA52fD940629625371775d2D7271A35a09BC2B49e"
-        val result = rootService.executePool(walletAddress, currencies, provider)
+        val result = rootService.executePoll(walletAddress, currencies, emptyList(), provider)
 
-        val networkInfo = result.second
+        val networkInfo = result.first
         println("networkInfo ${networkInfo}")
 
-        val balances = result.first
+        val balances = result.second
         for (i in 0 until currencies.count()) {
             val formatted = Formatters.currency.format(balances[i], currencies[i])
             println("${currencies[i].name} $formatted")
