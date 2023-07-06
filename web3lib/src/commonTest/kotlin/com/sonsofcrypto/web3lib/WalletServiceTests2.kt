@@ -18,11 +18,13 @@ import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
+import com.sonsofcrypto.web3lib.services.root.NetworkInfo
+import com.sonsofcrypto.web3lib.services.root.decodeNetworkInfoCallData
+import com.sonsofcrypto.web3lib.services.root.networkInfoCallData
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency
-import com.sonsofcrypto.web3lib.types.Currency.Type.NATIVE
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.toHexStringAddress
 import com.sonsofcrypto.web3lib.utils.BigInt
@@ -79,6 +81,8 @@ class WalletServiceTests2 {
     private val ifaceMulticall = Interface.Multicall3()
     private val ifaceERC20 = Interface.ERC20()
 
+    // transaction count
+    //
     @Test
     fun testTmp() = runBlocking {
         val network = Network.sepolia()
@@ -89,7 +93,7 @@ class WalletServiceTests2 {
         val callData = ifaceMulticall.encodeFunction(
             aggregateFn,
             listOf(
-                networkInfoCallData(network.multicall3Address()) +
+                NetworkInfo.callData(network.multicall3Address()) +
                 balancesCallData(currencies, walletAddress, network)
             )
         )
@@ -102,7 +106,7 @@ class WalletServiceTests2 {
             resultData.toByteArrayData()
         ).first() as List<List<Any>>
 
-        val networkInfo = decodeNetworkInfoCallData(result)
+        val networkInfo = NetworkInfo.decodeCallData(result)
         println("networkInfo ${networkInfo}")
 
         val balances = decodeBalancesCallData(result.subList(3, result.count()))
@@ -114,34 +118,6 @@ class WalletServiceTests2 {
         }
     }
 
-    data class NetworkInfo(
-        val blockNumber: BigInt,
-        val blockTimestamp: BigInt,
-        val getBasefee: BigInt,
-    )
-
-    fun networkInfoCallData(multicall3Address: String): List<Any> = listOf(
-        call3List(multicall3Address, ifaceMulticall, "getBlockNumber"),
-        call3List(multicall3Address, ifaceMulticall, "getCurrentBlockTimestamp"),
-        call3List(multicall3Address, ifaceMulticall, "getBasefee"),
-    )
-
-    fun decodeNetworkInfoCallData(data: List<List<Any>>): NetworkInfo {
-        val blockNumber = ifaceMulticall.decodeFunctionResult(
-            ifaceMulticall.function("getBlockNumber"), data[0].last() as ByteArray
-        )
-        val blockTimestamp = ifaceMulticall.decodeFunctionResult(
-            ifaceMulticall.function("getCurrentBlockTimestamp"), data[1].last() as ByteArray
-        )
-        val basefee = ifaceMulticall.decodeFunctionResult(
-            ifaceMulticall.function("getBasefee"), data[2].last() as ByteArray
-        )
-        return NetworkInfo(
-            blockNumber.first() as BigInt,
-            blockTimestamp.first() as BigInt,
-            basefee.first() as BigInt,
-        )
-    }
 
     fun balancesCallData(
         currencies: List<Currency>,
@@ -170,15 +146,6 @@ class WalletServiceTests2 {
             it.last() as ByteArray
         ).first() as BigInt
     }
-
-    private fun call3List(
-        address: AddressHexString,
-        iface: Interface,
-        fnName: String,
-        allowFailure: Boolean = true
-    ): List<Any> = listOf(
-        address, allowFailure, iface.encodeFunction(iface.function(fnName))
-    )
 
 }
 
