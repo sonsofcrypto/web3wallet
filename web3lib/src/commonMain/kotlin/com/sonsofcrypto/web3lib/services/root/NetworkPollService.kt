@@ -15,13 +15,29 @@ import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
+import com.sonsofcrypto.web3lib.utils.timerFlow
+import com.sonsofcrypto.web3lib.utils.withBgCxt
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlin.time.Duration.Companion.seconds
 
 
+/** `NetworkPollService` combines multiple calls into multicall, saving number
+ * of calls needed */
 interface NetworkPollService {
 
+    /** Adds request to be executed with next multicall
+     * @param repeat until canceled or just execute once. Default `False` */
+    suspend fun add(request: PollLoopRequest, network: Network, repeat: Boolean)
+    suspend fun cancel(id: String)
+
     /** Fetches balances for address & network info for `Provider.network` */
-    suspend fun executePoll(
+    suspend fun executePollDebug(
         walletAddress: AddressHexString,
         currencies: List<Currency>,
         pollLoopRequests: List<PollLoopRequest>,
@@ -30,12 +46,74 @@ interface NetworkPollService {
 }
 
 class DefaultNetworkPollService: NetworkPollService {
-
     private val ifaceMulticall = Interface.Multicall3()
-    private val ifaceERC20 = Interface.ERC20()
-    private val pollLoopRequests: MutableList<PollLoopRequest> = mutableListOf()
+    private var repeatIds: MutableList<String> = mutableListOf()
+    private var requests: MutableMap<Network, MutableList<PollLoopRequest>>
+        = mutableMapOf()
+    private val mutex = Mutex()
+    private val poolJob = timerFlow(15.seconds, initialDelay = 0.seconds)
+        .onEach { poll() }
+        .launchIn(CoroutineScope(bgDispatcher))
 
-    override suspend fun executePoll(
+    override suspend fun add(
+        request: PollLoopRequest,
+        network: Network,
+        repeat: Boolean
+    ) = mutex.withLock {
+        var list = requests[network] ?: mutableListOf()
+        list.add(request)
+        requests[network] = list
+        if (repeat)
+            repeatIds.add(request.id)
+    }
+
+    override suspend fun cancel(id: String) = mutex.withLock {
+        val tmp = repeatIds.remove(id)
+    }
+
+    private suspend fun poll() = withBgCxt {
+        val requests = mutex.withLock { requests.toMap() }
+        requests.keys.forEach { executePoll(it, requests[it] ?: emptyList()) }
+        // TODO: Pool testnets only every 45 seconds
+        // TODO: Optimize time to that is gets called just as new block was created
+    }
+
+    suspend fun executePoll(network: Network, requests: List<PollLoopRequest>) {
+        if (requests.isEmpty()) return
+        val aggregateFn = ifaceMulticall.function("aggregate3")
+        val callData = listOf(requests.map { it.toMultiCall3List() })
+        val resultData = requests.first().provider.call(
+            requests.first().provider.network.multicall3Address(),
+            ifaceMulticall.encodeFunction(aggregateFn, callData).toHexString(true)
+        )
+        val result = ifaceMulticall.decodeFunctionResult(
+            aggregateFn,
+            resultData.toByteArrayData()
+        ).first() as List<List<Any>>
+        handlePollLoopRequests(requests, result, network)
+    }
+
+    private suspend fun handlePollLoopRequests(
+        requests: List<PollLoopRequest>,
+        results: List<List<Any>>,
+        network: Network
+    ) = withBgCxt {
+        removeExecuted(requests, network)
+        requests.forEachIndexed { idx, req -> req.handler(results[idx]) }
+    }
+
+    private suspend fun removeExecuted(
+        requests: List<PollLoopRequest>,
+        network: Network
+    ) = mutex.withLock {
+        this.requests[network] = requests
+            .filter { repeatIds.contains(it.id) }
+            .toMutableList()
+    }
+
+    private val ifaceERC20 = Interface.ERC20()
+
+    override suspend fun executePollDebug(
         walletAddress: AddressHexString,
         currencies: List<Currency>,
         requests: List<PollLoopRequest>,
@@ -60,7 +138,7 @@ class DefaultNetworkPollService: NetworkPollService {
 
         handleNetworkInfo(result)
         handleBalances(result.subList(NetworkInfo.count(), NetworkInfo.count() + currencies.count()))
-        handlePollLoopRequests(requests, result.subList(reqRng.first, reqRng.second))
+//        handlePollLoopRequests(requests, result.subList(reqRng.first, reqRng.second))
 
         return Pair(
             NetworkInfo.decodeCallData(result),
@@ -81,13 +159,6 @@ class DefaultNetworkPollService: NetworkPollService {
                 it.last() as ByteArray
             ).first() as BigInt
         }
-    }
-
-    private fun handlePollLoopRequests(
-        requests: List<PollLoopRequest>,
-        results: List<List<Any>>
-    ){
-
     }
 
     fun balancesCallData(
