@@ -18,11 +18,15 @@ import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
+import com.sonsofcrypto.web3lib.services.root.NetworkInfo
+import com.sonsofcrypto.web3lib.services.root.NetworkPollRequest
+import com.sonsofcrypto.web3lib.services.root.decodeCallData
 import com.sonsofcrypto.web3lib.services.wallet.DefaultNetworkPollService
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.toHexStringAddress
+import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
@@ -79,22 +83,68 @@ class WalletServiceTests2 {
 
     @Test
     fun testTmp() = runBlocking {
-        val provider = ProviderPocket(Network.sepolia())
+//        val provider = ProviderPocket(Network.sepolia())
+//        val rootService = DefaultNetworkPollService()
+//        val currencies = sepoliaDefaultCurrencies
+//        val walletAddress = "0xA52fD940629625371775d2D7271A35a09BC2B49e"
+//        val result = rootService.executePoll(walletAddress, currencies, emptyList(), provider)
+//
+//        val networkInfo = result.first
+//        println("networkInfo ${networkInfo}")
+//
+//        val balances = result.second
+//        for (i in 0 until currencies.count()) {
+//            val formatted = Formatters.currency.format(balances[i], currencies[i])
+//            println("${currencies[i].name} $formatted")
+//        }
+    }
+
+    @Test
+    fun testPoolingService() = runBlocking {
+        val service = DefaultNetworkPollService(true)
+        val network = Network.sepolia()
+        val provider = ProviderPocket(network)
         val rootService = DefaultNetworkPollService()
         val currencies = sepoliaDefaultCurrencies
         val walletAddress = "0xA52fD940629625371775d2D7271A35a09BC2B49e"
-        val result = rootService.executePoll(walletAddress, currencies, emptyList(), provider)
 
-        val networkInfo = result.first
-        println("networkInfo ${networkInfo}")
-
-        val balances = result.second
-        for (i in 0 until currencies.count()) {
-            val formatted = Formatters.currency.format(balances[i], currencies[i])
-            println("${currencies[i].name} $formatted")
-        }
+        val request = NetworkPollRequest(
+            "id",
+            provider,
+            provider.network.multicall3Address(),
+            ifaceMulticall,
+            "getBlockNumber",
+            handler = ::blockNumberHandler
+        )
+        val requests = listOf(
+            request
+        )
+        service.add(request, network, false)
+        service.executePoll(network, requests)
     }
 
+    private fun blockNumberHandler(result: Any) {
+        println("result $result")
+        val data = result as List<Any>
+        val blockNumber = ifaceMulticall.decodeFunctionResult(
+            ifaceMulticall.function("getBlockNumber"), result.last() as ByteArray
+        )
+        println("blockNumber $blockNumber")
+
+    }
+
+    private fun handleNetworkInfo(data: List<List<Any>>) {
+        NetworkInfo.decodeCallData(data)
+    }
+
+    private fun handleBalances(data: List<List<Any>>) {
+        data.map {
+            ifaceERC20.decodeFunctionResult(
+                ifaceERC20.function("balanceOf"),
+                it.last() as ByteArray
+            ).first() as BigInt
+        }
+    }
 }
 
 fun testWalletServices(network: Network = Network.sepolia()): WalletServices {

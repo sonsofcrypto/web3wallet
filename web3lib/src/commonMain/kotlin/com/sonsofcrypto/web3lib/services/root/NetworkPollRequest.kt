@@ -5,13 +5,13 @@ import com.sonsofcrypto.web3lib.contract.multiCall3List
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.types.AddressHexString
 
-class PollLoopRequest(
+class NetworkPollRequest(
     val id: String,
+    val provider: Provider,
     val address: AddressHexString,
     val iface: Interface,
     val fnName: String,
     val values: List<Any> = emptyList(),
-    val provider: Provider,
     val handler: (List<Any>)->Unit,
 ) {
     fun toMultiCall3List(): List<Any> =

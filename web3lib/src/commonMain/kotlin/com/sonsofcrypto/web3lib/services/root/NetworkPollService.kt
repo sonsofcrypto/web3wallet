@@ -7,7 +7,7 @@ import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.call
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.services.root.NetworkInfo
-import com.sonsofcrypto.web3lib.services.root.PollLoopRequest
+import com.sonsofcrypto.web3lib.services.root.NetworkPollRequest
 import com.sonsofcrypto.web3lib.services.root.callData
 import com.sonsofcrypto.web3lib.services.root.count
 import com.sonsofcrypto.web3lib.services.root.decodeCallData
@@ -20,6 +20,7 @@ import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.timerFlow
 import com.sonsofcrypto.web3lib.utils.withBgCxt
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.sync.Mutex
@@ -33,14 +34,16 @@ interface NetworkPollService {
 
     /** Adds request to be executed with next multicall
      * @param repeat until canceled or just execute once. Default `False` */
-    suspend fun add(request: PollLoopRequest, network: Network, repeat: Boolean)
+    suspend fun add(request: NetworkPollRequest, network: Network, repeat: Boolean)
     suspend fun cancel(id: String)
+
+    suspend fun executePoll(network: Network, requests: List<NetworkPollRequest>)
 
     /** Fetches balances for address & network info for `Provider.network` */
     suspend fun executePollDebug(
         walletAddress: AddressHexString,
         currencies: List<Currency>,
-        pollLoopRequests: List<PollLoopRequest>,
+        networkPollRequests: List<NetworkPollRequest>,
         provider: Provider,
     ): Pair<NetworkInfo, List<BigInt>>
 }
@@ -48,15 +51,19 @@ interface NetworkPollService {
 class DefaultNetworkPollService: NetworkPollService {
     private val ifaceMulticall = Interface.Multicall3()
     private var repeatIds: MutableList<String> = mutableListOf()
-    private var requests: MutableMap<Network, MutableList<PollLoopRequest>>
+    private var requests: MutableMap<Network, MutableList<NetworkPollRequest>>
         = mutableMapOf()
     private val mutex = Mutex()
-    private val poolJob = timerFlow(15.seconds, initialDelay = 0.seconds)
+    private var poolJob: Job = timerFlow(15.seconds, initialDelay = 1.seconds)
         .onEach { poll() }
         .launchIn(CoroutineScope(bgDispatcher))
 
+    constructor(blockTimer: Boolean = false) {
+        if (blockTimer) poolJob.cancel()
+    }
+
     override suspend fun add(
-        request: PollLoopRequest,
+        request: NetworkPollRequest,
         network: Network,
         repeat: Boolean
     ) = mutex.withLock {
@@ -78,7 +85,7 @@ class DefaultNetworkPollService: NetworkPollService {
         // TODO: Optimize time to that is gets called just as new block was created
     }
 
-    suspend fun executePoll(network: Network, requests: List<PollLoopRequest>) {
+    override suspend fun executePoll(network: Network, requests: List<NetworkPollRequest>) {
         if (requests.isEmpty()) return
         val aggregateFn = ifaceMulticall.function("aggregate3")
         val callData = listOf(requests.map { it.toMultiCall3List() })
@@ -94,7 +101,7 @@ class DefaultNetworkPollService: NetworkPollService {
     }
 
     private suspend fun handlePollLoopRequests(
-        requests: List<PollLoopRequest>,
+        requests: List<NetworkPollRequest>,
         results: List<List<Any>>,
         network: Network
     ) = withBgCxt {
@@ -103,7 +110,7 @@ class DefaultNetworkPollService: NetworkPollService {
     }
 
     private suspend fun removeExecuted(
-        requests: List<PollLoopRequest>,
+        requests: List<NetworkPollRequest>,
         network: Network
     ) = mutex.withLock {
         this.requests[network] = requests
@@ -116,7 +123,7 @@ class DefaultNetworkPollService: NetworkPollService {
     override suspend fun executePollDebug(
         walletAddress: AddressHexString,
         currencies: List<Currency>,
-        requests: List<PollLoopRequest>,
+        requests: List<NetworkPollRequest>,
         provider: Provider,
     ): Pair<NetworkInfo, List<BigInt>> {
         val aggregateFn = ifaceMulticall.function("aggregate3")
