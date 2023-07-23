@@ -20,7 +20,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import kotlin.test.Test
 import kotlin.test.assertTrue
-import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 class PollServiceTests {

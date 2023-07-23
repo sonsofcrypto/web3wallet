@@ -1,11 +1,9 @@
 package com.sonsofcrypto.web3lib.services.wallet
 
-import com.sonsofcrypto.web3lib.contract.Call3
 import com.sonsofcrypto.web3lib.contract.Interface
 import com.sonsofcrypto.web3lib.contract.Multicall3
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.call
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.services.root.FnPollServiceRequest
 import com.sonsofcrypto.web3lib.services.root.PollServiceRequest
@@ -23,6 +21,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import kotlin.time.Duration.Companion.seconds
 
 
@@ -59,6 +58,7 @@ interface PollService {
 
 private val bootPollInterVal = 12.seconds
 private val pollInterval = 30.seconds
+private val testnetInterval = 45.seconds
 
 class DefaultPollService: PollService {
     private val ifaceMulticall = Interface.Multicall3()
@@ -69,6 +69,7 @@ class DefaultPollService: PollService {
     private val mutex = Mutex()
     private var syncedBlockTime: Boolean = false
     private var boostCount: Int = -1
+    private var lastTestnetTimeStamp: Instant = Instant.DISTANT_PAST
     private var poolJob: Job = timerFlow(pollInterval, initialDelay = 1.seconds)
         .onEach { poll() }
         .launchIn(CoroutineScope(bgDispatcher))
@@ -101,10 +102,24 @@ class DefaultPollService: PollService {
     private suspend fun poll() = withBgCxt {
         boostIfNeeded()
         optimizeBlockTimeIfNeeded()
+
         val requests = mutex.withLock { requests.toMap() }
-        val provides = mutex.withLock { providers.toList() }
-        // TODO: Pool testnets only every 45 seconds
-        optimizeBlockTimeIfNeeded()
+        val providers = mutex.withLock { providers.toMap() }
+        val testnetTs = lastTestnetTimeStamp.plus(testnetInterval).epochSeconds
+        val refreshTestnets = testnetTs > Clock.System.now().epochSeconds
+
+        lastTestnetTimeStamp = Clock.System.now()
+
+        for (entry in requests.iterator()) {
+            if (entry.key.isTestnet() && !refreshTestnets) continue;
+            executePoll(
+                entry.key,
+                providers[entry.key]
+                    ?: throw PollService.Error.MissingProvider(entry.key),
+                entry.value
+            )
+        }
+
         requests.keys.forEach {
             executePoll(
                 it,
@@ -114,7 +129,7 @@ class DefaultPollService: PollService {
         }
     }
 
-    /** @note only public for unit test purposes should never be called directly */
+    /** @note only public for unit tests, should never be called directly */
     suspend fun executePoll(
         network: Network,
         provider: Provider,

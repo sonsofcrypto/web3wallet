@@ -39,6 +39,10 @@ data class Network(
         L1, L2, L1_TEST, L2_TEST;
     }
 
+    fun isTestnet(): Boolean {
+        return type == Type.L1_TEST || type == Type.L2_TEST
+    }
+
     fun isValidAddress(input: String): Boolean = when (name) {
         "Ethereum" -> input.dropLast(40) == "0x" && input.length == 42
         else -> false
@@ -51,6 +55,7 @@ data class Network(
         sepolia().chainId -> "0xcA11bde05977b3631167028862bE2a173976CA11"
         else -> throw Error("This network id $this does not have multicall")
     }
+
 
     companion object {
         fun ethereum() = Network("Ethereum", 1u, Type.L1, null, Currency.ethereum())
