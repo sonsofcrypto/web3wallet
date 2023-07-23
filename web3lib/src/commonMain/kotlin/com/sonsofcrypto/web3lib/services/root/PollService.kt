@@ -19,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
@@ -44,10 +45,10 @@ interface PollService {
     suspend fun setProvider(provider: Provider, network: Network)
 
     /** Executes polls more frequently for a minute */
-    fun boostInterval()
+    suspend fun boostInterval()
 
-    /** Wheather currenly in boosted state. SEE: `boostInterval` */
-    fun isBoosted(): Boolean
+    /** Whether currently in boosted state. SEE: `boostInterval` */
+    suspend fun isBoosted(): Boolean
 
     /** Errors */
     sealed class Error(message: String? = null) : Exception(message) {
@@ -58,7 +59,6 @@ interface PollService {
 
 private val bootPollInterVal = 12.seconds
 private val pollInterval = 30.seconds
-
 
 class DefaultPollService: PollService {
     private val ifaceMulticall = Interface.Multicall3()
@@ -85,8 +85,7 @@ class DefaultPollService: PollService {
         var list = requests[network] ?: mutableListOf()
         list.add(request)
         requests[network] = list
-        if (repeat)
-            repeatIds.add(request.id)
+        if (repeat) repeatIds.add(request.id)
     }
 
     override suspend fun cancel(id: String)
@@ -95,11 +94,9 @@ class DefaultPollService: PollService {
     override suspend fun setProvider(provider: Provider, network: Network)
         = mutex.withLock { providers[network] = provider  }
 
-    override fun boostInterval() {
-        boostCount = 5
-    }
+    override suspend fun boostInterval() = mutex.withLock { boostCount = 5 }
 
-    override fun isBoosted(): Boolean = boostCount > 0
+    override suspend fun isBoosted(): Boolean = mutex.withLock { boostCount > 0 }
 
     private suspend fun poll() = withBgCxt {
         boostIfNeeded()
@@ -132,7 +129,8 @@ class DefaultPollService: PollService {
         try {
             val resultData = provider.call(
                 provider.network.multicall3Address(),
-                ifaceMulticall.encodeFunction(aggregateFn, listOf(calls)).toHexString(true)
+                ifaceMulticall.encodeFunction(aggregateFn, listOf(calls))
+                    .toHexString(true)
             )
             val result = ifaceMulticall.decodeFunctionResult(
                 aggregateFn,
@@ -151,10 +149,10 @@ class DefaultPollService: PollService {
     ) = withBgCxt {
         removeExecuted(requests, network)
         var currIdx = 0
-        requests.forEachIndexed { idx, req ->
-            if (req.callCount == 1) req.handler(results[currIdx], req)
-            else req.handler(results.subList(currIdx, currIdx + req.callCount), req)
-            currIdx += req.callCount
+        requests.forEachIndexed { _, r ->
+            if (r.callCount == 1) r.handler(results[currIdx], r)
+            else r.handler(results.subList(currIdx, currIdx + r.callCount), r)
+            currIdx += r.callCount
         }
     }
 
@@ -190,13 +188,16 @@ class DefaultPollService: PollService {
         val timestamp = decoded.toDecimalString().toLong().seconds
         val now =  Clock.System.now().epochSeconds.seconds
         val delay = timestamp + pollInterval + 1.seconds - now
-        val intv = if (boostCount > 0) bootPollInterVal else pollInterval
-        poolJob = timerFlow(intv, initialDelay = delay)
-            .onEach { poll() }
-            .launchIn(CoroutineScope(bgDispatcher))
+        CoroutineScope(bgDispatcher).launch {
+            val boostCnt = mutex.withLock { boostCount }
+            val intv = if (boostCnt > 0) bootPollInterVal else pollInterval
+            poolJob = timerFlow(intv, initialDelay = delay)
+                .onEach { poll() }
+                .launchIn(CoroutineScope(bgDispatcher))
+        }
     }
 
-    private fun boostIfNeeded() {
+    private suspend fun boostIfNeeded() = mutex.withLock {
         when {
             boostCount == 5 -> { syncedBlockTime = false }
             boostCount == 0 -> { syncedBlockTime = false }
