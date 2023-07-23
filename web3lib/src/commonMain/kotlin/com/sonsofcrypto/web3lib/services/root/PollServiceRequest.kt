@@ -6,8 +6,9 @@ import com.sonsofcrypto.web3lib.types.AddressHexString
 
 interface PollServiceRequest {
     val id: String
-    val handler: (List<Any>)->Unit
+    val handler: (result: List<Any>, request: PollServiceRequest)->Unit
     val callCount: Int
+    val userInfo: Any?
     fun calls(): List<Call3>
 }
 
@@ -17,7 +18,8 @@ class FnPollServiceRequest(
     val iface: Interface,
     val fnName: String,
     val values: List<Any> = emptyList(),
-    override val handler: (List<Any>)->Unit,
+    override val handler: (result: List<Any>, request: PollServiceRequest)->Unit,
+    override val userInfo: Any? = null,
 ): PollServiceRequest {
 
     override val callCount: Int = 1
@@ -34,7 +36,8 @@ class FnPollServiceRequest(
 class GroupPollServiceRequest(
     override val id: String,
     val calls: List<Call3>,
-    override val handler: (List<Any>)->Unit,
+    override val handler: (result: List<Any>, request: PollServiceRequest)->Unit,
+    override val userInfo: Any? = null,
 ): PollServiceRequest {
 
     override val callCount: Int by lazy { calls.count() }

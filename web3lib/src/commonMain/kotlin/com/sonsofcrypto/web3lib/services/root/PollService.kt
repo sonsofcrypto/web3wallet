@@ -105,12 +105,10 @@ class DefaultPollService: PollService {
         requests.forEach { c ->
             calls.addAll(c.calls().map { it.toList() })
         }
-        println("[CALLS] $calls")
         val resultData = provider.call(
             provider.network.multicall3Address(),
             ifaceMulticall.encodeFunction(aggregateFn, listOf(calls)).toHexString(true)
         )
-        println("[RESULT DATA] $resultData")
         val result = ifaceMulticall.decodeFunctionResult(
             aggregateFn,
             (resultData as DataHexString).toByteArrayData()
@@ -125,11 +123,9 @@ class DefaultPollService: PollService {
     ) = withBgCxt {
         removeExecuted(requests, network)
         var currIdx = 0
-        println("[COUNT] ${requests.count()} ${results.count()}")
         requests.forEachIndexed { idx, req ->
-            println("$currIdx, ${currIdx + req.callCount} ${req.callCount}")
-            if (req.callCount == 1) req.handler(results[currIdx])
-            else req.handler(results.subList(currIdx, currIdx + req.callCount))
+            if (req.callCount == 1) req.handler(results[currIdx], req)
+            else req.handler(results.subList(currIdx, currIdx + req.callCount), req)
             currIdx += req.callCount
         }
     }
@@ -142,82 +138,4 @@ class DefaultPollService: PollService {
             .filter { repeatIds.contains(it.id) }
             .toMutableList()
     }
-
-//    private val ifaceERC20 = Interface.ERC20()
-//
-//    override suspend fun executePollDebug(
-//        walletAddress: AddressHexString,
-//        currencies: List<Currency>,
-//        requests: List<FnPollServiceRequest>,
-//        provider: Provider,
-//    ): Pair<NetworkInfo, List<BigInt>> {
-//        val aggregateFn = ifaceMulticall.function("aggregate3")
-//        val callData = listOf(
-//            NetworkInfo.callData(provider.network.multicall3Address()) +
-//            balancesCallData(currencies, walletAddress, provider.network) +
-//            requests.map { it.toMultiCall3List() }
-//        )
-//        val resultData = provider.call(
-//            provider.network.multicall3Address(),
-//            ifaceMulticall.encodeFunction(aggregateFn, callData).toHexString(true)
-//        )
-//        val result = ifaceMulticall.decodeFunctionResult(
-//            aggregateFn,
-//            resultData.toByteArrayData()
-//        ).first() as List<List<Any>>
-//
-//        var reqRng = NetworkInfo.count() + currencies.count() to result.count()
-//
-//        handleNetworkInfo(result)
-//        handleBalances(result.subList(NetworkInfo.count(), NetworkInfo.count() + currencies.count()))
-////        handlePollLoopRequests(requests, result.subList(reqRng.first, reqRng.second))
-//
-//        return Pair(
-//            NetworkInfo.decodeCallData(result),
-//            decodeBalancesCallData(
-//                result.subList(NetworkInfo.count(), NetworkInfo.count() + currencies.count())
-//            ),
-//        )
-//    }
-//
-//    private fun handleNetworkInfo(data: List<List<Any>>) {
-//        NetworkInfo.decodeCallData(data)
-//    }
-//
-//    private fun handleBalances(data: List<List<Any>>) {
-//        data.map {
-//            ifaceERC20.decodeFunctionResult(
-//                ifaceERC20.function("balanceOf"),
-//                it.last() as ByteArray
-//            ).first() as BigInt
-//        }
-//    }
-//
-//    fun balancesCallData(
-//        currencies: List<Currency>,
-//        walletAddress: String,
-//        network: Network
-//    ): List<Any> {
-//        val balanceOfCallData = ifaceERC20.encodeFunction(
-//            ifaceERC20.function("balanceOf"),
-//            listOf(walletAddress)
-//        )
-//        val nativeBalanceCallData = ifaceMulticall.encodeFunction(
-//            ifaceMulticall.function("getEthBalance"),
-//            listOf(walletAddress)
-//        )
-//        return currencies.map {
-//            if (it.isNative())
-//                listOf(network.multicall3Address(), true, nativeBalanceCallData)
-//            else
-//                listOf(it.address, true, balanceOfCallData)
-//        }
-//    }
-//
-//    fun decodeBalancesCallData(data: List<List<Any>>): List<BigInt> = data.map {
-//        ifaceERC20.decodeFunctionResult(
-//            ifaceERC20.function("balanceOf"),
-//            it.last() as ByteArray
-//        ).first() as BigInt
-//    }
 }
