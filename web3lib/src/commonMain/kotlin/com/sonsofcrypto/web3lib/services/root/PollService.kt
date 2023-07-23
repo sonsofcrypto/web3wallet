@@ -129,15 +129,19 @@ class DefaultPollService: PollService {
         requests.forEach { c ->
             calls.addAll(c.calls().map { it.toList() })
         }
-        val resultData = provider.call(
-            provider.network.multicall3Address(),
-            ifaceMulticall.encodeFunction(aggregateFn, listOf(calls)).toHexString(true)
-        )
-        val result = ifaceMulticall.decodeFunctionResult(
-            aggregateFn,
-            (resultData as DataHexString).toByteArrayData()
-        ).first() as List<List<Any>>
-        handlePollLoopRequests(requests, result, network)
+        try {
+            val resultData = provider.call(
+                provider.network.multicall3Address(),
+                ifaceMulticall.encodeFunction(aggregateFn, listOf(calls)).toHexString(true)
+            )
+            val result = ifaceMulticall.decodeFunctionResult(
+                aggregateFn,
+                resultData.toByteArrayData()
+            ).first() as List<List<Any>>
+            handlePollLoopRequests(requests, result, network)
+        } catch (err: Throwable) {
+            println("[PollServiceError] $err")
+        }
     }
 
     private suspend fun handlePollLoopRequests(
