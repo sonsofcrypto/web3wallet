@@ -22,8 +22,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.datetime.Clock
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 
@@ -45,7 +43,11 @@ interface PollService {
     /** Provider to be used for given network */
     suspend fun setProvider(provider: Provider, network: Network)
 
-//    fun bootInterval()
+    /** Executes polls more frequently for a minute */
+    fun boostInterval()
+
+    /** Wheather currenly in boosted state. SEE: `boostInterval` */
+    fun isBoosted(): Boolean
 
     /** Errors */
     sealed class Error(message: String? = null) : Exception(message) {
@@ -54,8 +56,8 @@ interface PollService {
     }
 }
 
-private val bootPoolInterVal = 12.seconds
-private val pollInterval = 12.seconds
+private val bootPollInterVal = 12.seconds
+private val pollInterval = 30.seconds
 
 
 class DefaultPollService: PollService {
@@ -66,6 +68,7 @@ class DefaultPollService: PollService {
         = mutableMapOf()
     private val mutex = Mutex()
     private var syncedBlockTime: Boolean = false
+    private var boostCount: Int = -1
     private var poolJob: Job = timerFlow(pollInterval, initialDelay = 1.seconds)
         .onEach { poll() }
         .launchIn(CoroutineScope(bgDispatcher))
@@ -92,7 +95,14 @@ class DefaultPollService: PollService {
     override suspend fun setProvider(provider: Provider, network: Network)
         = mutex.withLock { providers[network] = provider  }
 
+    override fun boostInterval() {
+        boostCount = 5
+    }
+
+    override fun isBoosted(): Boolean = boostCount > 0
+
     private suspend fun poll() = withBgCxt {
+        boostIfNeeded()
         optimizeBlockTimeIfNeeded()
         val requests = mutex.withLock { requests.toMap() }
         val provides = mutex.withLock { providers.toList() }
@@ -176,9 +186,19 @@ class DefaultPollService: PollService {
         val timestamp = decoded.toDecimalString().toLong().seconds
         val now =  Clock.System.now().epochSeconds.seconds
         val delay = timestamp + pollInterval + 1.seconds - now
-        poolJob = timerFlow(pollInterval, initialDelay = delay)
+        val intv = if (boostCount > 0) bootPollInterVal else pollInterval
+        poolJob = timerFlow(intv, initialDelay = delay)
             .onEach { poll() }
             .launchIn(CoroutineScope(bgDispatcher))
     }
 
+    private fun boostIfNeeded() {
+        when {
+            boostCount == 5 -> { syncedBlockTime = false }
+            boostCount == 0 -> { syncedBlockTime = false }
+            else -> Unit
+        }
+        if (boostCount > -1)
+            boostCount -= 1
+    }
 }

@@ -24,31 +24,8 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 class PollServiceTests {
-
     private val ifaceERC20 = Interface.ERC20()
     private val ifaceMulticall = Interface.Multicall3()
-
-    @Test
-    fun testSyncTime() = runBlocking {
-        val network = Network.ethereum()
-        val provider = ProviderPocket(network)
-        val currencies = sepoliaDefaultCurrencies
-        val walletAddress = "0xA52fD940629625371775d2D7271A35a09BC2B49e"
-
-        val requests = mutableListOf<PollServiceRequest>()
-        val service = DefaultPollService()
-        service.setProvider(provider, network)
-
-        val networkInfoRequest = GroupPollServiceRequest(
-            "NetworkInfo.ethereum",
-            NetworkInfo.calls(network.multicall3Address()),
-            ::handleNetworkInfo
-        )
-        requests.add(networkInfoRequest)
-        service.add(networkInfoRequest, network, true)
-        service.executePoll(network, provider, requests)
-        delay(60.seconds)
-    }
 
     @Test
     fun testExecutePoll() = runBlocking {
@@ -72,6 +49,26 @@ class PollServiceTests {
         service.add(networkInfoRequest, network, true)
         balancesReqs.forEach { service.add(it, network, false) }
         service.executePoll(network, provider, requests)
+    }
+
+    @Test
+    fun testSyncTime() = runBlocking {
+        val network = Network.ethereum()
+        val provider = ProviderPocket(network)
+
+        val requests = mutableListOf<PollServiceRequest>()
+        val service = DefaultPollService()
+        service.setProvider(provider, network)
+
+        val networkInfoRequest = GroupPollServiceRequest(
+            "NetworkInfo.ethereum",
+            NetworkInfo.calls(network.multicall3Address()),
+            ::handleNetworkInfo
+        )
+        requests.add(networkInfoRequest)
+        service.add(networkInfoRequest, network, true)
+        service.executePoll(network, provider, requests)
+        delay(60.seconds)
     }
 
     private fun handleNetworkInfo(result: List<Any>, request: PollServiceRequest) {
