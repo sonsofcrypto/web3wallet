@@ -17,8 +17,10 @@ import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.Clock
 import kotlin.test.Test
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 class PollServiceTests {
@@ -26,13 +28,30 @@ class PollServiceTests {
     private val ifaceERC20 = Interface.ERC20()
     private val ifaceMulticall = Interface.Multicall3()
 
-    private var networkInfoResultCallCount = 0
-    private var balanceCallCount = 0
+    @Test
+    fun testSyncTime() = runBlocking {
+        val network = Network.ethereum()
+        val provider = ProviderPocket(network)
+        val currencies = sepoliaDefaultCurrencies
+        val walletAddress = "0xA52fD940629625371775d2D7271A35a09BC2B49e"
+
+        val requests = mutableListOf<PollServiceRequest>()
+        val service = DefaultPollService()
+        service.setProvider(provider, network)
+
+        val networkInfoRequest = GroupPollServiceRequest(
+            "NetworkInfo.ethereum",
+            NetworkInfo.calls(network.multicall3Address()),
+            ::handleNetworkInfo
+        )
+        requests.add(networkInfoRequest)
+        service.add(networkInfoRequest, network, true)
+        service.executePoll(network, provider, requests)
+        delay(60.seconds)
+    }
 
     @Test
     fun testExecutePoll() = runBlocking {
-        networkInfoResultCallCount = 0
-        balanceCallCount = 0
         val network = Network.sepolia()
         val provider = ProviderPocket(network)
         val currencies = sepoliaDefaultCurrencies
@@ -57,8 +76,6 @@ class PollServiceTests {
 
     private fun handleNetworkInfo(result: List<Any>, request: PollServiceRequest) {
         val networkInfo = NetworkInfo.decodeCallData(result as List<List<Any>>)
-        networkInfoResultCallCount +=1
-        println("[NETWORK INFO COUNT UPDATE] $networkInfoResultCallCount")
         assertTrue(
             networkInfo.blockNumber.isGreaterThan(BigInt.from(3946570)),
             "Block number too low: ${networkInfo.blockNumber}"
@@ -75,10 +92,12 @@ class PollServiceTests {
             !networkInfo.blockGasLimit.isZero(),
             "Zero block gas limit: ${networkInfo.basefee}"
         )
+        println("[NETWORKINFO] $networkInfo")
+        println("[BLOCKTIMESTAMP] ${networkInfo.blockTimestamp}")
+        println("[NOW]            ${Clock.System.now().epochSeconds}")
     }
 
     private fun handleBalance(result: List<Any>, request: PollServiceRequest) {
-        balanceCallCount += 1
         var currency = (request.userInfo as? Currency)
             ?: throw Throwable("Expected currency $request, $result")
         val balance = ifaceERC20.decodeFunctionResult(

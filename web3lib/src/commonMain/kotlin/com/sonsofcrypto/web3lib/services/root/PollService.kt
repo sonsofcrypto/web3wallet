@@ -1,13 +1,16 @@
 package com.sonsofcrypto.web3lib.services.wallet
 
+import com.sonsofcrypto.web3lib.contract.Call3
 import com.sonsofcrypto.web3lib.contract.Interface
 import com.sonsofcrypto.web3lib.contract.Multicall3
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.call
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
+import com.sonsofcrypto.web3lib.services.root.FnPollServiceRequest
 import com.sonsofcrypto.web3lib.services.root.PollServiceRequest
 import com.sonsofcrypto.web3lib.types.Network
+import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.timerFlow
@@ -18,6 +21,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.datetime.Clock
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 
@@ -39,12 +45,18 @@ interface PollService {
     /** Provider to be used for given network */
     suspend fun setProvider(provider: Provider, network: Network)
 
+//    fun bootInterval()
+
     /** Errors */
     sealed class Error(message: String? = null) : Exception(message) {
         data class MissingProvider(val network: Network):
             Error("Missing provider for $network")
     }
 }
+
+private val bootPoolInterVal = 12.seconds
+private val pollInterval = 12.seconds
+
 
 class DefaultPollService: PollService {
     private val ifaceMulticall = Interface.Multicall3()
@@ -53,7 +65,8 @@ class DefaultPollService: PollService {
     private var requests: MutableMap<Network, MutableList<PollServiceRequest>>
         = mutableMapOf()
     private val mutex = Mutex()
-    private var poolJob: Job = timerFlow(15.seconds, initialDelay = 1.seconds)
+    private var syncedBlockTime: Boolean = false
+    private var poolJob: Job = timerFlow(pollInterval, initialDelay = 1.seconds)
         .onEach { poll() }
         .launchIn(CoroutineScope(bgDispatcher))
 
@@ -80,10 +93,11 @@ class DefaultPollService: PollService {
         = mutex.withLock { providers[network] = provider  }
 
     private suspend fun poll() = withBgCxt {
+        optimizeBlockTimeIfNeeded()
         val requests = mutex.withLock { requests.toMap() }
         val provides = mutex.withLock { providers.toList() }
         // TODO: Pool testnets only every 45 seconds
-        // TODO: Optimize time to that is gets called just as new block was created
+        optimizeBlockTimeIfNeeded()
         requests.keys.forEach {
             executePoll(
                 it,
@@ -138,4 +152,33 @@ class DefaultPollService: PollService {
             .filter { repeatIds.contains(it.id) }
             .toMutableList()
     }
+
+    private suspend fun optimizeBlockTimeIfNeeded() {
+        if (syncedBlockTime || providers[Network.ethereum()] == null) return;
+        val request = FnPollServiceRequest(
+            "syncBlockTime",
+            Network.ethereum().multicall3Address(),
+            ifaceMulticall,
+            "getCurrentBlockTimestamp",
+            emptyList(),
+            ::handleBlockTimestamp,
+        )
+        add(request, Network.ethereum(), false)
+    }
+
+    private fun handleBlockTimestamp(result: List<Any>, r: PollServiceRequest) {
+        syncedBlockTime = true
+        poolJob.cancel()
+        val decoded = ifaceMulticall.decodeFunctionResult(
+            ifaceMulticall.function("getCurrentBlockTimestamp"),
+            result.last() as ByteArray
+        ).first() as BigInt
+        val timestamp = decoded.toDecimalString().toLong().seconds
+        val now =  Clock.System.now().epochSeconds.seconds
+        val delay = timestamp + pollInterval + 1.seconds - now
+        poolJob = timerFlow(pollInterval, initialDelay = delay)
+            .onEach { poll() }
+            .launchIn(CoroutineScope(bgDispatcher))
+    }
+
 }

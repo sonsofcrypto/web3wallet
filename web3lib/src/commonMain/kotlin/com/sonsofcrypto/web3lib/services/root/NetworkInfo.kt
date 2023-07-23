@@ -19,17 +19,6 @@ data class NetworkInfo(
     companion object
 }
 
-/** Number of properties (useful for multicall result decoding) */
-fun NetworkInfo.Companion.count(): Int = 4
-
-/** MulticallV3 contract Call3 items */
-fun NetworkInfo.Companion.callData(multicall3Address: AddressHexString): List<Any> = listOf(
-    multiCall3List(multicall3Address, iface, "getBlockNumber"),
-    multiCall3List(multicall3Address, iface, "getCurrentBlockTimestamp"),
-    multiCall3List(multicall3Address, iface, "getBasefee"),
-    multiCall3List(multicall3Address, iface, "getCurrentBlockGasLimit"),
-)
-
 /** MulticallV3 contract Call3 items */
 fun NetworkInfo.Companion.calls(multicallAddress: AddressHexString): List<Call3>
     = listOf(
