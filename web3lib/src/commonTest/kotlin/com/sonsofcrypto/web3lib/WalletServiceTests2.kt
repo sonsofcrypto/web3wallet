@@ -3,7 +3,6 @@ package com.sonsofcrypto.web3lib
 import com.sonsofcrypto.web3lib.contract.ERC20
 import com.sonsofcrypto.web3lib.contract.Interface
 import com.sonsofcrypto.web3lib.contract.Multicall3
-import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.provider.call
@@ -19,9 +18,10 @@ import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
 import com.sonsofcrypto.web3lib.services.root.NetworkInfo
-import com.sonsofcrypto.web3lib.services.root.NetworkPollRequest
+import com.sonsofcrypto.web3lib.services.root.GroupPollServiceRequest
+import com.sonsofcrypto.web3lib.services.root.calls
 import com.sonsofcrypto.web3lib.services.root.decodeCallData
-import com.sonsofcrypto.web3lib.services.wallet.DefaultNetworkPollService
+import com.sonsofcrypto.web3lib.services.wallet.DefaultPollService
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.types.Network
@@ -100,27 +100,27 @@ class WalletServiceTests2 {
     }
 
     @Test
-    fun testPoolingService() = runBlocking {
-        val service = DefaultNetworkPollService(true)
+    fun testPollingService() = runBlocking {
+        val service = DefaultPollService(true)
         val network = Network.sepolia()
         val provider = ProviderPocket(network)
-        val rootService = DefaultNetworkPollService()
         val currencies = sepoliaDefaultCurrencies
         val walletAddress = "0xA52fD940629625371775d2D7271A35a09BC2B49e"
 
-        val request = NetworkPollRequest(
-            "id",
-            provider,
-            provider.network.multicall3Address(),
-            ifaceMulticall,
-            "getBlockNumber",
-            handler = ::blockNumberHandler
+        service.setProvider(provider, network)
+
+        val request = GroupPollServiceRequest(
+            "NetworkInfo.sepolia",
+            NetworkInfo.calls(network.multicall3Address()),
+            ::handleNetworkInfo
         )
-        val requests = listOf(
-            request
-        )
-        service.add(request, network, false)
-        service.executePoll(network, requests)
+        service.add(request, network, true)
+        service.executePoll(network, provider, listOf(request))
+    }
+
+    private fun handleNetworkInfo(data: List<Any>) {
+        val networkInfo = NetworkInfo.decodeCallData(data as List<List<Any>> )
+        println(networkInfo)
     }
 
     private fun blockNumberHandler(result: Any) {
@@ -131,10 +131,6 @@ class WalletServiceTests2 {
         )
         println("blockNumber $blockNumber")
 
-    }
-
-    private fun handleNetworkInfo(data: List<List<Any>>) {
-        NetworkInfo.decodeCallData(data)
     }
 
     private fun handleBalances(data: List<List<Any>>) {

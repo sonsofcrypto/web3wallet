@@ -11,3 +11,11 @@ fun multiCall3List(
 ): List<Any> = listOf(
     address, allowFailure, iface.encodeFunction(iface.function(fnName), values)
 )
+
+data class Call3(
+    val address: AddressHexString,
+    val allowFailure: Boolean,
+    val calldata: ByteArray,
+) {
+    fun toList(): List<Any> = listOf(address, allowFailure, calldata)
+}
