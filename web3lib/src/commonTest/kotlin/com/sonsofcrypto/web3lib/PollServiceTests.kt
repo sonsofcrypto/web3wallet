@@ -5,13 +5,13 @@ import com.sonsofcrypto.web3lib.contract.Interface
 import com.sonsofcrypto.web3lib.contract.Multicall3
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.services.currencyStore.sepoliaDefaultCurrencies
-import com.sonsofcrypto.web3lib.services.root.FnPollServiceRequest
-import com.sonsofcrypto.web3lib.services.root.GroupPollServiceRequest
-import com.sonsofcrypto.web3lib.services.root.NetworkInfo
-import com.sonsofcrypto.web3lib.services.root.PollServiceRequest
-import com.sonsofcrypto.web3lib.services.root.calls
-import com.sonsofcrypto.web3lib.services.root.decodeCallData
-import com.sonsofcrypto.web3lib.services.wallet.DefaultPollService
+import com.sonsofcrypto.web3lib.services.poll.FnPollServiceRequest
+import com.sonsofcrypto.web3lib.services.poll.GroupPollServiceRequest
+import com.sonsofcrypto.web3lib.services.networks.NetworkInfo
+import com.sonsofcrypto.web3lib.services.poll.PollServiceRequest
+import com.sonsofcrypto.web3lib.services.networks.calls
+import com.sonsofcrypto.web3lib.services.networks.decodeCallData
+import com.sonsofcrypto.web3lib.services.poll.DefaultPollService
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
@@ -31,7 +31,7 @@ class PollServiceTests {
         val network = Network.sepolia()
         val provider = ProviderPocket(network)
         val currencies = sepoliaDefaultCurrencies
-        val walletAddress = "0xA52fD940629625371775d2D7271A35a09BC2B49e"
+        val walletAddress = Global.testWalletAddress
 
         val requests = mutableListOf<PollServiceRequest>()
         val service = DefaultPollService(true)
@@ -100,20 +100,11 @@ class PollServiceTests {
             ifaceERC20.function("balanceOf"),
             result.last() as ByteArray
         ).first() as BigInt
-        val expBalance = expectedBalance(currency, Network.sepolia())
+        val expBalance = Global.expectedBalance(currency, Network.sepolia())
         assertTrue(
             balance == expBalance && balance != null,
             "unexpected balance ${currency.name}: $balance, exp: $expBalance"
         )
-    }
-
-    private fun expectedBalance(currency: Currency, network: Network): BigInt? {
-        return when(currency.name) {
-            "Sepolia Ethereum" -> BigInt.from("408003475714348618", 10)
-            "Sepolia WETH" -> BigInt.from("10000000000000000", 10)
-            "Sepolia UNI Token" -> BigInt.from("10000000000000000000", 10)
-            else -> null
-        }
     }
 
     private fun balancesRequests(

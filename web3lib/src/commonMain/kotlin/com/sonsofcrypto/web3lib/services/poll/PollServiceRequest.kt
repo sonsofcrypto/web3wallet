@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.services.root
+package com.sonsofcrypto.web3lib.services.poll
 
 import com.sonsofcrypto.web3lib.contract.Call3
 import com.sonsofcrypto.web3lib.contract.Interface

@@ -1,12 +1,10 @@
-package com.sonsofcrypto.web3lib.services.wallet
+package com.sonsofcrypto.web3lib.services.poll
 
 import com.sonsofcrypto.web3lib.contract.Interface
 import com.sonsofcrypto.web3lib.contract.Multicall3
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.call
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
-import com.sonsofcrypto.web3lib.services.root.FnPollServiceRequest
-import com.sonsofcrypto.web3lib.services.root.PollServiceRequest
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.bgDispatcher

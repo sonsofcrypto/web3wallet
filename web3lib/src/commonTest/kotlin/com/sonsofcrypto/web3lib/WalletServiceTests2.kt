@@ -17,10 +17,10 @@ import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
-import com.sonsofcrypto.web3lib.services.root.NetworkInfo
-import com.sonsofcrypto.web3lib.services.root.GroupPollServiceRequest
-import com.sonsofcrypto.web3lib.services.root.calls
-import com.sonsofcrypto.web3lib.services.root.decodeCallData
+import com.sonsofcrypto.web3lib.services.networks.NetworkInfo
+import com.sonsofcrypto.web3lib.services.poll.GroupPollServiceRequest
+import com.sonsofcrypto.web3lib.services.networks.calls
+import com.sonsofcrypto.web3lib.services.networks.decodeCallData
 import com.sonsofcrypto.web3lib.services.wallet.DefaultPollService
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
@@ -86,7 +86,7 @@ class WalletServiceTests2 {
 //        val provider = ProviderPocket(Network.sepolia())
 //        val rootService = DefaultNetworkPollService()
 //        val currencies = sepoliaDefaultCurrencies
-//        val walletAddress = "0xA52fD940629625371775d2D7271A35a09BC2B49e"
+//        val walletAddress = "Global.0xA52fD940629625371775d2D7271A35a09BC2B49e"
 //        val result = rootService.executePoll(walletAddress, currencies, emptyList(), provider)
 //
 //        val networkInfo = result.first
@@ -105,7 +105,7 @@ class WalletServiceTests2 {
         val network = Network.sepolia()
         val provider = ProviderPocket(network)
         val currencies = sepoliaDefaultCurrencies
-        val walletAddress = "0xA52fD940629625371775d2D7271A35a09BC2B49e"
+        val walletAddress = "Global.0xA52fD940629625371775d2D7271A35a09BC2B49e"
 
         service.setProvider(provider, network)
 

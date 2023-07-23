@@ -1,9 +1,8 @@
-package com.sonsofcrypto.web3lib.services.root
+package com.sonsofcrypto.web3lib.services.networks
 
 import com.sonsofcrypto.web3lib.contract.Call3
 import com.sonsofcrypto.web3lib.contract.Interface
 import com.sonsofcrypto.web3lib.contract.Multicall3
-import com.sonsofcrypto.web3lib.contract.multiCall3List
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.utils.BigInt
 
