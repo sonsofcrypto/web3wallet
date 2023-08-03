@@ -10,7 +10,10 @@ import com.sonsofcrypto.web3walletcore.extensions.toNetworkFeeViewModel
 import com.sonsofcrypto.web3walletcore.modules.confirmation.ConfirmationWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendViewModel.ButtonState.INVALID_DESTINATION
 import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendViewModel.ButtonState.READY
-import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeDestination.*
+import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeDestination.Back
+import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeDestination.ConfirmSendNFT
+import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeDestination.QRCodeScan
+import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeDestination.UnderConstructionAlert
 
 sealed class NFTSendPresenterEvent {
     object QrCodeScan: NFTSendPresenterEvent()
@@ -20,7 +23,7 @@ sealed class NFTSendPresenterEvent {
     object NetworkFeeTapped: NFTSendPresenterEvent()
     data class NetworkFeeChanged(val value: NetworkFee): NFTSendPresenterEvent()
     object Review: NFTSendPresenterEvent()
-    object Dismiss: NFTSendPresenterEvent()
+    object Back: NFTSendPresenterEvent()
 }
 
 interface NFTSendPresenter {
@@ -70,7 +73,7 @@ class DefaultNFTSendPresenter(
                 val context = confirmationWireframeSendNFTContext() ?: return
                 wireframe.navigate(ConfirmSendNFT(context))
             }
-            is NFTSendPresenterEvent.Dismiss -> wireframe.navigate(Dismiss)
+            is NFTSendPresenterEvent.Back -> wireframe.navigate(Back)
         }
     }
 

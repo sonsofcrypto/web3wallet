@@ -9,7 +9,7 @@ data class NFTDetailWireframeContext(
 
 sealed class NFTDetailWireframeDestination {
     data class Send(val nft: NFTItem): NFTDetailWireframeDestination()
-    object Dismiss: NFTDetailWireframeDestination()
+    object Back: NFTDetailWireframeDestination()
 }
 
 interface NFTDetailWireframe {

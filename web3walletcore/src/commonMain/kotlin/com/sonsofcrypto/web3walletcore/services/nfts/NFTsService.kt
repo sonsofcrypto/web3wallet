@@ -75,6 +75,7 @@ class OpenSeaNFTsService(
             return emptyList()
         }
         return try {
+            println("[AAA] Fetching url -> https://api.opensea.io/api/v1/assets?format=json&owner=$address")
             val body = client.get {
                 headers {
                     append(HttpHeaders.Accept, "application/json")
@@ -88,6 +89,7 @@ class OpenSeaNFTsService(
                     parameters.append("owner", address)
                 }
             }.bodyAsText()
+            println("[AAA] NFTs fetched -> $body")
             val assets = jsonDecode<AssetList>(body)?.assets ?: emptyList()
             storeNFTs(updateMemPoolStatus(nftItemsFrom(assets)))
             storeCollections(nftCollections(assets))

@@ -13,7 +13,7 @@ sealed class NFTSendWireframeDestination {
     object UnderConstructionAlert: NFTSendWireframeDestination()
     data class QRCodeScan(val onCompletion: (String) -> Unit): NFTSendWireframeDestination()
     data class ConfirmSendNFT(val context: SendNFT): NFTSendWireframeDestination()
-    object Dismiss: NFTSendWireframeDestination()
+    object Back: NFTSendWireframeDestination()
 }
 
 interface NFTSendWireframe {

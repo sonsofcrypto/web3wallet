@@ -3,8 +3,8 @@ package com.sonsofcrypto.web3wallet.android.modules.compose.nftsdashboard
 import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.utils.WeakRef
-import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
+import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftdetail.NFTDetailWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftscollection.DefaultNFTsCollectionWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeContext
@@ -23,22 +23,16 @@ class DefaultNFTsDashboardWireframe(
     private val nftDetailWireframeFactory: NFTDetailWireframeFactory
 ): NFTsDashboardWireframe {
 
-    private lateinit var fragment: WeakRef<Fragment>
-
     override fun present() {
         val fragment = wireUp()
-        this.fragment = WeakRef(fragment)
-        parent?.get()?.childFragmentManager?.beginTransaction()?.apply {
-            add(R.id.container, fragment)
-            commitNow()
-        }
+        parent?.navigationFragment?.push(fragment)
     }
 
     override fun navigate(destination: NFTsDashboardWireframeDestination) {
         when (destination) {
             is NFTsDashboardWireframeDestination.ViewCollectionNFTs -> {
                 nftsCollectionWireframeFactory.make(
-                    fragment.get(),
+                    parent?.get(),
                     NFTsCollectionWireframeContext(destination.collectionId)
                 ).present()
             }
@@ -46,10 +40,7 @@ class DefaultNFTsDashboardWireframe(
                 val context = NFTDetailWireframeContext(
                     destination.nftItem.identifier, destination.nftItem.collectionIdentifier
                 )
-                nftDetailWireframeFactory.make(
-                    fragment.get(),
-                    context
-                ).present()
+                nftDetailWireframeFactory.make(parent?.get(), context).present()
             }
             is NFTsDashboardWireframeDestination.SendError -> {
 

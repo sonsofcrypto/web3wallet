@@ -24,10 +24,19 @@ import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3wallet.android.common.firstLetterCapital
 import com.sonsofcrypto.web3wallet.android.common.theme
-import com.sonsofcrypto.web3wallet.android.common.ui.*
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WButtonPrimary
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WCardWithTitle
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WImage
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WNavigationBack
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WNavigationBar
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WScreen
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WSpacerHorizontal
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WSpacerVertical
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WText
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailPresenter
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailPresenterEvent.Back
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailView
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailViewModel
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
@@ -59,7 +68,12 @@ class NFTDetailFragment: Fragment(), NFTDetailView {
     @Composable
     private fun NFTDetailScreen(viewModel: NFTDetailViewModel) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = viewModel.nft.name) },
+            navBar = {
+                W3WNavigationBar(
+                    title = viewModel.nft.name,
+                    leadingIcon = { W3WNavigationBack { presenter.handle(Back) }},
+                )
+             },
             content = { NFTDetailContent(viewModel) }
         )
     }

@@ -25,8 +25,10 @@ import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.common.viewModels.NetworkAddressPickerViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.NetworkFeeViewModel
 import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailPresenterEvent
 import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendPresenter
 import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendPresenterEvent.Back
 import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendView
 import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendViewModel
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
@@ -68,7 +70,12 @@ class NFTSendFragment: Fragment(), NFTSendView {
         dialogNetworkFees: DialogNetworkFee?,
     ) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = viewModel.title) },
+            navBar = {
+                W3WNavigationBar(
+                    title = viewModel.title,
+                    leadingIcon = { W3WNavigationBack { presenter.handle(Back) }},
+                )
+            },
             content = { NFTSendContent(viewModel, dialogNetworkFees) }
         )
     }

@@ -1,12 +1,12 @@
 package com.sonsofcrypto.web3walletcore.modules.nftDetail
 
 import com.sonsofcrypto.web3lib.utils.WeakRef
-import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeDestination.Dismiss
+import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeDestination.Back
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeDestination.Send
 
 sealed class NFTDetailPresenterEvent {
     object Send: NFTDetailPresenterEvent()
-    object Dismiss: NFTDetailPresenterEvent()
+    object Back: NFTDetailPresenterEvent()
 }
 
 interface NFTDetailPresenter {
@@ -28,7 +28,7 @@ class DefaultNFTDetailPresenter(
     override fun handle(event: NFTDetailPresenterEvent) {
         when(event) {
             is NFTDetailPresenterEvent.Send -> wireframe.navigate(Send(nft))
-            is NFTDetailPresenterEvent.Dismiss -> wireframe.navigate(Dismiss)
+            is NFTDetailPresenterEvent.Back -> wireframe.navigate(Back)
         }
     }
 

@@ -10,6 +10,8 @@ import com.sonsofcrypto.web3wallet.android.modules.compose.confirmation.Confirma
 import com.sonsofcrypto.web3wallet.android.modules.compose.nftsend.NFTSendWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.confirmation.ConfirmationWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.*
+import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeDestination.Back
+import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeDestination.Send
 import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeContext
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
 
@@ -28,7 +30,7 @@ class DefaultNFTDetailWireframe(
 
     override fun navigate(destination: NFTDetailWireframeDestination) {
         when (destination) {
-            is NFTDetailWireframeDestination.Send -> {
+            is Send -> {
                 val network = networksService.network ?: return
                 val context = NFTSendWireframeContext(
                     network = network,
@@ -39,9 +41,7 @@ class DefaultNFTDetailWireframe(
                     context = context
                 ).present()
             }
-            is NFTDetailWireframeDestination.Dismiss -> {
-                println("[AA] DefaultNFTDetailWireframe.navigate($destination)")
-            }
+            is Back -> { parent?.navigationFragment?.popOrDismiss() }
         }
     }
 

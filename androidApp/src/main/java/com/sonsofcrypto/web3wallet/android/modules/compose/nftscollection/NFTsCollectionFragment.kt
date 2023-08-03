@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,9 +20,15 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.sonsofcrypto.web3wallet.android.common.theme
-import com.sonsofcrypto.web3wallet.android.common.ui.*
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WImage
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WNavigationBack
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WNavigationBar
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WScreen
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WSpacerHorizontal
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WSpacerVertical
 import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionPresenter
 import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionPresenterEvent.Back
 import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionView
 import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionViewModel
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
@@ -50,7 +60,12 @@ class NFTsCollectionFragment: Fragment(), NFTsCollectionView {
     @Composable
     fun NFTsCollectionScreen(viewModel: NFTsCollectionViewModel) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = viewModel.collection.title) },
+            navBar = {
+                W3WNavigationBar(
+                    title = viewModel.collection.title,
+                    leadingIcon = { W3WNavigationBack { presenter.handle(Back) }},
+                )
+            },
             content = { NFTsCollectionContent(viewModel = viewModel.nfts) }
         )
     }

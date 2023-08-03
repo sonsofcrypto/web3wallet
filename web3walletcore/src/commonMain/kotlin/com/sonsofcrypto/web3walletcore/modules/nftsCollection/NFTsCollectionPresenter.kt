@@ -1,13 +1,13 @@
 package com.sonsofcrypto.web3walletcore.modules.nftsCollection
 
 import com.sonsofcrypto.web3lib.utils.WeakRef
-import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionWireframeDestination.Dismiss
+import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionWireframeDestination.Back
 import com.sonsofcrypto.web3walletcore.modules.nftsCollection.NFTsCollectionWireframeDestination.NFTDetail
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTCollection
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
 
 sealed class NFTsCollectionPresenterEvent {
-    object Dismiss: NFTsCollectionPresenterEvent()
+    object Back: NFTsCollectionPresenterEvent()
     data class NFTDetail(val idx: Int): NFTsCollectionPresenterEvent()
 }
 
@@ -33,7 +33,7 @@ class DefaultNFTsCollectionPresenter(
             is NFTsCollectionPresenterEvent.NFTDetail -> {
                 wireframe.navigate(NFTDetail(nfts[event.idx].identifier))
             }
-            is NFTsCollectionPresenterEvent.Dismiss -> wireframe.navigate(Dismiss)
+            is NFTsCollectionPresenterEvent.Back -> wireframe.navigate(Back)
         }
     }
 

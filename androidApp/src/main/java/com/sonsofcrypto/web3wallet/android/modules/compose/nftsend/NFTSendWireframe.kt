@@ -7,9 +7,14 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.compose.confirmation.ConfirmationWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.qrcodescan.QRCodeScanWireframeFactory
-import com.sonsofcrypto.web3walletcore.modules.nftSend.*
+import com.sonsofcrypto.web3walletcore.modules.nftSend.DefaultNFTSendInteractor
+import com.sonsofcrypto.web3walletcore.modules.nftSend.DefaultNFTSendPresenter
+import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframe
+import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeContext
+import com.sonsofcrypto.web3walletcore.modules.nftSend.NFTSendWireframeDestination
 import com.sonsofcrypto.web3walletcore.modules.qrCodeScan.QRCodeScanWireframeContext
 
 class DefaultNFTSendWireframe(
@@ -48,8 +53,8 @@ class DefaultNFTSendWireframe(
                     context = destination.context
                 ).present()
             }
-            is NFTSendWireframeDestination.Dismiss -> {
-                println("[AA] Implement -> navigateTo $destination")
+            is NFTSendWireframeDestination.Back -> {
+                parent?.navigationFragment?.popOrDismiss()
             }
         }
     }

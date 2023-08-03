@@ -6,7 +6,7 @@ data class NFTsCollectionWireframeContext(
 
 sealed class NFTsCollectionWireframeDestination {
     data class NFTDetail(val identifier: String): NFTsCollectionWireframeDestination()
-    object Dismiss: NFTsCollectionWireframeDestination()
+    object Back: NFTsCollectionWireframeDestination()
 }
 
 interface NFTsCollectionWireframe {

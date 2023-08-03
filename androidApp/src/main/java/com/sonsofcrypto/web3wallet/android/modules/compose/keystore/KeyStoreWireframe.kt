@@ -11,6 +11,7 @@ import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicimport.Mnemon
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicnew.MnemonicNewWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicupdate.MnemonicUpdateWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.degen.DegenWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.nftsdashboard.NFTsDashboardWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.keyStore.DefaultKeyStoreInteractor
 import com.sonsofcrypto.web3walletcore.modules.keyStore.DefaultKeyStorePresenter
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreWireframe
@@ -65,8 +66,12 @@ class DefaultKeyStoreWireframe(
 //                    DashboardWireframeFactory::class.name
 //                )
 //                factory.make(fragment?.get()).present()
-                val factory: DegenWireframeFactory = assembler.resolve(
-                    DegenWireframeFactory::class.name
+//                val factory: DegenWireframeFactory = assembler.resolve(
+//                    DegenWireframeFactory::class.name
+//                )
+//                factory.make(fragment?.get()).present()
+                val factory: NFTsDashboardWireframeFactory = assembler.resolve(
+                    NFTsDashboardWireframeFactory::class.name
                 )
                 factory.make(fragment?.get()).present()
             }
