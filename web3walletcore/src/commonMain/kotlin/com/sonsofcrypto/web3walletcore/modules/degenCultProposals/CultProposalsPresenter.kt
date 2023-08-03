@@ -22,6 +22,7 @@ sealed class CultProposalsPresenterEvent {
     data class SelectProposal(val idx: Int): CultProposalsPresenterEvent()
     data class ApproveProposal(val idx: Int): CultProposalsPresenterEvent()
     data class RejectProposal(val idx: Int): CultProposalsPresenterEvent()
+    object Dismiss: CultProposalsPresenterEvent()
 }
 
 interface CultProposalsPresenter {
@@ -74,6 +75,7 @@ class DefaultCultProposalsPresenter(
         }
         is CultProposalsPresenterEvent.ApproveProposal -> castVote(event.idx, true)
         is CultProposalsPresenterEvent.RejectProposal -> castVote(event.idx, false)
+        is CultProposalsPresenterEvent.Dismiss -> wireframe.navigate(Dismiss)
     }
 
     private fun updateView() { view.get()?.update(viewModel()) }

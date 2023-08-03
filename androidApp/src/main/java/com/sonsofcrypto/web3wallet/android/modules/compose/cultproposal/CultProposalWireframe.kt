@@ -22,8 +22,11 @@ class DefaultCultProposalWireframe(
 
     override fun navigate(destination: CultProposalWireframeDestination) {
         when (destination) {
-            is CultProposalWireframeDestination.Dismiss -> {
+            is CultProposalWireframeDestination.Back -> {
                 parent?.navigationFragment?.popOrDismiss()
+            }
+            is CultProposalWireframeDestination.Dismiss -> {
+                parent?.navigationFragment?.dismiss()
             }
         }
     }

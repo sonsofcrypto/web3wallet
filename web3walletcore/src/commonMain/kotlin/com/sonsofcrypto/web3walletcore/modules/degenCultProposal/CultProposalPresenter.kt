@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3walletcore.modules.degenCultProposal
 
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalPresenterEvent.Back
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalPresenterEvent.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalViewModel.ProposalDetails.*
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalViewModel.ProposalDetails.DocumentsInfo.Document
@@ -14,6 +15,7 @@ import com.sonsofcrypto.web3walletcore.services.cult.CultProposal
 import com.sonsofcrypto.web3walletcore.services.cult.CultProposal.ProjectDocuments
 
 sealed class CultProposalPresenterEvent {
+    object Back: CultProposalPresenterEvent()
     object Dismiss: CultProposalPresenterEvent()
 }
 
@@ -33,6 +35,7 @@ class DefaultCultProposalPresenter(
 
     override fun handle(event: CultProposalPresenterEvent) {
         when (event) {
+            is Back -> wireframe.navigate(CultProposalWireframeDestination.Back)
             is Dismiss -> wireframe.navigate(CultProposalWireframeDestination.Dismiss)
         }
     }

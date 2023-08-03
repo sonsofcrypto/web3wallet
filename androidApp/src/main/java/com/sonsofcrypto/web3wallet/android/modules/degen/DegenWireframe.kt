@@ -8,9 +8,11 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
+import com.sonsofcrypto.web3wallet.android.modules.compose.alert.AlertWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyswap.CurrencySwapWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.improvementproposals.ImprovementProposalsWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.cultproposals.CultProposalsWireframeFactory
+import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.degen.DefaultDegenInteractor
 import com.sonsofcrypto.web3walletcore.modules.degen.DefaultDegenPresenter
@@ -23,7 +25,9 @@ class DefaultDegenNewWireframe(
     private val parent: WeakRef<Fragment>?,
     private val degenService: DegenService,
     private val networksService: NetworksService,
+    private val currencySwapWireframeFactory: CurrencySwapWireframeFactory,
     private val cultProposalsWireframeFactory: CultProposalsWireframeFactory,
+    private val alertWireframeFactory: AlertWireframeFactory,
 ): DegenWireframe {
 
     private lateinit var fragment: WeakRef<Fragment>
@@ -41,24 +45,19 @@ class DefaultDegenNewWireframe(
     override fun navigate(destination: DegenWireframeDestination) {
         when (destination) {
             is DegenWireframeDestination.Swap -> {
-                println("Present SWAP!")
-                val factory: CurrencySwapWireframeFactory = assembler.resolve(
-                    CurrencySwapWireframeFactory::class.name
-                )
                 val context = CurrencySwapWireframeContext(
                     Network.ethereum(), Currency.ethereum(), Currency.usdt()
                 )
-                factory.make(fragment.get(), context).present()
-//                val factory: ImprovementProposalsWireframeFactory = assembler.resolve(
-//                    ImprovementProposalsWireframeFactory::class.name
-//                )
-//                factory.make(fragment.get()).present()
+                currencySwapWireframeFactory.make(parent?.get(), context).present()
             }
             is DegenWireframeDestination.Cult -> {
                 cultProposalsWireframeFactory.make(fragment.get()).present()
             }
             is DegenWireframeDestination.ComingSoon -> {
-                println("Present coming soon!")
+                alertWireframeFactory.make(
+                    parent?.get(),
+                    AlertWireframeContext.underConstructionAlert()
+                ).present()
             }
         }
     }

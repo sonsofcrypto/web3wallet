@@ -29,12 +29,16 @@ import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalPresenter
+import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalPresenterEvent.Back
+import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalPresenterEvent.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalView
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalViewModel
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalViewModel.ProposalDetails.DocumentsInfo.Document.Item.Link
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalViewModel.ProposalDetails.DocumentsInfo.Document.Item.Note
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalViewModel.ProposalDetails.Status.CLOSED
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposal.CultProposalViewModel.ProposalDetails.Status.PENDING
+import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsPresenterEvent
 
 class CultProposalFragment: Fragment(), CultProposalView {
 
@@ -63,7 +67,13 @@ class CultProposalFragment: Fragment(), CultProposalView {
     @Composable
     private fun CultProposalScreen(viewModel: CultProposalViewModel.ProposalDetails) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = viewModel.name) },
+            navBar = {
+                W3WNavigationBar(
+                    title = viewModel.name,
+                    leadingIcon = { W3WNavigationClose { presenter.handle(Back) }},
+                    trailingIcon = { W3WNavigationClose { presenter.handle(Dismiss) }},
+                )
+            },
             content = { CultProposalContent(viewModel) }
         )
     }

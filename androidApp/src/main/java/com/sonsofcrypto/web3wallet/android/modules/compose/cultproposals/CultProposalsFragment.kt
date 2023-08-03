@@ -28,6 +28,7 @@ import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsPresenter
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsPresenterEvent.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsPresenterEvent.SelectProposal
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsView
 import com.sonsofcrypto.web3walletcore.modules.degenCultProposals.CultProposalsViewModel
@@ -63,7 +64,12 @@ class CultProposalsFragment : Fragment(), CultProposalsView {
     @Composable
     private fun CultProposalsScreen(viewModel: CultProposalsViewModel) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = Localized("cult.proposals.title")) },
+            navBar = {
+                W3WNavigationBar(
+                    title = Localized("cult.proposals.title"),
+                    trailingIcon = { W3WNavigationClose { presenter.handle(Dismiss) }},
+                )
+             },
             content = { CultProposalsContent(viewModel) }
         )
     }

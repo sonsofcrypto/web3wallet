@@ -7,10 +7,10 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.R
 import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
-import com.sonsofcrypto.web3wallet.android.modules.compose.dashboard.DashboardWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicimport.MnemonicImportWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicnew.MnemonicNewWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicupdate.MnemonicUpdateWireframeFactory
+import com.sonsofcrypto.web3wallet.android.modules.compose.degen.DegenWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.keyStore.DefaultKeyStoreInteractor
 import com.sonsofcrypto.web3walletcore.modules.keyStore.DefaultKeyStorePresenter
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreWireframe
@@ -61,8 +61,12 @@ class DefaultKeyStoreWireframe(
                 mnemonicUpdateWireframeFactory.make(fragment?.get(), context).present()
             }
             is KeyStoreWireframeDestination.Networks -> {
-                val factory: DashboardWireframeFactory = assembler.resolve(
-                    DashboardWireframeFactory::class.name
+//                val factory: DashboardWireframeFactory = assembler.resolve(
+//                    DashboardWireframeFactory::class.name
+//                )
+//                factory.make(fragment?.get()).present()
+                val factory: DegenWireframeFactory = assembler.resolve(
+                    DegenWireframeFactory::class.name
                 )
                 factory.make(fragment?.get()).present()
             }

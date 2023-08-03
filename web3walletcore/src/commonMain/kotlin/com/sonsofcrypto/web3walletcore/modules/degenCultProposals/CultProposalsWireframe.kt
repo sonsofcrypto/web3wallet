@@ -12,6 +12,8 @@ sealed class CultProposalsWireframeDestination {
         ): CultProposalsWireframeDestination()
     data class Alert(val context: AlertWireframeContext): CultProposalsWireframeDestination()
     object GetCult: CultProposalsWireframeDestination()
+
+    object Dismiss: CultProposalsWireframeDestination()
 }
 
 interface CultProposalsWireframe {

@@ -8,6 +8,7 @@ data class CultProposalWireframeContext(
 )
 
 sealed class CultProposalWireframeDestination {
+    object Back: CultProposalWireframeDestination()
     object Dismiss: CultProposalWireframeDestination()
 }
 

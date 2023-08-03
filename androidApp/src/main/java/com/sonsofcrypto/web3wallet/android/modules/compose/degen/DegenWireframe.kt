@@ -5,25 +5,18 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
-import com.sonsofcrypto.web3wallet.android.R
-import com.sonsofcrypto.web3wallet.android.assembler
 import com.sonsofcrypto.web3wallet.android.common.NavigationFragment
-import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
+import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.compose.alert.AlertWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.cultproposals.CultProposalsWireframeFactory
-import com.sonsofcrypto.web3wallet.android.modules.compose.currencysend.CurrencySendWireframeFactory
 import com.sonsofcrypto.web3wallet.android.modules.compose.currencyswap.CurrencySwapWireframeFactory
-import com.sonsofcrypto.web3wallet.android.modules.compose.networks.NetworksWireframeFactory
 import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframeContext
-import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext
-import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.degen.DefaultDegenInteractor
 import com.sonsofcrypto.web3walletcore.modules.degen.DefaultDegenPresenter
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenWireframe
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenWireframeDestination
 import com.sonsofcrypto.web3walletcore.services.degen.DegenService
-import smartadapter.internal.extension.name
 
 class DefaultDegenWireframe(
     private val parent: WeakRef<Fragment>?,
@@ -34,16 +27,9 @@ class DefaultDegenWireframe(
     private val alertWireframeFactory: AlertWireframeFactory
 ): DegenWireframe {
 
-    private lateinit var fragment: WeakRef<Fragment>
-
     override fun present() {
         val fragment = wireUp()
-        this.fragment = WeakRef(fragment)
-        // NOTE: Refactor this once we setup with tabBar
-        parent?.get()?.childFragmentManager?.beginTransaction()?.apply {
-            add(R.id.container, fragment)
-            commitNow()
-        }
+        parent?.navigationFragment?.push(fragment)
     }
 
     override fun navigate(destination: DegenWireframeDestination) {
@@ -52,14 +38,14 @@ class DefaultDegenWireframe(
                 val context = CurrencySwapWireframeContext(
                     Network.ethereum(), Currency.ethereum(), Currency.usdt()
                 )
-                currencySwapWireframeFactory.make(fragment.get(), context).present()
+                currencySwapWireframeFactory.make(parent?.get(), context).present()
             }
             is DegenWireframeDestination.Cult -> {
-                cultProposalsWireframeFactory.make(fragment.get()).present()
+                cultProposalsWireframeFactory.make(parent?.get()).present()
             }
             is DegenWireframeDestination.ComingSoon -> {
                 val context = AlertWireframeContext.underConstructionAlert()
-                alertWireframeFactory.make(fragment.get(), context).present()
+                alertWireframeFactory.make(parent?.get(), context).present()
             }
         }
     }

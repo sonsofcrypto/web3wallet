@@ -30,7 +30,7 @@ class DefaultCultProposalsWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.navigationFragment?.push(fragment, animated = true)
+        parent?.navigationFragment?.present(fragment, animated = true)
     }
 
     override fun navigate(destination: CultProposalsWireframeDestination) {
@@ -51,6 +51,9 @@ class DefaultCultProposalsWireframe(
                     )
                 )
                 confirmationWireframeFactory.make(parent?.get(), context).present()
+            }
+            is CultProposalsWireframeDestination.Dismiss -> {
+                parent?.navigationFragment?.popOrDismiss()
             }
             else -> { println("handle event $destination")}
         }

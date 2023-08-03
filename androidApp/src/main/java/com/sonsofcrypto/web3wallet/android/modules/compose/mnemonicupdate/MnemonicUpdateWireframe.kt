@@ -3,10 +3,13 @@ package com.sonsofcrypto.web3wallet.android.modules.compose.mnemonicupdate
 import androidx.fragment.app.Fragment
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.utils.WeakRef
-import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
 import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
 import com.sonsofcrypto.web3wallet.android.modules.compose.alert.AlertWireframeFactory
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.*
+import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.DefaultMnemonicUpdateInteractor
+import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.DefaultMnemonicUpdatePresenter
+import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframe
+import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeContext
+import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination
 
 class DefaultMnemonicUpdateWireframe(
     private val parent: WeakRef<Fragment>?,

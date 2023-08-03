@@ -77,11 +77,11 @@ private class AssemblerBootstrapper: Bootstrapper {
                 EtherScanServiceAssembler(),
                 // Modules
                 RootWireframeFactoryAssembler(),
-                DegenWireframeFactoryAssembler(),
                 // Compose
                 KeyStoreWireframeFactoryAssembler(),
                 NetworksWireframeFactoryAssembler(),
                 DashboardWireframeFactoryAssembler(),
+                DegenWireframeFactoryAssembler(),
                 AccountWireframeFactoryAssembler(),
                 MnemonicNewWireframeFactoryAssembler(),
                 MnemonicImportWireframeFactoryAssembler(),
