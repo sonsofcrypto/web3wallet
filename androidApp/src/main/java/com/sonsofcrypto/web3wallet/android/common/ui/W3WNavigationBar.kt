@@ -52,6 +52,16 @@ fun W3WNavigationBar(
 }
 
 @Composable
+fun W3WNavigationBack(
+    onClick: (() -> Unit)
+) {
+    W3WNavigationIcon(
+        id = R.drawable.icon_arrow_back_24,
+        onClick = onClick,
+    )
+}
+
+@Composable
 fun W3WNavigationClose(
     onClick: (() -> Unit)
 ) {

@@ -34,10 +34,12 @@ import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.*
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapPresenterEvent.CurrencyFromChanged
+import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapPresenterEvent.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapViewModel.ApproveState
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapViewModel.ButtonState
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent
 
-class CurrencySwapFragment: Fragment(), CurrencySwapView {
+class CurrencySwapFragment : Fragment(), CurrencySwapView {
 
     lateinit var presenter: CurrencySwapPresenter
 
@@ -74,7 +76,12 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
         dialogNetworkFees: DialogNetworkFee?,
     ) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = viewModel.title) },
+            navBar = {
+                W3WNavigationBar(
+                    title = viewModel.title,
+                    trailingIcon = { W3WNavigationClose { presenter.handle(Dismiss) } }
+                )
+            },
             content = { CurrencySwapContent(viewModel, dialogNetworkFees) }
         )
     }
@@ -239,6 +246,7 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
             )
         }
     }
+
     @Composable
     private fun SwapSlippageRow(
         viewModel: CurrencySwapSlippageViewModel,
@@ -279,6 +287,7 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                     }
                 )
             }
+
             ApproveState.APPROVING -> {
                 W3WButtonPrimary(
                     title = Localized("currencySwap.cell.button.state.approving"),
@@ -288,6 +297,7 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                     }
                 )
             }
+
             ApproveState.APPROVED -> {}
         }
     }
@@ -303,6 +313,7 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                     isLoading = true,
                 )
             }
+
             is ButtonState.Invalid -> {
                 W3WButtonPrimary(
                     title = buttonState.text,
@@ -310,6 +321,7 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                     isEnabled = false,
                 )
             }
+
             is ButtonState.Swap -> {
                 W3WButtonPrimary(
                     title = Localized("currencySwap.cell.button.state.swap"),
@@ -320,6 +332,7 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
                     }
                 )
             }
+
             is ButtonState.SwapAnyway -> {
                 W3WButtonPrimary(
                     title = buttonState.text,
@@ -346,10 +359,16 @@ class CurrencySwapFragment: Fragment(), CurrencySwapView {
     }
 }
 
-private val CurrencySwapViewModel.data: CurrencySwapViewModel.SwapData? get() {
-    val item = items.firstOrNull() ?: return null
-    return when (item) {
-        is CurrencySwapViewModel.Item.Swap -> { item.swap }
-        else -> { null }
+private val CurrencySwapViewModel.data: CurrencySwapViewModel.SwapData?
+    get() {
+        val item = items.firstOrNull() ?: return null
+        return when (item) {
+            is CurrencySwapViewModel.Item.Swap -> {
+                item.swap
+            }
+
+            else -> {
+                null
+            }
+        }
     }
-}

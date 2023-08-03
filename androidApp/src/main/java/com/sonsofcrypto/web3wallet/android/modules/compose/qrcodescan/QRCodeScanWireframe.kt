@@ -18,8 +18,7 @@ class DefaultQRCodeScanWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.navigationFragment?.push(fragment, animated = true)
-        println("[AA] Pushing DefaultQRCodeScanWireframe")
+        parent?.navigationFragment?.present(fragment, animated = true)
     }
 
     override fun navigate(destination: QRCodeScanWireframeDestination) {
@@ -28,7 +27,7 @@ class DefaultQRCodeScanWireframe(
                 context.handler(destination.value)
             }
             is QRCodeScanWireframeDestination.Dismiss -> {
-                println("[AA] Implement -> navigateTo $destination")
+                parent?.navigationFragment?.popOrDismiss()
             }
         }
     }

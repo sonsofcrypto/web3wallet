@@ -27,7 +27,7 @@ class DefaultSettingsWireframe(
                 parent?.navigationFragment?.push(fragment, animated = true)
             }
             is SettingsWireframeDestination.Dismiss -> {
-                parent?.navigationFragment?.dismiss()
+                parent?.navigationFragment?.popOrDismiss()
             }
         }
     }

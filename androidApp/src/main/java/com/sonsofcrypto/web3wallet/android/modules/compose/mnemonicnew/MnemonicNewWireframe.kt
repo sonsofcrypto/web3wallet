@@ -26,7 +26,7 @@ class DefaultMnemonicNewWireframe(
     override fun navigate(destination: MnemonicNewWireframeDestination) {
         when (destination) {
             is MnemonicNewWireframeDestination.Dismiss -> {
-                parent?.navigationFragment?.dismiss()
+                parent?.navigationFragment?.popOrDismiss()
             }
             is MnemonicNewWireframeDestination.LearnMoreSalt -> {
                 App.openUrl("https://www.youtube.com/watch?v=XqB5xA62gLw")

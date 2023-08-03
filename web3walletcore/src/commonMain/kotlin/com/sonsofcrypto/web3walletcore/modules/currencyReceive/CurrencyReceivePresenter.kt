@@ -2,9 +2,11 @@ package com.sonsofcrypto.web3walletcore.modules.currencyReceive
 
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceiveWireframeDestination.Back
 import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceiveWireframeDestination.Dismiss
 
 sealed class CurrencyReceivePresenterEvent {
+    object Back: CurrencyReceivePresenterEvent()
     object Dismiss: CurrencyReceivePresenterEvent()
 }
 
@@ -26,6 +28,7 @@ class DefaultCurrencyReceivePresenter(
 
     override fun handle(event: CurrencyReceivePresenterEvent) {
         when (event) {
+            is CurrencyReceivePresenterEvent.Back -> wireframe.navigate(Back)
             is CurrencyReceivePresenterEvent.Dismiss -> wireframe.navigate(Dismiss)
         }
     }

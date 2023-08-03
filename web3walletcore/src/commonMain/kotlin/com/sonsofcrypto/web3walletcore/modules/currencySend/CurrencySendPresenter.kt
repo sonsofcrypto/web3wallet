@@ -23,6 +23,7 @@ sealed class CurrencySendPresenterEvent {
     object NetworkFeeTapped: CurrencySendPresenterEvent()
     data class NetworkFeeChanged(val value: NetworkFee): CurrencySendPresenterEvent()
     object Review: CurrencySendPresenterEvent()
+    object Back: CurrencySendPresenterEvent()
     object Dismiss: CurrencySendPresenterEvent()
 }
 
@@ -90,6 +91,7 @@ class DefaultCurrencySendPresenter(
                 val context = confirmationWireframeSendContext() ?: return
                 wireframe.navigate(ConfirmSend(context))
             }
+            is CurrencySendPresenterEvent.Back -> wireframe.navigate(Back)
             is CurrencySendPresenterEvent.Dismiss -> wireframe.navigate(Dismiss)
         }
     }

@@ -23,12 +23,14 @@ import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenter
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.DidSelectCta
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.DidSelectDismiss
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.MnemonicChanged
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportView
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportViewModel
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportViewModel.Section.Mnemonic
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent
 
-class MnemonicImportFragment: Fragment(), MnemonicImportView {
+class MnemonicImportFragment : Fragment(), MnemonicImportView {
 
     lateinit var presenter: MnemonicImportPresenter
     private val liveData = MutableLiveData<MnemonicImportViewModel>()
@@ -39,22 +41,27 @@ class MnemonicImportFragment: Fragment(), MnemonicImportView {
         savedInstanceState: Bundle?
     ): View {
         presenter.present()
-        return ComposeView(requireContext()).apply { 
-            setContent { 
+        return ComposeView(requireContext()).apply {
+            setContent {
                 val viewModel by liveData.observeAsState()
                 viewModel?.let { MnemonicImportScreen(it) }
             }
         }
     }
-    
+
     override fun update(viewModel: MnemonicImportViewModel) {
         liveData.value = viewModel
     }
-    
+
     @Composable
     private fun MnemonicImportScreen(viewModel: MnemonicImportViewModel) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = Localized("mnemonic.title.import")) },
+            navBar = {
+                W3WNavigationBar(
+                    title = Localized("mnemonic.title.import"),
+                    trailingIcon = { W3WNavigationClose { presenter.handle(DidSelectDismiss) } }
+                )
+            },
             content = { MnemonicImportContent(viewModel) }
         )
     }
@@ -101,6 +108,7 @@ class MnemonicImportFragment: Fragment(), MnemonicImportView {
                 is MnemonicImportViewModel.Section.Item.Mnemonic -> {
                     MnemonicImportMnemonic(item.mnemonic)
                 }
+
                 is MnemonicImportViewModel.Section.Item.TextInput -> {
                     W3WMnemonicTextInput(
                         title = item.viewModel.title,
@@ -110,13 +118,16 @@ class MnemonicImportFragment: Fragment(), MnemonicImportView {
                             viewModel.items.indexOf(item),
                             viewModel.items.count()
                         ).padding(start = theme().shapes.padding),
-                        onValueChange = { value -> presenter.handle(
-                            MnemonicImportPresenterEvent.DidChangeName(
-                                value
+                        onValueChange = { value ->
+                            presenter.handle(
+                                MnemonicImportPresenterEvent.DidChangeName(
+                                    value
+                                )
                             )
-                        ) }
+                        }
                     )
                 }
+
                 is MnemonicImportViewModel.Section.Item.Switch -> {
                     W3WMnemonicSwitch(
                         title = item.viewModel.title,
@@ -125,13 +136,16 @@ class MnemonicImportFragment: Fragment(), MnemonicImportView {
                             viewModel.items.indexOf(item),
                             viewModel.items.count()
                         ).padding(theme().shapes.padding),
-                        onValueChange = { value -> presenter.handle(
-                            MnemonicImportPresenterEvent.DidChangeICouldBackup(
-                                value
+                        onValueChange = { value ->
+                            presenter.handle(
+                                MnemonicImportPresenterEvent.DidChangeICouldBackup(
+                                    value
+                                )
                             )
-                        )}
+                        }
                     )
                 }
+
                 is MnemonicImportViewModel.Section.Item.SwitchWithTextInput -> {}
                 is MnemonicImportViewModel.Section.Item.SegmentWithTextAndSwitchInput -> {
                     W3WMnemonicSegmentTexAndSwitch(
@@ -140,21 +154,27 @@ class MnemonicImportFragment: Fragment(), MnemonicImportView {
                             viewModel.items.indexOf(item),
                             viewModel.items.count()
                         ),
-                        onSegmentChange = { presenter.handle(
-                            MnemonicImportPresenterEvent.PassTypeDidChange(
-                                it
+                        onSegmentChange = {
+                            presenter.handle(
+                                MnemonicImportPresenterEvent.PassTypeDidChange(
+                                    it
+                                )
                             )
-                        ) },
-                        onPasswordChange = { presenter.handle(
-                            MnemonicImportPresenterEvent.PasswordDidChange(
-                                it
+                        },
+                        onPasswordChange = {
+                            presenter.handle(
+                                MnemonicImportPresenterEvent.PasswordDidChange(
+                                    it
+                                )
                             )
-                        ) },
-                        onAllowFaceIDChange = { presenter.handle(
-                            MnemonicImportPresenterEvent.AllowFaceIdDidChange(
-                                it
+                        },
+                        onAllowFaceIDChange = {
+                            presenter.handle(
+                                MnemonicImportPresenterEvent.AllowFaceIdDidChange(
+                                    it
+                                )
                             )
-                        ) }
+                        }
                     )
                 }
             }

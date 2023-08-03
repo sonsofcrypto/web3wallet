@@ -24,6 +24,7 @@ import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerPresenter
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerPresenterEvent.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerPresenterEvent.SelectCurrency
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerPresenterEvent.SelectFavouriteCurrency
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerView
@@ -32,6 +33,7 @@ import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerView
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerViewModel.Position.LAST
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerViewModel.Position.SINGLE
 import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerViewModel.Section
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent
 
 class CurrencyPickerFragment: Fragment(), CurrencyPickerView {
 
@@ -53,7 +55,6 @@ class CurrencyPickerFragment: Fragment(), CurrencyPickerView {
     }
 
     override fun update(viewModel: CurrencyPickerViewModel) {
-        println("[AA] -> viewModel -> ${viewModel.sections.size}")
         liveData.value = viewModel
     }
 
@@ -63,8 +64,8 @@ class CurrencyPickerFragment: Fragment(), CurrencyPickerView {
             navBar = {
                 W3WNavigationBar(
                     title = viewModel.title,
-                    leadingIcon = if (viewModel.showAddCustomCurrency) ({ AddCurrency() })
-                                  else null,
+                    leadingIcon = if (viewModel.showAddCustomCurrency) ({ AddCurrency() }) else null,
+                    trailingIcon = { W3WNavigationClose { presenter.handle(Dismiss) } },
                     content = { SearchBar() }
                 )
             },

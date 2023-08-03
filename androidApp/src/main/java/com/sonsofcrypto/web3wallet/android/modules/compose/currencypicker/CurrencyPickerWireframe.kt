@@ -20,7 +20,7 @@ class DefaultCurrencyPickerWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.navigationFragment?.push(fragment, animated = true)
+        parent?.navigationFragment?.present(fragment, animated = true)
     }
 
     override fun navigate(destination: CurrencyPickerWireframeDestination) {
@@ -30,7 +30,7 @@ class DefaultCurrencyPickerWireframe(
                 currencyAddWireframeFactory.make(parent?.get(), context).present()
             }
             is CurrencyPickerWireframeDestination.Dismiss -> {
-                parent?.navigationFragment?.dismiss()
+                parent?.navigationFragment?.popOrDismiss()
             }
         }
     }

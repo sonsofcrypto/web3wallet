@@ -26,7 +26,7 @@ class DefaultMnemonicUpdateWireframe(
                 alertWireframeFactory.make(parent?.get(), destination.context).present()
             }
             is MnemonicUpdateWireframeDestination.Dismiss -> {
-                parent?.navigationFragment?.dismiss()
+                parent?.navigationFragment?.popOrDismiss()
             }
             is MnemonicUpdateWireframeDestination.Authenticate -> {
                 // TODO: Implement authentication

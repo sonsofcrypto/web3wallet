@@ -29,7 +29,7 @@ class DefaultMnemonicConfirmationWireframe(
     override fun navigate(destination: MnemonicConfirmationWireframeDestination) {
         when (destination) {
             is MnemonicConfirmationWireframeDestination.Dismiss -> {
-                parent?.navigationFragment?.dismiss()
+                parent?.navigationFragment?.popOrDismiss()
             }
         }
     }

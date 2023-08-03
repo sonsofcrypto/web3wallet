@@ -27,7 +27,7 @@ class DefaultMnemonicImportWireframe(
     override fun navigate(destination: MnemonicImportWireframeDestination) {
         when (destination) {
             is MnemonicImportWireframeDestination.Dismiss -> {
-                parent?.navigationFragment?.dismiss()
+                parent?.navigationFragment?.popOrDismiss()
             }
             is MnemonicImportWireframeDestination.LearnMoreSalt -> {
                 App.openUrl("https://www.youtube.com/watch?v=XqB5xA62gLw")

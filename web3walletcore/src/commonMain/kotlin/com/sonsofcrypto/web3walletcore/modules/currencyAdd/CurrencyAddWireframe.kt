@@ -11,6 +11,7 @@ sealed class CurrencyAddWireframeDestination {
     /** Select network */
     data class NetworkPicker(val handler: (Network) -> Unit): CurrencyAddWireframeDestination()
     /** Dismiss module */
+    object Back: CurrencyAddWireframeDestination()
     object Dismiss: CurrencyAddWireframeDestination()
 }
 

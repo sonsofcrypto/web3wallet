@@ -31,8 +31,12 @@ import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.app.App
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceivePresenter
+import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceivePresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceivePresenterEvent.Back
+import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceivePresenterEvent.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceiveView
 import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceiveViewModel
+import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationPresenterEvent
 
 class CurrencyReceiveFragment: Fragment(), CurrencyReceiveView {
 
@@ -60,7 +64,13 @@ class CurrencyReceiveFragment: Fragment(), CurrencyReceiveView {
     @Composable
     private fun CurrencyReceiveScreen(viewModel: CurrencyReceiveViewModel) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = viewModel.title) },
+            navBar = {
+                W3WNavigationBar(
+                    title = viewModel.title,
+                    leadingIcon = { W3WNavigationBack { presenter.handle(Back) } },
+                    trailingIcon = { W3WNavigationClose { presenter.handle(Dismiss) } }
+                )
+             },
             content = { CurrencyReceiveContent(viewModel) }
         )
     }

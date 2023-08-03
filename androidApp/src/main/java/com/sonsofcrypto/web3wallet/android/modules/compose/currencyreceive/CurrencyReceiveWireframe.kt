@@ -6,6 +6,8 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3wallet.android.common.extensions.navigationFragment
 import com.sonsofcrypto.web3wallet.android.common.ui.navigationFragment
 import com.sonsofcrypto.web3walletcore.modules.currencyReceive.*
+import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceiveWireframeDestination.Back
+import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceiveWireframeDestination.Dismiss
 
 class DefaultCurrencyReceiveWireframe(
     private val parent: WeakRef<Fragment>?,
@@ -19,7 +21,10 @@ class DefaultCurrencyReceiveWireframe(
     }
 
     override fun navigate(destination: CurrencyReceiveWireframeDestination) {
-        println("Not yet implemented")
+        when (destination) {
+            Back -> { parent?.navigationFragment?.popOrDismiss() }
+            Dismiss -> { parent?.navigationFragment?.dismiss() }
+        }
     }
 
     private fun wireUp(): Fragment {

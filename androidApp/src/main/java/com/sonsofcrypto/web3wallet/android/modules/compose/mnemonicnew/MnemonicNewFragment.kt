@@ -17,7 +17,9 @@ import com.sonsofcrypto.web3wallet.android.common.extensions.half
 import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3walletcore.modules.confirmation.ConfirmationPresenterEvent
 import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenter
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent
 import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.*
 import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewView
 import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewViewModel
@@ -50,7 +52,12 @@ class MnemonicNewFragment: Fragment(), MnemonicNewView {
     @Composable
     private fun MnemonicNewScreen(viewModel: MnemonicNewViewModel) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = Localized("mnemonic.title.new")) },
+            navBar = {
+                W3WNavigationBar(
+                    title = Localized("mnemonic.title.new"),
+                    trailingIcon = { W3WNavigationClose { presenter.handle(DidSelectDismiss) } }
+                )
+             },
             content = { MnemonicNewContent(viewModel) }
         )
     }

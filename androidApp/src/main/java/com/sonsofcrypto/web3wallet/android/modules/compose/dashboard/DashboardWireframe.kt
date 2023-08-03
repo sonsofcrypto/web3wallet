@@ -25,7 +25,16 @@ import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapWirefram
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframe
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.EditCurrencies
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.ImprovementProposals
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.KeyStoreNetworkSettings
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.MnemonicConfirmation
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.NftItem
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.Receive
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.ScanQRCode
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.Send
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.Swap
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.ThemePicker
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.Wallet
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DefaultDashboardInteractor
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DefaultDashboardPresenter
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeContext
@@ -58,14 +67,14 @@ class DefaultDashboardWireframe(
 
     override fun navigate(destination: DashboardWireframeDestination) {
         when (destination) {
-            is DashboardWireframeDestination.Wallet -> {
+            is Wallet -> {
                 val context = AccountWireframeContext(destination.network, destination.currency)
                 accountWireframeFactory.make(parent?.get(), context).present()
             }
-            is DashboardWireframeDestination.KeyStoreNetworkSettings -> {
+            is KeyStoreNetworkSettings -> {
                 println("[AA] navigate to KeyStoreNetworkSettings")
             }
-            is DashboardWireframeDestination.ScanQRCode -> {
+            is ScanQRCode -> {
                 val network = networksService.network ?: return
                 val context = QRCodeScanWireframeContext(
                     type = QRCodeScanWireframeContext.Type.Network(network),
@@ -73,22 +82,22 @@ class DefaultDashboardWireframe(
                 )
                 qrCodeScanWireframeFactory.make(parent?.get(), context).present()
             }
-            is DashboardWireframeDestination.MnemonicConfirmation -> {
+            is MnemonicConfirmation -> {
                 mnemonicConfirmationWireframeFactory.make(parent?.get()).present()
             }
-            is DashboardWireframeDestination.ThemePicker -> {
+            is ThemePicker -> {
                 println("[AA] navigate to ThemePicker")
             }
-            is DashboardWireframeDestination.ImprovementProposals -> {
+            is ImprovementProposals -> {
                 improvementProposalsWireframeFactory.make(parent?.get()).present()
             }
-            is DashboardWireframeDestination.Receive -> {
+            is Receive -> {
                 navigateToReceive()
             }
             is Send -> {
                 navigateToSend(destination)
             }
-            is DashboardWireframeDestination.Swap -> {
+            is Swap -> {
                 val network = networksService.network ?: return
                 val context = CurrencySwapWireframeContext(network, null, null)
                 currencySwapWireframeFactory.make(parent?.get(), context).present()
@@ -96,7 +105,7 @@ class DefaultDashboardWireframe(
             is EditCurrencies -> {
                 navigateToEditCurrencies(destination)
             }
-            is DashboardWireframeDestination.NftItem -> {
+            is NftItem -> {
                 val context = NFTDetailWireframeContext(
                     destination.nft.identifier, destination.nft.collectionIdentifier
                 )

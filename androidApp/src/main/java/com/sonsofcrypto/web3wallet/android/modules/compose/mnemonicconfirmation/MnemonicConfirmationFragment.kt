@@ -19,10 +19,13 @@ import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationPresenter
+import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationPresenterEvent
 import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationPresenterEvent.Confirm
+import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationPresenterEvent.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationPresenterEvent.MnemonicChanged
 import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationView
 import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationViewModel
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent
 
 class MnemonicConfirmationFragment: Fragment(), MnemonicConfirmationView {
 
@@ -50,7 +53,12 @@ class MnemonicConfirmationFragment: Fragment(), MnemonicConfirmationView {
     @Composable
     private fun MnemonicConfirmationScreen(viewModel: MnemonicConfirmationViewModel) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = Localized("mnemonicConfirmation.title")) },
+            navBar = {
+                W3WNavigationBar(
+                    title = Localized("mnemonicConfirmation.title"),
+                    trailingIcon = { W3WNavigationClose { presenter.handle(Dismiss) } }
+                )
+             },
             content = { MnemonicConfirmationContent(viewModel) }
         )
     }

@@ -19,6 +19,7 @@ sealed class CurrencySendWireframeDestination {
     data class ConfirmSend(
         val context: ConfirmationWireframeContext.Send
         ): CurrencySendWireframeDestination()
+    object Back: CurrencySendWireframeDestination()
     object Dismiss: CurrencySendWireframeDestination()
 }
 

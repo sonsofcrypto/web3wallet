@@ -12,6 +12,7 @@ data class CurrencyReceiveWireframeContext(
 
 sealed class CurrencyReceiveWireframeDestination {
     /** Dismiss module */
+    object Back: CurrencyReceiveWireframeDestination()
     object Dismiss: CurrencyReceiveWireframeDestination()
 }
 

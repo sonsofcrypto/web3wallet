@@ -34,7 +34,7 @@ class DefaultNFTsCollectionWireframe(
                 ).present()
             }
             is NFTsCollectionWireframeDestination.Dismiss -> {
-                parent?.navigationFragment?.dismiss()
+                parent?.navigationFragment?.popOrDismiss()
             }
         }
     }

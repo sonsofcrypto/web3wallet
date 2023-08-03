@@ -23,9 +23,12 @@ import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddPresenter
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddPresenterEvent.Back
+import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddPresenterEvent.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddPresenterEvent.InputChanged
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddView
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent
 
 class CurrencyAddFragment: Fragment(), CurrencyAddView {
 
@@ -55,7 +58,13 @@ class CurrencyAddFragment: Fragment(), CurrencyAddView {
     @Composable
     private fun CurrencyAddScreen(viewModel: CurrencyAddViewModel) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = viewModel.title) },
+            navBar = {
+                W3WNavigationBar(
+                    title = viewModel.title,
+                    leadingIcon = { W3WNavigationBack { presenter.handle(Back) } },
+                    trailingIcon = { W3WNavigationClose { presenter.handle(Dismiss) } }
+                )
+            },
             content = { CurrencyAddContent(viewModel) }
         )
     }

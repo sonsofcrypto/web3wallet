@@ -6,6 +6,7 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel.*
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel.TextFieldType.*
+import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddWireframeDestination.Back
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddWireframeDestination.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddWireframeDestination.NetworkPicker
 
@@ -20,6 +21,7 @@ sealed class CurrencyAddPresenterEvent {
     data class InputChanged(val type: TextFieldType, val value: String): CurrencyAddPresenterEvent()
     data class ReturnKeyTapped(val type: TextFieldType): CurrencyAddPresenterEvent()
     object AddCurrency: CurrencyAddPresenterEvent()
+    object Back: CurrencyAddPresenterEvent()
     object Dismiss: CurrencyAddPresenterEvent()
 }
 
@@ -84,6 +86,7 @@ class DefaultCurrencyAddPresenter(
             }
             is CurrencyAddPresenterEvent.ReturnKeyTapped -> updateView(event.type)
             is CurrencyAddPresenterEvent.AddCurrency -> addCurrency()
+            is CurrencyAddPresenterEvent.Back -> wireframe.navigate(Back)
             is CurrencyAddPresenterEvent.Dismiss -> wireframe.navigate(Dismiss)
         }
     }

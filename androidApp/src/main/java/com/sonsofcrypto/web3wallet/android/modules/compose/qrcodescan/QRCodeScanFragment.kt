@@ -44,12 +44,14 @@ import com.sonsofcrypto.web3wallet.android.appContext
 import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent
 import com.sonsofcrypto.web3walletcore.modules.qrCodeScan.QRCodeScanPresenter
 import com.sonsofcrypto.web3walletcore.modules.qrCodeScan.QRCodeScanPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.qrCodeScan.QRCodeScanPresenterEvent.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.qrCodeScan.QRCodeScanView
 import com.sonsofcrypto.web3walletcore.modules.qrCodeScan.QRCodeScanViewModel
 
-class QRCodeScanFragment: Fragment(), QRCodeScanView {
+class QRCodeScanFragment : Fragment(), QRCodeScanView {
 
     lateinit var presenter: QRCodeScanPresenter
     private val liveData = MutableLiveData<QRCodeScanViewModel>()
@@ -75,11 +77,16 @@ class QRCodeScanFragment: Fragment(), QRCodeScanView {
     @Composable
     private fun QRCodeScanScreen(viewModel: QRCodeScanViewModel) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = viewModel.title) },
+            navBar = {
+                W3WNavigationBar(
+                    title = viewModel.title,
+                    trailingIcon = { W3WNavigationClose { presenter.handle(Dismiss) } }
+                )
+            },
             content = { QRCodeScanContent(viewModel) }
         )
     }
-    
+
     @OptIn(ExperimentalPermissionsApi::class)
     @Composable
     private fun QRCodeScanContent(viewModel: QRCodeScanViewModel) {
@@ -108,6 +115,7 @@ class QRCodeScanFragment: Fragment(), QRCodeScanView {
                         perm.status.isGranted -> {
                             QRCodeScanShowCameraInput()
                         }
+
                         perm.status.shouldShowRationale -> {
                             Column(
                                 modifier = Modifier.fillMaxSize()
@@ -115,6 +123,7 @@ class QRCodeScanFragment: Fragment(), QRCodeScanView {
                                 W3WText(text = "Show rational")
                             }
                         }
+
                         else -> {
                             // Here we assume the user rejected the permission
                             Column(
@@ -131,8 +140,10 @@ class QRCodeScanFragment: Fragment(), QRCodeScanView {
                                 W3WButtonPrimary(
                                     title = "Open settings",
                                     onClick = {
-                                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                                        val uri = Uri.fromParts("package", appContext.packageName, null)
+                                        val intent =
+                                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                        val uri =
+                                            Uri.fromParts("package", appContext.packageName, null)
                                         intent.data = uri
                                         appContext.startActivity(intent)
 //                                        ContextCompat.startActivity(appContext, intent, null)

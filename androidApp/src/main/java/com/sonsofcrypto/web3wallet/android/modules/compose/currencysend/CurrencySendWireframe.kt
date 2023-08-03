@@ -59,8 +59,11 @@ class DefaultCurrencySendWireframe(
             is ConfirmSend -> {
                 confirmationWireframeFactory.make(parent?.get(), destination.context).present()
             }
+            is Back -> {
+                parent?.navigationFragment?.popOrDismiss()
+            }
             is Dismiss -> {
-                println("[AA] Implement -> $destination")
+                parent?.navigationFragment?.dismiss()
             }
             else -> {
                 println("[AA] Implement -> $destination")

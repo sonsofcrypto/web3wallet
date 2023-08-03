@@ -22,7 +22,7 @@ class DefaultAlertWireframe(
     override fun navigate(destination: AlertWireframeDestination) {
         when (destination) {
             is AlertWireframeDestination.Dismiss -> {
-                parent?.navigationFragment?.dismiss()
+                parent?.navigationFragment?.popOrDismiss()
             }
         }
     }

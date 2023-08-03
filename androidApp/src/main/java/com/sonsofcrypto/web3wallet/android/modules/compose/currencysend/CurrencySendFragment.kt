@@ -26,8 +26,11 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CurrencyAmountPickerVie
 import com.sonsofcrypto.web3walletcore.common.viewModels.NetworkAddressPickerViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.NetworkFeeViewModel
 import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3walletcore.modules.currencyReceive.CurrencyReceivePresenterEvent
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendPresenter
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendPresenterEvent.Back
+import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendPresenterEvent.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendPresenterEvent.QrCodeScan
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendPresenterEvent.Review
 import com.sonsofcrypto.web3walletcore.modules.currencySend.CurrencySendView
@@ -72,7 +75,13 @@ class CurrencySendFragment: Fragment(), CurrencySendView {
         dialogNetworkFees: DialogNetworkFee?,
     ) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = viewModel.title) },
+            navBar = {
+                W3WNavigationBar(
+                    title = viewModel.title,
+                    leadingIcon = { W3WNavigationBack { presenter.handle(Back) } },
+                    trailingIcon = { W3WNavigationClose { presenter.handle(Dismiss) } }
+                )
+             },
             content = { CurrencySendContent(viewModel, dialogNetworkFees) }
         )
     }

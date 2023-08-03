@@ -23,6 +23,9 @@ class DefaultCurrencyAddWireframe(
             is CurrencyAddWireframeDestination.NetworkPicker -> {
                 println("Implement navigation to $destination")
             }
+            is CurrencyAddWireframeDestination.Back -> {
+                parent?.navigationFragment?.popOrDismiss()
+            }
             is CurrencyAddWireframeDestination.Dismiss -> {
                 parent?.navigationFragment?.dismiss()
             }
