@@ -30,7 +30,7 @@ class DefaultCurrencySwapWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.navigationFragment?.push(fragment, animated = true)
+        parent?.navigationFragment?.present(fragment, animated = true)
     }
 
     override fun navigate(destination: CurrencySwapWireframeDestination) {
@@ -46,6 +46,9 @@ class DefaultCurrencySwapWireframe(
                     parent = parent?.get(),
                     context = destination.context
                 ).present()
+            }
+            is CurrencySwapWireframeDestination.Dismiss -> {
+                parent?.navigationFragment?.dismiss()
             }
             else -> { println("[AA] Handle action -> $destination") }
         }

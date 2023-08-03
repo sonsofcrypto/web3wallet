@@ -2,12 +2,14 @@ package com.sonsofcrypto.web3walletcore.modules.improvementProposal
 
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementProposalWireframeDestination.Back
 import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementProposalWireframeDestination.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementProposalWireframeDestination.Vote
 import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal
 
 sealed class ImprovementProposalPresenterEvent {
     object Vote: ImprovementProposalPresenterEvent()
+    object Back: ImprovementProposalPresenterEvent()
     object Dismiss: ImprovementProposalPresenterEvent()
 }
 
@@ -29,6 +31,7 @@ class DefaultImprovementProposalPresenter(
     override fun handle(event: ImprovementProposalPresenterEvent) =
         when (event) {
             is ImprovementProposalPresenterEvent.Vote -> wireframe.navigate(Vote(proposal))
+            is ImprovementProposalPresenterEvent.Back -> wireframe.navigate(Back)
             is ImprovementProposalPresenterEvent.Dismiss -> wireframe.navigate(Dismiss)
         }
 

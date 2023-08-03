@@ -13,6 +13,7 @@ sealed class ImprovementProposalWireframeDestination {
         val proposal: ImprovementProposal
     ): ImprovementProposalWireframeDestination()
     /** Dismissed wireframe */
+    object Back: ImprovementProposalWireframeDestination()
     object Dismiss: ImprovementProposalWireframeDestination()
 }
 

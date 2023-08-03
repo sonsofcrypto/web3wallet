@@ -26,8 +26,10 @@ import com.sonsofcrypto.web3wallet.android.common.theme
 import com.sonsofcrypto.web3wallet.android.common.ui.*
 import com.sonsofcrypto.web3wallet.android.modules.compose.improvementproposals.ImprovementProposalsFragment.ImprovementProposalCategoryType.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapPresenterEvent
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsPresenter
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsPresenterEvent.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsPresenterEvent.Proposal
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsPresenterEvent.Vote
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsView
@@ -67,6 +69,7 @@ class ImprovementProposalsFragment: Fragment(), ImprovementProposalsView {
             navBar = {
                 W3WNavigationBar(
                     title = Localized("proposals.title"),
+                    trailingIcon = { W3WNavigationClose { presenter.handle(Dismiss) } },
                     content = { ImprovementProposalsCategorySegments() }
                 )
             },
@@ -110,37 +113,43 @@ class ImprovementProposalsFragment: Fragment(), ImprovementProposalsView {
 
     @Composable
     private fun ImprovementProposalsCategorySegments() {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(30.dp)
-                .padding(start = theme().shapes.padding, end = theme().shapes.padding)
-                .clip(RoundedCornerShape(4.dp))
-                .background(theme().colors.segmentedControlBackground),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            var selectedType by remember { mutableStateOf(INFRASTRUCTURE ) }
-            ImprovementProposalsCategorySegmentItem(
-                title = Localized("proposals.infrastructure.title"),
-                isSelected = selectedType == INFRASTRUCTURE,
+        Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(30.dp)
+                    .padding(
+                        start = theme().shapes.padding,
+                        end = theme().shapes.padding,
+                    )
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(theme().colors.segmentedControlBackground),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                selectedType = INFRASTRUCTURE
-                presenter.handle(ImprovementProposalsPresenterEvent.Category(0))
+                var selectedType by remember { mutableStateOf(INFRASTRUCTURE ) }
+                ImprovementProposalsCategorySegmentItem(
+                    title = Localized("proposals.infrastructure.title"),
+                    isSelected = selectedType == INFRASTRUCTURE,
+                ) {
+                    selectedType = INFRASTRUCTURE
+                    presenter.handle(ImprovementProposalsPresenterEvent.Category(0))
+                }
+                ImprovementProposalsCategorySegmentItem(
+                    title = Localized("proposals.integration.title"),
+                    isSelected = selectedType == INTEGRATIONS,
+                ) {
+                    selectedType = INTEGRATIONS
+                    presenter.handle(ImprovementProposalsPresenterEvent.Category(1))
+                }
+                ImprovementProposalsCategorySegmentItem(
+                    title = Localized("proposals.feature.title"),
+                    isSelected = selectedType == FEATURES,
+                ) {
+                    selectedType = FEATURES
+                    presenter.handle(ImprovementProposalsPresenterEvent.Category(2))
+                }
             }
-            ImprovementProposalsCategorySegmentItem(
-                title = Localized("proposals.integration.title"),
-                isSelected = selectedType == INTEGRATIONS,
-            ) {
-                selectedType = INTEGRATIONS
-                presenter.handle(ImprovementProposalsPresenterEvent.Category(1))
-            }
-            ImprovementProposalsCategorySegmentItem(
-                title = Localized("proposals.feature.title"),
-                isSelected = selectedType == FEATURES,
-            ) {
-                selectedType = FEATURES
-                presenter.handle(ImprovementProposalsPresenterEvent.Category(2))
-            }
+            W3WSpacerVertical()
         }
     }
 

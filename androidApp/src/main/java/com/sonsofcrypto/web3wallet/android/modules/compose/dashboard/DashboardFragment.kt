@@ -79,7 +79,7 @@ class DashboardFragment: Fragment(), DashboardView {
 
     @Composable
     private fun NavBarTrailingIcon() {
-        W3WIcon(
+        W3WNavigationIcon(
             id = R.drawable.icon_qr_code_scanner_24,
             onClick = {
                 presenter.handle(DashboardPresenterEvent.DidScanQRCode)

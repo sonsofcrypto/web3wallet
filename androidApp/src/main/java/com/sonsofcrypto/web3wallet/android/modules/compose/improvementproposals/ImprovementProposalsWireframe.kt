@@ -25,7 +25,7 @@ class DefaultImprovementProposalsWireframe(
 
     override fun present() {
         val fragment = wireUp()
-        parent?.navigationFragment?.push(fragment, true)
+        parent?.navigationFragment?.present(fragment, true)
     }
 
     override fun navigate(destination: ImprovementProposalsWireframeDestination) {

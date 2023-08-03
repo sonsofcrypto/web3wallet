@@ -6,7 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -20,10 +26,20 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.sonsofcrypto.web3wallet.android.common.theme
-import com.sonsofcrypto.web3wallet.android.common.ui.*
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WButtonPrimary
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WCardWithTitle
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WImage
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WNavigationBack
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WNavigationBar
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WNavigationClose
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WScreen
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WSpacerVertical
+import com.sonsofcrypto.web3wallet.android.common.ui.W3WText
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementProposalPresenter
 import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementProposalPresenterEvent
+import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementProposalPresenterEvent.Back
+import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementProposalPresenterEvent.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementProposalView
 import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementProposalViewModel
 
@@ -54,7 +70,13 @@ class ImprovementProposalFragment: Fragment(), ImprovementProposalView {
     @Composable
     private fun ImprovementProposalScreen(viewModel: ImprovementProposalViewModel) {
         W3WScreen(
-            navBar = { W3WNavigationBar(title = viewModel.name) },
+            navBar = {
+                W3WNavigationBar(
+                    title = viewModel.name,
+                    leadingIcon = { W3WNavigationBack { presenter.handle(Back) } },
+                    trailingIcon = { W3WNavigationClose { presenter.handle(Dismiss) } }
+                )
+             },
             content = { ImprovementProposalContent(viewModel) }
         )
     }

@@ -33,8 +33,11 @@ class DefaultImprovementProposalWireframe(
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(str))
                 ContextCompat.startActivity(appContext, browserIntent, null)
             }
-            is ImprovementProposalWireframeDestination.Dismiss -> {
+            is ImprovementProposalWireframeDestination.Back -> {
                 parent?.navigationFragment?.popOrDismiss()
+            }
+            is ImprovementProposalWireframeDestination.Dismiss -> {
+                parent?.navigationFragment?.dismiss()
             }
         }
     }
