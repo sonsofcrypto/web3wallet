@@ -1,5 +1,6 @@
-package com.sonsofcrypto.web3lib
+package com.sonsofcrypto.web3lib.services
 
+import com.sonsofcrypto.web3lib.KeyStoreTest
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService

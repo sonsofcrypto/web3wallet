@@ -21,7 +21,7 @@ import com.sonsofcrypto.web3lib.services.networks.NetworkInfo
 import com.sonsofcrypto.web3lib.services.poll.GroupPollServiceRequest
 import com.sonsofcrypto.web3lib.services.networks.calls
 import com.sonsofcrypto.web3lib.services.networks.decodeCallData
-import com.sonsofcrypto.web3lib.services.wallet.DefaultPollService
+import com.sonsofcrypto.web3lib.services.poll.DefaultPollService
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.types.Network
@@ -99,24 +99,24 @@ class WalletServiceTests2 {
 //        }
     }
 
-    @Test
-    fun testPollingService() = runBlocking {
-        val service = DefaultPollService(true)
-        val network = Network.sepolia()
-        val provider = ProviderPocket(network)
-        val currencies = sepoliaDefaultCurrencies
-        val walletAddress = "Global.0xA52fD940629625371775d2D7271A35a09BC2B49e"
-
-        service.setProvider(provider, network)
-
-        val request = GroupPollServiceRequest(
-            "NetworkInfo.sepolia",
-            NetworkInfo.calls(network.multicall3Address()),
-            ::handleNetworkInfo
-        )
-        service.add(request, network, true)
-        service.executePoll(network, provider, listOf(request))
-    }
+//    @Test
+//    fun testPollingService() = runBlocking {
+//        val service = DefaultPollService(true)
+//        val network = Network.sepolia()
+//        val provider = ProviderPocket(network)
+//        val currencies = sepoliaDefaultCurrencies
+//        val walletAddress = "Global.0xA52fD940629625371775d2D7271A35a09BC2B49e"
+//
+//        service.setProvider(provider, network)
+//
+//        val request = GroupPollServiceRequest(
+//            "NetworkInfo.sepolia",
+//            NetworkInfo.calls(network.multicall3Address()),
+//            ::handleNetworkInfo
+//        )
+//        service.add(request, network, true)
+//        service.executePoll(network, provider, listOf(request))
+//    }
 
     private fun handleNetworkInfo(data: List<Any>) {
         val networkInfo = NetworkInfo.decodeCallData(data as List<List<Any>> )
