@@ -75,6 +75,8 @@ interface NetworksService {
     fun add(listener: NetworksListener)
     /** Remove listener for `NetworksEvent`s, if null removes all listeners */
     fun remove(listener: NetworksListener?)
+    /** NetworkInfo blockNumber, blockTimestamp, basefee, blockGasLimit */
+    fun networkInfo(network: Network): NetworkInfo
     /** Default Network Fee */
     fun defaultNetworkFee(network: Network): NetworkFee
     /** Network Fee price options */
@@ -117,6 +119,7 @@ class DefaultNetworksService(
             field = value
             store[selectedNetworkKey(keyStoreItem)] = value
             emit(NetworksEvent.NetworkDidChange(value))
+            updatePollingLoop()
         }
 
     private var enabledNetworks: List<Network> = listOf()
@@ -144,6 +147,9 @@ class DefaultNetworksService(
     override fun setNetwork(network: Network, enabled: Boolean) {
         enabledNetworks = if (!enabled) enabledNetworks.filter { it != network }
         else enabledNetworks + listOf(network)
+        if (network == this.network) {
+            updatePollingLoop()
+        }
     }
 
     override fun provider(network: Network): Provider {
@@ -165,6 +171,9 @@ class DefaultNetworksService(
         } else {
             providers.remove(network)
             (provider as? ProviderLocal)?.let { nodeService.stopNode(network) }
+        }
+        if (network == this.network) {
+            updatePollingLoop()
         }
     }
 
@@ -252,34 +261,58 @@ class DefaultNetworksService(
     }
 
     private var pollRequest: PollServiceRequest? = null
+    private var nonSelectedRefreshCounter = 0
+    private val nonSelectedRefreshTimeout = 2
 
     private fun updatePollingLoop() {
-        // TODO: Call when settings change
-        pollRequest.let { pollService.cancel(it!!.id) }
+        pollRequest?.let { pollService.cancel(it.id) }
+        if (!enabledNetworks.contains(network)) return
         val network = this.network ?: return
         val request = GroupPollServiceRequest(
-            "NetworkInfo.ethereum - ${Clock.System.now().epochSeconds}",
-            NetworkInfo.calls(network!!.multicall3Address()),
+            "NetworkInfo.${network.name} - ${Clock.System.now().epochSeconds}",
+            NetworkInfo.calls(network.multicall3Address()),
             ::handleNetworkInfo,
             network
         )
-        pollService.add(request, network!!, true)
+        pollService.setProvider(provider(network), network)
+        pollService.add(request, network, true)
         pollRequest = request
     }
 
     private fun handleNetworkInfo(result: List<Any>, request: PollServiceRequest) {
         val networkInfo = NetworkInfo.decodeCallData(result as List<List<Any>>)
         setNetworkInfo(networkInfo, request.userInfo as Network)
-        // TODO:  Add requests for non selected networks.
+        if (network == request.userInfo as Network)
+            fetchNonSelectedNetwokrsInfo()
     }
 
-    fun setNetworkInfo(info: NetworkInfo, network: Network) = uiScope.launch {
+    private fun fetchNonSelectedNetwokrsInfo() {
+        if (nonSelectedRefreshCounter != 0) {
+            nonSelectedRefreshCounter--
+            return
+        }
+        nonSelectedRefreshCounter = nonSelectedRefreshTimeout
+        enabledNetworks
+            .filter { it != network }
+            .forEach {
+                val request = GroupPollServiceRequest(
+                    "NetworkInfo.${it.name} - ${Clock.System.now().epochSeconds}",
+                    NetworkInfo.calls(it.multicall3Address()),
+                    ::handleNetworkInfo,
+                    it
+                )
+                pollService.setProvider(provider(it), it)
+                pollService.add(request, it, false)
+            }
+    }
+
+    private fun setNetworkInfo(info: NetworkInfo, network: Network) {
         networkInfo[network.id()] = info
         store.set(networkInfoKey(network), info)
         emit(NetworksEvent.NetworkInfoDidChange(info, network))
     }
 
-    fun networkInfo(network: Network): NetworkInfo
+    override fun networkInfo(network: Network): NetworkInfo
         = networkInfo[network.id()]
             ?: store.get<NetworkInfo>(networkInfoKey(network))
             ?: NetworkInfo.zero()

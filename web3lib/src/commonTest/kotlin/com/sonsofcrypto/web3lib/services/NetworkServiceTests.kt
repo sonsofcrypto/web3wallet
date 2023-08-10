@@ -7,15 +7,20 @@ import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworkInfo
+import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
+import com.sonsofcrypto.web3lib.services.networks.NetworksListener
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
 import com.sonsofcrypto.web3lib.services.poll.DefaultPollService
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import kotlin.test.Test
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.seconds
 
-class NetworkServiceTests {
+class NetworkServiceTests: NetworksListener {
 
     @Test
     fun testProviderStore() {
@@ -53,6 +58,36 @@ class NetworkServiceTests {
         store.set<NetworkInfo>("test", info)
         val result = store.get<NetworkInfo>("test")
         assertTrue("$info" == "$result", "NetworkInfo error:\n$info\n$result")
+    }
+
+    @Test
+    fun testNetworkInfo() {
+        val listener = this
+        runBlocking {
+            val keyStoreService = DefaultKeyStoreService(
+                KeyValueStore("networkServiceTests_keyStoreService"),
+                KeyStoreTest.MockKeyChainService()
+            )
+            keyStoreService.selected = mockKeyStoreItem
+
+            val networksService = DefaultNetworksService(
+                KeyValueStore("networkServiceTests"),
+                keyStoreService,
+                DefaultPollService(),
+                DefaultNodeService(),
+            )
+            networksService.add(listener)
+            networksService.keyStoreItem = mockKeyStoreItem
+
+            val provider = ProviderPocket(Network.sepolia())
+            networksService.setProvider(provider, Network.sepolia())
+
+            delay(120.seconds)
+        }
+    }
+
+    override fun handle(event: NetworksEvent) {
+        println("[EVENT] $event")
     }
 
     private val mockKeyStoreItem = KeyStoreItem(
