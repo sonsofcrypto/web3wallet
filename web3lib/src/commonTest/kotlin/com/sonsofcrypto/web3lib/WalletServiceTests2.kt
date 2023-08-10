@@ -159,6 +159,7 @@ fun testWalletServices(network: Network = Network.sepolia()): WalletServices {
     val networksService = DefaultNetworksService(
         KeyValueStore("web3serviceTest"),
         keyStoreService,
+        DefaultPollService(),
         DefaultNodeService()
     )
     networksService.network = network

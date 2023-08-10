@@ -10,7 +10,9 @@ import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.timerFlow
+import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import com.sonsofcrypto.web3lib.utils.withBgCxt
+import com.sonsofcrypto.web3lib.utils.withUICxt
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -29,17 +31,17 @@ interface PollService {
 
     /** Adds request to be executed with next multicall
      * @param repeat until canceled or just execute once. Default `False` */
-    suspend fun add(
+    fun add(
         request: PollServiceRequest,
         network: Network,
         repeat: Boolean
     )
 
     /** Cancel repeating request */
-    suspend fun cancel(id: String)
+    fun cancel(id: String)
 
     /** Provider to be used for given network */
-    suspend fun setProvider(provider: Provider, network: Network)
+    fun setProvider(provider: Provider, network: Network)
 
     /** Executes polls more frequently for a minute */
     suspend fun boostInterval()
@@ -68,6 +70,7 @@ class DefaultPollService: PollService {
     private var syncedBlockTime: Boolean = false
     private var boostCount: Int = -1
     private var lastTestnetTimeStamp: Instant = Instant.DISTANT_PAST
+    private val bgScope = CoroutineScope(bgDispatcher)
     private var poolJob: Job = timerFlow(pollInterval, initialDelay = 1.seconds)
         .onEach { poll() }
         .launchIn(CoroutineScope(bgDispatcher))
@@ -76,22 +79,30 @@ class DefaultPollService: PollService {
         if (blockTimer) poolJob.cancel()
     }
 
-    override suspend fun add(
+    override fun add(
         request: PollServiceRequest,
         network: Network,
         repeat: Boolean
-    ) = mutex.withLock {
-        var list = requests[network] ?: mutableListOf()
-        list.add(request)
-        requests[network] = list
-        if (repeat) repeatIds.add(request.id)
+    ) {
+        bgScope.launch {
+            mutex.withLock {
+                var list = requests[network] ?: mutableListOf()
+                list.add(request)
+                requests[network] = list
+                if (repeat) repeatIds.add(request.id)
+            }
+        }
     }
 
-    override suspend fun cancel(id: String)
-        = mutex.withLock { val tmp = repeatIds.remove(id) }
+    override fun cancel(id: String) {
+        bgScope.launch {
+            mutex.withLock { val tmp = repeatIds.remove(id) }
+        }
+    }
 
-    override suspend fun setProvider(provider: Provider, network: Network)
-        = mutex.withLock { providers[network] = provider  }
+    override fun setProvider(provider: Provider, network: Network) {
+        bgScope.launch { mutex.withLock { providers[network] = provider } }
+    }
 
     override suspend fun boostInterval() = mutex.withLock { boostCount = 5 }
 

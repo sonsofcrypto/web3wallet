@@ -11,11 +11,21 @@ import com.sonsofcrypto.web3lib.services.networks.ProviderInfo.Type.ALCHEMY
 import com.sonsofcrypto.web3lib.services.networks.ProviderInfo.Type.LOCAL
 import com.sonsofcrypto.web3lib.services.networks.ProviderInfo.Type.POCKET
 import com.sonsofcrypto.web3lib.services.node.NodeService
+import com.sonsofcrypto.web3lib.services.poll.GroupPollServiceRequest
+import com.sonsofcrypto.web3lib.services.poll.PollService
+import com.sonsofcrypto.web3lib.services.poll.PollServiceRequest
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.NetworkFee
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.bgDispatcher
+import com.sonsofcrypto.web3lib.utils.uiDispatcher
+import com.sonsofcrypto.web3lib.utils.withBgCxt
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.datetime.Clock
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -27,6 +37,11 @@ sealed class NetworksEvent() {
     data class NetworkDidChange(val network: Network?): NetworksEvent()
     /** Emitted when `enabledNetworks` changes */
     data class EnabledNetworksDidChange(val networks: List<Network>): NetworksEvent()
+    /** Emitted when `networkInfo` changes */
+    data class NetworkInfoDidChange(
+        val info: NetworkInfo,
+        val network: Network
+    ): NetworksEvent()
 }
 
 /** `NetworksEvent` listener */
@@ -85,6 +100,7 @@ interface NetworksService {
 class DefaultNetworksService(
     private val store: KeyValueStore,
     private val keyStoreService: KeyStoreService,
+    private val pollService: PollService,
     private val nodeService: NodeService,
 ): NetworksService {
 
@@ -114,9 +130,14 @@ class DefaultNetworksService(
 
     private var providers: MutableMap<Network, Provider> = mutableMapOf()
     private var wallets: MutableMap<String, Wallet> = mutableMapOf()
+    private var networkInfo: MutableMap<String, NetworkInfo> = mutableMapOf()
     private var listeners: List<NetworksListener> = listOf()
+    private val uiScope = CoroutineScope(uiDispatcher)
 
-    init { keyStoreItem = keyStoreService.selected }
+    init {
+        keyStoreItem = keyStoreService.selected
+        updatePollingLoop()
+    }
 
     override fun enabledNetworks(): List<Network> = enabledNetworks
 
@@ -230,6 +251,39 @@ class DefaultNetworksService(
         store[networksKey(item)] = Json.encodeToString(networks)
     }
 
+    private var pollRequest: PollServiceRequest? = null
+
+    private fun updatePollingLoop() {
+        // TODO: Call when settings change
+        pollRequest.let { pollService.cancel(it!!.id) }
+        val network = this.network ?: return
+        val request = GroupPollServiceRequest(
+            "NetworkInfo.ethereum - ${Clock.System.now().epochSeconds}",
+            NetworkInfo.calls(network!!.multicall3Address()),
+            ::handleNetworkInfo,
+            network
+        )
+        pollService.add(request, network!!, true)
+        pollRequest = request
+    }
+
+    private fun handleNetworkInfo(result: List<Any>, request: PollServiceRequest) {
+        val networkInfo = NetworkInfo.decodeCallData(result as List<List<Any>>)
+        setNetworkInfo(networkInfo, request.userInfo as Network)
+        // TODO:  Add requests for non selected networks.
+    }
+
+    fun setNetworkInfo(info: NetworkInfo, network: Network) = uiScope.launch {
+        networkInfo[network.id()] = info
+        store.set(networkInfoKey(network), info)
+        emit(NetworksEvent.NetworkInfoDidChange(info, network))
+    }
+
+    fun networkInfo(network: Network): NetworkInfo
+        = networkInfo[network.id()]
+            ?: store.get<NetworkInfo>(networkInfoKey(network))
+            ?: NetworkInfo.zero()
+
     private fun selectedNetworkKey(item: KeyStoreItem?): String {
         return "last_selected_network_${item?.uuid ?: ""}"
     }
@@ -240,5 +294,9 @@ class DefaultNetworksService(
 
     private fun providerKey(network: Network): String {
         return "provider_${network.chainId}"
+    }
+
+    private fun networkInfoKey(network: Network): String {
+        return "networkInfo_${network.chainId}"
     }
 }

@@ -5,17 +5,26 @@ import com.sonsofcrypto.web3lib.contract.Interface
 import com.sonsofcrypto.web3lib.contract.Multicall3
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.utils.BigInt
+import kotlinx.serialization.Serializable
 
 private val iface = Interface.Multicall3()
 
 /** Information about current state of network  */
+@Serializable
 data class NetworkInfo(
     val blockNumber: BigInt,
     val blockTimestamp: BigInt,
     val basefee: BigInt,
     val blockGasLimit: BigInt
 ) {
-    companion object
+    companion object {
+        fun zero() = NetworkInfo(
+            BigInt.zero,
+            BigInt.zero,
+            BigInt.zero,
+            BigInt.zero
+        )
+    }
 }
 
 /** MulticallV3 contract Call3 items */

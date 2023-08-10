@@ -6,8 +6,12 @@ import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
+import com.sonsofcrypto.web3lib.services.networks.NetworkInfo
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
+import com.sonsofcrypto.web3lib.services.poll.DefaultPollService
 import com.sonsofcrypto.web3lib.types.Network
+import com.sonsofcrypto.web3lib.utils.BigInt
+import kotlinx.datetime.Clock
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -16,14 +20,15 @@ class NetworkServiceTests {
     @Test
     fun testProviderStore() {
         val keyStoreService = DefaultKeyStoreService(
-            KeyValueStore("KeyStoreItemsTest2"),
+            KeyValueStore("networkServiceTests_keyStoreService"),
             KeyStoreTest.MockKeyChainService()
         )
         keyStoreService.selected = mockKeyStoreItem
 
         val networksService = DefaultNetworksService(
-            KeyValueStore("web3serviceTest"),
+            KeyValueStore("networkServiceTests"),
             keyStoreService,
+            DefaultPollService(),
             DefaultNodeService(),
         )
         networksService.keyStoreItem = mockKeyStoreItem
@@ -34,6 +39,20 @@ class NetworkServiceTests {
             networksService.provider(Network.sepolia()) is ProviderPocket,
             "Unexpected provider ${networksService.provider(Network.sepolia())}"
         )
+    }
+
+    @Test
+    fun testNetworkInfoCache() {
+        val store = KeyValueStore("networkServiceTests_networkInfoCache")
+        val info = NetworkInfo(
+            BigInt.from(289354234),
+            BigInt.from(Clock.System.now().epochSeconds),
+            BigInt.from(23489),
+            BigInt.from(150000000),
+        )
+        store.set<NetworkInfo>("test", info)
+        val result = store.get<NetworkInfo>("test")
+        assertTrue("$info" == "$result", "NetworkInfo error:\n$info\n$result")
     }
 
     private val mockKeyStoreItem = KeyStoreItem(
