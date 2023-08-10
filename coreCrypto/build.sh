@@ -8,7 +8,6 @@ gomobile bind -v -target=android -androidapi 19 -o ./build/android/coreCrypto.aa
 echo "======================"
 echo "Android framework done"
 
-
 # iOS
 if [[ "$OSTYPE" == "darwin"* ]]; then
   echo "Building iOS framework"
@@ -69,7 +68,6 @@ grep -v "#include <android/log.h>" build/hostOS/src/gobind/coreCrypto_android.c 
 rm build/hostOS/src/gobind/coreCrypto_android.c
 cp supportFiles/c/* build/hostOS/src/gobind
 
-# TODO change flags seq.go to include of java on mac (or just inlude both)
 cd build/hostOS
 export GOPATH="$(pwd):$GOPATH"
 export GO111MODULE=auto
@@ -84,7 +82,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   REPLACE="-I$JAVA_HOME/include -I$JAVA_HOME/include/darwin"
   ESCAPED_SEARCH=$(printf '%s\n' "$SEARCH" | sed -e 's/[]\/$*.^[]/\\&/g');
   ESCAPED_REPLACE=$(printf '%s\n' "$REPLACE" | sed -e 's/[]\/$*.^[]/\\&/g');
-  sed -i "s/$ESCAPED_SEARCH/$ESCAPED_REPLACE/" src/gobind/seq.go
+  sed -ie "s+$ESCAPED_SEARCH+$ESCAPED_REPLACE+" src/gobind/seq.go
 fi
 
 cd src
