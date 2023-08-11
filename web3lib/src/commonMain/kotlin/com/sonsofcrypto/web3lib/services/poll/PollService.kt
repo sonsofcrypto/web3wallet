@@ -96,7 +96,13 @@ class DefaultPollService: PollService {
 
     override fun cancel(id: String) {
         bgScope.launch {
-            mutex.withLock { val tmp = repeatIds.remove(id) }
+            mutex.withLock {
+                for (pair in requests.toMap().iterator()) {
+                    requests[pair.key] = pair.value.filter { it.id != id }
+                        .toMutableList()
+                }
+                val tmp = repeatIds.remove(id)
+            }
         }
     }
 
@@ -126,14 +132,6 @@ class DefaultPollService: PollService {
                 providers[entry.key]
                     ?: throw PollService.Error.MissingProvider(entry.key),
                 entry.value
-            )
-        }
-
-        requests.keys.forEach {
-            executePoll(
-                it,
-                providers[it] ?: throw PollService.Error.MissingProvider(it),
-                requests[it] ?: emptyList()
             )
         }
     }

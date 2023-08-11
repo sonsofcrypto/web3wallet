@@ -48,6 +48,10 @@ data class Network(
         else -> false
     }
 
+    override fun equals(other: Any?): Boolean {
+        return chainId == (other as? Network)?.chainId
+    }
+
     // TODO: Get address for Georly
     fun multicall3Address(): String = when (chainId) {
         ethereum().chainId,

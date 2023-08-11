@@ -146,7 +146,9 @@ class DefaultNetworksService(
 
     override fun setNetwork(network: Network, enabled: Boolean) {
         enabledNetworks = if (!enabled) enabledNetworks.filter { it != network }
+        else if (enabledNetworks.contains(network)) enabledNetworks
         else enabledNetworks + listOf(network)
+
         if (network == this.network) {
             updatePollingLoop()
         }

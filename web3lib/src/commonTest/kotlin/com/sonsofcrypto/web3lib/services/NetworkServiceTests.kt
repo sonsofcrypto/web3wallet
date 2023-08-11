@@ -64,30 +64,58 @@ class NetworkServiceTests: NetworksListener {
     fun testNetworkInfo() {
         val listener = this
         runBlocking {
+            val pollService = DefaultPollService()
+            pollService.boostInterval()
+
             val keyStoreService = DefaultKeyStoreService(
-                KeyValueStore("networkServiceTests_keyStoreService"),
+                KeyValueStore("networkServiceTests_keyStoreService2"),
                 KeyStoreTest.MockKeyChainService()
             )
             keyStoreService.selected = mockKeyStoreItem
 
             val networksService = DefaultNetworksService(
-                KeyValueStore("networkServiceTests"),
+                KeyValueStore("networkServiceTests2"),
                 keyStoreService,
-                DefaultPollService(),
+                pollService,
                 DefaultNodeService(),
             )
-            networksService.add(listener)
+            networksService.setProvider(
+                ProviderPocket(Network.sepolia()),
+                Network.sepolia()
+            )
+            networksService.setProvider(
+                ProviderPocket(Network.ethereum()),
+                Network.ethereum()
+            )
             networksService.keyStoreItem = mockKeyStoreItem
+            networksService.setNetwork(Network.ethereum(), true)
+            networksService.setNetwork(Network.sepolia(), true)
+            networksService.network = Network.ethereum()
+            networksService.add(listener)
 
-            val provider = ProviderPocket(Network.sepolia())
-            networksService.setProvider(provider, Network.sepolia())
-
-            delay(120.seconds)
+            delay(75.seconds)
+            val expeted = listOf(
+                "Ethereum",
+                "Ethereum",
+                "Sepolia",
+                "Ethereum",
+                "Ethereum",
+                "Ethereum",
+                "Sepolia",
+            )
+            assertTrue(
+                networkInfoEventNetworks == expeted,
+                "Unexpected events $expeted"
+            )
         }
     }
 
+    private var networkInfoEventNetworks: List<String> = emptyList()
+
     override fun handle(event: NetworksEvent) {
-        println("[EVENT] $event")
+        (event as? NetworksEvent.NetworkInfoDidChange)?.let {
+            networkInfoEventNetworks += event.network.name
+        }
     }
 
     private val mockKeyStoreItem = KeyStoreItem(
