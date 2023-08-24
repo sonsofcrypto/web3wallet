@@ -12,17 +12,6 @@ kotlin {
     val xcf = XCFramework()
     val frameworkPath = project.file("$rootDir/coreCrypto/build/ios").absolutePath
     listOf(
-        iosX64() {
-            compilations.getByName("main") {
-                val CoreCrypto by cinterops.creating {
-                    defFile("$frameworkPath/ios-arm64_x86_64-simulator/CoreCrypto.def")
-                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
-                }
-            }
-            binaries.all {
-                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
-            }
-        },
         iosArm64() {
             compilations.getByName("main") {
                 val CoreCrypto by cinterops.creating {
@@ -35,6 +24,17 @@ kotlin {
             }
         },
         iosSimulatorArm64() {
+            compilations.getByName("main") {
+                val CoreCrypto by cinterops.creating {
+                    defFile("$frameworkPath/ios-arm64_x86_64-simulator/CoreCrypto.def")
+                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+                }
+            }
+            binaries.all {
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+            }
+        },
+        iosX64() {
             compilations.getByName("main") {
                 val CoreCrypto by cinterops.creating {
                     defFile("$frameworkPath/ios-arm64_x86_64-simulator/CoreCrypto.def")

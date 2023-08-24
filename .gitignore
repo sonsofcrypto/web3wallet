@@ -215,4 +215,4 @@ gradlew.bat
 
 androidApp/debug.keystore
 androidApp/release.jks
-tmp/*
+.tmp/*

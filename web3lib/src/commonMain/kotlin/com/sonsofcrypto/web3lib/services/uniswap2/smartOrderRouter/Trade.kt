@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3lib.services.uniswap2.smartOrderRouter
 
+import com.sonsofcrypto.web3lib.services.uniswap2.core.TradeType
 import com.sonsofcrypto.web3lib.services.uniswap2.router.Route
 import com.sonsofcrypto.web3lib.types.CurrencyAmount
 import com.sonsofcrypto.web3lib.utils.BigInt
@@ -13,8 +14,8 @@ data class TradeSwap(
 class Trade (
     val routes: List<Route>,
     val tradeType: TradeType,
-    private val _outputAmount,
-    private val _inputAmount,
+    private val _outputAmount: CurrencyAmount,
+    private val _inputAmount: CurrencyAmount,
     /**
      * The swaps of the trade, i.e. which routes and how much is swapped in each
      * thatmake up the trade. May consist of swaps in v2 or v3.

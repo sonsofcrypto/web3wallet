@@ -55,7 +55,7 @@ Compile using Android Studio
 ```
 
 ## iosApp
-Build web3walletcore library ```./gradlew :web3walletcore:assembleXCFramework```
+Build web3walletcore library ```./gradlew :web3walletcore:assembleXCFramework --rerun-tasks --info```
 and run normally from Xcode. Alternatively add iosApp configuration in Android 
 Studio and run from there
 

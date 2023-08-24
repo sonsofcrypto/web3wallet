@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicImport
 
+import com.sonsofcrypto.web3walletcore.common.viewModels.MnemonicWordInfo
 import com.sonsofcrypto.web3walletcore.common.viewModels.SectionFooterViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.SegmentWithTextAndSwitchCellViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.SwitchCollectionViewModel

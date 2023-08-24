@@ -5,6 +5,7 @@ import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.common.mnemonic.MnemonicPresenterCommon
+import com.sonsofcrypto.web3walletcore.common.viewModels.MnemonicWordInfo
 import com.sonsofcrypto.web3walletcore.common.viewModels.SectionFooterViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.SegmentWithTextAndSwitchCellViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.SegmentWithTextAndSwitchCellViewModel.KeyboardType.DEFAULT
