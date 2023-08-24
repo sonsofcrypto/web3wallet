@@ -186,8 +186,8 @@ packages/react-devtools-timeline/dist
 .env
 local.properties
 
-download_metadata/node_modules
-download_metadata/.env
+bundledAssets/download_metadata/node_modules
+bundledAssets/download_metadata/.env
 
 crypto/iosMain
 crypto/androidMain

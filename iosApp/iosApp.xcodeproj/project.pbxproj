@@ -370,14 +370,6 @@
 		1CEF3D1F28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D1E28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift */; };
 		1F6A9FBA2A978F970056732C /* PollServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6A9FB92A978F970056732C /* PollServiceAssembler.swift */; };
 		1F6A9FBC2A97ACE50056732C /* bundledAssets in Resources */ = {isa = PBXBuildFile; fileRef = 1F6A9FBB2A97ACE50056732C /* bundledAssets */; };
-		5C7CC9A92A1579210099276A /* bitcoin_white_paper.md in Resources */ = {isa = PBXBuildFile; fileRef = 5C7CC9A82A1579210099276A /* bitcoin_white_paper.md */; };
-		D108AB4328AB9EB0005E0A63 /* cache_markets.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3D28AB9EB0005E0A63 /* cache_markets.json */; };
-		D108AB4428AB9EB0005E0A63 /* cache_currencies_3.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */; };
-		D108AB4528AB9EB0005E0A63 /* cache_metadatas.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3F28AB9EB0005E0A63 /* cache_metadatas.json */; };
-		D108AB4628AB9EB0005E0A63 /* cache_currencies_1.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB4028AB9EB0005E0A63 /* cache_currencies_1.json */; };
-		D108AB4728AB9EB0005E0A63 /* cache_currencies_4.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB4128AB9EB0005E0A63 /* cache_currencies_4.json */; };
-		D108AB4828AB9EB0005E0A63 /* cache_currencies_5.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB4228AB9EB0005E0A63 /* cache_currencies_5.json */; };
-		D1123920284B423D00D39A0C /* cult_manifesto.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D112391F284B423D00D39A0C /* cult_manifesto.pdf */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
 		D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */; };
 		D11A990127B8615B00EDFDD0 /* GothicA1-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F627B8615B00EDFDD0 /* GothicA1-Regular.ttf */; };
@@ -814,14 +806,6 @@
 		1CEF3D1E28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationApproveUniswapView.swift; sourceTree = "<group>"; };
 		1F6A9FB92A978F970056732C /* PollServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollServiceAssembler.swift; sourceTree = "<group>"; };
 		1F6A9FBB2A97ACE50056732C /* bundledAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bundledAssets; sourceTree = "<group>"; };
-		5C7CC9A82A1579210099276A /* bitcoin_white_paper.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = bitcoin_white_paper.md; sourceTree = "<group>"; };
-		D108AB3D28AB9EB0005E0A63 /* cache_markets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_markets.json; sourceTree = "<group>"; };
-		D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_currencies_3.json; sourceTree = "<group>"; };
-		D108AB3F28AB9EB0005E0A63 /* cache_metadatas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_metadatas.json; sourceTree = "<group>"; };
-		D108AB4028AB9EB0005E0A63 /* cache_currencies_1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_currencies_1.json; sourceTree = "<group>"; };
-		D108AB4128AB9EB0005E0A63 /* cache_currencies_4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_currencies_4.json; sourceTree = "<group>"; };
-		D108AB4228AB9EB0005E0A63 /* cache_currencies_5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_currencies_5.json; sourceTree = "<group>"; };
-		D112391F284B423D00D39A0C /* cult_manifesto.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = cult_manifesto.pdf; sourceTree = "<group>"; };
 		D116CF2F27C31ECC005542AA /* iosApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		D116CF3027C31ECC005542AA /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		D116CF3127C31ECC005542AA /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
@@ -1662,14 +1646,6 @@
 			isa = PBXGroup;
 			children = (
 				1C9B46FA281427B800F6C40B /* under-construction.gif */,
-				D112391F284B423D00D39A0C /* cult_manifesto.pdf */,
-				D108AB4028AB9EB0005E0A63 /* cache_currencies_1.json */,
-				D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */,
-				D108AB4128AB9EB0005E0A63 /* cache_currencies_4.json */,
-				D108AB4228AB9EB0005E0A63 /* cache_currencies_5.json */,
-				D108AB3D28AB9EB0005E0A63 /* cache_markets.json */,
-				D108AB3F28AB9EB0005E0A63 /* cache_metadatas.json */,
-				5C7CC9A82A1579210099276A /* bitcoin_white_paper.md */,
 				1F6A9FBB2A97ACE50056732C /* bundledAssets */,
 			);
 			path = Resources;
@@ -2182,9 +2158,7 @@
 				1C54DC1D2862354C00E378F6 /* QRCodeScan.storyboard in Resources */,
 				1C5D24CC28E19F62007DA557 /* ImprovementProposal.storyboard in Resources */,
 				1C671FFC287FE02200C5F044 /* CurrencySwap.storyboard in Resources */,
-				D108AB4528AB9EB0005E0A63 /* cache_metadatas.json in Resources */,
 				1CB8B0A6288A824C00024E7C /* Degen.storyboard in Resources */,
-				5C7CC9A92A1579210099276A /* bitcoin_white_paper.md in Resources */,
 				1C54DC5C28683DDA00E378F6 /* NaokoAA-Semilight-Italic.otf in Resources */,
 				1CAC5604286EFFC300CCB2B6 /* SFProText-RegularItalic.otf in Resources */,
 				1C54DC5B28683DDA00E378F6 /* NaokoAA-Semilight.otf in Resources */,
@@ -2200,7 +2174,6 @@
 				1CAC5605286EFFC300CCB2B6 /* SFProText-Semibold.otf in Resources */,
 				1CAC55A4286DF26100CCB2B6 /* Networks.storyboard in Resources */,
 				1C54DC5828683DDA00E378F6 /* NaokoAA-BlackItalic.otf in Resources */,
-				D108AB4728AB9EB0005E0A63 /* cache_currencies_4.json in Resources */,
 				1C54DC5E28683DDA00E378F6 /* NaokoAA-Medium-Italic.otf in Resources */,
 				1C67202B2887EB7F00C5F044 /* Confirmation.storyboard in Resources */,
 				1CAC560B286EFFC300CCB2B6 /* SFProDisplay-Semibold.otf in Resources */,
@@ -2218,7 +2191,6 @@
 				D169D5D728FF183C005EE909 /* NetworkSettings.storyboard in Resources */,
 				D157F7D727B69B6400578FF8 /* LaunchScreen.storyboard in Resources */,
 				1CAC560C286EFFC300CCB2B6 /* SFProDisplay-BoldItalic.otf in Resources */,
-				D108AB4828AB9EB0005E0A63 /* cache_currencies_5.json in Resources */,
 				D11A990227B8615B00EDFDD0 /* GothicA1-Light.ttf in Resources */,
 				1C5D24D328E19F62007DA557 /* ImprovementProposals.storyboard in Resources */,
 				1C54DC5228683DDA00E378F6 /* NaokoAA-Extrabold-Italic.otf in Resources */,
@@ -2236,9 +2208,7 @@
 				D1EF5BCB287BEE92004CAD82 /* MnemonicUpdate.storyboard in Resources */,
 				1CE006482889A08A002D1EB3 /* Alert.storyboard in Resources */,
 				D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */,
-				D1123920284B423D00D39A0C /* cult_manifesto.pdf in Resources */,
 				1CAC5601286EFFC300CCB2B6 /* SFProText-Regular.otf in Resources */,
-				D108AB4328AB9EB0005E0A63 /* cache_markets.json in Resources */,
 				1C54DC5D28683DDA00E378F6 /* NaokoAA-Black.otf in Resources */,
 				1CDED609289C4C8200DF34A7 /* NFTSend.storyboard in Resources */,
 				1F6A9FBC2A97ACE50056732C /* bundledAssets in Resources */,
@@ -2255,14 +2225,12 @@
 				D11A990127B8615B00EDFDD0 /* GothicA1-Regular.ttf in Resources */,
 				1CAC5606286EFFC300CCB2B6 /* SFProText-SemiboldItalic.otf in Resources */,
 				1C54DC5628683DDA00E378F6 /* NaokoAA-Regular.otf in Resources */,
-				D108AB4428AB9EB0005E0A63 /* cache_currencies_3.json in Resources */,
 				1C54DBDC285DD10000E378F6 /* Dashboard.storyboard in Resources */,
 				1CB8B0DE2890557400024E7C /* NFTDetail.storyboard in Resources */,
 				1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */,
 				1CAC5602286EFFC300CCB2B6 /* SFProText-Bold.otf in Resources */,
 				1C54DC5728683DDA00E378F6 /* NaokoAA-Medium.otf in Resources */,
 				1C60C327285724D1003BE25D /* MnemonicConfirmation.storyboard in Resources */,
-				D108AB4628AB9EB0005E0A63 /* cache_currencies_1.json in Resources */,
 				1A4C33A130E35EBC0BC27B07 /* mock-candles.json in Resources */,
 				1A4C3A41389B5EC22F3B2B88 /* Authenticate.storyboard in Resources */,
 			);
