@@ -30,6 +30,7 @@ private extension AssemblerBootstrapper {
             // Services
             SettingsServiceAssembler(), // needs to be the first one to initialise
             SettingsServiceActionTriggerAssembler(),
+            PollServiceAssembler(),
             KeyStoreKeyValStoreServiceAssembler(),
             KeyStoreServiceAssembler(),
             KeyChainServiceAssembler(),

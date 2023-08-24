@@ -17,13 +17,10 @@ extension Network {
         Network.Companion().goerli()
     }
 
-    static func rinkeby() -> Network {
-        Network.Companion().rinkeby()
+    static func sepolia() -> Network {
+        Network.Companion().sepolia()
     }
 
-    static func ropsten() -> Network {
-        Network.Companion().ropsten()
-    }
 }
 
 func abiDecodeBigInt(_ value: String) -> BigInt {

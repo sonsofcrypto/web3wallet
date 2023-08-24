@@ -12,6 +12,7 @@ final class NetworksServiceAssembler: AssemblerComponent {
             DefaultNetworksService(
                 store: KeyValueStore(name: "\(DefaultNetworksService.self)"),
                 keyStoreService: resolver.resolve(),
+                pollService: resolver.resolve(),
                 nodeService: resolver.resolve()
             )
         }
