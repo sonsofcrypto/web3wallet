@@ -60,3 +60,19 @@ tasks.register("clean", Delete::class) {
 ////    println("All env")
 ////    System.getenv().keys.forEach{ println("$it ${System.getenv()[it]}") }
 //}
+
+tasks.register("updateResources") {
+    val bundledAssets = rootProject.projectDir.path + "/bundledAssets"
+    val web3libRes = rootProject.project("web3lib").projectDir.path + "/src/androidMain/res/raw"
+    val web3walletCore = rootProject.project("web3walletcore").projectDir.path + "/src/androidMain/res/raw"
+    val iosRes = rootProject.projectDir.path + "/iosApp/iosApp/Resources/bundledAssets"
+
+    listOf("/contracts", "/currencies_meta", "/docs").forEach {
+        delete(web3libRes + it)
+        delete(web3walletCore + it)
+        delete(iosRes + it)
+        copy { from(bundledAssets + it); into(web3libRes + it) }
+        copy { from(bundledAssets + it); into(web3walletCore + it) }
+        copy { from(bundledAssets + it); into(iosRes + it) }
+    }
+}

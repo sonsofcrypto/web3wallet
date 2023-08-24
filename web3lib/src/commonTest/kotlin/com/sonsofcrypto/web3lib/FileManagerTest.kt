@@ -6,7 +6,7 @@ import io.ktor.utils.io.core.toByteArray
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
-class FileMangerTest {
+class FileManagerTest {
 
     @Test
     fun testReadBundlesFile() {

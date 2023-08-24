@@ -200,9 +200,7 @@ class DefaultCurrencyStoreService(
     private suspend fun loadCurrencyCaches(
         network: Network
     ): CurrencyCache = withContext(bgDispatcher) {
-        val name = "cache_currencies_${network.chainId}"
-        val data = BundledAssetProvider().file(name, "json")
-        val jsonString = data?.decodeToString() ?: "[]"
+        val jsonString = file("cache_currencies_${network.chainId}.json") ?: "[]"
         val currencies = jsonDecode<List<Currency>>(jsonString) ?: emptyList()
         val trie = Trie()
         val idxMap = mutableMapOf<String, Int>()
@@ -219,12 +217,12 @@ class DefaultCurrencyStoreService(
 
     private suspend fun loadMetadataCaches(): Map<String, CurrencyMetadata> =
         withContext(bgDispatcher) {
-            jsonDecode(file("cache_metadatas") ?: "{}") ?: emptyMap()
+            jsonDecode(file("cache_metadatas.json") ?: "{}") ?: emptyMap()
         }
 
     private suspend fun loadMarketCaches(): Map<String, CurrencyMarketData> =
         withContext(bgDispatcher) {
-            jsonDecode(file("cache_markets") ?: "{}") ?: emptyMap()
+            jsonDecode(file("cache_markets.json") ?: "{}") ?: emptyMap()
         }
 
     private suspend fun handlesCacheResults(
@@ -250,7 +248,7 @@ class DefaultCurrencyStoreService(
         val idxMap: Map<String, Int>,
     )
 
-    private fun file(name: String): String? {
-        return BundledAssetProvider().file(name, "json")?.decodeToString()
-    }
+    private fun file(name: String): String? = FileManager()
+        .readSync("currencies_meta/" + name, FileManager.Location.BUNDLE)
+        .decodeToString()
 }
