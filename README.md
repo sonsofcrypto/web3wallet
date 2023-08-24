@@ -57,7 +57,7 @@ Compile using Android Studio
 ## iosApp
 Build web3walletcore library ```./gradlew :web3walletcore:assembleXCFramework --rerun-tasks --info```
 and run normally from Xcode. Alternatively add iosApp configuration in Android 
-Studio and run from there
+Studio and run from there ```./gradlew :web3walletcore:embedAndSignAppleFrameworkForXcode```
 
 ### Run iOS tests
 
@@ -84,3 +84,7 @@ Generate keys for local runs
 keytool -genkey -v -keystore androidApp/debug.keystore -storepass android -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000
 keytool -genkey -v -keystore androidApp/release.jks -storepass android -alias androidreleasekey -keyalg RSA -keysize 2048 -validity 10000
 ```
+
+## update resource
+iOS, Android and unit test build expect resource files at different paths.   
+```./gradlew updateResources --rerun --info```

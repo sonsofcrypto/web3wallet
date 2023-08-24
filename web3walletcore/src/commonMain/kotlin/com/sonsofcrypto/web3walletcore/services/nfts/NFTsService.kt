@@ -88,7 +88,9 @@ class OpenSeaNFTsService(
                     parameters.append("owner", address)
                 }
             }.bodyAsText()
-            val assets = jsonDecode<AssetList>(body)?.assets ?: emptyList()
+            // TODO: "[NFTService] get api key"
+            val sanitizedBody = if (!body.contains("assets:")) "{assets: []}" else body
+            val assets = jsonDecode<AssetList>(sanitizedBody)?.assets ?: emptyList()
             storeNFTs(updateMemPoolStatus(nftItemsFrom(assets)))
             storeCollections(nftCollections(assets))
             broadcastNFTsChanged()
