@@ -14,7 +14,7 @@ import okio.buffer
  * - NOTE All paths are relative to bundle or workspace eg `folder/file.txt` if
  * path starts with `/` path is treated as absolute. (Relevant for unit tests)
  * - NOTE When working with workspace files in unit test. Files are saved in
- * `$rootProject/tmp`
+ * `$rootProject/.tmp`
  */
 actual class FileManager {
 
@@ -96,7 +96,7 @@ actual class FileManager {
         if (isUnitTestEnv) {
             return when (location) {
                 BUNDLE -> unitTestBasePath() + "/bundledAssets"
-                APPFILES -> unitTestBasePath() + "/tmp"
+                APPFILES -> unitTestBasePath() + "/.tmp"
             }
         }
         return when (location) {

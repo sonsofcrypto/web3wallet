@@ -29,6 +29,7 @@ open class Route(
 
 // TODO: Add properties from `IRouteWithValidQuote`
 //class RouteWithValidQuote(
+//    protocol: Protocol,
 //    pools: List<Pool>,
 //    tokenPath: List<Currency>,
 //    input: Currency,
