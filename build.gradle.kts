@@ -55,10 +55,10 @@ tasks.register("clean", Delete::class) {
 //    println("JAVA_HOME=${System.getenv("JAVA_HOME")}")
 //    props.forEach { println("$it=${ project.findProperty(it)}") }
 //    sysProps.forEach { println("$it=${ System.getProperty(it) }") }
-////    println("All props")
-////    System.getProperties().keys.forEach{ println("$it ${System.getProperty(it as? String ?: "")}") }
-////    println("All env")
-////    System.getenv().keys.forEach{ println("$it ${System.getenv()[it]}") }
+//    println("All props")
+//    System.getProperties().keys.forEach{ println("$it ${System.getProperty(it as? String ?: "")}") }
+//    println("All env")
+//    System.getenv().keys.forEach{ println("$it ${System.getenv()[it]}") }
 //}
 
 tasks.register("updateResources") {
@@ -66,13 +66,16 @@ tasks.register("updateResources") {
     val web3libRes = rootProject.project("web3lib").projectDir.path + "/src/androidMain/res/raw"
     val web3walletCore = rootProject.project("web3walletcore").projectDir.path + "/src/androidMain/res/raw"
     val iosRes = rootProject.projectDir.path + "/iosApp/iosApp/Resources/bundledAssets"
+    val androidRes = rootProject.projectDir.path + "/androidApp/src/main/assets"
 
     listOf("/contracts", "/currencies_meta", "/docs").forEach {
         delete(web3libRes + it)
         delete(web3walletCore + it)
         delete(iosRes + it)
+        delete(androidRes + it)
         copy { from(bundledAssets + it); into(web3libRes + it) }
         copy { from(bundledAssets + it); into(web3walletCore + it) }
         copy { from(bundledAssets + it); into(iosRes + it) }
+        copy { from(bundledAssets + it); into(androidRes + it) }
     }
 }

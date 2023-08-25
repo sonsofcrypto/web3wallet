@@ -16,35 +16,24 @@ class MainActivity : AppCompatActivity() {
 
         val tv: TextView = findViewById(R.id.text_view)
         tv.text = secureRand(128).toString()
-        println("what in the world")
     }
 
     override fun onResume() {
         super.onResume()
-        println("WTF")
         val fm = FileManager()
-
+        val filesDir = getFilesDir()
         val bytes: ByteArray = FileManager().readSync(
             "docs/bitcoin_white_paper.md",
             FileManager.Location.BUNDLE
         )
-
-        println("[MainActivity] whitepaper lenght ${bytes.decodeToString().length}")
-
-
-        val filesDir = getFilesDir()
-        println("Absolute ${filesDir.absolutePath}")
+        println("[MainActivity] whitepaper length ${bytes.decodeToString().length}")
         try {
             fm.writeSync("Testing".toByteArray(), "test.txt")
             val result = fm.readSync("test.txt").decodeToString()
-            println("RESULT $result")
+            println("[MainActivity] RESULT $result")
         } catch (err: Throwable) {
-            println("FAILED $err")
+            println("[MainActivity] FAILED $err")
         }
-
-
-        println("=== all tests executed ===")
-
     }
 }
 
