@@ -222,7 +222,7 @@ extension AccountViewController: UICollectionViewDelegate {
         if section == .marketInfo && indexPath.item == 1 {
             // TODO: Get presenter to present bonus action view
             let webViewController = WebViewController()
-            let url = Bundle.main.url(forResource: "bundledAssets/cult_manifesto", withExtension: ".pdf")!
+            let url = Bundle.main.url(forResource: "bundledAssets/docs/cult_manifesto", withExtension: ".pdf")!
             let navVc = NavigationController(rootViewController: webViewController)
             webViewController.title = "Manifesto"
             webViewController.webView.loadFileURL(url, allowingReadAccessTo: url)

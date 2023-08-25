@@ -10,7 +10,10 @@ class FileManagerTest {
 
     @Test
     fun testReadBundlesFile() {
-        val bytes: ByteArray = FileManager().readSync("bitcoin_white_paper.md", BUNDLE)
+        val bytes: ByteArray = FileManager().readSync(
+            "docs/bitcoin_white_paper.md",
+            BUNDLE
+        )
         assertTrue(
             bytes.decodeToString().length == 21896,
             "Failed to load bitcoin_white_paper.md"

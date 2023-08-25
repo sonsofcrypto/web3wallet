@@ -3,7 +3,6 @@ package com.sonsofcrypto.web3wallet.android
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.sonsofcrypto.web3lib.utils.BundledAssetProviderApplication
 import com.sonsofcrypto.web3lib.utils.FileManager
 import com.sonsofcrypto.web3lib.utils.secureRand
 
@@ -12,7 +11,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        BundledAssetProviderApplication.setInstance(application)
 
         setContentView(R.layout.activity_main)
 
@@ -23,26 +21,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        Bip39Test().runAll()
-//        Bip44Test().runAll()
-//        KeyValueStoreTest().runAll()
-//        KeyStoreTest().runAll()
-//        TrieTest().runAll()
-//        ProviderTest().runAll()
-//        CoinGeckoTest(this.applicationContext).runAll()
-//        Web3ServiceTests().runAll()
-//        CurrenciesServiceTests().runAll()
-//        WalletStateTest().runAll()
-//        CurrencyFormatterTest().runAll()
-//        CurrencyStoreServiceTest().runAll()
-//        WalletServiceTest().runAll()
-//        UniswapTests().runAll()
-//        EncryptTest().runAll()
-//        WalletCoreTests().runAll()
-//        InterfaceTests().runAll()
         println("WTF")
-//        MultiCallTests().runAll()
         val fm = FileManager()
+
+        val bytes: ByteArray = FileManager().readSync(
+            "docs/bitcoin_white_paper.md",
+            FileManager.Location.BUNDLE
+        )
+
+        println("[MainActivity] whitepaper lenght ${bytes.decodeToString().length}")
+
+
         val filesDir = getFilesDir()
         println("Absolute ${filesDir.absolutePath}")
         try {

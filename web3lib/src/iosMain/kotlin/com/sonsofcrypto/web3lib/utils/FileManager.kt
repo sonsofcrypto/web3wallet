@@ -26,12 +26,13 @@ actual class FileManager {
     @Throws(Throwable::class)
     actual fun readSync(path: String, location: Location): ByteArray {
         val comps = path.split("/").last().split(".")
-        val name = comps.first()
         val ext = comps.last()
+        val name = path.replace(".$ext", "")
         return when (location) {
             BUNDLE -> {
                 val filePath = if (isUnitTestEnv) basePath(location) + "/$path"
                     else NSBundle.mainBundle.pathForResource(name, ext)
+                    ?: NSBundle.mainBundle.pathForResource("bundledAssets/$name", ext)
                     ?: throw Error.BundlePath(path)
                 return NSData.dataWithContentsOfFile(filePath)?.toByteArray()
                     ?: throw Error.ReadData(filePath)
@@ -69,7 +70,7 @@ actual class FileManager {
         if (isUnitTestEnv) {
             return when (location) {
                 BUNDLE -> unitTestBasePath() + "/bundledAssets"
-                APPFILES -> unitTestBasePath() + "/tmp"
+                APPFILES -> unitTestBasePath() + "/.tmp"
             }
         }
         return when (location) {
