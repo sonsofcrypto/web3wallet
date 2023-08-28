@@ -65,6 +65,8 @@ class OpenSeaNFTsService(
     }
 
     override suspend fun fetchNFTs(): List<NFTItem> {
+        // TODO: "[NFTService] get api key"
+        return emptyList();
         val address = networksService.wallet()?.address()?.toHexStringAddress()?.hexString
             ?: return emptyList()
         val network = networksService.network ?: return emptyList()

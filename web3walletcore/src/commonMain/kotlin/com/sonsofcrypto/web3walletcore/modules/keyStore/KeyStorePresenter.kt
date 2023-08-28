@@ -21,6 +21,7 @@ import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.Button
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.ButtonSheetViewModel.SheetMode
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.ButtonSheetViewModel.SheetMode.COMPACT
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.ButtonSheetViewModel.SheetMode.EXPANDED
+import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.ButtonSheetViewModel.SheetMode.HIDDEN
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.Item
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.State.Loaded
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.TransitionTargetView.ButtonAt
@@ -60,6 +61,7 @@ class DefaultKeyStorePresenter(
     private var buttonsSheet: KeyStoreViewModel.ButtonSheetViewModel = buttonsCompacted()
     private var targetView: KeyStoreViewModel.TransitionTargetView = None
     private val uiScope = CoroutineScope(uiDispatcher)
+    private var initialPresent: Boolean = true
 
     override fun present() { updateView() }
 
@@ -150,6 +152,7 @@ class DefaultKeyStorePresenter(
 
     private fun updateView(state: KeyStoreViewModel.State = Loaded) {
         view.get()?.update(viewModel(state))
+        initialPresent = false
     }
 
     private fun viewModel(state: KeyStoreViewModel.State): KeyStoreViewModel = KeyStoreViewModel(

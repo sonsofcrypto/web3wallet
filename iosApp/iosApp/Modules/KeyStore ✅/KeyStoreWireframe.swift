@@ -8,7 +8,6 @@ import web3walletcore
 // MARK: - DefaultKeyStoreWireframe
 
 final class DefaultKeyStoreWireframe {
-
     private weak var parent: UIViewController?
     private let keyStoreService: KeyStoreService
     private let networksService: NetworksService

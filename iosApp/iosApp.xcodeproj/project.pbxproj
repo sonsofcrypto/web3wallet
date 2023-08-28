@@ -129,7 +129,6 @@
 		1C60C2B5285724D0003BE25D /* CurrencyPickerWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DF285724D0003BE25D /* CurrencyPickerWireframeFactory.swift */; };
 		1C60C2B6285724D0003BE25D /* CurrencyPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C1E0285724D0003BE25D /* CurrencyPicker.storyboard */; };
 		1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E3285724D0003BE25D /* KeyStoreWireframeFactory.swift */; };
-		1C60C2BB285724D0003BE25D /* ButtonsSheetViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E7285724D0003BE25D /* ButtonsSheetViewCell.swift */; };
 		1C60C2BF285724D0003BE25D /* KeyStoreWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */; };
 		1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EC285724D0003BE25D /* KeyStoreCell.swift */; };
 		1C60C2C1285724D0003BE25D /* KeyStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1ED285724D0003BE25D /* KeyStoreView.swift */; };
@@ -370,6 +369,8 @@
 		1CEF3D1F28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D1E28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift */; };
 		1F6A9FBA2A978F970056732C /* PollServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6A9FB92A978F970056732C /* PollServiceAssembler.swift */; };
 		1F6A9FBC2A97ACE50056732C /* bundledAssets in Resources */ = {isa = PBXBuildFile; fileRef = 1F6A9FBB2A97ACE50056732C /* bundledAssets */; };
+		2DC2C8B1CFC018D58D54D527 /* LogoAnimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C41558C39C7EFB97BC1F /* LogoAnimView.swift */; };
+		2DC2C9BD5DE2813FCC617F20 /* ButtonsSheetViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CBF8C62A6A6D9D6E9648 /* ButtonsSheetViewCell.swift */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
 		D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */; };
 		D11A990127B8615B00EDFDD0 /* GothicA1-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F627B8615B00EDFDD0 /* GothicA1-Regular.ttf */; };
@@ -565,7 +566,6 @@
 		1C60C1DF285724D0003BE25D /* CurrencyPickerWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C1E0285724D0003BE25D /* CurrencyPicker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CurrencyPicker.storyboard; sourceTree = "<group>"; };
 		1C60C1E3285724D0003BE25D /* KeyStoreWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframeFactory.swift; sourceTree = "<group>"; };
-		1C60C1E7285724D0003BE25D /* ButtonsSheetViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsSheetViewCell.swift; sourceTree = "<group>"; };
 		1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframe.swift; sourceTree = "<group>"; };
 		1C60C1EC285724D0003BE25D /* KeyStoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreCell.swift; sourceTree = "<group>"; };
 		1C60C1ED285724D0003BE25D /* KeyStoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreView.swift; sourceTree = "<group>"; };
@@ -806,6 +806,8 @@
 		1CEF3D1E28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationApproveUniswapView.swift; sourceTree = "<group>"; };
 		1F6A9FB92A978F970056732C /* PollServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollServiceAssembler.swift; sourceTree = "<group>"; };
 		1F6A9FBB2A97ACE50056732C /* bundledAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bundledAssets; sourceTree = "<group>"; };
+		2DC2C41558C39C7EFB97BC1F /* LogoAnimView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoAnimView.swift; sourceTree = "<group>"; };
+		2DC2CBF8C62A6A6D9D6E9648 /* ButtonsSheetViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsSheetViewCell.swift; sourceTree = "<group>"; };
 		D116CF2F27C31ECC005542AA /* iosApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		D116CF3027C31ECC005542AA /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		D116CF3127C31ECC005542AA /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
@@ -1018,12 +1020,14 @@
 			path = VisualEffectView;
 			sourceTree = "<group>";
 		};
-		1C0643CD2892EA1800643C15 /* Cells */ = {
+		1C0643CD2892EA1800643C15 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C1EC285724D0003BE25D /* KeyStoreCell.swift */,
+				2DC2C41558C39C7EFB97BC1F /* LogoAnimView.swift */,
+				2DC2CBF8C62A6A6D9D6E9648 /* ButtonsSheetViewCell.swift */,
 			);
-			path = Cells;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		1C0643D02892F0E800643C15 /* Cells */ = {
@@ -1234,18 +1238,9 @@
 				1C60C1ED285724D0003BE25D /* KeyStoreView.swift */,
 				1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */,
 				1C60C1E3285724D0003BE25D /* KeyStoreWireframeFactory.swift */,
-				1C60C1E6285724D0003BE25D /* ButtonSheetView */,
-				1C0643CD2892EA1800643C15 /* Cells */,
+				1C0643CD2892EA1800643C15 /* Views */,
 			);
 			path = "KeyStore ✅";
-			sourceTree = "<group>";
-		};
-		1C60C1E6285724D0003BE25D /* ButtonSheetView */ = {
-			isa = PBXGroup;
-			children = (
-				1C60C1E7285724D0003BE25D /* ButtonsSheetViewCell.swift */,
-			);
-			path = ButtonSheetView;
 			sourceTree = "<group>";
 		};
 		1C60C1FA285724D0003BE25D /* Alert ✅ */ = {
@@ -2299,7 +2294,6 @@
 				1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */,
 				1C60C2F5285724D0003BE25D /* NFTDetailView.swift in Sources */,
 				1C671FF8287FDFF100C5F044 /* CurrencySwapView.swift in Sources */,
-				1C60C2BB285724D0003BE25D /* ButtonsSheetViewCell.swift in Sources */,
 				1A4C3EB4D429242923984C76 /* Button.swift in Sources */,
 				1CDED5F02897EB3700DF34A7 /* SettingsCellBackgroundSupplementaryView.swift in Sources */,
 				1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */,
@@ -2599,6 +2593,8 @@
 				1A4C315AD9431C9ED566A189 /* NetworkSettingsWireframeFactory.swift in Sources */,
 				1A4C3F7E4490C3E804D3946D /* NetworkSettingsWireframe.swift in Sources */,
 				1A4C36D5E453DDACAE192245 /* SelectionCollectionViewCell.swift in Sources */,
+				2DC2C8B1CFC018D58D54D527 /* LogoAnimView.swift in Sources */,
+				2DC2C9BD5DE2813FCC617F20 /* ButtonsSheetViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

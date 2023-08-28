@@ -8,8 +8,7 @@ import web3walletcore
 final class KeyStoreViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var logoContainer: UIView!
-    @IBOutlet weak var logoView: UIImageView!
+    @IBOutlet weak var logoAnimView: LogoAnimView!
     @IBOutlet weak var buttonsCollectionView: UICollectionView!
     @IBOutlet weak var buttonBackgroundView: UIVisualEffectView!
     @IBOutlet weak var buttonHandleView: UIView!
@@ -50,7 +49,10 @@ final class KeyStoreViewController: BaseViewController {
         super.viewDidLayoutSubviews()
         if needsLayoutUI {
             configureInsets()
-            setButtonsSheetMode(viewModel?.buttons.mode, animated: false)
+            setButtonsSheetMode(
+                firstAppear ? .hidden :viewModel?.buttons.mode,
+                animated: false
+            )
             layoutButtonsBackground()
             needsLayoutUI = false
         }
@@ -76,7 +78,7 @@ final class KeyStoreViewController: BaseViewController {
 extension KeyStoreViewController {
 
     func update(with viewModel: KeyStoreViewModel) {
-        self.viewModel?.buttons.mode != viewModel.buttons.mode
+        self.viewModel?.buttons.mode != viewModel.buttons.mode && !firstAppear
             ? setButtonsSheetMode(viewModel.buttons.mode)
             : ()
         self.viewModel = viewModel
@@ -163,7 +165,6 @@ extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        
         .init(
             width: view.bounds.width - Theme.padding * 2,
             height: collectionView == buttonsCollectionView
@@ -193,21 +194,14 @@ extension KeyStoreViewController {
 
     func updateLogo(_ viewModel: KeyStoreViewModel) {
         // NOTE: For first keyStore added, we animate logo to hidden
-        if !logoContainer.isHidden && !viewModel.isEmpty {
-            UIView.springAnimate(0.7, delay: 0.3, damping: 0.01, velocity: 0.8, animations: {
-                self.logoView.alpha = 0
-            })
+        if !logoAnimView.isHidden && !viewModel.isEmpty {
             UIView.animate(withDuration: 0.6, delay: 0.3) {
-                self.logoContainer.alpha = 0
+                self.logoAnimView.alpha = 0
             }
             return
+        } else if logoAnimView.isHidden && !viewModel.isEmpty {
+            animateIntro()
         }
-        logoContainer.isHidden = !viewModel.isEmpty
-        guard viewDidAppear else { return }
-        // NOTE: Here is safe to set alpha to 1 since isHidden above would take care if showing
-        // or not the logo
-        logoContainer.alpha = 1
-        logoView.alpha = 1
     }
 
     func selectedIdxPaths() -> [IndexPath] {
@@ -299,17 +293,19 @@ extension KeyStoreViewController {
 
     func animateIntro() {
         guard viewModel?.isEmpty ?? false else {
-            animateButtonsIntro()
-            logoContainer.alpha = 1
             return
         }
-        (logoContainer.alpha, logoView.alpha) = (0, 0)
+        logoAnimView.isHidden = false
+        logoAnimView.alpha = 0.001
+        logoAnimView.animate()
+        setButtonsSheetMode(.hidden, animated: false)
         animateButtonsIntro()
-        UIView.springAnimate(0.7, damping: 0.01, velocity: 0.8, animations: {
-            self.logoView.alpha = 1
-        })
-        UIView.animate(withDuration: 1) {
-            self.logoContainer.alpha = 1
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            self?.logoAnimView.alpha = 1
+            self?.logoAnimView.animate()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.7) { [weak self] in
+                self?.setButtonsSheetMode(.compact, animated: true)
+            }
         }
     }
 
@@ -317,7 +313,7 @@ extension KeyStoreViewController {
         guard firstAppear && viewModel?.isEmpty ?? true else { return }
         firstAppear = false
         setButtonsSheetMode(.hidden, animated: false)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.7) { [weak self] in
             self?.setButtonsSheetMode(.compact, animated: true)
         }
     }
