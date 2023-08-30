@@ -20,13 +20,11 @@ final class KeyStoreViewController: BaseViewController {
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
     private var prevViewSize: CGSize = .zero
     private var needsLayoutUI: Bool = false
-    private var firstAppear: Bool = true
     private var viewDidAppear: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        logoAnimView.backgroundColor = UIColor.red.withAlphaComponent(0.2)
         configureUI()
         presenter?.present()
         prevViewSize = view.bounds.size
@@ -49,10 +47,7 @@ final class KeyStoreViewController: BaseViewController {
         super.viewDidLayoutSubviews()
         if needsLayoutUI {
             configureInsets()
-            setButtonsSheetMode(
-                firstAppear ? .hidden :viewModel?.buttons.mode,
-                animated: false
-            )
+            setButtonsSheetMode(viewModel?.buttons.mode, animated: false)
             layoutButtonsBackground()
             needsLayoutUI = false
         }
@@ -78,8 +73,8 @@ final class KeyStoreViewController: BaseViewController {
 extension KeyStoreViewController {
 
     func update(with viewModel: KeyStoreViewModel) {
-        self.viewModel?.buttons.mode != viewModel.buttons.mode && !firstAppear
-            ? setButtonsSheetMode(viewModel.buttons.mode)
+        self.viewModel?.buttons.mode != viewModel.buttons.mode
+            ? setButtonsSheetMode(viewModel.buttons.mode, animated: false)
             : ()
         self.viewModel = viewModel
         collectionView.reloadData()
@@ -107,7 +102,6 @@ extension KeyStoreViewController: UICollectionViewDataSource {
         }
         return viewModel?.items.count ?? 0
     }
-    
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -193,14 +187,19 @@ extension KeyStoreViewController {
     }
 
     func updateLogo(_ viewModel: KeyStoreViewModel) {
-        // NOTE: For first keyStore added, we animate logo to hidden
+        // Adding first wallet
         if !logoAnimView.isHidden && !viewModel.isEmpty {
-            UIView.animate(withDuration: 0.6, delay: 0.3) {
-                self.logoAnimView.alpha = 0
-            }
-            return
-        } else if logoAnimView.isHidden && !viewModel.isEmpty {
-            animateIntro()
+            UIView.animate(
+                withDuration: 0.6,
+                delay: 0.3, animations: { self.logoAnimView.alpha = 0 },
+                completion: {_ in self.logoAnimView.isHidden = true }
+            )
+        // Removing last wallet
+        } else if logoAnimView.isHidden && viewModel.isEmpty {
+            animateIntro(false)
+        // Launching app with wallets
+        } else {
+            setButtonsSheetMode(.compact, animated: false)
         }
     }
 
@@ -217,8 +216,13 @@ extension KeyStoreViewController {
         _ mode: KeyStoreViewModel.ButtonSheetViewModelSheetMode? = .compact,
         animated: Bool = true
     ) {
+        let targetMode = viewDidAppear ? mode : .hidden
         buttonsCollectionView.reloadData()
-        guard let mode = mode, let cv = buttonsCollectionView, !cv.isDragging else { return }
+        guard let mode = targetMode,
+              let cv = buttonsCollectionView,
+              !cv.isDragging else {
+            return
+        }
         switch mode {
         case .hidden:
             buttonsCollectionView.setContentOffset(
@@ -291,27 +295,23 @@ extension KeyStoreViewController {
 // MARK: - Into animations
 extension KeyStoreViewController {
 
-    func animateIntro() {
+    func animateIntro(_ animateButtons: Bool = true) {
         guard viewModel?.isEmpty ?? false else {
             return
         }
         logoAnimView.isHidden = false
         logoAnimView.alpha = 0.001
         logoAnimView.animate()
-        setButtonsSheetMode(.hidden, animated: false)
-        animateButtonsIntro()
+        if animateButtons {
+            animateButtonsIntro()
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             self?.logoAnimView.alpha = 1
             self?.logoAnimView.animate()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.7) { [weak self] in
-                self?.setButtonsSheetMode(.compact, animated: true)
-            }
         }
     }
 
     func animateButtonsIntro() {
-        guard firstAppear && viewModel?.isEmpty ?? true else { return }
-        firstAppear = false
         setButtonsSheetMode(.hidden, animated: false)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.7) { [weak self] in
             self?.setButtonsSheetMode(.compact, animated: true)
