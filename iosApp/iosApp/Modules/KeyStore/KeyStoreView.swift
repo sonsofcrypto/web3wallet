@@ -16,7 +16,8 @@ final class KeyStoreViewController: BaseViewController {
     var presenter: KeyStorePresenter!
 
     private var viewModel: KeyStoreViewModel?
-    private var transitionTargetView: KeyStoreViewModel.TransitionTargetView = KeyStoreViewModel.TransitionTargetViewNone()
+    private var transitionTargetView: KeyStoreViewModel.TransitionTargetView
+        = KeyStoreViewModel.TransitionTargetViewNone()
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
     private var prevViewSize: CGSize = .zero
     private var needsLayoutUI: Bool = false
@@ -24,7 +25,6 @@ final class KeyStoreViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        logoAnimView.backgroundColor = UIColor.red.withAlphaComponent(0.2)
         configureUI()
         presenter?.present()
         prevViewSize = view.bounds.size
@@ -96,7 +96,10 @@ extension KeyStoreViewController {
 // MARK: - UICollectionViewDataSource
 extension KeyStoreViewController: UICollectionViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         if collectionView == buttonsCollectionView {
             return viewModel?.buttons.buttons.count ?? 0
         }
@@ -118,25 +121,40 @@ extension KeyStoreViewController: UICollectionViewDataSource {
             ).update(with: button)
             
         default:
-            return collectionView.dequeue(KeyStoreCell.self, for: indexPath).update(
-                with: viewModel?.items[indexPath.item],
-                handler: .init(accessoryHandler: { [weak self] in
-                    self?.presenter.handle(event: KeyStorePresenterEvent.DidSelectAccessory(idx: indexPath.item.int32))
-                }),
-                index: indexPath.item
-            )
+            return collectionView.dequeue(KeyStoreCell.self, for: indexPath)
+                .update(
+                    with: viewModel?.items[indexPath.item],
+                    handler: .init(accessoryHandler: { [weak self] in
+                        let event = KeyStorePresenterEvent.DidSelectAccessory(
+                            idx: indexPath.item.int32
+                        )
+                        self?.presenter.handle(event: event)
+                    }),
+                    index: indexPath.item
+                )
         }
     }
 }
 
 extension KeyStoreViewController: UICollectionViewDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(
+            _ collectionView: UICollectionView,
+            didSelectItemAt indexPath: IndexPath
+    ) {
         if collectionView == buttonsCollectionView {
-            presenter.handle(event: KeyStorePresenterEvent.DidSelectButtonAt(idx: indexPath.item.int32))
+            presenter.handle(
+                event: KeyStorePresenterEvent.DidSelectButtonAt(
+                    idx: indexPath.item.int32
+                )
+            )
             return
         }
-        presenter.handle(event: KeyStorePresenterEvent.DidSelectKeyStoreItemtAt(idx: indexPath.item.int32))
+        presenter.handle(
+            event: KeyStorePresenterEvent.DidSelectKeyStoreItemtAt(
+                idx: indexPath.item.int32
+            )
+        )
     }
 
     func collectionView(
