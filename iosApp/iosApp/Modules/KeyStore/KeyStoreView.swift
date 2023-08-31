@@ -288,11 +288,11 @@ extension KeyStoreViewController {
             height: view.bounds.height - top.y + Theme.padding * 2
         )
         if let cv = buttonsCollectionView {
-            let contentHeight = collectionView.contentSize.height
-            var alpha = (cv.contentInset.top + cv.contentOffset.y) / 100
-            if contentHeight + view.safeAreaInsets.top  > -cv.contentOffset.y {
-                alpha = 1
-            }
+            let offsetCompact = cv.contentInset.top + cv.safeAreaInsets.top
+            let offsetExpanded = view.bounds.height - cv.contentSize.height
+                - cv.safeAreaInsets.bottom
+            var alpha = (offsetCompact + cv.contentOffset.y)
+                / (offsetCompact - offsetExpanded)
             buttonBackgroundView.alpha = min(1, max(0, alpha))
         }
     }
@@ -341,13 +341,15 @@ extension KeyStoreViewController {
 extension KeyStoreViewController: TargetViewTransitionDatasource {
 
     func targetView() -> UIView {
-        if let input = transitionTargetView as? KeyStoreViewModel.TransitionTargetViewKeyStoreItemAt {
-            let idxPath = IndexPath(item: input.idx.int, section: 0)
-            return collectionView.cellForItem(at: idxPath) ?? view
+        if let input = transitionTargetView as? KeyStoreViewModel
+            .TransitionTargetViewKeyStoreItemAt {
+                let idxPath = IndexPath(item: input.idx.int, section: 0)
+                return collectionView.cellForItem(at: idxPath) ?? view
         }
-        if let input = transitionTargetView as? KeyStoreViewModel.TransitionTargetViewButtonAt {
-            let idxPath = IndexPath(item: input.idx.int, section: 0)
-            return buttonsCollectionView.cellForItem(at: idxPath) ?? view
+        if let input = transitionTargetView as? KeyStoreViewModel
+            .TransitionTargetViewButtonAt {
+                let idxPath = IndexPath(item: input.idx.int, section: 0)
+                return buttonsCollectionView.cellForItem(at: idxPath) ?? view
         }
         return view
     }
