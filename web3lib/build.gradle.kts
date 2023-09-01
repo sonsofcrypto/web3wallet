@@ -166,7 +166,7 @@ kotlin {
     val runIosTests by project.tasks.creating(IosSimulatorTestsTask::class) {
         dependsOn(testBinary.linkTask)
         testExecutable.set(testBinary.outputFile)
-        simulatorId.set("06D4554E-11A9-4D9F-88F7-AB9CB677DA52")
+        simulatorId.set("6F2501E5-656F-41CE-A2B8-0F638E5E7213")
     }
 }
 

@@ -12,47 +12,47 @@ data class Setting(
     val group: Group,
     val action: Action?,
 ) {
-    enum class Group {
+    enum class Group(val value: String) {
         /** THEME */
-        THEME,
+        THEME("THEME"),
         /** IMPROVEMENT */
-        IMPROVEMENT,
+        IMPROVEMENT("IMPROVEMENT"),
         /** DEVELOPER */
-        DEVELOPER,
-        DEVELOPER_APIS,
-        DEVELOPER_APIS_NFTS,
-        DEVELOPER_TRANSITIONS,
+        DEVELOPER("DEVELOPER"),
+        DEVELOPER_APIS("DEVELOPER_APIS"),
+        DEVELOPER_APIS_NFTS("DEVELOPER_APIS_NFTS"),
+        DEVELOPER_TRANSITIONS("DEVELOPER_TRANSITIONS"),
         /** ABOUT */
-        ABOUT,
+        ABOUT("ABOUT"),
         /** FEEDBACK */
-        FEEDBACK,
+        FEEDBACK("FEEDBACK"),
     }
 
-    enum class Action {
+    enum class Action(val value: String) {
         /** THEME */
-        THEME_MIAMI_LIGHT,
-        THEME_MIAMI_DARK,
-        THEME_IOS_LIGHT,
-        THEME_IOS_DARK,
+        THEME_MIAMI_LIGHT("THEME_MIAMI_LIGHT"),
+        THEME_MIAMI_DARK("THEME_MIAMI_DARK"),
+        THEME_IOS_LIGHT("THEME_IOS_LIGHT"),
+        THEME_IOS_DARK("THEME_IOS_DARK"),
         /** IMPROVEMENT */
-        IMPROVEMENT_PROPOSALS,
+        IMPROVEMENT_PROPOSALS("IMPROVEMENT_PROPOSALS"),
         /** DEVELOPER_APIS_NFTS */
-        DEVELOPER_APIS_NFTS_OPEN_SEA,
+        DEVELOPER_APIS_NFTS_OPEN_SEA("DEVELOPER_APIS_NFTS_OPEN_SEA"),
         /** DEVELOPER_TRANSITIONS */
-        DEVELOPER_TRANSITIONS_CARD_FLIP,
-        DEVELOPER_TRANSITIONS_SHEET,
+        DEVELOPER_TRANSITIONS_CARD_FLIP("DEVELOPER_TRANSITIONS_CARD_FLIP"),
+        DEVELOPER_TRANSITIONS_SHEET("DEVELOPER_TRANSITIONS_SHEET"),
         /** DEVELOPER */
-        DEVELOPER_RESET_KEYSTORE,
+        DEVELOPER_RESET_KEYSTORE("DEVELOPER_RESET_KEYSTORE"),
         /** ABOUT */
-        ABOUT_WEBSITE,
-        ABOUT_GIT_HUB,
-        ABOUT_TWITTER,
-        ABOUT_TELEGRAM,
-        ABOUT_DISCORD,
-        ABOUT_MEDIUM,
-        ABOUT_MAIL,
+        ABOUT_WEBSITE("ABOUT_WEBSITE"),
+        ABOUT_GIT_HUB("ABOUT_GIT_HUB"),
+        ABOUT_TWITTER("ABOUT_TWITTER"),
+        ABOUT_TELEGRAM("ABOUT_TELEGRAM"),
+        ABOUT_DISCORD("ABOUT_DISCORD"),
+        ABOUT_MEDIUM("ABOUT_MEDIUM"),
+        ABOUT_MAIL("ABOUT_MAIL"),
         /** FEEDBACK */
-        FEEDBACK_REPORT,
+        FEEDBACK_REPORT("FEEDBACK_REPORT"),
     }
 }
 
@@ -78,15 +78,25 @@ class DefaultSettingsService(
     }
 
     override fun select(setting: Setting) {
+        println("[SettingsService] select ${setting.group.value} ${setting.action?.value}")
         val action = setting.action ?: return
-        store[setting.group.toString()] = action.toString()
+        store[setting.group.value] = action.value
     }
 
     override fun isSelected(setting: Setting): Boolean {
+        println("[SettingsService] isSelected ${setting.group.value} ${setting.action?.value}")
         val action = setting.action ?: return false
-        return action.toString() == store.get<String>(setting.group.toString())
+        val result = action.value == store.get<String>(setting.group.value)
+        println("resut: $result")
+        return result
     }
 
-    private fun isInitialized(group: Setting.Group): Boolean =
-        null != store.get<String>(group.toString())
+//    private fun isInitialized(group: Setting.Group): Boolean =
+//        null != store.get<String>(group.toString())
+
+    private fun isInitialized(group: Setting.Group): Boolean  {
+        val result = null != store.get<String>(group.value)
+        println("[SettingsService] isInitialized ${group.value} res ${result}")
+        return result
+    }
 }

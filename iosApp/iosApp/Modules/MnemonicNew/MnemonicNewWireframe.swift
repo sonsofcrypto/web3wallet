@@ -37,13 +37,13 @@ extension DefaultMnemonicNewWireframe {
         let vc = wireUp()
         let presentingTopVc = (parent as? UINavigationController)?.topVc
         // NOTE: This does not work on fresh install
-        if settingsService.isSelected(setting: .init(group: .developer, action: .developerTransitionsCardFlip)) {
+        if settingsService.isSelected(setting: .init(group: .developerTransitions, action: .developerTransitionsCardFlip)) {
             let presentedTopVc = (vc as? UINavigationController)?.topVc
             let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
             self.vc = vc
             vc.modalPresentationStyle = .overFullScreen
             vc.transitioningDelegate = delegate
-        } else if settingsService.isSelected(setting: .init(group: .developer, action: .developerTransitionsSheet)) {
+        } else if settingsService.isSelected(setting: .init(group: .developerTransitions, action: .developerTransitionsSheet)) {
             vc.modalPresentationStyle = .automatic
         }
         presentingTopVc?.present(vc, animated: true)

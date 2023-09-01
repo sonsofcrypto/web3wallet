@@ -53,7 +53,7 @@ extension DefaultAccountWireframe {
         let vc = wireUp()
         self.vc = vc
         if settingsService.isSelected(
-            setting: .init(group: .developer, action: .developerTransitionsSheet)
+            setting: .init(group: .developerTransitions, action: .developerTransitionsSheet)
         ) {
             vc.modalPresentationStyle = .automatic
             parent?.show(vc, sender: self)
