@@ -102,7 +102,7 @@ class DefaultDashboardInteractor(
             marketdata(currency)?.currentPrice ?: 0.0
         )
 
-    override fun nfts(network: Network): List<NFTItem> = nftsService.yourNFTs()
+    override fun nfts(network: Network): List<NFTItem> = nftsService.nfts()
 
     override fun actions(): List<Action> = actionsService.actions()
 

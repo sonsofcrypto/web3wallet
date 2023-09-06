@@ -16,8 +16,8 @@ sealed class NFTsDashboardViewModel {
 
     data class Collection(
         val identifier: String,
-        val coverImage: String,
+        val coverImage: String?,
         val title: String,
-        val author: String,
+        val author: String?,
     )
 }

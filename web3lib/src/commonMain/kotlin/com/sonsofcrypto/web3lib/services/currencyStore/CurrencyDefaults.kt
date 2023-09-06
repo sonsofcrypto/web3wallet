@@ -1,6 +1,14 @@
 package com.sonsofcrypto.web3lib.services.currencyStore
 
 import com.sonsofcrypto.web3lib.types.Currency
+import com.sonsofcrypto.web3lib.types.Network
+
+fun defaultCurrencies(network: Network): List<Currency> = when (network.chainId) {
+    Network.ethereum().chainId -> ethereumDefaultCurrencies
+    Network.sepolia().chainId -> sepoliaDefaultCurrencies
+    Network.goerli().chainId -> goerliDefaultCurrencies
+    else -> emptyList()
+}
 
 val ethereumDefaultCurrencies = listOf(
     Currency(

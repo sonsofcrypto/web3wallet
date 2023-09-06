@@ -35,7 +35,7 @@ class WalletServiceTests2 {
 
     @Test
     fun testPooling() = runBlocking {
-        val walletServices = testWalletServices()
+        val walletServices = testEnvServices("wallet2")
         val walletService = walletServices.walletService as DefaultWalletService
         val networksService = walletServices.networksService
         val network = walletService.selectedNetwork()!!
@@ -142,54 +142,3 @@ class WalletServiceTests2 {
         }
     }
 }
-
-fun testWalletServices(network: Network = Network.sepolia()): WalletServices {
-    var currencyStoreService = DefaultCurrencyStoreService(
-        DefaultCoinGeckoService(),
-        KeyValueStore("WalletServiceTest.marketStore"),
-        KeyValueStore("WalletServiceTest.candleStore"),
-        KeyValueStore("WalletServiceTest.metadataStore"),
-        KeyValueStore("WalletServiceTest.userCurrencyStore"),
-    )
-    val keyStoreService = DefaultKeyStoreService(
-        KeyValueStore("WalletServiceTest.keyStore"),
-        KeyStoreTest.MockKeyChainService()
-    )
-    keyStoreService.selected = mockKeyStoreItem
-    val networksService = DefaultNetworksService(
-        KeyValueStore("web3serviceTest"),
-        keyStoreService,
-        DefaultPollService(),
-        DefaultNodeService()
-    )
-    networksService.network = network
-    var walletService = DefaultWalletService(
-        networksService,
-        currencyStoreService,
-        KeyValueStore("WalletServiceTest.currencies"),
-        KeyValueStore("WalletServiceTest.networkState"),
-        KeyValueStore("WalletServiceTest.transferLogCache"),
-    )
-    walletService.setCurrencies(ethereumDefaultCurrencies, Network.ethereum())
-    walletService = DefaultWalletService(
-        networksService,
-        currencyStoreService,
-        KeyValueStore("WalletServiceTest.currencies"),
-        KeyValueStore("WalletServiceTest.networkState"),
-        KeyValueStore("WalletServiceTest.transferLogCache"),
-    )
-    networksService.provider(networksService.network!!).debugLogs = true
-    return WalletServices(
-        currencyStoreService,
-        keyStoreService,
-        networksService,
-        walletService,
-    )
-}
-
-class WalletServices(
-    val currencyStoreService: CurrencyStoreService,
-    val keyStoreService: KeyStoreService,
-    val networksService: NetworksService,
-    val walletService: WalletService,
-)

@@ -38,13 +38,14 @@ interface NFTsService {
      *  We use the data fetched by the latest request to fetchNFTs. */
     fun nft(identifier: String): NFTItem
     /** List of unique collections for your nfts. */
-    fun yourCollections(): List<NFTCollection>
+    fun collections(): List<NFTCollection>
     /** List of nfts. */
-    fun yourNFTs(): List<NFTItem>
+    fun nfts(): List<NFTItem>
     /** List of nfts for a given collection id. */
-    fun yourNFTs(collectionId: String): List<NFTItem>
-    /** To be called when a transaction for sending an nft is successful. This is so we can flag
-     * that NFT as pending confirmation so we hide it or flag it in your NFTs list */
+    fun nfts(collectionId: String): List<NFTItem>
+    /** To be called when a transaction for sending an nft is successful. This
+     * is so we can flag that NFT as pending confirmation so we hide it or flag
+     * it in your NFTs list */
     fun nftSent(identifier: String)
     /** Add a listener to the service */
     fun addListener(listener: NFTsServiceListener)
@@ -65,8 +66,6 @@ class OpenSeaNFTsService(
     }
 
     override suspend fun fetchNFTs(): List<NFTItem> {
-        // TODO: "[NFTService] get api key"
-        return emptyList();
         val address = networksService.wallet()?.address()?.toHexStringAddress()?.hexString
             ?: return emptyList()
         val network = networksService.network ?: return emptyList()
@@ -90,31 +89,30 @@ class OpenSeaNFTsService(
                     parameters.append("owner", address)
                 }
             }.bodyAsText()
-            // TODO: "[NFTService] get api key"
             val sanitizedBody = if (!body.contains("assets:")) "{assets: []}" else body
             val assets = jsonDecode<AssetList>(sanitizedBody)?.assets ?: emptyList()
             storeNFTs(updateMemPoolStatus(nftItemsFrom(assets)))
             storeCollections(nftCollections(assets))
             broadcastNFTsChanged()
-            yourNFTs()
+            nfts()
         } catch (err: Throwable) {
             broadcastNFTsChanged()
-            yourNFTs().ifEmpty { throw err }
+            nfts().ifEmpty { throw err }
         }
     }
 
     override fun collection(identifier: String): NFTCollection =
-        yourCollections().first { it.identifier == identifier }
+        collections().first { it.identifier == identifier }
 
-    override fun nft(identifier: String): NFTItem = yourNFTs().first { it.identifier == identifier }
+    override fun nft(identifier: String): NFTItem = nfts().first { it.identifier == identifier }
 
-    override fun yourCollections(): List<NFTCollection> =
+    override fun collections(): List<NFTCollection> =
         jsonDecode(store[collectionsKey] ?: "[]") ?: emptyList()
 
-    override fun yourNFTs(): List<NFTItem> = jsonDecode(store[nftsKey] ?: "[]") ?: emptyList()
+    override fun nfts(): List<NFTItem> = jsonDecode(store[nftsKey] ?: "[]") ?: emptyList()
 
-    override fun yourNFTs(collectionId: String): List<NFTItem> =
-        yourNFTs().filter { it.collectionIdentifier == collectionId }
+    override fun nfts(collectionId: String): List<NFTItem> =
+        nfts().filter { it.collectionIdentifier == collectionId }
 
     override fun nftSent(identifier: String) {
         val nfts = nftIdsInMemPool().toMutableList()
@@ -198,9 +196,11 @@ class OpenSeaNFTsService(
 
     private val addressKey: String get() =
         networksService.wallet()?.address()?.toHexStringAddress()?.hexString ?: "-"
+
     private val networkKey: String get() = networksService.network?.id() ?: "-"
 
-    private fun broadcastNFTsChanged() { listeners.forEach { it.nftsChanged() } }
+    private fun broadcastNFTsChanged() =
+        listeners.forEach { it.nftsChanged() }
 }
 
 @Serializable

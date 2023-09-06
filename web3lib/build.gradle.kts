@@ -25,7 +25,6 @@ kotlin {
             binaries.all {
                 linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/")
             }
-
         },
         iosSimulatorArm64() {
             compilations.getByName("main") {
@@ -183,6 +182,7 @@ buildkonfig {
         buildConfigField(Type.STRING, "alchemyKey", properties["com.sonsofcrypto.alchemyKey"] as String)
         buildConfigField(Type.STRING, "etherscanKey", properties["com.sonsofcrypto.etherscanKey"] as String)
         buildConfigField(Type.STRING, "testMnemonic", properties["com.sonsofcrypto.testMnemonic"] as String)
+        buildConfigField(Type.STRING, "moralisKey", properties["com.sonsofcrypto.moralisKey"] as String)
         buildConfigField(Type.STRING, "sourceSet", "default")
     }
 }

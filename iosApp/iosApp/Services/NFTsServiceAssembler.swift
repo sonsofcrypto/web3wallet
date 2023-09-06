@@ -10,7 +10,7 @@ final class NFTsServiceAssembler: AssemblerComponent {
         
         registry.register(scope: .singleton) { resolver -> NFTsService in
             
-            OpenSeaNFTsService(
+            NFTServiceMoralis(
                 networksService: resolver.resolve(),
                 store: KeyValueStore(name: "\(NFTsService.self)")
             )

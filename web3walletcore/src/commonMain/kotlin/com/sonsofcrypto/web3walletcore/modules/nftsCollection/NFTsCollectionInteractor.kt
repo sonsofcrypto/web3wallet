@@ -17,5 +17,5 @@ class DefaultNFTsCollectionInteractor(
         nftsService.collection(collectionId)
 
     override fun fetchNFTs(collectionId: String): List<NFTItem> =
-        nftsService.yourNFTs(collectionId)
+        nftsService.nfts(collectionId)
 }

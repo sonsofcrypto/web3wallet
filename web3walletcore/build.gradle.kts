@@ -8,7 +8,6 @@ plugins {
 
 kotlin {
     android()
-
     val xcf = XCFramework()
     val frameworkPath = project.file("$rootDir/coreCrypto/build/ios").absolutePath
     listOf(
@@ -77,7 +76,11 @@ kotlin {
             }
         }
         val androidMain by getting
-        val androidTest by getting
+        val androidTest by getting {
+            dependencies {
+                implementation(files("$rootDir/coreCrypto/build/hostOS/coreCrypto.jar"))
+            }
+        }
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting

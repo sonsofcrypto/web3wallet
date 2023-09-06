@@ -28,11 +28,11 @@ class DefaultNFTsDashboardInteractor(
     private var listener: NFTsDashboardInteractorLister? = null
 
     override suspend fun fetchYourNFTs(isPullDownToRefreh: Boolean): List<NFTItem> {
-        if (!isPullDownToRefreh) return nftsService.yourNFTs()
+        if (!isPullDownToRefreh) return nftsService.nfts()
         return nftsService.fetchNFTs()
     }
 
-    override fun yourCollections(): List<NFTCollection> = nftsService.yourCollections()
+    override fun yourCollections(): List<NFTCollection> = nftsService.collections()
 
     override fun add(listener: NFTsDashboardInteractorLister) {
         if (this.listener != null) { remove(this.listener!!)}

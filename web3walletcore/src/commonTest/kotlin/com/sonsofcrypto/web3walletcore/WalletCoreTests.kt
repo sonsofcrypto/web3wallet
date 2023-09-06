@@ -1,10 +1,24 @@
 package com.sonsofcrypto.web3walletcore
 
+import com.sonsofcrypto.web3lib.BuildKonfig
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
+import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
+import com.sonsofcrypto.web3lib.services.currencyStore.DefaultCurrencyStoreService
+import com.sonsofcrypto.web3lib.services.currencyStore.defaultCurrencies
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyChainService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyChainServiceErr
+import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.ServiceType
+import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
+import com.sonsofcrypto.web3lib.services.networks.NetworksService
+import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
+import com.sonsofcrypto.web3lib.services.poll.DefaultPollService
+import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
+import com.sonsofcrypto.web3lib.services.wallet.WalletService
+import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3walletcore.modules.root.DefaultRootPresenter
@@ -20,60 +34,11 @@ class WalletCoreTests {
 
     @Test
     fun testBuild() {
-        val keyStoreService = DefaultKeyStoreService(
-            KeyValueStore("WalletServiceTest.keyStore"),
-            MockKeyChainService()
-        )
-
-        val presenter = DefaultRootPresenter(
-            WeakRef(MockRootView()),
-            MockRootWireframe(),
-            keyStoreService
-        )
-        println("=== IT LIVES $presenter")
-        val debug = "" // System.getProperty("java.library.path")
-        println("=== debug $debug")
-        val bip39 = Bip39.from(Bip39.EntropySize.ES128)
-        println(bip39.mnemonic)
-    }
-
-    @Test
-    fun testProposalsService() {
-        val service = DefaultImprovementProposalsService(KeyValueStore("mock"))
-        GlobalScope.launch {
-            val proposals = service.fetch()
-            println("=== proposals ${proposals.count()}")
-            println("=== cached ${proposals.count()}")
-        }
+        println("Hello Test World")
     }
 }
 
-class MockKeyChainService: KeyChainService {
-
-    val store = mutableMapOf<String, ByteArray>()
-
-    @Throws(KeyChainServiceErr::class)
-    override fun get(id: String, type: ServiceType): ByteArray {
-        return store[id]!!
-    }
-
-    @Throws(KeyChainServiceErr::class)
-    override fun set(id: String, data: ByteArray, type: ServiceType, icloud: Boolean) {
-        store[id] = data
-    }
-
-    override fun remove(id: String, type: ServiceType) {
-        store.remove(id)
-    }
-
-    override fun biometricsSupported(): Boolean {
-        return true
-    }
-
-    override fun biometricsAuthenticate(title: String, handler: (Boolean, Error?) -> Unit) {
-        TODO("Not yet implemented")
-    }
-}
+val testMnemonic = BuildKonfig.testMnemonic
 
 class MockRootWireframe: RootWireframe {
 

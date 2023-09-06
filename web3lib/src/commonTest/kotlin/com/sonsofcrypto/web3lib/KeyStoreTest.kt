@@ -22,7 +22,7 @@ class KeyStoreTest {
         val data = secureRand(32)
         val password = "testpass"
         val secretStorage = SecretStorage.encrypt(
-            id = mockKeyStoreItem.uuid,
+            id = testMockKeyStoreItem.uuid,
             data = data,
             password = password,
             address = "67ca77ce83b9668460ab6263dc202a788443510c",
@@ -60,7 +60,7 @@ class KeyStoreTest {
 
         val password = "testpass"
         val secretStorage = SecretStorage.encrypt(
-            id = mockKeyStoreItem.uuid,
+            id = testMockKeyStoreItem.uuid,
             data = secureRand(32),
             password = password,
             address = "67ca77ce83b9668460ab6263dc202a788443510c",
@@ -68,17 +68,17 @@ class KeyStoreTest {
             mnemonicLocale = null,
             mnemonicPath = null,
         )
-        keyStore.add(mockKeyStoreItem, password, secretStorage)
+        keyStore.add(testMockKeyStoreItem, password, secretStorage)
         assertTrue(
             keyStore.items().size == 1,
             "Did not save KeyStore item"
         )
         assertTrue(
-            keyStore.items().first() == mockKeyStoreItem,
-            "Stored item does not equal \n${keyStore.items().first()}\n${mockKeyStoreItem}"
+            keyStore.items().first() == testMockKeyStoreItem,
+            "Stored item does not equal \n${keyStore.items().first()}\n${testMockKeyStoreItem}"
         )
         assertTrue(
-            keyStore.secretStorage(mockKeyStoreItem, password) != null,
+            keyStore.secretStorage(testMockKeyStoreItem, password) != null,
             "Failed secret storage"
         )
 
@@ -93,26 +93,26 @@ class KeyStoreTest {
             MockKeyChainService()
         )
         keyStore.items().forEach { keyStore.remove(it) }
-        keyStore.selected = mockKeyStoreItem
+        keyStore.selected = testMockKeyStoreItem
         assertTrue(
-            keyStore.selected == mockKeyStoreItem,
+            keyStore.selected == testMockKeyStoreItem,
             "Failed selected"
         )
     }
 
     @Test
     fun testSecretStorageEncryptDecryptMnemonic() {
-        val bip39 = Bip39(testMnemonic, "", WordList.ENGLISH)
+        val bip39 = Bip39(privTestMnemonic, "", WordList.ENGLISH)
         val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
         val path = "m/44'/60'/0'/0/0"
         val data = bip44.deriveChildKey(path).key
         val password = "testpass"
         val secretStorage = SecretStorage.encrypt(
-            id = mockKeyStoreItem.uuid,
+            id = testMockKeyStoreItem.uuid,
             data = data,
             password = password,
             address = "67ca77ce83b9668460ab6263dc202a788443510c",
-            mnemonic = testMnemonic.joinToString(separator = " "),
+            mnemonic = privTestMnemonic.joinToString(separator = " "),
             mnemonicLocale = bip39.worldList.localeString(),
             mnemonicPath = path,
         )
@@ -120,8 +120,8 @@ class KeyStoreTest {
         val decodedSecretStorage = Json.decodeFromString<SecretStorage>(json)
         val result = decodedSecretStorage.decrypt(password)
         assertTrue(
-            result.mnemonic == testMnemonic.joinToString(separator = " "),
-            "Failed to decrypt \n${result.mnemonic}\n${testMnemonic.joinToString(separator = " ")}"
+            result.mnemonic == privTestMnemonic.joinToString(separator = " "),
+            "Failed to decrypt \n${result.mnemonic}\n${privTestMnemonic.joinToString(separator = " ")}"
         )
         assertTrue(
             result.key.toHexString() == data.toHexString(),
@@ -182,7 +182,7 @@ private val mockSecretStorageString = """
 }
 """.trimIndent()
 
-val mockKeyStoreItem = KeyStoreItem(
+val testMockKeyStoreItem = KeyStoreItem(
     uuid = "uuid001",
     name = "wallet mock",
     sortOrder = 0u,
@@ -197,4 +197,4 @@ val mockKeyStoreItem = KeyStoreItem(
     ),
 )
 
-val testMnemonic = listOf("club", "aspect", "deposit", "protect", "arrest", "leader", "zone", "crash", "west", "strong", "tent", "hammer")
+val privTestMnemonic = listOf("club", "aspect", "deposit", "protect", "arrest", "leader", "zone", "crash", "west", "strong", "tent", "hammer")
