@@ -44,20 +44,23 @@ class NFTServiceMoralis(
         val network = networksService.network ?: return emptyList()
         val address = walletAddress?.toHexStringAddress()?.hexString
             ?: return emptyList()
-        val allResps = mutableListOf<Response>()
+        val allResps = mutableListOf<Response?>()
         try {
             var resp = fetch(address, network, null)
             var cursor: String? = resp?.cursor
-            while (cursor != null && resp != null) {
-                allResps.add(resp)
+            allResps.add(resp)
+            while (cursor != null) {
                 resp = fetch(address, network, cursor)
                 cursor = resp?.cursor
+                allResps.add(resp)
             }
         } catch (err: Throwable) {
-            println("[NFTServiceMoralis] $err")
+            println("[NFTServiceMoralis] error: $err")
         }
         return withBgCxt {
-            val results = allResps.map { it.result }
+            val results = allResps
+                .filterNotNull()
+                .map { it.result }
                 .filterNotNull()
                 .flatten()
             val normalized = transformToStantardNFTs(results)
@@ -125,7 +128,7 @@ class NFTServiceMoralis(
             }
             url {
                 protocol = URLProtocol.HTTPS
-                host = "https://deep-index.moralis.io/"
+                host = "deep-index.moralis.io"
                 path("api/v2.2/$address/nft")
                 parameters.append("chain", chain)
                 parameters.append("format", "decimal")

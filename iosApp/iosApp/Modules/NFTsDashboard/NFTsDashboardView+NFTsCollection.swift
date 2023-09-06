@@ -131,7 +131,9 @@ private extension NFTsDashboardViewController {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        imageView.load(url: collection.coverImage)
+        if let coverImage = collection.coverImage {
+            imageView.load(url: coverImage)
+        }
         view.addArrangedSubview(imageView)
         imageView.addConstraints(
             [
@@ -153,11 +155,11 @@ private extension NFTsDashboardViewController {
         authorLabel.numberOfLines = 1
         authorLabel.attributedText = Localized(
             "nfts.dashboard.collection.popular.author",
-            collection.author
+            collection.author ?? ""
         ).attributtedString(
             with: font,
             and: Theme.color.textPrimary,
-            updating: [collection.author],
+            updating: [collection.author ?? ""],
             withColour: Theme.color.textPrimary,
             andFont: font
         )

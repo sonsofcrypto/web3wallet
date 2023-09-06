@@ -78,25 +78,15 @@ class DefaultSettingsService(
     }
 
     override fun select(setting: Setting) {
-        println("[SettingsService] select ${setting.group.value} ${setting.action?.value}")
         val action = setting.action ?: return
         store[setting.group.value] = action.value
     }
 
     override fun isSelected(setting: Setting): Boolean {
-        println("[SettingsService] isSelected ${setting.group.value} ${setting.action?.value}")
         val action = setting.action ?: return false
-        val result = action.value == store.get<String>(setting.group.value)
-        println("resut: $result")
-        return result
+        return action.value == store.get<String>(setting.group.value)
     }
 
-//    private fun isInitialized(group: Setting.Group): Boolean =
-//        null != store.get<String>(group.toString())
-
-    private fun isInitialized(group: Setting.Group): Boolean  {
-        val result = null != store.get<String>(group.value)
-        println("[SettingsService] isInitialized ${group.value} res ${result}")
-        return result
-    }
+    private fun isInitialized(group: Setting.Group): Boolean =
+        null != store.get<String>(group.value)
 }
