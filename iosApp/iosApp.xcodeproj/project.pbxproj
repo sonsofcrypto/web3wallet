@@ -2044,7 +2044,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D157F7F127B69B6400578FF8 /* Build configuration list for PBXNativeTarget "iosApp" */;
 			buildPhases = (
-				D1A6713E283D6B1C0042A448 /* ShellScript */,
+				D1A6713E283D6B1C0042A448 /* Run Script */,
 				D157F7C327B69B6300578FF8 /* Sources */,
 				D157F7C427B69B6300578FF8 /* Frameworks */,
 				D157F7C527B69B6300578FF8 /* Resources */,
@@ -2248,7 +2248,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		D1A6713E283D6B1C0042A448 /* ShellScript */ = {
+		D1A6713E283D6B1C0042A448 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2257,13 +2257,14 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export JAVA_HOME=\"/Users/anon/Library/Java/JavaVirtualMachines/temurin-17.0.8/Contents/Home\"\n\ncd \"$SRCROOT/..\"\n./gradlew :web3walletcore:embedAndSignAppleFrameworkForXcode\n";
+			shellScript = "export JAVA_HOME=\"/Users/anon/Library/Java/JavaVirtualMachines/temurin-17.0.8.1/Contents/Home\"\n\ncd \"$SRCROOT/..\"\n./gradlew :web3walletcore:embedAndSignAppleFrameworkForXcode\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
