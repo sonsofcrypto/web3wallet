@@ -55,7 +55,9 @@ extension DefaultMnemonicImportWireframe {
             UIApplication.shared.open(Constant.saltExplanationURL)
         }
         if destination is MnemonicImportWireframeDestination.Dismiss {
-            vc?.popOrDismiss()
+            // NOTE: Needs next run loop dispatch so that collectionView has
+            // enough time to reload to have target cell for animation
+            DispatchQueue.main.async { [weak vc] in vc?.popOrDismiss() }
         }
     }
 }

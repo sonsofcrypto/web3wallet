@@ -36,7 +36,6 @@ extension DefaultMnemonicNewWireframe {
     func present() {
         let vc = wireUp()
         let presentingTopVc = (parent as? UINavigationController)?.topVc
-        // NOTE: This does not work on fresh install
         if settingsService.isSelected(setting: .init(group: .developerTransitions, action: .developerTransitionsCardFlip)) {
             let presentedTopVc = (vc as? UINavigationController)?.topVc
             let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
@@ -54,7 +53,9 @@ extension DefaultMnemonicNewWireframe {
             UIApplication.shared.open(Constant.saltExplanationURL)
         }
         if destination is MnemonicNewWireframeDestination.Dismiss {
-            vc?.popOrDismiss()
+            // NOTE: Needs next run loop dispatch so that collectionView has
+            // enough time to reload to have target cell for animation
+            DispatchQueue.main.async { [weak vc] in vc?.popOrDismiss() }
         }
     }
 }

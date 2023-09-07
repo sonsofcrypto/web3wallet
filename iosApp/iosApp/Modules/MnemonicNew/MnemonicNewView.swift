@@ -323,7 +323,7 @@ extension MnemonicNewViewController: UIViewControllerTransitioningDelegate {
             targetView: targetView,
             isPresenting: false,
             scaleAdjustment: 0.05,
-        handler: { [weak self] in self?.animatedTransitioning = nil }
+            handler: { [weak self] in self?.animatedTransitioning = nil }
         )
         return animatedTransitioning
     }
