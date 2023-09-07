@@ -545,7 +545,8 @@ extension EdgeCardsController: UIGestureRecognizerDelegate {
         default:
             ()
         }
-        panRecognizer.isEnabled = mode != .master
+        edgeRecognizer.isEnabled = !(mode == .topCard || mode == .bottomCard)
+        panRecognizer.isEnabled = mode != .master && edgeRecognizer.isEnabled
     }
 
     func gestureRecognizer(
