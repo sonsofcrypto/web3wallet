@@ -165,6 +165,14 @@ extension KeyStoreViewController: UICollectionViewDelegate {
         layoutButtonsBackground()
     }
 
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didEndDisplaying cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        layoutButtonsBackground()
+    }
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         updateSheetModeIfNeeded(scrollView)
     }
@@ -280,6 +288,7 @@ extension KeyStoreViewController {
             buttonBackgroundView.frame = .zero
             return
         }
+
         let top = topCell.convert(topCell.bounds.minXminY, to: view)
         buttonBackgroundView.frame = CGRect(
             x: 0,
@@ -287,11 +296,24 @@ extension KeyStoreViewController {
             width: view.bounds.width,
             height: view.bounds.height - top.y + Theme.padding * 2
         )
-        if let cv = buttonsCollectionView {
+
+        guard let cv = buttonsCollectionView else { return }
+
+        if viewModel?.buttons.mode == .compact,
+           (viewModel?.items.count ?? 0) > 4,
+           let idxPath = collectionView.indexPathsForVisibleItems
+               .sorted(by: { $0.item < $1.item }).last,
+           let cell = collectionView.cellForItem(at: idxPath) {
+                let maxY = cell.convert(cell.bounds, to: view).maxY
+                let alpha = maxY > buttonBackgroundView.frame.minY ? 1 : 0
+                UIView.animate(withDuration: 0.2) {
+                    self.buttonBackgroundView.alpha = CGFloat(alpha)
+                }
+        } else {
             let offsetCompact = cv.contentInset.top + cv.safeAreaInsets.top
             let offsetExpanded = view.bounds.height - cv.contentSize.height
                 - cv.safeAreaInsets.bottom
-            var alpha = (offsetCompact + cv.contentOffset.y)
+            let alpha = (offsetCompact + cv.contentOffset.y)
                 / (offsetCompact - offsetExpanded)
             buttonBackgroundView.alpha = min(1, max(0, alpha))
         }
