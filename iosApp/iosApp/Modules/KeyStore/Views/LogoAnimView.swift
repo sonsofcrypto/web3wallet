@@ -31,22 +31,22 @@ class LogoAnimView: UIView {
             $0?.center = CGPoint(x: bounds.midX, y: bounds.midY)
         }
         let walletSize = CGSize(
-                width: bounds.width * 0.641025641,
-                height: bounds.height * 0.3076923077
+            width: bounds.width * 0.641025641,
+            height: bounds.height * 0.3076923077
         )
         wallet?.bounds = CGRect(origin: .zero, size: walletSize)
         wallet?.center = CGPoint(
-                x: bounds.width * 0.1852564103 + walletSize.width / 2.0,
-                y: bounds.height * 0.6506410256 + walletSize.height / 2.0
+            x: bounds.width * 0.1852564103 + walletSize.width / 2.0,
+            y: bounds.height * 0.6506410256 + walletSize.height / 2.0
         )
         let degenSize = CGSize(
-                width: bounds.width * 0.3205128205,
-                height: bounds.height * 0.09615384615
+            width: bounds.width * 0.3205128205,
+            height: bounds.height * 0.09615384615
         )
         degen?.bounds = CGRect(origin: .zero, size: degenSize)
         degen?.center = CGPoint(
-                x: bounds.width * 0.483974359 + degenSize.width / 2.0,
-                y: bounds.height * 0.8608974359 + degenSize.height / 2.0
+            x: bounds.width * 0.483974359 + degenSize.width / 2.0,
+            y: bounds.height * 0.8608974359 + degenSize.height / 2.0
         )
     }
 
@@ -63,33 +63,33 @@ class LogoAnimView: UIView {
         animViews.forEach { $0?.alpha = 0 }
 
         UIView.springAnimate(
-                1,
-                delay: 0,
-                animations: { [weak self] in self?.sun?.transform = .identity }
+            1,
+            delay: 0,
+            animations: { [weak self] in self?.sun?.transform = .identity }
         )
         UIView.springAnimate(
-                1,
-                delay: 0.15,
-                animations: { [weak self] in self?.web3?.transform = .identity }
+            1,
+            delay: 0.15,
+            animations: { [weak self] in self?.web3?.transform = .identity }
         )
         UIView.springAnimate(
-                1,
-                delay: 0.3,
-                animations: { [weak self] in self?.badge?.transform = .identity }
+            1,
+            delay: 0.3,
+            animations: { [weak self] in self?.badge?.transform = .identity }
         )
         UIView.springAnimate(
-                0.01,
-                animations: { [weak self] in self?.sun?.alpha = 1 }
+            0.01,
+            animations: { [weak self] in self?.sun?.alpha = 1 }
         )
         UIView.springAnimate(
-                0.01,
-                delay: 0.15,
-                animations: { [weak self] in self?.web3?.alpha = 1 }
+            0.01,
+            delay: 0.15,
+            animations: { [weak self] in self?.web3?.alpha = 1 }
         )
         UIView.springAnimate(
-                0.01,
-                delay: 0.3,
-                animations: { [weak self] in self?.badge?.alpha = 1 }
+            0.01,
+            delay: 0.3,
+            animations: { [weak self] in self?.badge?.alpha = 1 }
         )
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
@@ -163,19 +163,19 @@ class LogoAnimView: UIView {
 
     private func degensImage() -> UIImage {
         UIImage.animatedImage(
-                with: (86564..<86635).map {
-                    UIImage(named: "logo_anim_degens_\($0)")!
-                },
-                duration: 1.5
+            with: (86564..<86635).map {
+                UIImage(named: "logo_anim_degens_\($0)")!
+            },
+            duration: 1.5
         )!
     }
 
     private func walletImage() -> UIImage {
         UIImage.animatedImage(
-                with: (108056..<108293).map {
-                    UIImage(named: "logo_anim_wallet_line_\($0)")!
-                },
-                duration: 1.5
+            with: (108056..<108293).map {
+                UIImage(named: "logo_anim_wallet_line_\($0)")!
+            },
+            duration: 1.5
         )!
     }
 }

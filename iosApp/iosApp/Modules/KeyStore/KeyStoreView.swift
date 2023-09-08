@@ -9,10 +9,12 @@ final class KeyStoreViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var logoAnimView: LogoAnimView!
+    @IBOutlet weak var openBetaView: UIStackView!
     @IBOutlet weak var buttonsCollectionView: UICollectionView!
     @IBOutlet weak var buttonBackgroundView: UIVisualEffectView!
     @IBOutlet weak var buttonHandleView: UIView!
     
+
     var presenter: KeyStorePresenter!
 
     private var viewModel: KeyStoreViewModel?
@@ -217,8 +219,14 @@ extension KeyStoreViewController {
         if !logoAnimView.isHidden && !viewModel.isEmpty {
             UIView.animate(
                 withDuration: 0.6,
-                delay: 0.3, animations: { self.logoAnimView.alpha = 0 },
-                completion: {_ in self.logoAnimView.isHidden = true }
+                delay: 0.3, animations: {
+                    self.logoAnimView.alpha = 0
+                    self.openBetaView.alpha = 0
+                },
+                completion: { _ in
+                    self.logoAnimView.isHidden = true
+                    self.openBetaView.isHidden = true
+                }
             )
         // Removing last wallet
         } else if logoAnimView.isHidden && viewModel.isEmpty {
@@ -345,6 +353,7 @@ extension KeyStoreViewController {
         if animateButtons {
             animateButtonsIntro()
         }
+        animateOpenBeta()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             self?.logoAnimView.alpha = 1
             self?.logoAnimView.animate()
@@ -356,6 +365,26 @@ extension KeyStoreViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.7) { [weak self] in
             self?.setButtonsSheetMode(.compact, animated: true)
         }
+    }
+
+    func animateOpenBeta() {
+        let views = openBetaView.arrangedSubviews.map { $0 as? UIImageView }
+        for (idx, view) in views.compactMap({$0}).enumerated() {
+            view.alpha = 0.2
+            animateLetter(view, delay: (idx > 4 ? 0.1 * Double(idx) : 0) + 3)
+        }
+        openBetaView.isHidden = false
+        UIView.animate(withDuration: 1) { self.openBetaView.alpha = 1 }
+    }
+
+    func animateLetter(_ view: UIView, delay: TimeInterval) {
+        UIView.springAnimate(
+            0.7,
+            delay: delay,
+            damping: 0.01,
+            velocity: 0.8,
+            animations: { view.alpha = 1 }
+        )
     }
 }
 
