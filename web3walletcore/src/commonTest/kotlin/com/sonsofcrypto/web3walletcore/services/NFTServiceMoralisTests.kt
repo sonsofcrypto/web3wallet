@@ -28,6 +28,17 @@ class NFTServiceMoralisTests {
             println(it.title)
         }
     }
+
+    @Test
+    fun testGatewayUrl() {
+        val url = "ipfs://QmXQsYJMbAh8Vv293AUm7ZRt5bgzBc2b9Ghw5cTrbuqJar/29.jpeg"
+        val gatewayUrl = ipfsToGateway(url)
+        println("[GatewayUrl] $gatewayUrl")
+    }
+
+    private fun ipfsToGateway(url: String): String =
+        if (!url.contains("ipfs://")) url
+        else url.replace("ipfs://", "https://ipfs.io/ipfs/")
 }
 
 

@@ -164,7 +164,7 @@ class NFTServiceMoralis(
                             info = "",
                         )
                     } ?: emptyList(),
-                    image = image,
+                    imageUrl = image,
                     address = tokenAddress,
                     schemaName = it.contractType ?: "",
                     tokenId = BigInt.from(tokenId, 10),

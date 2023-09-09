@@ -43,7 +43,7 @@ private extension ConfirmationSendNFTView {
     
     func imageView(with nftItem: NFTItem) -> UIView {
         let image = UIImageView()
-        image.load(url: nftItem.image)
+        image.load(url: nftItem.gatewayImageUrl)
         image.layer.cornerRadius = Theme.cornerRadiusSmall
         image.clipsToBounds = true
         let view = UIView()

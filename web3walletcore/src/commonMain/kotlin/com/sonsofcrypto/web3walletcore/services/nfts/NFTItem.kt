@@ -15,7 +15,7 @@ data class NFTItem(
     /** List of properties **/
     val properties: List<Property>,
     /** URL pointing to the NFT image **/
-    val image: String,
+    val imageUrl: String,
     /** Contract address of the NFT **/
     val address: String,
     /** Schema name **/
@@ -26,6 +26,13 @@ data class NFTItem(
     /** True if the NFT is known to be in the mempool pending for a transaction to be broadcasted */
     var inMemPool: Boolean,
 ) {
+
+    val gatewayImageUrl: String
+        get() = ipfsToGateway(imageUrl)
+
+    private fun ipfsToGateway(url: String): String =
+        if (!url.contains("ipfs://")) url
+        else url.replace("ipfs://", "https://ipfs.io/ipfs/")
 
     @Serializable
     data class Property(
