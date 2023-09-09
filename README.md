@@ -165,8 +165,10 @@ keytool -genkey -v -keystore androidApp/debug.keystore -storepass android -alias
 keytool -genkey -v -keystore androidApp/release.jks -storepass android -alias androidreleasekey -keyalg RSA -keysize 2048 -validity 10000
 ```
 
-<hr/>
-
-![web3wallet_first_launch](bundledAssets/exclude/first_launch_teaser_7.gif)
+## teaser 
+<p align="center">
+  <img src="bundledAssets/exclude/first_launch_teaser_7.gif"/>
+  <br/><a href="https://sonsofcrypto.com">sonsofcrypto.com</a>
+</p>
 
 [//]: # (![web3wallet]&#40;iosApp/iosApp/Assets.xcassets/AppIcon.appiconset/w3w_logo_1024.png&#41;)
