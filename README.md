@@ -1,5 +1,6 @@
 ![web3wallet](iosApp/iosApp/Assets.xcassets/AppIcon.appiconset/w3w_logo_1024.png)
-### NOTE: Currently under active development.
+# web3wallet
+NOTE: Currently under active development.
 
 # coreCrypto
 
