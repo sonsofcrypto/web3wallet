@@ -10,6 +10,16 @@ for more info see [sonsofcrypto.com](https://sonsofcrypto.com)
 
 NOTE: Currently under active development.
 
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 # coreCrypto
 
 `CoreCrypto` is written in [Go](https://go.dev) with binding and wrappers for
