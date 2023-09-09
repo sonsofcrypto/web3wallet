@@ -52,7 +52,10 @@ final class NFTLoadingView: UIView {
     }
     
     func configure(with item: NFTsDashboardViewModel.NFT) {
-        imageView.load(url: item.image)
+        imageView.setImage(
+            url: item.previewImage ?? item.image,
+            fallBackUrl: item.image
+        )
     }
 }
 

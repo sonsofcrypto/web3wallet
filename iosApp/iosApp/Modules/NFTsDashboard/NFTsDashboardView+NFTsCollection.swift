@@ -132,7 +132,7 @@ private extension NFTsDashboardViewController {
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         if let coverImage = collection.coverImage {
-            imageView.load(url: coverImage)
+            imageView.setImage(url: coverImage)
         }
         view.addArrangedSubview(imageView)
         imageView.addConstraints(

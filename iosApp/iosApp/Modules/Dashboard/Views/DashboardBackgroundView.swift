@@ -5,10 +5,10 @@
 import UIKit
 
 final class DashboardBackgroundView: BackgroundView {
-    private lazy var topPalm = UIImageView(named: "dashboard-palm")
-    private lazy var btmSun = UIImageView(named: "overscroll_sun")
-    private lazy var btmLogo = UIImageView(named: "overscroll_logo")
-    private lazy var btmMeme = UIImageView(named: "overscroll_meme")
+    private lazy var topPalm = UIImageView(imgName: "dashboard-palm")
+    private lazy var btmSun = UIImageView(imgName: "overscroll_sun")
+    private lazy var btmLogo = UIImageView(imgName: "overscroll_logo")
+    private lazy var btmMeme = UIImageView(imgName: "overscroll_meme")
 
     override init(frame: CGRect) {
         super.init(frame: frame)

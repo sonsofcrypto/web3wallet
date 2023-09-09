@@ -12,7 +12,23 @@ extension UIImageView {
         case none
     }
 
-    func setImage(url: URL?, placeholder: Placeholder) {
+    func setImage(
+        url: String?,
+        fallBackUrl: String? = nil,
+        placeholder: Placeholder = .activityIndicator
+    ) {
+        setImage(
+            url: url != nil ? URL(string: url!) : nil,
+            fallBackUrl: fallBackUrl != nil ? URL(string: fallBackUrl!) : nil,
+            placeholder: placeholder
+        )
+    }
+
+    func setImage(
+        url: URL?,
+        fallBackUrl: URL? = nil,
+        placeholder: Placeholder = .activityIndicator
+    ) {
         let previousTag = tag
         let ogTag = url?.absoluteString.sdbmhash ?? 0
 
@@ -40,7 +56,7 @@ extension UIImageView {
 
         tag = ogTag
 
-        ServiceDirectory.Cache.image.image(url: url) { [weak self] result in
+        DefaultImageCache.shared.image(url: url) { [weak self] result in
             DispatchQueue.main.async {
                 guard self?.tag == ogTag else {
                     return
@@ -51,14 +67,18 @@ extension UIImageView {
                     self?.removeActivityIndicator()
                 case let .failure(err):
                     print(err)
-                    self?.removeActivityIndicator()
+                    guard self?.tag == ogTag, let fallBack = fallBackUrl else {
+                        self?.removeActivityIndicator()
+                        return
+                    }
+                    self?.setImage(url: fallBack, placeholder: placeholder)
                 }
             }
         }
     }
 
     func cancelImageLoad() {
-        ServiceDirectory.Cache.image.cancel(nil, urlHash: tag)
+        DefaultImageCache.shared.cancel(nil, urlHash: tag)
     }
 
     func addActivityIndicator() {

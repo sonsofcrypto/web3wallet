@@ -29,7 +29,7 @@ extension ImprovementProposalViewController {
     
     func update(with viewModel: ImprovementProposalViewModel) {
         self.viewModel = viewModel
-        imageView.load(url: viewModel.imageUrl)
+        imageView.setImage(url: viewModel.imageUrl)
         title = viewModel.name
         statusView.label.text = viewModel.status
 

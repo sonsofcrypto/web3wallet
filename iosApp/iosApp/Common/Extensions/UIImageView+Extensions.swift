@@ -3,52 +3,10 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-import Kingfisher
 
 extension UIImageView {
-    
-    func load(
-        url: String,
-        fallback: String? = nil,
-        placeholder: UIImage? = nil
-    ) {
-        guard let url = URL(string: url) else { return }
 
-        load(
-            url: url,
-            fallback: fallback != nil ? URL(string: fallback!) : nil
-        )
-    }
-    
-    func load(url: URL, fallback: URL? = nil, placeholder: UIImage? = nil) {
-        
-        let activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.color = Theme.color.activityIndicator
-        activityIndicator.startAnimating()
-        addSubview(activityIndicator)
-        activityIndicator.addConstraints(
-            [
-                .layout(anchor: .centerXAnchor),
-                .layout(anchor: .centerYAnchor)
-            ]
-        )
-        
-        kf.setImage(with: url) { [self] result in
-            switch result {
-            case .success:
-                activityIndicator.removeFromSuperview()
-            case let .failure(err):
-                print("[UIImageView] err \(err)")
-                if let fallback = fallback {
-                    kf.setImage(with: fallback) { _ in
-                        activityIndicator.removeFromSuperview()
-                    }
-                }
-            }
-        }
-    }
-
-    convenience init(named: String) {
-        self.init(image: UIImage(named: named))
+    convenience init(imgName: String) {
+        self.init(image: UIImage(named: imgName))
     }
 }

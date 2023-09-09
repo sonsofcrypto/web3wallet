@@ -25,7 +25,10 @@ final class NFTSendImageCollectionViewCell: UICollectionViewCell {
 extension NFTSendImageCollectionViewCell {
     
     func update(with nftItem: NFTItem) {
-        imageView.load(url: nftItem.gatewayImageUrl)
+        imageView.setImage(
+            url: nftItem.gatewayPreviewImageUrl ?? nftItem.gatewayImageUrl,
+            fallBackUrl: nftItem.gatewayImageUrl
+        )
     }
 }
 

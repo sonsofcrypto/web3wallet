@@ -28,9 +28,9 @@ extension DashboardNFTCell {
     @discardableResult
     func update(with viewModel: DashboardViewModel.SectionItemsNFT?) -> Self {
         guard let viewModel = viewModel else { return self }
-        imageView.load(
+        imageView.setImage(
             url: viewModel.previewImage ?? viewModel.image,
-            fallback: viewModel.previewImage
+            fallBackUrl: viewModel.previewImage
         )
         return self
     }
