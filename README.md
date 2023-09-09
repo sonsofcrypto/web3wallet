@@ -1,5 +1,3 @@
-[//]: # (![web3wallet >]&#40;iosApp/iosApp/Assets.xcassets/AppIcon.appiconset/w3w_logo_1024.png&#41;)
-
 <img align="right" src="bundledAssets/exclude/logo.png"/>
 
 # web3wallet
@@ -166,3 +164,9 @@ appropriate paths for all supported targets.
 keytool -genkey -v -keystore androidApp/debug.keystore -storepass android -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000
 keytool -genkey -v -keystore androidApp/release.jks -storepass android -alias androidreleasekey -keyalg RSA -keysize 2048 -validity 10000
 ```
+
+<hr/>
+
+![web3wallet_first_launch](bundledAssets/exclude/first_launch_teaser_7.gif)
+
+[//]: # (![web3wallet]&#40;iosApp/iosApp/Assets.xcassets/AppIcon.appiconset/w3w_logo_1024.png&#41;)
