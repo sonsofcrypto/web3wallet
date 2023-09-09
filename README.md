@@ -1,5 +1,13 @@
-![web3wallet](iosApp/iosApp/Assets.xcassets/AppIcon.appiconset/w3w_logo_1024.png)
+[//]: # (![web3wallet >]&#40;iosApp/iosApp/Assets.xcassets/AppIcon.appiconset/w3w_logo_1024.png&#41;)
+
+<img align="right" src="bundledAssets/exclude/logo.png"/>
+
 # web3wallet
+
+by degens for degens
+
+for more info see [sonsofcrypto.com](https://sonsofcrypto.com)
+
 NOTE: Currently under active development.
 
 # coreCrypto
