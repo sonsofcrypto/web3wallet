@@ -56,7 +56,10 @@ data class DashboardViewModel(
                 val fiatCurrencyCode: String,
             )
 
-            data class NFT(val image: String)
+            data class NFT(
+                val image: String,
+                val previewImage: String?,
+            )
         }
     }
 }

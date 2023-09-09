@@ -165,6 +165,7 @@ class NFTServiceMoralis(
                         )
                     } ?: emptyList(),
                     imageUrl = image,
+                    previewImageUrl = it.media?.collection?.get("high")?.url,
                     address = tokenAddress,
                     schemaName = it.contractType ?: "",
                     tokenId = BigInt.from(tokenId, 10),
@@ -187,7 +188,8 @@ class NFTServiceMoralis(
                     author = null,
                     isVerifiedAccount = it.normalized.verified ?: false ,
                     authorImage = null,
-                    description = null,
+                    description = it.normalized.description
+                        ?: "${it.normalized.name} ${it.tokenAddress}",
                 )
         }
         return Pair(colections.filterNotNull(), nfts.filterNotNull())
@@ -222,7 +224,8 @@ class NFTServiceMoralis(
             @SerialName("token_uri")
             val tokenURI: String?,
             @SerialName("normalized_metadata")
-            val normalized: NormalizedMetadata?
+            val normalized: NormalizedMetadata?,
+            val media: Media?,
         ) {
             @Serializable
             data class NormalizedMetadata(
@@ -238,6 +241,18 @@ class NFTServiceMoralis(
                     @SerialName("trait_type")
                     val traitType: String?,
                     val value: String?,
+                )
+            }
+            @Serializable
+            data class Media(
+                val mimetype: String?,
+                val status: String?,
+                @SerialName("media_collection")
+                val collection: Map<String, Item>?,
+            ) {
+                @Serializable
+                data class Item(
+                    val url: String
                 )
             }
         }

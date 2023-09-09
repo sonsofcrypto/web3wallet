@@ -1,4 +1,4 @@
-<img align="right" src="bundledAssets/exclude/logo.png"/>
+<img align="right" src="bundledAssets/images/logo.png"/>
 
 # web3wallet
 
@@ -167,7 +167,7 @@ keytool -genkey -v -keystore androidApp/release.jks -storepass android -alias an
 
 ## teaser 
 <p align="center">
-  <img src="bundledAssets/exclude/first_launch_teaser_7.gif"/>
+  <img src="bundledAssets/images/first_launch_teaser_7.gif"/>
   <br/><a href="https://sonsofcrypto.com">sonsofcrypto.com</a>
 </p>
 

@@ -7,13 +7,20 @@ import Kingfisher
 
 extension UIImageView {
     
-    func load(url: String, placeholder: UIImage? = nil) {
-        
+    func load(
+        url: String,
+        fallback: String? = nil,
+        placeholder: UIImage? = nil
+    ) {
         guard let url = URL(string: url) else { return }
-        load(url: url)
+
+        load(
+            url: url,
+            fallback: fallback != nil ? URL(string: fallback!) : nil
+        )
     }
     
-    func load(url: URL, placeholder: UIImage? = nil) {
+    func load(url: URL, fallback: URL? = nil, placeholder: UIImage? = nil) {
         
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.color = Theme.color.activityIndicator
@@ -26,8 +33,18 @@ extension UIImageView {
             ]
         )
         
-        kf.setImage(with: url) { _ in
-            activityIndicator.removeFromSuperview()
+        kf.setImage(with: url) { [self] result in
+            switch result {
+            case .success:
+                activityIndicator.removeFromSuperview()
+            case let .failure(err):
+                print("[UIImageView] err \(err)")
+                if let fallback = fallback {
+                    kf.setImage(with: fallback) { _ in
+                        activityIndicator.removeFromSuperview()
+                    }
+                }
+            }
         }
     }
 

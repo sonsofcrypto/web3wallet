@@ -9,7 +9,7 @@ extension NFTDetailViewController {
     func makeDescription(with item: NFTCollection) -> UIView {
         let view = UIView()
         view.backgroundColor = .clear
-        let content = makeDescriptionContent(with: item.description)
+        let content = makeDescriptionContent(with: item.description_)
         view.addSubview(content)
         content.addConstraints(.toEdges(padding: Theme.padding))
         view.layer.cornerRadius = Theme.cornerRadius

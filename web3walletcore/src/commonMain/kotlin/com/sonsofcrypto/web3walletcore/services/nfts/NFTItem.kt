@@ -16,6 +16,8 @@ data class NFTItem(
     val properties: List<Property>,
     /** URL pointing to the NFT image **/
     val imageUrl: String,
+    /** preview image url if available (also used as fallback)*/
+    val previewImageUrl: String?,
     /** Contract address of the NFT **/
     val address: String,
     /** Schema name **/
@@ -29,6 +31,10 @@ data class NFTItem(
 
     val gatewayImageUrl: String
         get() = ipfsToGateway(imageUrl)
+
+    val gatewayPreviewImageUrl: String?
+        get() = if (previewImageUrl != null) ipfsToGateway(previewImageUrl)
+                else null
 
     private fun ipfsToGateway(url: String): String =
         if (!url.contains("ipfs://")) url

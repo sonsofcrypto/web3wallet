@@ -16,5 +16,5 @@ data class NFTCollection(
     /** URL pointing to the author image of the collection **/
     val authorImage: String?,
     /** Description of the collection **/
-    val description: String?,
+    val description: String,
 )

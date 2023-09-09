@@ -92,7 +92,9 @@ class DefaultNFTsDashboardPresenter(
     override fun nftsChanged() { uiScope.launch { present(isPullDownToRefresh = false) } }
 
     private fun updateView() {
-        val nftsViewModel = nfts.map { NFT(it.identifier, it.gatewayImageUrl) }
+        val nftsViewModel = nfts.map {
+            NFT(it.identifier, it.gatewayImageUrl, it.gatewayPreviewImageUrl)
+        }
         val collectionsViewModel = interactor.yourCollections().map {
             Collection(it.identifier, it.coverImage, it.title, it.author)
         }

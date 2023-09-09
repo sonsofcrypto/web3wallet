@@ -133,6 +133,7 @@ class OpenSeaNFTsService(
                 asset.name ?: "",
                 asset.traits.map { NFTItem.Property(it.traitType, it.value, "") },
                 asset.imageUrl ?: "",
+                null,
                 asset.assetContract.address,
                 asset.assetContract.schemaName,
                 asset.tokenId,

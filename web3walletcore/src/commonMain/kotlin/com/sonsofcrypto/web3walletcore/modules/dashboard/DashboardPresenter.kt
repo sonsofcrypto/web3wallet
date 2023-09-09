@@ -249,7 +249,9 @@ class DefaultDashboardPresenter(
         )
     }
 
-    private fun nftsItems(): Section.Items = Nfts(nfts.map { NFT(it.gatewayImageUrl) })
+    private fun nftsItems(): Section.Items = Nfts(
+        nfts.map { NFT(it.gatewayImageUrl, it.gatewayPreviewImageUrl) }
+    )
 
     private fun didTapAction(idx: Int) {
         if (actions[idx] is Action.ConfirmMnemonic) {
