@@ -258,10 +258,8 @@ class DefaultDashboardPresenter(
                 nft.gatewayImageUrl,
                 nft.gatewayPreviewImageUrl,
                 nft.mimeType,
-                nftCollections.firstOrNull { col ->
-                    col.identifier == nft.collectionIdentifier
-                }?.title ?: "",
                 nft.identifier,
+                nft.fallbackText,
             )
         }
     )

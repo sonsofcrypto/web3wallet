@@ -98,6 +98,7 @@ class DefaultNFTsDashboardPresenter(
                 it.gatewayImageUrl,
                 it.gatewayPreviewImageUrl,
                 it.mimeType,
+                it.fallbackText
             )
         }
         val collectionsViewModel = interactor.yourCollections().map {

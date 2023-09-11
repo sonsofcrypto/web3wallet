@@ -60,8 +60,8 @@ data class DashboardViewModel(
                 val image: String,
                 val previewImage: String?,
                 val mimeType: String?,
-                val collectionName: String,
                 val tokenId: String,
+                val fallbackText: String?,
             )
         }
     }

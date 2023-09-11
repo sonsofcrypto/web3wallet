@@ -33,6 +33,6 @@ class DefaultNFTDetailPresenter(
     }
 
     private fun updateView() {
-        view.get()?.update(NFTDetailViewModel(nft,  collection))
+        view.get()?.update(NFTDetailViewModel(nft, collection))
     }
 }

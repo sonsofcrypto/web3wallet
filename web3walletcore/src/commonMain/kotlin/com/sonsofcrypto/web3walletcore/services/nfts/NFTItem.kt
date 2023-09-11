@@ -38,6 +38,12 @@ data class NFTItem(
         get() = if (previewImageUrl != null) ipfsToGateway(previewImageUrl)
                 else null
 
+    val fallbackText: String
+        get() = when {
+            name.contains(" #") -> name.replace(" #", "\n#")
+            else -> name
+        }
+
     private fun ipfsToGateway(url: String): String =
         if (!url.contains("ipfs://")) url
         else url.replace("ipfs://", "https://ipfs.io/ipfs/")

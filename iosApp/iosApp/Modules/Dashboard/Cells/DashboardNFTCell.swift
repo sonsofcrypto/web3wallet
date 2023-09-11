@@ -31,7 +31,7 @@ extension DashboardNFTCell {
         imageView.setImage(
             url: viewModel.previewImage ?? viewModel.image,
             fallBackUrl: viewModel.previewImage,
-            fallBackText: "\(viewModel.collectionName)\n#\(viewModel.tokenId)"
+            fallBackText: viewModel.fallbackString
         )
         return self
     }
