@@ -125,7 +125,11 @@ private extension NFTsCollectionViewController {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
-        imageView.setImage(url: item.gatewayImageUrl)
+        imageView.setImage(
+            url: item.gatewayPreviewImageUrl ?? item.gatewayImageUrl,
+            fallBackUrl: item.gatewayImageUrl,
+            fallBackText: item.fallbackText
+        )
         view.addArrangedSubview(imageView)
         return view
     }

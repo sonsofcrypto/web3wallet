@@ -151,20 +151,20 @@ private extension NFTsDashboardViewController {
         titleLabel.textColor = Theme.color.textPrimary
         titleLabel.textAlignment = .center
         view.addArrangedSubview(titleLabel)
-        let authorLabel = UILabel()
-        authorLabel.numberOfLines = 1
-        authorLabel.attributedText = Localized(
-            "nfts.dashboard.collection.popular.author",
-            collection.author ?? ""
-        ).attributtedString(
-            with: font,
-            and: Theme.color.textPrimary,
-            updating: [collection.author ?? ""],
-            withColour: Theme.color.textPrimary,
-            andFont: font
-        )
-        authorLabel.textAlignment = .center
-        view.addArrangedSubview(authorLabel)
+//        let authorLabel = UILabel()
+//        authorLabel.numberOfLines = 1
+//        authorLabel.attributedText = Localized(
+//            "nfts.dashboard.collection.popular.author",
+//            collection.author ?? ""
+//        ).attributtedString(
+//            with: font,
+//            and: Theme.color.textPrimary,
+//            updating: [collection.author ?? ""],
+//            withColour: Theme.color.textPrimary,
+//            andFont: font
+//        )
+//        authorLabel.textAlignment = .center
+//        view.addArrangedSubview(authorLabel)
         view.spacing = Theme.padding * 0.5
         return view
     }

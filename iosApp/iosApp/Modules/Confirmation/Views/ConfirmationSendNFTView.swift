@@ -45,7 +45,8 @@ private extension ConfirmationSendNFTView {
         let image = UIImageView()
         image.setImage(
             url: nftItem.gatewayPreviewImageUrl ?? nftItem.gatewayImageUrl,
-            fallBackUrl: nftItem.gatewayImageUrl
+            fallBackUrl: nftItem.gatewayImageUrl,
+            fallBackText: nftItem.fallbackText
         )
         image.layer.cornerRadius = Theme.cornerRadiusSmall
         image.clipsToBounds = true

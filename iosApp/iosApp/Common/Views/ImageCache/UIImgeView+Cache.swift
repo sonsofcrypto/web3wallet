@@ -82,7 +82,11 @@ extension UIImageView {
                             self?.removeActivityIndicator()
                             return
                     }
-                    self?.setImage(url: fallBack, placeholder: placeholder)
+                    self?.setImage(
+                        url: fallBack,
+                        fallBackText: fallBackText,
+                        placeholder: placeholder
+                    )
                 }
             }
         }

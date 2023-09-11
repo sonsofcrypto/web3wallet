@@ -14,8 +14,9 @@ extension NFTDetailViewController {
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.setImage(
-            url: item.gatewayPreviewImageUrl ?? item.gatewayImageUrl,
-            fallBackUrl: item.gatewayImageUrl
+            url: item.gatewayImageUrl,
+            fallBackUrl: item.previewImageUrl,
+            fallBackText: item.fallbackText
         )
         views.append(imageView)
         imageView.addConstraints(

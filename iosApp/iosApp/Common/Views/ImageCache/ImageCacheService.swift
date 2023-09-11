@@ -67,7 +67,8 @@ class DefaultImageCache: ImageCacheService {
     ) {
         let urlHash = url.absoluteString.sdbmhash
         for op in downloadQueue.operations {
-            if (op as? ImageDownloadOperation)?.urlHash == urlHash {
+            if let op = op as? ImageDownloadOperation, op.urlHash == urlHash {
+                op.additionalHandlers.append(handler)
                 return
             }
         }
@@ -76,11 +77,14 @@ class DefaultImageCache: ImageCacheService {
             guard (op?.isCancelled ?? false) == false else {
                 return
             }
+            op?.additionalHandlers.append(handler)
             guard let result = op?.result else {
-                handler(.failure(ImageCacheError.unknownOperationError))
+                op?.additionalHandlers.forEach {
+                    $0(.failure(ImageCacheError.unknownOperationError))
+                }
                 return
             }
-            handler(result)
+            op?.additionalHandlers.forEach { $0(result) }
         }
         downloadQueue.addOperation(op)
     }
@@ -121,6 +125,7 @@ private final class ImageDownloadOperation: Operation {
     let url: URL
 
     var result: Result<UIImage, Error>? = nil
+    var additionalHandlers: [(Result<UIImage, Error>)->()] = []
 
     init(_ url: URL) {
         self.url = url

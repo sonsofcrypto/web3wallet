@@ -27,7 +27,8 @@ extension NFTSendImageCollectionViewCell {
     func update(with nftItem: NFTItem) {
         imageView.setImage(
             url: nftItem.gatewayPreviewImageUrl ?? nftItem.gatewayImageUrl,
-            fallBackUrl: nftItem.gatewayImageUrl
+            fallBackUrl: nftItem.gatewayImageUrl,
+            fallBackText: nftItem.fallbackText
         )
     }
 }

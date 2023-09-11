@@ -181,13 +181,13 @@ class NFTServiceMoralis(
             .map {
             val tokenId = it.tokenId
             val tokenAddress = it.tokenAddress
-            val image = it.normalized?.image
-            if (tokenId == null || tokenAddress == null || image == null)
+            val img = it.normalized?.image
+            if (tokenId == null || tokenAddress == null || img == null)
                 null
             else
                 NFTCollection(
                     identifier = tokenAddress,
-                    coverImage = null,
+                    coverImage = it.media?.collection?.get("high")?.url ?: img,
                     title = it.name ?: it.normalized.name ?: tokenAddress,
                     author = null,
                     isVerifiedAccount = it.normalized.verified ?: false ,
