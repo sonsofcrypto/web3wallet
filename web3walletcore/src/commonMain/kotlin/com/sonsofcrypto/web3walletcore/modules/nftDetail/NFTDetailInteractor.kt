@@ -5,16 +5,17 @@ import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
 
 interface NFTDetailInteractor {
-    fun fetchNFT(identifier: String): NFTItem
-    fun fetchCollection(identifier: String): NFTCollection
+    fun fetchNFT(collectionId: String, tokenId: String): NFTItem
+    fun fetchCollection(id: String): NFTCollection
 }
 
 class DefaultNFTDetailInteractor(
     private val nftService: NFTsService,
 ): NFTDetailInteractor {
 
-    override fun fetchNFT(identifier: String): NFTItem = nftService.nft(identifier)
+    override fun fetchNFT(collectionId: String, tokenId: String): NFTItem =
+        nftService.nft(collectionId, tokenId)
 
-    override fun fetchCollection(identifier: String): NFTCollection =
-        nftService.collection(identifier)
+    override fun fetchCollection(id: String): NFTCollection =
+        nftService.collection(id)
 }

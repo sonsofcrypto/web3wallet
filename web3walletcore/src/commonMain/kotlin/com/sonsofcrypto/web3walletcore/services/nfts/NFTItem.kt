@@ -18,6 +18,8 @@ data class NFTItem(
     val imageUrl: String,
     /** preview image url if available (also used as fallback)*/
     val previewImageUrl: String?,
+    /** mime type of asset at `imageUrl` */
+    val mimeType: String?,
     /** Contract address of the NFT **/
     val address: String,
     /** Schema name **/

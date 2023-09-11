@@ -30,7 +30,8 @@ extension DashboardNFTCell {
         guard let viewModel = viewModel else { return self }
         imageView.setImage(
             url: viewModel.previewImage ?? viewModel.image,
-            fallBackUrl: viewModel.previewImage
+            fallBackUrl: viewModel.previewImage,
+            fallBackText: "\(viewModel.collectionName)\n#\(viewModel.tokenId)"
         )
         return self
     }

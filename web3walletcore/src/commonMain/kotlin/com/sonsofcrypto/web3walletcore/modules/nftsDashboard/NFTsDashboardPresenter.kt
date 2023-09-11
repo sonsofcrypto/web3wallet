@@ -93,7 +93,12 @@ class DefaultNFTsDashboardPresenter(
 
     private fun updateView() {
         val nftsViewModel = nfts.map {
-            NFT(it.identifier, it.gatewayImageUrl, it.gatewayPreviewImageUrl)
+            NFT(
+                it.identifier,
+                it.gatewayImageUrl,
+                it.gatewayPreviewImageUrl,
+                it.mimeType,
+            )
         }
         val collectionsViewModel = interactor.yourCollections().map {
             Collection(it.identifier, it.coverImage, it.title, it.author)

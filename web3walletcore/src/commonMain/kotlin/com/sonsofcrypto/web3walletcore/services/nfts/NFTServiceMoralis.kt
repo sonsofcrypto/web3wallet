@@ -75,13 +75,15 @@ class NFTServiceMoralis(
 
     /** Find a collection that matches the given identifier (from memory).
      *  We use the data fetched by the latest request to fetchNFTs. */
-    override fun collection(identifier: String): NFTCollection {
-        return collections().first { it.identifier == identifier }
+    override fun collection(id: String): NFTCollection {
+        return collections().first { it.identifier == id }
     }
     /** Find a nft that matches the given identifier (from memory).
      *  We use the data fetched by the latest request to fetchNFTs. */
-    override fun nft(identifier: String): NFTItem {
-        return nfts().first { it.identifier == identifier }
+    override fun nft(collectionId: String, tokenId: String): NFTItem {
+        return nfts().first {
+            it.address == collectionId && it.identifier == tokenId
+        }
     }
     /** List of unique collections for your nfts. */
     override fun collections(): List<NFTCollection> {
@@ -93,13 +95,14 @@ class NFTServiceMoralis(
     }
     /** List of nfts for a given collection id. */
     override fun nfts(collectionId: String): List<NFTItem> {
-        return nfts().filter { it.collectionIdentifier == collectionId }
+        return nfts().filter { it.address == collectionId }
     }
-    /** To be called when a transaction for sending an nft is successful. This is so we can flag
-     * that NFT as pending confirmation so we hide it or flag it in your NFTs list */
-    override fun nftSent(identifier: String) {
+    /** To be called when a transaction for sending an nft is successful. This
+     * is so we can flag that NFT as pending confirmation so we hide it or flag
+     * it in your NFTs list */
+    override fun nftSent(collectionId: String, tokenId: String) {
         val mempoolNfts = nftIdsInMemPool().toMutableList()
-        mempoolNfts.add(identifier)
+        mempoolNfts.add("$collectionId/$tokenId")
         storeNftIdsInMemPool(mempoolNfts)
         broadcastNFTsChanged()
     }
@@ -154,7 +157,7 @@ class NFTServiceMoralis(
                 null
             else
                 NFTItem(
-                    identifier = "$tokenAddress/$tokenId",
+                    identifier = "$tokenId",
                     collectionIdentifier = tokenAddress,
                     name = it.normalized?.name ?: it.name ?: it.tokenId,
                     properties = it.normalized?.attributes?.map { attr ->
@@ -166,6 +169,7 @@ class NFTServiceMoralis(
                     } ?: emptyList(),
                     imageUrl = image,
                     previewImageUrl = it.media?.collection?.get("high")?.url,
+                    mimeType = it.media?.mimetype,
                     address = tokenAddress,
                     schemaName = it.contractType ?: "",
                     tokenId = BigInt.from(tokenId, 10),
@@ -265,9 +269,10 @@ class NFTServiceMoralis(
         val updatedNFTs = mutableListOf<NFTItem>()
         val updatedNftIdsInMemPool = mutableListOf<String>()
         nfts.forEach {
-            if (currentNftIdsInMemPool.contains(it.identifier)) {
+            val memPoolId = "${it.address}/${it.tokenId}"
+            if (currentNftIdsInMemPool.contains(memPoolId)) {
                 it.inMemPool = true
-                updatedNftIdsInMemPool.add(it.identifier)
+                updatedNftIdsInMemPool.add(memPoolId)
             }
             updatedNFTs.add(it)
         }
@@ -275,15 +280,15 @@ class NFTServiceMoralis(
         return updatedNFTs
     }
 
-    private fun storeNFTs(n: List<NFTItem>) {
-        store[nftsKey] = jsonEncode(n)
+    private fun storeNFTs(nfts: List<NFTItem>) {
+        store[nftsKey] = jsonEncode(nfts)
     }
 
     private val nftsKey: String
         get() = "web3wallet.core.$addressKey.$networkKey.nfts"
 
-    private fun storeCollections(c: List<NFTCollection>) {
-        store[collectionsKey] = jsonEncode(c)
+    private fun storeCollections(collection: List<NFTCollection>) {
+        store[collectionsKey] = jsonEncode(collection)
     }
 
     private val collectionsKey: String
@@ -292,8 +297,8 @@ class NFTServiceMoralis(
     private fun nftIdsInMemPool(): List<String> =
         jsonDecode(store[nftIdsInMemPoolKey] ?: "[]") ?: emptyList()
 
-    private fun storeNftIdsInMemPool(s: List<String>) {
-        store[nftIdsInMemPoolKey] = jsonEncode(s)
+    private fun storeNftIdsInMemPool(nfts: List<String>) {
+        store[nftIdsInMemPoolKey] = jsonEncode(nfts)
     }
 
     private val nftIdsInMemPoolKey: String get() =

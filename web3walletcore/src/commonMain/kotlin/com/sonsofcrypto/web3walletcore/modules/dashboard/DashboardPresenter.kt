@@ -19,6 +19,7 @@ import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Sect
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.Button.Type.SWAP
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardWireframeDestination.KeyStoreNetworkSettings
 import com.sonsofcrypto.web3walletcore.services.actions.Action
+import com.sonsofcrypto.web3walletcore.services.nfts.NFTCollection
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -57,6 +58,7 @@ class DefaultDashboardPresenter(
     private var actions = listOf<Action>()
     private var networks = listOf<Network>()
     private var nfts = listOf<NFTItem>()
+    private var nftCollections = listOf<NFTCollection>()
 
     init {
         interactor.addListener(this)
@@ -129,6 +131,7 @@ class DefaultDashboardPresenter(
         actions = interactor.actions()
         networks = interactor.enabledNetworks()
         nfts = interactor.nfts(Network.ethereum())
+        nftCollections = interactor.nftCollections(Network.ethereum())
         view.get()?.update(viewModel())
     }
 
@@ -250,7 +253,17 @@ class DefaultDashboardPresenter(
     }
 
     private fun nftsItems(): Section.Items = Nfts(
-        nfts.map { NFT(it.gatewayImageUrl, it.gatewayPreviewImageUrl) }
+        nfts.map { nft ->
+            NFT(
+                nft.gatewayImageUrl,
+                nft.gatewayPreviewImageUrl,
+                nft.mimeType,
+                nftCollections.firstOrNull { col ->
+                    col.identifier == nft.collectionIdentifier
+                }?.title ?: "",
+                nft.identifier,
+            )
+        }
     )
 
     private fun didTapAction(idx: Int) {

@@ -59,6 +59,9 @@ data class DashboardViewModel(
             data class NFT(
                 val image: String,
                 val previewImage: String?,
+                val mimeType: String?,
+                val collectionName: String,
+                val tokenId: String,
             )
         }
     }

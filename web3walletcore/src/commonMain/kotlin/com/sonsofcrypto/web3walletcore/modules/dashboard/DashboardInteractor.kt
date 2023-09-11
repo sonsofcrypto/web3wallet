@@ -27,6 +27,7 @@ import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardInteractorEven
 import com.sonsofcrypto.web3walletcore.services.actions.Action
 import com.sonsofcrypto.web3walletcore.services.actions.ActionsListener
 import com.sonsofcrypto.web3walletcore.services.actions.ActionsService
+import com.sonsofcrypto.web3walletcore.services.nfts.NFTCollection
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
 import kotlinx.coroutines.CoroutineScope
@@ -56,6 +57,7 @@ interface DashboardInteractor {
     fun cryptoBalance(network: Network, currency: Currency): BigInt
     fun fiatBalance(network: Network, currency: Currency): Double
     fun nfts(network: Network): List<NFTItem>
+    fun nftCollections(network: Network): List<NFTCollection>
     fun actions(): List<Action>
     fun dismissAction(action: Action)
     fun totalFiatBalance(): Double
@@ -103,6 +105,9 @@ class DefaultDashboardInteractor(
         )
 
     override fun nfts(network: Network): List<NFTItem> = nftsService.nfts()
+
+    override fun nftCollections(network: Network): List<NFTCollection> =
+        nftsService.collections()
 
     override fun actions(): List<Action> = actionsService.actions()
 

@@ -13,6 +13,7 @@ sealed class NFTsDashboardViewModel {
         val identifier: String,
         val image: String,
         val previewImage: String?,
+        val mimeType: String?,
     )
 
     data class Collection(

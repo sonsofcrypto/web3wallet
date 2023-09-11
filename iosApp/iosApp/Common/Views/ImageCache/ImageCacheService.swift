@@ -15,6 +15,8 @@ protocol ImageCacheService {
 class DefaultImageCache: ImageCacheService {
 
     static let shared = DefaultImageCache()
+    
+    private var errorCache: [String: Error] = [:]
 
     private let downloadQueue: OperationQueue = {
         var queue = OperationQueue()
@@ -29,6 +31,10 @@ class DefaultImageCache: ImageCacheService {
                 handler(.success(image))
                 return
             }
+            if let err = self?.cachedError(url: url) {
+                handler(.failure(err))
+                return
+            }
 
             self?.downloadImage(at: url) { result in
                 switch result {
@@ -36,6 +42,9 @@ class DefaultImageCache: ImageCacheService {
                     handler(.success(image))
                     self?.cache(image, url: url)
                 case let .failure(err):
+                    if case ImageCacheError.failedToCreateImageFromData = err {
+                        self?.cache(err, url: url)
+                    }
                     handler(.failure(err))
                 }
             }
@@ -56,6 +65,12 @@ class DefaultImageCache: ImageCacheService {
         at url: URL,
         handler: @escaping ImageCacheService.Handler
     ) {
+        let urlHash = url.absoluteString.sdbmhash
+        for op in downloadQueue.operations {
+            if (op as? ImageDownloadOperation)?.urlHash == urlHash {
+                return
+            }
+        }
         let op = ImageDownloadOperation(url)
         op.completionBlock = { [weak op] in
             guard (op?.isCancelled ?? false) == false else {
@@ -80,7 +95,15 @@ class DefaultImageCache: ImageCacheService {
     private func cache(_ image: UIImage, url: URL) {
         try? image.pngData()?.write(to: cacheURL(url))
     }
-
+    
+    private func cachedError(url: URL) -> Error? {
+        return errorCache[url.absoluteString]
+    }
+    
+    private func cache(_ error: Error, url: URL) {
+        errorCache[url.absoluteString] = error
+    }
+    
     private func cachePath(_ url: URL) -> String {
         return NSTemporaryDirectory() + "\(url.absoluteString.sdbmhash).png"
     }

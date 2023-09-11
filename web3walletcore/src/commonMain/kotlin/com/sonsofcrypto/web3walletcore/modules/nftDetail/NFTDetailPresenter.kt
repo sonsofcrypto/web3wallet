@@ -20,7 +20,7 @@ class DefaultNFTDetailPresenter(
     private val interactor: NFTDetailInteractor,
     private val context: NFTDetailWireframeContext,
 ): NFTDetailPresenter {
-    private var nft = interactor.fetchNFT(context.nftId)
+    private var nft = interactor.fetchNFT(context.collectionId, context.nftId)
     private var collection = interactor.fetchCollection(context.collectionId)
 
     override fun present() { updateView() }

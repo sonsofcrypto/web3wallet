@@ -33,10 +33,10 @@ interface NFTsService {
     suspend fun fetchNFTs(): List<NFTItem>
     /** Find a collection that matches the given identifier (from memory).
      *  We use the data fetched by the latest request to fetchNFTs. */
-    fun collection(identifier: String): NFTCollection
+    fun collection(id: String): NFTCollection
     /** Find a nft that matches the given identifier (from memory).
      *  We use the data fetched by the latest request to fetchNFTs. */
-    fun nft(identifier: String): NFTItem
+    fun nft(collectionId: String, tokenId: String): NFTItem
     /** List of unique collections for your nfts. */
     fun collections(): List<NFTCollection>
     /** List of nfts. */
@@ -46,7 +46,7 @@ interface NFTsService {
     /** To be called when a transaction for sending an nft is successful. This
      * is so we can flag that NFT as pending confirmation so we hide it or flag
      * it in your NFTs list */
-    fun nftSent(identifier: String)
+    fun nftSent(identifier: String, tokenId: String)
     /** Add a listener to the service */
     fun addListener(listener: NFTsServiceListener)
     /** Removes a listener to the service */
@@ -101,10 +101,14 @@ class OpenSeaNFTsService(
         }
     }
 
-    override fun collection(identifier: String): NFTCollection =
-        collections().first { it.identifier == identifier }
+    override fun collection(id: String): NFTCollection =
+        collections().first { it.identifier == id }
 
-    override fun nft(identifier: String): NFTItem = nfts().first { it.identifier == identifier }
+    override fun nft(collectionId: String, tokenId: String): NFTItem {
+        return nfts().first {
+            it.address == collectionId && it.identifier == tokenId
+        }
+    }
 
     override fun collections(): List<NFTCollection> =
         jsonDecode(store[collectionsKey] ?: "[]") ?: emptyList()
@@ -114,9 +118,9 @@ class OpenSeaNFTsService(
     override fun nfts(collectionId: String): List<NFTItem> =
         nfts().filter { it.collectionIdentifier == collectionId }
 
-    override fun nftSent(identifier: String) {
+    override fun nftSent(collectionId: String, tokenId: String) {
         val nfts = nftIdsInMemPool().toMutableList()
-        nfts.add(identifier)
+        nfts.add("$collectionId/$tokenId")
         storeNftIdsInMemPool(nfts)
         broadcastNFTsChanged()
     }
@@ -133,6 +137,7 @@ class OpenSeaNFTsService(
                 asset.name ?: "",
                 asset.traits.map { NFTItem.Property(it.traitType, it.value, "") },
                 asset.imageUrl ?: "",
+                null,
                 null,
                 asset.assetContract.address,
                 asset.assetContract.schemaName,
@@ -173,9 +178,10 @@ class OpenSeaNFTsService(
         val updatedNFTs = mutableListOf<NFTItem>()
         val updatedNftIdsInMemPool = mutableListOf<String>()
         nfts.forEach {
-            if (currentNftIdsInMemPool.contains(it.identifier)) {
+            val memPoolId = "${it.address}/${it.tokenId}"
+            if (currentNftIdsInMemPool.contains(memPoolId)) {
                 it.inMemPool = true
-                updatedNftIdsInMemPool.add(it.identifier)
+                updatedNftIdsInMemPool.add(memPoolId)
             }
             updatedNFTs.add(it)
         }
