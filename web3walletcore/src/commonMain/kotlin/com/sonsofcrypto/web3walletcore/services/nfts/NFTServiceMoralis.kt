@@ -149,7 +149,7 @@ class NFTServiceMoralis(
     private fun transformToStantardNFTs(
         results: List<Response.Nft>
     ): Pair<List<NFTCollection>, List<NFTItem>> {
-        val nfts: List<NFTItem?> = results.sortedBy { it.tokenAddress }.map {
+        val nfts: List<NFTItem?> = results.map {
             val tokenId = it.tokenId
             val tokenAddress = it.tokenAddress
             val image = it.normalized?.image
