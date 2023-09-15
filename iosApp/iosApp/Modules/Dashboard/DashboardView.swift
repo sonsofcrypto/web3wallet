@@ -5,7 +5,7 @@
 import UIKit
 import web3walletcore
 
-final class DashboardViewController: BaseViewController, FPSCounterDelegate {
+final class DashboardViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
 
     var presenter: DashboardPresenter!
@@ -19,16 +19,7 @@ final class DashboardViewController: BaseViewController, FPSCounterDelegate {
         super.viewDidLoad()
         configureUI()
         presenter.present()
-//        fpsCounter.delegate = self
-//        fpsCounter.startTracking()
     }
-
-//    private var fpsCounter = FPSCounter()
-//
-//    func fpsCounter(_ counter: FPSCounter, didUpdateFramesPerSecond fps: Int) {
-//        title = "web3wallet \(fps)"
-//        print("fps \(fps)")
-//    }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -61,10 +52,8 @@ extension DashboardViewController {
         if collectionView.refreshControl?.isRefreshing ?? false {
             collectionView.refreshControl?.endRefreshing()
         }
-        print("[DashboardView] update")
         if self.viewModel?.sections.count != viewModel.sections.count {
             self.viewModel = viewModel
-            print("[DashboardView] reloadData")
             collectionView.reloadData()
             return
         }
@@ -77,9 +66,7 @@ extension DashboardViewController {
             if section.items.count != prevSection?.items.count
                || section.items.kind != prevSection?.items.kind  {
                 sectionsToReload.append(idx)
-                print("[DashboardView] schedule reload idx: \(idx), id: \(section.items.kind), cnt: \(section.items.count)")
             } else {
-                print("[DashboardView] schedule update idx: \(idx), id: \(section.items.kind), cnt: \(section.items.count)")
                 sectionsToUpdate.append(idx)
             }
         }
@@ -120,10 +107,6 @@ extension DashboardViewController {
         _ viewModel: DashboardViewModel.SectionItemsWallet?,
         at idxPath: IndexPath
     ) {
-        print("[DashboardView] updateWallet \(idxPath.item)")
-//        let cell = collectionView.visibleCells.first(where: {
-//            collectionView.indexPath(for: $0) == idxPath
-//        })
         let cell = collectionView.cellForItem(at: idxPath)
         let _ = (cell as? DashboardWalletCell)?.update(with: viewModel)
     }
@@ -131,7 +114,6 @@ extension DashboardViewController {
     func update(_ idxPath: IndexPath, items: DashboardViewModel.SectionItems) {
         let cell = collectionView.cellForItem(at: idxPath)
         let idx = idxPath.item
-        print("[DashboardView] update item: \(idxPath.item), section: \(idxPath.section), kind: \(items.kind)")
         if let input = items as? DashboardViewModel.SectionItemsButtons {
             let presenter = self.presenter
             (cell as? DashboardButtonsCell)?.update(

@@ -59,6 +59,7 @@ class DefaultDashboardPresenter(
     private var networks = listOf<Network>()
     private var nfts = listOf<NFTItem>()
     private var nftCollections = listOf<NFTCollection>()
+    private var needsUpdate = false
 
     init {
         interactor.addListener(this)
@@ -121,9 +122,14 @@ class DefaultDashboardPresenter(
     override fun willEnterForeground() { interactor.willEnterForeground() }
 
     override fun handle(event: DashboardInteractorEvent) {
+        needsUpdate = true
         bgScope.launch {
-            delay(5000)
-            uiScope.launch { updateView() }
+            delay(6000)
+            uiScope.launch {
+                if (!needsUpdate) return@launch
+                needsUpdate = false
+                updateView()
+            }
         }
     }
 
@@ -132,7 +138,8 @@ class DefaultDashboardPresenter(
         networks = interactor.enabledNetworks()
         nfts = interactor.nfts(Network.ethereum())
         nftCollections = interactor.nftCollections(Network.ethereum())
-        view.get()?.update(viewModel())
+        val viewModel = viewModel()
+        view.get()?.update(viewModel)
     }
 
     private fun viewModel(): DashboardViewModel = DashboardViewModel(sections())
@@ -280,7 +287,7 @@ class DefaultDashboardPresenter(
         wireframe.navigate(
             DashboardWireframeDestination.EditCurrencies(
                 network,
-                interactor.currencies(network)
+                interactor.currencies(network),
             ) {
                 interactor.setCurrencies(it, network)
                 updateView()

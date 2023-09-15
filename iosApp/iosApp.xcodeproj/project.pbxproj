@@ -369,12 +369,10 @@
 		1F5E646C2AACA58A000A1548 /* UIImgeView+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5E646A2AACA58A000A1548 /* UIImgeView+Cache.swift */; };
 		1F6A9FBA2A978F970056732C /* PollServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6A9FB92A978F970056732C /* PollServiceAssembler.swift */; };
 		1F6A9FBC2A97ACE50056732C /* bundledAssets in Resources */ = {isa = PBXBuildFile; fileRef = 1F6A9FBB2A97ACE50056732C /* bundledAssets */; };
-		2DC2C57EC3D002717534D4DF /* FPStatusBarWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CA4925E035D2B7EB6054 /* FPStatusBarWindow.swift */; };
 		2DC2C7C3A650E3B9EB8B0D3B /* SunLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C24534389C71A56B59FF /* SunLogoView.swift */; };
 		2DC2C89480B489FB22F389EC /* FPSCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C42478AFAD6C062BE808 /* FPSCounter.swift */; };
 		2DC2C8B1CFC018D58D54D527 /* LogoAnimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C41558C39C7EFB97BC1F /* LogoAnimView.swift */; };
 		2DC2C9BD5DE2813FCC617F20 /* ButtonsSheetViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CBF8C62A6A6D9D6E9648 /* ButtonsSheetViewCell.swift */; };
-		2DC2CAC2BA738E2618F51B8D /* FPSStatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CA88AEE5EA091DD309E9 /* FPSStatusBarViewController.swift */; };
 		2DC2CFAED100073886D0644D /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C9A15E44BDD7C7864D81 /* CollectionView.swift */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
 		D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */; };
@@ -816,8 +814,6 @@
 		2DC2C41558C39C7EFB97BC1F /* LogoAnimView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoAnimView.swift; sourceTree = "<group>"; };
 		2DC2C42478AFAD6C062BE808 /* FPSCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPSCounter.swift; sourceTree = "<group>"; };
 		2DC2C9A15E44BDD7C7864D81 /* CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
-		2DC2CA4925E035D2B7EB6054 /* FPStatusBarWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPStatusBarWindow.swift; sourceTree = "<group>"; };
-		2DC2CA88AEE5EA091DD309E9 /* FPSStatusBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPSStatusBarViewController.swift; sourceTree = "<group>"; };
 		2DC2CBF8C62A6A6D9D6E9648 /* ButtonsSheetViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsSheetViewCell.swift; sourceTree = "<group>"; };
 		D116CF2F27C31ECC005542AA /* iosApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		D116CF3027C31ECC005542AA /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
@@ -1839,8 +1835,6 @@
 			isa = PBXGroup;
 			children = (
 				2DC2C42478AFAD6C062BE808 /* FPSCounter.swift */,
-				2DC2CA88AEE5EA091DD309E9 /* FPSStatusBarViewController.swift */,
-				2DC2CA4925E035D2B7EB6054 /* FPStatusBarWindow.swift */,
 			);
 			path = FPSCounter;
 			sourceTree = "<group>";
@@ -2630,8 +2624,6 @@
 				2DC2C7C3A650E3B9EB8B0D3B /* SunLogoView.swift in Sources */,
 				2DC2CFAED100073886D0644D /* CollectionView.swift in Sources */,
 				2DC2C89480B489FB22F389EC /* FPSCounter.swift in Sources */,
-				2DC2CAC2BA738E2618F51B8D /* FPSStatusBarViewController.swift in Sources */,
-				2DC2C57EC3D002717534D4DF /* FPStatusBarWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
