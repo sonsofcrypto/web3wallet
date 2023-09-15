@@ -78,6 +78,11 @@ export GOOS=linux
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export GOOS=darwin
   export GOARCH=amd64
+
+  if [[ $(arch) == 'arm64' ]]; then
+    export GOARCH=arm64
+  fi
+
   SEARCH="-I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux"
   REPLACE="-I$JAVA_HOME/include -I$JAVA_HOME/include/darwin"
   ESCAPED_SEARCH=$(printf '%s\n' "$SEARCH" | sed -e 's/[]\/$*.^[]/\\&/g');
