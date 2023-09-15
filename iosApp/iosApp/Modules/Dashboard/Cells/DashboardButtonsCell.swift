@@ -7,41 +7,59 @@ import web3walletcore
 
 final class DashboardButtonsCell: UICollectionViewCell {
 
-    struct Handler {
-        let onReceive: () -> Void
-        let onSend: () -> Void
-        let onSwap: () -> Void
-    }
+    typealias Handler = ()->Void
 
     @IBOutlet weak var receiveButton: Button!
     @IBOutlet weak var sendButton: Button!
     @IBOutlet weak var tradeButton: Button!
     @IBOutlet weak var stack: UIStackView!
     
-    private var viewModel: [DashboardViewModel.SectionItemsButton] = []
-    private var handler: Handler!
-        
+    private var receiveHandler: Handler?
+    private var sendHandler: Handler?
+    private var swapHandler: Handler?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         stack.spacing = Theme.padding
-        updateViews()
     }
-    
+
     override func traitCollectionDidChange(
         _ previousTraitCollection: UITraitCollection?
     ) {
         super.traitCollectionDidChange(previousTraitCollection)
-        updateViews()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
     }
 }
 
-private extension DashboardButtonsCell {
+extension DashboardButtonsCell {
     
-    func updateViews() {
+    @IBAction func receiveTapped() {
+        receiveHandler?()
+    }
+
+    @IBAction func sendTapped() {
+        sendHandler?()
+    }
+
+    @IBAction func tradeTapped() {
+        swapHandler?()
+    }
+}
+
+// MARK: - ViewModel
+
+extension DashboardButtonsCell {
+
+    @discardableResult
+    func update(
+        with viewModel: [DashboardViewModel.SectionItemsButton],
+        receiveHandler: Handler? = nil,
+        sendHandler: Handler? = nil,
+        swapHandler: Handler? = nil
+    ) -> Self {
+        self.receiveHandler = receiveHandler
+        self.sendHandler = sendHandler
+        self.swapHandler = swapHandler
+
         viewModel.forEach {
             switch $0.type {
             case .receive:
@@ -63,30 +81,7 @@ private extension DashboardButtonsCell {
                 break
             }
         }
-    }
-}
 
-extension DashboardButtonsCell {
-    
-    @IBAction func receiveTapped() { handler.onReceive() }
-
-    @IBAction func sendTapped() { handler.onSend() }
-
-    @IBAction func tradeTapped() { handler.onSwap() }
-}
-
-// MARK: - ViewModel
-
-extension DashboardButtonsCell {
-
-    @discardableResult
-    func update(
-        with viewModel: [DashboardViewModel.SectionItemsButton],
-        handler: Handler
-    ) -> Self {
-        self.viewModel = viewModel
-        self.handler = handler
-        updateViews()
         return self
     }
 }
