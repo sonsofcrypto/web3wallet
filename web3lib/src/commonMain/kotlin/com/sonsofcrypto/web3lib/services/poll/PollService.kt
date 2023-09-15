@@ -86,7 +86,7 @@ class DefaultPollService: PollService {
     ) {
         bgScope.launch {
             mutex.withLock {
-                var list = requests[network] ?: mutableListOf()
+                var list = requests[network]?.toMutableList() ?: mutableListOf()
                 list.add(request)
                 requests[network] = list
                 if (repeat) repeatIds.add(request.id)
@@ -131,7 +131,7 @@ class DefaultPollService: PollService {
                 entry.key,
                 providers[entry.key]
                     ?: throw PollService.Error.MissingProvider(entry.key),
-                entry.value
+                entry.value.toList()
             )
         }
     }
