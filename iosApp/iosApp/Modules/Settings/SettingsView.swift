@@ -9,7 +9,7 @@ final class SettingsViewController: BaseViewController {
 
     var presenter: SettingsPresenter!
 
-    @IBOutlet weak var collectionView: CollectionViewOld!
+    @IBOutlet weak var collectionView: CollectionView!
 
     private var viewModel: SettingsViewModel!
 
@@ -188,13 +188,13 @@ private extension SettingsViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
             withReuseIdentifier: String(describing: SettingsSectionFooterViewCell.self)
         )
-        collectionView.overScrollView.image = "overscroll_anon".assetImage
+        collectionView.overscrollView = UIImageView(imgName: "overscroll_anon")
         let version = UILabel(with: .footnote)
         version.text = Bundle.main.version() + "v #" + Bundle.main.build()
         version.textAlignment = .center
-        collectionView.overScrollView.addSubview(version)
+        collectionView.overscrollView?.addSubview(version)
         version.sizeToFit()
-        version.center = collectionView.overScrollView.bounds.midXY
+        version.center = collectionView.overscrollView?.bounds.midXY ?? .zero
         version.center.x -= 1.5
         version.center.y += 31
     }

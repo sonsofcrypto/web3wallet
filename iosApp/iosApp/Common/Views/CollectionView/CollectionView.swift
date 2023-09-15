@@ -10,18 +10,19 @@ protocol Progressable {
 
 class CollectionView: UICollectionView {
 
+    /// View at the end of visible content
     var overscrollView: UIView? {
         didSet { didSetNewOverscrollView(overscrollView, old: oldValue)}
     }
 
-    // `overscrollView` top is at the end of the scroll area. `abovescrollView`
-    // bottom is at the end of scroll area. It is recommended to set
-    // `contentInset.bottom` to height of the `abovescrollView`
+    /// `overscrollView` top is at the end of the scroll area. `abovescrollView`
+    /// bottom is at the end of scroll area. It is recommended to set
+    /// `contentInset.bottom` to height of the `abovescrollView`
     var abovescrollView: UIView? {
         didSet { didSetNewOverscrollView(abovescrollView, old: oldValue)}
     }
 
-    // View in on the top of content
+    /// View in on the top of content
     var topscrollView: UIView? {
         didSet { didSetNewOverscrollView(topscrollView, old: oldValue) }
     }
@@ -29,22 +30,34 @@ class CollectionView: UICollectionView {
     var pinTopScrollToTop: Bool = false
     var pinOverscrollToBottom: Bool = false
 
+    override init(
+        frame: CGRect,
+        collectionViewLayout layout: UICollectionViewLayout
+    ) {
+        super.init(frame: frame, collectionViewLayout: layout)
+        backgroundView = BackgroundView()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        backgroundView = BackgroundView()
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
+        repairViewsHierarchyIfNeeded()
 
         let pin = pinOverscrollToBottom
 
         layoutTopOverscrollView(topscrollView, pin: pinTopScrollToTop)
         layoutOverscrollView(overscrollView, pinToBottom: pin)
         layoutOverscrollView(abovescrollView, aboveLine: true, pinToBottom: pin)
+
+        (backgroundView as? BackgroundView)?.topInset = adjustedContentInset.top
     }
 
     private func layoutTopOverscrollView(_ view: UIView?, pin: Bool = false) {
         guard let view = view else { return }
-
-        if subviews.first != view && subviews[safe: 1] != view {
-            insertSubview(view, at: 0)
-        }
 
         view.center.y = view.bounds.height * 0.5
 
@@ -59,10 +72,6 @@ class CollectionView: UICollectionView {
         pinToBottom: Bool = false
     ) {
         guard let view = view else { return }
-
-        if subviews.first != view {
-            insertSubview(view, at: 0)
-        }
 
         let adjInset = adjustedContentInset
         let safeInset = safeAreaInsets
@@ -117,5 +126,23 @@ class CollectionView: UICollectionView {
         old?.removeFromSuperview()
         guard let view = new else { return }
         insertSubview(view, at: 0)
+    }
+
+    private func repairViewsHierarchyIfNeeded() {
+        var baseIdx = backgroundView == nil ? 0 : 1
+
+        if let view = overscrollView, subviews[safe: baseIdx] != view {
+            insertSubview(view, at: baseIdx)
+            baseIdx += 1
+        }
+
+        if let view = abovescrollView, subviews[safe: baseIdx] != view {
+            insertSubview(view, at: baseIdx)
+            baseIdx += 1
+        }
+
+        if let view = topscrollView, subviews[safe: baseIdx] != view {
+            insertSubview(view, at: baseIdx)
+        }
     }
 }

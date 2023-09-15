@@ -46,7 +46,6 @@
 		1A4C3B9C62DFDDC589C8E7DB /* WalletServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C351B672C360A32A15547 /* WalletServiceAssembler.swift */; };
 		1A4C3BCA3545491AC4FC17C9 /* NodeServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E18C108CD578807EBA5 /* NodeServiceAssembler.swift */; };
 		1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */; };
-		1A4C3C292484B7A62AF950A7 /* CollectionViewOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C325A6875E5041A491945 /* CollectionViewOld.swift */; };
 		1A4C3CFB23D66DF60B4BCE71 /* KeyStoreServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3553B19E38E28C955332 /* KeyStoreServiceAssembler.swift */; };
 		1A4C3D1FEE4DD4904DEBCFAB /* DashboardTableWalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3ECB03083B9516E13031 /* DashboardTableWalletCell.swift */; };
 		1A4C3D4F7A0F0032C75606BE /* TextInputCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E9049D6DF4AB69A8CF5 /* TextInputCollectionViewCell.swift */; };
@@ -456,7 +455,6 @@
 		1A4C31ABF9D50601A55F94D0 /* SwitchTextInputCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTextInputCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A4C3228790C1569B37F5179 /* AppsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsService.swift; sourceTree = "<group>"; };
 		1A4C3231FA724A88A529EFE7 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		1A4C325A6875E5041A491945 /* CollectionViewOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewOld.swift; sourceTree = "<group>"; };
 		1A4C32EA04CA65C9DFEE9504 /* ThemePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemePickerCell.swift; sourceTree = "<group>"; };
 		1A4C332FF69B880FCA444DE2 /* PreferredSizePresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredSizePresentationController.swift; sourceTree = "<group>"; };
 		1A4C3378B5287B6A9BDE65CD /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -2053,7 +2051,6 @@
 		D1FA44A02805B52A00817274 /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C325A6875E5041A491945 /* CollectionViewOld.swift */,
 				1CDED5EB2897C5F300DF34A7 /* ScrollView.swift */,
 				1A4C377EA04FF6D39349042B /* BackgroundView.swift */,
 				1A4C308C7EEAF2E80221C519 /* TouchPassThroughCollectionView.swift */,
@@ -2511,7 +2508,6 @@
 				1C6487272832E5150091A12D /* DefaultAppsService.swift in Sources */,
 				1C6720162885E13500C5F044 /* CurrencySwapLimitCollectionViewCell.swift in Sources */,
 				1C228AC528A17744005316A3 /* CurrencyPickerNetworkCell.swift in Sources */,
-				1A4C3C292484B7A62AF950A7 /* CollectionViewOld.swift in Sources */,
 				1C67201F28870FDB00C5F044 /* ConfirmationWireframe.swift in Sources */,
 				1CDED5FF289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift in Sources */,
 				1C54DBEB285E833600E378F6 /* CurrencyAddView.swift in Sources */,
