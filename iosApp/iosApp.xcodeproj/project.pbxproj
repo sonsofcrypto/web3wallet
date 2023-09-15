@@ -13,7 +13,6 @@
 		1A4C3090DC31EABF15853AB1 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C377EA04FF6D39349042B /* BackgroundView.swift */; };
 		1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */; };
 		1A4C315AD9431C9ED566A189 /* NetworkSettingsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A3BFB0F8E7982EDC99B /* NetworkSettingsWireframeFactory.swift */; };
-		1A4C3192ECD284C083DC6E68 /* DashboardBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3CB439BEEC245A94242B /* DashboardBackgroundView.swift */; };
 		1A4C31C7DCD235DD4D29DCA6 /* IndexPath+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3EF22DC2A63B2B9365C5 /* IndexPath+Extensions.swift */; };
 		1A4C31D59C7D2B84D247FDDD /* TransformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C393772D3384C556C29C3 /* TransformView.swift */; };
 		1A4C323E05E2334BE9914A25 /* SegmentWithTextAndSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C34C77DDD6672DC05AC12 /* SegmentWithTextAndSwitchCell.swift */; };
@@ -47,7 +46,7 @@
 		1A4C3B9C62DFDDC589C8E7DB /* WalletServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C351B672C360A32A15547 /* WalletServiceAssembler.swift */; };
 		1A4C3BCA3545491AC4FC17C9 /* NodeServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E18C108CD578807EBA5 /* NodeServiceAssembler.swift */; };
 		1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */; };
-		1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C325A6875E5041A491945 /* CollectionView.swift */; };
+		1A4C3C292484B7A62AF950A7 /* CollectionViewOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C325A6875E5041A491945 /* CollectionViewOld.swift */; };
 		1A4C3CFB23D66DF60B4BCE71 /* KeyStoreServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3553B19E38E28C955332 /* KeyStoreServiceAssembler.swift */; };
 		1A4C3D1FEE4DD4904DEBCFAB /* DashboardTableWalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3ECB03083B9516E13031 /* DashboardTableWalletCell.swift */; };
 		1A4C3D4F7A0F0032C75606BE /* TextInputCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E9049D6DF4AB69A8CF5 /* TextInputCollectionViewCell.swift */; };
@@ -370,8 +369,13 @@
 		1F5E646C2AACA58A000A1548 /* UIImgeView+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5E646A2AACA58A000A1548 /* UIImgeView+Cache.swift */; };
 		1F6A9FBA2A978F970056732C /* PollServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6A9FB92A978F970056732C /* PollServiceAssembler.swift */; };
 		1F6A9FBC2A97ACE50056732C /* bundledAssets in Resources */ = {isa = PBXBuildFile; fileRef = 1F6A9FBB2A97ACE50056732C /* bundledAssets */; };
+		2DC2C57EC3D002717534D4DF /* FPStatusBarWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CA4925E035D2B7EB6054 /* FPStatusBarWindow.swift */; };
+		2DC2C7C3A650E3B9EB8B0D3B /* SunLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C24534389C71A56B59FF /* SunLogoView.swift */; };
+		2DC2C89480B489FB22F389EC /* FPSCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C42478AFAD6C062BE808 /* FPSCounter.swift */; };
 		2DC2C8B1CFC018D58D54D527 /* LogoAnimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C41558C39C7EFB97BC1F /* LogoAnimView.swift */; };
 		2DC2C9BD5DE2813FCC617F20 /* ButtonsSheetViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CBF8C62A6A6D9D6E9648 /* ButtonsSheetViewCell.swift */; };
+		2DC2CAC2BA738E2618F51B8D /* FPSStatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CA88AEE5EA091DD309E9 /* FPSStatusBarViewController.swift */; };
+		2DC2CFAED100073886D0644D /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C9A15E44BDD7C7864D81 /* CollectionView.swift */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
 		D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */; };
 		D11A990127B8615B00EDFDD0 /* GothicA1-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F627B8615B00EDFDD0 /* GothicA1-Regular.ttf */; };
@@ -454,7 +458,7 @@
 		1A4C31ABF9D50601A55F94D0 /* SwitchTextInputCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTextInputCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A4C3228790C1569B37F5179 /* AppsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsService.swift; sourceTree = "<group>"; };
 		1A4C3231FA724A88A529EFE7 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		1A4C325A6875E5041A491945 /* CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
+		1A4C325A6875E5041A491945 /* CollectionViewOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewOld.swift; sourceTree = "<group>"; };
 		1A4C32EA04CA65C9DFEE9504 /* ThemePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemePickerCell.swift; sourceTree = "<group>"; };
 		1A4C332FF69B880FCA444DE2 /* PreferredSizePresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredSizePresentationController.swift; sourceTree = "<group>"; };
 		1A4C3378B5287B6A9BDE65CD /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -483,7 +487,6 @@
 		1A4C3B7861E8944B80AFD1C6 /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		1A4C3BCABDF62FE3C376A0D2 /* SelectionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
-		1A4C3CB439BEEC245A94242B /* DashboardBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardBackgroundView.swift; sourceTree = "<group>"; };
 		1A4C3D0633392F79141C7CA0 /* ThemePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemePickerView.swift; sourceTree = "<group>"; };
 		1A4C3D1A250726DF3EC37D35 /* NetworkSettingsWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSettingsWireframe.swift; sourceTree = "<group>"; };
 		1A4C3D85BA9138472B83EB04 /* NetworksServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksServiceAssembler.swift; sourceTree = "<group>"; };
@@ -809,7 +812,12 @@
 		1F5E646A2AACA58A000A1548 /* UIImgeView+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImgeView+Cache.swift"; sourceTree = "<group>"; };
 		1F6A9FB92A978F970056732C /* PollServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollServiceAssembler.swift; sourceTree = "<group>"; };
 		1F6A9FBB2A97ACE50056732C /* bundledAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bundledAssets; sourceTree = "<group>"; };
+		2DC2C24534389C71A56B59FF /* SunLogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SunLogoView.swift; sourceTree = "<group>"; };
 		2DC2C41558C39C7EFB97BC1F /* LogoAnimView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoAnimView.swift; sourceTree = "<group>"; };
+		2DC2C42478AFAD6C062BE808 /* FPSCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPSCounter.swift; sourceTree = "<group>"; };
+		2DC2C9A15E44BDD7C7864D81 /* CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
+		2DC2CA4925E035D2B7EB6054 /* FPStatusBarWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPStatusBarWindow.swift; sourceTree = "<group>"; };
+		2DC2CA88AEE5EA091DD309E9 /* FPSStatusBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPSStatusBarViewController.swift; sourceTree = "<group>"; };
 		2DC2CBF8C62A6A6D9D6E9648 /* ButtonsSheetViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsSheetViewCell.swift; sourceTree = "<group>"; };
 		D116CF2F27C31ECC005542AA /* iosApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		D116CF3027C31ECC005542AA /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
@@ -996,7 +1004,7 @@
 			children = (
 				1A4C3A57271F5E51E72C6685 /* AnimatedTextBarButton.swift */,
 				1A4C3DA3993DB4402FA7010C /* AnimatedTextButton.swift */,
-				1A4C3CB439BEEC245A94242B /* DashboardBackgroundView.swift */,
+				2DC2C24534389C71A56B59FF /* SunLogoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1827,6 +1835,16 @@
 			path = ImageCache;
 			sourceTree = "<group>";
 		};
+		2DC2C53FE5670FA68D01D4A3 /* FPSCounter */ = {
+			isa = PBXGroup;
+			children = (
+				2DC2C42478AFAD6C062BE808 /* FPSCounter.swift */,
+				2DC2CA88AEE5EA091DD309E9 /* FPSStatusBarViewController.swift */,
+				2DC2CA4925E035D2B7EB6054 /* FPStatusBarWindow.swift */,
+			);
+			path = FPSCounter;
+			sourceTree = "<group>";
+		};
 		D116CF2927C31C42005542AA /* iCarousel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1971,6 +1989,7 @@
 				1A4C3C27E8AC72B44037C9E2 /* ViewControllers */,
 				1CBFDAF628113D180054B276 /* ViewModels */,
 				D15B06C427B6D241008C3C62 /* Views */,
+				2DC2C53FE5670FA68D01D4A3 /* FPSCounter */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2040,11 +2059,12 @@
 		D1FA44A02805B52A00817274 /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C325A6875E5041A491945 /* CollectionView.swift */,
+				1A4C325A6875E5041A491945 /* CollectionViewOld.swift */,
 				1CDED5EB2897C5F300DF34A7 /* ScrollView.swift */,
 				1A4C377EA04FF6D39349042B /* BackgroundView.swift */,
 				1A4C308C7EEAF2E80221C519 /* TouchPassThroughCollectionView.swift */,
 				1A4C362D6827F3D0CD4E3578 /* Cells */,
+				2DC2C9A15E44BDD7C7864D81 /* CollectionView.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -2497,7 +2517,7 @@
 				1C6487272832E5150091A12D /* DefaultAppsService.swift in Sources */,
 				1C6720162885E13500C5F044 /* CurrencySwapLimitCollectionViewCell.swift in Sources */,
 				1C228AC528A17744005316A3 /* CurrencyPickerNetworkCell.swift in Sources */,
-				1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */,
+				1A4C3C292484B7A62AF950A7 /* CollectionViewOld.swift in Sources */,
 				1C67201F28870FDB00C5F044 /* ConfirmationWireframe.swift in Sources */,
 				1CDED5FF289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift in Sources */,
 				1C54DBEB285E833600E378F6 /* CurrencyAddView.swift in Sources */,
@@ -2599,7 +2619,6 @@
 				1A4C344238357B1B1AFEA845 /* SectionHeaderView.swift in Sources */,
 				1A4C3EFB16DB99838BABBB8C /* UIControl+Extensions.swift in Sources */,
 				1A4C3090DC31EABF15853AB1 /* BackgroundView.swift in Sources */,
-				1A4C3192ECD284C083DC6E68 /* DashboardBackgroundView.swift in Sources */,
 				1A4C3BCA3545491AC4FC17C9 /* NodeServiceAssembler.swift in Sources */,
 				1A4C39FDF8DB305BDA48C445 /* NetworksServiceAssembler.swift in Sources */,
 				1A4C39BBACC4A741A4102CF8 /* NetworkSettingsView.swift in Sources */,
@@ -2608,6 +2627,11 @@
 				1A4C36D5E453DDACAE192245 /* SelectionCollectionViewCell.swift in Sources */,
 				2DC2C8B1CFC018D58D54D527 /* LogoAnimView.swift in Sources */,
 				2DC2C9BD5DE2813FCC617F20 /* ButtonsSheetViewCell.swift in Sources */,
+				2DC2C7C3A650E3B9EB8B0D3B /* SunLogoView.swift in Sources */,
+				2DC2CFAED100073886D0644D /* CollectionView.swift in Sources */,
+				2DC2C89480B489FB22F389EC /* FPSCounter.swift in Sources */,
+				2DC2CAC2BA738E2618F51B8D /* FPSStatusBarViewController.swift in Sources */,
+				2DC2C57EC3D002717534D4DF /* FPStatusBarWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

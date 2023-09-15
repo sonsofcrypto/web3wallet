@@ -105,7 +105,7 @@ class DefaultImageCache: ImageCacheService {
     }
     
     private func cache(_ error: Error, url: URL) {
-        errorCache[url.absoluteString] = error
+        DispatchQueue.main.async { self.errorCache[url.absoluteString] = error }
     }
     
     private func cachePath(_ url: URL) -> String {

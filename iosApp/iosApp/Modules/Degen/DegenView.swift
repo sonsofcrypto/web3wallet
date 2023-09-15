@@ -9,7 +9,7 @@ final class DegenViewController: BaseViewController {
 
     var presenter: DegenPresenter!
 
-    @IBOutlet weak var collectionView: CollectionView!
+    @IBOutlet weak var collectionView: CollectionViewOld!
     private var backgroundGradientTopConstraint: NSLayoutConstraint?
     private var backgroundGradientHeightConstraint: NSLayoutConstraint?
 

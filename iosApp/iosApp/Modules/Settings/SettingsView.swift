@@ -9,7 +9,7 @@ final class SettingsViewController: BaseViewController {
 
     var presenter: SettingsPresenter!
 
-    @IBOutlet weak var collectionView: CollectionView!
+    @IBOutlet weak var collectionView: CollectionViewOld!
 
     private var viewModel: SettingsViewModel!
 

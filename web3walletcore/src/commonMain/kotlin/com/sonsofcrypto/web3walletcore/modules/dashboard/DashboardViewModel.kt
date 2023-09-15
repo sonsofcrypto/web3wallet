@@ -73,3 +73,10 @@ val DashboardViewModel.Section.Items.count: Int get() = when (this) {
     is Wallets -> this.data.count()
     is Nfts -> this.data.count()
 }
+
+val DashboardViewModel.Section.Items.kind: Int get() = when (this) {
+    is Buttons -> 0
+    is Actions -> 1
+    is Wallets -> 2
+    is Nfts -> 3
+}
