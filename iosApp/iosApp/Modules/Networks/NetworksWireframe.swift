@@ -45,10 +45,10 @@ extension DefaultNetworksWireframe {
         }
         if let input = destination as? NetworksWireframeDestination.EditNetwork {
             alertWireframeFactory.make(parent, context: .underConstructionAlert()).present()
- //             networkSettingsWireframeFactory.make(
- //                 vc?.asNavVc?.topVc ?? vc,
- //                 network: input.network
- //             ).present()
+//              networkSettingsWireframeFactory.make(
+//                  vc?.asNavVc?.topVc ?? vc,
+//                  network: input.network
+//              ).present()
         }
     }
 }
