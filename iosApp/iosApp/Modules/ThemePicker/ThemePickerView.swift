@@ -98,13 +98,21 @@ extension ThemePickerViewController: UICollectionViewDelegate {
                         let settingsService: SettingsService = AppAssembler.resolve()
                         switch indexPath.item {
                         case 0:
-                            settingsService.isSelected(setting: .init(group: .theme, action: .themeMiamiLight))
+                            settingsService.select(setting: .init(group: .theme, action: .themeMiamiLight))
+                            AppDelegate.setUserInterfaceStyle(.light)
+                            Theme = ThemeMiamiSunrise()
                         case 1:
-                            settingsService.isSelected(setting: .init(group: .theme, action: .themeMiamiDark))
+                            settingsService.select(setting: .init(group: .theme, action: .themeMiamiDark))
+                            AppDelegate.setUserInterfaceStyle(.dark)
+                            Theme = ThemeMiamiSunrise()
                         case 2:
-                            settingsService.isSelected(setting: .init(group: .theme, action: .themeIosLight))
+                            settingsService.select(setting: .init(group: .theme, action: .themeIosLight))
+                            AppDelegate.setUserInterfaceStyle(.light)
+                            Theme = ThemeVanilla()
                         case 3:
-                            settingsService.isSelected(setting: .init(group: .theme, action: .themeIosDark))
+                            settingsService.select(setting: .init(group: .theme, action: .themeIosDark))
+                            AppDelegate.setUserInterfaceStyle(.dark)
+                            Theme = ThemeVanilla()
                         default:
                             break
                         }
