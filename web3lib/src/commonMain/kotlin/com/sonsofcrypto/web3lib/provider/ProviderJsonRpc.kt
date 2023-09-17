@@ -132,7 +132,8 @@ abstract class ProviderJsonRpc(
     override suspend fun feeData(): FeeData = withBgCxt {
         val blockAsync = async { getBlock(BlockTag.Latest) }
         val gasPriceAsync = async { gasPrice() }
-        val block = blockAsync.await(); val gasPrice = gasPriceAsync.await()
+        val block = blockAsync.await()
+        val gasPrice = gasPriceAsync.await()
 
         if (block.baseFeePerGas == null) {
             throw Error.feeDataNullBaseFeePerGas
@@ -140,7 +141,7 @@ abstract class ProviderJsonRpc(
 
         // TODO:Compute this more accurately in the future, "check if the base
         // fee is correct". https://eips.ethereum.org/EIPS/eip-1559
-        val maxPriorityFeePerGas = BigInt.from("1500000000")
+        val maxPriorityFeePerGas = BigInt.from("2000000000") // 2 Gwei
         val maxFeePerGas = block.baseFeePerGas
             .mul(BigInt.from(2))
             .add(maxPriorityFeePerGas)
