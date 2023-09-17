@@ -26,18 +26,26 @@ final class DashboardViewController: BaseViewController {
         guard prevSize != view.bounds.size else { return }
         guard let cv = collectionView as? CollectionView else { return }
 
+        let vw = view.bounds.width
+        prevSize = view.bounds.size
+
+        guard !ThemeVanilla.isCurrent() else {
+            cv.contentInset.bottom = Theme.padding * 2
+            cv.overscrollView?.bounds = CGRect(
+                zeroOrigin: .init(width: vw, height: vw * Constant.sunRatio)
+            )
+            return
+        }
+
         let palmSize = (cv.topscrollView as? UIImageView)?.image?.size ?? .zero
-        let width = view.bounds.width
-        
         cv.contentInset.bottom = view.bounds.width * Constant.contentInsetRatio
         cv.abovescrollView?.bounds = CGRect(
-            zeroOrigin: .init(width: width, height: width * Constant.sunRatio)
+            zeroOrigin: .init(width: vw, height: vw * Constant.sunRatio)
         )
         cv.topscrollView?.frame = .init(
-            origin: .init(x: width - palmSize.width, y: 0),
+            origin: .init(x: vw - palmSize.width, y: 0),
             size: .init(width: palmSize.width, height: palmSize.height - 50)
         )
-        prevSize = view.bounds.size
     }
 
     deinit {
@@ -313,9 +321,12 @@ private extension DashboardViewController {
         cv?.register(DashboardHeaderTitleView.self, kind: .header)
         cv?.setCollectionViewLayout(compositionalLayout(), animated: false)
         cv?.refreshControl = UIRefreshControl()
-        cv?.backgroundView = nil
-        cv?.abovescrollView = SunLogoView(frame: .zero)
-        cv?.topscrollView = palmView
+        if let _ = Theme as? ThemeVanilla {
+            cv?.overscrollView = SunLogoView(frame: .zero)
+        } else {
+            cv?.abovescrollView = SunLogoView(frame: .zero)
+            cv?.topscrollView = palmView
+        }
         cv?.pinTopScrollToTop = true
         cv?.pinOverscrollToBottom = true
         cv?.layer.sublayerTransform = CATransform3D.m34(-1.0 / 500.0)
