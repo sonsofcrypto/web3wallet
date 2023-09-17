@@ -36,7 +36,9 @@ sealed class NetworksEvent() {
     /** Emitted when selected `network` changes */
     data class NetworkDidChange(val network: Network?): NetworksEvent()
     /** Emitted when `enabledNetworks` changes */
-    data class EnabledNetworksDidChange(val networks: List<Network>): NetworksEvent()
+    data class EnabledNetworksDidChange(
+        val networks: List<Network>
+    ): NetworksEvent()
     /** Emitted when `networkInfo` changes */
     data class NetworkInfoDidChange(
         val info: NetworkInfo,
@@ -51,7 +53,7 @@ interface NetworksListener { fun handle(event: NetworksEvent) }
  * Enabled and selected networks and provider preferences are persisted.
  */
 interface NetworksService {
-    /** Selected `KeyStoreItem`, when set rebuilds networks, providers & wallets */
+    /** Selected `KeyStoreItem` setting rebuilds networks, providers, wallets */
     var keyStoreItem: KeyStoreItem?
     /** Selected `Network`, when set rebuilds networks, providers & wallets */
     var network: Network?
@@ -59,7 +61,7 @@ interface NetworksService {
     fun enabledNetworks(): List<Network>
     /** Enabled / disable network for selected `NetworksService.keyStoreItem` */
     fun setNetwork(network: Network, enabled: Boolean)
-    /** Provider for `network`. Caches previous user selection returns default */
+    /** Provider for `network`. Caches previous selection returns default */
     fun provider(network: Network): Provider
     /** Set `provider` for `network`. Does not rebuild wallets */
     fun setProvider(provider: Provider?, network: Network)
@@ -205,7 +207,8 @@ class DefaultNetworksService(
     }
 
     override fun remove(listener: NetworksListener?) {
-        listeners = if (listener != null) listeners.filter { it != listener } else listOf()
+        listeners = if (listener != null) listeners.filter { it != listener }
+        else listOf()
     }
 
     override fun defaultNetworkFee(network: Network): NetworkFee = networkFees(network)[1]
@@ -258,7 +261,10 @@ class DefaultNetworksService(
         return null
     }
 
-    private fun setStoredNetworks(networks: List<Network>, item: KeyStoreItem?) {
+    private fun setStoredNetworks(
+        networks: List<Network>,
+        item: KeyStoreItem?
+    ) {
         store[networksKey(item)] = Json.encodeToString(networks)
     }
 
@@ -281,7 +287,10 @@ class DefaultNetworksService(
         pollRequest = request
     }
 
-    private fun handleNetworkInfo(result: List<Any>, request: PollServiceRequest) {
+    private fun handleNetworkInfo(
+        result: List<Any>,
+        request: PollServiceRequest
+    ) {
         val networkInfo = NetworkInfo.decodeCallData(result as List<List<Any>>)
         setNetworkInfo(networkInfo, request.userInfo as Network)
         if (network == request.userInfo as Network)
@@ -298,7 +307,7 @@ class DefaultNetworksService(
             .filter { it != network }
             .forEach {
                 val request = GroupPollServiceRequest(
-                    "NetworkInfo.${it.name} - ${Clock.System.now().epochSeconds}",
+                    "NetworkInfo.${it.name}-${Clock.System.now().epochSeconds}",
                     NetworkInfo.calls(it.multicall3Address()),
                     ::handleNetworkInfo,
                     it
