@@ -19,12 +19,9 @@ import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.NetworkFee
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
-import com.sonsofcrypto.web3lib.utils.withBgCxt
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -292,9 +289,11 @@ class DefaultNetworksService(
         request: PollServiceRequest
     ) {
         val networkInfo = NetworkInfo.decodeCallData(result as List<List<Any>>)
-        setNetworkInfo(networkInfo, request.userInfo as Network)
-        if (network == request.userInfo as Network)
-            fetchNonSelectedNetwokrsInfo()
+        uiScope.launch {
+            setNetworkInfo(networkInfo, request.userInfo as Network)
+            if (network == request.userInfo as Network)
+                fetchNonSelectedNetwokrsInfo()
+        }
     }
 
     private fun fetchNonSelectedNetwokrsInfo() {

@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3lib.services.uniswap2.core
 
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency
-import com.sonsofcrypto.web3lib.utils.BigInt
 
 data class TypedDataDomain(
     val name: String? = null,

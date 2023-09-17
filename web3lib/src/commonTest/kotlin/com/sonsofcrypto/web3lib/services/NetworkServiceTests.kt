@@ -105,7 +105,7 @@ class NetworkServiceTests: NetworksListener {
             )
             assertTrue(
                 networkInfoEventNetworks == expeted,
-                "Unexpected events $expeted"
+                "Unexpected events $networkInfoEventNetworks"
             )
         }
     }

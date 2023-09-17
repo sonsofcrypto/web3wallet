@@ -10,9 +10,7 @@ import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.timerFlow
-import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import com.sonsofcrypto.web3lib.utils.withBgCxt
-import com.sonsofcrypto.web3lib.utils.withUICxt
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn

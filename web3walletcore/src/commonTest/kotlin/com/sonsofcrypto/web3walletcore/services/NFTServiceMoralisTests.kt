@@ -5,9 +5,7 @@ import com.sonsofcrypto.web3lib.utils.FileManager
 import com.sonsofcrypto.web3lib.utils.FileManager.Location.BUNDLE
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTServiceMoralis
 import com.sonsofcrypto.web3walletcore.testEnvNetworkService
-import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
-import kotlin.test.assertTrue
 
 class NFTServiceMoralisTests {
 

@@ -21,7 +21,6 @@ import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.Button
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.ButtonSheetViewModel.SheetMode
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.ButtonSheetViewModel.SheetMode.COMPACT
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.ButtonSheetViewModel.SheetMode.EXPANDED
-import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.ButtonSheetViewModel.SheetMode.HIDDEN
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.Item
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.State.Loaded
 import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreViewModel.TransitionTargetView.ButtonAt
