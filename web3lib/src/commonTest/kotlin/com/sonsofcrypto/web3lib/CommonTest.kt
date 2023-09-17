@@ -15,6 +15,7 @@ import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
 import com.sonsofcrypto.web3lib.services.poll.DefaultPollService
+import com.sonsofcrypto.web3lib.services.poll.PollService
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.types.Network
@@ -69,12 +70,13 @@ fun testEnvKeyStore(prefix: String = "Test"): KeyStoreService {
 fun testEnvNetworkService(
     prefix: String = "test",
     network: Network = Network.sepolia(),
+    pollService: PollService = DefaultPollService(),
     keyStoreService: KeyStoreService? = null
 ): NetworksService {
     val service = DefaultNetworksService(
         KeyValueStore("$prefix.networkService"),
         keyStoreService ?: testEnvKeyStore(prefix),
-        DefaultPollService(),
+        pollService,
         DefaultNodeService()
     )
     service.network = network
@@ -85,18 +87,24 @@ fun testEnvWalletService(
     prefix: String = "test",
     network: Network = Network.sepolia(),
     networksService: NetworksService? = null,
+    pollService: PollService? = null,
     currencyStoreService: CurrencyStoreService? = null
 ): WalletService {
-    val netService = networksService ?: testEnvNetworkService(prefix, network)
+    val pollService = pollService ?: DefaultPollService()
+    val networkService = networksService ?: testEnvNetworkService(
+        prefix,
+        network,
+        pollService
+    )
     val walletService = DefaultWalletService(
-        netService,
+        networkService,
         currencyStoreService ?: testEnvCurrencyStore(prefix),
         KeyValueStore("$prefix.walletService.currencies"),
         KeyValueStore("$prefix.walletService.networkState"),
         KeyValueStore("$prefix.walletService.transferLogCache"),
     )
     walletService.setCurrencies(defaultCurrencies(network), network)
-    netService.provider(netService.network!!).debugLogs = true
+    networkService.provider(networkService.network!!).debugLogs = true
     return walletService
 }
 
@@ -104,12 +112,27 @@ fun testEnvServices(
     prefix: String = "test",
     network: Network = Network.sepolia()
 ): TestEnvServices {
+    val currencyStoreService = testEnvCurrencyStore(prefix)
     val keyStoreService = testEnvKeyStore(prefix)
+    val pollService = DefaultPollService()
+    val networkService = testEnvNetworkService(
+        prefix,
+        network,
+        pollService,
+        keyStoreService
+    )
+    val walletService = testEnvWalletService(
+        prefix,
+        network,
+        networkService,
+        pollService,
+        currencyStoreService
+    )
     return TestEnvServices(
-        testEnvCurrencyStore(prefix),
-        testEnvKeyStore(prefix),
-        testEnvNetworkService(prefix, network, keyStoreService),
-        testEnvWalletService(prefix, network),
+        currencyStoreService,
+        keyStoreService,
+        networkService,
+        walletService,
     )
 }
 

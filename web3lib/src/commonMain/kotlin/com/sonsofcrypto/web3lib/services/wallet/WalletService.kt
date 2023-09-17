@@ -433,7 +433,7 @@ class DefaultWalletService(
                     receipts.add(info.toReceiptInfo(receipt))
                 } catch (error: Throwable) {
                     remaining.add(info)
-                    println("=== Receipt error")
+                    println("[WalletService] Receipt error $error")
                 }
             } else {
                 remaining.add(info)

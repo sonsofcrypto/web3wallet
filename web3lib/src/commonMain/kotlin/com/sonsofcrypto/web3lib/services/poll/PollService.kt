@@ -69,7 +69,7 @@ class DefaultPollService: PollService {
     private var boostCount: Int = -1
     private var lastTestnetTimeStamp: Instant = Instant.DISTANT_PAST
     private val bgScope = CoroutineScope(bgDispatcher)
-    private var poolJob: Job = timerFlow(pollInterval, initialDelay = 1.seconds)
+    private var poolJob: Job = timerFlow(pollInterval, initialDelay = 3.seconds)
         .onEach { poll() }
         .launchIn(CoroutineScope(bgDispatcher))
 

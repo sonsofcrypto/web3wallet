@@ -2,6 +2,8 @@ package com.sonsofcrypto.web3lib
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.currencyStore.defaultCurrencies
+import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
+import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
 import com.sonsofcrypto.web3lib.services.poll.DefaultPollService
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletServiceMulticall
 import com.sonsofcrypto.web3lib.services.wallet.WalletEvent
@@ -16,21 +18,9 @@ class WalletServiceMulticallTests: WalletListener {
 
     @Test
     fun testPooling() = runBlocking {
-        println("[WalletServiceMulticallTests] start")
         val prefix = "walletServiceMulticallTests"
-        val services = testEnvServices(prefix)
-        val networksService = testEnvNetworkService(prefix)
-        services.networksService.network = Network.ethereum()
-        services.networksService.setNetwork(Network.goerli(), true)
-        services.networksService.setNetwork(Network.sepolia(), true)
-        val walletService = DefaultWalletServiceMulticall(
-            services.networksService,
-            services.currencyStoreService,
-            DefaultPollService(),
-            KeyValueStore("$prefix.walletService.currencies"),
-            KeyValueStore("$prefix.walletService.networkState"),
-            KeyValueStore("$prefix.walletService.transferLogCache"),
-        )
+        val services = envServices(prefix)
+        val walletService = services.walletService
         services.networksService.enabledNetworks().forEach {
             services.networksService.provider(it).debugLogs = true
             walletService.setCurrencies(defaultCurrencies(it), it)
@@ -48,4 +38,33 @@ class WalletServiceMulticallTests: WalletListener {
         }
     }
 
+    fun envServices(prefix: String): TestEnvServices {
+        val network = Network.ethereum()
+        val pollService = DefaultPollService()
+        val keyStoreService = testEnvKeyStore(prefix)
+        val currencyStoreService = testEnvCurrencyStore(prefix)
+        val networksService = DefaultNetworksService(
+            KeyValueStore("$prefix.networkService"),
+            keyStoreService ?: testEnvKeyStore(prefix),
+            pollService,
+            DefaultNodeService()
+        )
+        networksService.network = Network.ethereum()
+        networksService.setNetwork(Network.goerli(), true)
+        networksService.setNetwork(Network.sepolia(), true)
+        val walletService = DefaultWalletServiceMulticall(
+            networksService,
+            currencyStoreService,
+            pollService,
+            KeyValueStore("$prefix.walletService.currencies"),
+            KeyValueStore("$prefix.walletService.networkState"),
+            KeyValueStore("$prefix.walletService.transferLogCache"),
+        )
+        return TestEnvServices(
+            currencyStoreService,
+            keyStoreService,
+            networksService,
+            walletService
+        )
+    }
 }

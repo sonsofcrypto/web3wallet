@@ -8,6 +8,7 @@ import com.sonsofcrypto.web3lib.provider.model.*
 import com.sonsofcrypto.web3lib.services.currencyStore.*
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent.EnabledNetworksDidChange
+import com.sonsofcrypto.web3lib.services.networks.NetworksEvent.KeyStoreItemDidChange
 import com.sonsofcrypto.web3lib.services.networks.NetworksListener
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.poll.FnPollServiceRequest
@@ -150,7 +151,7 @@ class DefaultWalletServiceMulticall(
         val response = wallet!!.sendTransaction(request)
         withUICxt {
             addPending(PendingInfo.Transfer(network, currency, to, amount, response))
-            scheduleUpdate(3.seconds)
+            pollService.boostInterval()
         }
         return@withBgCxt response
     }
@@ -169,7 +170,7 @@ class DefaultWalletServiceMulticall(
         val response = wallet!!.sendTransaction(request)
         withUICxt {
             addPending(PendingInfo.Contract(network, contractAddress, response))
-            scheduleUpdate(3.seconds)
+            pollService.boostInterval()
         }
         return@withBgCxt response
     }
@@ -250,7 +251,7 @@ class DefaultWalletServiceMulticall(
 
     override fun handle(event: NetworksEvent) {
         when (event) {
-            NetworksEvent.KeyStoreItemDidChange,
+            is KeyStoreItemDidChange,
             is EnabledNetworksDidChange -> {
                 pausePolling()
                 startPolling()
@@ -273,7 +274,7 @@ class DefaultWalletServiceMulticall(
                     receipts.add(info.toReceiptInfo(receipt))
                 } catch (error: Throwable) {
                     remaining.add(info)
-                    println("=== Receipt error")
+                    println("[WalletService] Receipt error $error")
                 }
             } else {
                 remaining.add(info)
@@ -285,14 +286,6 @@ class DefaultWalletServiceMulticall(
         }
     }
 
-    private fun scheduleUpdate(duration: Duration) {
-        scope.launch {
-            delay(duration)
-//            poll()
-            // TODO: Investigate
-        }
-    }
-
     private data class BalanceReqUserInfo(
         val network: Network,
         val currency: Currency,
@@ -300,9 +293,7 @@ class DefaultWalletServiceMulticall(
 
     /** Updates getEthBalance & ERC20 balances. Triggers transaction log fetch
      * if new balance != previous balance. Processes pending transactions */
-    private fun poll3() {
-        // TODO: That we dont have request pending schedule if we do not
-        // TODO: Check if pending transactions were processed
+    private fun poll() {
         val requestsIds = mutableListOf<String>()
         for (network in networkService.enabledNetworks()) {
             val wallet = networkService.wallet(network) ?: continue
@@ -321,7 +312,8 @@ class DefaultWalletServiceMulticall(
 
     private fun invalidatePollRequests(restart: Boolean) {
         requestsIds.forEach { pollService.cancel(it) }
-        if (restart) poll3()
+        requestsIds = emptyList()
+        if (restart) poll()
     }
 
     @Throws(Throwable::class)
@@ -353,6 +345,19 @@ class DefaultWalletServiceMulticall(
                 result.last() as ByteArray
             ).first() as BigInt
             updateBalance(userInfo.network, userInfo.currency, balance)
+            // TODO: This is a hack, move to its own loop
+            if (
+                userInfo.network.chainId == Network.ethereum().chainId &&
+                userInfo.currency.isNative()
+            ) {
+                val pendingTransactions = pending.toList()
+                val walletsMap = networks()
+                    .map { it.id() to networkService.wallet(it) }
+                    .toMap()
+                withBgCxt {
+                    processPending(pendingTransactions, walletsMap)
+                }
+            }
         }
     }
 
@@ -362,172 +367,13 @@ class DefaultWalletServiceMulticall(
         balance: BigInt,
     ) = withUICxt {
         val balanceKey = balanceKey(network, currency)
+        val prevBalance = balance(network, currency)
         networksState[balanceKey] = balance
         networksStateCache.set(balanceKey, jsonEncode(balance))
-        // TODO: Only emit if balance changed
-        emit(WalletEvent.Balance(network, currency, balance))
-        // TODO: Trigger logs fetch if needed
+        if (!prevBalance.equals(balance)) {
+            emit(WalletEvent.Balance(network, currency, balance))
+        }
     }
-
-        /** Network service begining ============*/
-
-//    private var pollRequest: PollServiceRequest? = null
-//    private var nonSelectedRefreshCounter = 0
-//    private val nonSelectedRefreshTimeout = 2
-//
-//    private fun updatePollingLoop() {
-//        pollRequest?.let { pollService.cancel(it.id) }
-//        if (!enabledNetworks.contains(network)) return
-//        val network = this.network ?: return
-//        val request = GroupPollServiceRequest(
-//            "NetworkInfo.${network.name} - ${Clock.System.now().epochSeconds}",
-//            NetworkInfo.calls(network.multicall3Address()),
-//            ::handleNetworkInfo,
-//            network
-//        )
-//        pollService.setProvider(provider(network), network)
-//        pollService.add(request, network, true)
-//        pollRequest = request
-//    }
-//
-//    private fun handleNetworkInfo(
-//        result: List<Any>,
-//        request: PollServiceRequest
-//    ) {
-//        val networkInfo = NetworkInfo.decodeCallData(result as List<List<Any>>)
-//        setNetworkInfo(networkInfo, request.userInfo as Network)
-//        if (network == request.userInfo as Network)
-//            fetchNonSelectedNetwokrsInfo()
-//    }
-//
-//    private fun fetchNonSelectedNetwokrsInfo() {
-//        if (nonSelectedRefreshCounter != 0) {
-//            nonSelectedRefreshCounter--
-//            return
-//        }
-//        nonSelectedRefreshCounter = nonSelectedRefreshTimeout
-//        enabledNetworks
-//            .filter { it != network }
-//            .forEach {
-//                val request = GroupPollServiceRequest(
-//                    "NetworkInfo.${it.name}-${Clock.System.now().epochSeconds}",
-//                    NetworkInfo.calls(it.multicall3Address()),
-//                    ::handleNetworkInfo,
-//                    it
-//                )
-//                pollService.setProvider(provider(it), it)
-//                pollService.add(request, it, false)
-//            }
-//    }
-
-    /** Network service end =================*/
-
-    /** Old polling service begining ======================================== */
-
-//    override fun startPolling() {
-//        if (pollingJob == null)
-//            pollingJob = timerFlow(pollInterval, initialDelay = 0.1.seconds)
-//                .onEach { poll() }
-//                .launchIn(scope)
-//    }
-//
-//    override fun pausePolling() {
-//        pollingJob?.cancel()
-//        pollingJob = null
-//    }
-//
-//    private suspend fun poll() = withContext(SupervisorJob() + uiDispatcher) {
-//        val wallets = networks().map { networkService.wallet(it) }
-//        val transactionCounts = networks().map { recordedTransactionCount(it) }
-//        val currencies = networks().map { currencies(it) }
-//        val pendingTransactions = pending.toList()
-//        val walletsMap = networks().map { it.id() to networkService.wallet(it) }
-//            .toMap()
-//        val force = !didReloadOnLastBlock
-//        didReloadOnLastBlock = !didReloadOnLastBlock
-//        scope.launch(logExceptionHandler) {
-//            processPending(pendingTransactions, walletsMap)
-//            wallets.forEachIndexed { idx, wallet ->
-//                if (wallet != null) {
-//                    blockNumber(wallet)
-//                    transactionCountAndBalance(
-//                        wallet,
-//                        transactionCounts[idx],
-//                        currencies[idx],
-//                        force
-//                    )
-//                }
-//            }
-//        }
-//    }
-//
-//    private suspend fun blockNumber(wallet: Wallet) {
-//        val network = wallet.network()!!
-//        val block = wallet.provider()?.blockNumber() ?: BigInt.zero
-//        withUICxt {
-//            networksState[blockNumKey(network)] = block
-//            networksStateCache.set(blockNumKey(network), jsonEncode(block))
-//            emit(WalletEvent.BlockNumber(network, block))
-//        }
-//    }
-//
-//    private suspend fun transactionCountAndBalance(
-//        wallet: Wallet,
-//        transactionCount: BigInt?,
-//        currencies: List<Currency>,
-//        force: Boolean = false
-//    ) {
-//        val newTransactionCount = wallet.getTransactionCount(
-//            wallet.address(),
-//            BlockTag.Latest
-//        )
-//        if (!force && transactionCount != null && transactionCount == newTransactionCount)
-//            return
-//        // TODO: Get transaction from nonce and only update IRC20s in transaction
-//        currencies.forEach { currency ->
-//            when (currency.type) {
-//                Currency.Type.NATIVE -> {
-//                    val balance = wallet.getBalance(BlockTag.Latest)
-//                    updateBalance(wallet, currency, balance, newTransactionCount)
-//                }
-//                Currency.Type.ERC20 -> {
-//                    val contract = ERC20Legacy(Address.HexString(currency.address!!))
-//                    val address = wallet.address().toHexStringAddress()
-//                    val encodedBalance = wallet.call(
-//                        TransactionRequest(
-//                            to = contract.address,
-//                            data = contract.balanceOf(address),
-//                        )
-//                    )
-//                    val balance = abiDecodeBigInt(encodedBalance)
-//                    updateBalance(wallet, currency, balance, newTransactionCount)
-//                }
-//                else -> { println("Unhandled balance") }
-//            }
-//        }
-//    }
-//
-//    override fun reloadAllBalances() {
-//        val wallets = networks().map { networkService.wallet(it) }
-//        val transactionCounts = networks().map { recordedTransactionCount(it) }
-//        val currencies = networks().map { currencies(it) }
-//        didReloadOnLastBlock = true
-//        scope.launch(logExceptionHandler) {
-//            wallets.forEachIndexed { idx, wallet ->
-//                if (wallet != null) {
-//                    blockNumber(wallet)
-//                    transactionCountAndBalance(
-//                        wallet,
-//                        transactionCounts[idx],
-//                        currencies[idx],
-//                        true
-//                    )
-//                }
-//            }
-//        }
-//    }
-
-    /** Old polling service end ============================================= */
 
     private fun blockNumKey(network: Network): String {
         val wallet = networkService.wallet(network)
