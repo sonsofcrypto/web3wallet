@@ -153,7 +153,7 @@ val mockKeyStoreItem = KeyStoreItem(
     saltMnemonic = false,
     passwordType = KeyStoreItem.PasswordType.PASS,
     addresses = mapOf(
-        "m/44'/60'/0'/0/0" to "A52fD940629625371775d2D7271A35a09BC2B49e",
+        "m/44'/60'/0'/0/0" to "0xA52fD940629625371775d2D7271A35a09BC2B49e",
     ),
 )
 

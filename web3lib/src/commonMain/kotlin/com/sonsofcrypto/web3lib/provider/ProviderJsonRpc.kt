@@ -332,6 +332,7 @@ abstract class ProviderJsonRpc(
 
     @Throws(Throwable::class)
     suspend fun perform(req: JsonRpcRequest): JsonRpcResponse = withBgCxt {
+        if (debugLogs) println("[RPC REQUEST] $req")
         var respBody = ""
         try {
             respBody = client.post(url()) {
@@ -355,6 +356,7 @@ abstract class ProviderJsonRpc(
         } catch (e: Throwable) {
             println(e)
         }
+        if (debugLogs) println("[RPC ERROR] ${jsonRpcErrorResponse?.error ?: error}")
         throw jsonRpcErrorResponse?.error ?: error
     }
 

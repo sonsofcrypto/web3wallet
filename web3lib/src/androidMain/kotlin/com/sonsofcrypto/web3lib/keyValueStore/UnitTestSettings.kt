@@ -26,9 +26,9 @@ class UnitTestSettings constructor(val name: String = "com.sonsofcrypto.default"
             val data = fm.readSync("preferences/$name", APPFILES)
             val f = ByteArrayInputStream(data)
             val s = ObjectInputStream(f)
-            println("loaded $s")
+            // println("loaded $s")
             val map = s.readObject() as HashMap<String, Any?>
-            println("casted $map")
+            // println("casted $map")
             s.close()
             delegate = map.toMutableMap()
         } catch (err: Throwable) { }
