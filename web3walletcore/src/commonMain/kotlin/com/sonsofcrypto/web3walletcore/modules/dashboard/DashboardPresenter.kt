@@ -170,17 +170,17 @@ class DefaultDashboardPresenter(
         listOf(
             Button(
                 Localized("dashboard.button.receive"),
-                "receive-button",
+                "icon_receive",
                 RECEIVE
             ),
             Button(
                 Localized("dashboard.button.send"),
-                "send-button",
+                "icon_send",
                 SEND
             ),
             Button(
                 Localized("dashboard.button.swap"),
-                "swap-button",
+                "icon_swap",
                 SWAP
             )
         )

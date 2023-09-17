@@ -6,14 +6,13 @@ import UIKit
 import web3walletcore
 
 final class DashboardButtonsCell: UICollectionViewCell {
-
-    typealias Handler = ()->Void
-
     @IBOutlet weak var receiveButton: Button!
     @IBOutlet weak var sendButton: Button!
     @IBOutlet weak var tradeButton: Button!
     @IBOutlet weak var stack: UIStackView!
-    
+
+    typealias Handler = ()->Void
+
     private var receiveHandler: Handler?
     private var sendHandler: Handler?
     private var swapHandler: Handler?
@@ -29,6 +28,8 @@ final class DashboardButtonsCell: UICollectionViewCell {
         super.traitCollectionDidChange(previousTraitCollection)
     }
 }
+
+// MARK: - Actions
 
 extension DashboardButtonsCell {
     
@@ -61,27 +62,28 @@ extension DashboardButtonsCell {
         self.swapHandler = swapHandler
 
         viewModel.forEach {
-            switch $0.type {
-            case .receive:
-                receiveButton.style = .dashboardAction(
-                    leftImage: $0.imageName.assetImage?.withTintColor(Theme.color.textPrimary)
-                )
-                receiveButton.setTitle($0.title, for: .normal)
-            case .send:
-                sendButton.style = .dashboardAction(
-                    leftImage: $0.imageName.assetImage?.withTintColor(Theme.color.textPrimary)
-                )
-                sendButton.setTitle($0.title, for: .normal)
-            case .swap:
-                tradeButton.style = .dashboardAction(
-                    leftImage: $0.imageName.assetImage?.withTintColor(Theme.color.textPrimary)
-                )
-                tradeButton.setTitle($0.title, for: .normal)
-            default:
-                break
-            }
+            var button: Button? = button(for: $0.type)
+            button?.setTitle($0.title, for: .normal)
+            button?.style = .dashboardAction(
+                leftImage: UIImage(named: $0.imageName)
+            )
         }
 
         return self
+    }
+
+    private func button(
+            for type: DashboardViewModel.SectionItemsButtonType
+    ) -> Button? {
+        switch type {
+        case .receive:
+            return receiveButton
+        case .send:
+            return sendButton
+        case .swap:
+            return tradeButton
+        default:
+            return nil
+        }
     }
 }

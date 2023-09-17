@@ -60,7 +60,6 @@ extension Button {
         case accountAction
         
         enum PrimaryAction {
-            
             case `default`
             case destructive
         }

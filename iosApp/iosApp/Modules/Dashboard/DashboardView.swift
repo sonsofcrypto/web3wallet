@@ -315,8 +315,6 @@ private extension DashboardViewController {
             tag: 0
         )
         edgeCardsController?.delegate = self
-        let palmView = UIImageView(imgName: "dashboard-palm")
-        palmView.contentMode = .bottom
         let cv = collectionView as? CollectionView
         cv?.register(DashboardHeaderTitleView.self, kind: .header)
         cv?.setCollectionViewLayout(compositionalLayout(), animated: false)
@@ -324,6 +322,8 @@ private extension DashboardViewController {
         if let _ = Theme as? ThemeVanilla {
             cv?.overscrollView = SunLogoView(frame: .zero)
         } else {
+            let palmView = UIImageView(imgName: "topscroll_palm")
+            palmView.contentMode = .bottom
             cv?.abovescrollView = SunLogoView(frame: .zero)
             cv?.topscrollView = palmView
         }

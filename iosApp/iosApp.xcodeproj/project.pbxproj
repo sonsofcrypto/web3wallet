@@ -294,7 +294,6 @@
 		1C9E3197287580BF00DD2031 /* CurrencyCurrencyWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3196287580BF00DD2031 /* CurrencyCurrencyWireframeFactory.swift */; };
 		1C9E319D287580D400DD2031 /* CurrencySendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E319C287580D400DD2031 /* CurrencySendView.swift */; };
 		1C9E31A3287580E500DD2031 /* CurrencySend.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C9E31A2287580E500DD2031 /* CurrencySend.storyboard */; };
-		1C9E31AE287732A700DD2031 /* Assets-Old.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C9E31AD287732A700DD2031 /* Assets-Old.xcassets */; };
 		1C9E31B028787A3000DD2031 /* NetworkFeePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31AF28787A3000DD2031 /* NetworkFeePickerView.swift */; };
 		1CAC55A4286DF26100CCB2B6 /* Networks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55A3286DF26100CCB2B6 /* Networks.storyboard */; };
 		1CAC55A8286E119500CCB2B6 /* KeyStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55A7286E119500CCB2B6 /* KeyStore.storyboard */; };
@@ -734,7 +733,6 @@
 		1C9E3196287580BF00DD2031 /* CurrencyCurrencyWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCurrencyWireframeFactory.swift; sourceTree = "<group>"; };
 		1C9E319C287580D400DD2031 /* CurrencySendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySendView.swift; sourceTree = "<group>"; };
 		1C9E31A2287580E500DD2031 /* CurrencySend.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CurrencySend.storyboard; sourceTree = "<group>"; };
-		1C9E31AD287732A700DD2031 /* Assets-Old.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-Old.xcassets"; sourceTree = "<group>"; };
 		1C9E31AF28787A3000DD2031 /* NetworkFeePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkFeePickerView.swift; sourceTree = "<group>"; };
 		1CAC55A3286DF26100CCB2B6 /* Networks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Networks.storyboard; sourceTree = "<group>"; };
 		1CAC55A7286E119500CCB2B6 /* KeyStore.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = KeyStore.storyboard; sourceTree = "<group>"; };
@@ -1914,7 +1912,6 @@
 				D157F7CA27B69B6300578FF8 /* AppDelegate.swift */,
 				1CD3FE1F284D5840008312DE /* FeatureFlags.swift */,
 				D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */,
-				1C9E31AD287732A700DD2031 /* Assets-Old.xcassets */,
 				1CB8B0E728916AA900024E7C /* Assets-ThemeIOS.xcassets */,
 				1C54DC73286A1D4B00E378F6 /* Assets-ThemeMiami.xcassets */,
 				D157F7D327B69B6400578FF8 /* Assets.xcassets */,
@@ -2212,7 +2209,6 @@
 				1C54DC5228683DDA00E378F6 /* NaokoAA-Extrabold-Italic.otf in Resources */,
 				1CAC5607286EFFC300CCB2B6 /* SFProDisplay-SemiboldItalic.otf in Resources */,
 				1CB8B0DC28904F6C00024E7C /* NFTsCollection.storyboard in Resources */,
-				1C9E31AE287732A700DD2031 /* Assets-Old.xcassets in Resources */,
 				D15CB4FE2893D1AC00E4A25E /* Currencies.xcassets in Resources */,
 				1C54DC74286A1D4C00E378F6 /* Assets-ThemeMiami.xcassets in Resources */,
 				D11A990727B8615B00EDFDD0 /* GothicA1-Medium.ttf in Resources */,
