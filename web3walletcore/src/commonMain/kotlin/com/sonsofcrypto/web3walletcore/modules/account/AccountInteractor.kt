@@ -77,9 +77,9 @@ class DefaultAccountInteractor(
     }
 
     override fun transactions(network: Network, currency: Currency): List<AccountTransaction> =
-        if (network.isEthereum && currency.type == ERC20) {
+        if (currency.type == ERC20) {
             walletService.transferLogs(currency, network).toAccountTransactions(network)
-        } else if (network.isEthereum && currency.type == NATIVE) {
+        } else if (currency.type == NATIVE) {
             etherScanService.transactionHistory(
                 address(network),
                 network,
@@ -91,9 +91,9 @@ class DefaultAccountInteractor(
 
 
     override suspend fun fetchTransactions(network: Network, currency: Currency) {
-        if (network.isEthereum && currency.type == ERC20) {
+        if (currency.type == ERC20) {
             walletService.fetchTransferLogs(currency, network)
-        } else if (network.isEthereum && currency.type == NATIVE) {
+        } else if (currency.type == NATIVE) {
             etherScanService.fetchTransactionHistory(address(network), network)
         }
     }

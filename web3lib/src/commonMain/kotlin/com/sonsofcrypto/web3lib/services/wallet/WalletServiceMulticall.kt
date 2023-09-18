@@ -21,8 +21,6 @@ import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
 import kotlinx.coroutines.*
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.seconds
 
 
 class DefaultWalletServiceMulticall(
@@ -36,7 +34,7 @@ class DefaultWalletServiceMulticall(
     private val currencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private val networksState: MutableMap<String, BigInt> = mutableMapOf()
     private val transferLogs: MutableMap<String, List<Log>> = mutableMapOf()
-    private val transferLogsNonce: MutableMap<String,BigInt> = mutableMapOf()
+    private val transferLogsBalance: MutableMap<String,BigInt> = mutableMapOf()
     private var listeners: MutableSet<WalletListener> = mutableSetOf()
     private var pending: MutableList<PendingInfo> = mutableListOf()
     private var requestsIds: List<String> = mutableListOf()
@@ -110,16 +108,8 @@ class DefaultWalletServiceMulticall(
         currency: Currency
     ): List<PendingInfo> = pending.filter {
         it.network.id() == network.id()
-                && it as? PendingInfo.Transfer != null
-                && it.currency.id() == currency.id()
-    }
-
-    private fun recordedTransactionCount(network: Network): BigInt? {
-        networksState[transactionCountKey(network)]?.let { return it }
-        networksStateCache.get<String>(transactionCountKey(network))?.let {
-            jsonDecode<BigInt>(it)?.let { balance -> return balance }
-        }
-        return null
+            && it as? PendingInfo.Transfer != null
+            && it.currency.id() == currency.id()
     }
 
     override fun transferLogs(currency: Currency, network: Network): List<Log> {
@@ -198,29 +188,28 @@ class DefaultWalletServiceMulticall(
         network: Network
     ): List<Log> = withBgCxt {
         val wallet = withUICxt { return@withUICxt networkService.wallet(network) }
-        val nonce = withUICxt { return@withUICxt transactionCount(network) }
-        val lastNonce = withUICxt { return@withUICxt transferLogNonce(currency, network) }
-        if (nonce == lastNonce) {
+        val balance = withUICxt { return@withUICxt balance(network, currency) }
+        val lastBalance = withUICxt { return@withUICxt transferLogBalance(currency, network) }
+        if (balance == lastBalance) {
             val logs = withUICxt { transferLogs(currency, network) }
             return@withBgCxt logs
         }
         val logs = wallet?.getTransferLogs(currency) ?: listOf()
         withUICxt {
             val key = transferLogsKey(currency, network)
-            val nonceKey = transferLogsNonceKey(currency, network)
+            val balanceKey = transferLogsBalanceKey(currency, network)
             transferLogs[key] = logs
-            transferLogsNonce[nonceKey] = transactionCount(network)
+            transferLogsBalance[balanceKey] = balance
             transferLogsCache.set(key, jsonEncode(logs))
-            transferLogsCache.set(nonceKey, jsonEncode(transactionCount(network)))
+            transferLogsCache.set(balanceKey, jsonEncode(balance))
             emit(WalletEvent.TransferLogs(network, currency, logs))
         }
         return@withBgCxt logs
     }
 
-
-    private fun transferLogNonce(currency: Currency, network: Network): BigInt {
-        transferLogsNonce[transferLogsNonceKey(currency, network)]?.let { return it }
-        transferLogsCache.get<String>(transferLogsNonceKey(currency, network))?.let {
+    private fun transferLogBalance(currency: Currency, network: Network): BigInt {
+        transferLogsBalance[transferLogsBalanceKey(currency, network)]?.let { return it }
+        transferLogsCache.get<String>(transferLogsBalanceKey(currency, network))?.let {
             jsonDecode<BigInt>(it)?.let { nonce -> return nonce }
         }
         return BigInt.zero
@@ -400,7 +389,10 @@ class DefaultWalletServiceMulticall(
         return "transferLogs_${wallet?.id()}_${currency.id()}_${network.id()}"
     }
 
-    private fun transferLogsNonceKey(currency: Currency, network: Network): String {
+    private fun transferLogsBalanceKey(
+        currency: Currency,
+        network: Network
+    ): String {
         val wallet = networkService.wallet(network)
         return "transferLogsNonce_${wallet?.id()}_${currency.id()}_${network.id()}"
     }
