@@ -104,7 +104,9 @@ class SunLogoView: UIView, Progressable {
     }
 
     func setProgress(_ progress: CGFloat) {
-        alpha = (progress - 0.2) / 0.2
+        ThemeVanilla.isCurrent() {
+            alpha = (progress - 0.2) / 0.2
+        }
         let length = bounds.width
         let invProg = 1 - progress
 
