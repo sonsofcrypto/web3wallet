@@ -66,7 +66,7 @@ extension CACornerMask {
 
 extension CATransform3D {
 
-    static func m34(_ m34:CGFloat) -> CATransform3D {
+    static func m34(_ m34:CGFloat = -1.0 / 500.0) -> CATransform3D {
         var transform = CATransform3DIdentity
         transform.m34 = m34
         return transform

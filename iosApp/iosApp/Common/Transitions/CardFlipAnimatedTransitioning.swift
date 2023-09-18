@@ -36,9 +36,7 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
         let toView = transitionContext.view(forKey: .to)
         let containerView = transitionContext.containerView
 
-        var transform = CATransform3DIdentity
-        transform.m34 = -1.0 / 500.0
-        containerView.layer.sublayerTransform = transform
+        containerView.layer.sublayerTransform = CATransform3D.m34()
 
         if isPresenting {
             animatePresenting(

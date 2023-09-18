@@ -7,13 +7,8 @@ import UIKit
 class TransformView: UIView {
 
     override class var layerClass: AnyClass {
-        return CATransformLayer.self
+         CATransformLayer.self
     }
 
-    static let parentSublayerTransform:CATransform3D = {
-        var transform = CATransform3DIdentity
-        transform.m34 = -1.0 / 500.0
-        return transform
-    }()
-
+    static let parentSublayerTransform: CATransform3D = .m34()
 }

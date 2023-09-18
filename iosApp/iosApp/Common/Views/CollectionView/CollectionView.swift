@@ -52,8 +52,6 @@ class CollectionView: UICollectionView {
         layoutTopOverscrollView(topscrollView, pin: pinTopScrollToTop)
         layoutOverscrollView(overscrollView, pinToBottom: pin)
         layoutOverscrollView(abovescrollView, aboveLine: true, pinToBottom: pin)
-
-        (backgroundView as? BackgroundView)?.topInset = adjustedContentInset.top
     }
 
     private func layoutTopOverscrollView(_ view: UIView?, pin: Bool = false) {
@@ -130,14 +128,18 @@ class CollectionView: UICollectionView {
 
     private func repairViewsHierarchyIfNeeded() {
         var baseIdx = backgroundView == nil ? 0 : 1
-
-        if let view = overscrollView, subviews[safe: baseIdx] != view {
-            insertSubview(view, at: baseIdx)
+        
+        if let view = overscrollView {
+            if subviews[safe: baseIdx] != view {
+                insertSubview(view, at: baseIdx)
+            }
             baseIdx += 1
         }
 
-        if let view = abovescrollView, subviews[safe: baseIdx] != view {
-            insertSubview(view, at: baseIdx)
+        if let view = abovescrollView {
+            if subviews[safe: baseIdx] != view {
+                insertSubview(view, at: baseIdx)
+            }
             baseIdx += 1
         }
 
