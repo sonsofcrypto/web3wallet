@@ -14,10 +14,14 @@
         <scene sceneID="fla-7C-pKJ">
             <objects>
                 <viewController restorationIdentifier="DashboardViewController" storyboardIdentifier="DashboardViewController" id="EhY-FW-vL9" userLabel="DashboardViewController" customClass="DashboardViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="1Ea-Xb-sRG" customClass="ThemeGradientView" customModule="iosApp" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="1Ea-Xb-sRG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E32-18-nEs" customClass="ThemeGradientView" customModule="iosApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="48" width="414" height="848"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cZV-5M-45A" customClass="CollectionView" customModule="iosApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -394,8 +398,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="cZV-5M-45A" firstAttribute="top" secondItem="1Ea-Xb-sRG" secondAttribute="top" id="2GH-xw-Ctg"/>
+                            <constraint firstItem="E32-18-nEs" firstAttribute="top" secondItem="L3I-Ob-0Wf" secondAttribute="top" id="FiO-3b-mbp"/>
                             <constraint firstItem="cZV-5M-45A" firstAttribute="leading" secondItem="L3I-Ob-0Wf" secondAttribute="leading" id="KNj-Mm-66R"/>
+                            <constraint firstAttribute="bottom" secondItem="E32-18-nEs" secondAttribute="bottom" id="aPo-Mp-SfO"/>
+                            <constraint firstItem="L3I-Ob-0Wf" firstAttribute="trailing" secondItem="E32-18-nEs" secondAttribute="trailing" id="d41-xk-MMU"/>
                             <constraint firstItem="cZV-5M-45A" firstAttribute="trailing" secondItem="L3I-Ob-0Wf" secondAttribute="trailing" id="kTG-ep-3dB"/>
+                            <constraint firstItem="E32-18-nEs" firstAttribute="leading" secondItem="L3I-Ob-0Wf" secondAttribute="leading" id="tgT-oB-oCL"/>
                             <constraint firstAttribute="bottom" secondItem="cZV-5M-45A" secondAttribute="bottom" id="vKT-Bl-Jdh"/>
                         </constraints>
                     </view>
