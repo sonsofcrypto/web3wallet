@@ -146,7 +146,7 @@ private fun CultProposalJSON.projectDocuments(): List<ProjectDocuments> {
     documents.add(
         ProjectDocuments(
             Localized("cult.proposals.result.liteWhitepaper"),
-            listOf(Link(description.file, description.file))
+            listOf(Link(description.file ?: "", description.file ?: ""))
         )
     )
     val socialDocs = description.socialChannel.replace("\n", " ")
@@ -191,7 +191,7 @@ private fun Description.cultReward(): String =
 
 private fun Description.rewardDistribution(): String {
     val perString = Localized("cult.proposal.parsing.rewardDistribution.per")
-    val rate = rate.replace("%", "")
+    val rate = rate?.replace("%", "") ?: ""
     return "$rate% $perString $time"
 }
 @Serializable
@@ -220,14 +220,12 @@ private data class CultProposalJSON(
     data class Description(
         val projectName: String,
         val shortDescription: String,
-        val file: String,
+        val file: String?,
         val socialChannel: String,
         val links: String,
-        val range: String,
-        val rate: String,
-        val time: String,
-        //let checkbox1: Bool
-        //let checkbox2: Bool
+        val range: String?,
+        val rate: String?,
+        val time: String?,
         val wallet: String,
         val guardianProposal: String?,
         val guardianDiscord: String?,
