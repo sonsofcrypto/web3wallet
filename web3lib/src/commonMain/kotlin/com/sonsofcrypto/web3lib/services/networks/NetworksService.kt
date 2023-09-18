@@ -245,8 +245,8 @@ class DefaultNetworksService(
         if (provider != null)
             return provider
         return when(network.chainId) {
-            Network.goerli().chainId -> ProviderAlchemy(network)
-            Network.sepolia().chainId -> ProviderAlchemy(network)
+            Network.goerli().chainId -> ProviderPocket(network)
+            Network.sepolia().chainId -> ProviderPocket(network)
             else -> ProviderPocket(network)
         }
     }
