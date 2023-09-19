@@ -6,9 +6,9 @@ by degens for degens
 
 for more info see [sonsofcrypto.com](https://sonsofcrypto.com)
 
-NOTE: Currently under active development.
+[Download Beta](CHANGELOG.md)
 
-&nbsp;
+NOTE: Currently under active development.
 
 &nbsp;
 
