@@ -9,7 +9,7 @@ All three builds can be installed simultaniously.
 
 Production, stable appstore build. 
 
-[Get PROD build on testflight](https://testflight.apple.com/join/85JEPH96)
+[Get PROD build on testflight](https://testflight.apple.com/join/I4DFVaiH)
 
 
 <br/>
