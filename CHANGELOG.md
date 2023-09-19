@@ -31,3 +31,9 @@ etc are handled via very same code
 [Go Ethereum](https://github.com/ethereum/go-ethereum) uses. Binded to Kotlin 
 Multiplatform via `coreCrypto` wrapper library using 
 [gomobile](https://pkg.go.dev/golang.org/x/mobile/cmd/gomobile).
+
+## by degens for degens
+<p align="center">
+  <img src="bundledAssets/images/first_launch_teaser_7.gif"/>
+  <br/><a href="https://sonsofcrypto.com">sonsofcrypto.com</a>
+</p>
