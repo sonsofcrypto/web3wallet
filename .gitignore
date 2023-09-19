@@ -188,6 +188,8 @@ local.properties
 
 bundledAssets/download_metadata/node_modules
 bundledAssets/download_metadata/.env
+bundledAssets/download_metadata/venv/*
+bundledAssets/download_metadata/node_modules/*
 
 crypto/iosMain
 crypto/androidMain
