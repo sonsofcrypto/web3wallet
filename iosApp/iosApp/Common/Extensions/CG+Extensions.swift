@@ -14,31 +14,22 @@ extension CGSize {
         CGSize(width: width, height: height + adjustment)
     }
 
-    func max(_ otherSize: CGSize) -> CGSize {
-        otherSize.width >= width && otherSize.height >= height ? otherSize : self
+    func max(_ other: CGSize) -> CGSize {
+        other.width >= width && other.height >= height ? other : self
     }
 
-    func sizeWithHeight(_ wihtHeight: CGFloat) -> CGSize {
+    func sizeWithHeight(_ withHeight: CGFloat) -> CGSize {
         var size = self
-        size.height = wihtHeight
+        size.height = withHeight
         return size
     }
 }
 
 extension CGRect {
 
-    var minXminY: CGPoint {
-        CGPoint(x: minX, y: minY)
-    }
-
-    var midXY: CGPoint {
-        CGPoint(x: midX, y: midY)
-    }
-
-    var midXmaxY: CGPoint {
-        CGPoint(x: midX, y: maxY)
-    }
-
+    var minXY: CGPoint { CGPoint(x: minX, y: minY) }
+    var midXY: CGPoint { CGPoint(x: midX, y: midY) }
+    var midXmaxY: CGPoint { CGPoint(x: midX, y: maxY) }
 
     init(zeroOrigin size: CGSize) {
         self.init(origin: .zero, size: size)
@@ -57,9 +48,7 @@ extension CGRect {
 
 extension CGFloat {
 
-    var half: CGFloat {
-        self * 0.5
-    }
+    var half: CGFloat { self * 0.5 }
 }
 
 extension CGPoint {

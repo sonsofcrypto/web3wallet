@@ -98,7 +98,7 @@ private extension CultProposalCellClosed  {
         let days = comps.day ?? 0
         var dateString = ""
         if days > 1 {
-            dateString += Localized("time.ago.days", days.stringValue)
+            dateString += Localized("time.ago.days", "\(days)")
         } else {
             dateString += Localized("time.ago.day", "1")
         }

@@ -297,7 +297,7 @@ extension KeyStoreViewController {
             return
         }
 
-        let top = topCell.convert(topCell.bounds.minXminY, to: view)
+        let top = topCell.convert(topCell.bounds.minXY, to: view)
         buttonBackgroundView.frame = CGRect(
             x: 0,
             y: top.y - Theme.padding * 2,

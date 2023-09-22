@@ -105,7 +105,7 @@ private extension CultProposalCellPending  {
         let seconds = comps.second ?? 0
         var dateString = ""
         if days > 0 {
-            dateString += Localized("time.until.day.shortest", days.stringValue)
+            dateString += Localized("time.until.day.shortest", "\(days)")
         }
         if hours > 0 || !dateString.isEmpty {
             let hoursFormatted = String(

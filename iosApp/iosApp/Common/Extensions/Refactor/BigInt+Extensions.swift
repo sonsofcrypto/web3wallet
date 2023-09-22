@@ -40,56 +40,44 @@ extension BigInt {
     }
     
     static var zero: BigInt {
-        
         BigInt.Companion().from(int: 0)
     }
     
     static func < (left: BigInt, right: BigInt) -> Bool {
-        
         left.compare(other: right) == -1
     }
     
     static func == (left: BigInt, right: BigInt) -> Bool {
-        
         left.compare(other: right) == 0
     }
     
     static func != (left: BigInt, right: BigInt) -> Bool {
-        
         left.compare(other: right) != 0
     }
     
     static func > (left: BigInt, right: BigInt) -> Bool {
-        
         left.compare(other: right) == 1
     }
 
     static func >= (left: BigInt, right: BigInt) -> Bool {
-        
         left > right || left == right
     }
         
     static func * (left: BigInt, right: BigInt) -> BigInt {
-        
         left.mul(value: right)
     }
     
     static func / (left: BigInt, right: BigInt) -> BigInt {
-        
         guard right != .zero else { return .zero }
-        
         do {
-            
             return try left.div(value: right)
         } catch {
-            
             return .zero
         }
         
     }
     
     static func min (left: BigInt, right: BigInt) -> BigInt {
-        
         left < right ? left : right
     }
 }

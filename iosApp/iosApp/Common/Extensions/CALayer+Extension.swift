@@ -31,24 +31,15 @@ extension CALayer {
         borderColor = color.cgColor
     }
 
-    func applyShadowPath(_ bounds: CGRect, radius: CGFloat = Theme.cornerRadiusSmall) {
+    func applyShadowPath(
+        _ bounds: CGRect,
+        radius: CGFloat = Theme.cornerRadiusSmall
+    ) {
         cornerRadius = radius
         shadowPath = UIBezierPath(
             roundedRect: bounds,
             cornerRadius: radius
         ).cgPath
-    }
-}
-
-extension CALayer {
-
-    func applyHighlighted(_ highlighted: Bool) {
-        // TODO: @Annon discussion
-        borderColor = (highlighted
-            ? Theme.color.stroke
-            : Theme.color.stroke
-        ).cgColor
-        shadowOpacity = highlighted ? 1 : 0
     }
 }
 
