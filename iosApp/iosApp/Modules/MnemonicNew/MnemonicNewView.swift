@@ -391,7 +391,7 @@ private extension MnemonicNewViewController {
         edgePan.edges = [UIRectEdge.left]
         view.addGestureRecognizer(edgePan)
         // TODO: Smell
-        let window = UIApplication.shared.keyWindow
+        let window = AppDelegate.keyWindow()
         ctaButtonBottomConstraint.constant = window?.safeAreaInsets.bottom == 0
             ? -Theme.padding
             : 0

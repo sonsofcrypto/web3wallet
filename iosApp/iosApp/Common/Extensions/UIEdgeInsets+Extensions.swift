@@ -15,15 +15,3 @@ extension UIEdgeInsets {
         UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
     }
 }
-
-extension NSDirectionalEdgeInsets {
-
-    static func with(
-        top: CGFloat = 0,
-        left: CGFloat = 0,
-        bottom: CGFloat = 0,
-        right: CGFloat = 0
-    ) -> NSDirectionalEdgeInsets {
-        NSDirectionalEdgeInsets(top: top, leading: left, bottom: bottom, trailing: right)
-    }
-}

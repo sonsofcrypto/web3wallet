@@ -70,7 +70,7 @@ extension DefaultConfirmationWireframe {
             deepLinkHandler.handle(deepLink: .cultProposals)
         }
         if let d = destination as? ConfirmationWireframeDestination.ViewEtherscan {
-            guard let url = "https://etherscan.io/tx/\(d.txHash)".url else { return }
+            guard let url = URL(string: "https://etherscan.io/tx/\(d.txHash)") else { return }
             webViewWireframeFactory.make(vc, context: .init(url: url)).present()
         }
         if let d = destination as? ConfirmationWireframeDestination.Report {

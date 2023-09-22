@@ -51,4 +51,17 @@ extension AppDelegate {
         guard let window = UIApplication.shared.keyWindow else { return }
         UIBootstrapper(window: window).boot()
     }
+
+    static func keyWindow() -> UIWindow? {
+        UIApplication.shared.connectedScenes
+            .filter { $0.activationState == .foregroundActive }
+            .map { $0 as? UIWindowScene }
+            .compactMap { $0 }
+            .first?
+            .keyWindow
+    }
+
+    static func rootVc() -> UIViewController? {
+        keyWindow()?.rootViewController
+    }
 }

@@ -5,24 +5,15 @@
 import UIKit
 
 extension UIButton {
-    
-    func showLoading() {
-        var configuration = configuration
-        configuration?.showsActivityIndicator = true
-        self.configuration = configuration
-        updateConfiguration()
-    }
-    
-    func hideLoading() {
-        var configuration = configuration
-        configuration?.showsActivityIndicator = false
-        self.configuration = configuration
-        updateConfiguration()
-    }
 
     func removeAllTargets() {
-        allTargets.forEach {
-            self.removeTarget($0, action: nil, for: .touchUpInside)
-        }
+        allTargets.forEach { removeTarget($0, action: nil, for: .touchUpInside)}
+    }
+
+    func setActivityIndicator(_ visible: Bool = false) {
+        var configuration = configuration
+        configuration?.showsActivityIndicator = visible
+        self.configuration = configuration
+        updateConfiguration()
     }
 }

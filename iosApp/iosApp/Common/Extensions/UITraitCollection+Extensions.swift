@@ -5,9 +5,5 @@
 import UIKit
 
 extension UITraitCollection {
-    
-    var isDarkMode: Bool {
-        
-        userInterfaceStyle == .dark
-    }
+    var isDarkMode: Bool { userInterfaceStyle == .dark }
 }

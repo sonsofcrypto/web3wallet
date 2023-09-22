@@ -14,14 +14,10 @@ extension UIViewController {
     }
     
     func popOrDismiss() {
-        if let nc = navigationController?.asNavVc, nc.canPop {
+        if let nc = navigationController?.asNavVc, nc.viewControllers.count > 1 {
             nc.popViewController(animated: true)
         } else {
             dismiss(animated: true)
         }
     }
-}
-
-extension NavigationController {
-    var canPop: Bool { viewControllers.count > 1 }
 }

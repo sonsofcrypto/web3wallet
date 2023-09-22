@@ -122,12 +122,12 @@ extension CurrencySwapMarketCollectionViewCell {
         switch viewModel.approveState {
         case .approve:
             approveButton.isHidden = false
-            approveButton.hideLoading()
+            approveButton.setActivityIndicator(false)
             approveButton.setTitle(Localized("currencySwap.cell.button.state.approve"), for: .normal)
             approveButton.isEnabled = true
         case .approving:
             approveButton.isHidden = false
-            approveButton.showLoading()
+            approveButton.setActivityIndicator(true)
             approveButton.setTitle(Localized("currencySwap.cell.button.state.approving"), for: .normal)
             approveButton.isEnabled = true
         case .approved:
@@ -136,25 +136,25 @@ extension CurrencySwapMarketCollectionViewCell {
             break
         }
         if viewModel.buttonState is CurrencySwapViewModel.ButtonStateLoading {
-            button.hideLoading()
+            button.setActivityIndicator(false)
             button.style = .primary
             button.setTitle(Localized("currencySwap.cell.button.state.swap"), for: .normal)
             button.isEnabled = false
         }
         if let input = viewModel.buttonState as? CurrencySwapViewModel.ButtonStateInvalid {
-            button.hideLoading()
+            button.setActivityIndicator(false)
             button.style = .primary
             button.setTitle(input.text, for: .normal)
             button.isEnabled = false
         }
         if let input = viewModel.buttonState as? CurrencySwapViewModel.ButtonStateSwapAnyway {
-            button.hideLoading()
+            button.setActivityIndicator(false)
             button.setTitle(input.text, for: .normal)
             button.style = .primary(action: .destructive)
             button.isEnabled = viewModel.approveState == .approved
         }
         if viewModel.buttonState is CurrencySwapViewModel.ButtonStateSwap {
-            button.hideLoading()
+            button.setActivityIndicator(false)
             button.setTitle(Localized("currencySwap.cell.button.state.swap"), for: .normal)
             button.style = .primary
             button.isEnabled = viewModel.approveState == .approved

@@ -71,7 +71,7 @@ extension DefaultDashboardWireframe {
     func present() {
         let vc = wireUp()
         if let tabVc = parent as? UITabBarController {
-            let vcs = tabVc.add(viewController: vc)
+            let vcs = tabVc.viewControllers ?? [] + [vc]
             tabVc.setViewControllers(vcs, animated: false)
         } else {
             parent?.show(vc, sender: self)

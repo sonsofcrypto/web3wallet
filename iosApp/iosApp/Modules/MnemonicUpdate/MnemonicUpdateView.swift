@@ -327,7 +327,7 @@ private extension MnemonicUpdateViewController {
         )
         collectionView.register(
             MnemonicUpdateDeleteCell.self,
-            forCellWithReuseIdentifier: MnemonicUpdateDeleteCell.className
+            forCellWithReuseIdentifier: "\(MnemonicUpdateDeleteCell.self)"
         )
         ctaButton.style = .primary
         let edgePan = UIScreenEdgePanGestureRecognizer(
@@ -337,7 +337,7 @@ private extension MnemonicUpdateViewController {
         edgePan.edges = [UIRectEdge.left]
         view.addGestureRecognizer(edgePan)
         // TODO: Smell
-        let window = UIApplication.shared.keyWindow
+        let window = AppDelegate.keyWindow()
         ctaButtonBottomConstraint.constant = window?.safeAreaInsets.bottom == 0
             ? -Theme.padding
             : 0

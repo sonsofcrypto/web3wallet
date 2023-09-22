@@ -130,7 +130,7 @@ private extension DefaultDeepLinkHandler {
 
 private extension DefaultDeepLinkHandler {
     var rootVC: UIViewController? {
-        UIApplication.shared.rootVc as? RootViewController
+        AppDelegate.rootVc() as? RootViewController
     }
     
     var tabBarController: TabBarController? {

@@ -97,7 +97,8 @@ private extension CultProposalDetailDocsView {
     
     @objc func documentTapped(sender: UITapGestureRecognizer) {
         guard let tag = sender.view?.tag else { return }
-        guard let url = directory[tag]?.url else { return }
+        guard let tagDir = directory[tag] else { return }
+        guard let url = URL(string: tagDir) else { return }
         UIApplication.shared.open(url)
     }
 }

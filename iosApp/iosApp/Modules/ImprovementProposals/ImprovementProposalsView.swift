@@ -121,9 +121,10 @@ private extension ImprovementProposalsViewController {
         navigationItem.backButtonTitle = ""
         collectionView.setCollectionViewLayout(layout(), animated: false)
         collectionView.refreshControl = UIRefreshControl()
-        collectionView.refreshControl?.addValueChangedTarget(
+        collectionView.refreshControl?.addTarget(
             self,
-            action: #selector(refreshAction(_:))
+            action: #selector(refreshAction(_:)),
+            for: .valueChanged
         )
     }
 
