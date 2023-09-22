@@ -153,7 +153,7 @@ extension String {
         let formatter = NumberFormatter()
         formatter.currencyCode = "usd"
         formatter.numberStyle = .currency
-        formatter.locale = .english
+        formatter.locale = .init(identifier: "en")
 
         let symbol = formatter.string(
             from: 0
@@ -169,10 +169,9 @@ extension String {
 extension String {
     
     func date(using dateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ") -> Date? {
-        
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat
-        formatter.locale = .english
+        formatter.locale = .init(identifier: "en" )
         return formatter.date(from: self)
     }
 }

@@ -9,55 +9,23 @@ extension KotlinError: Swift.Error {}
 
 extension Network {
 
-    static func ethereum() -> Network {
-        Network.Companion().ethereum()
-    }
+    static func ethereum() -> Network { Network.Companion().ethereum()}
+    static func goerli() -> Network { Network.Companion().goerli() }
+    static func sepolia() -> Network { Network.Companion().sepolia() }
 
-    static func goerli() -> Network {
-        Network.Companion().goerli()
-    }
-
-    static func sepolia() -> Network {
-        Network.Companion().sepolia()
-    }
-
-}
-
-func abiDecodeBigInt(_ value: String) -> BigInt {
-    AbiEncodeKt.abiDecodeBigInt(value: value)
-}
-
-func abiDecodeAddress(_ value: String) -> Address.HexString {
-    AbiEncodeKt.abiDecodeAddress(value: value)
-}
-
-func abiEncodeAddress(_ address: Address.HexString) -> KotlinByteArray {
-    AbiEncodeKt.abiEncode(address: address)
-}
-
-func abiEncodeBigInt(_ bigInt: BigInt) -> KotlinByteArray {
-    AbiEncodeKt.abiEncode(bigInt: bigInt)
-}
-
-func abiEncodeUInt(_ uint: UInt32) -> KotlinByteArray {
-    AbiEncodeKt.abiEncode(uint: uint)
 }
 
 extension Formatters {
 
-    static var currency: CurrencyFormatter {
-        Formatters.Companion().currency
-    }
+    static var currency: CurrencyFormatter { Formatters.Companion().currency }
+    static var fiat: FiatFormatter { Formatters.Companion().fiat }
+    static var pct: PctFormatter { Formatters.Companion().pct }
+    static var date: DateFormatter { Formatters.Companion().date }
+}
 
-    static var fiat: FiatFormatter {
-        Formatters.Companion().fiat
-    }
+extension Data {
 
-    static var pct: PctFormatter {
-        Formatters.Companion().pct
-    }
-
-    static var date: DateFormatter {
-        Formatters.Companion().date
+    func byteArray() -> KotlinByteArray {
+        ExtensionsKt.byteArrayFrom(data: self)
     }
 }

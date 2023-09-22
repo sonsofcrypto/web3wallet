@@ -10,7 +10,7 @@ extension NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .percent
         formatter.maximumFractionDigits = 2
-        formatter.locale = .english
+        formatter.locale = .init(identifier: "en" )
         return formatter
     }()
 

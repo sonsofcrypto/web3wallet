@@ -10,36 +10,9 @@ extension Int {
 
     var int32: Int32 { Int32(self) }
     var uint32: UInt32 { UInt32(self) }
-
-    var stringValue: String {
-        "\(self)"
-    }
-
-    var abbreviated: String {
-        let abbrev = ["K", " mil", " bil", "T", "P", "E"]
-        return abbrev.enumerated()
-            .reversed()
-            .reduce(nil as String?) { accum, tuple in
-                let factor = Double(self) / pow(10, Double(tuple.0 + 1) * 3)
-                let truncRemainder = factor.truncatingRemainder(dividingBy: 1)
-                let format = truncRemainder == 0 ? "%.0f%@" : "%.1f%@"
-
-                if let accum = accum {
-                    return accum
-                }
-
-                if factor > 1 {
-                    return String(format: format, factor, String(tuple.1))
-                }
-
-                return nil
-            } ?? String(self)
-    }
 }
 
 extension Int32 {
 
-    var int: Int {
-        Int(self)
-    }
+    var int: Int { Int(self) }
 }

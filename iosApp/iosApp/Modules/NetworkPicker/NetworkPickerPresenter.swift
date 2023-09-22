@@ -105,7 +105,7 @@ private extension DefaultNetworkPickerPresenter {
     ) -> [NetworkPickerViewModel.Item] {
         networks.sortByName.compactMap {
             .init(
-                imageName: $0.iconName,
+                imageName: "token_eth_icon",
                 name: $0.name
             )
         }
