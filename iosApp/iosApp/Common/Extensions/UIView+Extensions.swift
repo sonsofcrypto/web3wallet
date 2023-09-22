@@ -5,20 +5,6 @@
 import UIKit
 
 extension UIView {
-    
-    var isDarkMode: Bool {
-        
-        UITraitCollection.current.userInterfaceStyle == .dark
-    }
-    
-    static var empty: UIView {
-        let view = UIView()
-        view.backgroundColor = .clear
-        return view
-    }
-}
-
-extension UIView {
 
     class func springAnimate(
         _ duration: TimeInterval = 0.5,
@@ -88,66 +74,23 @@ extension UIView {
     }
 }
 
-extension UIView {
-    
-    class func vSpace(
-        height: CGFloat = Theme.padding
-    ) -> UIView {
-        
-        let view = UIView()
-        view.backgroundColor = .clear
-        view.addConstraints(
-            [
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: height))
-            ]
-        )
-        
-        return view
-    }
-    
-    class func hSpace(
-        value: CGFloat = Theme.padding
-    ) -> UIView {
-        
-        let view = UIView()
-        view.backgroundColor = .clear
-        view.addConstraints(
-            [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: value))
-            ]
-        )
-        
-        return view
-    }
-    
-    class func dividerLine(
-        backgroundColor: UIColor = Theme.color.separatorSecondary,
-        height: CGFloat = 1
-    ) -> UIView {
-        
-        let view = UIView()
-        view.backgroundColor = backgroundColor
-        view.addConstraints(
-            [
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: height))
-            ]
-        )
-        
-        return view
-    }
-}
+// MARK: - Layout
 
 extension UIView {
-    
-    var firstResponder: UIView? {
-        guard !isFirstResponder else { return self }
 
-        for subview in subviews {
-            if let firstResponder = subview.firstResponder {
-                return firstResponder
-            }
-        }
+    func contraintToSuperView(
+        top: CGFloat = 0,
+        left: CGFloat = 0,
+        bottom: CGFloat = 0,
+        right: CGFloat = 0
+    ) {
+        guard let sv = superview else { return }
 
-        return nil
+        sv.addConstraints([
+            leadingAnchor.constraint(equalTo: sv.leadingAnchor, constant: left),
+            trailingAnchor.constraint(equalTo: sv.trailingAnchor, constant: right),
+            topAnchor.constraint(equalTo: sv.topAnchor, constant: top),
+            bottomAnchor.constraint(equalTo: sv.bottomAnchor, constant: bottom),
+        ])
     }
 }

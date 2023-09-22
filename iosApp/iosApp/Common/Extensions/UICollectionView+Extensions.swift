@@ -6,7 +6,9 @@ import UIKit
 
 extension UICollectionView {
 
-    func dequeue<T: UICollectionViewCell>(_: T.Type, for idxPath: IndexPath) -> T {
+    func dequeue<T: UICollectionViewCell>(
+        _: T.Type, for idxPath: IndexPath
+    ) -> T {
         guard let cell = dequeueReusableCell(
             withReuseIdentifier: "\(T.self)",
             for: idxPath
@@ -61,7 +63,11 @@ extension UICollectionView {
             .forEach { deselectItem(at: $0, animated: animated) }
 
         (idxPaths ?? []).forEach {
-            selectItem(at: $0, animated: animated, scrollPosition: scrollPosition)
+            selectItem(
+                at: $0,
+                animated: animated,
+                scrollPosition: scrollPosition
+            )
         }
     }
 

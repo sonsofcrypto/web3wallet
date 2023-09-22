@@ -24,42 +24,39 @@ struct PasswordValidatorHelper {
 private extension PasswordValidatorHelper {
     
     func makePinValidationError(for text: String) -> String? {
-        
-        guard text.isValidRegex(#"(?=.{6,})"#) else {
-            
+        guard isValidRegex(text: text, regex: #"(?=.{6,})"#) else {
             return Localized("validation.error.pin.min.length")
         }
 
         guard text[0] != text[1] else {
-            
             return Localized("validation.error.pin.weak")
         }
         
         return nil
     }
-    
+
     func makePassValidationError(for text: String) -> String? {
-        
-        guard text.isValidRegex(#"(?=.{8,})"#) else {
-            
+        guard isValidRegex(text: text, regex: #"(?=.{8,})"#) else {
             return Localized("validation.error.pass.min.lenght")
         }
 
-        guard text.isValidRegex(#"(?=.*[A-Z])"#) else {
-            
+        guard isValidRegex(text: text, regex: #"(?=.*[A-Z])"#) else {
             return Localized("validation.error.pass.min.capital")
         }
 
-        guard text.isValidRegex(#"(?=.*[a-z])"#) else {
-            
+        guard isValidRegex(text: text, regex: #"(?=.*[a-z])"#) else {
             return Localized("validation.error.pass.min.lowercase")
         }
 
-        guard text.isValidRegex(#"(?=.*\d)"#) else {
-            
+        guard isValidRegex(text: text, regex: #"(?=.*\d)"#) else {
             return Localized("validation.error.pass.min.digit")
         }
                 
         return nil
+    }
+
+    private func isValidRegex(text: String?, regex: String) -> Bool {
+        guard let text else { return false }
+        return text.range(of: regex, options: .regularExpression) != nil
     }
 }

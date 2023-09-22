@@ -84,7 +84,7 @@ private extension CurrencyPickerViewController {
         // TODO: Smell
         bottomKeyboardLayoutConstraint = collectionView.bottomAnchor.constraint(
             equalTo: view.keyboardLayoutGuide.topAnchor,
-            constant: UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+            constant: AppDelegate.keyWindow()?.safeAreaInsets.bottom ?? 0
         )
         bottomKeyboardLayoutConstraint.priority = .required
         bottomKeyboardLayoutConstraint.isActive = true
@@ -96,7 +96,7 @@ private extension CurrencyPickerViewController {
     
     func addCollectionViewBottomInset() {
         // TODO: Smell
-        let bottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+        let bottom = AppDelegate.keyWindow()?.safeAreaInsets.bottom ?? 0
         collectionView.contentInset = .init(top: 0, left: 0, bottom: bottom, right: 0)
     }
     

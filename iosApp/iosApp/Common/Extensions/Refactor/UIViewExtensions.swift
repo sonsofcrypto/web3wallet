@@ -1,26 +1,90 @@
-// Created by web3dgn on 23/04/2022.
-// Copyright (c) 2022 Sons Of Crypto.
-// SPDX-License-Identifier: MIT
+//
+// Created by anon on 22/09/2023.
+//
 
 import UIKit
 
 extension UIView {
-    
+
+    class func vSpace(
+            height: CGFloat = Theme.padding
+    ) -> UIView {
+
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.addConstraints(
+                [
+                    .layout(anchor: .heightAnchor, constant: .equalTo(constant: height))
+                ]
+        )
+
+        return view
+    }
+
+    class func hSpace(
+            value: CGFloat = Theme.padding
+    ) -> UIView {
+
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.addConstraints(
+                [
+                    .layout(anchor: .widthAnchor, constant: .equalTo(constant: value))
+                ]
+        )
+
+        return view
+    }
+
+    class func dividerLine(
+            backgroundColor: UIColor = Theme.color.separatorSecondary,
+            height: CGFloat = 1
+    ) -> UIView {
+
+        let view = UIView()
+        view.backgroundColor = backgroundColor
+        view.addConstraints(
+                [
+                    .layout(anchor: .heightAnchor, constant: .equalTo(constant: height))
+                ]
+        )
+
+        return view
+    }
+}
+
+extension UIView {
+
+    var firstResponder: UIView? {
+        guard !isFirstResponder else { return self }
+
+        for subview in subviews {
+            if let firstResponder = subview.firstResponder {
+                return firstResponder
+            }
+        }
+
+        return nil
+    }
+}
+
+extension UIView {
+
     enum Constraint {
-        
+
         case layout(LayoutConstraint, priority: UILayoutPriority)
         case hugging(layoutAxis: NSLayoutConstraint.Axis, priority: UILayoutPriority)
         case compression(layoutAxis: NSLayoutConstraint.Axis, priority: UILayoutPriority)
     }
-    
+
     struct LayoutConstraint {
-        
+
         let layoutAnchor: LayoutAnchor
         let constant: LayoutConstant
     }
-    
+
     enum LayoutAnchor {
-        
+
         case leadingAnchor
         case trailingAnchor
         case leftAnchor
@@ -32,9 +96,9 @@ extension UIView {
         case widthAnchor
         case heightAnchor
     }
-    
+
     enum LayoutConstant {
-        
+
         case equalTo(constant: CGFloat)
         case greaterThanOrEqualTo(constant: CGFloat)
         case lessThanOrEqualTo(constant: CGFloat)
@@ -42,25 +106,25 @@ extension UIView {
 }
 
 extension UIView {
-    
+
     func addConstraints(_ constraints: [Constraint]) {
-        
+
         translatesAutoresizingMaskIntoConstraints = false
-        
+
         constraints.forEach { constraint in
-            
+
             switch constraint {
-                
+
             case let .layout(layoutConstraint, priority):
-                
+
                 addLayoutConstraint(layoutConstraint, with: priority)
-                
+
             case let .hugging(axis, priority):
-                
+
                 setContentHuggingPriority(priority, for: axis)
 
             case let .compression(axis, priority):
-                
+
                 setContentCompressionResistancePriority(priority, for: axis)
             }
         }
@@ -68,16 +132,16 @@ extension UIView {
 }
 
 extension Array where Element == UIView.Constraint {
-    
+
     static var toEdges: [UIView.Constraint] = [
         .layout(anchor: .topAnchor),
         .layout(anchor: .bottomAnchor),
         .layout(anchor: .leadingAnchor),
         .layout(anchor: .trailingAnchor)
     ]
-    
+
     static func toEdges(padding: CGFloat) -> [UIView.Constraint] {
-        
+
         [
             .layout(anchor: .topAnchor, constant: .equalTo(constant: padding)),
             .layout(anchor: .bottomAnchor, constant: .equalTo(constant: padding)),
@@ -85,9 +149,9 @@ extension Array where Element == UIView.Constraint {
             .layout(anchor: .trailingAnchor, constant: .equalTo(constant: padding))
         ]
     }
-    
+
     func adding(_ constraint: UIView.Constraint) -> [UIView.Constraint] {
-        
+
         var array = self
         array.append(constraint)
         return array
@@ -95,52 +159,52 @@ extension Array where Element == UIView.Constraint {
 }
 
 private extension UIView {
-    
+
     @discardableResult
     func addLayoutConstraint(
-        _ layoutConstraint: LayoutConstraint,
-        with priority: UILayoutPriority
+            _ layoutConstraint: LayoutConstraint,
+            with priority: UILayoutPriority
     ) -> NSLayoutConstraint? {
-        
+
         switch layoutConstraint.layoutAnchor {
-            
+
         case .leadingAnchor:
             return applyLeadingAnchorConstraint(with: layoutConstraint, andPriority: priority)
-            
+
         case .trailingAnchor:
             return applyTrailingAnchorConstraint(with: layoutConstraint, andPriority: priority)
 
         case .leftAnchor:
             return applyLeftAnchorConstraint(with: layoutConstraint, andPriority: priority)
-            
+
         case .rightAnchor:
             return applyRightAnchorConstraint(with: layoutConstraint, andPriority: priority)
-            
+
         case .centerXAnchor:
             return applyCenterXAnchorConstraint(with: layoutConstraint, andPriority: priority)
-            
+
         case .topAnchor:
             return applyTopAnchorConstraint(with: layoutConstraint, andPriority: priority)
-            
+
         case .bottomAnchor:
             return applyBottomAnchorConstraint(with: layoutConstraint, andPriority: priority)
-            
+
         case .centerYAnchor:
             return applyCenterYAnchorConstraint(with: layoutConstraint, andPriority: priority)
-            
+
         case .widthAnchor:
             return applyWidthAnchorConstraint(with: layoutConstraint, andPriority: priority)
-            
+
         case .heightAnchor:
             return applyHeightAnchorConstraint(with: layoutConstraint, andPriority: priority)
         }
     }
-    
+
     func applyLeadingAnchorConstraint(
-        with displayModel: LayoutConstraint,
-        andPriority priority: UILayoutPriority
+            with displayModel: LayoutConstraint,
+            andPriority priority: UILayoutPriority
     ) -> NSLayoutConstraint? {
-        
+
         guard let parent = superview else { return nil }
         let constraint: NSLayoutConstraint
         switch displayModel.constant {
@@ -153,15 +217,15 @@ private extension UIView {
         }
         constraint.priority = priority
         constraint.isActive = true
-        
+
         return constraint
     }
-    
+
     func applyTrailingAnchorConstraint(
-        with displayModel: LayoutConstraint,
-        andPriority priority: UILayoutPriority
+            with displayModel: LayoutConstraint,
+            andPriority priority: UILayoutPriority
     ) -> NSLayoutConstraint? {
-        
+
         guard let parent = superview else { return nil }
         let constraint: NSLayoutConstraint
         switch displayModel.constant {
@@ -174,15 +238,15 @@ private extension UIView {
         }
         constraint.priority = priority
         constraint.isActive = true
-        
+
         return constraint
     }
-    
+
     func applyLeftAnchorConstraint(
-        with displayModel: LayoutConstraint,
-        andPriority priority: UILayoutPriority
+            with displayModel: LayoutConstraint,
+            andPriority priority: UILayoutPriority
     ) -> NSLayoutConstraint? {
-        
+
         guard let parent = superview else { return nil }
         let constraint: NSLayoutConstraint
         switch displayModel.constant {
@@ -195,15 +259,15 @@ private extension UIView {
         }
         constraint.priority = priority
         constraint.isActive = true
-        
+
         return constraint
     }
-    
+
     func applyRightAnchorConstraint(
-        with displayModel: LayoutConstraint,
-        andPriority priority: UILayoutPriority
+            with displayModel: LayoutConstraint,
+            andPriority priority: UILayoutPriority
     ) -> NSLayoutConstraint? {
-        
+
         guard let parent = superview else { return nil }
         let constraint: NSLayoutConstraint
         switch displayModel.constant {
@@ -216,15 +280,15 @@ private extension UIView {
         }
         constraint.priority = priority
         constraint.isActive = true
-        
+
         return constraint
     }
-    
+
     func applyCenterXAnchorConstraint(
-        with displayModel: LayoutConstraint,
-        andPriority priority: UILayoutPriority
+            with displayModel: LayoutConstraint,
+            andPriority priority: UILayoutPriority
     ) -> NSLayoutConstraint? {
-        
+
         guard let parent = superview else { return nil }
         let constraint: NSLayoutConstraint
         switch displayModel.constant {
@@ -237,15 +301,15 @@ private extension UIView {
         }
         constraint.priority = priority
         constraint.isActive = true
-        
+
         return constraint
     }
-    
+
     func applyTopAnchorConstraint(
-        with displayModel: LayoutConstraint,
-        andPriority priority: UILayoutPriority
+            with displayModel: LayoutConstraint,
+            andPriority priority: UILayoutPriority
     ) -> NSLayoutConstraint? {
-        
+
         guard let parent = superview else { return nil }
         let constraint: NSLayoutConstraint
         switch displayModel.constant {
@@ -258,15 +322,15 @@ private extension UIView {
         }
         constraint.priority = priority
         constraint.isActive = true
-        
+
         return constraint
     }
-    
+
     func applyBottomAnchorConstraint(
-        with displayModel: LayoutConstraint,
-        andPriority priority: UILayoutPriority
+            with displayModel: LayoutConstraint,
+            andPriority priority: UILayoutPriority
     ) -> NSLayoutConstraint? {
-        
+
         guard let parent = superview else { return nil }
         let constraint: NSLayoutConstraint
         switch displayModel.constant {
@@ -279,15 +343,15 @@ private extension UIView {
         }
         constraint.priority = priority
         constraint.isActive = true
-        
+
         return constraint
     }
- 
+
     func applyCenterYAnchorConstraint(
-        with displayModel: LayoutConstraint,
-        andPriority priority: UILayoutPriority
+            with displayModel: LayoutConstraint,
+            andPriority priority: UILayoutPriority
     ) -> NSLayoutConstraint? {
-        
+
         guard let parent = superview else { return nil }
         let constraint: NSLayoutConstraint
         switch displayModel.constant {
@@ -300,15 +364,15 @@ private extension UIView {
         }
         constraint.priority = priority
         constraint.isActive = true
-        
+
         return constraint
     }
-    
+
     func applyWidthAnchorConstraint(
-        with displayModel: LayoutConstraint,
-        andPriority priority: UILayoutPriority
+            with displayModel: LayoutConstraint,
+            andPriority priority: UILayoutPriority
     ) -> NSLayoutConstraint? {
-        
+
         let constraint: NSLayoutConstraint
         switch displayModel.constant {
         case let .equalTo(constant):
@@ -325,15 +389,15 @@ private extension UIView {
         }
         constraint.priority = priority
         constraint.isActive = true
-        
+
         return constraint
     }
-    
+
     func applyHeightAnchorConstraint(
-        with displayModel: LayoutConstraint,
-        andPriority priority: UILayoutPriority
+            with displayModel: LayoutConstraint,
+            andPriority priority: UILayoutPriority
     ) -> NSLayoutConstraint? {
-        
+
         let constraint: NSLayoutConstraint
         switch displayModel.constant {
         case let .equalTo(constant):
@@ -350,7 +414,7 @@ private extension UIView {
         }
         constraint.priority = priority
         constraint.isActive = true
-        
+
         return constraint
     }
 }
@@ -358,49 +422,30 @@ private extension UIView {
 extension UIView.Constraint {
 
     static func layout(
-        anchor: UIView.LayoutAnchor,
-        constant: UIView.LayoutConstant = .equalTo(constant: 0),
-        priority: UILayoutPriority = .required
+            anchor: UIView.LayoutAnchor,
+            constant: UIView.LayoutConstant = .equalTo(constant: 0),
+            priority: UILayoutPriority = .required
     ) -> Self {
-        
+
         .layout(
-            .init(layoutAnchor: anchor, constant: constant),
-            priority: priority
+                .init(layoutAnchor: anchor, constant: constant),
+                priority: priority
         )
     }
-    
+
     static func hugging(
-        axis: NSLayoutConstraint.Axis,
-        priority: UILayoutPriority = .defaultHigh
+            axis: NSLayoutConstraint.Axis,
+            priority: UILayoutPriority = .defaultHigh
     ) -> Self {
-        
+
         .hugging(layoutAxis: axis, priority: priority)
     }
-    
+
     static func compression(
-        axis: NSLayoutConstraint.Axis,
-        priority: UILayoutPriority = .defaultHigh
+            axis: NSLayoutConstraint.Axis,
+            priority: UILayoutPriority = .defaultHigh
     ) -> Self {
-        
+
         .compression(layoutAxis: axis, priority: priority)
-    }
-}
-
-extension UIView {
-
-    func contraintToSuperView(
-        top: CGFloat = 0,
-        left: CGFloat = 0,
-        bottom: CGFloat = 0,
-        right: CGFloat = 0
-    ) {
-        guard let sv = superview else { return }
-
-        sv.addConstraints([
-            leadingAnchor.constraint(equalTo: sv.leadingAnchor, constant: left),
-            trailingAnchor.constraint(equalTo: sv.trailingAnchor, constant: right),
-            topAnchor.constraint(equalTo: sv.topAnchor, constant: top),
-            bottomAnchor.constraint(equalTo: sv.bottomAnchor, constant: bottom),
-        ])
     }
 }

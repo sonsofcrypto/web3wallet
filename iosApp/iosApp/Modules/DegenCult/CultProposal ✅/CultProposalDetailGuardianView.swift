@@ -57,7 +57,7 @@ private extension CultProposalDetailGuardianView {
     // TODO: Connect to discord, the code below does not seem to work
     @objc func discordTapped() {
         let user = viewModel.socialHandle.replacingOccurrences(of: "@", with: "")
-        guard let discordURL = "https://discord.gg/users/\(user))".url else { return }
+        guard let discordURL = URL(string: "https://discord.gg/users/\(user))") else { return }
         UIApplication.shared.open(discordURL)
     }
 }

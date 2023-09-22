@@ -215,7 +215,7 @@ extension AccountViewController: UICollectionViewDelegate {
             guard let input = viewModel.transactions[indexPath.item] as? AccountViewModel.TransactionLoaded else {
                 return
             }
-            guard let url = "https://etherscan.io/tx/\(input.data.txHash)".url else { return }
+            guard let url = URL(string: "https://etherscan.io/tx/\(input.data.txHash)") else { return }
             let factory: WebViewWireframeFactory = AppAssembler.resolve()
             factory.make(parent, context: .init(url: url)).present()
         }
@@ -334,7 +334,7 @@ private extension AccountViewController {
     
     func configureUI() {
         title = Localized("wallets")
-        navigationItem.rightBarButtonItem = UIBarButtonItem.glowLabel()
+        navigationItem.rightBarButtonItem = UIBarButtonItem.smallLabel()
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: "chevron.left".assetImage,
             style: .plain,

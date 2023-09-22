@@ -77,7 +77,7 @@ private extension CurrencyReceiveViewController {
         )
         let spacingBetweenButtons = Theme.padding * CGFloat(5)
         // TODO: Smell
-        let windowWidth = UIApplication.shared.keyWindow?.frame.width ?? 0
+        let windowWidth = AppDelegate.keyWindow()?.frame.width ?? 0
         let height = (windowWidth - spacingBetweenButtons) / CGFloat(4)
         buttonsStackViewHeightConstraint.constant = CGFloat(height)
         copyButton.widthConstraint?.constant = CGFloat(height)

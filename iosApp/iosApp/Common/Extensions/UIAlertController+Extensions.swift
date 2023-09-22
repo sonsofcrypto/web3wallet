@@ -7,7 +7,10 @@ import web3walletcore
 
 extension UIAlertController {
 
-    convenience init(_ viewModel: ErrorViewModel, handlers: [((UIAlertAction) -> Void)?]) {
+    convenience init(
+        _ viewModel: ErrorViewModel,
+        handlers: [((UIAlertAction) -> Void)?]
+    ) {
         self.init(
             title: viewModel.title,
             message: viewModel.body,

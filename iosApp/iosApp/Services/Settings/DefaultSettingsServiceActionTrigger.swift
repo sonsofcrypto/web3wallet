@@ -38,29 +38,39 @@ extension DefaultSettingsServiceActionTrigger: SettingsServiceActionTrigger {
         case .developerTransitionsSheet, .developerTransitionsCardFlip:
             break
         case .developerResetKeystore:
-            guard let vc = UIApplication.shared.rootVc else { return }
+            guard let vc = rootVc() else { return }
             let factory: AlertWireframeFactory = AppAssembler.resolve()
             factory.make(vc, context: resetKeystoreAlertContext()).present()
         case .aboutWebsite:
-            UIApplication.shared.open("https://www.sonsofcrypto.com".url!)
+            UIApplication.shared.open(URL(string: "https://www.sonsofcrypto.com")!)
         case .aboutGitHub:
-            UIApplication.shared.open("https://github.com/sonsofcrypto".url!)
+            UIApplication.shared.open(URL(string: "https://github.com/sonsofcrypto")!)
         case .aboutTwitter:
-            UIApplication.shared.open("https://twitter.com/sonsofcryptolab".url!)
+            UIApplication.shared.open(URL(string: "https://twitter.com/sonsofcryptolab")!)
         case .aboutTelegram:
-            UIApplication.shared.open("https://t.me/+osHUInXKmwMyZjQ0".url!)
+            UIApplication.shared.open(URL(string: "https://t.me/+osHUInXKmwMyZjQ0")!)
         case .aboutDiscord:
-            UIApplication.shared.open("https://discord.gg/DW8kUu6Q6E".url!)
+            UIApplication.shared.open(URL(string: "https://discord.gg/DW8kUu6Q6E")!)
         case .aboutMedium:
-            UIApplication.shared.open("https://medium.com/@sonsofcrypto".url!)
+            UIApplication.shared.open(URL(string: "https://medium.com/@sonsofcrypto")!)
         case .aboutMail:
-            UIApplication.shared.open("mailto:sonsofcrypto@protonmail.com".url!)
+            UIApplication.shared.open(URL(string: "mailto:sonsofcrypto@protonmail.com")!)
         case .feedbackReport:
             let mailService: MailService = AppAssembler.resolve()
             mailService.sendMail(context: .init(subject: .beta))
         default:
             fatalError("Action not handled")
         }
+    }
+
+    private func rootVc() -> UIViewController? {
+        UIApplication.shared.connectedScenes
+                .filter { $0.activationState == .foregroundActive }
+                .map { $0 as? UIWindowScene }
+                .compactMap { $0 }
+                .first?
+                .keyWindow?
+                .rootViewController
     }
 }
 

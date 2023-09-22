@@ -80,13 +80,13 @@ private extension AlertViewController {
         if let input = media as? AlertWireframeContext.MediaImage {
             return alertImage(
                 with: input.named,
-                size: .init(width: input.width.cgFloat, height: input.height.cgFloat)
+                size: .init(width: CGFloat(input.width), height: CGFloat(input.height))
             )
         }
         if let input = media as? AlertWireframeContext.MediaGift {
             return alertMediaGif(
                 with: input.named,
-                size: .init(width: input.width.cgFloat, height: input.height.cgFloat)
+                size: .init(width: CGFloat(input.width), height: CGFloat(input.height))
             )
         }
         fatalError("Media Type not handled")

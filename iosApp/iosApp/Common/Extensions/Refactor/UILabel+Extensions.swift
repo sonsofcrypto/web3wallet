@@ -172,24 +172,6 @@ extension UILabel {
     }
 }
 
-private extension UILabel {
-    
-    func update(
-        lineSpacing: CGFloat = 10
-    ) {
-        
-        let attrString = NSMutableAttributedString(string: text ?? "")
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = lineSpacing
-        attrString.addAttribute(
-            NSAttributedString.Key.paragraphStyle,
-            value: style,
-            range: NSRange(location: 0, length: attrString.length)
-        )
-        attributedText = attrString
-    }
-}
-
 extension UILabel {
 
     convenience init(
