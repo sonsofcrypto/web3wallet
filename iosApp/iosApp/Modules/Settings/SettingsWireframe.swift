@@ -33,7 +33,7 @@ extension DefaultSettingsWireframe {
         self.vc = vc
         let nc = settingsNavigationController(with: vc)
         if let tabVc = parent as? UITabBarController {
-            let vcs = tabVc.viewControllers ?? [] + [vc]
+            let vcs = (tabVc.viewControllers ?? []) + [nc]
             tabVc.setViewControllers(vcs, animated: false)
         } else {
             parent?.show(nc, sender: self)

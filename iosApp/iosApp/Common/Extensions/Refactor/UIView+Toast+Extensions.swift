@@ -18,37 +18,21 @@ extension UIView {
         bottomOffset: CGFloat = 48
     ) {
         subviews.forEach {
-            
             if $0.tag == Self.toastViewTag { $0.removeFromSuperview() }
         }
-        
-        let toastView = UIView()
+
+        let size = CGSize(width: bounds.width - Theme.padding * 2, height: 48)
+        let toastView = UIView(frame: .init(origin: .zero, size: size))
         toastView.tag = Self.toastViewTag
         toastView.alpha = 0.0
+        toastView.autoresizingMask = [.flexibleWidth]
 
         let backgroundView = UIView()
         backgroundView.layer.cornerRadius = Theme.cornerRadiusSmall
         backgroundView.backgroundColor = Theme.color.tabBarBackground
         toastView.addSubview(backgroundView)
-        backgroundView.addConstraints(
-            [
-                .layout(anchor: .centerXAnchor),
-                .layout(anchor: .topAnchor),
-                .layout(anchor: .bottomAnchor),
-                .layout(
-                    anchor: .leadingAnchor,
-                    constant: .greaterThanOrEqualTo(
-                        constant: Theme.padding
-                    ),
-                    priority: .defaultHigh
-                ),
-                .layout(
-                    anchor: .trailingAnchor,
-                    constant: .greaterThanOrEqualTo(constant: Theme.padding),
-                    priority: .defaultHigh
-                )
-            ]
-        )
+        backgroundView.frame = toastView.bounds
+        backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         let label = UILabel()
         label.apply(style: .subheadline)
@@ -57,69 +41,26 @@ extension UIView {
         label.numberOfLines = 0
         label.text = message
         backgroundView.addSubview(label)
-        label.addConstraints(
-            [
-                .layout(
-                    anchor: .leadingAnchor,
-                    constant: .equalTo(constant: Theme.padding)
-                ),
-                .layout(
-                    anchor: .trailingAnchor,
-                    constant: .equalTo(constant: Theme.padding)
-                ),
-                .layout(
-                    anchor: .topAnchor,
-                    constant: .equalTo(constant: Theme.padding * 0.75)),
-                .layout(
-                    anchor: .bottomAnchor,
-                    constant: .equalTo(constant: Theme.padding * 0.75)
-                )
-            ]
-        )
-            
+        label.frame = backgroundView.bounds.insetBy(dx: Theme.padding * 0.75, dy: Theme.padding)
+        label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
         addSubview(toastView)
-        toastView.addConstraints(
-            [
-                .layout(
-                    anchor: .leadingAnchor,
-                    constant: .equalTo(constant: Theme.padding)
-                ),
-                .layout(
-                    anchor: .trailingAnchor,
-                    constant: .equalTo(constant: Theme.padding)
-                ),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: bottomOffset))
-            ]
+
+        toastView.frame = CGRect(
+            origin: .init(x: Theme.padding, y: bounds.maxY - (size.height + bottomOffset)),
+            size: size
         )
 
-        UIView.animate(
-            withDuration: 0.3,
-            animations: {
-                toastView.alpha = 1.0
-            },
+        UIView.springAnimate(
+            0.3,
+            animations: { toastView.alpha = 1.0 },
             completion: { _ in
-                
-                toastView.animateOut(with: duration)
-            }
-        )
-    }
-}
-
-private extension UIView {
-    
-    func animateOut(with duration: TimeInterval) {
-        
-        UIView.animate(
-            withDuration: 0.3,
-            delay: duration,
-            options: .curveEaseInOut,
-            animations: { [weak self] in
-                guard let self = self else { return }
-                self.alpha = 0.0
-            },
-            completion: { [weak self] _ in
-                guard let self = self else { return }
-                self.removeFromSuperview()
+                UIView.springAnimate(
+                    0.3,
+                    delay: duration,
+                    animations: { toastView.alpha = 0 },
+                    completion: { _ in toastView.removeFromSuperview() }
+                )
             }
         )
     }

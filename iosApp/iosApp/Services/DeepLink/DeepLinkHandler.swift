@@ -241,3 +241,12 @@ private extension DefaultDeepLinkHandler {
         factory.make(degenNavController).present()
     }
 }
+
+final class DeepLinkHandlerAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .singleton) { _ -> DeepLinkHandler in
+            DefaultDeepLinkHandler()
+        }
+    }
+}

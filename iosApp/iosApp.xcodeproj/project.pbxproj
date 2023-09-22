@@ -301,7 +301,6 @@
 		1CB8B0C4288DD97300024E7C /* CultProposalStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0C3288DD97300024E7C /* CultProposalStatus.swift */; };
 		1CB8B0C8288F30DA00024E7C /* DashboardActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0C7288F30DA00024E7C /* DashboardActionCell.swift */; };
 		1CB8B0CC288FAC7B00024E7C /* DeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0CB288FAC7B00024E7C /* DeepLinkHandler.swift */; };
-		1CB8B0D0288FB76300024E7C /* DeepLinkHandlerAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0CF288FB76200024E7C /* DeepLinkHandlerAssembler.swift */; };
 		1CB8B0D4288FBC1500024E7C /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8B0D3288FBC1500024E7C /* Settings.storyboard */; };
 		1CB8B0DA28904A8A00024E7C /* NFTsDashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8B0D928904A8A00024E7C /* NFTsDashboard.storyboard */; };
 		1CB8B0DC28904F6C00024E7C /* NFTsCollection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8B0DB28904F6C00024E7C /* NFTsCollection.storyboard */; };
@@ -725,7 +724,6 @@
 		1CB8B0C3288DD97300024E7C /* CultProposalStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalStatus.swift; sourceTree = "<group>"; };
 		1CB8B0C7288F30DA00024E7C /* DashboardActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardActionCell.swift; sourceTree = "<group>"; };
 		1CB8B0CB288FAC7B00024E7C /* DeepLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandler.swift; sourceTree = "<group>"; };
-		1CB8B0CF288FB76200024E7C /* DeepLinkHandlerAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandlerAssembler.swift; sourceTree = "<group>"; };
 		1CB8B0D3288FBC1500024E7C /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		1CB8B0D928904A8A00024E7C /* NFTsDashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NFTsDashboard.storyboard; sourceTree = "<group>"; };
 		1CB8B0DB28904F6C00024E7C /* NFTsCollection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NFTsCollection.storyboard; sourceTree = "<group>"; };
@@ -936,6 +934,7 @@
 		1A4C38B91F448C1E962685B3 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				1CB8B0CA288FAB7900024E7C /* DeepLink */,
 				1C96842529263F2E00629A92 /* ActionsServiceAssembler.swift */,
 				1A4C3635DC5425C3CA3A2D25 /* CultServiceAssembler.swift */,
 				1A4C3766FCB2E384E3CA86A7 /* CurrencyStoreServiceAssembler.swift */,
@@ -1525,8 +1524,8 @@
 		1C7F85FE28D20E490073FD95 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				1C7F85FF28D20E490073FD95 /* Array+Extensions.swift */,
 				1FF13C092ABD3DA7003228C9 /* Refactor */,
+				1C7F85FF28D20E490073FD95 /* Array+Extensions.swift */,
 				1A4C391FFCFF40F06CD89323 /* Bundle+Extensions.swift */,
 				1C7F860228D20E490073FD95 /* CAAnimation+Extension.swift */,
 				1C7F862328D20E490073FD95 /* CALayer+Extension.swift */,
@@ -1590,6 +1589,7 @@
 		1C9B46F92814279F00F6C40B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D11A98F327B8615B00EDFDD0 /* Fonts */,
 				1C9B46FA281427B800F6C40B /* under-construction.gif */,
 				1F6A9FBB2A97ACE50056732C /* bundledAssets */,
 			);
@@ -1671,7 +1671,6 @@
 			isa = PBXGroup;
 			children = (
 				1CB8B0CB288FAC7B00024E7C /* DeepLinkHandler.swift */,
-				1CB8B0CF288FB76200024E7C /* DeepLinkHandlerAssembler.swift */,
 			);
 			path = DeepLink;
 			sourceTree = "<group>";
@@ -1872,6 +1871,11 @@
 		D157F7C927B69B6300578FF8 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				1C6487072832DC550091A12D /* Bootstrapper */,
+				D15B06C527B6D247008C3C62 /* Common */,
+				1C60C1C7285724D0003BE25D /* Modules */,
+				1A4C38B91F448C1E962685B3 /* Services */,
+				1C9B46F92814279F00F6C40B /* Resources */,
 				D157F7D827B69B6400578FF8 /* Info.plist */,
 				D14ECE3827B833E500228F90 /* Localizable.strings */,
 				D157F7CA27B69B6300578FF8 /* AppDelegate.swift */,
@@ -1879,16 +1883,8 @@
 				D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */,
 				D157F7D327B69B6400578FF8 /* Assets.xcassets */,
 				D15CB4FD2893D1AC00E4A25E /* Currencies.xcassets */,
-				1C6487072832DC550091A12D /* Bootstrapper */,
-				D15B06C527B6D247008C3C62 /* Common */,
-				1CB8B0CA288FAB7900024E7C /* DeepLink */,
-				D11A98F327B8615B00EDFDD0 /* Fonts */,
 				D157F7D527B69B6400578FF8 /* LaunchScreen.storyboard */,
 				D157F7D027B69B6300578FF8 /* Main.storyboard */,
-				1C60C1C7285724D0003BE25D /* Modules */,
-				1C9B46F92814279F00F6C40B /* Resources */,
-				1A4C38B91F448C1E962685B3 /* Services */,
-				D1BF267E280D7FC200DE9A0B /* Theme */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -1935,6 +1931,7 @@
 		D15B06C527B6D247008C3C62 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D1BF267E280D7FC200DE9A0B /* Theme */,
 				1C7F85FE28D20E490073FD95 /* Extensions */,
 				1C60C37C2859CC19003BE25D /* Helpers */,
 				1A4C37A412F5D0AF12CB3719 /* Transitions */,
@@ -2297,7 +2294,6 @@
 				1CE0064C2889E0E6002D1EB3 /* ThemeVanilla.swift in Sources */,
 				1C60C2D6285724D0003BE25D /* MnemonicNewWireframeFactory.swift in Sources */,
 				1C7FC9A528BCC5E900FC9175 /* MailServiceAssembler.swift in Sources */,
-				1CB8B0D0288FB76300024E7C /* DeepLinkHandlerAssembler.swift in Sources */,
 				1A4C39EAC9477080E80A6C07 /* EdgeCardsController.swift in Sources */,
 				1C60C32E285724D1003BE25D /* NFTsCollectionView.swift in Sources */,
 				D1EF5BC9287BEE92004CAD82 /* MnemonicUpdateWireframe.swift in Sources */,
