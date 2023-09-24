@@ -41,11 +41,11 @@ extension ImprovementProposalViewController {
     }
     
     @IBAction func voteAction(_ sender: UIButton?) {
-        presenter.handle(event: .Vote())
+        presenter.handle(.Vote())
     }
     
     @objc func dismissAction() {
-        presenter.handle(event: .Dismiss())
+        presenter.handle(.Dismiss())
     }
 }
 

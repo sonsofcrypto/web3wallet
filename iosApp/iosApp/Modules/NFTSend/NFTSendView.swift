@@ -201,7 +201,7 @@ private extension NFTSendViewController {
     }
     
     func onTapped(_ event: NFTSendPresenterEvent) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event: event) }
+        { [weak self] in self?.presenter.handle(event) }
     }
 }
 

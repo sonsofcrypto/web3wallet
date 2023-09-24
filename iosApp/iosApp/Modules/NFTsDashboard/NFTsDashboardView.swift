@@ -146,8 +146,8 @@ private extension NFTsDashboardViewController {
             .init(
                 title: viewModel.actions[0],
                 style: .cancel,
-                handler: { [weak self] _ in self?.presenter.handle(
-                    event: NFTsDashboardPresenterEvent.CancelError())
+                handler: { [weak self] _ in
+                    self?.presenter.handle(.CancelError())
                 }
             )
         )
@@ -155,8 +155,8 @@ private extension NFTsDashboardViewController {
             .init(
                 title: viewModel.actions[1],
                 style: .default,
-                handler: { [weak self] _ in self?.presenter.handle(
-                    event: NFTsDashboardPresenterEvent.SendError())
+                handler: { [weak self] _ in
+                    self?.presenter.handle(.SendError())
                 }
             )
         )

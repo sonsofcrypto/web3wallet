@@ -104,7 +104,7 @@ extension DashboardViewController {
                let titleView = view as? DashboardHeaderTitleView {
                     titleView.update(with: input) { [weak self] in
                         self?.presenter.handle(
-                            event: .DidTapEditNetwork(idx: idxPath.item.int32)
+                            .DidTapEditNetwork(idx: idxPath.item.int32)
                         )
                 }
             }
@@ -126,9 +126,9 @@ extension DashboardViewController {
             let presenter = self.presenter
             (cell as? DashboardButtonsCell)?.update(
                 with: input.data,
-                receiveHandler: { presenter?.handle(event: .ReceiveAction()) },
-                sendHandler: { presenter?.handle(event: .SendAction()) },
-                swapHandler: { presenter?.handle(event: .SwapAction()) }
+                receiveHandler: { presenter?.handle(.ReceiveAction()) },
+                sendHandler: { presenter?.handle(.SendAction()) },
+                swapHandler: { presenter?.handle(.SwapAction()) }
             )
         }
         if let input = items as? DashboardViewModel.SectionItemsWallets {
@@ -169,9 +169,9 @@ extension DashboardViewController: UICollectionViewDataSource {
             let presenter = self.presenter
             return cv.dequeue(DashboardButtonsCell.self, for: idxPath).update(
                 with: vm.data,
-                receiveHandler: { presenter?.handle(event: .ReceiveAction()) },
-                sendHandler: { presenter?.handle(event: .SendAction()) },
-                swapHandler: { presenter?.handle(event: .SwapAction()) }
+                receiveHandler: { presenter?.handle(.ReceiveAction()) },
+                sendHandler: { presenter?.handle(.SendAction()) },
+                swapHandler: { presenter?.handle(.SwapAction()) }
             )
         }
         if let vm = section.items as? DashboardViewModel.SectionItemsActions {
@@ -231,7 +231,7 @@ extension DashboardViewController: UICollectionViewDataSource {
                 kind: kind
             ).update(with: vm) { [weak self] in
                 let idx = idxPath.item.int32
-                self?.presenter.handle(event: .DidTapEditNetwork(idx: idx))
+                self?.presenter.handle(.DidTapEditNetwork(idx: idx))
             }
         }
         fatalError("Should not configure a section header when type none.")
@@ -250,18 +250,18 @@ extension DashboardViewController: UICollectionViewDelegate {
             return
         }
         if section.items is DashboardViewModel.SectionItemsActions {
-            presenter.handle(event: .DidTapAction(idx: indexPath.item.int32))
+            presenter.handle(.DidTapAction(idx: indexPath.item.int32))
         }
         if section.items is DashboardViewModel.SectionItemsWallets {
             presenter.handle(
-                event: .DidSelectWallet(
+                .DidSelectWallet(
                     networkIdx: (indexPath.section - 2).int32,
                     currencyIdx: indexPath.item.int32
                 )
             )
         }
         if section.items is DashboardViewModel.SectionItemsNfts {
-            presenter.handle(event: .DidSelectNFT(idx: indexPath.item.int32))
+            presenter.handle(.DidSelectNFT(idx: indexPath.item.int32))
         }
     }
 
@@ -359,15 +359,15 @@ private extension DashboardViewController {
     }
 
     @objc func didPullToRefresh(_ sender: Any) {
-        presenter.handle(event: .PullDownToRefresh())
+        presenter.handle(.PullDownToRefresh())
     }
 
     @objc func navBarLeftActionTapped() {
-        presenter.handle(event: .WalletConnectionSettingsAction())
+        presenter.handle(.WalletConnectionSettingsAction())
     }
 
     @objc func navBarRightActionTapped() {
-        presenter.handle(event: .DidScanQRCode())
+        presenter.handle(.DidScanQRCode())
     }
 
     func compositionalLayout() -> UICollectionViewCompositionalLayout {
@@ -500,7 +500,7 @@ extension DashboardViewController: EdgeCardsControllerDelegate {
         vc: EdgeCardsController,
         didChangeTo mode: EdgeCardsController.DisplayMode
     ) {
-        presenter.handle(event: .DidInteractWithCardSwitcher())
+        presenter.handle(.DidInteractWithCardSwitcher())
     }
 }
 

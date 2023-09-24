@@ -158,7 +158,7 @@ private extension CurrencyAddViewController {
     
     func presenterHandle(_ event: CurrencyAddPresenterEvent) -> () -> Void {
         {
-            [weak self] in self?.presenter.handle(event: event)
+            [weak self] in self?.presenter.handle(event)
         }
     }
 }

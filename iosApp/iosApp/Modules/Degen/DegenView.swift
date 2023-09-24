@@ -100,11 +100,9 @@ extension DegenViewController: UICollectionViewDelegate {
         guard let section = viewModel?.sections[indexPath.section] else { return }
         if let input = section as? DegenViewModel.SectionGroup {
             if input.items[indexPath.row].isEnabled {
-                presenter.handle(
-                    event: DegenPresenterEvent.DidSelectCategory(idx: indexPath.item.int32)
-                )
+                presenter.handle(.DidSelectCategory(idx: indexPath.item.int32))
             } else {
-                presenter.handle(event: DegenPresenterEvent.ComingSoon())
+                presenter.handle(DegenPresenterEvent.ComingSoon())
             }
         }
     }
