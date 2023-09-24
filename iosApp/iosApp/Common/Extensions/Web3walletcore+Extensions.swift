@@ -7,7 +7,7 @@ import web3walletcore
 
 // MARK: Account
 extension DefaultAccountWireframe: AccountWireframe {
-    func navigate(destination____________________ destination: AccountWireframeDestination) { navigate(with: destination) }
+    func navigate(destination____________________ destination: AccountWireframeDestination) { navigate(to: destination) }
 }
 extension AccountViewController: AccountView {
     func update(viewModel____________________ viewModel: AccountViewModel) { update(with: viewModel) }
@@ -18,7 +18,7 @@ extension AccountPresenter {
 
 // MARK: Alert
 extension DefaultAlertWireframe: AlertWireframe {
-    func navigate(destination___________ destination: AlertWireframeDestination) { navigate(with: destination) }
+    func navigate(destination___________ destination: AlertWireframeDestination) { navigate(to: destination) }
 }
 extension AlertViewController: AlertView {
     func update(viewModel____________ viewModel: AlertViewModel) { update(with: viewModel) }
@@ -29,7 +29,7 @@ extension AlertPresenter {
 
 // MARK: Authenticate
 extension DefaultAuthenticateWireframe: AuthenticateWireframe {
-    func navigate(destination__________________________ destination: AuthenticateWireframeDestination) { navigate(with: destination) }
+    func navigate(destination__________________________ destination: AuthenticateWireframeDestination) { navigate(to: destination) }
 }
 extension AuthenticateViewController: AuthenticateView {
     func update(viewModel__________________________ viewModel: AuthenticateViewModel) { update(with: viewModel) }
@@ -40,7 +40,7 @@ extension AuthenticatePresenter {
 
 // MARK: Confirmation
 extension DefaultConfirmationWireframe: ConfirmationWireframe {
-    func navigate(destination__________ destination: ConfirmationWireframeDestination) { navigate(with: destination) }
+    func navigate(destination__________ destination: ConfirmationWireframeDestination) { navigate(to: destination) }
 }
 extension ConfirmationViewController: ConfirmationView {
     func update(viewModel___________ viewModel: ConfirmationViewModel) { update(with: viewModel) }
@@ -51,7 +51,7 @@ extension ConfirmationPresenter {
 
 // MARK: CurrencyAdd
 extension DefaultCurrencyAddWireframe: CurrencyAddWireframe {
-    func navigate(destination_________ destination: CurrencyAddWireframeDestination) { navigate(with: destination) }
+    func navigate(destination_________ destination: CurrencyAddWireframeDestination) { navigate(to: destination) }
 }
 extension CurrencyAddViewController: CurrencyAddView {
     func update(viewModel__________ viewModel: CurrencyAddViewModel) { update(with: viewModel) }
@@ -62,7 +62,7 @@ extension CurrencyAddPresenter {
 
 // MARK: CurrencyPicker
 extension DefaultCurrencyPickerWireframe: CurrencyPickerWireframe {
-    func navigate(destination_________________________ destination: CurrencyPickerWireframeDestination) { navigate(with: destination) }
+    func navigate(destination_________________________ destination: CurrencyPickerWireframeDestination) { navigate(to: destination) }
 }
 extension CurrencyPickerViewController: CurrencyPickerView {
     func update(viewModel_________________________ viewModel: CurrencyPickerViewModel) { update(with: viewModel) }
@@ -73,7 +73,7 @@ extension CurrencyPickerPresenter {
 
 // MARK: CurrencyReceive
 extension DefaultCurrencyReceiveWireframe: CurrencyReceiveWireframe {
-    func navigate(destination__________________ destination: CurrencyReceiveWireframeDestination) { navigate(with: destination) }
+    func navigate(destination__________________ destination: CurrencyReceiveWireframeDestination) { navigate(to: destination) }
 }
 extension CurrencyReceiveViewController: CurrencyReceiveView {
     func update(viewModel__________________ viewModel: CurrencyReceiveViewModel) { update(with: viewModel) }
@@ -84,7 +84,7 @@ extension CurrencyReceivePresenter {
 
 // MARK: CurrencySend
 extension DefaultCurrencySendWireframe: CurrencySendWireframe {
-    func navigate(destination_______________ destination: CurrencySendWireframeDestination) { navigate(with: destination) }
+    func navigate(destination_______________ destination: CurrencySendWireframeDestination) { navigate(to: destination) }
 }
 extension CurrencySendViewController: CurrencySendView {
     func update(viewModel________________ viewModel: CurrencySendViewModel) { update(with: viewModel) }
@@ -95,7 +95,7 @@ extension CurrencySendPresenter {
 
 // MARK: CurrencySwap
 extension DefaultCurrencySwapWireframe: CurrencySwapWireframe {
-    func navigate(destination________________________ destination: CurrencySwapWireframeDestination) { navigate(with: destination) }
+    func navigate(destination________________________ destination: CurrencySwapWireframeDestination) { navigate(to: destination) }
 }
 extension CurrencySwapViewController: CurrencySwapView {
     func update(viewModel________________________ viewModel: CurrencySwapViewModel) { update(with: viewModel) }
@@ -106,7 +106,7 @@ extension CurrencySwapPresenter {
 
 // MARK: Dashboard
 extension DefaultDashboardWireframe: DashboardWireframe {
-    func navigate(destination___________________ destination: DashboardWireframeDestination) { navigate(with: destination) }
+    func navigate(destination___________________ destination: DashboardWireframeDestination) { navigate(to: destination) }
 }
 extension DashboardViewController: DashboardView {
     func update(viewModel___________________ viewModel: DashboardViewModel) { update(with: viewModel) }
@@ -118,7 +118,7 @@ extension DashboardPresenter {
 
 // MARK: CultProposal
 extension DefaultCultProposalWireframe: CultProposalWireframe {
-    func navigate(destination_ destination: CultProposalWireframeDestination) { navigate(with: destination) }
+    func navigate(destination_ destination: CultProposalWireframeDestination) { navigate(to: destination) }
 }
 extension CultProposalViewController: CultProposalView {
     func update(viewModel_ viewModel: CultProposalViewModel) { update(with: viewModel) }
@@ -129,7 +129,7 @@ extension CultProposalPresenter {
 
 // MARK: CultProposals
 extension DefaultCultProposalsWireframe: CultProposalsWireframe {
-    func navigate(destination______ destination: CultProposalsWireframeDestination) { navigate(with: destination) }
+    func navigate(destination______ destination: CultProposalsWireframeDestination) { navigate(to: destination) }
 }
 extension CultProposalsViewController: CultProposalsView {
     func update(viewModel______ viewModel: CultProposalsViewModel) { update(with: viewModel) }
@@ -140,7 +140,7 @@ extension CultProposalsPresenter {
 
 // MARK: Degen
 extension DefaultDegenWireframe: DegenWireframe {
-    func navigate(destination______________ destination: DegenWireframeDestination) { navigate(with: destination) }
+    func navigate(destination______________ destination: DegenWireframeDestination) { navigate(to: destination) }
 }
 extension DegenViewController: DegenView {
     func update(viewModel_______________ viewModel: DegenViewModel) { update(with: viewModel) }
@@ -151,7 +151,7 @@ extension DegenPresenter {
 
 // MARK: KeyStore
 extension DefaultKeyStoreWireframe: KeyStoreWireframe {
-    func navigate(destination___ destination: KeyStoreWireframeDestination) { navigate(with: destination) }
+    func navigate(destination___ destination: KeyStoreWireframeDestination) { navigate(to: destination) }
 }
 extension KeyStoreViewController: KeyStoreView {
     func update(viewModel___ viewModel: KeyStoreViewModel) { update(with: viewModel) }
@@ -162,7 +162,7 @@ extension KeyStorePresenter {
 
 // MARK: MnemonicConfirmation
 extension DefaultMnemonicConfirmationWireframe: MnemonicConfirmationWireframe {
-    func navigate(destination_____ destination: MnemonicConfirmationWireframeDestination) { navigate(with: destination) }
+    func navigate(destination_____ destination: MnemonicConfirmationWireframeDestination) { navigate(to: destination) }
 }
 extension MnemonicConfirmationViewController: MnemonicConfirmationView {
     func update(viewModel_____ viewModel: MnemonicConfirmationViewModel) { update(with: viewModel) }
@@ -173,7 +173,7 @@ extension MnemonicConfirmationPresenter {
 
 // MARK: MnemonicImport
 extension DefaultMnemonicImportWireframe: MnemonicImportWireframe {
-    func navigate(destination___________________________ destination: MnemonicImportWireframeDestination) { navigate(with: destination) }
+    func navigate(destination___________________________ destination: MnemonicImportWireframeDestination) { navigate(to: destination) }
 }
 extension MnemonicImportViewController: MnemonicImportView {
     func update(viewModel___________________________ viewModel: MnemonicImportViewModel) { update(with: viewModel) }
@@ -184,7 +184,7 @@ extension MnemonicImportPresenter {
 
 // MARK: MnemonicNew
 extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
-    func navigate(destination_____________________ destination: MnemonicNewWireframeDestination) { navigate(with: destination) }
+    func navigate(destination_____________________ destination: MnemonicNewWireframeDestination) { navigate(to: destination) }
 }
 extension MnemonicNewViewController: MnemonicNewView {
     func update(viewModel_____________________ viewModel: MnemonicNewViewModel) { update(with: viewModel) }
@@ -195,7 +195,7 @@ extension MnemonicNewPresenter {
 
 // MARK: MnemonicUpdate
 extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
-    func navigate(destination: MnemonicUpdateWireframeDestination) { navigate(with: destination) }
+    func navigate(destination: MnemonicUpdateWireframeDestination) { navigate(to: destination) }
 }
 extension MnemonicUpdateViewController: MnemonicUpdateView {
     func update(viewModel: MnemonicUpdateViewModel) { update(with: viewModel) }
@@ -206,7 +206,7 @@ extension MnemonicUpdatePresenter {
 
 // MARK: Networks
 extension DefaultNetworksWireframe: NetworksWireframe {
-    func navigate(destination_______________________ destination: NetworksWireframeDestination) { navigate(with: destination) }
+    func navigate(destination_______________________ destination: NetworksWireframeDestination) { navigate(to: destination) }
 }
 extension NetworksViewController: NetworksView {
     func update(viewModel_______________________ viewModel: NetworksViewModel) { update(with: viewModel)}
@@ -217,7 +217,7 @@ extension NetworksPresenter {
 
 // MARK: NetworkSettings
 extension DefaultNetworkSettingsWireframe: NetworkSettingsWireframe {
-    //func navigate(destination__ destination: NetworksSettingsWireframeDestination) { navigate(with: destination) }
+    //func navigate(destination__ destination: NetworksSettingsWireframeDestination) { navigate(to: destination) }
 }
 extension NetworkSettingsViewController: NetworkSettingsView {
     func update(viewModel_______ viewModel: NetworkSettingsViewModel) { update(with: viewModel)}
@@ -228,7 +228,7 @@ extension NetworkSettingsPresenter {
 
 // MARK: NFTDetail
 extension DefaultNFTDetailWireframe: NFTDetailWireframe {
-    func navigate(destination____ destination: NFTDetailWireframeDestination) { navigate(with: destination) }
+    func navigate(destination____ destination: NFTDetailWireframeDestination) { navigate(to: destination) }
 }
 extension NFTDetailViewController: NFTDetailView {
     func update(viewModel____ viewModel: NFTDetailViewModel) { update(with: viewModel)}
@@ -239,7 +239,7 @@ extension NFTDetailPresenter {
 
 // MARK: NFTsCollection
 extension DefaultNFTsCollectionWireframe: NFTsCollectionWireframe {
-    func navigate(destination__ destination: NFTsCollectionWireframeDestination) { navigate(with: destination) }
+    func navigate(destination__ destination: NFTsCollectionWireframeDestination) { navigate(to: destination) }
 }
 extension NFTsCollectionViewController: NFTsCollectionView {
     func update(viewModel__ viewModel: NFTsCollectionViewModel) { update(with: viewModel)}
@@ -250,7 +250,7 @@ extension NFTsCollectionPresenter {
 
 // MARK: NFTsDashboard
 extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
-    func navigate(destination____________ destination: NFTsDashboardWireframeDestination) { navigate(with: destination) }
+    func navigate(destination____________ destination: NFTsDashboardWireframeDestination) { navigate(to: destination) }
 }
 extension NFTsDashboardViewController: NFTsDashboardView {
     func update(viewModel_____________ viewModel: NFTsDashboardViewModel) { update(with: viewModel)}
@@ -261,7 +261,7 @@ extension NFTsDashboardPresenter {
 
 // MARK: NFTSend
 extension DefaultNFTSendWireframe: NFTSendWireframe {
-    func navigate(destination______________________ destination: NFTSendWireframeDestination) { navigate(with: destination) }
+    func navigate(destination______________________ destination: NFTSendWireframeDestination) { navigate(to: destination) }
 }
 extension NFTSendViewController: NFTSendView {
     func update(viewModel______________________ viewModel: NFTSendViewModel) { update(with: viewModel)}
@@ -272,7 +272,7 @@ extension NFTSendPresenter {
 
 // MARK: ImprovementProposal
 extension DefaultImprovementProposalWireframe: ImprovementProposalWireframe {
-    func navigate(destination_____________ destination: ImprovementProposalWireframeDestination) { navigate(with: destination) }
+    func navigate(destination_____________ destination: ImprovementProposalWireframeDestination) { navigate(to: destination) }
 }
 extension ImprovementProposalViewController: ImprovementProposalView {
     func update(viewModel______________ viewModel: ImprovementProposalViewModel) { update(with: viewModel)}
@@ -283,7 +283,7 @@ extension ImprovementProposalPresenter {
 
 // MARK: ImprovementProposals
 extension DefaultImprovementProposalsWireframe: ImprovementProposalsWireframe {
-    func navigate(destination_______ destination: ImprovementProposalsWireframeDestination) { navigate(with: destination) }
+    func navigate(destination_______ destination: ImprovementProposalsWireframeDestination) { navigate(to: destination) }
 }
 extension ImprovementProposalsViewController: ImprovementProposalsView {
     func update(viewModel________ viewModel: ImprovementProposalsViewModel) { update(with: viewModel)}
@@ -294,7 +294,7 @@ extension ImprovementProposalsPresenter {
 
 // MARK: QRCodeScan
 extension DefaultQRCodeScanWireframe: QRCodeScanWireframe {
-    func navigate(destination________________ destination: QRCodeScanWireframeDestination) { navigate(with: destination) }
+    func navigate(destination________________ destination: QRCodeScanWireframeDestination) { navigate(to: destination) }
 }
 extension QRCodeScanViewController: QRCodeScanView {
     func update(viewModel_________________ viewModel: QRCodeScanViewModel) { update(with: viewModel)}
@@ -305,7 +305,7 @@ extension QRCodeScanPresenter {
 
 // MARK: Settings
 extension DefaultSettingsWireframe: SettingsWireframe {
-    func navigate(destination________ destination: SettingsWireframeDestination) { navigate(with: destination) }
+    func navigate(destination________ destination: SettingsWireframeDestination) { navigate(to: destination) }
 }
 extension SettingsViewController: SettingsView {
     func update(viewModel_________ viewModel: SettingsViewModel) { update(with: viewModel)}

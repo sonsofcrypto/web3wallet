@@ -49,7 +49,7 @@ extension DefaultMnemonicUpdateWireframe {
         presentingTopVc?.present(vc, animated: true)
     }
 
-    func navigate(with destination: MnemonicUpdateWireframeDestination) {
+    func navigate(to destination: MnemonicUpdateWireframeDestination) {
         if let input = destination as? MnemonicUpdateWireframeDestination.Authenticate {
             authenticateWireframeFactory.make(vc, context: input.context).present()
         }

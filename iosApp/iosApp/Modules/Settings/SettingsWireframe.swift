@@ -40,7 +40,7 @@ extension DefaultSettingsWireframe {
         }
     }
 
-    func navigate(with destination: SettingsWireframeDestination) {
+    func navigate(to destination: SettingsWireframeDestination) {
         if let input = destination as? SettingsWireframeDestination.Settings {
             pushSettingsVC(with: input.context)
         }

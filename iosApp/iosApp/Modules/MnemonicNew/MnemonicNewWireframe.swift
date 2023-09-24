@@ -48,7 +48,7 @@ extension DefaultMnemonicNewWireframe {
         presentingTopVc?.present(vc, animated: true)
     }
 
-    func navigate(with destination: MnemonicNewWireframeDestination) {
+    func navigate(to destination: MnemonicNewWireframeDestination) {
         if destination is MnemonicNewWireframeDestination.LearnMoreSalt {
             UIApplication.shared.open(Constant.saltExplanationURL)
         }

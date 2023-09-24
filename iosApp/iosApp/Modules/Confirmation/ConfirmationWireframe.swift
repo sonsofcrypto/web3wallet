@@ -51,7 +51,7 @@ extension DefaultConfirmationWireframe {
         parent?.present(vc, animated: true)
     }
     
-    func navigate(with destination: ConfirmationWireframeDestination) {
+    func navigate(to destination: ConfirmationWireframeDestination) {
         if let d = destination as? ConfirmationWireframeDestination.Authenticate {
             authenticateWireframeFactory.make(vc,context: d.context).present()
         }

@@ -33,7 +33,7 @@ extension DefaultNFTsCollectionWireframe {
         parent?.show(vc, sender: self)
     }
 
-    func navigate(with destination: NFTsCollectionWireframeDestination) {
+    func navigate(to destination: NFTsCollectionWireframeDestination) {
         if let input = destination as? NFTsCollectionWireframeDestination.NFTDetail {
             let context = NFTDetailWireframeContext(
                 nftId: input.identifier,

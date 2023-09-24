@@ -66,7 +66,7 @@ extension DefaultAccountWireframe {
         }
     }
 
-    func navigate(with destination: AccountWireframeDestination) {
+    func navigate(to destination: AccountWireframeDestination) {
         if destination is AccountWireframeDestination.Receive {
             let context = CurrencyReceiveWireframeContext(network: context.network, currency: context.currency)
             currencyReceiveWireframeFactory.make(vc, context: context).present()

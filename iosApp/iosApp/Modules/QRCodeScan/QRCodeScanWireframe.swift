@@ -27,7 +27,7 @@ extension DefaultQRCodeScanWireframe {
         parent?.show(vc, sender: self)
     }
     
-    func navigate(with destination: QRCodeScanWireframeDestination) {
+    func navigate(to destination: QRCodeScanWireframeDestination) {
         if let qrCode = destination as? QRCodeScanWireframeDestination.QRCode {
             _ = context.handler(qrCode.value)
         }

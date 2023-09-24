@@ -45,7 +45,7 @@ extension DefaultCultProposalsWireframe {
         parent?.show(vc, sender: self)
     }
 
-    func navigate(with destination: CultProposalsWireframeDestination) {
+    func navigate(to destination: CultProposalsWireframeDestination) {
         if let input = destination as? CultProposalsWireframeDestination.Proposal {
             let context = CultProposalWireframeContext(proposal: input.proposal, proposals: input.proposals)
             cultProposalWireframeFactory.make(vc, context: context).present()
