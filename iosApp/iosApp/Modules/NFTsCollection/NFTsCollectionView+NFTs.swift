@@ -115,7 +115,7 @@ private extension NFTsCollectionViewController {
         guard let tag = tapGesture.view?.tag else { return }
         guard let viewModel = viewModel else { return }
         guard viewModel.nfts.count > tag else { return }
-        presenter.handle(event: NFTsCollectionPresenterEvent.NFTDetail(idx: tag.int32))
+        presenter.handle(NFTsCollectionPresenterEvent.NFTDetail(idx: tag.int32))
     }
     
     func makeVerticalStack(

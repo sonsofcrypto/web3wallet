@@ -130,7 +130,7 @@ extension KeyStoreViewController: UICollectionViewDataSource {
                         let event = KeyStorePresenterEvent.DidSelectAccessory(
                             idx: indexPath.item.int32
                         )
-                        self?.presenter.handle(event: event)
+                        self?.presenter.handle(event)
                     }),
                     index: indexPath.item
                 )
@@ -145,15 +145,11 @@ extension KeyStoreViewController: UICollectionViewDelegate {
             didSelectItemAt indexPath: IndexPath
     ) {
         if collectionView == buttonsCollectionView {
-            presenter.handle(
-                event: KeyStorePresenterEvent.DidSelectButtonAt(
-                    idx: indexPath.item.int32
-                )
-            )
+            presenter.handle(.DidSelectButtonAt(idx: indexPath.item.int32))
             return
         }
         presenter.handle(
-            event: KeyStorePresenterEvent.DidSelectKeyStoreItemtAt(
+            KeyStorePresenterEvent.DidSelectKeyStoreItemtAt(
                 idx: indexPath.item.int32
             )
         )
@@ -331,11 +327,9 @@ extension KeyStoreViewController {
         guard scrollView == buttonsCollectionView else { return }
         layoutButtonsBackground()
         guard scrollView.isDragging else { return }
-        let cellCount = buttonsCollectionView.visibleCells.count
+        let cellCnt = buttonsCollectionView.visibleCells.count
         presenter.handle(
-            event: KeyStorePresenterEvent.DidChangeButtonsSheetMode(
-                mode: cellCount > 4 ? .expanded : .compact
-            )
+            .DidChangeButtonsSheetMode(mode: cellCnt > 4 ? .expanded : .compact)
         )
     }
 }

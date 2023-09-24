@@ -32,7 +32,7 @@ final class MnemonicConfirmationViewController: UIViewController {
 extension MnemonicConfirmationViewController {
     
     @IBAction func ctaAction(_ sender: Any) {
-        presenter.handle(event: MnemonicConfirmationPresenterEvent.Confirm())
+        presenter.handle(MnemonicConfirmationPresenterEvent.Confirm())
     }
 }
 
@@ -62,7 +62,7 @@ extension MnemonicConfirmationViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         presenter.handle(
-            event: MnemonicConfirmationPresenterEvent.MnemonicChanged(
+            .MnemonicChanged(
                 to: textView.text,
                 selectedLocation: textView.selectedRange.location.int32
             )
@@ -77,7 +77,7 @@ private extension MnemonicConfirmationViewController {
             textView: textView,
             onMnemonicChangedHandler: { [weak self] newMnemonic, selectedLocation in
                 self?.presenter.handle(
-                    event: MnemonicConfirmationPresenterEvent.MnemonicChanged(
+                    .MnemonicChanged(
                         to: newMnemonic,
                         selectedLocation: selectedLocation.int32
                     )
@@ -120,7 +120,7 @@ private extension MnemonicConfirmationViewController {
     
     @objc func dismissKeyboard() { textView.resignFirstResponder() }
 
-    @objc func dismissTapped() { presenter.handle(event: MnemonicConfirmationPresenterEvent.Dismiss()) }
+    @objc func dismissTapped() { presenter.handle(MnemonicConfirmationPresenterEvent.Dismiss()) }
 }
 
 private extension MnemonicConfirmationViewController {
@@ -188,6 +188,6 @@ private extension MnemonicConfirmationViewController {
 extension MnemonicConfirmationViewController: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        presenter.handle(event: MnemonicConfirmationPresenterEvent.SaltChanged(to: textField.text ?? ""))
+        presenter.handle(MnemonicConfirmationPresenterEvent.SaltChanged(to: textField.text ?? ""))
     }
 }

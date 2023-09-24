@@ -70,7 +70,7 @@ private extension ConfirmationViewController {
     }
 
     @objc func dismissAction() {
-        presenter.handle(event: ConfirmationPresenterEvent.Dismiss())
+        presenter.handle(ConfirmationPresenterEvent.Dismiss())
     }
 }
 
@@ -140,7 +140,7 @@ private extension ConfirmationViewController {
     }
     
     func presenterEventTapped(_ event: ConfirmationPresenterEvent) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event: event) }
+        { [weak self] in self?.presenter.handle(event) }
     }
 }
 

@@ -155,7 +155,7 @@ private extension CurrencyPickerViewController {
     }
     
     func handlePresenter(event: CurrencyPickerPresenterEvent) {
-        presenter.handle(event: event)
+        presenter.handle(event)
     }
 }
 

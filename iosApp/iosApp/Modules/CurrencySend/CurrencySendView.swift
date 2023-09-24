@@ -122,7 +122,7 @@ private extension CurrencySendViewController {
     }
     
     @objc func navBarLeftActionTapped() {
-        presenter.handle(event: CurrencySendPresenterEvent.Dismiss())
+        presenter.handle(CurrencySendPresenterEvent.Dismiss())
     }
 }
 
@@ -224,7 +224,7 @@ private extension CurrencySendViewController {
     }
     
     func onTapped(_ event: CurrencySendPresenterEvent) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event: event) }
+        { [weak self] in self?.presenter.handle(event) }
     }
 }
 

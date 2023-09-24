@@ -62,7 +62,7 @@ extension NetworkSettingsViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        presenter.handle(event: .Select(idx: Int32(indexPath.item)))
+        presenter.handle(.Select(idx: Int32(indexPath.item)))
     }
 }
 

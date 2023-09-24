@@ -23,7 +23,7 @@ final class SettingsViewController: BaseViewController {
 extension SettingsViewController {
 
     @objc func dismissAction() {
-        presenter.handle(event: .Dismiss())
+        presenter.handle(.Dismiss())
     }
 }
 
@@ -104,7 +104,7 @@ extension SettingsViewController: UICollectionViewDelegate {
         didSelectItemAt indexPath: IndexPath
     ) {
         presenter.handle(
-            event: .Select(
+            .Select(
                 groupIdx: indexPath.section.int32,
                 itemIdx: indexPath.item.int32
             )

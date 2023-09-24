@@ -1387,13 +1387,13 @@
 		1C60C285285724D0003BE25D /* DegenCult */ = {
 			isa = PBXGroup;
 			children = (
-				1C60C286285724D0003BE25D /* CultProposal ✅ */,
-				1C60C28D285724D0003BE25D /* CultProposals ✅ */,
+				1C60C286285724D0003BE25D /* CultProposal */,
+				1C60C28D285724D0003BE25D /* CultProposals */,
 			);
 			path = DegenCult;
 			sourceTree = "<group>";
 		};
-		1C60C286285724D0003BE25D /* CultProposal ✅ */ = {
+		1C60C286285724D0003BE25D /* CultProposal */ = {
 			isa = PBXGroup;
 			children = (
 				1CB8B0B4288C34B900024E7C /* CultProposal.storyboard */,
@@ -1402,10 +1402,10 @@
 				1C60C28A285724D0003BE25D /* CultProposalWireframeFactory.swift */,
 				1CB8B0B6288C350200024E7C /* Cells */,
 			);
-			path = "CultProposal ✅";
+			path = CultProposal;
 			sourceTree = "<group>";
 		};
-		1C60C28D285724D0003BE25D /* CultProposals ✅ */ = {
+		1C60C28D285724D0003BE25D /* CultProposals */ = {
 			isa = PBXGroup;
 			children = (
 				1CB8B0AA288B065100024E7C /* CultProposals.storyboard */,
@@ -1414,7 +1414,7 @@
 				1C60C294285724D0003BE25D /* CultProposalsWireframeFactory.swift */,
 				1C60C28E285724D0003BE25D /* Cells */,
 			);
-			path = "CultProposals ✅";
+			path = CultProposals;
 			sourceTree = "<group>";
 		};
 		1C60C28E285724D0003BE25D /* Cells */ = {

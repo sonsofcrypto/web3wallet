@@ -33,11 +33,11 @@ final class MnemonicNewViewController: BaseViewController {
     }
     
     @IBAction func ctaAction(_ sender: Any) {
-        presenter.handle(event: MnemonicNewPresenterEvent.DidSelectCta())
+        presenter.handle(MnemonicNewPresenterEvent.DidSelectCta())
     }
 
     @IBAction func dismissAction(_ sender: Any?) {
-        presenter.handle(event: MnemonicNewPresenterEvent.DidSelectDismiss())
+        presenter.handle(MnemonicNewPresenterEvent.DidSelectDismiss())
     }
 }
 
@@ -191,40 +191,40 @@ extension MnemonicNewViewController: UICollectionViewDelegate {
         guard indexPath == .init(row: 0, section: 0) else { return false }
         let cell = collectionView.cellForItem(at: .init(item: 0, section: 0))
         (cell as? MnemonicNewCell)?.animateCopiedToPasteboard()
-        presenter.handle(event: MnemonicNewPresenterEvent.DidTapMnemonic())
+        presenter.handle(MnemonicNewPresenterEvent.DidTapMnemonic())
         return false
     }
 
     func nameDidChange(_ name: String) {
-        presenter.handle(event: MnemonicNewPresenterEvent.DidChangeName(name: name))
+        presenter.handle(MnemonicNewPresenterEvent.DidChangeName(name: name))
     }
 
     func iCloudBackupDidChange(_ onOff: Bool) {
-        presenter.handle(event: MnemonicNewPresenterEvent.DidChangeICouldBackup(onOff: onOff))
+        presenter.handle(MnemonicNewPresenterEvent.DidChangeICouldBackup(onOff: onOff))
     }
 
     func saltSwitchDidChange(_ onOff: Bool) {
-        presenter.handle(event: MnemonicNewPresenterEvent.SaltSwitchDidChange(onOff: onOff))
+        presenter.handle(MnemonicNewPresenterEvent.SaltSwitchDidChange(onOff: onOff))
     }
 
     func saltTextDidChange(_ text: String) {
-        presenter.handle(event: MnemonicNewPresenterEvent.DidChangeSalt(salt: text))
+        presenter.handle(MnemonicNewPresenterEvent.DidChangeSalt(salt: text))
     }
 
     func saltLearnMoreAction() {
-        presenter.handle(event: MnemonicNewPresenterEvent.SaltLearnMoreAction())
+        presenter.handle(MnemonicNewPresenterEvent.SaltLearnMoreAction())
     }
 
     func passTypeDidChange(_ idx: Int) {
-        presenter.handle(event: MnemonicNewPresenterEvent.PassTypeDidChange(idx: idx.int32))
+        presenter.handle(MnemonicNewPresenterEvent.PassTypeDidChange(idx: idx.int32))
     }
 
     func passwordDidChange(_ text: String) {
-        presenter.handle(event: MnemonicNewPresenterEvent.PasswordDidChange(text: text))
+        presenter.handle(MnemonicNewPresenterEvent.PasswordDidChange(text: text))
     }
 
     func allowFaceIdDidChange(_ onOff: Bool) {
-        presenter.handle(event: MnemonicNewPresenterEvent.AllowFaceIdDidChange(onOff: onOff))
+        presenter.handle(MnemonicNewPresenterEvent.AllowFaceIdDidChange(onOff: onOff))
     }
 }
 

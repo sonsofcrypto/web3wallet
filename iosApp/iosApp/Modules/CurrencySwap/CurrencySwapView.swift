@@ -271,7 +271,7 @@ private extension CurrencySwapViewController {
     }
     
     func onTapped(_ event: CurrencySwapPresenterEvent) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event: event) }
+        { [weak self] in self?.presenter.handle(event) }
     }
 }
 
