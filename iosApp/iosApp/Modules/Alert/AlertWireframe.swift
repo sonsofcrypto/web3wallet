@@ -27,7 +27,7 @@ extension DefaultAlertWireframe {
         parent?.present(vc, animated: true)
     }
     
-    func navigate(with destination: AlertWireframeDestination) {
+    func navigate(to destination: AlertWireframeDestination) {
         if destination is AlertWireframeDestination.Dismiss {
             vc?.navigationController?.dismiss(animated: true) ?? vc?.dismiss(animated: true)
         }

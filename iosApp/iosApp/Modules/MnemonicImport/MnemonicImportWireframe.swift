@@ -50,7 +50,7 @@ extension DefaultMnemonicImportWireframe {
         presentingTopVc?.present(vc, animated: true)
     }
 
-    func navigate(with destination: MnemonicImportWireframeDestination) {
+    func navigate(to destination: MnemonicImportWireframeDestination) {
         if destination is MnemonicImportWireframeDestination.LearnMoreSalt {
             UIApplication.shared.open(Constant.saltExplanationURL)
         }

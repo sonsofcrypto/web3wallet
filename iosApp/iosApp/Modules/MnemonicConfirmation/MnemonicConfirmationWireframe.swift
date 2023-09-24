@@ -33,7 +33,7 @@ extension DefaultMnemonicConfirmationWireframe {
         parent?.present(vc, animated: true)
     }
     
-    func navigate(with destination: MnemonicConfirmationWireframeDestination) {
+    func navigate(to destination: MnemonicConfirmationWireframeDestination) {
         if destination is MnemonicConfirmationWireframeDestination.Dismiss {
             vc?.popOrDismiss()
         }

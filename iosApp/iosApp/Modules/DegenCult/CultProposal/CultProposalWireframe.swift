@@ -27,7 +27,7 @@ extension DefaultCultProposalWireframe {
         parent?.show(vc, sender: self)
     }
 
-    func navigate(with destination: CultProposalWireframeDestination) {
+    func navigate(to destination: CultProposalWireframeDestination) {
         if destination is CultProposalWireframeDestination.Dismiss {
             vc?.popOrDismiss()
         }

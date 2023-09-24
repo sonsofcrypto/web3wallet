@@ -47,7 +47,7 @@ extension DefaultKeyStoreWireframe {
         parent?.asEdgeCardsController?.setBottomCard(vc: vc) ?? parent?.show(vc, sender: self)
     }
 
-    func navigate(with destination: KeyStoreWireframeDestination) {
+    func navigate(to destination: KeyStoreWireframeDestination) {
         let edgeVc = parent as? EdgeCardsController
         if destination is KeyStoreWireframeDestination.HideNetworksAndDashboard {
             edgeVc?.setDisplayMode(.bottomCard)

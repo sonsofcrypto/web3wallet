@@ -48,7 +48,7 @@ extension DefaultCurrencySwapWireframe {
         parent?.show(vc, sender: self)
     }
     
-    func navigate(with destination: CurrencySwapWireframeDestination) {
+    func navigate(to destination: CurrencySwapWireframeDestination) {
         if destination is CurrencySwapWireframeDestination.UnderConstructionAlert {
             alertWireframeFactory.make(
                 vc,

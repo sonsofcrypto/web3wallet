@@ -78,7 +78,7 @@ extension DefaultDashboardWireframe {
         }
     }
 
-    func navigate(with destination: DashboardWireframeDestination) {
+    func navigate(to destination: DashboardWireframeDestination) {
         guard let vc = self.vc ?? parent else {
             print("DefaultDashboardWireframe has no view")
             return
@@ -211,7 +211,7 @@ private extension DefaultDashboardWireframe {
     }
     
     func navigateToCurrencySend() -> (String) -> Void {
-        { [weak self] addressTo in self?.navigate(with: DashboardWireframeDestination.Send(addressTo: addressTo)) }
+        { [weak self] addressTo in self?.navigate(to: DashboardWireframeDestination.Send(addressTo: addressTo)) }
     }
 
     func navigateToReceive() {
