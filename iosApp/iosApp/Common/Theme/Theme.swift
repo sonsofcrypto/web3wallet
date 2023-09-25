@@ -109,14 +109,14 @@ struct ThemeFont {
 // TODO: This is comment on settings. It should be `Settings.theme`
 // `Settings.variat` thi complexity is way too much and too hard to understand
 private func initialize() ->  ThemeProtocol {
-    let service: SettingsService = AppAssembler.resolve()
-    if service.isSelected(setting: .init(group: .theme, action: .themeMiamiLight)) {
+    let service: SettingsLegacyService = AppAssembler.resolve()
+    if service.isSelected(settingLegacy: .init(group: .theme, action: .themeMiamiLight)) {
         AppDelegate.setUserInterfaceStyle(.light)
         return ThemeMiamiSunrise()
-    } else if service.isSelected(setting: .init(group: .theme, action: .themeMiamiDark)) {
+    } else if service.isSelected(settingLegacy: .init(group: .theme, action: .themeMiamiDark)) {
         AppDelegate.setUserInterfaceStyle(.dark)
         return ThemeMiamiSunrise()
-    } else if service.isSelected(setting: .init(group: .theme, action: .themeIosLight)) {
+    } else if service.isSelected(settingLegacy: .init(group: .theme, action: .themeIosLight)) {
         AppDelegate.setUserInterfaceStyle(.light)
         return ThemeVanilla()
     } else {

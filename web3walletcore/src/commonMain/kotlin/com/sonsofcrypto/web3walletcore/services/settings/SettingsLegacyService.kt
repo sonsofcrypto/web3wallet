@@ -1,14 +1,14 @@
 package com.sonsofcrypto.web3walletcore.services.settings
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3walletcore.services.settings.Setting.Action.DEVELOPER_APIS_NFTS_OPEN_SEA
-import com.sonsofcrypto.web3walletcore.services.settings.Setting.Action.DEVELOPER_TRANSITIONS_CARD_FLIP
-import com.sonsofcrypto.web3walletcore.services.settings.Setting.Action.THEME_MIAMI_LIGHT
-import com.sonsofcrypto.web3walletcore.services.settings.Setting.Group.DEVELOPER_APIS_NFTS
-import com.sonsofcrypto.web3walletcore.services.settings.Setting.Group.DEVELOPER_TRANSITIONS
-import com.sonsofcrypto.web3walletcore.services.settings.Setting.Group.THEME
+import com.sonsofcrypto.web3walletcore.services.settings.SettingLegacy.Action.DEVELOPER_APIS_NFTS_OPEN_SEA
+import com.sonsofcrypto.web3walletcore.services.settings.SettingLegacy.Action.DEVELOPER_TRANSITIONS_CARD_FLIP
+import com.sonsofcrypto.web3walletcore.services.settings.SettingLegacy.Action.THEME_MIAMI_LIGHT
+import com.sonsofcrypto.web3walletcore.services.settings.SettingLegacy.Group.DEVELOPER_APIS_NFTS
+import com.sonsofcrypto.web3walletcore.services.settings.SettingLegacy.Group.DEVELOPER_TRANSITIONS
+import com.sonsofcrypto.web3walletcore.services.settings.SettingLegacy.Group.THEME
 
-data class Setting(
+data class SettingLegacy(
     val group: Group,
     val action: Action?,
 ) {
@@ -56,37 +56,37 @@ data class Setting(
     }
 }
 
-interface SettingsService {
-    fun select(setting: Setting)
-    fun isSelected(setting: Setting): Boolean
+interface SettingsLegacyService {
+    fun select(settingLegacy: SettingLegacy)
+    fun isSelected(settingLegacy: SettingLegacy): Boolean
 }
 
-class DefaultSettingsService(
+class DefaultSettingsLegacyService(
     private val store: KeyValueStore,
-): SettingsService {
+): SettingsLegacyService {
 
     init {
         if (!isInitialized(THEME)) {
-            select(Setting(THEME, THEME_MIAMI_LIGHT))
+            select(SettingLegacy(THEME, THEME_MIAMI_LIGHT))
         }
         if (!isInitialized(DEVELOPER_APIS_NFTS)) {
-            select(Setting(DEVELOPER_APIS_NFTS, DEVELOPER_APIS_NFTS_OPEN_SEA))
+            select(SettingLegacy(DEVELOPER_APIS_NFTS, DEVELOPER_APIS_NFTS_OPEN_SEA))
         }
         if (!isInitialized(DEVELOPER_TRANSITIONS)) {
-            select(Setting(DEVELOPER_TRANSITIONS, DEVELOPER_TRANSITIONS_CARD_FLIP))
+            select(SettingLegacy(DEVELOPER_TRANSITIONS, DEVELOPER_TRANSITIONS_CARD_FLIP))
         }
     }
 
-    override fun select(setting: Setting) {
-        val action = setting.action ?: return
-        store[setting.group.value] = action.value
+    override fun select(settingLegacy: SettingLegacy) {
+        val action = settingLegacy.action ?: return
+        store[settingLegacy.group.value] = action.value
     }
 
-    override fun isSelected(setting: Setting): Boolean {
-        val action = setting.action ?: return false
-        return action.value == store.get<String>(setting.group.value)
+    override fun isSelected(settingLegacy: SettingLegacy): Boolean {
+        val action = settingLegacy.action ?: return false
+        return action.value == store.get<String>(settingLegacy.group.value)
     }
 
-    private fun isInitialized(group: Setting.Group): Boolean =
+    private fun isInitialized(group: SettingLegacy.Group): Boolean =
         null != store.get<String>(group.value)
 }

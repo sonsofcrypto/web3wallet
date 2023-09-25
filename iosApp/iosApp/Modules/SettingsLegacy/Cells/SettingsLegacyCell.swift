@@ -5,12 +5,12 @@
 import UIKit
 import web3walletcore
 
-final class SettingsCell: CollectionViewCell {
+final class SettingsLegacyCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var rightImageView: UIImageView!
     
-    private var viewModel: SettingsViewModel.SectionItem!
+    private var viewModel: SettingsLegacyViewModel.SectionItem!
 
     override func awakeFromNib() {
         
@@ -45,12 +45,12 @@ final class SettingsCell: CollectionViewCell {
     }
 }
 
-extension SettingsCell {
+extension SettingsLegacyCell {
     
     func update(
-        with viewModel: SettingsViewModel.SectionItem,
+        with viewModel: SettingsLegacyViewModel.SectionItem,
         showSeparator: Bool = true
-    ) -> SettingsCell {
+    ) -> SettingsLegacyCell {
         
         self.viewModel = viewModel
         

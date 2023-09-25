@@ -1,6 +1,6 @@
-package com.sonsofcrypto.web3walletcore.modules.settings
+package com.sonsofcrypto.web3walletcore.modules.settingsLegacy
 
-data class SettingsViewModel(
+data class SettingsLegacyViewModel(
     val title: String,
     val sections: List<Section>,
 ) {

@@ -5,18 +5,18 @@
 import UIKit
 import web3walletcore
 
-final class DefaultSettingsWireframe {
+final class DefaultSettingsLegacyWireframe {
     private weak var parent: UIViewController?
-    private let context: SettingsWireframeContext
-    private let settingsService: SettingsService
+    private let context: SettingsLegacyWireframeContext
+    private let settingsService: SettingsLegacyService
     private let settingsServiceActionTrigger: SettingsServiceActionTrigger
     
     private weak var vc: UIViewController?
 
     init(
         _ parent: UIViewController?,
-        context: SettingsWireframeContext,
-        settingsService: SettingsService,
+        context: SettingsLegacyWireframeContext,
+        settingsService: SettingsLegacyService,
         settingsServiceActionTrigger: SettingsServiceActionTrigger
     ) {
         self.parent = parent
@@ -26,7 +26,7 @@ final class DefaultSettingsWireframe {
     }
 }
 
-extension DefaultSettingsWireframe {
+extension DefaultSettingsLegacyWireframe {
 
     func present() {
         let vc = wireUp(with: context)
@@ -40,19 +40,19 @@ extension DefaultSettingsWireframe {
         }
     }
 
-    func navigate(to destination: SettingsWireframeDestination) {
-        if let input = destination as? SettingsWireframeDestination.Settings {
+    func navigate(to destination: SettingsLegacyWireframeDestination) {
+        if let input = destination as? SettingsLegacyWireframeDestination.SettingsLegacy {
             pushSettingsVC(with: input.context)
         }
-        if destination is SettingsWireframeDestination.Dismiss {
+        if destination is SettingsLegacyWireframeDestination.Dismiss {
             vc?.popOrDismiss()
         }
     }
 }
 
-private extension DefaultSettingsWireframe {
+private extension DefaultSettingsLegacyWireframe {
     
-    func pushSettingsVC(with context: SettingsWireframeContext) {
+    func pushSettingsVC(with context: SettingsLegacyWireframeContext) {
         let vc = wireUp(with: context)
         self.vc?.show(vc, sender: self)
     }
@@ -71,13 +71,13 @@ private extension DefaultSettingsWireframe {
         return navigationController
     }
 
-    func wireUp(with context: SettingsWireframeContext) -> UIViewController {
-        let interactor = DefaultSettingsInteractor(
-            settingsService: settingsService,
+    func wireUp(with context: SettingsLegacyWireframeContext) -> UIViewController {
+        let interactor = DefaultSettingsLegacyInteractor(
+            settingsLegacyService: settingsService,
             settingsServiceActionTrigger: settingsServiceActionTrigger
         )
-        let vc: SettingsViewController = UIStoryboard(.settings).instantiate()
-        let presenter = DefaultSettingsPresenter(
+        let vc: SettingsLegacyViewController = UIStoryboard(.settingsLegacy).instantiate()
+        let presenter = DefaultSettingsLegacyPresenter(
             view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor,

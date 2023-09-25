@@ -71,7 +71,7 @@ extension DefaultRootWireframe: RootWireframe {
         nftsDashboardWireframeFactory.make(tabVc).present()
         settingsWireframeFactory.make(
             tabVc,
-            context: SettingsWireframeContext.companion.create(setting: nil)
+            context: SettingsLegacyWireframeContext.companion.create(settingLegacy: nil)
         ).present()
         window?.rootViewController = vc
         window?.makeKeyAndVisible()

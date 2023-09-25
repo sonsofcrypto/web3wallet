@@ -1,19 +1,19 @@
-package com.sonsofcrypto.web3walletcore.modules.settings
+package com.sonsofcrypto.web3walletcore.modules.settingsLegacy
 
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.services.settings.Setting
+import com.sonsofcrypto.web3walletcore.services.settings.SettingLegacy
 
-sealed class SettingsWireframeDestination {
-    object Dismiss: SettingsWireframeDestination()
-    data class Settings(val context: SettingsWireframeContext): SettingsWireframeDestination()
+sealed class SettingsLegacyWireframeDestination {
+    object Dismiss: SettingsLegacyWireframeDestination()
+    data class SettingsLegacy(val context: SettingsLegacyWireframeContext): SettingsLegacyWireframeDestination()
 }
 
-interface SettingsWireframe {
+interface SettingsLegacyWireframe {
     fun present()
-    fun navigate(destination: SettingsWireframeDestination)
+    fun navigate(destination: SettingsLegacyWireframeDestination)
 }
 
-data class SettingsWireframeContext(
+data class SettingsLegacyWireframeContext(
     val title: String,
     val groups: List<Group>,
 ) {
@@ -24,7 +24,7 @@ data class SettingsWireframeContext(
     ) {
         data class Item(
             val name: String,
-            val setting: Setting,
+            val settingLegacy: SettingLegacy,
         )
         data class Footer(
             val text: String,
@@ -35,23 +35,23 @@ data class SettingsWireframeContext(
     }
 
     companion object Factory {
-        fun create(setting: Setting?): SettingsWireframeContext = when (setting?.group) {
-            Setting.Group.THEME -> themeContext
-            Setting.Group.IMPROVEMENT -> emptyContext
-            Setting.Group.DEVELOPER -> developerContext
-            Setting.Group.DEVELOPER_APIS -> developerAPIsContext
-            Setting.Group.DEVELOPER_APIS_NFTS -> developerAPIsNFTsContext
-            Setting.Group.DEVELOPER_TRANSITIONS -> developerTransitionsContext
-            Setting.Group.ABOUT -> aboutContext
-            Setting.Group.FEEDBACK -> emptyContext
+        fun create(settingLegacy: SettingLegacy?): SettingsLegacyWireframeContext = when (settingLegacy?.group) {
+            SettingLegacy.Group.THEME -> themeContext
+            SettingLegacy.Group.IMPROVEMENT -> emptyContext
+            SettingLegacy.Group.DEVELOPER -> developerContext
+            SettingLegacy.Group.DEVELOPER_APIS -> developerAPIsContext
+            SettingLegacy.Group.DEVELOPER_APIS_NFTS -> developerAPIsNFTsContext
+            SettingLegacy.Group.DEVELOPER_TRANSITIONS -> developerTransitionsContext
+            SettingLegacy.Group.ABOUT -> aboutContext
+            SettingLegacy.Group.FEEDBACK -> emptyContext
             null -> rootContext
         }
 
-        private val emptyContext: SettingsWireframeContext get() = SettingsWireframeContext(
+        private val emptyContext: SettingsLegacyWireframeContext get() = SettingsLegacyWireframeContext(
             "", emptyList()
         )
 
-        private val rootContext: SettingsWireframeContext get() = SettingsWireframeContext(
+        private val rootContext: SettingsLegacyWireframeContext get() = SettingsLegacyWireframeContext(
             Localized("settings"),
             listOf(
                 Group(
@@ -59,15 +59,15 @@ data class SettingsWireframeContext(
                     listOf(
                         Group.Item(
                             Localized("settings.themes"),
-                            Setting(Setting.Group.THEME, null)
+                            SettingLegacy(SettingLegacy.Group.THEME, null)
                         ),
                         Group.Item(
                             Localized("settings.improvement"),
-                            Setting(Setting.Group.IMPROVEMENT, Setting.Action.IMPROVEMENT_PROPOSALS)
+                            SettingLegacy(SettingLegacy.Group.IMPROVEMENT, SettingLegacy.Action.IMPROVEMENT_PROPOSALS)
                         ),
                         Group.Item(
                             Localized("settings.developer"),
-                            Setting(Setting.Group.DEVELOPER, null)
+                            SettingLegacy(SettingLegacy.Group.DEVELOPER, null)
                         ),
                     ),
                     null,
@@ -77,7 +77,7 @@ data class SettingsWireframeContext(
                     listOf(
                         Group.Item(
                             Localized("settings.about"),
-                            Setting(Setting.Group.ABOUT, null)
+                            SettingLegacy(SettingLegacy.Group.ABOUT, null)
                         ),
                     ),
                     null,
@@ -87,7 +87,7 @@ data class SettingsWireframeContext(
                     listOf(
                         Group.Item(
                             Localized("settings.feedback"),
-                            Setting(Setting.Group.FEEDBACK, Setting.Action.FEEDBACK_REPORT)
+                            SettingLegacy(SettingLegacy.Group.FEEDBACK, SettingLegacy.Action.FEEDBACK_REPORT)
                         ),
                     ),
                     null,
@@ -95,7 +95,7 @@ data class SettingsWireframeContext(
             ),
         )
 
-        private val themeContext: SettingsWireframeContext get() = SettingsWireframeContext(
+        private val themeContext: SettingsLegacyWireframeContext get() = SettingsLegacyWireframeContext(
             Localized("settings.themes"),
             listOf(
                 Group(
@@ -103,19 +103,19 @@ data class SettingsWireframeContext(
                     listOf(
                         Group.Item(
                             Localized("settings.themes.miami.light"),
-                            Setting(Setting.Group.THEME, Setting.Action.THEME_MIAMI_LIGHT)
+                            SettingLegacy(SettingLegacy.Group.THEME, SettingLegacy.Action.THEME_MIAMI_LIGHT)
                         ),
                         Group.Item(
                             Localized("settings.themes.miami.dark"),
-                            Setting(Setting.Group.THEME, Setting.Action.THEME_MIAMI_DARK)
+                            SettingLegacy(SettingLegacy.Group.THEME, SettingLegacy.Action.THEME_MIAMI_DARK)
                         ),
                         Group.Item(
                             Localized("settings.themes.ios.light"),
-                            Setting(Setting.Group.THEME, Setting.Action.THEME_IOS_LIGHT)
+                            SettingLegacy(SettingLegacy.Group.THEME, SettingLegacy.Action.THEME_IOS_LIGHT)
                         ),
                         Group.Item(
                             Localized("settings.themes.ios.dark"),
-                            Setting(Setting.Group.THEME, Setting.Action.THEME_IOS_DARK)
+                            SettingLegacy(SettingLegacy.Group.THEME, SettingLegacy.Action.THEME_IOS_DARK)
                         ),
                     ),
                     null,
@@ -123,7 +123,7 @@ data class SettingsWireframeContext(
             ),
         )
 
-        private val developerContext: SettingsWireframeContext get() = SettingsWireframeContext(
+        private val developerContext: SettingsLegacyWireframeContext get() = SettingsLegacyWireframeContext(
             Localized("settings.developer"),
             listOf(
                 Group(
@@ -131,17 +131,17 @@ data class SettingsWireframeContext(
                     listOf(
                         Group.Item(
                             Localized("settings.developer.apis"),
-                            Setting(Setting.Group.DEVELOPER_APIS, null)
+                            SettingLegacy(SettingLegacy.Group.DEVELOPER_APIS, null)
                         ),
                         Group.Item(
                             Localized("settings.developer.transitions"),
-                            Setting(Setting.Group.DEVELOPER_TRANSITIONS, null)
+                            SettingLegacy(SettingLegacy.Group.DEVELOPER_TRANSITIONS, null)
                         ),
                         Group.Item(
                             Localized("settings.developer.resetKeyStore"),
-                            Setting(
-                                Setting.Group.DEVELOPER,
-                                Setting.Action.DEVELOPER_RESET_KEYSTORE
+                            SettingLegacy(
+                                SettingLegacy.Group.DEVELOPER,
+                                SettingLegacy.Action.DEVELOPER_RESET_KEYSTORE
                             )
                         ),
                     ),
@@ -150,7 +150,7 @@ data class SettingsWireframeContext(
             ),
         )
 
-        private val developerAPIsContext: SettingsWireframeContext get() = SettingsWireframeContext(
+        private val developerAPIsContext: SettingsLegacyWireframeContext get() = SettingsLegacyWireframeContext(
             Localized("settings.developer.apis"),
             listOf(
                 Group(
@@ -158,7 +158,7 @@ data class SettingsWireframeContext(
                     listOf(
                         Group.Item(
                             Localized("settings.developer.apis.nfts"),
-                            Setting(Setting.Group.DEVELOPER_APIS_NFTS, null)
+                            SettingLegacy(SettingLegacy.Group.DEVELOPER_APIS_NFTS, null)
                         ),
                     ),
                     null,
@@ -166,7 +166,7 @@ data class SettingsWireframeContext(
             ),
         )
 
-        private val developerAPIsNFTsContext: SettingsWireframeContext get() = SettingsWireframeContext(
+        private val developerAPIsNFTsContext: SettingsLegacyWireframeContext get() = SettingsLegacyWireframeContext(
             Localized("settings.developer.apis.nfts"),
             listOf(
                 Group(
@@ -174,9 +174,9 @@ data class SettingsWireframeContext(
                     listOf(
                         Group.Item(
                             Localized("settings.developer.apis.nfts.openSea"),
-                            Setting(
-                                Setting.Group.DEVELOPER_APIS_NFTS,
-                                Setting.Action.DEVELOPER_APIS_NFTS_OPEN_SEA
+                            SettingLegacy(
+                                SettingLegacy.Group.DEVELOPER_APIS_NFTS,
+                                SettingLegacy.Action.DEVELOPER_APIS_NFTS_OPEN_SEA
                             )
                         ),
                     ),
@@ -185,7 +185,7 @@ data class SettingsWireframeContext(
             ),
         )
 
-        private val developerTransitionsContext: SettingsWireframeContext get() = SettingsWireframeContext(
+        private val developerTransitionsContext: SettingsLegacyWireframeContext get() = SettingsLegacyWireframeContext(
             Localized("settings.developer.transitions"),
             listOf(
                 Group(
@@ -193,16 +193,16 @@ data class SettingsWireframeContext(
                     listOf(
                         Group.Item(
                             Localized("settings.developer.transitions.cardFlip"),
-                            Setting(
-                                Setting.Group.DEVELOPER_TRANSITIONS,
-                                Setting.Action.DEVELOPER_TRANSITIONS_CARD_FLIP
+                            SettingLegacy(
+                                SettingLegacy.Group.DEVELOPER_TRANSITIONS,
+                                SettingLegacy.Action.DEVELOPER_TRANSITIONS_CARD_FLIP
                             )
                         ),
                         Group.Item(
                             Localized("settings.developer.transitions.sheet"),
-                            Setting(
-                                Setting.Group.DEVELOPER_TRANSITIONS,
-                                Setting.Action.DEVELOPER_TRANSITIONS_SHEET
+                            SettingLegacy(
+                                SettingLegacy.Group.DEVELOPER_TRANSITIONS,
+                                SettingLegacy.Action.DEVELOPER_TRANSITIONS_SHEET
                             )
                         ),
                     ),
@@ -211,7 +211,7 @@ data class SettingsWireframeContext(
             ),
         )
 
-        private val aboutContext: SettingsWireframeContext get() = SettingsWireframeContext(
+        private val aboutContext: SettingsLegacyWireframeContext get() = SettingsLegacyWireframeContext(
             Localized("settings.about"),
             listOf(
                 Group(
@@ -219,27 +219,27 @@ data class SettingsWireframeContext(
                     listOf(
                         Group.Item(
                             Localized("settings.about.socials.website"),
-                            Setting(Setting.Group.ABOUT, Setting.Action.ABOUT_WEBSITE),
+                            SettingLegacy(SettingLegacy.Group.ABOUT, SettingLegacy.Action.ABOUT_WEBSITE),
                         ),
                         Group.Item(
                             Localized("settings.about.socials.github"),
-                            Setting(Setting.Group.ABOUT, Setting.Action.ABOUT_GIT_HUB),
+                            SettingLegacy(SettingLegacy.Group.ABOUT, SettingLegacy.Action.ABOUT_GIT_HUB),
                         ),
                         Group.Item(
                             Localized("settings.about.socials.twitter"),
-                            Setting(Setting.Group.ABOUT, Setting.Action.ABOUT_TWITTER),
+                            SettingLegacy(SettingLegacy.Group.ABOUT, SettingLegacy.Action.ABOUT_TWITTER),
                         ),
                         Group.Item(
                             Localized("settings.about.socials.telegram"),
-                            Setting(Setting.Group.ABOUT, Setting.Action.ABOUT_TELEGRAM),
+                            SettingLegacy(SettingLegacy.Group.ABOUT, SettingLegacy.Action.ABOUT_TELEGRAM),
                         ),
                         Group.Item(
                             Localized("settings.about.socials.discord"),
-                            Setting(Setting.Group.ABOUT, Setting.Action.ABOUT_DISCORD),
+                            SettingLegacy(SettingLegacy.Group.ABOUT, SettingLegacy.Action.ABOUT_DISCORD),
                         ),
                         Group.Item(
                             Localized("settings.about.socials.medium"),
-                            Setting(Setting.Group.ABOUT, Setting.Action.ABOUT_MEDIUM),
+                            SettingLegacy(SettingLegacy.Group.ABOUT, SettingLegacy.Action.ABOUT_MEDIUM),
                         ),
                     ),
                     null,
@@ -249,7 +249,7 @@ data class SettingsWireframeContext(
                     listOf(
                         Group.Item(
                             Localized("settings.about.contactUs.mail"),
-                            Setting(Setting.Group.ABOUT, Setting.Action.ABOUT_MAIL)
+                            SettingLegacy(SettingLegacy.Group.ABOUT, SettingLegacy.Action.ABOUT_MAIL)
                         ),
                     ),
                     Group.Footer(

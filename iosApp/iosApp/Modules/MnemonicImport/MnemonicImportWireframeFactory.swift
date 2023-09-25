@@ -17,13 +17,13 @@ final class DefaultMnemonicImportWireframeFactory {
     private let keyStoreService: KeyStoreService
     private let mnemonicService: MnemonicService
     private let passwordService: PasswordService
-    private let settingsService: SettingsService
+    private let settingsService: SettingsLegacyService
 
     init(
         keyStoreService: KeyStoreService,
         mnemonicService: MnemonicService,
         passwordService: PasswordService,
-        settingsService: SettingsService
+        settingsService: SettingsLegacyService
     ) {
         self.keyStoreService = keyStoreService
         self.mnemonicService = mnemonicService

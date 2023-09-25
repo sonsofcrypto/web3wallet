@@ -189,19 +189,19 @@ private extension DefaultDeepLinkHandler {
         return navigationController
     }
     
-    var settingsVC: SettingsViewController? {
+    var settingsVC: SettingsLegacyViewController? {
         guard let navigationController = tabBarController?.children.first(
             where: {
                 guard let navigationController = $0 as? NavigationController else {
                     return false
                 }
-                guard navigationController.topViewController is SettingsViewController else {
+                guard navigationController.topViewController is SettingsLegacyViewController else {
                     return false
                 }
                 return true
             }
         ) as? NavigationController else { return nil }
-        return navigationController.topViewController as? SettingsViewController
+        return navigationController.topViewController as? SettingsLegacyViewController
     }
 }
 

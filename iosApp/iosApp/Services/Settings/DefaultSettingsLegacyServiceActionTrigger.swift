@@ -5,7 +5,7 @@
 import Foundation
 import web3walletcore
 
-final class DefaultSettingsServiceActionTrigger {
+final class DefaultSettingsLegacyServiceActionTrigger {
     let keyStoreService: KeyStoreService
 
     init(keyStoreService: KeyStoreService) {
@@ -13,9 +13,10 @@ final class DefaultSettingsServiceActionTrigger {
     }
 }
 
-extension DefaultSettingsServiceActionTrigger: SettingsServiceActionTrigger {
+
+extension DefaultSettingsLegacyServiceActionTrigger: SettingsServiceActionTrigger {
     
-    func trigger(action: Setting.Action) {
+    func trigger(action: SettingLegacy.Action) {
         switch action {
         case .themeMiamiLight:
             AppDelegate.setUserInterfaceStyle(.light)
@@ -74,7 +75,7 @@ extension DefaultSettingsServiceActionTrigger: SettingsServiceActionTrigger {
     }
 }
 
-private extension DefaultSettingsServiceActionTrigger {
+private extension DefaultSettingsLegacyServiceActionTrigger {
     
     func resetKeystoreAlertContext() -> AlertWireframeContext {
         AlertWireframeContext(

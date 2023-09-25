@@ -4,12 +4,12 @@
 
 import web3walletcore
 
-final class SettingsServiceActionTriggerAssembler: AssemblerComponent {
+final class SettingsLegacyServiceLegacyActionTriggerAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
         
         registry.register(scope: .singleton) { resolver -> SettingsServiceActionTrigger in
-            DefaultSettingsServiceActionTrigger(
+            DefaultSettingsLegacyServiceActionTrigger(
                 keyStoreService: resolver.resolve()
             )
         }
