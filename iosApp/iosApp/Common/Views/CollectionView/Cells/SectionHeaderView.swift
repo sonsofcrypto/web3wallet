@@ -7,7 +7,6 @@ import web3walletcore
 
 class SectionHeaderView: UICollectionReusableView {
     @IBOutlet weak var label: UILabel!
-    @IBOutlet var edgeConstraints: [NSLayoutConstraint]!
     
     override func awakeFromNib() {
         super.awakeFromNib()

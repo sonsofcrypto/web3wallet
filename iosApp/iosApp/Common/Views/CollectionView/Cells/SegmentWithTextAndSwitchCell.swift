@@ -6,7 +6,6 @@ import UIKit
 import web3walletcore
 
 final class SegmentWithTextAndSwitchCell: CollectionViewCell {
-
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var segmentControl: SegmentedControl!
     @IBOutlet weak var textField: TextField!
@@ -23,9 +22,7 @@ final class SegmentWithTextAndSwitchCell: CollectionViewCell {
     private var switchAction: ((Bool)->Void)?
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         configureUI()
     }
 }
@@ -37,7 +34,6 @@ extension SegmentWithTextAndSwitchCell {
     }
 
     @objc func segmentAction(_ sender: UISegmentedControl) {
-        
         UIView.animate(withDuration: 0.15) { [weak self] in
             guard let self = self else { return }
             self.group1.alpha = sender.selectedSegmentIndex == 2 ? 0 : 1

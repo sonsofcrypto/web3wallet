@@ -4,7 +4,7 @@
 
 import UIKit
 
-class BackgroundView: UIView {
+class CollectionBackgroundView: UIView {
     var topInset = CGFloat(0) {
         didSet { oldValue != topInset ? setNeedsLayout() : () }
     }
