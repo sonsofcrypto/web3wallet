@@ -1,6 +1,6 @@
-//
-// Created by anon on 13/09/2023.
-//
+// Created by web3d3v on 12/02/2022.
+// Copyright (c) 2022 Sons Of Crypto.
+// SPDX-License-Identifier: MIT
 
 import UIKit
 
@@ -9,7 +9,7 @@ protocol Progressable {
 }
 
 class CollectionView: UICollectionView {
-
+    
     /// View at the end of visible content
     var overscrollView: UIView? {
         didSet { didSetNewOverscrollView(overscrollView, old: oldValue)}
@@ -35,12 +35,12 @@ class CollectionView: UICollectionView {
         collectionViewLayout layout: UICollectionViewLayout
     ) {
         super.init(frame: frame, collectionViewLayout: layout)
-        backgroundView = BackgroundView()
+        backgroundView = CollectionBackgroundView()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        backgroundView = BackgroundView()
+        backgroundView = CollectionBackgroundView()
     }
 
     override func layoutSubviews() {
@@ -79,11 +79,9 @@ class CollectionView: UICollectionView {
         // Content size large enough to scroll
         if contentSize.height + adjInset.top + adjInset.bottom > bounds.height {
             y = contentSize.height + adjInset.bottom - btmOffsetAdj
-//            view.backgroundColor = .green.withAlpha(0.5)
-            // Content does not fill entire view case (not scrolling)
+        // Content does not fill entire view case (not scrolling)
         } else {
             y = bounds.maxY - contentOffset.y - adjInset.top - btmOffsetAdj
-//            view.backgroundColor = .red.withAlpha(0.5)
         }
 
         y = aboveLine ? y - view.bounds.height : y
@@ -146,5 +144,31 @@ class CollectionView: UICollectionView {
         if let view = topscrollView, subviews[safe: baseIdx] != view {
             insertSubview(view, at: baseIdx)
         }
+    }
+}
+
+// MARK: - TableFlowLayout
+
+extension CollectionView {
+    
+    /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
+    var separatorInsets: UIEdgeInsets = .init(top: 0, left: 16, bottom: 0, right: 0) {
+        didSet { tableLayout()?.separatorInsets = separatorInsets }
+    }
+    /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
+    var separatorColor: UIColor = .secondarySystemBackground {
+        didSet { tableLayout()?.separatorColor = separatorColor }
+    }
+    /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
+    var sectionBackgroundColor: UIColor = .systemBackground {
+        didSet { tableLayout()?.sectionBackgroundColor = sectionBackgroundColor }
+    }
+    /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
+    var sectionBorderColor: UIColor = .secondarySystemBackground {
+        didSet { tableLayout()?.sectionBackgroundBorderColor = sectionBorderColor }
+    }
+    
+    private func tableLayout() -> TableFlowLayout? {
+        collectionViewLayout as? TableFlowLayout
     }
 }
