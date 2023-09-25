@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cnO-ev-hje">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cnO-ev-hje">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -12,7 +15,7 @@
             <objects>
                 <navigationController id="cnO-ev-hje" customClass="NavigationController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aZg-iz-PJC">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="50" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <navigationBarAppearance key="scrollEdgeAppearance">
                             <color key="backgroundColor" red="0.12941176470588234" green="0.11764705882352941" blue="0.23921568627450979" alpha="0.75061118197278898" colorSpace="custom" customColorSpace="sRGB"/>
@@ -36,7 +39,85 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ci-vz-aXn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-358" y="888"/>
+            <point key="canvasLocation" x="1049" y="123"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="Ujb-W2-v0C">
+            <objects>
+                <collectionViewController storyboardIdentifier="SettingsViewController" id="vqT-qr-qtk" customClass="SettingsViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="faV-cI-Thj" customClass="CollectionView" customModule="iosApp" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="0.0" id="YOK-y3-FpQ" customClass="TableGroupedFlowLayout" customModule="iosApp" customModuleProvider="target">
+                            <size key="itemSize" width="335" height="46"/>
+                            <size key="headerReferenceSize" width="50" height="46"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LabelCell" id="WkZ-w5-5Fz" customClass="LabelCell" customModule="iosApp" customModuleProvider="target">
+                                <rect key="frame" x="16" y="46" width="343" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="LgJ-Iv-gNJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="46"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="il1-1w-cvh">
+                                            <rect key="frame" x="16" y="0.0" width="319" height="46"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3WU-9t-b9E">
+                                                    <rect key="frame" x="0.0" y="0.0" width="319" height="46"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="il1-1w-cvh" firstAttribute="top" secondItem="LgJ-Iv-gNJ" secondAttribute="top" id="5I8-1f-zI8"/>
+                                        <constraint firstAttribute="bottom" secondItem="il1-1w-cvh" secondAttribute="bottom" id="bJb-kW-azR"/>
+                                        <constraint firstAttribute="trailing" secondItem="il1-1w-cvh" secondAttribute="trailing" constant="8" id="dZ7-dl-hLd"/>
+                                        <constraint firstItem="il1-1w-cvh" firstAttribute="leading" secondItem="LgJ-Iv-gNJ" secondAttribute="leading" constant="16" id="dxf-bk-bVM"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="343" height="46"/>
+                                <connections>
+                                    <outlet property="label" destination="3WU-9t-b9E" id="i2l-XH-f5Y"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SectionHeaderView" id="dqz-Hj-WAi" customClass="SectionHeaderView" customModule="iosApp" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iBs-tq-xEX">
+                                    <rect key="frame" x="40" y="23.666666666666671" width="41.333333333333343" height="20.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="iBs-tq-xEX" firstAttribute="bottom" secondItem="dqz-Hj-WAi" secondAttribute="bottomMargin" constant="6" id="9XM-Va-vWi"/>
+                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="iBs-tq-xEX" secondAttribute="trailing" id="DVH-SG-bxX"/>
+                                <constraint firstItem="iBs-tq-xEX" firstAttribute="leading" secondItem="dqz-Hj-WAi" secondAttribute="leadingMargin" constant="32" id="oeV-vl-xT3"/>
+                                <constraint firstItem="iBs-tq-xEX" firstAttribute="top" relation="greaterThanOrEqual" secondItem="dqz-Hj-WAi" secondAttribute="topMargin" id="sSM-Gb-d35"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="label" destination="iBs-tq-xEX" id="lJj-hE-EjA"/>
+                            </connections>
+                        </collectionReusableView>
+                        <connections>
+                            <outlet property="dataSource" destination="vqT-qr-qtk" id="NvQ-DU-9A5"/>
+                            <outlet property="delegate" destination="vqT-qr-qtk" id="GUh-0w-ipm"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LTZ-4H-416" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1770" y="123"/>
         </scene>
     </scenes>
     <color key="tintColor" name="tintPrimary"/>
@@ -44,5 +125,8 @@
         <namedColor name="tintPrimary">
             <color red="0.90600001811981201" green="0.21600000560283661" blue="0.58399999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

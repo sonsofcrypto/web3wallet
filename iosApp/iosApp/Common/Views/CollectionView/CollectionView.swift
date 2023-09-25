@@ -8,28 +8,43 @@ protocol Progressable {
     func setProgress(_ progress: CGFloat)
 }
 
+@IBDesignable
 class CollectionView: UICollectionView {
-    
     /// View at the end of visible content
     var overscrollView: UIView? {
         didSet { didSetNewOverscrollView(overscrollView, old: oldValue)}
     }
-
     /// `overscrollView` top is at the end of the scroll area. `abovescrollView`
     /// bottom is at the end of scroll area. It is recommended to set
     /// `contentInset.bottom` to height of the `abovescrollView`
     var abovescrollView: UIView? {
         didSet { didSetNewOverscrollView(abovescrollView, old: oldValue)}
     }
-
     /// View in on the top of content
     var topscrollView: UIView? {
         didSet { didSetNewOverscrollView(topscrollView, old: oldValue) }
     }
-
+    /// When oversrolling `topscrollView` & `overscrollView` pinned to top.
     var pinTopScrollToTop: Bool = false
+    /// When oversrolling `abovescrollView` & `overscrollView` pinned to bottom.
     var pinOverscrollToBottom: Bool = false
-
+    /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
+    var separatorInsets: UIEdgeInsets = .init(top: 0, left: 16, bottom: 0, right: 0) {
+        didSet { tableLayout()?.separatorInsets = separatorInsets }
+    }
+    /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
+    var separatorColor: UIColor = .secondarySystemBackground {
+        didSet { tableLayout()?.separatorColor = separatorColor }
+    }
+    /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
+    var sectionBackgroundColor: UIColor = .systemBackground {
+        didSet { tableLayout()?.sectionBackgroundColor = sectionBackgroundColor }
+    }
+    /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
+    var sectionBorderColor: UIColor = .secondarySystemBackground {
+        didSet { tableLayout()?.sectionBackgroundBorderColor = sectionBorderColor }
+    }
+    
     override init(
         frame: CGRect,
         collectionViewLayout layout: UICollectionViewLayout
@@ -145,30 +160,13 @@ class CollectionView: UICollectionView {
             insertSubview(view, at: baseIdx)
         }
     }
-}
-
-// MARK: - TableFlowLayout
-
-extension CollectionView {
-    
-    /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
-    var separatorInsets: UIEdgeInsets = .init(top: 0, left: 16, bottom: 0, right: 0) {
-        didSet { tableLayout()?.separatorInsets = separatorInsets }
-    }
-    /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
-    var separatorColor: UIColor = .secondarySystemBackground {
-        didSet { tableLayout()?.separatorColor = separatorColor }
-    }
-    /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
-    var sectionBackgroundColor: UIColor = .systemBackground {
-        didSet { tableLayout()?.sectionBackgroundColor = sectionBackgroundColor }
-    }
-    /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
-    var sectionBorderColor: UIColor = .secondarySystemBackground {
-        didSet { tableLayout()?.sectionBackgroundBorderColor = sectionBorderColor }
-    }
     
     private func tableLayout() -> TableFlowLayout? {
         collectionViewLayout as? TableFlowLayout
+    }
+
+    override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        setNeedsLayout()
     }
 }

@@ -29,6 +29,7 @@ private extension AssemblerBootstrapper {
         [
             // Services
             SettingsLegacyServiceAssembler(), // needs to be the first one to initialise
+            SettingsServiceAssembler(),
             SettingsLegacyServiceLegacyActionTriggerAssembler(),
             PollServiceAssembler(),
             KeyStoreKeyValStoreServiceAssembler(),
@@ -71,6 +72,7 @@ private extension AssemblerBootstrapper {
             NFTDetailWireframeFactoryAssembler(),
             NFTSendWireframeFactoryAssembler(),
             RootWireframeFactoryAssembler(),
+            SettingsLegacyWireframeFactoryAssembler(),
             SettingsWireframeFactoryAssembler(),
             CultProposalsWireframeFactoryAssembler(),
             CultProposalWireframeFactoryAssembler(),

@@ -5,18 +5,18 @@
 import UIKit
 import web3walletcore
 
-// MARK: - SettingsWireframeFactory
+// MARK: - SettingsLegacyWireframeFactory
 
-protocol SettingsWireframeFactory {
+protocol SettingsLegacyWireframeFactory {
     func make(
         _ parent: UIViewController?,
         context: SettingsLegacyWireframeContext
     ) -> SettingsLegacyWireframe
 }
 
-// MARK: - DefaultSettingsWireframeFactory
+// MARK: - DefaultSettingsLegacyWireframeFactory
 
-final class DefaultSettingsWireframeFactory {
+final class DefaultSettingsLegacyWireframeFactory {
     private let settingsService: SettingsLegacyService
     private let settingsServiceActionTrigger: SettingsServiceActionTrigger
 
@@ -29,7 +29,7 @@ final class DefaultSettingsWireframeFactory {
     }
 }
 
-extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
+extension DefaultSettingsLegacyWireframeFactory: SettingsLegacyWireframeFactory {
 
     func make(
         _ parent: UIViewController?,
@@ -46,11 +46,11 @@ extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
 
 // MARK: - Assembler
 
-final class SettingsWireframeFactoryAssembler: AssemblerComponent {
+final class SettingsLegacyWireframeFactoryAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> SettingsWireframeFactory in
-            DefaultSettingsWireframeFactory(
+        registry.register(scope: .instance) { resolver -> SettingsLegacyWireframeFactory in
+            DefaultSettingsLegacyWireframeFactory(
                 settingsService: resolver.resolve(),
                 settingsServiceActionTrigger: resolver.resolve()
             )
