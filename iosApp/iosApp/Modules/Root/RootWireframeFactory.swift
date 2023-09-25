@@ -19,6 +19,7 @@ final class DefaultRootWireframeFactory {
     private let dashboardWireframeFactory: DashboardWireframeFactory
     private let degenWireframeFactory: DegenWireframeFactory
     private let nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory
+    private let settingsLegacyWireframeFactory: SettingsLegacyWireframeFactory
     private let settingsWireframeFactory: SettingsWireframeFactory
     private let keyStoreService: KeyStoreService
 
@@ -28,6 +29,7 @@ final class DefaultRootWireframeFactory {
         dashboardWireframeFactory: DashboardWireframeFactory,
         degenWireframeFactory: DegenWireframeFactory,
         nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
+        settingsLegacyWireframeFactory: SettingsLegacyWireframeFactory,
         settingsWireframeFactory: SettingsWireframeFactory,
         keyStoreService: KeyStoreService
     ) {
@@ -36,6 +38,7 @@ final class DefaultRootWireframeFactory {
         self.dashboardWireframeFactory = dashboardWireframeFactory
         self.degenWireframeFactory = degenWireframeFactory
         self.nftsDashboardWireframeFactory = nftsDashboardWireframeFactory
+        self.settingsLegacyWireframeFactory = settingsLegacyWireframeFactory
         self.settingsWireframeFactory = settingsWireframeFactory
         self.keyStoreService = keyStoreService
     }
@@ -53,6 +56,7 @@ extension DefaultRootWireframeFactory: RootWireframeFactory {
             dashboardWireframeFactory: dashboardWireframeFactory,
             degenWireframeFactory: degenWireframeFactory,
             nftsDashboardWireframeFactory: nftsDashboardWireframeFactory,
+            settingsLegacyWireframeFactory: settingsLegacyWireframeFactory,
             settingsWireframeFactory: settingsWireframeFactory,
             keyStoreService: keyStoreService
         )
@@ -71,6 +75,7 @@ final class RootWireframeFactoryAssembler: AssemblerComponent {
                 dashboardWireframeFactory: resolver.resolve(),
                 degenWireframeFactory: resolver.resolve(),
                 nftsDashboardWireframeFactory: resolver.resolve(),
+                settingsLegacyWireframeFactory: resolver.resolve(),
                 settingsWireframeFactory: resolver.resolve(),
                 keyStoreService: resolver.resolve()
             )
