@@ -10,18 +10,18 @@ import web3walletcore
 protocol SettingsWireframeFactory {
     func make(
         _ parent: UIViewController?,
-        context: SettingsWireframeContext
-    ) -> SettingsWireframe
+        context: SettingsLegacyWireframeContext
+    ) -> SettingsLegacyWireframe
 }
 
 // MARK: - DefaultSettingsWireframeFactory
 
 final class DefaultSettingsWireframeFactory {
-    private let settingsService: SettingsService
+    private let settingsService: SettingsLegacyService
     private let settingsServiceActionTrigger: SettingsServiceActionTrigger
 
     init(
-        settingsService: SettingsService,
+        settingsService: SettingsLegacyService,
         settingsServiceActionTrigger: SettingsServiceActionTrigger
     ) {
         self.settingsService = settingsService
@@ -33,9 +33,9 @@ extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
 
     func make(
         _ parent: UIViewController?,
-        context: SettingsWireframeContext
-    ) -> SettingsWireframe {
-        DefaultSettingsWireframe(
+        context: SettingsLegacyWireframeContext
+    ) -> SettingsLegacyWireframe {
+        DefaultSettingsLegacyWireframe(
             parent,
             context: context,
             settingsService: settingsService,

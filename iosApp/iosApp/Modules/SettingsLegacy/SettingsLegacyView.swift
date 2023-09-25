@@ -5,13 +5,13 @@
 import UIKit
 import web3walletcore
 
-final class SettingsViewController: BaseViewController {
+final class SettingsLegacyViewController: BaseViewController {
 
-    var presenter: SettingsPresenter!
+    var presenter: SettingsLegacyPresenter!
 
     @IBOutlet weak var collectionView: CollectionView!
 
-    private var viewModel: SettingsViewModel!
+    private var viewModel: SettingsLegacyViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,16 +20,16 @@ final class SettingsViewController: BaseViewController {
     }
 }
 
-extension SettingsViewController {
+extension SettingsLegacyViewController {
 
     @objc func dismissAction() {
         presenter.handle(.Dismiss())
     }
 }
 
-extension SettingsViewController {
+extension SettingsLegacyViewController {
 
-    func update(with viewModel: SettingsViewModel) {
+    func update(with viewModel: SettingsLegacyViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         if (navigationController?.viewControllers.count ?? 0) > 1 {
@@ -44,7 +44,7 @@ extension SettingsViewController {
     }
 }
 
-extension SettingsViewController: UICollectionViewDataSource {
+extension SettingsLegacyViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         viewModel?.sections.count ?? 0
@@ -63,7 +63,7 @@ extension SettingsViewController: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         let items = viewModel.sections[indexPath.section].items
         let item = items[indexPath.item]
-        let cell = collectionView.dequeue(SettingsCell.self, for: indexPath)
+        let cell = collectionView.dequeue(SettingsLegacyCell.self, for: indexPath)
         return cell.update(with: item, showSeparator: items.last != item)
     }
     
@@ -97,7 +97,7 @@ extension SettingsViewController: UICollectionViewDataSource {
     }
 }
 
-extension SettingsViewController: UICollectionViewDelegate {
+extension SettingsLegacyViewController: UICollectionViewDelegate {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -112,7 +112,7 @@ extension SettingsViewController: UICollectionViewDelegate {
     }
 }
 
-private extension SettingsViewController{
+private extension SettingsLegacyViewController{
 
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, environment in
@@ -171,7 +171,7 @@ private extension SettingsViewController{
     }
 }
 
-private extension SettingsViewController {
+private extension SettingsLegacyViewController {
     
     func configureUI() {
         collectionView.setCollectionViewLayout(

@@ -34,17 +34,17 @@ final class ThemePickerViewController: UIViewController, ThemePickerView {
     }
 
     private func selectedThemeIndex() -> Int {
-        let settingsService: SettingsService = AppAssembler.resolve()
-        if settingsService.isSelected(setting: .init(group: .theme, action: .themeMiamiLight)) {
+        let settingsService: SettingsLegacyService = AppAssembler.resolve()
+        if settingsService.isSelected(settingLegacy: .init(group: .theme, action: .themeMiamiLight)) {
             return 0
         }
-        if settingsService.isSelected(setting: .init(group: .theme, action: .themeMiamiDark)) {
+        if settingsService.isSelected(settingLegacy: .init(group: .theme, action: .themeMiamiDark)) {
             return 1
         }
-        if settingsService.isSelected(setting: .init(group: .theme, action: .themeIosLight)) {
+        if settingsService.isSelected(settingLegacy: .init(group: .theme, action: .themeIosLight)) {
             return 2
         }
-        if settingsService.isSelected(setting: .init(group: .theme, action: .themeIosDark)) {
+        if settingsService.isSelected(settingLegacy: .init(group: .theme, action: .themeIosDark)) {
             return 3
         }
         return 0
@@ -95,22 +95,22 @@ extension ThemePickerViewController: UICollectionViewDelegate {
                 completion: { [weak self] _ in
                     // TODO: Think on how to move to presenter/wireframe
                     self?.dismiss(animated: false) {
-                        let settingsService: SettingsService = AppAssembler.resolve()
+                        let settingsService: SettingsLegacyService = AppAssembler.resolve()
                         switch indexPath.item {
                         case 0:
-                            settingsService.select(setting: .init(group: .theme, action: .themeMiamiLight))
+                            settingsService.select(settingLegacy: .init(group: .theme, action: .themeMiamiLight))
                             AppDelegate.setUserInterfaceStyle(.light)
                             Theme = ThemeMiamiSunrise()
                         case 1:
-                            settingsService.select(setting: .init(group: .theme, action: .themeMiamiDark))
+                            settingsService.select(settingLegacy: .init(group: .theme, action: .themeMiamiDark))
                             AppDelegate.setUserInterfaceStyle(.dark)
                             Theme = ThemeMiamiSunrise()
                         case 2:
-                            settingsService.select(setting: .init(group: .theme, action: .themeIosLight))
+                            settingsService.select(settingLegacy: .init(group: .theme, action: .themeIosLight))
                             AppDelegate.setUserInterfaceStyle(.light)
                             Theme = ThemeVanilla()
                         case 3:
-                            settingsService.select(setting: .init(group: .theme, action: .themeIosDark))
+                            settingsService.select(settingLegacy: .init(group: .theme, action: .themeIosDark))
                             AppDelegate.setUserInterfaceStyle(.dark)
                             Theme = ThemeVanilla()
                         default:

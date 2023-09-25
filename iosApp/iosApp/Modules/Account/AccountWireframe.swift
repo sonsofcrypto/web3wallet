@@ -16,7 +16,7 @@ final class DefaultAccountWireframe {
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
     private let etherScanService: EtherScanService
-    private let settingsService: SettingsService
+    private let settingsService: SettingsLegacyService
 
     private weak var vc: UIViewController?
     
@@ -31,7 +31,7 @@ final class DefaultAccountWireframe {
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
         etherScanService: EtherScanService,
-        settingsService: SettingsService
+        settingsService: SettingsLegacyService
     ) {
         self.parent = parent
         self.context = context
@@ -53,7 +53,7 @@ extension DefaultAccountWireframe {
         let vc = wireUp()
         self.vc = vc
         if settingsService.isSelected(
-            setting: .init(group: .developerTransitions, action: .developerTransitionsSheet)
+            settingLegacy: .init(group: .developerTransitions, action: .developerTransitionsSheet)
         ) {
             vc.modalPresentationStyle = .automatic
             parent?.show(vc, sender: self)

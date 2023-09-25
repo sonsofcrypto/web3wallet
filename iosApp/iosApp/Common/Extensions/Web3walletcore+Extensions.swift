@@ -40,24 +40,24 @@ extension AuthenticatePresenter {
 
 // MARK: Confirmation
 extension DefaultConfirmationWireframe: ConfirmationWireframe {
-    func navigate(destination__________ destination: ConfirmationWireframeDestination) { navigate(to: destination) }
+    func navigate(destination_________ destination: ConfirmationWireframeDestination) { navigate(to: destination) }
 }
 extension ConfirmationViewController: ConfirmationView {
-    func update(viewModel___________ viewModel: ConfirmationViewModel) { update(with: viewModel) }
+    func update(viewModel__________ viewModel: ConfirmationViewModel) { update(with: viewModel) }
 }
 extension ConfirmationPresenter {
-    func handle(_ event: ConfirmationPresenterEvent) { handle(event_______________: event) }
+    func handle(_ event: ConfirmationPresenterEvent) { handle(event______________: event) }
 }
 
 // MARK: CurrencyAdd
 extension DefaultCurrencyAddWireframe: CurrencyAddWireframe {
-    func navigate(destination_________ destination: CurrencyAddWireframeDestination) { navigate(to: destination) }
+    func navigate(destination________ destination: CurrencyAddWireframeDestination) { navigate(to: destination) }
 }
 extension CurrencyAddViewController: CurrencyAddView {
-    func update(viewModel__________ viewModel: CurrencyAddViewModel) { update(with: viewModel) }
+    func update(viewModel_________ viewModel: CurrencyAddViewModel) { update(with: viewModel) }
 }
 extension CurrencyAddPresenter {
-    func handle(_ event: CurrencyAddPresenterEvent) { handle(event______________: event) }
+    func handle(_ event: CurrencyAddPresenterEvent) { handle(event_____________: event) }
 }
 
 // MARK: CurrencyPicker
@@ -217,7 +217,7 @@ extension NetworksPresenter {
 
 // MARK: NetworkSettings
 extension DefaultNetworkSettingsWireframe: NetworkSettingsWireframe {
-    //func navigate(destination__ destination: NetworksSettingsWireframeDestination) { navigate(to: destination) }
+    //func navigate(destination__ destination: NetworksSettingsLegacyWireframeDestination) { navigate(to: destination) }
 }
 extension NetworkSettingsViewController: NetworkSettingsView {
     func update(viewModel_______ viewModel: NetworkSettingsViewModel) { update(with: viewModel)}
@@ -304,12 +304,12 @@ extension QRCodeScanPresenter {
 }
 
 // MARK: Settings
-extension DefaultSettingsWireframe: SettingsWireframe {
-    func navigate(destination________ destination: SettingsWireframeDestination) { navigate(to: destination) }
+extension DefaultSettingsLegacyWireframe: SettingsLegacyWireframe {
+    func navigate(destination__________ destination: SettingsLegacyWireframeDestination) { navigate(to: destination) }
 }
-extension SettingsViewController: SettingsView {
-    func update(viewModel_________ viewModel: SettingsViewModel) { update(with: viewModel)}
+extension SettingsLegacyViewController: SettingsLegacyView {
+    func update(viewModel___________ viewModel: SettingsLegacyViewModel) { update(with: viewModel)}
 }
-extension SettingsPresenter {
-    func handle(_ event: SettingsPresenterEvent) { handle(event_____________: event)}
+extension SettingsLegacyPresenter {
+    func handle(_ event: SettingsLegacyPresenterEvent) { handle(event_______________: event)}
 }

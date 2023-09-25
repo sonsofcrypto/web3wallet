@@ -41,7 +41,7 @@ private extension SettingsSectionFooterViewCell {
 
 extension SettingsSectionFooterViewCell {
 
-    func update(with viewModel: SettingsViewModel.SectionFooter) -> Self {
+    func update(with viewModel: SettingsLegacyViewModel.SectionFooter) -> Self {
         label.text = viewModel.title
         switch viewModel.alignment {
         case .left: label.textAlignment = .left

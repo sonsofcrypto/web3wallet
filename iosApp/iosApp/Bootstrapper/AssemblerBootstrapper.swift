@@ -28,8 +28,8 @@ private extension AssemblerBootstrapper {
     func makeComponents() -> [AssemblerComponent] {
         [
             // Services
-            SettingsServiceAssembler(), // needs to be the first one to initialise
-            SettingsServiceActionTriggerAssembler(),
+            SettingsLegacyServiceAssembler(), // needs to be the first one to initialise
+            SettingsLegacyServiceLegacyActionTriggerAssembler(),
             PollServiceAssembler(),
             KeyStoreKeyValStoreServiceAssembler(),
             KeyStoreServiceAssembler(),
