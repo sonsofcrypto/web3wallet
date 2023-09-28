@@ -96,7 +96,7 @@ extension UIColor {
     convenience init(variants: [UIColor?]) {
         self.init(
             dynamicProvider: { traits in
-                (traits.isDarkMode
+                (traits.userInterfaceStyle == .dark
                     ? ((variants.last ?? variants.first) ?? UIColor.white)
                     : (variants.first ?? UIColor.black)) ?? UIColor.white
             }

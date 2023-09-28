@@ -5,9 +5,7 @@
 import UIKit
 
 class TableFlowLayout: UICollectionViewFlowLayout {
-    var separatorInsets: UIEdgeInsets = .init(
-        top: 0, left: 16, bottom: 0, right: 0
-    )
+    var separatorInsets: UIEdgeInsets = .with(left: 16)
     var separatorColor: UIColor = .secondarySystemBackground
     var sectionBackgroundColor: UIColor = .systemBackground
     var sectionBackgroundBorderColor: UIColor = .secondarySystemBackground
@@ -16,7 +14,7 @@ class TableFlowLayout: UICollectionViewFlowLayout {
     private var prevBoundsWidth: CGFloat = 0
     private var sectionsCount: Int = 0
     private(set) var itemsCount: [Int: Int] = [:]
-    private(set) var separatorHeight: CGFloat = 1
+    private(set) var separatorHeight: CGFloat = 0.5
     
     override func prepare() {
         super.prepare()

@@ -107,7 +107,8 @@ private extension AlertSheetPresentationController {
     func newBGView() -> UIView {
         
         let bgView = UIView(frame: containerViewBounds())
-        if ThemeVanilla.isCurrent() && traitCollection.isDarkMode {
+        let isDarkMode = traitCollection.userInterfaceStyle == .dark
+        if ThemeVanilla.isCurrent() && isDarkMode {
             bgView.backgroundColor = UIColor.white.withAlpha(0.15)
         } else {
             bgView.backgroundColor = UIColor.black.withAlpha(0.55)

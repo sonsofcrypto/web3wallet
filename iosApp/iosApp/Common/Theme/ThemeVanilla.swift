@@ -13,8 +13,8 @@ struct ThemeVanilla: ThemeProtocol {
     let cornerRadius: CGFloat = 14
     let cornerRadiusSmall: CGFloat = 8
     let shadowRadius: CGFloat = 4
-    let cellHeight: CGFloat = 64
-    let cellHeightSmall: CGFloat = 46
+    let cellHeightLarge: CGFloat = 64
+    let cellHeight: CGFloat = 46
     let buttonHeight: CGFloat = 46
     let buttonSmallHeight: CGFloat = 32
     let buttonHeightExtraSmall: CGFloat = 24

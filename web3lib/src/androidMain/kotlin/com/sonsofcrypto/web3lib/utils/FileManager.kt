@@ -18,7 +18,7 @@ import okio.buffer
  */
 actual class FileManager {
 
-    val isUnitTestEnv = EnvUtils().isUnitTestEnv()
+    val isUnitTestEnv = EnvUtils().isUnitTest()
 
     actual constructor(){}
 

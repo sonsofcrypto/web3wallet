@@ -187,7 +187,7 @@ extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
             width: view.bounds.width - Theme.padding * 2,
             height: collectionView == buttonsCollectionView
             ? Theme.buttonHeight
-            : Theme.cellHeight
+            : Theme.cellHeightLarge
         )
     }
 }
