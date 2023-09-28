@@ -6,10 +6,9 @@ import UIKit
 import web3walletcore
 
 final class SettingsLegacyViewController: BaseViewController {
+    @IBOutlet weak var collectionView: CollectionView!
 
     var presenter: SettingsLegacyPresenter!
-
-    @IBOutlet weak var collectionView: CollectionView!
 
     private var viewModel: SettingsLegacyViewModel!
 

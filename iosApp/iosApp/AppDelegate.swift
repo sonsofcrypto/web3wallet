@@ -64,4 +64,21 @@ extension AppDelegate {
     static func rootVc() -> UIViewController? {
         keyWindow()?.rootViewController
     }
+    /// Triggers traits update for entire app.
+    static func refreshTraits() {
+        guard let root = AppDelegate.rootVc() as? EdgeCardsController else {
+            return
+        }
+        let curr = root.traitCollection
+        let refreshTraits = UITraitCollection(
+            traitsFrom: [curr, UITraitCollection(layoutDirection: .rightToLeft)]
+        )
+        let vcs = [root.master, root.topCard, root.bottomCard].compactMap { $0 }
+        vcs.forEach { vc in
+            root.setOverrideTraitCollection(refreshTraits, forChild: vc)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                root.setOverrideTraitCollection(nil, forChild: vc)
+            }
+        }
+    }
 }

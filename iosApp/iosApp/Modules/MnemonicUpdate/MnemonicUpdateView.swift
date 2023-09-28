@@ -195,7 +195,7 @@ extension MnemonicUpdateViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         let width = view.bounds.width - Theme.padding * 2
         guard let viewModel = viewModel?.sections[indexPath.section].items[indexPath.item] else {
-            return CGSize(width: width, height: Theme.cellHeight)
+            return CGSize(width: width, height: Theme.cellHeightLarge)
         }
         if viewModel is MnemonicUpdateViewModel.SectionItemMnemonic {
             return CGSize(width: width, height: Constant.mnemonicCellHeight)

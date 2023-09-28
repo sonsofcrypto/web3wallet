@@ -80,7 +80,7 @@
 		1C54DC172862351D00E378F6 /* QRCodeScanWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC162862351D00E378F6 /* QRCodeScanWireframe.swift */; };
 		1C54DC192862352200E378F6 /* QRCodeScanWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC182862352200E378F6 /* QRCodeScanWireframeFactory.swift */; };
 		1C54DC1D2862354C00E378F6 /* QRCodeScan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */; };
-		1C54DC2A2868193300E378F6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC292868193300E378F6 /* Theme.swift */; };
+		1C54DC2A2868193300E378F6 /* ThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC292868193300E378F6 /* ThemeProtocol.swift */; };
 		1C54DC5128683DDA00E378F6 /* NaokoAA-Light-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4328683DD900E378F6 /* NaokoAA-Light-Italic.otf */; };
 		1C54DC5228683DDA00E378F6 /* NaokoAA-Extrabold-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4428683DD900E378F6 /* NaokoAA-Extrabold-Italic.otf */; };
 		1C54DC5328683DDA00E378F6 /* NaokoAA-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4528683DD900E378F6 /* NaokoAA-Bold.otf */; };
@@ -234,7 +234,6 @@
 		1C7F863328D20E490073FD95 /* UIEdgeInsets+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F860B28D20E490073FD95 /* UIEdgeInsets+Extensions.swift */; };
 		1C7F863628D20E490073FD95 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F860E28D20E490073FD95 /* UIImage+Extension.swift */; };
 		1C7F863728D20E490073FD95 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F860F28D20E490073FD95 /* UIColor+Extensions.swift */; };
-		1C7F863E28D20E490073FD95 /* UITraitCollection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F861628D20E490073FD95 /* UITraitCollection+Extensions.swift */; };
 		1C7F863F28D20E490073FD95 /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F861728D20E490073FD95 /* UIStackView+Extensions.swift */; };
 		1C7F864028D20E490073FD95 /* UIStoryboard+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F861828D20E490073FD95 /* UIStoryboard+Extensions.swift */; };
 		1C7F864128D20E490073FD95 /* UIBarButtonItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F861928D20E490073FD95 /* UIBarButtonItem+Extensions.swift */; };
@@ -516,7 +515,7 @@
 		1C54DC162862351D00E378F6 /* QRCodeScanWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanWireframe.swift; sourceTree = "<group>"; };
 		1C54DC182862352200E378F6 /* QRCodeScanWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanWireframeFactory.swift; sourceTree = "<group>"; };
 		1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QRCodeScan.storyboard; sourceTree = "<group>"; };
-		1C54DC292868193300E378F6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		1C54DC292868193300E378F6 /* ThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeProtocol.swift; sourceTree = "<group>"; };
 		1C54DC4328683DD900E378F6 /* NaokoAA-Light-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Light-Italic.otf"; sourceTree = "<group>"; };
 		1C54DC4428683DD900E378F6 /* NaokoAA-Extrabold-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Extrabold-Italic.otf"; sourceTree = "<group>"; };
 		1C54DC4528683DD900E378F6 /* NaokoAA-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Bold.otf"; sourceTree = "<group>"; };
@@ -670,7 +669,6 @@
 		1C7F860B28D20E490073FD95 /* UIEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
 		1C7F860E28D20E490073FD95 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		1C7F860F28D20E490073FD95 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
-		1C7F861628D20E490073FD95 /* UITraitCollection+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITraitCollection+Extensions.swift"; sourceTree = "<group>"; };
 		1C7F861728D20E490073FD95 /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
 		1C7F861828D20E490073FD95 /* UIStoryboard+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Extensions.swift"; sourceTree = "<group>"; };
 		1C7F861928D20E490073FD95 /* UIBarButtonItem+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Extensions.swift"; sourceTree = "<group>"; };
@@ -1580,7 +1578,6 @@
 				1C7F861728D20E490073FD95 /* UIStackView+Extensions.swift */,
 				1C7F861828D20E490073FD95 /* UIStoryboard+Extensions.swift */,
 				1C7F861A28D20E490073FD95 /* UITableView+Extensions.swift */,
-				1C7F861628D20E490073FD95 /* UITraitCollection+Extensions.swift */,
 				1C7F860828D20E490073FD95 /* UIView+Extensions.swift */,
 				1C5D24DE28E1A3DD007DA557 /* UIViewController+Extensions.swift */,
 				1C54BB3B291B9F400009F158 /* Web3walletcore+Extensions.swift */,
@@ -2022,7 +2019,7 @@
 		D1BF267E280D7FC200DE9A0B /* Theme */ = {
 			isa = PBXGroup;
 			children = (
-				1C54DC292868193300E378F6 /* Theme.swift */,
+				1C54DC292868193300E378F6 /* ThemeProtocol.swift */,
 				1C54DC692869D60D00E378F6 /* ThemeMiamiSunrise.swift */,
 				1CE0064B2889E0E6002D1EB3 /* ThemeVanilla.swift */,
 			);
@@ -2332,7 +2329,6 @@
 				1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */,
 				1F871F532AC1791E0002A1AC /* TableGroupedFlowLayout.swift in Sources */,
 				1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */,
-				1C7F863E28D20E490073FD95 /* UITraitCollection+Extensions.swift in Sources */,
 				1C60C2C1285724D0003BE25D /* KeyStoreView.swift in Sources */,
 				1C60C2DD285724D0003BE25D /* DashboardView.swift in Sources */,
 				1C60C2FF285724D1003BE25D /* NFTsDashboardView+MainScrollView.swift in Sources */,
@@ -2394,7 +2390,7 @@
 				1F5E646B2AACA58A000A1548 /* ImageCacheService.swift in Sources */,
 				1C60C34C285724D1003BE25D /* CultProposalWireframe.swift in Sources */,
 				1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */,
-				1C54DC2A2868193300E378F6 /* Theme.swift in Sources */,
+				1C54DC2A2868193300E378F6 /* ThemeProtocol.swift in Sources */,
 				1F871F602AC17BB00002A1AC /* SettingsView.swift in Sources */,
 				1F871F612AC17BB00002A1AC /* SettingsInterator.swift in Sources */,
 				D1ED725F287C1122005805CF /* CurrencySendCurrencyCollectionViewCell.swift in Sources */,

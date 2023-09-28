@@ -5,9 +5,11 @@
 import UIKit
 import web3walletcore
 
-var Theme: ThemeProtocol = initialize() {
-    didSet { AppDelegate.rebootApp() }
-}
+//var Theme: ThemeProtocol = initialize() {
+//    didSet { AppDelegate.rebootApp() }
+//}
+
+var Theme: ThemeProtocol = initialize()
 
 enum ThemeVariant: String {
     case light
@@ -25,8 +27,8 @@ protocol ThemeProtocol {
     var cornerRadius: CGFloat { get }
     var cornerRadiusSmall: CGFloat { get }
     var shadowRadius: CGFloat { get }
+    var cellHeightLarge: CGFloat { get }
     var cellHeight: CGFloat { get }
-    var cellHeightSmall: CGFloat { get }
     var buttonHeight: CGFloat { get }
     var buttonSmallHeight: CGFloat { get }
     var buttonHeightExtraSmall: CGFloat { get }

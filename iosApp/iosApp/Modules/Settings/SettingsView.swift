@@ -28,7 +28,15 @@ class SettingsViewController: UICollectionViewController,
         super.viewWillLayoutSubviews()
         recomputeSizeIfNeeded()
     }
-    
+
+    override func traitCollectionDidChange(
+        _ previousTraitCollection: UITraitCollection?
+    ) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyTheme(Theme)
+        cv?.collectionViewLayout.invalidateLayout()
+    }
+
     // MARK: - SettingsView
     
     func update(with viewModel: SettingsViewModel) {
@@ -36,6 +44,13 @@ class SettingsViewController: UICollectionViewController,
         collectionView.reloadData()
     }
 
+    @IBAction func refreshAction(_ sender: Any) {
+        Theme = ThemeVanilla.isCurrent()
+            ? ThemeMiamiSunrise()
+            : ThemeVanilla()
+        AppDelegate.refreshTraits()
+    }
+    
     // MARK: - UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -100,14 +115,22 @@ private extension SettingsViewController {
     func configureUI() {
         title = Localized("Settings")
         configureOverscrollView()
+        applyTheme(Theme)
     }
-    
+
+    func applyTheme(_ theme: ThemeProtocol) {
+        cv?.separatorInsets = .with(left: theme.padding)
+        cv?.sectionBackgroundColor = Theme.color.bgPrimary
+        cv?.sectionBorderColor = Theme.color.separatorSecondary
+        cv?.separatorColor = Theme.color.separatorSecondary
+    }
+
     func recomputeSizeIfNeeded() {
         guard prevSize.width != view.bounds.size.width else { return }
         prevSize = view.bounds.size
         cellSize = .init(
             width: view.bounds.size.width - Theme.padding * 2,
-            height: Theme.cellHeightSmall
+            height: Theme.cellHeight
         )
     }
     
@@ -121,4 +144,5 @@ private extension SettingsViewController {
         version.center.x -= 1.5
         version.center.y += 31
     }
+
 }

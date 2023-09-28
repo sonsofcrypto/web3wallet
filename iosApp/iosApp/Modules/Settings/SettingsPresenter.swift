@@ -20,8 +20,6 @@ class DefaultSettingsPresenter {
     private let interactor: SettingsInterator
     private let wireframe: SettingsWireframe
 
-    // private var items: [Item]
-
     private weak var view: SettingsView?
 
     init(
@@ -63,15 +61,19 @@ private extension DefaultSettingsPresenter {
             sections: [
                 .init(
                     items: [
-                        CellViewModel.Label(text: "Test 1", accessory: .none),
-                        CellViewModel.Label(text: "Test 2", accessory: .none),
-                        CellViewModel.Label(text: "Test 3", accessory: .none)
+                        CellViewModel.Label(text: "Themes", accessory: .detail),
+                        CellViewModel.Label(text: "Improvement proposals", accessory: .detail),
+                        CellViewModel.Label(text: "Developer menu", accessory: .detail)
                     ]
                 ),
                 .init(
                     items: [
-                        CellViewModel.Label(text: "Test 1", accessory: .none),
-                        CellViewModel.Label(text: "Test 2", accessory: .none)
+                        CellViewModel.Label(text: "About", accessory: .detail)
+                    ]
+                ),
+                .init(
+                    items: [
+                        CellViewModel.Label(text: "Beta feedback / Report issue 🪲", accessory: .none)
                     ]
                 )
             ]

@@ -15,7 +15,7 @@ private val pool: ExecutorService = Executors.newFixedThreadPool(1)
 private val uiMockDispatcher = pool.asCoroutineDispatcher()
 
 actual val uiDispatcher: CoroutineDispatcher
-    get() = if (EnvUtils().isUnitTestEnv()) uiMockDispatcher else Dispatchers.Main
+    get() = if (EnvUtils().isUnitTest()) uiMockDispatcher else Dispatchers.Main
 
 actual val bgDispatcher: CoroutineDispatcher
     get() = Dispatchers.Default
