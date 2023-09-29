@@ -76,7 +76,7 @@ extension DefaultRootWireframe: RootWireframe {
             tabVc,
             context: SettingsLegacyWireframeContext.companion.create(settingLegacy: nil)
         ).present()
-        settingsWireframeFactory.make(tabVc, destination: .root).present()
+        settingsWireframeFactory.make(tabVc, screenId: .root).present()
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }

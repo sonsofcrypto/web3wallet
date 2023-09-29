@@ -49,6 +49,7 @@ extension CGRect {
 extension CGFloat {
 
     var half: CGFloat { self * 0.5 }
+    var twice: CGFloat { self * 2.0 }
 }
 
 extension CGPoint {

@@ -9,7 +9,7 @@ import web3walletcore
 //    didSet { AppDelegate.rebootApp() }
 //}
 
-var Theme: ThemeProtocol = initialize()
+var Theme: ThemeProtocol = loadThemeFromSettings()
 
 enum ThemeVariant: String {
     case light
@@ -42,12 +42,15 @@ protocol ThemeColorProtocol {
     var bgPrimary: UIColor { get }
     var bgGradientTop: UIColor { get }
     var bgGradientBtm: UIColor { get }
+
     var navBarBackground: UIColor { get }
     var navBarTint: UIColor { get }
     var navBarTitle: UIColor { get }
+
     var tabBarBackground: UIColor { get }
     var tabBarTint: UIColor { get }
     var tabBarTintSelected: UIColor { get }
+
     var collectionSectionStroke: UIColor { get }
     var collectionSeparator: UIColor { get }
 
@@ -110,23 +113,13 @@ struct ThemeFont {
     let dashboardTVTokenBalance: UIFont
     let dashboardTVTokenBalanceSmall: UIFont
     let sectionHeader: UIFont
+    let sectionFooter: UIFont
 }
 
-// TODO: This is comment on settings. It should be `Settings.theme`
-// `Settings.variat` thi complexity is way too much and too hard to understand
-private func initialize() ->  ThemeProtocol {
-    let service: SettingsLegacyService = AppAssembler.resolve()
-    if service.isSelected(settingLegacy: .init(group: .theme, action: .themeMiamiLight)) {
-        AppDelegate.setUserInterfaceStyle(.light)
-        return ThemeMiamiSunrise()
-    } else if service.isSelected(settingLegacy: .init(group: .theme, action: .themeMiamiDark)) {
-        AppDelegate.setUserInterfaceStyle(.dark)
-        return ThemeMiamiSunrise()
-    } else if service.isSelected(settingLegacy: .init(group: .theme, action: .themeIosLight)) {
-        AppDelegate.setUserInterfaceStyle(.light)
-        return ThemeVanilla()
-    } else {
-        AppDelegate.setUserInterfaceStyle(.dark)
-        return ThemeVanilla()
-    }
+func loadThemeFromSettings() ->  ThemeProtocol {
+    let service: SettingsService = AppAssembler.resolve()
+    let id = service.themeId
+    let variant = service.themeVariant
+    AppDelegate.setUserInterfaceStyle(variant == .light ? .light : .dark)
+    return id == .miami ? ThemeMiamiSunrise() : ThemeVanilla()
 }

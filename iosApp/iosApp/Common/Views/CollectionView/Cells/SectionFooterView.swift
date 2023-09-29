@@ -7,6 +7,26 @@ import web3walletcore
 
 final class SectionFooterView: UICollectionReusableView {
     @IBOutlet weak var label: UILabel!
+    private var attributed: Bool = false
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        applyTheme(Theme)
+        label.numberOfLines = 0
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        applyTheme(Theme)
+    }
+    
+    private func applyTheme(_ theme: ThemeProtocol) {
+        guard !attributed else {
+
+            return
+        }
+        label.font = theme.font.sectionHeader
+        label.textColor = theme.color.textSecondary
+    }
 }
 
 extension SectionFooterView {
@@ -26,6 +46,13 @@ extension SectionFooterView {
             attrStr.setAttributes(hlAttrs, range: range)
         }
         label.attributedText = attrStr
+        attributed = true
+    }
+    
+    func update(with viewModel: CollectionViewModel.Section?) -> Self  {
+        label.text = viewModel?.footer
+        attributed = false
+        return self
     }
 }
 
@@ -35,7 +62,7 @@ private extension SectionFooterView {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
         return [
-            .font: Theme.font.subheadline,
+            .font: Theme.font.sectionHeader,
             .foregroundColor: Theme.color.textSecondary,
             .paragraphStyle: paragraphStyle
         ]

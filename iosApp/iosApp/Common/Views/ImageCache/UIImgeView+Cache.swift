@@ -75,6 +75,7 @@ extension UIImageView {
                     self?.removeActivityIndicator()
                     self?.removeFallbackLabel()
                 case let .failure(err):
+                    print("[ImageView+Cache] \(err)")
                     guard self?.tag == ogTag,
                           url.absoluteString != fallBackUrl?.absoluteString,
                           let fallBack = fallBackUrl else {
@@ -104,7 +105,9 @@ extension UIImageView {
             return
         }
         
-        let indicator = UIActivityIndicatorView(style: .whiteLarge)
+        let indicator = UIActivityIndicatorView(
+            style: UIActivityIndicatorView.Style.large
+        )
         indicator.tag = Constant.activityIndicatorTag
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.autoresizingMask = [

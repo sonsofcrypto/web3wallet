@@ -39,6 +39,7 @@ class SettingsViewController: UICollectionViewController,
     
     func update(with viewModel: CollectionViewModel.Screen) {
         self.viewModel = viewModel
+        self.title = viewModel.id
         collectionView.reloadData()
     }
 
@@ -82,11 +83,22 @@ class SettingsViewController: UICollectionViewController,
                 for: indexPath,
                 kind: .header
             ).update(with: viewModel?.sections[indexPath.section])
+        case UICollectionView.elementKindSectionFooter:
+            return collectionView.dequeue(
+                SectionFooterView.self,
+                for: indexPath,
+                kind: .footer
+            ).update(with: viewModel?.sections[indexPath.section])
         default:
             fatalError("Failed to handle \(kind) \(indexPath)")
         }
     }
     
+    func updateTheme() {
+        Theme = loadThemeFromSettings()
+        AppDelegate.refreshTraits()
+    }
+
     // MARK: - UICollectionViewDelegateFlowLayout
     
     func collectionView(
@@ -97,8 +109,47 @@ class SettingsViewController: UICollectionViewController,
         recomputeSizeIfNeeded()
         return cellSize
     }
-    
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        String.estimateSize(
+            viewModel?.sections[section].header,
+            font: Theme.font.sectionHeader,
+            maxWidth: cellSize.width,
+            extraHeight: Theme.padding.twice,
+            minHeight: Theme.padding
+        )
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForFooterInSection section: Int
+    ) -> CGSize {
+        String.estimateSize(
+            viewModel?.sections[section].footer,
+            font: Theme.font.sectionFooter,
+            maxWidth: cellSize.width,
+            extraHeight: Theme.padding
+        )
+    }
+
     // MARK: - UICollectionViewDelegate
+    
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        presenter.handle(
+            .Select(
+                section: indexPath.section.int32,
+                item: indexPath.item.int32
+            )
+        )
+    }
     
 }
 
@@ -110,6 +161,7 @@ private extension SettingsViewController {
         title = Localized("Settings")
         configureOverscrollView()
         applyTheme(Theme)
+        cv?.contentInset.bottom = Theme.padding * 3
     }
 
     func applyTheme(_ theme: ThemeProtocol) {

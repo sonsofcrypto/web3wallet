@@ -99,8 +99,8 @@ struct ThemeVanilla: ThemeProtocol {
         dashboardTVPct: .init(name: "OCR-A", size: 10)!,
         dashboardTVTokenBalance: .init(name: "OCR-A", size: 13)!,
         dashboardTVTokenBalanceSmall: .init(name: "OCR-A", size: 8)!,
-        sectionHeader: .systemFont(ofSize: 13, weight: .regular)
-
+        sectionHeader: .systemFont(ofSize: 13, weight: .regular),
+        sectionFooter: .systemFont(ofSize: 15, weight: .regular)
 )
 
     static func isCurrent() -> Bool {

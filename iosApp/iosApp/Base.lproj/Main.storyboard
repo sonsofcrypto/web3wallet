@@ -52,7 +52,7 @@
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="0.0" id="YOK-y3-FpQ" customClass="TableGroupedFlowLayout" customModule="iosApp" customModuleProvider="target">
                             <size key="itemSize" width="335" height="46"/>
                             <size key="headerReferenceSize" width="50" height="46"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="50" height="50"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
@@ -111,6 +111,27 @@
                             </constraints>
                             <connections>
                                 <outlet property="label" destination="iBs-tq-xEX" id="lJj-hE-EjA"/>
+                            </connections>
+                        </collectionReusableView>
+                        <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="SectionFooterView" id="OPK-V1-Nc3" customClass="SectionFooterView" customModule="iosApp" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="92" width="375" height="50"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JKG-UA-PJ4">
+                                    <rect key="frame" x="24.000000000000004" y="7.9999999999999982" width="41.333333333333343" height="20.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="JKG-UA-PJ4" secondAttribute="trailing" constant="16" id="7fS-SV-d4E"/>
+                                <constraint firstItem="JKG-UA-PJ4" firstAttribute="top" secondItem="OPK-V1-Nc3" secondAttribute="topMargin" id="Rhn-rZ-9yK"/>
+                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="JKG-UA-PJ4" secondAttribute="bottom" id="cw9-Qa-NO2"/>
+                                <constraint firstItem="JKG-UA-PJ4" firstAttribute="leading" secondItem="OPK-V1-Nc3" secondAttribute="leadingMargin" constant="16" id="ize-ii-Hbv"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="label" destination="JKG-UA-PJ4" id="T7d-qb-vbl"/>
                             </connections>
                         </collectionReusableView>
                         <connections>

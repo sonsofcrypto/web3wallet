@@ -73,13 +73,13 @@ private extension DefaultMailService {
     // TODO: Smell
     var presentingIn: UIViewController? {
         UIApplication.shared.connectedScenes
-                .filter { $0.activationState == .foregroundActive }
-                .map { $0 as? UIWindowScene }
-                .compactMap { $0 }
-                .first?
-                .keyWindow?
-                .rootViewController?
-                .topPresentedViewController
+            .filter { $0.activationState == .foregroundActive }
+            .map { $0 as? UIWindowScene }
+            .compactMap { $0 }
+            .first?
+            .keyWindow?
+            .rootViewController?
+            .topPresentedViewController
     }
     
     func showAlertNoEmailDetected() {

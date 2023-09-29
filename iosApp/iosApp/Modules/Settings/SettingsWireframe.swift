@@ -7,19 +7,31 @@ import web3walletcore
 
 class DefaultSettingsWireframe {
     private weak var parent: UIViewController?
-    private let destination: SettingsWireframeDestination
+    private let screenId: SettingsScreenId
+    private let webViewWireframeFactory: WebViewWireframeFactory
+    private let improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory
+    private let mailWireframeFactory: MailService
     private let settingsService: SettingsService
-    
+    private let keyStoreService: KeyStoreService
+
     private weak var vc: UIViewController?
 
     init(
         _ parent: UIViewController?,
-        destination: SettingsWireframeDestination,
-        settingsService: SettingsService
+        screenId: SettingsScreenId,
+        webViewWireframeFactory: WebViewWireframeFactory,
+        improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory,
+        mailWireframeFactory: MailService,
+        settingsService: SettingsService,
+        keyStoreService: KeyStoreService
     ) {
         self.parent = parent
-        self.destination = destination
+        self.screenId = screenId
+        self.webViewWireframeFactory = webViewWireframeFactory
+        self.improvementProposalsWireframeFactory = improvementProposalsWireframeFactory
+        self.mailWireframeFactory = mailWireframeFactory
         self.settingsService = settingsService
+        self.keyStoreService = keyStoreService
     }
 }
 
@@ -36,7 +48,7 @@ extension DefaultSettingsWireframe {
             nc.tabBarItem = UITabBarItem(
                 title: Localized("settings"),
                 image: "tab_icon_settings".assetImage,
-                tag: 4
+                tag: 3
             )
             let vcs = (tabVc.viewControllers ?? []) + [nc]
             tabVc.setViewControllers(vcs, animated: false)
@@ -46,7 +58,35 @@ extension DefaultSettingsWireframe {
     }
 
     func navigate(to destination: SettingsWireframeDestination) {
-        print("navigate to \(destination)")
+        if destination is SettingsWireframeDestination.Mail {
+            mailWireframeFactory.sendMail(context: .init(subject: .beta))
+        }
+        if destination is SettingsWireframeDestination.Improvements {
+            improvementProposalsWireframeFactory.make(vc).present()
+        }
+        if let website = destination as? SettingsWireframeDestination.Website {
+            let url = URL(string: website.url)!
+            webViewWireframeFactory.make(vc, context: .init(url: url)).present()
+        }
+        if destination is SettingsWireframeDestination.KeyStore {
+            vc?.navigationController?.popToRootViewController(animated: true)
+            vc?.tabBarController?.selectedIndex = 0
+            vc?.tabBarController?.edgeCardsController?.setDisplayMode(
+                .bottomCard,
+                animated: true
+            )
+        }
+        if let settings = destination as? SettingsWireframeDestination.Settings {
+            DefaultSettingsWireframe(
+                vc,
+                screenId: settings.id,
+                webViewWireframeFactory: webViewWireframeFactory,
+                improvementProposalsWireframeFactory: improvementProposalsWireframeFactory,
+                mailWireframeFactory: mailWireframeFactory,
+                settingsService: settingsService,
+                keyStoreService: keyStoreService
+            ).present()
+        }
     }
 }
 
@@ -58,9 +98,10 @@ extension DefaultSettingsWireframe {
             view: WeakRef(referred: vc),
             wireframe: self,
             interactor: DefaultSettingsInteractor(
-                settingsService: settingsService
+                settingsService: settingsService,
+                keyStoreService: keyStoreService
             ),
-            destination: destination
+            screenId: screenId
         )
         vc.presenter = presenter
         return vc

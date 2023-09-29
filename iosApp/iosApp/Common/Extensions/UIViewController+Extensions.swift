@@ -15,7 +15,7 @@ extension UIViewController {
     
     func popOrDismiss() {
         if let nc = navigationController?.asNavVc, nc.viewControllers.count > 1 {
-            nc.popViewController(animated: true)
+            _ = nc.popViewController(animated: true)
         } else {
             dismiss(animated: true)
         }
