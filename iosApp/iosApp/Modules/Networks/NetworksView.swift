@@ -192,7 +192,7 @@ private extension NetworksViewController {
     }
     
     func presenterHandle(_ event: NetworksPresenterEvent) {
-        presenter.handle(event)
+        presenter.handleEvent(event)
     }
 }
 

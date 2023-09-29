@@ -32,7 +32,7 @@ final class MnemonicConfirmationViewController: UIViewController {
 extension MnemonicConfirmationViewController {
     
     @IBAction func ctaAction(_ sender: Any) {
-        presenter.handle(MnemonicConfirmationPresenterEvent.Confirm())
+        presenter.handleEvent(MnemonicConfirmationPresenterEvent.Confirm())
     }
 }
 
@@ -61,7 +61,7 @@ extension MnemonicConfirmationViewController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        presenter.handle(
+        presenter.handleEvent(
             .MnemonicChanged(
                 to: textView.text,
                 selectedLocation: textView.selectedRange.location.int32
@@ -76,7 +76,7 @@ private extension MnemonicConfirmationViewController {
         mnemonicImportHelper = MnemonicImportHelper(
             textView: textView,
             onMnemonicChangedHandler: { [weak self] newMnemonic, selectedLocation in
-                self?.presenter.handle(
+                self?.presenter.handleEvent(
                     .MnemonicChanged(
                         to: newMnemonic,
                         selectedLocation: selectedLocation.int32
@@ -120,7 +120,7 @@ private extension MnemonicConfirmationViewController {
     
     @objc func dismissKeyboard() { textView.resignFirstResponder() }
 
-    @objc func dismissTapped() { presenter.handle(MnemonicConfirmationPresenterEvent.Dismiss()) }
+    @objc func dismissTapped() { presenter.handleEvent(MnemonicConfirmationPresenterEvent.Dismiss()) }
 }
 
 private extension MnemonicConfirmationViewController {
@@ -188,6 +188,6 @@ private extension MnemonicConfirmationViewController {
 extension MnemonicConfirmationViewController: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        presenter.handle(MnemonicConfirmationPresenterEvent.SaltChanged(to: textField.text ?? ""))
+        presenter.handleEvent(MnemonicConfirmationPresenterEvent.SaltChanged(to: textField.text ?? ""))
     }
 }

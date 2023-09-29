@@ -37,11 +37,11 @@ final class MnemonicUpdateViewController: BaseViewController {
     }
     
     @IBAction func ctaAction(_ sender: Any) {
-        presenter.handle(MnemonicUpdatePresenterEvent.Update())
+        presenter.handleEvent(MnemonicUpdatePresenterEvent.Update())
     }
     
     @IBAction func dismissAction(_ sender: Any?) {
-        presenter.handle(MnemonicUpdatePresenterEvent.Dismiss())
+        presenter.handleEvent(MnemonicUpdatePresenterEvent.Dismiss())
     }
 }
 
@@ -173,16 +173,16 @@ extension MnemonicUpdateViewController: UICollectionViewDelegate {
         guard indexPath == .init(row: 0, section: 0) else { return false }
         let cell = collectionView.cellForItem(at: .init(item: 0, section: 0))
         (cell as? MnemonicUpdateCell)?.animateCopiedToPasteboard()
-        presenter.handle(MnemonicUpdatePresenterEvent.DidTapMnemonic())
+        presenter.handleEvent(MnemonicUpdatePresenterEvent.DidTapMnemonic())
         return false
     }
 
     func nameDidChange(_ name: String) {
-        presenter.handle(MnemonicUpdatePresenterEvent.DidChangeName(name: name))
+        presenter.handleEvent(MnemonicUpdatePresenterEvent.DidChangeName(name: name))
     }
 
     func iCloudBackupDidChange(_ onOff: Bool) {
-        presenter.handle(MnemonicUpdatePresenterEvent.DidChangeICouldBackup(onOff: onOff))
+        presenter.handleEvent(MnemonicUpdatePresenterEvent.DidChangeICouldBackup(onOff: onOff))
     }
 }
 
@@ -353,7 +353,7 @@ private extension MnemonicUpdateViewController {
     }
     
     @objc func didEnterBackground() {
-        presenter.handle(MnemonicUpdatePresenterEvent.Dismiss())
+        presenter.handleEvent(MnemonicUpdatePresenterEvent.Dismiss())
     }
     
     func needsReload(_ preViewModel: MnemonicUpdateViewModel?, viewModel: MnemonicUpdateViewModel) -> Bool {
@@ -365,7 +365,7 @@ private extension MnemonicUpdateViewController {
     }
     
     func mnemonicUpdateDeleteCellOnDelete() -> () -> Void {
-        { [weak self] in self?.presenter.handle(MnemonicUpdatePresenterEvent.ConfirmDelete()) }
+        { [weak self] in self?.presenter.handleEvent(MnemonicUpdatePresenterEvent.ConfirmDelete()) }
     }
 }
 

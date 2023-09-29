@@ -25,11 +25,11 @@ final class AuthenticateViewController: UIViewController, ModalDismissProtocol {
 extension AuthenticateViewController {
 
     @IBAction func dismissAction(_ sender: Any) {
-        presenter.handle(AuthenticatePresenterEvent.DidCancel())
+        presenter.handleEvent(AuthenticatePresenterEvent.DidCancel())
     }
 
     @IBAction func ctaAction(_ sender: Any) {
-        presenter.handle(AuthenticatePresenterEvent.DidConfirm())
+        presenter.handleEvent(AuthenticatePresenterEvent.DidConfirm())
     }
 }
 
@@ -107,16 +107,16 @@ extension AuthenticateViewController: UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        presenter.handle(AuthenticatePresenterEvent.DidConfirm())
+        presenter.handleEvent(AuthenticatePresenterEvent.DidConfirm())
         return false
     }
     
     func updatePresenter(_ textField: UITextField) {
         if textField == passwordTextField {
-            presenter.handle(AuthenticatePresenterEvent.DidChangePassword(text: textField.text ?? ""))
+            presenter.handleEvent(AuthenticatePresenterEvent.DidChangePassword(text: textField.text ?? ""))
         }
         if textField == saltTextField {
-            presenter.handle(AuthenticatePresenterEvent.DidChangeSalt(text: textField.text ?? ""))
+            presenter.handleEvent(AuthenticatePresenterEvent.DidChangeSalt(text: textField.text ?? ""))
         }
     }
 }

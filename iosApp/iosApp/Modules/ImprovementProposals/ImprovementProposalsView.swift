@@ -89,15 +89,15 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        presenter.handle(.Proposal(idx: Int32(indexPath.item)))
+        presenter.handleEvent(.Proposal(idx: Int32(indexPath.item)))
     }
 
     func voteAction(idx: Int) {
-        presenter.handle(.Vote(idx: Int32(idx)))
+        presenter.handleEvent(.Vote(idx: Int32(idx)))
     }
 
     @IBAction func segmentCtlAction(_ sender: SegmentedControl) {
-        presenter.handle(.Category(idx: Int32(sender.selectedSegmentIndex)))
+        presenter.handleEvent(.Category(idx: Int32(sender.selectedSegmentIndex)))
     }
 
     @objc func refreshAction(_ sender: Any) {
@@ -105,11 +105,11 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
     }
 
     @IBAction func dismissAction() {
-        presenter.handle(.Dismiss())
+        presenter.handleEvent(.Dismiss())
     }
 
     func handle(_ alertAction: UIAlertAction) {
-        presenter.handle(.AlertAction(idx: 0))
+        presenter.handleEvent(.AlertAction(idx: 0))
     }
 }
 

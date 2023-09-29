@@ -10,7 +10,7 @@ final class DefaultMnemonicNewWireframe {
     private let context: MnemonicNewWireframeContext
     private let keyStoreService: KeyStoreService
     private let passwordService: PasswordService
-    private let settingsService: SettingsLegacyService
+    private let settingsService: SettingsService
 
     private weak var vc: UIViewController!
 
@@ -19,7 +19,7 @@ final class DefaultMnemonicNewWireframe {
         context: MnemonicNewWireframeContext,
         keyStoreService: KeyStoreService,
         passwordService: PasswordService,
-        settingsService: SettingsLegacyService
+        settingsService: SettingsService
     ) {
         self.parent = parent
         self.context = context
@@ -36,15 +36,14 @@ extension DefaultMnemonicNewWireframe {
     func present() {
         let vc = wireUp()
         let presentingTopVc = (parent as? UINavigationController)?.topVc
-        if settingsService.isSelected(settingLegacy: .init(group: .developerTransitions, action: .developerTransitionsCardFlip)) {
-            let presentedTopVc = (vc as? UINavigationController)?.topVc
-            let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
-            self.vc = vc
-            vc.modalPresentationStyle = .overFullScreen
-            vc.transitioningDelegate = delegate
-        } else if settingsService.isSelected(settingLegacy: .init(group: .developerTransitions, action: .developerTransitionsSheet)) {
-            vc.modalPresentationStyle = .automatic
-        }
+
+        let presentedTopVc = (vc as? UINavigationController)?.topVc
+        let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
+        self.vc = vc
+        vc.modalPresentationStyle = .overFullScreen
+        vc.transitioningDelegate = delegate
+    
+        //vc.modalPresentationStyle = .automatic
         presentingTopVc?.present(vc, animated: true)
     }
 

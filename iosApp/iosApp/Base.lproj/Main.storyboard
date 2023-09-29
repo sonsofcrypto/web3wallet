@@ -139,13 +139,7 @@
                             <outlet property="delegate" destination="vqT-qr-qtk" id="GUh-0w-ipm"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="vTC-yi-mjU">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="Bpr-gq-iyq">
-                            <connections>
-                                <action selector="refreshAction:" destination="vqT-qr-qtk" id="CD6-kh-fas"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="vTC-yi-mjU"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LTZ-4H-416" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

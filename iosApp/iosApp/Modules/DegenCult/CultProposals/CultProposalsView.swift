@@ -111,7 +111,7 @@ extension CultProposalsViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        presenter.handle(CultProposalsPresenterEvent.SelectProposal(idx: indexPath.row.int32))
+        presenter.handleEvent(CultProposalsPresenterEvent.SelectProposal(idx: indexPath.row.int32))
     }
     
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -185,9 +185,9 @@ private extension CultProposalsViewController {
     
     @objc func segmentControlChanged(_ sender: SegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
-            presenter.handle(CultProposalsPresenterEvent.SelectPendingProposals())
+            presenter.handleEvent(CultProposalsPresenterEvent.SelectPendingProposals())
         } else {
-            presenter.handle(CultProposalsPresenterEvent.SelectClosedProposals())
+            presenter.handleEvent(CultProposalsPresenterEvent.SelectClosedProposals())
         }
     }
     
@@ -280,11 +280,11 @@ private extension CultProposalsViewController {
     }
     
     func approveProposal(idx: Int) -> () -> Void {
-        { [weak self] in self?.presenter.handle(CultProposalsPresenterEvent.ApproveProposal(idx: idx.int32)) }
+        { [weak self] in self?.presenter.handleEvent(CultProposalsPresenterEvent.ApproveProposal(idx: idx.int32)) }
     }
     
     func rejectProposal(idx: Int) -> () -> Void {
-        { [weak self] in self?.presenter.handle(CultProposalsPresenterEvent.RejectProposal(idx: idx.int32)) }
+        { [weak self] in self?.presenter.handleEvent(CultProposalsPresenterEvent.RejectProposal(idx: idx.int32)) }
     }
 
 }

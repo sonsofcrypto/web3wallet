@@ -7,35 +7,35 @@ import web3walletcore
 
 // MARK: Account
 extension DefaultAccountWireframe: AccountWireframe {
-    func navigate(destination_____________________ destination: AccountWireframeDestination) { navigate(to: destination) }
+    func navigate(destination____________________ destination: AccountWireframeDestination) { navigate(to: destination) }
 }
 extension AccountViewController: AccountView {
-    func update(viewModel_____________________ viewModel: AccountViewModel) { update(with: viewModel) }
+    func update(viewModel____________________ viewModel: AccountViewModel) { update(with: viewModel) }
 }
 extension AccountPresenter {
-    func handle(_ event: AccountPresenterEvent) { handle(event__________________________: event)  }
+    func handleEvent(_ event: AccountPresenterEvent) { handle(event_________________________: event)  }
 }
 
 // MARK: Alert
 extension DefaultAlertWireframe: AlertWireframe {
-    func navigate(destination____________ destination: AlertWireframeDestination) { navigate(to: destination) }
+    func navigate(destination___________ destination: AlertWireframeDestination) { navigate(to: destination) }
 }
 extension AlertViewController: AlertView {
-    func update(viewModel_____________ viewModel: AlertViewModel) { update(with: viewModel) }
+    func update(viewModel____________ viewModel: AlertViewModel) { update(with: viewModel) }
 }
 extension AlertPresenter {
-    func handle(_ event: AlertPresenterEvent) { handle(event_________________: event) }
+    func handleEvent(_ event: AlertPresenterEvent) { handle(event________________: event) }
 }
 
 // MARK: Authenticate
 extension DefaultAuthenticateWireframe: AuthenticateWireframe {
-    func navigate(destination___________________________ destination: AuthenticateWireframeDestination) { navigate(to: destination) }
+    func navigate(destination__________________________ destination: AuthenticateWireframeDestination) { navigate(to: destination) }
 }
 extension AuthenticateViewController: AuthenticateView {
-    func update(viewModel___________________________ viewModel: AuthenticateViewModel) { update(with: viewModel) }
+    func update(viewModel__________________________ viewModel: AuthenticateViewModel) { update(with: viewModel) }
 }
 extension AuthenticatePresenter {
-    func handle(_ event: AuthenticatePresenterEvent) { handle(event________________________________: event) }
+    func handleEvent(_ event: AuthenticatePresenterEvent) { handle(event_______________________________: event) }
 }
 
 // MARK: Confirmation
@@ -46,7 +46,7 @@ extension ConfirmationViewController: ConfirmationView {
     func update(viewModel___________ viewModel: ConfirmationViewModel) { update(with: viewModel) }
 }
 extension ConfirmationPresenter {
-    func handle(_ event: ConfirmationPresenterEvent) { handle(event_______________: event) }
+    func handleEvent(_ event: ConfirmationPresenterEvent) { handle(event_______________: event) }
 }
 
 // MARK: CurrencyAdd
@@ -57,62 +57,62 @@ extension CurrencyAddViewController: CurrencyAddView {
     func update(viewModel__________ viewModel: CurrencyAddViewModel) { update(with: viewModel) }
 }
 extension CurrencyAddPresenter {
-    func handle(_ event: CurrencyAddPresenterEvent) { handle(event______________: event) }
+    func handleEvent(_ event: CurrencyAddPresenterEvent) { handle(event______________: event) }
 }
 
 // MARK: CurrencyPicker
 extension DefaultCurrencyPickerWireframe: CurrencyPickerWireframe {
-    func navigate(destination__________________________ destination: CurrencyPickerWireframeDestination) { navigate(to: destination) }
+    func navigate(destination_________________________ destination: CurrencyPickerWireframeDestination) { navigate(to: destination) }
 }
 extension CurrencyPickerViewController: CurrencyPickerView {
-    func update(viewModel__________________________ viewModel: CurrencyPickerViewModel) { update(with: viewModel) }
+    func update(viewModel_________________________ viewModel: CurrencyPickerViewModel) { update(with: viewModel) }
 }
 extension CurrencyPickerPresenter {
-    func handle(_ event: CurrencyPickerPresenterEvent) { handle(event_______________________________: event) }
+    func handleEvent(_ event: CurrencyPickerPresenterEvent) { handle(event______________________________: event) }
 }
 
 // MARK: CurrencyReceive
 extension DefaultCurrencyReceiveWireframe: CurrencyReceiveWireframe {
-    func navigate(destination___________________ destination: CurrencyReceiveWireframeDestination) { navigate(to: destination) }
+    func navigate(destination__________________ destination: CurrencyReceiveWireframeDestination) { navigate(to: destination) }
 }
 extension CurrencyReceiveViewController: CurrencyReceiveView {
-    func update(viewModel___________________ viewModel: CurrencyReceiveViewModel) { update(with: viewModel) }
+    func update(viewModel__________________ viewModel: CurrencyReceiveViewModel) { update(with: viewModel) }
 }
 extension CurrencyReceivePresenter {
-    func handle(_ event: CurrencyReceivePresenterEvent) { handle(event_______________________: event) }
+    func handleEvent(_ event: CurrencyReceivePresenterEvent) { handle(event______________________: event) }
 }
 
 // MARK: CurrencySend
 extension DefaultCurrencySendWireframe: CurrencySendWireframe {
-    func navigate(destination________________ destination: CurrencySendWireframeDestination) { navigate(to: destination) }
+    func navigate(destination_______________ destination: CurrencySendWireframeDestination) { navigate(to: destination) }
 }
 extension CurrencySendViewController: CurrencySendView {
-    func update(viewModel_________________ viewModel: CurrencySendViewModel) { update(with: viewModel) }
+    func update(viewModel________________ viewModel: CurrencySendViewModel) { update(with: viewModel) }
 }
 extension CurrencySendPresenter {
-    func handle(_ event: CurrencySendPresenterEvent) { handle(event_____________________: event) }
+    func handleEvent(_ event: CurrencySendPresenterEvent) { handle(event____________________: event) }
 }
 
 // MARK: CurrencySwap
 extension DefaultCurrencySwapWireframe: CurrencySwapWireframe {
-    func navigate(destination_________________________ destination: CurrencySwapWireframeDestination) { navigate(to: destination) }
+    func navigate(destination________________________ destination: CurrencySwapWireframeDestination) { navigate(to: destination) }
 }
 extension CurrencySwapViewController: CurrencySwapView {
-    func update(viewModel_________________________ viewModel: CurrencySwapViewModel) { update(with: viewModel) }
+    func update(viewModel________________________ viewModel: CurrencySwapViewModel) { update(with: viewModel) }
 }
 extension CurrencySwapPresenter {
-    func handle(_ event: CurrencySwapPresenterEvent) { handle(event______________________________: event) }
+    func handleEvent(_ event: CurrencySwapPresenterEvent) { handle(event_____________________________: event) }
 }
 
 // MARK: Dashboard
 extension DefaultDashboardWireframe: DashboardWireframe {
-    func navigate(destination____________________ destination: DashboardWireframeDestination) { navigate(to: destination) }
+    func navigate(destination___________________ destination: DashboardWireframeDestination) { navigate(to: destination) }
 }
 extension DashboardViewController: DashboardView {
-    func update(viewModel____________________ viewModel: DashboardViewModel) { update(with: viewModel) }
+    func update(viewModel___________________ viewModel: DashboardViewModel) { update(with: viewModel) }
 }
 extension DashboardPresenter {
-    func handle(_ event: DashboardPresenterEvent) { handle(event_________________________: event) }
+    func handleEvent(_ event: DashboardPresenterEvent) { handle(event________________________: event) }
 }
 
 
@@ -124,7 +124,7 @@ extension CultProposalViewController: CultProposalView {
     func update(viewModel_ viewModel: CultProposalViewModel) { update(with: viewModel) }
 }
 extension CultProposalPresenter {
-    func handle(_ event: CultProposalPresenterEvent) { handle(event_____: event) }
+    func handleEvent(_ event: CultProposalPresenterEvent) { handle(event_____: event) }
 }
 
 // MARK: CultProposals
@@ -135,18 +135,18 @@ extension CultProposalsViewController: CultProposalsView {
     func update(viewModel______ viewModel: CultProposalsViewModel) { update(with: viewModel) }
 }
 extension CultProposalsPresenter {
-    func handle(_ event: CultProposalsPresenterEvent) { handle(event__________: event) }
+    func handleEvent(_ event: CultProposalsPresenterEvent) { handle(event__________: event) }
 }
 
 // MARK: Degen
 extension DefaultDegenWireframe: DegenWireframe {
-    func navigate(destination_______________ destination: DegenWireframeDestination) { navigate(to: destination) }
+    func navigate(destination______________ destination: DegenWireframeDestination) { navigate(to: destination) }
 }
 extension DegenViewController: DegenView {
-    func update(viewModel________________ viewModel: DegenViewModel) { update(with: viewModel) }
+    func update(viewModel_______________ viewModel: DegenViewModel) { update(with: viewModel) }
 }
 extension DegenPresenter {
-    func handle(_ event: DegenPresenterEvent) { handle(event____________________: event) }
+    func handleEvent(_ event: DegenPresenterEvent) { handle(event___________________: event) }
 }
 
 // MARK: KeyStore
@@ -157,7 +157,7 @@ extension KeyStoreViewController: KeyStoreView {
     func update(viewModel___ viewModel: KeyStoreViewModel) { update(with: viewModel) }
 }
 extension KeyStorePresenter {
-    func handle(_ event: KeyStorePresenterEvent) { handle(event_______: event) }
+    func handleEvent(_ event: KeyStorePresenterEvent) { handle(event_______: event) }
 }
 
 // MARK: MnemonicConfirmation
@@ -168,29 +168,29 @@ extension MnemonicConfirmationViewController: MnemonicConfirmationView {
     func update(viewModel_____ viewModel: MnemonicConfirmationViewModel) { update(with: viewModel) }
 }
 extension MnemonicConfirmationPresenter {
-    func handle(_ event: MnemonicConfirmationPresenterEvent) { handle(event_________: event) }
+    func handleEvent(_ event: MnemonicConfirmationPresenterEvent) { handle(event_________: event) }
 }
 
 // MARK: MnemonicImport
 extension DefaultMnemonicImportWireframe: MnemonicImportWireframe {
-    func navigate(destination____________________________ destination: MnemonicImportWireframeDestination) { navigate(to: destination) }
+    func navigate(destination___________________________ destination: MnemonicImportWireframeDestination) { navigate(to: destination) }
 }
 extension MnemonicImportViewController: MnemonicImportView {
-    func update(viewModel____________________________ viewModel: MnemonicImportViewModel) { update(with: viewModel) }
+    func update(viewModel___________________________ viewModel: MnemonicImportViewModel) { update(with: viewModel) }
 }
 extension MnemonicImportPresenter {
-    func handle(_ event: MnemonicImportPresenterEvent) { handle(event_________________________________: event) }
+    func handleEvent(_ event: MnemonicImportPresenterEvent) { handle(event________________________________: event) }
 }
 
 // MARK: MnemonicNew
 extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
-    func navigate(destination______________________ destination: MnemonicNewWireframeDestination) { navigate(to: destination) }
+    func navigate(destination_____________________ destination: MnemonicNewWireframeDestination) { navigate(to: destination) }
 }
 extension MnemonicNewViewController: MnemonicNewView {
-    func update(viewModel______________________ viewModel: MnemonicNewViewModel) { update(with: viewModel) }
+    func update(viewModel_____________________ viewModel: MnemonicNewViewModel) { update(with: viewModel) }
 }
 extension MnemonicNewPresenter {
-    func handle(_ event: MnemonicNewPresenterEvent) { handle(event___________________________: event) }
+    func handleEvent(_ event: MnemonicNewPresenterEvent) { handle(event__________________________: event) }
 }
 
 // MARK: MnemonicUpdate
@@ -201,18 +201,18 @@ extension MnemonicUpdateViewController: MnemonicUpdateView {
     func update(viewModel: MnemonicUpdateViewModel) { update(with: viewModel) }
 }
 extension MnemonicUpdatePresenter {
-    func handle(_ event: MnemonicUpdatePresenterEvent) { handle(event____: event) }
+    func handleEvent(_ event: MnemonicUpdatePresenterEvent) { handle(event____: event) }
 }
 
 // MARK: Networks
 extension DefaultNetworksWireframe: NetworksWireframe {
-    func navigate(destination________________________ destination: NetworksWireframeDestination) { navigate(to: destination) }
+    func navigate(destination_______________________ destination: NetworksWireframeDestination) { navigate(to: destination) }
 }
 extension NetworksViewController: NetworksView {
-    func update(viewModel________________________ viewModel: NetworksViewModel) { update(with: viewModel)}
+    func update(viewModel_______________________ viewModel: NetworksViewModel) { update(with: viewModel)}
 }
 extension NetworksPresenter {
-    func handle(_ event: NetworksPresenterEvent) { handle(event_____________________________: event) }
+    func handleEvent(_ event: NetworksPresenterEvent) { handle(event____________________________: event) }
 }
 
 // MARK: NetworkSettings
@@ -223,7 +223,7 @@ extension NetworkSettingsViewController: NetworkSettingsView {
     func update(viewModel_______ viewModel: NetworkSettingsViewModel) { update(with: viewModel)}
 }
 extension NetworkSettingsPresenter {
-    func handle(_ event: NetworkSettingsPresenterEvent) { handle(event___________: event) }
+    func handleEvent(_ event: NetworkSettingsPresenterEvent) { handle(event___________: event) }
 }
 
 // MARK: NFTDetail
@@ -234,7 +234,7 @@ extension NFTDetailViewController: NFTDetailView {
     func update(viewModel____ viewModel: NFTDetailViewModel) { update(with: viewModel)}
 }
 extension NFTDetailPresenter {
-    func handle(_ event: NFTDetailPresenterEvent) { handle(event________: event) }
+    func handleEvent(_ event: NFTDetailPresenterEvent) { handle(event________: event) }
 }
 
 // MARK: NFTsCollection
@@ -245,40 +245,40 @@ extension NFTsCollectionViewController: NFTsCollectionView {
     func update(viewModel__ viewModel: NFTsCollectionViewModel) { update(with: viewModel)}
 }
 extension NFTsCollectionPresenter {
-    func handle(_ event: NFTsCollectionPresenterEvent) { handle(event______: event) }
+    func handleEvent(_ event: NFTsCollectionPresenterEvent) { handle(event______: event) }
 }
 
 // MARK: NFTsDashboard
 extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
-    func navigate(destination_____________ destination: NFTsDashboardWireframeDestination) { navigate(to: destination) }
+    func navigate(destination____________ destination: NFTsDashboardWireframeDestination) { navigate(to: destination) }
 }
 extension NFTsDashboardViewController: NFTsDashboardView {
-    func update(viewModel______________ viewModel: NFTsDashboardViewModel) { update(with: viewModel)}
+    func update(viewModel_____________ viewModel: NFTsDashboardViewModel) { update(with: viewModel)}
 }
 extension NFTsDashboardPresenter {
-    func handle(_ event: NFTsDashboardPresenterEvent) { handle(event__________________: event) }
+    func handleEvent(_ event: NFTsDashboardPresenterEvent) { handle(event_________________: event) }
 }
 
 // MARK: NFTSend
 extension DefaultNFTSendWireframe: NFTSendWireframe {
-    func navigate(destination_______________________ destination: NFTSendWireframeDestination) { navigate(to: destination) }
+    func navigate(destination______________________ destination: NFTSendWireframeDestination) { navigate(to: destination) }
 }
 extension NFTSendViewController: NFTSendView {
-    func update(viewModel_______________________ viewModel: NFTSendViewModel) { update(with: viewModel)}
+    func update(viewModel______________________ viewModel: NFTSendViewModel) { update(with: viewModel)}
 }
 extension NFTSendPresenter {
-    func handle(_ event: NFTSendPresenterEvent) { handle(event____________________________: event) }
+    func handleEvent(_ event: NFTSendPresenterEvent) { handle(event___________________________: event) }
 }
 
 // MARK: ImprovementProposal
 extension DefaultImprovementProposalWireframe: ImprovementProposalWireframe {
-    func navigate(destination______________ destination: ImprovementProposalWireframeDestination) { navigate(to: destination) }
+    func navigate(destination_____________ destination: ImprovementProposalWireframeDestination) { navigate(to: destination) }
 }
 extension ImprovementProposalViewController: ImprovementProposalView {
-    func update(viewModel_______________ viewModel: ImprovementProposalViewModel) { update(with: viewModel)}
+    func update(viewModel______________ viewModel: ImprovementProposalViewModel) { update(with: viewModel)}
 }
 extension ImprovementProposalPresenter {
-    func handle(_ event: ImprovementProposalPresenterEvent) { handle(event___________________: event) }
+    func handleEvent(_ event: ImprovementProposalPresenterEvent) { handle(event__________________: event) }
 }
 
 // MARK: ImprovementProposals
@@ -289,31 +289,21 @@ extension ImprovementProposalsViewController: ImprovementProposalsView {
     func update(viewModel________ viewModel: ImprovementProposalsViewModel) { update(with: viewModel)}
 }
 extension ImprovementProposalsPresenter {
-    func handle(_ event: ImprovementProposalsPresenterEvent) { handle(event____________: event) }
+    func handleEvent(_ event: ImprovementProposalsPresenterEvent) { handle(event____________: event) }
 }
 
 // MARK: QRCodeScan
 extension DefaultQRCodeScanWireframe: QRCodeScanWireframe {
-    func navigate(destination_________________ destination: QRCodeScanWireframeDestination) { navigate(to: destination) }
+    func navigate(destination________________ destination: QRCodeScanWireframeDestination) { navigate(to: destination) }
 }
 extension QRCodeScanViewController: QRCodeScanView {
-    func update(viewModel__________________ viewModel: QRCodeScanViewModel) { update(with: viewModel)}
+    func update(viewModel_________________ viewModel: QRCodeScanViewModel) { update(with: viewModel)}
 }
 extension QRCodeScanPresenter {
-    func handle(_ event: QRCodeScanPresenterEvent) { handle(event______________________: event) }
+    func handleEvent(_ event: QRCodeScanPresenterEvent) { handle(event_____________________: event) }
 }
 
 // MARK: Settings
-extension DefaultSettingsLegacyWireframe: SettingsLegacyWireframe {
-    func navigate(destination___________ destination: SettingsLegacyWireframeDestination) { navigate(to: destination) }
-}
-extension SettingsLegacyViewController: SettingsLegacyView {
-    func update(viewModel____________ viewModel: SettingsLegacyViewModel) { update(with: viewModel)}
-}
-extension SettingsLegacyPresenter {
-    func handle(_ event: SettingsLegacyPresenterEvent) { handle(event________________:event)}
-}
-
 extension DefaultSettingsWireframe: SettingsWireframe {
     func navigate(destination________ destination: SettingsWireframeDestination) { navigate(to: destination) }
 }
@@ -321,5 +311,5 @@ extension SettingsViewController: SettingsView {
     func update(viewModel_________ viewModel: CollectionViewModel.Screen) { update(with: viewModel)}
 }
 extension SettingsPresenter {
-    func handle(_ event: SettingsPresenterEvent) { handle(event_____________: event)}
+    func handleEvent(_ event: SettingsPresenterEvent) { handle(event_____________: event)}
 }

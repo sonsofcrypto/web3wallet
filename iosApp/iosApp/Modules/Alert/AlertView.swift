@@ -50,7 +50,7 @@ extension AlertViewController {
 private extension AlertViewController {
         
     @objc func dismissAction() {
-        presenter.handle(AlertPresenterEvent.Dismiss())
+        presenter.handleEvent(AlertPresenterEvent.Dismiss())
     }
         
     func presentAlert(with viewModel: AlertViewModel) {
@@ -189,7 +189,7 @@ private extension AlertViewController {
     }
     
     @objc func buttonTapped(sender: UIButton) {
-        presenter.handle(AlertPresenterEvent.SelectAction(idx: sender.tag.int32))
+        presenter.handleEvent(AlertPresenterEvent.SelectAction(idx: sender.tag.int32))
     }
 
 }

@@ -28,9 +28,7 @@ private extension AssemblerBootstrapper {
     func makeComponents() -> [AssemblerComponent] {
         [
             // Services
-            SettingsLegacyServiceAssembler(), // needs to be the first one to initialise
             SettingsServiceAssembler(),
-            SettingsLegacyServiceLegacyActionTriggerAssembler(),
             PollServiceAssembler(),
             KeyStoreServiceAssembler(),
             KeyChainServiceAssembler(),
@@ -69,7 +67,6 @@ private extension AssemblerBootstrapper {
             NFTDetailWireframeFactoryAssembler(),
             NFTSendWireframeFactoryAssembler(),
             RootWireframeFactoryAssembler(),
-            SettingsLegacyWireframeFactoryAssembler(),
             SettingsWireframeFactoryAssembler(),
             CultProposalsWireframeFactoryAssembler(),
             CultProposalWireframeFactoryAssembler(),

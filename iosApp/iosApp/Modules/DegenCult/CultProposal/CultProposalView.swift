@@ -141,7 +141,7 @@ private extension CultProposalViewController {
     }
     
     @objc func dismissTapped() {
-        presenter.handle(CultProposalPresenterEvent.Dismiss())
+        presenter.handleEvent(CultProposalPresenterEvent.Dismiss())
     }
     
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
