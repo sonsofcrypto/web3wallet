@@ -19,12 +19,12 @@ protocol MnemonicNewWireframeFactory {
 final class DefaultMnemonicNewWireframeFactory {
     private let keyStoreService: KeyStoreService
     private let passwordService: PasswordService
-    private let settingsService: SettingsLegacyService
+    private let settingsService: SettingsService
     
     init(
         keyStoreService: KeyStoreService,
         passwordService: PasswordService,
-        settingsService: SettingsLegacyService
+        settingsService: SettingsService
     ) {
         self.keyStoreService = keyStoreService
         self.passwordService = passwordService

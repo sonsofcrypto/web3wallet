@@ -52,6 +52,6 @@ private extension NFTsCollectionViewController {
     }
     
     @objc func dismissTapped() {
-        presenter.handle(NFTsCollectionPresenterEvent.Dismiss())
+        presenter.handleEvent(NFTsCollectionPresenterEvent.Dismiss())
     }
 }

@@ -364,7 +364,7 @@ private extension AccountViewController {
     }
     
     @objc func didPullToRefresh(_ sender: Any) {
-        presenter.handle(.PullDownToRefresh())
+        presenter.handleEvent(.PullDownToRefresh())
     }
 }
 
@@ -380,7 +380,7 @@ private extension AccountViewController {
     }
     
     func onPresenterActionEventTapped(_ event: AccountPresenterEvent) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event) }
+        { [weak self] in self?.presenter.handleEvent(event) }
     }
 }
 

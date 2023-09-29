@@ -90,7 +90,7 @@ private extension CurrencyReceiveViewController {
     }
     
     @objc func navBarLeftActionTapped() {
-        presenter.handle(.Dismiss())
+        presenter.handleEvent(.Dismiss())
     }
 }
 

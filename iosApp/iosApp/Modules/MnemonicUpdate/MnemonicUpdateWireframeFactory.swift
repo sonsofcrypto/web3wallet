@@ -18,13 +18,13 @@ final class DefaultMnemonicUpdateWireframeFactory {
     private let keyStoreService: KeyStoreService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
-    private let settingsService: SettingsLegacyService
+    private let settingsService: SettingsService
     
     init(
         keyStoreService: KeyStoreService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        settingsService: SettingsLegacyService
+        settingsService: SettingsService
     ) {
         self.keyStoreService = keyStoreService
         self.authenticateWireframeFactory = authenticateWireframeFactory

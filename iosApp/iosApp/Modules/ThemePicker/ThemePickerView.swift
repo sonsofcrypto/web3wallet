@@ -13,6 +13,7 @@ final class ThemePickerViewController: UIViewController, ThemePickerView {
     @IBOutlet weak var collectionView: UICollectionView!
 
     private var firstAppear: Bool = true
+    private let settingsService: SettingsService = AppAssembler.resolve()
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -34,20 +35,11 @@ final class ThemePickerViewController: UIViewController, ThemePickerView {
     }
 
     private func selectedThemeIndex() -> Int {
-        let settingsService: SettingsLegacyService = AppAssembler.resolve()
-        if settingsService.isSelected(settingLegacy: .init(group: .theme, action: .themeMiamiLight)) {
-            return 0
-        }
-        if settingsService.isSelected(settingLegacy: .init(group: .theme, action: .themeMiamiDark)) {
-            return 1
-        }
-        if settingsService.isSelected(settingLegacy: .init(group: .theme, action: .themeIosLight)) {
-            return 2
-        }
-        if settingsService.isSelected(settingLegacy: .init(group: .theme, action: .themeIosDark)) {
-            return 3
-        }
-        return 0
+        let id = settingsService.themeId
+        let variant = settingsService.themeVariant
+        return id == .miami
+           ? (variant == .light ? 0 : 1)
+           : (variant == .light ? 2 : 3)
     }
 }
 
@@ -93,29 +85,25 @@ extension ThemePickerViewController: UICollectionViewDelegate {
                     cell.layer.transform = CATransform3DMakeScale(1.25, 1.25, 1)
                 },
                 completion: { [weak self] _ in
-                    // TODO: Think on how to move to presenter/wireframe
                     self?.dismiss(animated: false) {
-                        let settingsService: SettingsLegacyService = AppAssembler.resolve()
+                        let settingsService: SettingsService = AppAssembler.resolve()
                         switch indexPath.item {
                         case 0:
-                            settingsService.select(settingLegacy: .init(group: .theme, action: .themeMiamiLight))
-                            AppDelegate.setUserInterfaceStyle(.light)
-                            Theme = ThemeMiamiSunrise()
+                            settingsService.themeId = ThemeId.miami
+                            settingsService.themeVariant = web3walletcore.ThemeVariant.light
                         case 1:
-                            settingsService.select(settingLegacy: .init(group: .theme, action: .themeMiamiDark))
-                            AppDelegate.setUserInterfaceStyle(.dark)
-                            Theme = ThemeMiamiSunrise()
+                            settingsService.themeId = ThemeId.miami
+                            settingsService.themeVariant = web3walletcore.ThemeVariant.dark
                         case 2:
-                            settingsService.select(settingLegacy: .init(group: .theme, action: .themeIosLight))
-                            AppDelegate.setUserInterfaceStyle(.light)
-                            Theme = ThemeVanilla()
+                            settingsService.themeId = ThemeId.vanilla
+                            settingsService.themeVariant = web3walletcore.ThemeVariant.light
                         case 3:
-                            settingsService.select(settingLegacy: .init(group: .theme, action: .themeIosDark))
-                            AppDelegate.setUserInterfaceStyle(.dark)
-                            Theme = ThemeVanilla()
+                            settingsService.themeId = ThemeId.vanilla
+                            settingsService.themeVariant = web3walletcore.ThemeVariant.dark
                         default:
                             break
                         }
+                        Theme = loadThemeFromSettings()
                     }
                 }
             )

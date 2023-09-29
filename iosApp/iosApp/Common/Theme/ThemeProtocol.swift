@@ -5,11 +5,9 @@
 import UIKit
 import web3walletcore
 
-//var Theme: ThemeProtocol = initialize() {
-//    didSet { AppDelegate.rebootApp() }
-//}
-
-var Theme: ThemeProtocol = loadThemeFromSettings()
+var Theme: ThemeProtocol = loadThemeFromSettings() {
+    didSet { AppDelegate.rebootApp() }
+}
 
 enum ThemeVariant: String {
     case light

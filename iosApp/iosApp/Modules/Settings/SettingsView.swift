@@ -42,13 +42,6 @@ class SettingsViewController: UICollectionViewController,
         self.title = viewModel.id
         collectionView.reloadData()
     }
-
-    @IBAction func refreshAction(_ sender: Any) {
-        Theme = ThemeVanilla.isCurrent()
-            ? ThemeMiamiSunrise()
-            : ThemeVanilla()
-        AppDelegate.refreshTraits()
-    }
     
     // MARK: - UICollectionViewDataSource
     
@@ -96,7 +89,7 @@ class SettingsViewController: UICollectionViewController,
     
     func updateTheme() {
         Theme = loadThemeFromSettings()
-        AppDelegate.refreshTraits()
+//        AppDelegate.refreshTraits()
     }
 
     // MARK: - UICollectionViewDelegateFlowLayout
@@ -143,7 +136,7 @@ class SettingsViewController: UICollectionViewController,
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        presenter.handle(
+        presenter.handleEvent(
             .Select(
                 section: indexPath.section.int32,
                 item: indexPath.item.int32

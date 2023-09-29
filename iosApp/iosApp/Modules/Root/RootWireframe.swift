@@ -35,7 +35,6 @@ final class DefaultRootWireframe {
     private let dashboardWireframeFactory: DashboardWireframeFactory
     private let degenWireframeFactory: DegenWireframeFactory
     private let nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory
-    private let settingsLegacyWireframeFactory: SettingsLegacyWireframeFactory
     private let settingsWireframeFactory: SettingsWireframeFactory
     private let keyStoreService: KeyStoreService
 
@@ -46,7 +45,6 @@ final class DefaultRootWireframe {
         dashboardWireframeFactory: DashboardWireframeFactory,
         degenWireframeFactory: DegenWireframeFactory,
         nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
-        settingsLegacyWireframeFactory: SettingsLegacyWireframeFactory,
         settingsWireframeFactory: SettingsWireframeFactory,
         keyStoreService: KeyStoreService
     ) {
@@ -56,7 +54,6 @@ final class DefaultRootWireframe {
         self.dashboardWireframeFactory = dashboardWireframeFactory
         self.degenWireframeFactory = degenWireframeFactory
         self.nftsDashboardWireframeFactory = nftsDashboardWireframeFactory
-        self.settingsLegacyWireframeFactory = settingsLegacyWireframeFactory
         self.settingsWireframeFactory = settingsWireframeFactory
         self.keyStoreService = keyStoreService
     }
@@ -72,10 +69,6 @@ extension DefaultRootWireframe: RootWireframe {
         dashboardWireframeFactory.make(tabVc).present()
         degenWireframeFactory.make(tabVc).present()
         nftsDashboardWireframeFactory.make(tabVc).present()
-        settingsLegacyWireframeFactory.make(
-            tabVc,
-            context: SettingsLegacyWireframeContext.companion.create(settingLegacy: nil)
-        ).present()
         settingsWireframeFactory.make(tabVc, screenId: .root).present()
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
