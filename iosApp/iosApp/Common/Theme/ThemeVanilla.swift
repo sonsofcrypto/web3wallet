@@ -32,6 +32,9 @@ struct ThemeVanilla: ThemeProtocol {
         var tabBarBackground: UIColor { .systemBackground }
         var tabBarTint: UIColor { Palette.blue }
         var tabBarTintSelected: UIColor { Palette.pink }
+        var collectionSectionStroke: UIColor { UIColor.clear }
+        var collectionSeparator: UIColor { .quaternaryLabel }
+
         var stroke: UIColor { .label }
         var separatorPrimary: UIColor { .tertiaryLabel }
         var separatorSecondary: UIColor { .quaternaryLabel }
@@ -95,8 +98,10 @@ struct ThemeVanilla: ThemeProtocol {
         dashboardTVSymbol: .init(name: "NaokoAA-Semilight", size: 13)!,
         dashboardTVPct: .init(name: "OCR-A", size: 10)!,
         dashboardTVTokenBalance: .init(name: "OCR-A", size: 13)!,
-        dashboardTVTokenBalanceSmall: .init(name: "OCR-A", size: 8)!
-    )
+        dashboardTVTokenBalanceSmall: .init(name: "OCR-A", size: 8)!,
+        sectionHeader: .systemFont(ofSize: 13, weight: .regular)
+
+)
 
     static func isCurrent() -> Bool {
         (Theme as? ThemeVanilla) != nil

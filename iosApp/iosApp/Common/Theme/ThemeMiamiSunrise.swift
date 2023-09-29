@@ -32,6 +32,9 @@ struct ThemeMiamiSunrise: ThemeProtocol {
         var tabBarBackground: UIColor { Palette.lightBlack }
         var tabBarTint: UIColor { Palette.blue }
         var tabBarTintSelected: UIColor { Palette.pink }
+        var collectionSectionStroke: UIColor { UIColor.clear }
+        var collectionSeparator: UIColor { Palette.white3 }
+
         var stroke: UIColor { Palette.lightGray }
         var separatorPrimary: UIColor { Palette.lighterGray }
         var separatorSecondary: UIColor { Palette.white3 }
@@ -106,6 +109,7 @@ struct ThemeMiamiSunrise: ThemeProtocol {
         dashboardTVSymbol: .init(name: "NaokoAA-Semilight", size: 13)!,
         dashboardTVPct: .init(name: "OCR-A", size: 10)!,
         dashboardTVTokenBalance: .init(name: "OCR-A", size: 13)!,
-        dashboardTVTokenBalanceSmall: .init(name: "OCR-A", size: 8)!
-    )
+        dashboardTVTokenBalanceSmall: .init(name: "OCR-A", size: 8)!,
+        sectionHeader: .systemFont(ofSize: 13, weight: .semibold)
+)
 }

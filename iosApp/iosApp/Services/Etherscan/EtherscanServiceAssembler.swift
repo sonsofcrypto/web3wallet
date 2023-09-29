@@ -4,14 +4,3 @@
 
 import web3walletcore
 
-final class EtherscanServiceAssembler: AssemblerComponent {
-    
-    func register(to registry: AssemblerRegistry) {
-        
-        registry.register(scope: .singleton) { resolver -> EtherScanService in
-            DefaultEtherScanService(
-                store: KeyValueStore(name: "\(EtherScanService.self)")
-            )
-        }
-    }
-}

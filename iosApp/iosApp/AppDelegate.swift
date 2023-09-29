@@ -48,7 +48,7 @@ extension AppDelegate {
     }
     
     static func rebootApp() {
-        guard let window = UIApplication.shared.keyWindow else { return }
+        guard let window = keyWindow() else { return }
         UIBootstrapper(window: window).boot()
     }
 

@@ -6,8 +6,7 @@ sealed class CellViewModel {
     }
     data class Label(
         val text: String,
-        val accessory: Accessory = Accessory.NONE
+        val accessory: Accessory = Accessory.NONE,
+        val selected: Boolean = false
     ): CellViewModel()
-
-
 }

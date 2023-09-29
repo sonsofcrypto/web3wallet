@@ -9,4 +9,8 @@ extension UIImageView {
     convenience init(imgName: String) {
         self.init(image: UIImage(named: imgName))
     }
+
+    convenience init(sysImgName: String) {
+        self.init(image: UIImage(systemName: sysImgName))
+    }
 }

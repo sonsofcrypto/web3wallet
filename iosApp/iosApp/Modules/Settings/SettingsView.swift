@@ -3,21 +3,19 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
-protocol SettingsView: AnyObject {
-    func update(with viewModel: SettingsViewModel)
-}
 
 class SettingsViewController: UICollectionViewController,
-    UICollectionViewDelegateFlowLayout, SettingsView {
+                              UICollectionViewDelegateFlowLayout {
     
     var presenter: SettingsPresenter!
 
     private var prevSize: CGSize = .zero
     private var cellSize: CGSize = .zero
-    private var viewModel: SettingsViewModel?
+    private var viewModel: CollectionViewModel.Screen?
     private var cv: CollectionView? { collectionView as? CollectionView }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -39,7 +37,7 @@ class SettingsViewController: UICollectionViewController,
 
     // MARK: - SettingsView
     
-    func update(with viewModel: SettingsViewModel) {
+    func update(with viewModel: CollectionViewModel.Screen) {
         self.viewModel = viewModel
         collectionView.reloadData()
     }
@@ -61,7 +59,7 @@ class SettingsViewController: UICollectionViewController,
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return viewModel?.sections[section].items.count ?? 0
+        viewModel?.sections[section].items.count ?? 0
     }
     
     override func collectionView(
@@ -69,9 +67,7 @@ class SettingsViewController: UICollectionViewController,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeue(LabelCell.self, for: indexPath)
-        return cell.update(
-            with: viewModel?.sections[indexPath.section].items[indexPath.item]
-        )
+        return cell.update(with: viewModel(at: indexPath))
     }
     
     override func collectionView(
@@ -81,13 +77,11 @@ class SettingsViewController: UICollectionViewController,
     ) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            let header = collectionView.dequeue(
+            return collectionView.dequeue(
                 SectionHeaderView.self,
                 for: indexPath,
                 kind: .header
-            )
-            header.label.text = "Section \(indexPath.section)"
-            return header
+            ).update(with: viewModel?.sections[indexPath.section])
         default:
             fatalError("Failed to handle \(kind) \(indexPath)")
         }
@@ -121,8 +115,9 @@ private extension SettingsViewController {
     func applyTheme(_ theme: ThemeProtocol) {
         cv?.separatorInsets = .with(left: theme.padding)
         cv?.sectionBackgroundColor = Theme.color.bgPrimary
-        cv?.sectionBorderColor = Theme.color.separatorSecondary
-        cv?.separatorColor = Theme.color.separatorSecondary
+        cv?.sectionBorderColor = Theme.color.collectionSectionStroke
+        cv?.separatorColor = Theme.color.collectionSeparator
+        (cv?.overscrollView?.subviews.first as? UILabel)?.textColor = Theme.color.textPrimary
     }
 
     func recomputeSizeIfNeeded() {
@@ -136,13 +131,18 @@ private extension SettingsViewController {
     
     func configureOverscrollView() {
         cv?.overscrollView = UIImageView(imgName: "overscroll_anon")
-        let version = UILabel(with: .footnote)
-        version.text = Bundle.main.version() + "v #" + Bundle.main.build()
+        let version = UILabel(
+            Theme.font.footnote,
+            color: Theme.color.textPrimary,
+            text: Bundle.main.version() + "v #" + Bundle.main.build()
+        )
+        let center = cv?.overscrollView?.bounds.midXY ?? .zero
         cv?.overscrollView?.addSubview(version)
-        version.sizeToFit()
-        version.center = cv?.overscrollView?.bounds.midXY ?? .zero
-        version.center.x -= 1.5
-        version.center.y += 31
+        version.center = .init(x: center.x - 1.5, y: center.x + 31)
+    }
+
+    func viewModel(at idxPath: IndexPath) -> CellViewModel? {
+        viewModel?.sections[idxPath.section].items[idxPath.item].cellViewModel
     }
 
 }

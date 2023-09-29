@@ -55,6 +55,8 @@
 "error" = "Error";
 "cancel" = "Cancel";
 "sendLogs" = "Send Logs";
+"sonsofcrypto" = "sons of crypto";
+
 
 "error.alert.title" = "Oops! 😬";
 
@@ -161,35 +163,27 @@
 "settings.themes" = "Themes";
 "settings.themes.miami.light" = "Miami Sunrise Light";
 "settings.themes.miami.dark" = "Miami Sunrise Dark";
-"settings.themes.ios.light" = "Vanilla Light";
-"settings.themes.ios.dark" = "Vanilla Dark";
+"settings.themes.vanilla.light" = "Vanilla Light";
+"settings.themes.vanilla.dark" = "Vanilla Dark";
 
 "settings.improvement" = "Improvement proposals";
 
 "settings.developer" = "Developer menu";
-"settings.developer.apis" = "APIs";
-"settings.developer.apis.nfts" = "NFTs";
-"settings.developer.apis.nfts.openSea" = "OpenSea";
-"settings.developer.transitions" = "Transitions";
-"settings.developer.transitions.cardFlip" = "Card Flip";
-"settings.developer.transitions.sheet" = "Sheet";
 "settings.developer.resetKeyStore" = "Reset keystore";
 
-"settings.about" = "About";
-"settings.about.socials" = "Socials";
-"settings.about.socials.website" = "Website";
-"settings.about.socials.github" = "GitHub";
-"settings.about.socials.twitter" = "Twitter";
-"settings.about.socials.telegram" = "Telegram";
-"settings.about.socials.discord" = "Discord";
-"settings.about.socials.medium" = "Medium";
-"settings.about.contactUs" = "Contact us";
-"settings.about.contactUs.mail" = "Mail";
-"settings.about.contactUs.footer" = "sons Of crypto";
+"settings.soc.website" = "Website";
+"settings.soc.twitter" = "Twitter";
+"settings.soc.telegram" = "Telegram";
+"settings.soc.substack" = "Substack";
 
-"settings.feedback" = "Beta feedback / Report issue 🪲";
+"settings.feedback" = "Feedback / Report issue 🪲";
 "settings.feedback.subject" = "App feedback %@";
-"settings.feedback.subject.beta" = "Beta %@ feedback / Report 🪲";
+"settings.feedback.subject.beta" = "%@ feedback / Report 🪲";
+
+"settings.docs.title" = "web3wallet stands for";
+"settings.docs.cyberspace" = "The Independence of Cyberspace";
+"settings.docs.cypherpunkmanifesto" = "A Cypherpunk's Manifesto";
+"settings.docs.netoworkstate" = "The Network State";
 
 "alert.underConstruction.title" = "Under construction";
 "alert.underConstruction.message" = "App is under very active development and this corner is not quite ready yet. Check back soon.";
