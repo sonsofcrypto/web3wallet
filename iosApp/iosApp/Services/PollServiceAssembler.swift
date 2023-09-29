@@ -1,11 +1,7 @@
-//
-//  PollServiceAssembler.swift
-//  iosApp
-//
-//  Created by anon on 24/08/2023.
-//
+// Created by web3d3v on 03/08/2022.
+// Copyright (c) 2022 Sons Of Crypto.
+// SPDX-License-Identifier: MIT
 
-import Foundation
 import Foundation
 import web3walletcore
 

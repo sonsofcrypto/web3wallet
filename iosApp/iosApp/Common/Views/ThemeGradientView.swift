@@ -14,12 +14,12 @@ final class ThemeGradientView: GradientView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureUI()
+        applyTheme(Theme)
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        configureUI()
+        applyTheme(Theme)
     }
 
     override func layoutSubviews() {
@@ -33,11 +33,11 @@ final class ThemeGradientView: GradientView {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        configureUI()
+        applyTheme(Theme)
     }
 
-    private func configureUI() {
-        colors = [Theme.color.bgGradientTop, Theme.color.bgGradientBtm]
+    private func applyTheme(_ theme: ThemeProtocol) {
+        colors = [theme.color.bgGradientTop, theme.color.bgGradientBtm]
     }
 
     private func setTopClipEnabled(_ enabled: Bool) {

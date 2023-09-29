@@ -3,11 +3,12 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 protocol SettingsWireframeFactory {
     func make(
         _ parent: UIViewController?,
-        context: SettingsWireframeContext
+        destination: SettingsWireframeDestination
     ) -> SettingsWireframe
 }
 
@@ -27,11 +28,11 @@ extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
     
     func make(
         _ parent: UIViewController?,
-        context: SettingsWireframeContext
+        destination: SettingsWireframeDestination
     ) -> SettingsWireframe {
         DefaultSettingsWireframe(
             parent,
-            context: context,
+            destination: destination,
             settingsService: service
         )
     }

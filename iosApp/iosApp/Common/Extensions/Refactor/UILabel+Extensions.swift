@@ -180,14 +180,9 @@ extension UILabel {
         text: String? = nil
     ) {
         self.init()
-        if let font = font {
-            self.font = font
-        }
-        if let color = color {
-            self.textColor = color
-        }
-        if let text = text {
-            self.text = text
-        }
+        if let font = font { self.font = font }
+        if let color = color { textColor = color }
+        self.text = text
+        self.sizeToFit()
     }
 }

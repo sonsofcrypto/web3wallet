@@ -10,14 +10,16 @@ class SectionHeaderView: UICollectionReusableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configure()
+        applyTheme(Theme)
     }
-}
 
-private extension SectionHeaderView {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+    }
 
-    func configure() {
-        label.apply(style: .body)
+    private func applyTheme(_ theme: ThemeProtocol) {
+        label.textColor = theme.color.textSecondary
+        label.font = theme.font.sectionHeader
     }
 }
 
@@ -25,6 +27,11 @@ extension SectionHeaderView {
 
     func update(with viewModel: SectionHeaderViewModel?) -> Self {
         label.text = viewModel?.title
+        return self
+    }
+
+    func update(with viewModel: CollectionViewModel.Section?) -> Self {
+        label.text = viewModel?.header?.uppercased()
         return self
     }
 }

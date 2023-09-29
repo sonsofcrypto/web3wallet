@@ -105,13 +105,9 @@ private extension NetworkFeePickerView {
 private extension NetworkFeePickerView {
     
     @objc func feeTapped(_ sender: UITapGestureRecognizer) {
-        
         guard let tag = sender.view?.tag else { return }
-        
         let fee = fees[tag]
-        
         onFeeSelected?(fee)
-        
         dismissPicker()
     }
     

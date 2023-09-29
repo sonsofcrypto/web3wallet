@@ -48,6 +48,9 @@ protocol ThemeColorProtocol {
     var tabBarBackground: UIColor { get }
     var tabBarTint: UIColor { get }
     var tabBarTintSelected: UIColor { get }
+    var collectionSectionStroke: UIColor { get }
+    var collectionSeparator: UIColor { get }
+
     var stroke: UIColor { get }
     var separatorPrimary: UIColor { get }
     var separatorSecondary: UIColor { get }
@@ -106,6 +109,7 @@ struct ThemeFont {
     let dashboardTVPct: UIFont
     let dashboardTVTokenBalance: UIFont
     let dashboardTVTokenBalanceSmall: UIFont
+    let sectionHeader: UIFont
 }
 
 // TODO: This is comment on settings. It should be `Settings.theme`
