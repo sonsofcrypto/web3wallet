@@ -14,6 +14,16 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 # Release Notes 
 
+### v1.0.1 #30
+- Adding "web3wallet stand for" to settings 
+- Settings Module Refactor
+- Settings UI refactor
+- CollectionViewModel (Sharing more UI Level components)
+- Removed classed no longer in use
+- Removed assets no longer in use
+- Theme optimizations 
+- Fixed broken constraints across the app ()
+
 ### v1.0 #28
 
 Initial open beta MVP release of the most cypherpunk web3 wallet.

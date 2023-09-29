@@ -4,4 +4,5 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
 
 interface SettingsView {
     fun update(viewModel: CollectionViewModel.Screen)
+    fun updateTheme()
 }

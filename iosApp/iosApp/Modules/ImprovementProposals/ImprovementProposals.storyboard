@@ -119,8 +119,6 @@
                             </constraints>
                             <connections>
                                 <outlet property="label" destination="fuC-fe-ehh" id="Dgv-b4-641"/>
-                                <outletCollection property="edgeConstraints" destination="XnI-5G-ZmK" collectionClass="NSMutableArray" id="nSx-kT-8Eo"/>
-                                <outletCollection property="edgeConstraints" destination="l20-dq-INt" collectionClass="NSMutableArray" id="NOU-4d-brI"/>
                             </connections>
                         </collectionReusableView>
                         <connections>

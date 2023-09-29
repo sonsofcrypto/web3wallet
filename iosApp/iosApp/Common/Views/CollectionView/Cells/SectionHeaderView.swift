@@ -15,6 +15,7 @@ class SectionHeaderView: UICollectionReusableView {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+        applyTheme(Theme)
     }
 
     private func applyTheme(_ theme: ThemeProtocol) {

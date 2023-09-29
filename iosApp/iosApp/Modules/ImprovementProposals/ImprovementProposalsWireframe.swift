@@ -27,7 +27,11 @@ extension DefaultImprovementProposalsWireframe {
     func present() {
         let vc = wireUp()
         self.vc = vc
-        parent?.show(vc, sender: self)
+        if let _ = parent as? SettingsView {
+            parent?.show(vc.asNavVc?.viewControllers[0] ?? vc, sender: self)
+        } else {
+            parent?.show(vc, sender: self)
+        }
     }
 
     func navigate(to destination: ImprovementProposalsWireframeDestination) {

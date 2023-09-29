@@ -12,8 +12,8 @@ extension String {
         let unicodeScalars = self.unicodeScalars.map { $0.value }
         return unicodeScalars.reduce(0) {
             (Int($1) &+ ($0 << 6) &+ ($0 << 16))
-                    .addingReportingOverflow(-$0)
-                    .partialValue
+                .addingReportingOverflow(-$0)
+                .partialValue
         }
     }
 }
@@ -72,3 +72,32 @@ extension String {
     }
 }
 
+extension String {
+
+    static func estimateSize(
+        _ text: String?,
+        font: UIFont,
+        maxWidth: CGFloat,
+        extraHeight: CGFloat = 0,
+        minHeight: CGFloat = 0
+    ) -> CGSize {
+        guard let nxText = text as? NSString else {
+            return minHeight != 0
+                ? .init(width: maxWidth, height: minHeight)
+                : .zero
+        }
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = .byWordWrapping
+        var size = nxText.boundingRect(
+            with: .init(width: maxWidth, height: .greatestFiniteMagnitude),
+            options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin ],
+            attributes: [
+                .font: font,
+                .paragraphStyle: paragraphStyle
+            ],
+            context: nil
+        ).size
+        size.height += extraHeight
+        return size
+    }
+}

@@ -8,17 +8,31 @@ import web3walletcore
 protocol SettingsWireframeFactory {
     func make(
         _ parent: UIViewController?,
-        destination: SettingsWireframeDestination
+        screenId: SettingsScreenId
     ) -> SettingsWireframe
 }
 
 // MARK: - DefaultSettingsWireframeFactory
 
 class DefaultSettingsWireframeFactory {
-    private let service: SettingsService
+    private let webViewWireframeFactory: WebViewWireframeFactory
+    private let improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory
+    private let mailWireframeFactory: MailService
+    private let settingsService: SettingsService
+    private let keyStoreService: KeyStoreService
 
-    init(service: SettingsService) {
-        self.service = service
+    init(
+        webViewWireframeFactory: WebViewWireframeFactory,
+        improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory,
+        mailWireframeFactory: MailService,
+        settingsService: SettingsService,
+        keyStoreService: KeyStoreService
+    ) {
+        self.webViewWireframeFactory = webViewWireframeFactory
+        self.improvementProposalsWireframeFactory = improvementProposalsWireframeFactory
+        self.mailWireframeFactory = mailWireframeFactory
+        self.settingsService = settingsService
+        self.keyStoreService = keyStoreService
     }
 }
 
@@ -28,12 +42,16 @@ extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
     
     func make(
         _ parent: UIViewController?,
-        destination: SettingsWireframeDestination
+        screenId: SettingsScreenId
     ) -> SettingsWireframe {
         DefaultSettingsWireframe(
             parent,
-            destination: destination,
-            settingsService: service
+            screenId: screenId,
+            webViewWireframeFactory: webViewWireframeFactory,
+            improvementProposalsWireframeFactory: improvementProposalsWireframeFactory,
+            mailWireframeFactory: mailWireframeFactory,
+            settingsService: settingsService,
+            keyStoreService: keyStoreService
         )
     }
 }
@@ -45,7 +63,11 @@ final class SettingsWireframeFactoryAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> SettingsWireframeFactory in
             DefaultSettingsWireframeFactory(
-                service: resolver.resolve()
+                webViewWireframeFactory: resolver.resolve(),
+                improvementProposalsWireframeFactory: resolver.resolve(),
+                mailWireframeFactory: resolver.resolve(),
+                settingsService: resolver.resolve(),
+                keyStoreService: resolver.resolve()
             )
         }
     }
