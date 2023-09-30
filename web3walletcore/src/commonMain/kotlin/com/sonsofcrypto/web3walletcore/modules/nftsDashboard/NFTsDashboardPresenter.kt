@@ -6,6 +6,8 @@ import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import com.sonsofcrypto.web3lib.utils.withUICxt
 import com.sonsofcrypto.web3walletcore.common.viewModels.ErrorViewModel
 import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardPresenterEvent.ErrAction
+import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardPresenterEvent.Refresh
 import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardViewModel.Collection
 import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardViewModel.Error
 import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardViewModel.Loaded
@@ -14,22 +16,19 @@ import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardViewMo
 import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardWireframeDestination.SendError
 import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardWireframeDestination.ViewCollectionNFTs
 import com.sonsofcrypto.web3walletcore.modules.nftsDashboard.NFTsDashboardWireframeDestination.ViewNFT
-import com.sonsofcrypto.web3walletcore.services.nfts.NFTCollection
-import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 sealed class NFTsDashboardPresenterEvent {
     data class ViewCollectionNFTs(val idx: Int): NFTsDashboardPresenterEvent()
     data class ViewNFT(val idx: Int): NFTsDashboardPresenterEvent()
-    object CancelError: NFTsDashboardPresenterEvent()
-    object SendError: NFTsDashboardPresenterEvent()
+    data class ErrAction(val idx: Int): NFTsDashboardPresenterEvent()
+    object Refresh: NFTsDashboardPresenterEvent()
 }
 
 interface NFTsDashboardPresenter {
-    fun present(isPullDownToRefresh: Boolean)
+    fun present()
     fun handle(event: NFTsDashboardPresenterEvent)
-    fun releaseResources()
 }
 
 class DefaultNFTsDashboardPresenter(
@@ -39,31 +38,26 @@ class DefaultNFTsDashboardPresenter(
 ): NFTsDashboardPresenter, NFTsDashboardInteractorLister  {
     private val bgScope = CoroutineScope(bgDispatcher)
     private val uiScope = CoroutineScope(uiDispatcher)
-    private var nfts: List<NFTItem> = emptyList()
-    private var collections: List<NFTCollection> = emptyList()
+    private var isLoading: Boolean =  false
     private var err: Throwable? = null
+    /** `errCache` needed due to potential race conditions, between user
+     * handling error and new async events causing viewModel update */
+    private var errCache: Throwable? = null
 
     init {
         interactor.add(this)
     }
 
-    override fun present(isPullDownToRefresh: Boolean) {
-        if (!isPullDownToRefresh) { view.get()?.update(Loading) }
+    override fun present() {
+        isLoading = true
+        updateView()
         bgScope.launch {
             try {
-                nfts = interactor.fetchYourNFTs(isPullDownToRefresh)
-                collections = interactor.yourCollections()
+                interactor.fetchYourNFTs()
                 withUICxt { updateView() }
             } catch (e: Throwable) {
                 err = e
-                withUICxt {
-                    val errorViewModel = ErrorViewModel(
-                        Localized("error"),
-                        Localized("nfts.dashboard.error.message"),
-                        listOf(Localized("cancel"), Localized("sendLogs"))
-                    )
-                    view.get()?.update(Error(errorViewModel))
-                }
+                withUICxt { updateView() }
             }
         }
     }
@@ -71,28 +65,49 @@ class DefaultNFTsDashboardPresenter(
     override fun handle(event: NFTsDashboardPresenterEvent) {
         when (event) {
             is NFTsDashboardPresenterEvent.ViewNFT -> {
-                wireframe.navigate(ViewNFT(nfts[event.idx]))
+                wireframe.navigate(ViewNFT(interactor.nfts()[event.idx]))
             }
             is NFTsDashboardPresenterEvent.ViewCollectionNFTs -> {
-                wireframe.navigate(ViewCollectionNFTs(collections[event.idx].identifier))
+                val collId = interactor.collections()[event.idx].identifier
+                wireframe.navigate(ViewCollectionNFTs(collId))
             }
-            is NFTsDashboardPresenterEvent.CancelError -> err = null
-            is NFTsDashboardPresenterEvent.SendError -> {
-                if (err == null) return
-                wireframe.navigate(SendError(Localized("nfts.dashboard.error.email.body", err!!)))
+            is Refresh -> present()
+            is ErrAction -> {
+                if (err != null && event.idx == 1) {
+                    val e = err ?: errCache
+                    val errMgs = Localized("nfts.dashboard.error.email.body", e)
+                    wireframe.navigate(SendError(errMgs))
+                }
                 err = null
             }
         }
     }
 
-    override fun releaseResources() { interactor.remove(this) }
+    override fun networkChanged() {
+        uiScope.launch { view.get()?.popToRootAndRefresh() }
+    }
 
-    override fun networkChanged() { uiScope.launch { view.get()?.popToRootAndRefresh() } }
-
-    override fun nftsChanged() { uiScope.launch { present(isPullDownToRefresh = false) } }
+    override fun nftsChanged() { uiScope.launch { updateView() } }
 
     private fun updateView() {
-        val nftsViewModel = nfts.map {
+        if (isLoading) {
+            view.get()?.update(Loading)
+            isLoading = false
+            return
+        }
+        if (err != null) {
+            println("[NFTsDashboardPresenter] error: $err")
+            val errorViewModel = ErrorViewModel(
+                Localized("error"),
+                Localized("nfts.dashboard.error.message"),
+                listOf(Localized("cancel"), Localized("sendLogs"))
+            )
+            view.get()?.update(Error(errorViewModel))
+            errCache = err
+            err = null
+            return
+        }
+        val nftsViewModel = interactor.nfts().map {
             NFT(
                 it.identifier,
                 it.gatewayImageUrl,
@@ -101,7 +116,7 @@ class DefaultNFTsDashboardPresenter(
                 it.fallbackText
             )
         }
-        val collectionsViewModel = interactor.yourCollections().map {
+        val collectionsViewModel = interactor.collections().map {
             Collection(it.identifier, it.coverImage, it.title, it.author)
         }
         view.get()?.update(Loaded(nftsViewModel, collectionsViewModel))

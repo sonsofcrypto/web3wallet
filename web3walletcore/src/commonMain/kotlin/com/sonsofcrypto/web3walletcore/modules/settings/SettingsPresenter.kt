@@ -3,7 +3,6 @@ package com.sonsofcrypto.web3walletcore.modules.settings
 import com.sonsofcrypto.web3lib.utils.EnvUtils
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
-import com.sonsofcrypto.web3lib.utils.withUICxt
 import com.sonsofcrypto.web3walletcore.common.ThemeId
 import com.sonsofcrypto.web3walletcore.common.ThemeVariant
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
@@ -11,10 +10,11 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory.DETAIL
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory.NONE
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Label
-import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.*
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Item
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.modules.keyStore.KeyStoreWireframeDestination
-import com.sonsofcrypto.web3walletcore.modules.settings.SettingsPresenterEvent.*
+import com.sonsofcrypto.web3walletcore.modules.settings.SettingsPresenterEvent.Select
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsScreenId.DEVELOPER
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsScreenId.ROOT
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsScreenId.THEMES

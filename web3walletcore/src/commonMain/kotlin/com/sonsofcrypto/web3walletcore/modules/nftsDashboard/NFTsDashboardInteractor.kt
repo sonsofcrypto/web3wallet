@@ -3,10 +3,14 @@ package com.sonsofcrypto.web3walletcore.modules.nftsDashboard
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
 import com.sonsofcrypto.web3lib.services.networks.NetworksListener
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
+import com.sonsofcrypto.web3lib.utils.uiDispatcher
+import com.sonsofcrypto.web3lib.utils.withUICxt
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTCollection
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsServiceListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 interface NFTsDashboardInteractorLister {
     fun networkChanged()
@@ -15,8 +19,9 @@ interface NFTsDashboardInteractorLister {
 
 interface NFTsDashboardInteractor {
     @Throws(Throwable::class)
-    suspend fun fetchYourNFTs(isPullDownToRefreh: Boolean): List<NFTItem>
-    fun yourCollections(): List<NFTCollection>
+    suspend fun fetchYourNFTs()
+    fun nfts(): List<NFTItem>
+    fun collections(): List<NFTCollection>
     fun add(listener: NFTsDashboardInteractorLister)
     fun remove(listener: NFTsDashboardInteractorLister)
 }
@@ -25,14 +30,20 @@ class DefaultNFTsDashboardInteractor(
     private val networksService: NetworksService,
     private val nftsService: NFTsService,
 ): NFTsDashboardInteractor, NetworksListener, NFTsServiceListener {
+    private var nfts: List<NFTItem> = emptyList()
+    private var collections: List<NFTCollection> = emptyList()
     private var listener: NFTsDashboardInteractorLister? = null
 
-    override suspend fun fetchYourNFTs(isPullDownToRefreh: Boolean): List<NFTItem> {
-        if (!isPullDownToRefreh) return nftsService.nfts()
-        return nftsService.fetchNFTs()
+    override suspend fun fetchYourNFTs() {
+        nftsService.fetchNFTs()
+        withUICxt {
+            nfts = nftsService.nfts()
+            collections = nftsService.collections()
+        }
     }
 
-    override fun yourCollections(): List<NFTCollection> = nftsService.collections()
+    override fun nfts(): List<NFTItem> = nfts
+    override fun collections(): List<NFTCollection> = collections
 
     override fun add(listener: NFTsDashboardInteractorLister) {
         if (this.listener != null) { remove(this.listener!!)}
@@ -52,6 +63,10 @@ class DefaultNFTsDashboardInteractor(
     }
 
     override fun nftsChanged() {
-        listener?.nftsChanged()
+        CoroutineScope(uiDispatcher).launch {
+            nfts = nftsService.nfts()
+            collections = nftsService.collections()
+            listener?.nftsChanged()
+        }
     }
 }

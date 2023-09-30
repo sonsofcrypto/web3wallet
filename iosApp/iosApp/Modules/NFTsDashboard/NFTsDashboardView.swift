@@ -19,10 +19,6 @@ final class NFTsDashboardViewController: BaseViewController {
         configureUI()
         presenter.present(isPullDownToRefresh: false)
     }
-    
-    deinit {
-        presenter.releaseResources()
-    }
 }
 
 extension NFTsDashboardViewController {
@@ -45,8 +41,8 @@ extension NFTsDashboardViewController {
     }
     
     func popToRootAndRefresh() {
-        navigationController?.popToRootViewController(animated: false)
-        presenter.present(isPullDownToRefresh: true)
+        navigationController?.popToRootViewController(animated: true)
+        presenter.present()
     }
 }
 

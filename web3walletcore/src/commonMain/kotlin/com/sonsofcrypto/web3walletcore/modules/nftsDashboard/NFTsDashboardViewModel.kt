@@ -6,7 +6,8 @@ sealed class NFTsDashboardViewModel {
     object Loading: NFTsDashboardViewModel()
     data class Error(val error: ErrorViewModel): NFTsDashboardViewModel()
     data class Loaded(
-        val nfts: List<NFT>, val collections: List<Collection>
+        val nfts: List<NFT>,
+        val collections: List<Collection>,
     ): NFTsDashboardViewModel()
 
     data class NFT(
