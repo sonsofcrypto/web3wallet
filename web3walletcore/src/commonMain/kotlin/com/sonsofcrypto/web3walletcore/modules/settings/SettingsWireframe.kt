@@ -1,7 +1,5 @@
 package com.sonsofcrypto.web3walletcore.modules.settings
 
-import com.sonsofcrypto.web3walletcore.extensions.Localized
-
 sealed class SettingsWireframeDestination() {
     data class Settings(val id: SettingsScreenId): SettingsWireframeDestination()
     data class Website(val url: String): SettingsWireframeDestination()
