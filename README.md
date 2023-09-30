@@ -2,6 +2,8 @@
 
 # web3wallet
 
+by cypherpunks for cypherpunks
+
 by degens for degens
 
 for more info see [sonsofcrypto.com](https://sonsofcrypto.com)
@@ -11,10 +13,6 @@ for more info see [sonsofcrypto.com](https://sonsofcrypto.com)
 [Download on AppStore](https://apps.apple.com/us/app/web3wallet-by-sons-of-crypto-%CE%BE/id6464587288)
 
 NOTE: Currently under active development.
-
-&nbsp;
-
-&nbsp;
 
 &nbsp;
 
