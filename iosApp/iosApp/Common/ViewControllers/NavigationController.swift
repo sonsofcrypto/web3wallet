@@ -39,11 +39,6 @@ final class NavigationController: UINavigationController {
         interactivePopGestureRecognizer?.delegate = self
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        layoutBar()
-    }
-
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         layoutBar()
@@ -97,17 +92,31 @@ private extension NavigationController {
 
     func didSetContentView(_ contentView: UIView?, prevView: UIView?) {
         guard contentView != prevView else { return }
-        prevView?.removeFromSuperview()
-        view.setNeedsLayout()
+
         if let contentView = contentView {
-            navigationBar.setNeedsLayout()
+            let barFrame = navigationBar.frame
+            let width = contentView.intrinsicContentSize.width
             view.addSubview(contentView)
-            contentView.alpha = 0
-            UIView.animate(withDuration: 0.15) {
-                self.view.layoutIfNeeded()
-                contentView.alpha = 1
-            }
+            contentView.frame = CGRect(
+                center: .init(x: barFrame.width.half, y: barFrame.midY),
+                size: .init(width: width, height: 0)
+            )
         }
+        
+        transitionCoordinator?.animate(
+            alongsideTransition: { context in
+                prevView?.alpha = 0
+                contentView?.alpha = 1
+                self.layoutBar()
+                let ty = -(prevView?.bounds.height ?? 0.0)
+                prevView?.transform = CGAffineTransformMakeTranslation(0, ty)
+            },
+            completion: { context in
+                prevView?.transform = .identity
+                prevView?.removeFromSuperview()
+                self.layoutBar()
+            }
+        )
     }
 
     func layoutBar() {
@@ -122,7 +131,7 @@ private extension NavigationController {
         navigationBar.frame = barFrame
 
         var contentFrame = barFrame.insetBy(dx: Theme.padding, dy: 0)
-        contentFrame.size.height = contentView.bounds.height
+        contentFrame.size.height = contentView.intrinsicContentSize.height
         contentFrame.origin.y = barFrame.maxY - Theme.padding
         contentFrame.origin.y -= contentView.bounds.height
         contentView.frame = contentFrame
@@ -131,6 +140,7 @@ private extension NavigationController {
             top: barFrame.maxY - contentFrame.minY
         )
     }
+
 
     func contentView(for viewController: UIViewController?) -> UIView? {
         (viewController?.navigationItem as? NavigationItem)?.contentView

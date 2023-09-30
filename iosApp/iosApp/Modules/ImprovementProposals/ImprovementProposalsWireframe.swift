@@ -28,7 +28,8 @@ extension DefaultImprovementProposalsWireframe {
         let vc = wireUp()
         self.vc = vc
         if let _ = parent as? SettingsView {
-            parent?.show(vc.asNavVc?.viewControllers[0] ?? vc, sender: self)
+            self.vc = vc.asNavVc?.viewControllers[0] ?? vc
+            parent?.show(self.vc ?? vc, sender: self)
         } else {
             parent?.show(vc, sender: self)
         }

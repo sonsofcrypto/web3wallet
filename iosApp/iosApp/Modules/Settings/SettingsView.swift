@@ -89,7 +89,9 @@ class SettingsViewController: UICollectionViewController,
     
     func updateTheme() {
         Theme = loadThemeFromSettings()
-//        AppDelegate.refreshTraits()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            AppDelegate.refreshTraits()
+        }
     }
 
     // MARK: - UICollectionViewDelegateFlowLayout
