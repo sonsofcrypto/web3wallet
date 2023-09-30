@@ -9,6 +9,8 @@ var Theme: ThemeProtocol = loadThemeFromSettings() {
     didSet { AppDelegate.rebootApp() }
 }
 
+//var Theme: ThemeProtocol = loadThemeFromSettings()
+
 enum ThemeVariant: String {
     case light
     case dark
