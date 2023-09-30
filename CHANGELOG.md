@@ -7,8 +7,9 @@
 | AppStore RC.                                            | New features not quite AppStore ready. Great for testing | Living on the bleeding edge. Latest features, latest bugs. 🐛  |
 | [Download](https://testflight.apple.com/join/I4DFVaiH)  | [Download](https://testflight.apple.com/join/5GiDXNJ3)   | [Download](https://testflight.apple.com/join/85JEPH96)         |
 
-All three builds can be installed simultaneously. For more info about web3wallet
-head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
+Live AppStore build link [here (v1.0 #28)](https://apps.apple.com/us/app/web3wallet-by-sons-of-crypto-%CE%BE/id6464587288)
+. All three builds can be installed simultaneously. For more info about web3wallet
+head over to [sonsofcrypto.com](https://sonsofcrypto.com/). 
 
 
 # Release Notes 
