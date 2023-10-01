@@ -43,11 +43,19 @@ class SettingsViewController: UICollectionViewController,
         collectionView.reloadData()
     }
 
-    func updateTheme() {
+    func updateThemeAndRefreshTraits() {
         Theme = loadThemeFromSettings()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            AppDelegate.refreshTraits()
-        }
+        // Once all views were moved to traits based theme
+        // AppDelegate.refreshTraits()
+    }
+
+    func refreshTraits() {
+        // NOTE: Temporary hack. Once we have refreshTraits for iOS 17 and
+        // this hack for prior
+        let navVc = tabBarController?.viewControllers?[safe: 2]?.asNavVc
+        let vc = navVc?.viewControllers.first as? NFTsDashboardViewController
+        vc?.traitCollectionDidChange(nil)
+        // AppDelegate.refreshTraits()
     }
 
     // MARK: - UICollectionViewDataSource

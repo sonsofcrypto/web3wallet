@@ -11,6 +11,7 @@ final class DefaultNFTsDashboardWireframe {
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let nftsService: NFTsService
     private let networksService: NetworksService
+    private let settingsService: SettingsService
     private let mailService: MailService
 
     private weak var vc: UIViewController?
@@ -21,6 +22,7 @@ final class DefaultNFTsDashboardWireframe {
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         nftsService: NFTsService,
         networksService: NetworksService,
+        settingsService: SettingsService,
         mailService: MailService
     ) {
         self.parent = parent
@@ -28,6 +30,7 @@ final class DefaultNFTsDashboardWireframe {
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.nftsService = nftsService
         self.networksService = networksService
+        self.settingsService = settingsService
         self.mailService = mailService
     }
 }
@@ -70,7 +73,8 @@ private extension DefaultNFTsDashboardWireframe {
         let vc: NFTsDashboardViewController = UIStoryboard(.main).instantiate()
         let interactor = DefaultNFTsDashboardInteractor(
             networksService: networksService,
-            nftsService: nftsService
+            nftsService: nftsService,
+            settingsService: settingsService
         )
         let presenter = DefaultNFTsDashboardPresenter(
             view: WeakRef(referred: vc),

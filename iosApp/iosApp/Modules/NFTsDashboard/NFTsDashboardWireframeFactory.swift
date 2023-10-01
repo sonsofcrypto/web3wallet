@@ -18,6 +18,7 @@ final class DefaultNFTsDashboardWireframeFactory {
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let nftsService: NFTsService
     private let networksService: NetworksService
+    private let settingsService: SettingsService
     private let mailService: MailService
 
     init(
@@ -25,12 +26,14 @@ final class DefaultNFTsDashboardWireframeFactory {
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         nftsService: NFTsService,
         networksService: NetworksService,
+        settingsService: SettingsService,
         mailService: MailService
     ) {
         self.nftsCollectionWireframeFactory = nftsCollectionWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.nftsService = nftsService
         self.networksService = networksService
+        self.settingsService = settingsService
         self.mailService = mailService
     }
 }
@@ -44,6 +47,7 @@ extension DefaultNFTsDashboardWireframeFactory: NFTsDashboardWireframeFactory {
             nftDetailWireframeFactory: nftDetailWireframeFactory,
             nftsService: nftsService,
             networksService: networksService,
+            settingsService: settingsService,
             mailService: mailService
         )
     }
@@ -60,6 +64,7 @@ final class NFTsDashboardWireframeFactoryAssembler: AssemblerComponent {
                 nftDetailWireframeFactory: resolver.resolve(),
                 nftsService: resolver.resolve(),
                 networksService: resolver.resolve(),
+                settingsService: resolver.resolve(),
                 mailService: resolver.resolve()
             )
         }

@@ -122,6 +122,9 @@ class DefaultNFTsDashboardPresenter(
         val collectionsViewModel = interactor.collections().map {
             Collection(it.identifier, it.coverImage, it.title, it.author)
         }
-        view.get()?.update(Loaded(nftsViewModel, collectionsViewModel))
+        val regCarousel = interactor.regularCarousel()
+        view.get()?.update(
+            Loaded(nftsViewModel, collectionsViewModel, regCarousel)
+        )
     }
 }

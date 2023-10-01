@@ -3,13 +3,14 @@ package com.sonsofcrypto.web3walletcore.modules.settings
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3walletcore.common.ThemeId
 import com.sonsofcrypto.web3walletcore.common.ThemeVariant
+import com.sonsofcrypto.web3walletcore.services.settings.NFTCarouselSize
 import com.sonsofcrypto.web3walletcore.services.settings.SettingsService
 
 interface SettingsInteractor {
     var themeId: ThemeId
     var themeVariant: ThemeVariant
+    var nftCarouselSize: NFTCarouselSize
 
-    fun selectedThemeIdx(): Int
     fun resetKeyStore()
 }
 
@@ -26,11 +27,9 @@ class DefaultSettingsInteractor(
         get() = settingsService.themeVariant
         set(variant) { settingsService.themeVariant = variant }
 
-    override fun selectedThemeIdx(): Int {
-        var idx = if (themeId == ThemeId.MIAMI) 0 else 2
-        idx += if (themeVariant == ThemeVariant.DARK) 1 else 0
-        return idx
-    }
+    override var nftCarouselSize: NFTCarouselSize
+        get() = settingsService.nftCarouselSize
+        set(size) { settingsService.nftCarouselSize = size }
 
     override fun resetKeyStore() {
         keyStoreService.items().forEach {

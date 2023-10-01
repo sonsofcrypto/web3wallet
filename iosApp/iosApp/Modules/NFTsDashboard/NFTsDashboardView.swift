@@ -33,7 +33,8 @@ final class NFTsDashboardViewController: UICollectionViewController,
     ) {
         super.traitCollectionDidChange(previousTraitCollection)
         applyTheme(Theme)
-//        cv?.collectionViewLayout.invalidateLayout()
+        recomputeSizeIfNeeded(true)
+        cv?.collectionViewLayout.invalidateLayout()
     }
 
     // MARK: - NFTsDashboardView
@@ -181,13 +182,19 @@ private extension NFTsDashboardViewController {
         applyTheme(Theme)
     }
 
-    func recomputeSizeIfNeeded() {
-        guard prevSize.width != view.bounds.size.width else { return }
+    func recomputeSizeIfNeeded(_ force: Bool = false) {
+        guard prevSize.width != view.bounds.size.width || force else { return }
         prevSize = view.bounds.size
         let length = floor((view.bounds.width - Theme.padding * 3) / 2)
+        let vm = viewModel as? NFTsDashboardViewModel.Loaded
         collectionCellSize = .init(width: length, height: length)
         emptyCellSize = view.frame.size
-        carouselCellSize = .init(width: view.bounds.width, height: length)
+        let settings: SettingsService = AppAssembler.resolve()
+        let regular = settings.nftCarouselSize == .regular
+        carouselCellSize = .init(
+            width: view.bounds.width,
+            height: length * ( regular ? 1 : 1.25)
+        )
     }
 
     func applyTheme(_ theme: ThemeProtocol) {
