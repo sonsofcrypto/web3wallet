@@ -22,6 +22,17 @@ class ThemeCell: UICollectionViewCell {
         // NOTE: To be overridden by subclasses to that this boiler plate does
         // not need to be in each cell
     }
+
+    func collectionView() -> UICollectionView? {
+        var superView = superview
+        while superView != nil {
+            if let cv = superView as? UICollectionView {
+                return cv
+            }
+            superView = superView?.superview
+        }
+        return nil
+    }
 }
 
 class CollectionViewCell: UICollectionViewCell {

@@ -5,5 +5,10 @@
 import Foundation
 
 extension IndexPath {
+
+    func isZero() -> Bool {
+        section == 0 && item == 0
+    }
+
     static var zero: IndexPath = IndexPath(item: 0, section: 0)
 }

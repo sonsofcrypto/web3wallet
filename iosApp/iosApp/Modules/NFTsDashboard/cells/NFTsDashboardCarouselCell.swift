@@ -11,7 +11,7 @@ class NFTsDashboardCarouselCell: ThemeCell, iCarouselDataSource, iCarouselDelega
     private var viewModel: [NFTsDashboardViewModel.Loaded.NFT]?
     private var prevSize: CGSize = .zero
     private var cellSize: CGSize = .zero
-    
+
     override func applyTheme(_ theme: ThemeProtocol) {
         super.applyTheme(theme)
         carouselView.visibleItemViews.forEach {

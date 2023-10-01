@@ -332,6 +332,7 @@
 		2DC2CD82A596ABBBA697D14E /* NFTsDashboardRefreshCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CE6C3DB0794556494A4D /* NFTsDashboardRefreshCell.swift */; };
 		2DC2CD833926C212135B8005 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CD771E4261A43B284DBD /* UIViewExtensions.swift */; };
 		2DC2CE81DB04333AC1E6833F /* ThemeBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CA1C756CB56666E04D0A /* ThemeBlurView.swift */; };
+		2DC2CF60440C5C9E64FCD9AF /* UIControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C7C91B9C13F1D182D921 /* UIControl+Extensions.swift */; };
 		2DC2CFAED100073886D0644D /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C9A15E44BDD7C7864D81 /* CollectionView.swift */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
 		D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */; };
@@ -723,6 +724,7 @@
 		2DC2C4716D8E32D5CE26DDA2 /* AlertWireframe+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertWireframe+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C486937A338F1B4E4CFB /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		2DC2C4B6C92D814FB1D50384 /* Double+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		2DC2C7C91B9C13F1D182D921 /* UIControl+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C8FA05735FD6B546BA4B /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		2DC2C9A15E44BDD7C7864D81 /* CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		2DC2CA1C756CB56666E04D0A /* ThemeBlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeBlurView.swift; sourceTree = "<group>"; };
@@ -1440,6 +1442,7 @@
 				1C7F860828D20E490073FD95 /* UIView+Extensions.swift */,
 				1C5D24DE28E1A3DD007DA557 /* UIViewController+Extensions.swift */,
 				1C54BB3B291B9F400009F158 /* Web3walletcore+Extensions.swift */,
+				2DC2C7C91B9C13F1D182D921 /* UIControl+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2436,6 +2439,7 @@
 				2DC2CD82A596ABBBA697D14E /* NFTsDashboardRefreshCell.swift in Sources */,
 				2DC2CA1BB3426CD144AE0590 /* FPSCounter.swift in Sources */,
 				2DC2CE81DB04333AC1E6833F /* ThemeBlurView.swift in Sources */,
+				2DC2CF60440C5C9E64FCD9AF /* UIControl+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
