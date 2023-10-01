@@ -4,6 +4,26 @@
 
 import UIKit
 
+class ThemeCell: UICollectionViewCell {
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        applyTheme(Theme)
+    }
+
+    override func traitCollectionDidChange(
+        _ previousTraitCollection: UITraitCollection?
+    ) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyTheme(Theme)
+    }
+
+    func applyTheme(_ theme: ThemeProtocol) {
+        // NOTE: To be overridden by subclasses to that this boiler plate does
+        // not need to be in each cell
+    }
+}
+
 class CollectionViewCell: UICollectionViewCell {
 
     override var isSelected: Bool {

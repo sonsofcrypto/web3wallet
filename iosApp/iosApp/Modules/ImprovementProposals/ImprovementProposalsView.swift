@@ -119,6 +119,7 @@ private extension ImprovementProposalsViewController {
         navigationItem.backButtonTitle = ""
         collectionView.setCollectionViewLayout(layout(), animated: false)
         collectionView.refreshControl = UIRefreshControl()
+        collectionView.refreshControl?.tintColor = Theme.color.textPrimary
         collectionView.refreshControl?.addTarget(
             self,
             action: #selector(refreshAction(_:)),

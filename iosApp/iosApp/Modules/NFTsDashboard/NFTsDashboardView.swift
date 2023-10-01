@@ -5,164 +5,213 @@
 import UIKit
 import web3walletcore
 
-final class NFTsDashboardViewController: BaseViewController {
+final class NFTsDashboardViewController: UICollectionViewController,
+    UICollectionViewDelegateFlowLayout {
+
     var presenter: NFTsDashboardPresenter!
-    private (set) weak var mainScrollView: ScrollView?
-    weak var loadingView: UIActivityIndicatorView?
-    weak var noContentView: ScrollView?
-    weak var carousel: iCarousel?
-    weak var collectionsView: UIView?
-    private (set) var viewModel: NFTsDashboardViewModel?
+
+    private var prevSize: CGSize = .zero
+    private var carouselCellSize: CGSize = .zero
+    private var emptyCellSize: CGSize = .zero
+    private var collectionCellSize: CGSize = .zero
+    private var cv: CollectionView? { collectionView as? CollectionView }
+    private(set) var viewModel: NFTsDashboardViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        presenter.present(isPullDownToRefresh: false)
+        presenter.present()
     }
-}
 
-extension NFTsDashboardViewController {
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        recomputeSizeIfNeeded()
+    }
+
+    override func traitCollectionDidChange(
+        _ previousTraitCollection: UITraitCollection?
+    ) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyTheme(Theme)
+//        cv?.collectionViewLayout.invalidateLayout()
+    }
+
+    // MARK: - NFTsDashboardView
 
     func update(with viewModel: NFTsDashboardViewModel) {
         if viewModel is NFTsDashboardViewModel.Loading {
-            guard self.viewModel?.nftItems.isEmpty ?? true else { return }
-            showLoading()
+            collectionView.refreshControl?.beginRefreshing()
+        } else {
+            collectionView.refreshControl?.endRefreshing()
         }
         if let input = viewModel as? NFTsDashboardViewModel.Error {
-            presentError(with: input.error)
+            handleError(with: input.error)
         }
         if viewModel is NFTsDashboardViewModel.Loaded {
-            noContentView?.refreshControl?.endRefreshing()
-            mainScrollView?.refreshControl?.endRefreshing()
             self.viewModel = viewModel
-            if viewModel.nftItems.isEmpty { showNoNFTs() }
-            else { showNFTs() }
+            collectionView.reloadData()
         }
     }
-    
+
     func popToRootAndRefresh() {
         navigationController?.popToRootViewController(animated: true)
         presenter.present()
     }
-}
 
-extension NFTsDashboardViewController {
-    
-    var collectionItemSize: CGSize {
-        let width: CGFloat
-        if let view = navigationController?.view {
-            width = view.frame.size.width - Theme.padding * 3
-        } else {
-            width = 220
+    // MARK: - UICollectionViewDataSource
+
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        guard let viewModel = viewModel else { return 0 }
+        // If there are no nfts we still want to show refresh cell
+        return viewModel.nfts_().isEmpty ? 1 : 2
+    }
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        guard let viewModel = viewModel else { return 0 }
+        return section == 0 ? 1 : viewModel.collections_().count
+    }
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        if indexPath.section == 0 {
+            if viewModel?.nfts_().isEmpty ?? true {
+                return collectionView.dequeue(
+                    NFTsDashboardRefreshCell.self,
+                    for: indexPath
+                ).update()
+            }
+            return collectionView.dequeue(
+                NFTsDashboardCarouselCell.self,
+                for: indexPath
+            ).update(with: viewModel?.nfts_())
         }
-        return .init(
-            width: width * 0.5,
-            height: width * 0.5
+
+        return collectionView.dequeue(
+            NFTsDashboardCollectionCell.self,
+            for: indexPath
+        ).update(with: viewModel?.collections_()[indexPath.item])
+    }
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            let titleKey = indexPath.section == 1
+                ? "nfts.dashboard.section.collections.title"
+                : "nfts.dashboard.section.nfts.title"
+            return collectionView.dequeue(
+                SectionHeaderView.self,
+                for: indexPath,
+                kind: .header
+            ).update(with: Localized(titleKey))
+        default:
+            fatalError("Failed to handle \(kind) \(indexPath)")
+        }
+    }
+
+    // MARK: - UICollectionViewDelegateFlowLayout
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        recomputeSizeIfNeeded()
+        guard indexPath.section == 0 else { return collectionCellSize }
+        return viewModel?.nfts_().count != 0 ? carouselCellSize : emptyCellSize
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        section == 0 && (viewModel?.nfts_().isEmpty ?? true)
+            ? .zero
+            : .init(width: view.bounds.width, height: Theme.sectionHeaderHeight)
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
+        section != 0 ?
+            UIEdgeInsets.with(left: Theme.padding, right: Theme.padding)
+            : .zero
+    }
+
+
+    // MARK: - UICollectionViewDelegate
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        print("Did select item at intex path")
+        presenter.handleEvent(
+            .Select(section: indexPath.section.int32, idx: indexPath.item.int32)
         )
     }
-    
-    @objc func pullDownToRefresh() {
-        presenter.present(isPullDownToRefresh: true)
-    }
-    
-    @objc func refreshNoContent() {
-        showLoading()
-        presenter.present(isPullDownToRefresh: true)
+
+    @objc func refreshAction(_ sender: Any) {
+        presenter.handleEvent(.Refresh())
     }
 }
 
 private extension NFTsDashboardViewController {
-    
-    func showLoading() {
-        loadingView?.isHidden = false
-        loadingView?.startAnimating()
-        noContentView?.isHidden = true
-        mainScrollView?.isHidden = true
-    }
-
-    func hideLoading() {
-        loadingView?.isHidden = true
-        loadingView?.stopAnimating()
-    }
-
-    func showNoNFTs() {
-        hideLoading()
-        noContentView?.isHidden = false
-        mainScrollView?.isHidden = true
-    }
-
-    func showNFTs() {
-        hideLoading()
-        noContentView?.isHidden = true
-        mainScrollView?.isHidden = false
-        refreshNFTs()
-        refreshNFTsCollections()
-    }
 
     func configureUI() {
-        edgesForExtendedLayout = []
         title = Localized("nfts")
-        let gradient = ThemeGradientView()
-        view.addSubview(gradient)
-        gradient.addConstraints(.toEdges)
-        let loadingView = UIActivityIndicatorView(style: .large)
-        loadingView.color = Theme.color.activityIndicator
-        view.addSubview(loadingView)
-        self.loadingView = loadingView
-        loadingView.addConstraints(
-            [
-                .layout(
-                    anchor: .topAnchor,
-                    constant: .equalTo(constant: Theme.padding * 2)
-                ),
-                .layout(
-                    anchor: .centerXAnchor
-                )
-            ]
+        cv?.overscrollView = UIImageView(imgName: "overscroll_ape")
+        cv?.refreshControl = UIRefreshControl()
+        cv?.refreshControl?.addTarget(
+            self,
+            action: #selector(refreshAction(_:)),
+            for: .valueChanged
         )
-        let noContentView = makeNoContentView()
-        view.addSubview(noContentView)
-        self.noContentView = noContentView
-        noContentView.addConstraints(.toEdges)
-        noContentView.overScrollView.image = "overscroll_ape".assetImage
-        let mainScrollView = makeMainScrollView()
-        view.addSubview(mainScrollView)
-        self.mainScrollView = mainScrollView
-        mainScrollView.addConstraints(.toEdges)
-        mainScrollView.overScrollView.image = "overscroll_ape".assetImage
+        applyTheme(Theme)
     }
-    
-    func presentError(with viewModel: ErrorViewModel) {
+
+    func recomputeSizeIfNeeded() {
+        guard prevSize.width != view.bounds.size.width else { return }
+        prevSize = view.bounds.size
+        let length = floor((view.bounds.width - Theme.padding * 3) / 2)
+        collectionCellSize = .init(width: length, height: length)
+        emptyCellSize = view.frame.size
+        carouselCellSize = .init(width: view.bounds.width, height: length)
+    }
+
+    func applyTheme(_ theme: ThemeProtocol) {
+        cv?.contentInset.bottom = Theme.padding
+        cv?.refreshControl?.tintColor = Theme.color.textPrimary
+    }
+
+    func handleError(with viewModel: ErrorViewModel) {
         guard viewModel.actions.count == 2 else { return }
         let alert = UIAlertController(
             title: viewModel.title,
             message: viewModel.body,
-            preferredStyle: .alert)
-        alert.addAction(
-            .init(
-                title: viewModel.actions[0],
-                style: .cancel,
-                handler: { [weak self] _ in
-                    self?.presenter.handleEvent(.CancelError())
-                }
-            )
+            preferredStyle: .alert
         )
         alert.addAction(
-            .init(
-                title: viewModel.actions[1],
-                style: .default,
-                handler: { [weak self] _ in
-                    self?.presenter.handleEvent(.SendError())
-                }
-            )
+            .init(title: viewModel.actions[0], style: .cancel) { [weak self] _ in
+                self?.presenter.handleEvent(.ErrAction(idx: 0))
+            }
+        )
+        alert.addAction(
+            .init(title: viewModel.actions[1], style: .default) { [weak self] _ in
+                self?.presenter.handleEvent(.ErrAction(idx: 1))
+            }
         )
         present(alert, animated: true)
-    }
-}
-
-extension NFTsDashboardViewModel {
-    var nftItems: [NFTsDashboardViewModel.NFT] {
-        guard let input = self as? NFTsDashboardViewModel.Loaded else { return [] }
-        return input.nfts
     }
 }

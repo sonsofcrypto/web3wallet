@@ -6,17 +6,12 @@
 import UIKit
 import web3walletcore
 
-class LabelCell: CollectionViewTableCell {
+class LabelCell: ThemeCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var accessoryImageView: UIImageView!
     @IBOutlet weak var contentStackView: UIStackView!
 
     private weak var accessoryType: CellViewModel.Label.Accessory?
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        applyTheme(Theme)
-    }
 
     func update(with viewModel: CellViewModel?) -> Self {
         guard let vm = viewModel as? CellViewModel.Label else {
@@ -27,14 +22,7 @@ class LabelCell: CollectionViewTableCell {
         return self
     }
 
-    override func traitCollectionDidChange(
-        _ previousTraitCollection: UITraitCollection?
-    ) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        applyTheme(Theme)
-    }
-
-    func applyTheme(_ theme: ThemeProtocol) {
+    override func applyTheme(_ theme: ThemeProtocol) {
         label.textColor = theme.color.textPrimary
         label.font = theme.font.callout
         accessoryImageView.tintColor = theme.color.textPrimary

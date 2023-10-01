@@ -25,3 +25,13 @@ sealed class NFTsDashboardViewModel {
         val author: String?,
     )
 }
+
+fun NFTsDashboardViewModel.nfts(): List<NFTsDashboardViewModel.NFT> {
+    return if (this is NFTsDashboardViewModel.Loaded) return this.nfts
+    else emptyList()
+}
+
+fun NFTsDashboardViewModel.collections(): List<NFTsDashboardViewModel.Collection> {
+    return if (this is NFTsDashboardViewModel.Loaded) return this.collections
+    else emptyList()
+}

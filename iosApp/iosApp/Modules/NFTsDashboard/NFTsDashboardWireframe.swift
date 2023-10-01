@@ -53,7 +53,9 @@ extension DefaultNFTsDashboardWireframe {
             nftDetailWireframeFactory.make(vc, context: context).present()
         }
         if let input = destination as? NFTsDashboardWireframeDestination.ViewCollectionNFTs {
-            let context = NFTsCollectionWireframeContext(collectionId: input.collectionId)
+            let context = NFTsCollectionWireframeContext(
+                collectionId: input.collectionId
+            )
             nftsCollectionWireframeFactory.make(vc, context: context).present()
         }
         if let input = destination as? NFTsDashboardWireframeDestination.SendError {
@@ -65,9 +67,7 @@ extension DefaultNFTsDashboardWireframe {
 private extension DefaultNFTsDashboardWireframe {
 
     func wireUp() -> UIViewController {
-        let vc: NFTsDashboardViewController = UIStoryboard(
-            .nftsDashboard
-        ).instantiate()
+        let vc: NFTsDashboardViewController = UIStoryboard(.main).instantiate()
         let interactor = DefaultNFTsDashboardInteractor(
             networksService: networksService,
             nftsService: nftsService

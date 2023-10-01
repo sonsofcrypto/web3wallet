@@ -22,16 +22,19 @@ protocol ThemeProtocol {
     var font: ThemeFont { get }
     var supportedVariants: [ThemeVariant] { get }
     var statusBarStyle: UIStatusBarStyle { get }
-    // TODO(Anon): To be consolidated further
     var padding: CGFloat { get }
+    // TODO(Anon): To be consolidated further
     var cornerRadius: CGFloat { get }
     var cornerRadiusSmall: CGFloat { get }
     var shadowRadius: CGFloat { get }
     var cellHeightLarge: CGFloat { get }
     var cellHeight: CGFloat { get }
+    var sectionHeaderHeight: CGFloat { get }
     var buttonHeight: CGFloat { get }
     var buttonSmallHeight: CGFloat { get }
     var buttonHeightExtraSmall: CGFloat { get }
+    var blurRadius: CGFloat { get }
+    var blurTintAlpha: CGFloat { get }
 }
 
 // TODO(Anon): This can be further consolidated

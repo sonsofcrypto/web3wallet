@@ -5,25 +5,12 @@
 import UIKit
 import web3walletcore
 
-final class SectionFooterView: UICollectionReusableView {
+final class SectionFooterView: ThemeReusableView {
     @IBOutlet weak var label: UILabel!
     private var attributed: Bool = false
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        applyTheme(Theme)
-        label.numberOfLines = 0
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        applyTheme(Theme)
-    }
-    
-    private func applyTheme(_ theme: ThemeProtocol) {
-        guard !attributed else {
 
-            return
-        }
+    override func applyTheme(_ theme: ThemeProtocol) {
+        guard !attributed else { return }
         label.font = theme.font.sectionHeader
         label.textColor = theme.color.textSecondary
     }
