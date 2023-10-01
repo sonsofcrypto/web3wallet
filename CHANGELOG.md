@@ -28,6 +28,7 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 - Fix collection name visibility
 - Adding section headers for NFts Dashboard
 - Optimized NFT loading
+- Placeholder for collections without image
 
 ### v1.0 #28
 
