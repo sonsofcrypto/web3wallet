@@ -56,7 +56,7 @@
 "cancel" = "Cancel";
 "sendLogs" = "Send Logs";
 "sonsofcrypto" = "sons of crypto";
-
+"ipfs.image.unavailable" = "¯\\_(ツ)_/¯\n\nImage not available on ipfs\n\n";
 
 "error.alert.title" = "Oops! 😬";
 
