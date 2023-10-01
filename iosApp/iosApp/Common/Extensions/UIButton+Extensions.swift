@@ -6,10 +6,6 @@ import UIKit
 
 extension UIButton {
 
-    func removeAllTargets() {
-        allTargets.forEach { removeTarget($0, action: nil, for: .touchUpInside)}
-    }
-
     func setActivityIndicator(_ visible: Bool = false) {
         var configuration = configuration
         configuration?.showsActivityIndicator = visible

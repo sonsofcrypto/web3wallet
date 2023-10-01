@@ -157,7 +157,10 @@ final class NFTsDashboardViewController: UICollectionViewController,
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        print("Did select item at intex path")
+        if indexPath.isZero()  && (viewModel?.nfts_().isEmpty ?? true) {
+            presenter.handleEvent(.Refresh())
+            return
+        }
         presenter.handleEvent(
             .Select(section: indexPath.section.int32, idx: indexPath.item.int32)
         )
@@ -188,7 +191,7 @@ private extension NFTsDashboardViewController {
         let length = floor((view.bounds.width - Theme.padding * 3) / 2)
         let vm = viewModel as? NFTsDashboardViewModel.Loaded
         collectionCellSize = .init(width: length, height: length)
-        emptyCellSize = view.frame.size
+        emptyCellSize = view.frame.inset(by: collectionView.adjustedContentInset).size
         let settings: SettingsService = AppAssembler.resolve()
         let regular = settings.nftCarouselSize == .regular
         carouselCellSize = .init(
