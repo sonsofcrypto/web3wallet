@@ -13,7 +13,10 @@ class NFTsDashboardCollectionCell: ThemeCell {
         with viewModel: NFTsDashboardViewModel.Loaded.Collection?
     ) -> Self {
         label.text = viewModel?.title
-        imageView.setImage(url: viewModel?.coverImage)
+        imageView.setImage(
+            url: viewModel?.coverImage,
+            fallBackText: Localized("ipfs.image.unavailable")
+        )
         return self
     }
 
