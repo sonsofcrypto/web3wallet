@@ -243,7 +243,7 @@ class DefaultConfirmationPresenter(
                 updateView(inProgressViewModel())
                 broadcastTransaction(data)
             } else {
-                print(error ?: "No error but no data either")
+                println(error ?: "No error but no data either")
             }
         }
     }

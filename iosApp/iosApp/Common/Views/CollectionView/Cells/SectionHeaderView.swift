@@ -5,9 +5,8 @@
 import UIKit
 import web3walletcore
 
-class SectionHeaderView: UICollectionReusableView {
-    @IBOutlet weak var label: UILabel!
-    
+class ThemeReusableView: UICollectionReusableView {
+
     override func awakeFromNib() {
         super.awakeFromNib()
         applyTheme(Theme)
@@ -18,13 +17,27 @@ class SectionHeaderView: UICollectionReusableView {
         applyTheme(Theme)
     }
 
-    private func applyTheme(_ theme: ThemeProtocol) {
+    func applyTheme(_ theme: ThemeProtocol) {
+        // NOTE: To be overridden by subclasses to that this boiler plate does
+        // not need to be in each cell
+    }
+}
+
+class SectionHeaderView: ThemeReusableView {
+    @IBOutlet weak var label: UILabel!
+
+    override func applyTheme(_ theme: ThemeProtocol) {
         label.textColor = theme.color.textSecondary
         label.font = theme.font.sectionHeader
     }
 }
 
 extension SectionHeaderView {
+
+    func update(with viewModel: String?) -> Self {
+        label.text = viewModel?.uppercased()
+        return self
+    }
 
     func update(with viewModel: SectionHeaderViewModel?) -> Self {
         label.text = viewModel?.title

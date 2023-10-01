@@ -7,7 +7,7 @@ import web3walletcore
 
 
 class SettingsViewController: UICollectionViewController,
-                              UICollectionViewDelegateFlowLayout {
+  UICollectionViewDelegateFlowLayout {
     
     var presenter: SettingsPresenter!
 
@@ -42,7 +42,14 @@ class SettingsViewController: UICollectionViewController,
         self.title = viewModel.id
         collectionView.reloadData()
     }
-    
+
+    func updateTheme() {
+        Theme = loadThemeFromSettings()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            AppDelegate.refreshTraits()
+        }
+    }
+
     // MARK: - UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -84,13 +91,6 @@ class SettingsViewController: UICollectionViewController,
             ).update(with: viewModel?.sections[indexPath.section])
         default:
             fatalError("Failed to handle \(kind) \(indexPath)")
-        }
-    }
-    
-    func updateTheme() {
-        Theme = loadThemeFromSettings()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-            AppDelegate.refreshTraits()
         }
     }
 

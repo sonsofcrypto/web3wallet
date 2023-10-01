@@ -20,8 +20,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 sealed class NFTsDashboardPresenterEvent {
-    data class ViewCollectionNFTs(val idx: Int): NFTsDashboardPresenterEvent()
-    data class ViewNFT(val idx: Int): NFTsDashboardPresenterEvent()
+    data class Select(
+        val section: Int,
+        val idx: Int
+    ): NFTsDashboardPresenterEvent()
     data class ErrAction(val idx: Int): NFTsDashboardPresenterEvent()
     object Refresh: NFTsDashboardPresenterEvent()
 }
@@ -52,10 +54,8 @@ class DefaultNFTsDashboardPresenter(
         isLoading = true
         updateView()
         bgScope.launch {
-            try {
-                interactor.fetchYourNFTs()
-                withUICxt { updateView() }
-            } catch (e: Throwable) {
+            try { interactor.fetchYourNFTs() }
+            catch (e: Throwable) {
                 err = e
                 withUICxt { updateView() }
             }
@@ -64,12 +64,13 @@ class DefaultNFTsDashboardPresenter(
 
     override fun handle(event: NFTsDashboardPresenterEvent) {
         when (event) {
-            is NFTsDashboardPresenterEvent.ViewNFT -> {
-                wireframe.navigate(ViewNFT(interactor.nfts()[event.idx]))
-            }
-            is NFTsDashboardPresenterEvent.ViewCollectionNFTs -> {
-                val collId = interactor.collections()[event.idx].identifier
-                wireframe.navigate(ViewCollectionNFTs(collId))
+            is NFTsDashboardPresenterEvent.Select -> {
+                if (event.section == 0 && interactor.nfts().isNotEmpty()) {
+                    wireframe.navigate(ViewNFT(interactor.nfts()[event.idx]))
+                } else if (event.section == 1) {
+                    val collId = interactor.collections()[event.idx].identifier
+                    wireframe.navigate(ViewCollectionNFTs(collId))
+                }
             }
             is Refresh -> present()
             is ErrAction -> {
@@ -84,7 +85,9 @@ class DefaultNFTsDashboardPresenter(
     }
 
     override fun networkChanged() {
-        uiScope.launch { view.get()?.popToRootAndRefresh() }
+        uiScope.launch {
+            view.get()?.popToRootAndRefresh()
+        }
     }
 
     override fun nftsChanged() { uiScope.launch { updateView() } }

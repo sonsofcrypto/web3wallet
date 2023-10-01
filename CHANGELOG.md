@@ -23,6 +23,11 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 - Removed assets no longer in use
 - Theme optimizations 
 - Fixed broken constraints across the app ()
+- Updated blur view
+- Connecting NFTs navigation
+- Fix collection name visibility
+- Adding section headers for NFts Dashboard
+- Optimized NFT loading
 
 ### v1.0 #28
 

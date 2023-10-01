@@ -15,9 +15,12 @@ struct ThemeMiamiSunrise: ThemeProtocol {
     let shadowRadius: CGFloat = 4
     let cellHeightLarge: CGFloat = 64
     let cellHeight: CGFloat = 46
+    let sectionHeaderHeight: CGFloat = 46
     let buttonHeight: CGFloat = 46
     let buttonSmallHeight: CGFloat = 32
     let buttonHeightExtraSmall: CGFloat = 24
+    let blurRadius: CGFloat = 16
+    let blurTintAlpha: CGFloat = 0.18
 
     class ThemeColor: ThemeColorProtocol {
         var textPrimary: UIColor { Palette.white }
@@ -110,6 +113,7 @@ struct ThemeMiamiSunrise: ThemeProtocol {
         dashboardTVPct: .init(name: "OCR-A", size: 10)!,
         dashboardTVTokenBalance: .init(name: "OCR-A", size: 13)!,
         dashboardTVTokenBalanceSmall: .init(name: "OCR-A", size: 8)!,
+
         sectionHeader: .systemFont(ofSize: 13, weight: .semibold),
         sectionFooter: .systemFont(ofSize: 15, weight: .regular)
 )

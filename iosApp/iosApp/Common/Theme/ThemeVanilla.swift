@@ -15,9 +15,12 @@ struct ThemeVanilla: ThemeProtocol {
     let shadowRadius: CGFloat = 4
     let cellHeightLarge: CGFloat = 64
     let cellHeight: CGFloat = 46
+    let sectionHeaderHeight: CGFloat = 46
     let buttonHeight: CGFloat = 46
     let buttonSmallHeight: CGFloat = 32
     let buttonHeightExtraSmall: CGFloat = 24
+    let blurRadius: CGFloat = 16
+    let blurTintAlpha: CGFloat = 0.18
 
     class ThemeColor: ThemeColorProtocol {
         var textPrimary: UIColor { .label }

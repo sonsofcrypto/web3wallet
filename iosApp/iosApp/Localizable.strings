@@ -210,7 +210,8 @@
 "mnemonicConfirmation.cta.invalid" = "Invalid mnemonic";
 "mnemonicConfirmation.cta.congratulations" = "Tap to confirm! 🥳";
 
-"nfts.dashboard.collection.title" = "Your Collections";
+"nfts.dashboard.section.nfts.title" = "NFTs";
+"nfts.dashboard.section.collections.title" = "Collections";
 "nfts.dashboard.collection.popular.author" = "Created by %@";
 "nfts.dashboard.noContent.title" = "No NFTs detected";
 "nfts.dashboard.noContent.body" = "There seems to be no NFTs associated to this wallet address";
