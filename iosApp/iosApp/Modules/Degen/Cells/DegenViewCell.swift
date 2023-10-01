@@ -47,7 +47,9 @@ extension DegenViewCell {
 private extension DegenViewCell {
     
     func image(from imageName: String) -> UIImage? {
-        if let image = UIImage(named: imageName) { return image }
+        if imageName != "l.circle.fill", let image = UIImage(named: imageName) {
+            return image
+        }
         let config = UIImage.SymbolConfiguration(
             paletteColors: [
                 Theme.color.textPrimary,
