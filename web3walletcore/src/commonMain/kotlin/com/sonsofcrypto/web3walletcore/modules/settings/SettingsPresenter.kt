@@ -18,11 +18,13 @@ import com.sonsofcrypto.web3walletcore.modules.settings.SettingsPresenterEvent.S
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsScreenId.DEVELOPER
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsScreenId.ROOT
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsScreenId.THEMES
+import com.sonsofcrypto.web3walletcore.modules.settings.SettingsScreenId.UITWEAKS
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsWireframeDestination.Improvements
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsWireframeDestination.KeyStore
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsWireframeDestination.Mail
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsWireframeDestination.Settings
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsWireframeDestination.Website
+import com.sonsofcrypto.web3walletcore.services.settings.NFTCarouselSize
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -52,6 +54,7 @@ class DefaultSettingsPresenter(
             when (screenId) {
                 ROOT -> handleEventForRoot(event)
                 THEMES -> handleEventForThemes(event)
+                UITWEAKS -> handleEventForUITweaks(event)
                 DEVELOPER -> handleEventForThemes(event)
             }
     }
@@ -59,9 +62,10 @@ class DefaultSettingsPresenter(
     private fun handleEventForRoot(e: Select) = when {
         // Settings
         e.section == 0 && e.item == 0 -> wireframe.navigate(Settings(THEMES))
-        e.section == 0 && e.item == 1 -> wireframe.navigate(Improvements)
-        e.section == 0 && e.item == 2 -> wireframe.navigate(Mail)
-        e.section == 0 && e.item == 3 -> wireframe.navigate(Settings(DEVELOPER))
+        e.section == 0 && e.item == 1 -> wireframe.navigate(Settings(UITWEAKS))
+        e.section == 0 && e.item == 2 -> wireframe.navigate(Improvements)
+        e.section == 0 && e.item == 3 -> wireframe.navigate(Mail)
+        e.section == 0 && e.item == 4 -> wireframe.navigate(Settings(DEVELOPER))
         // Sons of crypto
         e.section == 1 && e.item == 0 -> wireframe.navigate(
             Website("https://www.sonsofcrypto.com")
@@ -108,11 +112,21 @@ class DefaultSettingsPresenter(
             }
             else -> {}
         }
-        view.get()?.updateTheme()
-        CoroutineScope(uiDispatcher).launch {
-            delay(20.toLong())
-            updateView()
+        view.get()?.updateThemeAndRefreshTraits()
+        updateViewOnNextRunLoop()
+    }
+
+    private fun handleEventForUITweaks(e: Select) {
+        when {
+            e.section == 0 && e.item == 0 -> {
+                interactor.nftCarouselSize = NFTCarouselSize.REGULAR
+            }
+            e.section == 0 && e.item == 1 -> {
+                interactor.nftCarouselSize = NFTCarouselSize.LARGE
+            }
         }
+        view.get()?.refreshTraits()
+        updateViewOnNextRunLoop()
     }
 
     private fun handleEventForDeveloper(e: Select) = when {
@@ -127,9 +141,17 @@ class DefaultSettingsPresenter(
         view.get()?.update(viewModel())
     }
 
+    private fun updateViewOnNextRunLoop() {
+        CoroutineScope(uiDispatcher).launch {
+            delay(20.toLong())
+            updateView()
+        }
+    }
+
     private fun viewModel(): Screen = when(screenId) {
         ROOT -> Screen(ROOT.value, sectionsForRoot())
         THEMES -> Screen(THEMES.value, sectionsForThemes())
+        UITWEAKS -> Screen(UITWEAKS.value, sectionsForUITweaks())
         DEVELOPER -> Screen(DEVELOPER.value, sectionsForDeveloper())
     }
 
@@ -138,6 +160,7 @@ class DefaultSettingsPresenter(
             Localized("settings"),
             listOf(
                 Item(Label(Localized("settings.themes"), DETAIL)),
+                Item(Label(Localized("settings.uitweaks"), DETAIL)),
                 Item(Label(Localized("settings.improvement"), DETAIL)),
                 Item(Label(Localized("settings.feedback"), DETAIL)),
             ) + (
@@ -171,17 +194,42 @@ class DefaultSettingsPresenter(
         Section(
             null,
             listOf(
-                Item(Label(Localized("settings.themes.miami.light"), themeAcc(0))),
-                Item(Label(Localized("settings.themes.miami.dark"), themeAcc(1))),
-                Item(Label(Localized("settings.themes.vanilla.light"), themeAcc(2))),
-                Item(Label(Localized("settings.themes.vanilla.dark"), themeAcc(3))),
-            ),
+                "settings.themes.miami.light",
+                "settings.themes.miami.dark",
+                "settings.themes.vanilla.light",
+                "settings.themes.vanilla.dark",
+            ).mapIndexed { i, s -> Item(Label(Localized(s), themeAcc(i))) },
             null,
         )
     )
 
     private fun themeAcc(idx: Int): CellViewModel.Accessory {
-        return if (interactor.selectedThemeIdx() == idx) CHECKMARK else NONE
+        return if (selectedThemeIdx() == idx) CHECKMARK else NONE
+    }
+
+    fun selectedThemeIdx(): Int {
+        var idx = if (interactor.themeId == ThemeId.MIAMI) 0 else 2
+        idx += if (interactor.themeVariant == ThemeVariant.DARK) 1 else 0
+        return idx
+    }
+
+    private fun sectionsForUITweaks(): List<Section> = listOf(
+        Section(
+            Localized("settings.uitweaks.nft.carousel.title"),
+            listOf(
+                "settings.uitweaks.nft.carousel.regular",
+                "settings.uitweaks.nft.carousel.large"
+            ).mapIndexed{ i, s -> Item(Label(Localized(s), carouselAcc(i))) },
+            null,
+        )
+    )
+
+    private fun carouselAcc(idx: Int): CellViewModel.Accessory {
+        return if (selectedCarouselIdx() == idx) CHECKMARK else NONE
+    }
+
+    private fun selectedCarouselIdx(): Int {
+        return if (interactor.nftCarouselSize == NFTCarouselSize.REGULAR) 0 else 1
     }
 
     private fun sectionsForDeveloper(): List<Section> = listOf(

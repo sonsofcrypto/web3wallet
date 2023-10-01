@@ -9,6 +9,9 @@ import com.sonsofcrypto.web3walletcore.services.nfts.NFTCollection
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsServiceListener
+import com.sonsofcrypto.web3walletcore.services.settings.NFTCarouselSize
+import com.sonsofcrypto.web3walletcore.services.settings.NFTCarouselSize.*
+import com.sonsofcrypto.web3walletcore.services.settings.SettingsService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -22,6 +25,7 @@ interface NFTsDashboardInteractor {
     suspend fun fetchYourNFTs()
     fun nfts(): List<NFTItem>
     fun collections(): List<NFTCollection>
+    fun regularCarousel(): Boolean
     fun add(listener: NFTsDashboardInteractorLister)
     fun remove(listener: NFTsDashboardInteractorLister)
 }
@@ -29,6 +33,7 @@ interface NFTsDashboardInteractor {
 class DefaultNFTsDashboardInteractor(
     private val networksService: NetworksService,
     private val nftsService: NFTsService,
+    private val settingsService: SettingsService,
 ): NFTsDashboardInteractor, NetworksListener, NFTsServiceListener {
     private var nfts: List<NFTItem> = emptyList()
     private var collections: List<NFTCollection> = emptyList()
@@ -44,6 +49,8 @@ class DefaultNFTsDashboardInteractor(
 
     override fun nfts(): List<NFTItem> = nfts
     override fun collections(): List<NFTCollection> = collections
+    override fun regularCarousel(): Boolean =
+        settingsService.nftCarouselSize == REGULAR
 
     override fun add(listener: NFTsDashboardInteractorLister) {
         if (this.listener != null) { remove(this.listener!!)}

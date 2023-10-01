@@ -11,17 +11,19 @@ class NFTsDashboardCarouselCell: ThemeCell, iCarouselDataSource, iCarouselDelega
     private var viewModel: [NFTsDashboardViewModel.Loaded.NFT]?
     private var prevSize: CGSize = .zero
     private var cellSize: CGSize = .zero
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        recomputeCellSize()
-    }
-
+    
     override func applyTheme(_ theme: ThemeProtocol) {
         super.applyTheme(theme)
         carouselView.visibleItemViews.forEach {
             ($0 as? UIImageView)?.backgroundColor = theme.color.bgPrimary
             ($0 as? UIImageView)?.layer.cornerRadius = Theme.cornerRadius
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if recomputeCellSize() {
+            carouselView.reloadData()
         }
     }
 
@@ -31,12 +33,13 @@ class NFTsDashboardCarouselCell: ThemeCell, iCarouselDataSource, iCarouselDelega
         return self
     }
     
-    private func recomputeCellSize() {
-        guard prevSize != bounds.size else { return }
+    private func recomputeCellSize() -> Bool {
+        guard prevSize != bounds.size else { return false }
         let length = min(bounds.width, bounds.height)
         cellSize = .init(width: length, height: length)
         prevSize = bounds.size
         carouselView.type = .coverFlow
+        return true
     }
 
     // MARK: - iCarouselDataSource
@@ -52,7 +55,7 @@ class NFTsDashboardCarouselCell: ThemeCell, iCarouselDataSource, iCarouselDelega
     ) -> UIView {
         let imageView = view as? UIImageView ?? reusableImageView()
         let nft = viewModel?[index]
-        recomputeCellSize()
+        _ = recomputeCellSize()
         imageView.bounds.size = cellSize
         imageView.setImage(
             url: nft?.previewImage ?? nft?.image,

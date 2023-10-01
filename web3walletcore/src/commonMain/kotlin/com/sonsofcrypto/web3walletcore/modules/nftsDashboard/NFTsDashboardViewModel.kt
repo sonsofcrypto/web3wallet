@@ -8,6 +8,7 @@ sealed class NFTsDashboardViewModel {
     data class Loaded(
         val nfts: List<NFT>,
         val collections: List<Collection>,
+        val regularCarousel: Boolean
     ): NFTsDashboardViewModel()
 
     data class NFT(

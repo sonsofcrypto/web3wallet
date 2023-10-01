@@ -29,6 +29,9 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 - Adding section headers for NFts Dashboard
 - Optimized NFT loading
 - Placeholder for collections without image
+- Fixing L symbol in degen section
+- UI Tweaks sections
+- Carousel size option
 
 ### v1.0 #28
 

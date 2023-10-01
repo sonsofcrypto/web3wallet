@@ -166,6 +166,11 @@
 "settings.themes.vanilla.light" = "Vanilla Light";
 "settings.themes.vanilla.dark" = "Vanilla Dark";
 
+"settings.uitweaks" = "UI Tweaks";
+"settings.uitweaks.nft.carousel.title" = "NFT Carousel";
+"settings.uitweaks.nft.carousel.regular" = "NFT Carousel Regular";
+"settings.uitweaks.nft.carousel.large" = "NFT Carousel Large";
+
 "settings.improvement" = "Improvement proposals";
 
 "settings.developer" = "Developer menu";

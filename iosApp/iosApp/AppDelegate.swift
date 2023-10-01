@@ -66,19 +66,11 @@ extension AppDelegate {
     }
     /// Triggers traits update for entire app.
     static func refreshTraits() {
-        guard let root = AppDelegate.rootVc() as? EdgeCardsController else {
-            return
-        }
-        let curr = root.traitCollection
-        let refreshTraits = UITraitCollection(
-            traitsFrom: [curr, UITraitCollection(layoutDirection: .rightToLeft)]
-        )
-        let vcs = [root.master, root.topCard, root.bottomCard].compactMap { $0 }
-        vcs.forEach { vc in
-            root.setOverrideTraitCollection(refreshTraits, forChild: vc)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                root.setOverrideTraitCollection(nil, forChild: vc)
-            }
+        if #available(iOS 17, *) {
+            // TODO: Update theme and all the settings that need UI refresh
+            // this will call traitsDidChange on all view when they apprear.
+        } else {
+            // rebootApp()
         }
     }
 }
