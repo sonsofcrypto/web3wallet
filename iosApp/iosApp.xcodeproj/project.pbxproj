@@ -156,10 +156,8 @@
 		1C60C32A285724D1003BE25D /* MnemonicConfirmationWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C264285724D0003BE25D /* MnemonicConfirmationWireframeFactory.swift */; };
 		1C60C32B285724D1003BE25D /* MnemonicConfirmationWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C265285724D0003BE25D /* MnemonicConfirmationWireframe.swift */; };
 		1C60C32E285724D1003BE25D /* NFTsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C269285724D0003BE25D /* NFTsCollectionView.swift */; };
-		1C60C32F285724D1003BE25D /* NFTsCollectionView+NFTs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C26A285724D0003BE25D /* NFTsCollectionView+NFTs.swift */; };
 		1C60C331285724D1003BE25D /* NFTsCollectionWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C26C285724D0003BE25D /* NFTsCollectionWireframe.swift */; };
 		1C60C333285724D1003BE25D /* NFTsCollectionWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C26E285724D0003BE25D /* NFTsCollectionWireframeFactory.swift */; };
-		1C60C335285724D1003BE25D /* NFTsCollectionView+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C270285724D0003BE25D /* NFTsCollectionView+Shared.swift */; };
 		1C60C34A285724D1003BE25D /* CultProposalWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C28A285724D0003BE25D /* CultProposalWireframeFactory.swift */; };
 		1C60C34B285724D1003BE25D /* CultProposalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C28B285724D0003BE25D /* CultProposalView.swift */; };
 		1C60C34C285724D1003BE25D /* CultProposalWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C28C285724D0003BE25D /* CultProposalWireframe.swift */; };
@@ -274,7 +272,6 @@
 		1CB8B0C4288DD97300024E7C /* CultProposalStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0C3288DD97300024E7C /* CultProposalStatus.swift */; };
 		1CB8B0C8288F30DA00024E7C /* DashboardActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0C7288F30DA00024E7C /* DashboardActionCell.swift */; };
 		1CB8B0CC288FAC7B00024E7C /* DeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0CB288FAC7B00024E7C /* DeepLinkHandler.swift */; };
-		1CB8B0DC28904F6C00024E7C /* NFTsCollection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8B0DB28904F6C00024E7C /* NFTsCollection.storyboard */; };
 		1CB8B0DE2890557400024E7C /* NFTDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8B0DD2890557400024E7C /* NFTDetail.storyboard */; };
 		1CB8B0E42891040500024E7C /* NetworkAddressPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0E32891040500024E7C /* NetworkAddressPickerView.swift */; };
 		1CB8B0E62891346B00024E7C /* CultProposalFooterSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0E52891346B00024E7C /* CultProposalFooterSupplementaryView.swift */; };
@@ -300,6 +297,7 @@
 		1CE0064C2889E0E6002D1EB3 /* ThemeVanilla.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064B2889E0E6002D1EB3 /* ThemeVanilla.swift */; };
 		1CE66BD22848ED4000AB6ACA /* PresentationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */; };
 		1CEF3D1F28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D1E28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift */; };
+		1F316EF02ACF14F60037E022 /* ImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F316EEF2ACF14F60037E022 /* ImageViewCell.swift */; };
 		1F5E646B2AACA58A000A1548 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5E64692AACA58A000A1548 /* ImageCacheService.swift */; };
 		1F5E646C2AACA58A000A1548 /* UIImgeView+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5E646A2AACA58A000A1548 /* UIImgeView+Cache.swift */; };
 		1F6A9FBC2A97ACE50056732C /* bundledAssets in Resources */ = {isa = PBXBuildFile; fileRef = 1F6A9FBB2A97ACE50056732C /* bundledAssets */; };
@@ -557,10 +555,8 @@
 		1C60C264285724D0003BE25D /* MnemonicConfirmationWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C265285724D0003BE25D /* MnemonicConfirmationWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationWireframe.swift; sourceTree = "<group>"; };
 		1C60C269285724D0003BE25D /* NFTsCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsCollectionView.swift; sourceTree = "<group>"; };
-		1C60C26A285724D0003BE25D /* NFTsCollectionView+NFTs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NFTsCollectionView+NFTs.swift"; sourceTree = "<group>"; };
 		1C60C26C285724D0003BE25D /* NFTsCollectionWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsCollectionWireframe.swift; sourceTree = "<group>"; };
 		1C60C26E285724D0003BE25D /* NFTsCollectionWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsCollectionWireframeFactory.swift; sourceTree = "<group>"; };
-		1C60C270285724D0003BE25D /* NFTsCollectionView+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NFTsCollectionView+Shared.swift"; sourceTree = "<group>"; };
 		1C60C28A285724D0003BE25D /* CultProposalWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C28B285724D0003BE25D /* CultProposalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalView.swift; sourceTree = "<group>"; };
 		1C60C28C285724D0003BE25D /* CultProposalWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalWireframe.swift; sourceTree = "<group>"; };
@@ -675,7 +671,6 @@
 		1CB8B0C3288DD97300024E7C /* CultProposalStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalStatus.swift; sourceTree = "<group>"; };
 		1CB8B0C7288F30DA00024E7C /* DashboardActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardActionCell.swift; sourceTree = "<group>"; };
 		1CB8B0CB288FAC7B00024E7C /* DeepLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandler.swift; sourceTree = "<group>"; };
-		1CB8B0DB28904F6C00024E7C /* NFTsCollection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NFTsCollection.storyboard; sourceTree = "<group>"; };
 		1CB8B0DD2890557400024E7C /* NFTDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NFTDetail.storyboard; sourceTree = "<group>"; };
 		1CB8B0E32891040500024E7C /* NetworkAddressPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAddressPickerView.swift; sourceTree = "<group>"; };
 		1CB8B0E52891346B00024E7C /* CultProposalFooterSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalFooterSupplementaryView.swift; sourceTree = "<group>"; };
@@ -701,6 +696,7 @@
 		1CE0064B2889E0E6002D1EB3 /* ThemeVanilla.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeVanilla.swift; sourceTree = "<group>"; };
 		1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationStyle.swift; sourceTree = "<group>"; };
 		1CEF3D1E28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationApproveUniswapView.swift; sourceTree = "<group>"; };
+		1F316EEF2ACF14F60037E022 /* ImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCell.swift; sourceTree = "<group>"; };
 		1F5E64692AACA58A000A1548 /* ImageCacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		1F5E646A2AACA58A000A1548 /* UIImgeView+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImgeView+Cache.swift"; sourceTree = "<group>"; };
 		1F6A9FBB2A97ACE50056732C /* bundledAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bundledAssets; sourceTree = "<group>"; };
@@ -833,6 +829,7 @@
 			isa = PBXGroup;
 			children = (
 				1F871F4F2AC1791E0002A1AC /* CollectionViewTableCell.swift */,
+				1F316EEF2ACF14F60037E022 /* ImageViewCell.swift */,
 				1F871F672AC18F320002A1AC /* LabelCell.swift */,
 				1F871F4C2AC1791E0002A1AC /* SectionBackgroundView.swift */,
 				1F871F4E2AC1791E0002A1AC /* SeparatorCellView.swift */,
@@ -1259,10 +1256,7 @@
 		1C60C268285724D0003BE25D /* NFTsCollection */ = {
 			isa = PBXGroup;
 			children = (
-				1CB8B0DB28904F6C00024E7C /* NFTsCollection.storyboard */,
 				1C60C269285724D0003BE25D /* NFTsCollectionView.swift */,
-				1C60C26A285724D0003BE25D /* NFTsCollectionView+NFTs.swift */,
-				1C60C270285724D0003BE25D /* NFTsCollectionView+Shared.swift */,
 				1C60C26C285724D0003BE25D /* NFTsCollectionWireframe.swift */,
 				1C60C26E285724D0003BE25D /* NFTsCollectionWireframeFactory.swift */,
 			);
@@ -2067,7 +2061,6 @@
 				1C5D24D328E19F62007DA557 /* ImprovementProposals.storyboard in Resources */,
 				1C54DC5228683DDA00E378F6 /* NaokoAA-Extrabold-Italic.otf in Resources */,
 				1CAC5607286EFFC300CCB2B6 /* SFProDisplay-SemiboldItalic.otf in Resources */,
-				1CB8B0DC28904F6C00024E7C /* NFTsCollection.storyboard in Resources */,
 				D15CB4FE2893D1AC00E4A25E /* Currencies.xcassets in Resources */,
 				D11A990727B8615B00EDFDD0 /* GothicA1-Medium.ttf in Resources */,
 				1C54DC5A28683DDA00E378F6 /* NaokoAA-Extrabold.otf in Resources */,
@@ -2194,7 +2187,6 @@
 				1C60C308285724D1003BE25D /* NFTsDashboardWireframeFactory.swift in Sources */,
 				1C60C34E285724D1003BE25D /* CultProposalCellPending.swift in Sources */,
 				1C60C2D9285724D0003BE25D /* MnemonicNewView.swift in Sources */,
-				1C60C32F285724D1003BE25D /* NFTsCollectionView+NFTs.swift in Sources */,
 				1C7FC9A328BCC5DE00FC9175 /* MailService.swift in Sources */,
 				1C60C358285724D1003BE25D /* DegenView.swift in Sources */,
 				1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */,
@@ -2215,6 +2207,7 @@
 				1C6720142885D78A00C5F044 /* CurrencySwapPriceView.swift in Sources */,
 				1C60C35D285724D1003BE25D /* DegenWireframeFactory.swift in Sources */,
 				1C9E3197287580BF00DD2031 /* CurrencyCurrencyWireframeFactory.swift in Sources */,
+				1F316EF02ACF14F60037E022 /* ImageViewCell.swift in Sources */,
 				D1EF5BCD287BEE92004CAD82 /* MnemonicUpdateView.swift in Sources */,
 				1C671FF4287FDFDC00C5F044 /* CurrencySwapWireframeFactory.swift in Sources */,
 				1CB8B0BA288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift in Sources */,
@@ -2317,7 +2310,6 @@
 				1CB8B0E62891346B00024E7C /* CultProposalFooterSupplementaryView.swift in Sources */,
 				1C60C2CD285724D0003BE25D /* AlertWireframeFactory.swift in Sources */,
 				1C60C2DF285724D0003BE25D /* DashboardHeaderTitleView.swift in Sources */,
-				1C60C335285724D1003BE25D /* NFTsCollectionView+Shared.swift in Sources */,
 				1CB8B0B8288C351A00024E7C /* CultProposalDetailViewCell.swift in Sources */,
 				1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */,
 				1C7F863328D20E490073FD95 /* UIEdgeInsets+Extensions.swift in Sources */,
@@ -2558,7 +2550,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = P52TMYZ5WB;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -2579,7 +2571,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3wallet.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2691,7 +2683,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = P52TMYZ5WB;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -2712,7 +2704,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3wallet.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2831,7 +2823,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = P52TMYZ5WB;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -2852,7 +2844,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3wallet.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2971,7 +2963,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = P52TMYZ5WB;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -2992,7 +2984,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3wallet.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3167,7 +3159,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = P52TMYZ5WB;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -3188,7 +3180,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3wallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3210,7 +3202,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = P52TMYZ5WB;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -3231,7 +3223,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3wallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

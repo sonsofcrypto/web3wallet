@@ -30,14 +30,15 @@ extension DefaultNFTsCollectionWireframe {
 
     func present() {
         let vc = wireUp()
+        self.vc = vc
         parent?.show(vc, sender: self)
     }
 
     func navigate(to destination: NFTsCollectionWireframeDestination) {
         if let input = destination as? NFTsCollectionWireframeDestination.NFTDetail {
             let context = NFTDetailWireframeContext(
-                nftId: input.identifier,
-                collectionId: context.collectionId
+                nftId: input.nftId,
+                collectionId: input.collectionId
             )
             nftDetailWireframeFactory.make(vc, context: context).present()
         }
@@ -50,7 +51,7 @@ extension DefaultNFTsCollectionWireframe {
 private extension DefaultNFTsCollectionWireframe {
 
     func wireUp() -> UIViewController {
-        let vc: NFTsCollectionViewController = UIStoryboard(.nftsCollection).instantiate()
+        let vc: NFTsCollectionViewController = UIStoryboard(.main).instantiate()
         let interactor = DefaultNFTsCollectionInteractor(nftsService: nftsService)
         let presenter = DefaultNFTsCollectionPresenter(
             view: WeakRef(referred: vc),
@@ -59,10 +60,6 @@ private extension DefaultNFTsCollectionWireframe {
             context: context
         )
         vc.presenter = presenter
-        self.vc = vc
-        guard parent?.asNavVc == nil else { return vc }
-        let nc = NavigationController(rootViewController: vc)
-        self.vc = nc
-        return nc
+        return vc
     }
 }
