@@ -5,30 +5,91 @@
 import UIKit
 import web3walletcore
 
-final class NFTsCollectionViewController: BaseViewController {
-    private (set) weak var mainScrollView: UIScrollView!
-    weak var scrollableContentView: UIView!
-
+final class NFTsCollectionViewController: UICollectionViewController,
+    UICollectionViewDelegateFlowLayout {
+    
     var presenter: NFTsCollectionPresenter!
     
+    private var prevSize: CGSize = .zero
+    private var cellSize: CGSize = .zero
+    private var cv: CollectionView? { collectionView as? CollectionView }
     private (set) var viewModel: NFTsCollectionViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        refresh()
+        presenter.present()
     }
-}
-
-extension NFTsCollectionViewController {
     
-    @objc func refresh() { presenter.present() }
-
+    override func traitCollectionDidChange(
+        _ previousTraitCollection: UITraitCollection?
+    ) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyTheme(Theme)
+        recomputeSizeIfNeeded(true)
+        cv?.collectionViewLayout.invalidateLayout()
+    }
+    
+    // MARK: - NFTsCollectionView
+    
     func update(with viewModel: NFTsCollectionViewModel) {
-        self.viewModel = viewModel
-        self.mainScrollView.refreshControl?.endRefreshing()
-        title = viewModel.collection.title
-        refreshNFTs()
+        if viewModel is NFTsCollectionViewModel.Loading {
+            collectionView.refreshControl?.beginRefreshing()
+        } else {
+            collectionView.refreshControl?.endRefreshing()
+        }
+        if viewModel is NFTsCollectionViewModel.Loaded {
+            self.viewModel = viewModel
+            title = viewModel.collection()?.title ?? title
+            collectionView.reloadData()
+        }
+    }
+    
+    // MARK: - UICollectionViewDataSource
+
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        viewModel?.nfts_().count ?? 0
+    }
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        return collectionView.dequeue(ImageViewCell.self, for: indexPath)
+            .update(with: viewModel?.nfts_()[indexPath.item])
+    }
+    
+    // MARK: - UICollectionViewDelegateFlowLayout
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        recomputeSizeIfNeeded()
+        return cellSize
+    }
+    
+    // MARK: - UICollectionViewDelegate
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        presenter.handleEvent(.Select(idx: indexPath.item.int32))
+    }
+    
+    // MARK: - Actions
+    
+    @objc func refreshAction(_ sender: Any?) {
+        presenter.present()
     }
 }
 
@@ -36,22 +97,27 @@ private extension NFTsCollectionViewController {
     
     func configureUI() {
         title = Localized("nfts")
-        let mainScrollView = makeMainScrollView()
-        view.addSubview(mainScrollView)
-        self.mainScrollView = mainScrollView
-        mainScrollView.addConstraints(.toEdges)
-        let showBack = (navigationController?.viewControllers.count ?? 0) > 1
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: showBack ? "chevron.left".assetImage : "xmark".assetImage,
-            style: .plain,
-            target: self,
-            action: #selector(dismissTapped)
+        cv?.overscrollView = UIImageView(imgName: "overscroll_ape")
+        cv?.refreshControl = UIRefreshControl()
+        cv?.refreshControl?.addTarget(
+            self,
+            action: #selector(refreshAction(_:)),
+            for: .valueChanged
         )
-        // TODO: Enable once switcher to collection view
-        // (mainScrollView as? ScrollView)?.overScrollView.image = "overscroll_ape".assetImage
+        applyTheme(Theme)
+        
     }
     
-    @objc func dismissTapped() {
-        presenter.handleEvent(NFTsCollectionPresenterEvent.Dismiss())
+    func recomputeSizeIfNeeded(_ force: Bool = false) {
+        guard prevSize.width != view.bounds.size.width || force else { return }
+        prevSize = view.bounds.size
+        let length = floor((view.bounds.width - Theme.padding * 3) / 2)
+        cellSize = .init(width: length, height: length)
+    }
+    
+    func applyTheme(_ theme: ThemeProtocol) {
+        cv?.contentInset.bottom = Theme.padding
+        cv?.contentInset.top = Theme.padding
+        cv?.refreshControl?.tintColor = Theme.color.textPrimary
     }
 }
