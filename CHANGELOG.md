@@ -3,7 +3,7 @@
 | Prod / AppStore                                         | Staging                                                  | Dev / Nightly                                                  |
 |---------------------------------------------------------|----------------------------------------------------------|----------------------------------------------------------------|
 | ![pro](bundledAssets/images/testflight_prod.png)        | ![staging](bundledAssets/images/testflight_staging.png)  | ![dev.png](bundledAssets/images/testflight_dev.png)            |
-| web3wallet by sons of crypto Ξ v1.0 #28                 | web3wallet by sons of crypto S v1.0 #28                  | web3wallet by sons of crypto D v1.0 #28                        |
+| web3wallet by sons of crypto Ξ v1.0.1 #30               | web3wallet by sons of crypto S v1.0.1 #30                | web3wallet by sons of crypto D v1.0.1 #30                      |
 | AppStore RC.                                            | New features not quite AppStore ready. Great for testing | Living on the bleeding edge. Latest features, latest bugs. 🐛  |
 | [Download](https://testflight.apple.com/join/I4DFVaiH)  | [Download](https://testflight.apple.com/join/5GiDXNJ3)   | [Download](https://testflight.apple.com/join/85JEPH96)         |
 
