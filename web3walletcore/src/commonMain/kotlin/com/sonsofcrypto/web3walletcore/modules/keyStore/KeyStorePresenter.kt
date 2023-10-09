@@ -94,7 +94,10 @@ class DefaultKeyStorePresenter(
                     updateView()
                 },
                 onDeleted = {
-                    if (interactor.items.isEmpty()) { wireframe.navigate(HideNetworksAndDashboard) }
+                    targetView = None
+                    if (interactor.items.isEmpty()) {
+                        wireframe.navigate(HideNetworksAndDashboard)
+                    }
                     present()
                 }
             )

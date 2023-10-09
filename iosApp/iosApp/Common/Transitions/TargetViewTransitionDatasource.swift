@@ -6,5 +6,5 @@ import Foundation
 
 protocol TargetViewTransitionDatasource: UIViewController {
 
-    func targetView() -> UIView
+    func targetView() -> UIView?
 }
