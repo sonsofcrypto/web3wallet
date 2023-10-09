@@ -506,7 +506,7 @@ extension DashboardViewController: EdgeCardsControllerDelegate {
 
 extension DashboardViewController: TargetViewTransitionDatasource {
 
-    func targetView() -> UIView {
+    func targetView() -> UIView? {
         guard let ip = collectionView.indexPathsForSelectedItems?.first else {
             return view
         }

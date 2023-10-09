@@ -382,7 +382,7 @@ extension KeyStoreViewController {
 // MARK: - UIViewControllerTransitioningDelegate
 extension KeyStoreViewController: TargetViewTransitionDatasource {
 
-    func targetView() -> UIView {
+    func targetView() -> UIView? {
         if let input = transitionTargetView as? KeyStoreViewModel
             .TransitionTargetViewKeyStoreItemAt {
                 let idxPath = IndexPath(item: input.idx.int, section: 0)
@@ -393,6 +393,6 @@ extension KeyStoreViewController: TargetViewTransitionDatasource {
                 let idxPath = IndexPath(item: input.idx.int, section: 0)
                 return buttonsCollectionView.cellForItem(at: idxPath) ?? view
         }
-        return view
+        return nil
     }
 }
