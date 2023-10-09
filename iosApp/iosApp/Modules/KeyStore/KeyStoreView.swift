@@ -76,7 +76,7 @@ extension KeyStoreViewController {
 
     func update(with viewModel: KeyStoreViewModel) {
         self.viewModel?.buttons.mode != viewModel.buttons.mode
-            ? setButtonsSheetMode(viewModel.buttons.mode, animated: false)
+            ? setButtonsSheetMode(viewModel.buttons.mode, animated: viewDidAppear)
             : ()
         self.viewModel = viewModel
         collectionView.reloadData()
@@ -227,9 +227,6 @@ extension KeyStoreViewController {
         // Removing last wallet
         } else if logoAnimView.isHidden && viewModel.isEmpty {
             animateIntro(false)
-        // Launching app with wallets
-        } else {
-            setButtonsSheetMode(.compact, animated: false)
         }
     }
 
