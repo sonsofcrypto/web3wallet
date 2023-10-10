@@ -55,7 +55,7 @@ private extension AssemblerBootstrapper {
             AlertWireframeFactoryAssembler(),
             DashboardWireframeFactoryAssembler(),
             DegenWireframeFactoryAssembler(),
-            KeyStoreWireframeFactoryAssembler(),
+            SignersWireframeFactoryAssembler(),
             MnemonicNewWireframeFactoryAssembler(),
             MnemonicUpdateWireframeFactoryAssembler(),
             MnemonicImportWireframeFactoryAssembler(),

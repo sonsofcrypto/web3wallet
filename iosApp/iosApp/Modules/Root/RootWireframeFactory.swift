@@ -14,7 +14,7 @@ protocol RootWireframeFactory {
 // MARK: - DefaultRootWireframeFactory
 
 final class DefaultRootWireframeFactory {
-    private let keyStoreWireframeFactory: KeyStoreWireframeFactory
+    private let keyStoreWireframeFactory: SignersWireframeFactory
     private let networksWireframeFactory: NetworksWireframeFactory
     private let dashboardWireframeFactory: DashboardWireframeFactory
     private let degenWireframeFactory: DegenWireframeFactory
@@ -23,7 +23,7 @@ final class DefaultRootWireframeFactory {
     private let keyStoreService: KeyStoreService
 
     init(
-        keyStoreWireframeFactory: KeyStoreWireframeFactory,
+        keyStoreWireframeFactory: SignersWireframeFactory,
         networksWireframeFactory: NetworksWireframeFactory,
         dashboardWireframeFactory: DashboardWireframeFactory,
         degenWireframeFactory: DegenWireframeFactory,

@@ -5,9 +5,9 @@
 import UIKit
 import web3walletcore
 
-// MARK: - DefaultKeyStoreWireframe
+// MARK: - DefaultSignersWireframe
 
-final class DefaultKeyStoreWireframe {
+final class DefaultSignersWireframe {
     private weak var parent: UIViewController?
     private let keyStoreService: KeyStoreService
     private let networksService: NetworksService
@@ -37,9 +37,9 @@ final class DefaultKeyStoreWireframe {
     }
 }
 
-// MARK: - KeyStoreWireframe
+// MARK: - SignersWireframe
 
-extension DefaultKeyStoreWireframe {
+extension DefaultSignersWireframe {
 
     func present() {
         let vc = wireUp()
@@ -47,57 +47,57 @@ extension DefaultKeyStoreWireframe {
         parent?.asEdgeCardsController?.setBottomCard(vc: vc) ?? parent?.show(vc, sender: self)
     }
 
-    func navigate(to destination: KeyStoreWireframeDestination) {
+    func navigate(to destination: SignersWireframeDestination) {
         let edgeVc = parent as? EdgeCardsController
-        if destination is KeyStoreWireframeDestination.HideNetworksAndDashboard {
+        if destination is SignersWireframeDestination.SignersFullscreen {
             edgeVc?.setDisplayMode(.bottomCard)
         }
-        if destination is KeyStoreWireframeDestination.Networks {
+        if destination is SignersWireframeDestination.Networks {
             edgeVc?.setDisplayMode(.overviewTopCard, animated: true)
         }
-        if destination is KeyStoreWireframeDestination.Dashboard {
+        if destination is SignersWireframeDestination.Dashboard {
             edgeVc?.setDisplayMode(.master, animated: true)
         }
-        if destination is KeyStoreWireframeDestination.DashboardOnboarding {
+        if destination is SignersWireframeDestination.DashboardOnboarding {
             edgeVc?.setDisplayMode(.masterOnboardAnim, animated: true)
         }
-        if let input = destination as? KeyStoreWireframeDestination.NewMnemonic {
+        if let input = destination as? SignersWireframeDestination.NewMnemonic {
             let context = MnemonicNewWireframeContext(handler: input.handler)
             newMnemonic.make(vc, context: context).present()
         }
-        if let input = destination as? KeyStoreWireframeDestination.ImportMnemonic {
+        if let input = destination as? SignersWireframeDestination.ImportMnemonic {
             let context = MnemonicImportWireframeContext(handler: input.handler)
             importMnemonic.make(vc, context: context).present()
         }
-        if let input = destination as? KeyStoreWireframeDestination.EditKeyStoreItem {
+        if let input = destination as? SignersWireframeDestination.EditSignersItem {
             let context = MnemonicUpdateWireframeContext(
                 keyStoreItem: input.item,
                 onUpdateHandler: input.handler,
-                onDeleteHandler: input.onDeleted
+                onDeleteHandler: input.deleteHandler
             )
             updateMnemonic.make(vc, context: context).present()
         }
-        if destination is KeyStoreWireframeDestination.ConnectHardwareWallet {
+        if destination is SignersWireframeDestination.ConnectHardwareWallet {
             alertWireframeFactory.make(vc, context: .underConstructionAlert()).present()
         }
-        if destination is KeyStoreWireframeDestination.ImportPrivateKey {
+        if destination is SignersWireframeDestination.ImportPrivateKey {
             alertWireframeFactory.make(vc, context: .underConstructionAlert()).present()
         }
-        if destination is KeyStoreWireframeDestination.CreateMultisig {
+        if destination is SignersWireframeDestination.CreateMultisig {
             alertWireframeFactory.make(vc, context: .underConstructionAlert()).present()
         }
     }
 }
 
-private extension DefaultKeyStoreWireframe {
+private extension DefaultSignersWireframe {
 
     func wireUp() -> UIViewController {
-        let interactor = DefaultKeyStoreInteractor(
+        let interactor = DefaultSignersInteractor(
             keyStoreService: keyStoreService,
             networksService: networksService
         )
-        let vc: KeyStoreViewController = UIStoryboard(.keyStore).instantiate()
-        let presenter = DefaultKeyStorePresenter(
+        let vc: SignersViewController = UIStoryboard(.main).instantiate()
+        let presenter = DefaultSignersPresenter(
             view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor

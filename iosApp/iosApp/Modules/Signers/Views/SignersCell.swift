@@ -5,7 +5,7 @@
 import UIKit
 import web3walletcore
 
-final class KeyStoreCell: CollectionViewCell {
+final class SignersCell: CollectionViewCell {
     
     struct Handler {
         let accessoryHandler: (() -> Void)
@@ -40,10 +40,10 @@ final class KeyStoreCell: CollectionViewCell {
     }
 }
 
-extension KeyStoreCell {
+extension SignersCell {
     
     func update(
-        with viewModel: KeyStoreViewModel.Item?,
+        with viewModel: SignersViewModel.Item?,
         handler: Handler,
         index: Int
     ) -> Self {
@@ -63,7 +63,7 @@ extension KeyStoreCell {
     }
 }
 
-private extension KeyStoreCell {
+private extension SignersCell {
     
     @objc func accessoryAction(_ sender: UIButton) {
         handler.accessoryHandler()

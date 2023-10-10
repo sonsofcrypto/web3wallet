@@ -5,7 +5,7 @@
 import UIKit
 import web3walletcore
 
-final class KeyStoreViewController: BaseViewController {
+final class SignersViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var logoAnimView: LogoAnimView!
@@ -15,11 +15,11 @@ final class KeyStoreViewController: BaseViewController {
     @IBOutlet weak var buttonHandleView: UIView!
     
 
-    var presenter: KeyStorePresenter!
+    var presenter: SignersPresenter!
 
-    private var viewModel: KeyStoreViewModel?
-    private var transitionTargetView: KeyStoreViewModel.TransitionTargetView
-        = KeyStoreViewModel.TransitionTargetViewNone()
+    private var viewModel: SignersViewModel?
+    private var transitionTargetView: SignersViewModel.TransitionTargetView
+        = SignersViewModel.TransitionTargetViewNone()
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
     private var prevViewSize: CGSize = .zero
     private var needsLayoutUI: Bool = false
@@ -72,9 +72,9 @@ final class KeyStoreViewController: BaseViewController {
 }
 
 // MARK: - KeyStoreView
-extension KeyStoreViewController {
+extension SignersViewController {
 
-    func update(with viewModel: KeyStoreViewModel) {
+    func update(with viewModel: SignersViewModel) {
         self.viewModel?.buttons.mode != viewModel.buttons.mode
             ? setButtonsSheetMode(viewModel.buttons.mode, animated: viewDidAppear)
             : ()
@@ -90,13 +90,13 @@ extension KeyStoreViewController {
         )
     }
     
-    func updateTargetView(targetView: KeyStoreViewModel.TransitionTargetView) {
+    func updateTargetView(targetView: SignersViewModel.TransitionTargetView) {
         transitionTargetView = targetView
     }
 }
 
 // MARK: - UICollectionViewDataSource
-extension KeyStoreViewController: UICollectionViewDataSource {
+extension SignersViewController: UICollectionViewDataSource {
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -123,14 +123,13 @@ extension KeyStoreViewController: UICollectionViewDataSource {
             ).update(with: button)
             
         default:
-            return collectionView.dequeue(KeyStoreCell.self, for: indexPath)
+            return collectionView.dequeue(SignersCell.self, for: indexPath)
                 .update(
                     with: viewModel?.items[indexPath.item],
                     handler: .init(accessoryHandler: { [weak self] in
-                        let event = KeyStorePresenterEvent.DidSelectAccessory(
-                            idx: indexPath.item.int32
+                        self?.presenter.handleEvent(
+                            .SelectAccessory(idx: indexPath.item.int32)
                         )
-                        self?.presenter.handleEvent(event)
                     }),
                     index: indexPath.item
                 )
@@ -138,21 +137,17 @@ extension KeyStoreViewController: UICollectionViewDataSource {
     }
 }
 
-extension KeyStoreViewController: UICollectionViewDelegate {
+extension SignersViewController: UICollectionViewDelegate {
 
     func collectionView(
             _ collectionView: UICollectionView,
             didSelectItemAt indexPath: IndexPath
     ) {
         if collectionView == buttonsCollectionView {
-            presenter.handleEvent(.DidSelectButtonAt(idx: indexPath.item.int32))
+            presenter.handleEvent(.SelectButtonAt(idx: indexPath.item.int32))
             return
         }
-        presenter.handleEvent(
-            KeyStorePresenterEvent.DidSelectKeyStoreItemtAt(
-                idx: indexPath.item.int32
-            )
-        )
+        presenter.handleEvent(.SelectSignerItemAt(idx: indexPath.item.int32))
     }
 
     func collectionView(
@@ -176,7 +171,7 @@ extension KeyStoreViewController: UICollectionViewDelegate {
     }
 }
 
-extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
+extension SignersViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -193,7 +188,7 @@ extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
 }
 
 // MARK: - Configure UI
-extension KeyStoreViewController {
+extension SignersViewController {
     
     func configureUI() {
         title = Localized("wallets")
@@ -210,7 +205,7 @@ extension KeyStoreViewController {
         (view as? ThemeGradientView)?.topClipEnabled = true
     }
 
-    func updateLogo(_ viewModel: KeyStoreViewModel) {
+    func updateLogo(_ viewModel: SignersViewModel) {
         // Adding first wallet
         if !logoAnimView.isHidden && !viewModel.isEmpty {
             UIView.animate(
@@ -237,10 +232,10 @@ extension KeyStoreViewController {
 }
 
 // MARK: - ButtonsSheet handling
-extension KeyStoreViewController {
+extension SignersViewController {
 
     func setButtonsSheetMode(
-        _ mode: KeyStoreViewModel.ButtonSheetViewModelSheetMode? = .compact,
+        _ mode: SignersViewModel.ButtonSheetViewModelSheetMode? = .compact,
         animated: Bool = true
     ) {
         let targetMode = viewDidAppear ? mode : .hidden
@@ -326,13 +321,13 @@ extension KeyStoreViewController {
         guard scrollView.isDragging else { return }
         let cellCnt = buttonsCollectionView.visibleCells.count
         presenter.handleEvent(
-            .DidChangeButtonsSheetMode(mode: cellCnt > 4 ? .expanded : .compact)
+            .ChangeButtonsSheetMode(mode: cellCnt > 4 ? .expanded : .compact)
         )
     }
 }
 
 // MARK: - Into animations
-extension KeyStoreViewController {
+extension SignersViewController {
 
     func animateIntro(_ animateButtons: Bool = true) {
         guard viewModel?.isEmpty ?? false else {
@@ -380,16 +375,14 @@ extension KeyStoreViewController {
 }
 
 // MARK: - UIViewControllerTransitioningDelegate
-extension KeyStoreViewController: TargetViewTransitionDatasource {
+extension SignersViewController: TargetViewTransitionDatasource {
 
     func targetView() -> UIView? {
-        if let input = transitionTargetView as? KeyStoreViewModel
-            .TransitionTargetViewKeyStoreItemAt {
+        if let input = transitionTargetView as? SignersViewModel            .TransitionTargetViewKeyStoreItemAt {
                 let idxPath = IndexPath(item: input.idx.int, section: 0)
                 return collectionView.cellForItem(at: idxPath) ?? view
         }
-        if let input = transitionTargetView as? KeyStoreViewModel
-            .TransitionTargetViewButtonAt {
+        if let input = transitionTargetView as? SignersViewModel            .TransitionTargetViewButtonAt {
                 let idxPath = IndexPath(item: input.idx.int, section: 0)
                 return buttonsCollectionView.cellForItem(at: idxPath) ?? view
         }

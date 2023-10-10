@@ -5,15 +5,15 @@
 import UIKit
 import web3walletcore
 
-protocol KeyStoreWireframeFactory {
+protocol SignersWireframeFactory {
     func make(
         _ parent: UIViewController?
-    ) -> KeyStoreWireframe
+    ) -> SignersWireframe
 }
 
-// MARK: - DefaultKeyStoreWireframeFactory
+// MARK: - DefaultSignersWireframeFactory
 
-final class DefaultKeyStoreWireframeFactory {
+final class DefaultSignersWireframeFactory {
 
     private let keyStoreService: KeyStoreService
     private let networksService: NetworksService
@@ -39,14 +39,14 @@ final class DefaultKeyStoreWireframeFactory {
     }
 }
 
-// MARK: - WalletsWireframeFactory
+// MARK: - SignersWireframeFactory
 
-extension DefaultKeyStoreWireframeFactory: KeyStoreWireframeFactory {
+extension DefaultSignersWireframeFactory: SignersWireframeFactory {
 
     func make(
         _ parent: UIViewController?
-    ) -> KeyStoreWireframe {
-        DefaultKeyStoreWireframe(
+    ) -> SignersWireframe {
+        DefaultSignersWireframe(
             parent,
             keyStoreService: keyStoreService,
             networksService: networksService,
@@ -60,11 +60,11 @@ extension DefaultKeyStoreWireframeFactory: KeyStoreWireframeFactory {
 
 // MARK: - Assembler
 
-final class KeyStoreWireframeFactoryAssembler: AssemblerComponent {
+final class SignersWireframeFactoryAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> KeyStoreWireframeFactory in
-            DefaultKeyStoreWireframeFactory(
+        registry.register(scope: .instance) { resolver -> SignersWireframeFactory in
+            DefaultSignersWireframeFactory(
                 keyStoreService: resolver.resolve(),
                 networksService: resolver.resolve(),
                 newMnemonic: resolver.resolve(),
