@@ -17,6 +17,7 @@ final class TextInputCollectionViewCell: CollectionViewCell {
         
         titleLabel.font = Theme.font.body
         titleLabel.textColor = Theme.color.textPrimary
+        titleLabel.adjustsFontSizeToFitWidth = true
         
         textField.delegate = self
         textField.addDoneInputAccessoryView(

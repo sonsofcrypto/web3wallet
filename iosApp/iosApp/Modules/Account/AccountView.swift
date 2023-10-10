@@ -259,8 +259,6 @@ extension AccountViewController: UIViewControllerTransitioningDelegate {
     func animationController(
         forDismissed dismissed: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
-        let root = (presentingViewController as? RootViewController)
-        let nav = root?.visibleViewController as? UINavigationController
         guard dismissed == navigationController,
             let targetView = self.targetView else {
             animatedTransitioning = nil

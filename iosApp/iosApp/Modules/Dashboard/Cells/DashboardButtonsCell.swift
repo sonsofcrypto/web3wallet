@@ -62,7 +62,7 @@ extension DashboardButtonsCell {
         self.swapHandler = swapHandler
 
         viewModel.forEach {
-            var button: Button? = button(for: $0.type)
+            let button: Button? = button(for: $0.type)
             button?.setTitle($0.title, for: .normal)
             button?.style = .dashboardAction(
                 leftImage: UIImage(named: $0.imageName)

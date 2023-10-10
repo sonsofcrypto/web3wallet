@@ -4,7 +4,6 @@
 
 import UIKit
 
-@IBDesignable
 class ThemeBlurView: VisualEffectView {
     
     override init(effect: UIVisualEffect?) {
@@ -25,14 +24,6 @@ class ThemeBlurView: VisualEffectView {
         colorTint = theme.color.bgPrimary
         colorTintAlpha = theme.blurTintAlpha
         blurRadius = theme.blurRadius
-        scale = 1
-    }
-
-    override func prepareForInterfaceBuilder() {
-        super.prepareForInterfaceBuilder()
-        colorTint = .white
-        colorTintAlpha = 0.18
-        blurRadius = 16
         scale = 1
     }
 }

@@ -43,13 +43,13 @@ extension DefaultNetworksWireframe {
         if destination is NetworksWireframeDestination.Dashboard {
             parent?.asEdgeCardsController?.setDisplayMode(.master, animated: true)
         }
-        if let input = destination as? NetworksWireframeDestination.EditNetwork {
-            alertWireframeFactory.make(parent, context: .underConstructionAlert()).present()
+//        if let input = destination as? NetworksWireframeDestination.EditNetwork {
+//            alertWireframeFactory.make(parent, context: .underConstructionAlert()).present()
 //              networkSettingsWireframeFactory.make(
 //                  vc?.asNavVc?.topVc ?? vc,
 //                  network: input.network
 //              ).present()
-        }
+//        }
     }
 }
 

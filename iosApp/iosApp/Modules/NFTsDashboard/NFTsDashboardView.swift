@@ -189,7 +189,6 @@ private extension NFTsDashboardViewController {
         guard prevSize.width != view.bounds.size.width || force else { return }
         prevSize = view.bounds.size
         let length = floor((view.bounds.width - Theme.padding * 3) / 2)
-        let vm = viewModel as? NFTsDashboardViewModel.Loaded
         collectionCellSize = .init(width: length, height: length)
         emptyCellSize = view.frame.inset(by: collectionView.adjustedContentInset).size
         let settings: SettingsService = AppAssembler.resolve()
