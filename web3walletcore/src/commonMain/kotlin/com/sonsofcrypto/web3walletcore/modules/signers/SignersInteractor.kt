@@ -1,20 +1,20 @@
-package com.sonsofcrypto.web3walletcore.modules.keyStore
+package com.sonsofcrypto.web3walletcore.modules.signers
 
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 
-interface KeyStoreInteractor {
+interface SignersInteractor {
     var selected: KeyStoreItem?
     val items: List<KeyStoreItem>
     fun add(item: KeyStoreItem, password: String, secretStorage: SecretStorage)
 }
 
-class DefaultKeyStoreInteractor(
+class DefaultSignersInteractor(
     private var keyStoreService: KeyStoreService,
     private var networksService: NetworksService,
-): KeyStoreInteractor {
+): SignersInteractor {
 
     override var selected: KeyStoreItem?
         get() = keyStoreService.selected

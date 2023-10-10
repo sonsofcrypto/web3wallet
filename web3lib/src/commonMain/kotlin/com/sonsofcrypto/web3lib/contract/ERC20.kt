@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib.contract
 
 import com.sonsofcrypto.web3lib.provider.Provider
-import com.sonsofcrypto.web3lib.signer.Signer
+import com.sonsofcrypto.web3lib.signer.SignerIntf
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
 
@@ -10,8 +10,8 @@ class ERC20: Contract {
     constructor(
         address: Address.HexString? = null,
         provider: Provider? = null,
-        signer: Signer? = null
-    ) : super(listOf(ERC20.abi()), address, provider, signer)
+        signerIntf: SignerIntf? = null
+    ) : super(listOf(ERC20.abi()), address, provider, signerIntf)
     /** Returns `BigInt` */
     fun decimals(): Method = method("decimals()")
     /** Returns `BigInt` */

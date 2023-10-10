@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WaB-ch-uED">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -128,7 +128,7 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="W3W improvement proposals" id="oW5-1I-9mL" customClass="NavigationItem" customModule="iosApp" customModuleProvider="target">
-                        <barButtonItem key="rightBarButtonItem" image="xmark" catalog="system" landscapeImage="xmark" style="plain" id="apG-h3-OzR">
+                        <barButtonItem key="rightBarButtonItem" image="xmark" catalog="system" landscapeImage="xmark" id="apG-h3-OzR">
                             <connections>
                                 <action selector="dismissAction" destination="4hk-9p-GXg" id="eci-o4-zZD"/>
                             </connections>

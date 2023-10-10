@@ -30,7 +30,7 @@ final class DefaultRootWireframe {
     private weak var vc: UIViewController!
     private weak var tabVc: TabBarController!
 
-    private let keyStoreWireframeFactory: KeyStoreWireframeFactory
+    private let keyStoreWireframeFactory: SignersWireframeFactory
     private let networksWireframeFactory: NetworksWireframeFactory
     private let dashboardWireframeFactory: DashboardWireframeFactory
     private let degenWireframeFactory: DegenWireframeFactory
@@ -40,7 +40,7 @@ final class DefaultRootWireframe {
 
     init(
         window: UIWindow?,
-        keyStoreWireframeFactory: KeyStoreWireframeFactory,
+        keyStoreWireframeFactory: SignersWireframeFactory,
         networksWireframeFactory: NetworksWireframeFactory,
         dashboardWireframeFactory: DashboardWireframeFactory,
         degenWireframeFactory: DegenWireframeFactory,

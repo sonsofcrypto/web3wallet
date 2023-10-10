@@ -1,8 +1,8 @@
-package com.sonsofcrypto.web3walletcore.modules.keyStore
+package com.sonsofcrypto.web3walletcore.modules.signers
 
 import com.sonsofcrypto.web3walletcore.common.viewModels.ErrorViewModel
 
-data class KeyStoreViewModel(
+data class SignersViewModel(
     val isEmpty: Boolean,
     val state: State,
     val items: List<Item>,
@@ -34,7 +34,8 @@ data class KeyStoreViewModel(
                 IMPORT_MNEMONIC,
                 MORE_OPTION,
                 CONNECT_HARDWARE_WALLET,
-                IMPORT_PRIVATE_KEY,
+                IMPORT_PRIV_KEY,
+                IMPORT_ADDRESS,
                 CREATE_MULTI_SIG,
             }
         }

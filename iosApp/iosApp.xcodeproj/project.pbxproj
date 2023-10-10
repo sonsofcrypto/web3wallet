@@ -106,10 +106,10 @@
 		1C60C2B3285724D0003BE25D /* CurrencyPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DD285724D0003BE25D /* CurrencyPickerView.swift */; };
 		1C60C2B5285724D0003BE25D /* CurrencyPickerWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DF285724D0003BE25D /* CurrencyPickerWireframeFactory.swift */; };
 		1C60C2B6285724D0003BE25D /* CurrencyPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C1E0285724D0003BE25D /* CurrencyPicker.storyboard */; };
-		1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E3285724D0003BE25D /* KeyStoreWireframeFactory.swift */; };
-		1C60C2BF285724D0003BE25D /* KeyStoreWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */; };
-		1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EC285724D0003BE25D /* KeyStoreCell.swift */; };
-		1C60C2C1285724D0003BE25D /* KeyStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1ED285724D0003BE25D /* KeyStoreView.swift */; };
+		1C60C2B8285724D0003BE25D /* SignersWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E3285724D0003BE25D /* SignersWireframeFactory.swift */; };
+		1C60C2BF285724D0003BE25D /* SignersWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EB285724D0003BE25D /* SignersWireframe.swift */; };
+		1C60C2C0285724D0003BE25D /* SignersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EC285724D0003BE25D /* SignersCell.swift */; };
+		1C60C2C1285724D0003BE25D /* SignersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1ED285724D0003BE25D /* SignersView.swift */; };
 		1C60C2CC285724D0003BE25D /* AlertWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FB285724D0003BE25D /* AlertWireframe.swift */; };
 		1C60C2CD285724D0003BE25D /* AlertWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FC285724D0003BE25D /* AlertWireframeFactory.swift */; };
 		1C60C2CF285724D0003BE25D /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FE285724D0003BE25D /* AlertView.swift */; };
@@ -244,7 +244,6 @@
 		1C9E31A3287580E500DD2031 /* CurrencySend.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C9E31A2287580E500DD2031 /* CurrencySend.storyboard */; };
 		1C9E31B028787A3000DD2031 /* NetworkFeePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31AF28787A3000DD2031 /* NetworkFeePickerView.swift */; };
 		1CAC55A4286DF26100CCB2B6 /* Networks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55A3286DF26100CCB2B6 /* Networks.storyboard */; };
-		1CAC55A8286E119500CCB2B6 /* KeyStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55A7286E119500CCB2B6 /* KeyStore.storyboard */; };
 		1CAC5601286EFFC300CCB2B6 /* SFProText-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55F4286EFFC200CCB2B6 /* SFProText-Regular.otf */; };
 		1CAC5602286EFFC300CCB2B6 /* SFProText-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55F5286EFFC200CCB2B6 /* SFProText-Bold.otf */; };
 		1CAC5603286EFFC300CCB2B6 /* SFProText-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55F6286EFFC200CCB2B6 /* SFProText-BoldItalic.otf */; };
@@ -505,10 +504,10 @@
 		1C60C1DD285724D0003BE25D /* CurrencyPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerView.swift; sourceTree = "<group>"; };
 		1C60C1DF285724D0003BE25D /* CurrencyPickerWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C1E0285724D0003BE25D /* CurrencyPicker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CurrencyPicker.storyboard; sourceTree = "<group>"; };
-		1C60C1E3285724D0003BE25D /* KeyStoreWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframeFactory.swift; sourceTree = "<group>"; };
-		1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframe.swift; sourceTree = "<group>"; };
-		1C60C1EC285724D0003BE25D /* KeyStoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreCell.swift; sourceTree = "<group>"; };
-		1C60C1ED285724D0003BE25D /* KeyStoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreView.swift; sourceTree = "<group>"; };
+		1C60C1E3285724D0003BE25D /* SignersWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignersWireframeFactory.swift; sourceTree = "<group>"; };
+		1C60C1EB285724D0003BE25D /* SignersWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignersWireframe.swift; sourceTree = "<group>"; };
+		1C60C1EC285724D0003BE25D /* SignersCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignersCell.swift; sourceTree = "<group>"; };
+		1C60C1ED285724D0003BE25D /* SignersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignersView.swift; sourceTree = "<group>"; };
 		1C60C1FB285724D0003BE25D /* AlertWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWireframe.swift; sourceTree = "<group>"; };
 		1C60C1FC285724D0003BE25D /* AlertWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C1FE285724D0003BE25D /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
@@ -643,7 +642,6 @@
 		1C9E31A2287580E500DD2031 /* CurrencySend.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CurrencySend.storyboard; sourceTree = "<group>"; };
 		1C9E31AF28787A3000DD2031 /* NetworkFeePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkFeePickerView.swift; sourceTree = "<group>"; };
 		1CAC55A3286DF26100CCB2B6 /* Networks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Networks.storyboard; sourceTree = "<group>"; };
-		1CAC55A7286E119500CCB2B6 /* KeyStore.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = KeyStore.storyboard; sourceTree = "<group>"; };
 		1CAC55F4286EFFC200CCB2B6 /* SFProText-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Regular.otf"; sourceTree = "<group>"; };
 		1CAC55F5286EFFC200CCB2B6 /* SFProText-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Bold.otf"; sourceTree = "<group>"; };
 		1CAC55F6286EFFC200CCB2B6 /* SFProText-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-BoldItalic.otf"; sourceTree = "<group>"; };
@@ -915,7 +913,7 @@
 		1C0643CD2892EA1800643C15 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1C60C1EC285724D0003BE25D /* KeyStoreCell.swift */,
+				1C60C1EC285724D0003BE25D /* SignersCell.swift */,
 				2DC2C41558C39C7EFB97BC1F /* LogoAnimView.swift */,
 				2DC2CBF8C62A6A6D9D6E9648 /* ButtonsSheetViewCell.swift */,
 			);
@@ -1054,7 +1052,7 @@
 				1C60C20D285724D0003BE25D /* Dashboard */,
 				1C60C272285724D0003BE25D /* Degen */,
 				1C60C285285724D0003BE25D /* DegenCult */,
-				1C60C1E1285724D0003BE25D /* KeyStore */,
+				1C60C1E1285724D0003BE25D /* Signers */,
 				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
 				D1976B01287EFAE10063FC9C /* MnemonicImport */,
 				1C60C202285724D0003BE25D /* MnemonicNew */,
@@ -1100,16 +1098,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C1E1285724D0003BE25D /* KeyStore */ = {
+		1C60C1E1285724D0003BE25D /* Signers */ = {
 			isa = PBXGroup;
 			children = (
-				1CAC55A7286E119500CCB2B6 /* KeyStore.storyboard */,
-				1C60C1ED285724D0003BE25D /* KeyStoreView.swift */,
-				1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */,
-				1C60C1E3285724D0003BE25D /* KeyStoreWireframeFactory.swift */,
+				1C60C1ED285724D0003BE25D /* SignersView.swift */,
+				1C60C1EB285724D0003BE25D /* SignersWireframe.swift */,
+				1C60C1E3285724D0003BE25D /* SignersWireframeFactory.swift */,
 				1C0643CD2892EA1800643C15 /* Views */,
 			);
-			path = KeyStore;
+			path = Signers;
 			sourceTree = "<group>";
 		};
 		1C60C1FA285724D0003BE25D /* Alert */ = {
@@ -1981,7 +1978,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					D157F7C627B69B6300578FF8 = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -2048,7 +2045,6 @@
 				1CAC560A286EFFC300CCB2B6 /* SFProDisplay-Bold.otf in Resources */,
 				D11A990627B8615B00EDFDD0 /* OFL.txt in Resources */,
 				1C54DC5928683DDA00E378F6 /* NaokoAA-Light.otf in Resources */,
-				1CAC55A8286E119500CCB2B6 /* KeyStore.storyboard in Resources */,
 				1C54DBEF285E835400E378F6 /* CurrencyAdd.storyboard in Resources */,
 				1C54DC5428683DDA00E378F6 /* NaokoAA-Bold-Italic.otf in Resources */,
 				D11A990427B8615B00EDFDD0 /* GothicA1-Bold.ttf in Resources */,
@@ -2172,7 +2168,7 @@
 				1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */,
 				1F871F532AC1791E0002A1AC /* TableGroupedFlowLayout.swift in Sources */,
 				1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */,
-				1C60C2C1285724D0003BE25D /* KeyStoreView.swift in Sources */,
+				1C60C2C1285724D0003BE25D /* SignersView.swift in Sources */,
 				1C60C2DD285724D0003BE25D /* DashboardView.swift in Sources */,
 				1C672001287FE11700C5F044 /* CurrencySwapMarketCollectionViewCell.swift in Sources */,
 				1C7F863028D20E490073FD95 /* UIView+Extensions.swift in Sources */,
@@ -2201,7 +2197,7 @@
 				1C60C2FE285724D0003BE25D /* NFTDetailView+Content+Properties.swift in Sources */,
 				1F871F642AC17BB00002A1AC /* SettingsWireframeFactory.swift in Sources */,
 				D1976B0E287EFAE10063FC9C /* MnemonicImportWireframe.swift in Sources */,
-				1C60C2BF285724D0003BE25D /* KeyStoreWireframe.swift in Sources */,
+				1C60C2BF285724D0003BE25D /* SignersWireframe.swift in Sources */,
 				1C7F862A28D20E490073FD95 /* CAAnimation+Extension.swift in Sources */,
 				1C54DBFD2860E5AB00E378F6 /* NetworkPickerInteractor.swift in Sources */,
 				1C6720142885D78A00C5F044 /* CurrencySwapPriceView.swift in Sources */,
@@ -2311,7 +2307,7 @@
 				1C60C2CD285724D0003BE25D /* AlertWireframeFactory.swift in Sources */,
 				1C60C2DF285724D0003BE25D /* DashboardHeaderTitleView.swift in Sources */,
 				1CB8B0B8288C351A00024E7C /* CultProposalDetailViewCell.swift in Sources */,
-				1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */,
+				1C60C2C0285724D0003BE25D /* SignersCell.swift in Sources */,
 				1C7F863328D20E490073FD95 /* UIEdgeInsets+Extensions.swift in Sources */,
 				1F871F682AC18F320002A1AC /* LabelCell.swift in Sources */,
 				1C54DC662869A48A00E378F6 /* DashboardHeaderBalanceView.swift in Sources */,
@@ -2372,7 +2368,7 @@
 				1C67201B28870FCB00C5F044 /* ConfirmationView.swift in Sources */,
 				1C7F862F28D20E490073FD95 /* UIButton+Extensions.swift in Sources */,
 				1C7F863628D20E490073FD95 /* UIImage+Extension.swift in Sources */,
-				1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */,
+				1C60C2B8285724D0003BE25D /* SignersWireframeFactory.swift in Sources */,
 				1CEF3D1F28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift in Sources */,
 				1CE0063D288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift in Sources */,
 				1CDED603289C4C5C00DF34A7 /* NFTSendView.swift in Sources */,
@@ -2544,7 +2540,6 @@
 		1F3AC2862AB7ED09006E5E40 /* ReleaseDev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -2817,7 +2812,6 @@
 		1FBFA8E52AAB30CE00C458F2 /* Dev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -3153,7 +3147,6 @@
 		D157F7F227B69B6400578FF8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;

@@ -17,11 +17,11 @@ import kotlinx.coroutines.flow.onEach
 import kotlin.time.Duration.Companion.seconds
 
 /** Generic signer interface */
-interface Signer {
+interface SignerIntf {
     /** Returns provider if connected */
     fun provider(): Provider?
     /** Returns a new instance of the Signer, connected to provider. */
-    fun connect(provider: Provider): Signer;
+    fun connect(provider: Provider): SignerIntf;
     /** Returns the checksum address */
     @Throws(Throwable::class)
     fun address(): Address
@@ -76,7 +76,7 @@ class Wallet(
     private val keyStoreItem: KeyStoreItem,
     private val keyStoreService: KeyStoreService,
     private var provider: Provider? = null,
-): Signer {
+): SignerIntf {
     private var key: ByteArray? = null
     private var lockJob: Job? = null
 
@@ -85,7 +85,7 @@ class Wallet(
 
     override fun provider(): Provider? = provider
 
-    override fun connect(provider: Provider): Signer {
+    override fun connect(provider: Provider): SignerIntf {
         this.provider = provider
         return this
     }

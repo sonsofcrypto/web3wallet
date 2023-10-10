@@ -2,13 +2,13 @@ package com.sonsofcrypto.web3lib.contract
 
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
-import com.sonsofcrypto.web3lib.signer.Signer
+import com.sonsofcrypto.web3lib.signer.SignerIntf
 import com.sonsofcrypto.web3lib.types.Address
 
 open class Contract{
     private var address: Address.HexString?
     private var provider: Provider?
-    private var signer: Signer?
+    private var signerIntf: SignerIntf?
     private var params: List<Input> = emptyList()
     private var events: List<Event> = emptyList()
     private var methods: List<Method> = emptyList()
@@ -18,11 +18,11 @@ open class Contract{
         abis: List<String>,
         address: Address.HexString? = null,
         provider: Provider? = null,
-        signer: Signer? = null
+        signerIntf: SignerIntf? = null
     ) {
         this.address = address
         this.provider = provider
-        this.signer = signer
+        this.signerIntf = signerIntf
         this.params = abis.map { abiDecodeParams(it) }.flatten()
         this.methods= abis.map { abiDecodeMethods(it) }.flatten()
         this.events = abis.map { abiDecodeEvents(it) }.flatten()
@@ -33,13 +33,13 @@ open class Contract{
     fun connect(
         address: Address.HexString? = null,
         provider: Provider? = null,
-        signer: Signer? = null,
+        signerIntf: SignerIntf? = null,
     ): Contract {
         val copy = Contract(
             listOf(),
             address ?: this.address,
             provider ?: this.provider,
-            signer ?: this.signer
+            signerIntf ?: this.signerIntf
         )
         copy.params = this.params
         copy.events = this.events

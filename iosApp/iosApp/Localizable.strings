@@ -120,6 +120,7 @@
 "keyStore.moreOption" = "More options";
 "keyStore.connectHardwareWallet" = "Connect hardware wallet";
 "keyStore.importPrivateKey" = "Import private key";
+"keyStore.importAddress" = "Import address (View only)";
 "keyStore.createMultiSig" = "Create multisig wallet";
 
 "mnemonic.title.new" = "New wallet";

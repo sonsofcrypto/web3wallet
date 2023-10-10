@@ -9,7 +9,7 @@ final class ButtonsSheetViewCell: UICollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     
-    private var viewModel: KeyStoreViewModel.ButtonSheetViewModelButton?
+    private var viewModel: SignersViewModel.ButtonSheetViewModelButton?
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -19,7 +19,7 @@ final class ButtonsSheetViewCell: UICollectionViewCell {
 
 extension ButtonsSheetViewCell {
     
-    func update(with viewModel: KeyStoreViewModel.ButtonSheetViewModelButton?) -> ButtonsSheetViewCell {
+    func update(with viewModel: SignersViewModel.ButtonSheetViewModelButton?) -> ButtonsSheetViewCell {
         self.viewModel = viewModel
         titleLabel.text = viewModel?.title ?? ""
         updateButtonStyle()
