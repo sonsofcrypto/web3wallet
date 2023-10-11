@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicNew
 
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.BIO
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.common.viewModels.SectionFooterViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.SegmentWithTextAndSwitchCellViewModel
@@ -39,7 +39,7 @@ class DefaultMnemonicNewPresenter(
     private var iCloudSecretStorage = false
     private var saltMnemonicOn = false
     private var salt = ""
-    private var passwordType: KeyStoreItem.PasswordType = BIO
+    private var passwordType: SignerStoreItem.PasswordType = BIO
     private var password = ""
     private var passUnlockWithBio = true
     private var selectedLocation = 0
@@ -175,7 +175,7 @@ class DefaultMnemonicNewPresenter(
                 passwordTypes().map { it.name.lowercase() },
                 selectedPasswordTypeIdx(),
                 password,
-                if (passwordType == KeyStoreItem.PasswordType.PIN) SegmentWithTextAndSwitchCellViewModel.KeyboardType.NUMBER_PAD else SegmentWithTextAndSwitchCellViewModel.KeyboardType.DEFAULT,
+                if (passwordType == SignerStoreItem.PasswordType.PIN) SegmentWithTextAndSwitchCellViewModel.KeyboardType.NUMBER_PAD else SegmentWithTextAndSwitchCellViewModel.KeyboardType.DEFAULT,
                 Localized("mnemonic.$placeholderType.placeholder"),
                 passwordErrorMessage,
                 Localized("mnemonic.passType.allowFaceId"),
@@ -184,10 +184,10 @@ class DefaultMnemonicNewPresenter(
         )
     )
 
-    private val placeholderType: String get() = if (passwordType == KeyStoreItem.PasswordType.PIN) "pinType" else "passType"
+    private val placeholderType: String get() = if (passwordType == SignerStoreItem.PasswordType.PIN) "pinType" else "passType"
 
-    private fun passwordTypes(): List<KeyStoreItem.PasswordType> =
-        KeyStoreItem.PasswordType.values().map { it }
+    private fun passwordTypes(): List<SignerStoreItem.PasswordType> =
+        SignerStoreItem.PasswordType.values().map { it }
 
     private fun selectedPasswordTypeIdx(): Int {
         val index = passwordTypes().indexOf(passwordType)

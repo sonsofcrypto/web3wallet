@@ -2,8 +2,8 @@ package com.sonsofcrypto.web3lib.signer
 
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.model.*
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
@@ -73,14 +73,14 @@ interface SignerIntf {
 private val autoLockInterval = 5.seconds
 
 class Wallet(
-    private val keyStoreItem: KeyStoreItem,
-    private val keyStoreService: KeyStoreService,
+    private val signerStoreItem: SignerStoreItem,
+    private val signerStoreService: SignerStoreService,
     private var provider: Provider? = null,
 ): SignerIntf {
     private var key: ByteArray? = null
     private var lockJob: Job? = null
 
-    fun id(): String = keyStoreItem.uuid
+    fun id(): String = signerStoreItem.uuid
     fun network(): Network? = provider?.network
 
     override fun provider(): Provider? = provider
@@ -94,7 +94,7 @@ class Wallet(
 
     @Throws(Throwable::class)
     fun unlock(password: String, salt: String) {
-        val secretStorage = keyStoreService.secretStorage(keyStoreItem, password)
+        val secretStorage = signerStoreService.secretStorage(signerStoreItem, password)
             ?: throw Error.FailedToUnlockWallet
 
         val result = secretStorage.decrypt(password)
@@ -103,7 +103,7 @@ class Wallet(
             val wordList = WordList.fromLocaleString(result.mnemonicLocale)
             val bip39 = Bip39(result.mnemonic.split(" "), salt, wordList)
             val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
-            key = bip44.deriveChildKey(keyStoreItem.derivationPath).key
+            key = bip44.deriveChildKey(signerStoreItem.derivationPath).key
         } else key = result.key
 
         lockJob = timerFlow(autoLockInterval, initialDelay = autoLockInterval)
@@ -120,11 +120,11 @@ class Wallet(
 
     @Throws(Throwable::class)
     override fun address(): Address {
-        val path = keyStoreItem.derivationPath
-        val hexStrAddress = keyStoreItem.addresses[path]
+        val path = signerStoreItem.derivationPath
+        val hexStrAddress = signerStoreItem.addresses[path]
         if (hexStrAddress != null)
             return Address.HexString(hexStrAddress)
-        throw Error.MissingAddressError(path, keyStoreItem.uuid)
+        throw Error.MissingAddressError(path, signerStoreItem.uuid)
     }
 
     override suspend fun signMessage(message: ByteArray): ByteArray {
@@ -259,7 +259,7 @@ class Wallet(
     }
 
     fun copy(provider: Provider? = null): Wallet {
-        return Wallet(keyStoreItem, keyStoreService, provider)
+        return Wallet(signerStoreItem, signerStoreService, provider)
     }
 
     /** Exceptions */

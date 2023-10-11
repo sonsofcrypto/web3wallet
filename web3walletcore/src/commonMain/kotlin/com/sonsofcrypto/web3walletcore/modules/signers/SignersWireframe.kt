@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.signers
 
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 
 sealed class SignersWireframeDestination {
 
@@ -9,15 +9,15 @@ sealed class SignersWireframeDestination {
     object Dashboard: SignersWireframeDestination()
     object DashboardOnboarding: SignersWireframeDestination()
     data class EditSignersItem(
-        val item: KeyStoreItem,
-        val handler: (KeyStoreItem) -> Unit,
+        val item: SignerStoreItem,
+        val handler: (SignerStoreItem) -> Unit,
         val deleteHandler: () -> Unit
     ): SignersWireframeDestination()
     data class NewMnemonic(
-        val handler: (KeyStoreItem) -> Unit
+        val handler: (SignerStoreItem) -> Unit
     ): SignersWireframeDestination()
     data class ImportMnemonic(
-        val handler: (KeyStoreItem) -> Unit
+        val handler: (SignerStoreItem) -> Unit
     ): SignersWireframeDestination()
     object ImportPrivateKey: SignersWireframeDestination()
     object ImportAddress: SignersWireframeDestination()

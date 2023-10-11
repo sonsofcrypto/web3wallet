@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.settings
 
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3walletcore.common.ThemeId
 import com.sonsofcrypto.web3walletcore.common.ThemeVariant
 import com.sonsofcrypto.web3walletcore.services.settings.NFTCarouselSize
@@ -16,7 +16,7 @@ interface SettingsInteractor {
 
 class DefaultSettingsInteractor(
     private val settingsService: SettingsService,
-    private val keyStoreService: KeyStoreService,
+    private val signerStoreService: SignerStoreService,
 ): SettingsInteractor {
 
     override var themeId: ThemeId
@@ -32,8 +32,8 @@ class DefaultSettingsInteractor(
         set(size) { settingsService.nftCarouselSize = size }
 
     override fun resetKeyStore() {
-        keyStoreService.items().forEach {
-            keyStoreService.remove(it)
+        signerStoreService.items().forEach {
+            signerStoreService.remove(it)
         }
     }
 }

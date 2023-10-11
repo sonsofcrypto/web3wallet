@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicImport
 
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.types.Bip44
@@ -25,7 +25,7 @@ data class MnemonicImportInteractorData(
     val passUnlockWithBio: Boolean,
     val iCloudSecretStorage: Boolean,
     val saltMnemonic: Boolean,
-    val passwordType: KeyStoreItem.PasswordType,
+    val passwordType: SignerStoreItem.PasswordType,
 )
 
 interface MnemonicImportInteractor {
@@ -34,16 +34,16 @@ interface MnemonicImportInteractor {
     fun isValidPrefix(prefix: String): Boolean
     fun isMnemonicValid(mnemonic: String, salt: String?): Boolean
     @Throws(Exception::class)
-    fun createKeyStoreItem(data: MnemonicImportInteractorData, password: String, salt: String): KeyStoreItem
+    fun createKeyStoreItem(data: MnemonicImportInteractorData, password: String, salt: String): SignerStoreItem
     fun mnemonicError(mnemonic: List<String>, salt: String): MnemonicServiceError?
     fun generatePassword(): String
     fun pasteToClipboard(text: String)
-    fun validationError(password: String, type: KeyStoreItem.PasswordType): String?
+    fun validationError(password: String, type: SignerStoreItem.PasswordType): String?
     fun keyStoreItemsCount(): Int
 }
 
 class DefaultMnemonicImportInteractor(
-    private val keyStoreService: KeyStoreService,
+    private val signerStoreService: SignerStoreService,
     private val mnemonicService: MnemonicService,
     private val passwordService: PasswordService,
 ): MnemonicImportInteractor {
@@ -60,17 +60,17 @@ class DefaultMnemonicImportInteractor(
     override fun isMnemonicValid(mnemonic: String, salt: String?): Boolean =
         mnemonicService.mnemonicError(mnemonic, salt) == null
 
-    override fun createKeyStoreItem(data: MnemonicImportInteractorData, password: String, salt: String): KeyStoreItem {
+    override fun createKeyStoreItem(data: MnemonicImportInteractorData, password: String, salt: String): SignerStoreItem {
         val worldList = WordList.fromLocaleString("en")
         val bip39 = Bip39(data.mnemonic, salt, worldList)
         val bip44 = Bip44(bip39.seed(), MAINNETPRV)
         val derivationPath = Network.ethereum().defaultDerivationPath()
         val extKey = bip44.deriveChildKey(derivationPath)
-        val keyStoreItem = KeyStoreItem(
+        val signerStoreItem = SignerStoreItem(
             UUIDService().uuidString(),
             data.name,
-            (keyStoreService.items().lastOrNull()?.sortOrder ?: 0u) + 100u,
-            KeyStoreItem.Type.MNEMONIC,
+            (signerStoreService.items().lastOrNull()?.sortOrder ?: 0u) + 100u,
+            SignerStoreItem.Type.MNEMONIC,
             data.passUnlockWithBio,
             data.iCloudSecretStorage,
             data.saltMnemonic,
@@ -79,7 +79,7 @@ class DefaultMnemonicImportInteractor(
             addresses(bip44)
         )
         val secretStorage = SecretStorage.encryptDefault(
-            keyStoreItem.uuid,
+            signerStoreItem.uuid,
             extKey.key,
             password,
             Network.ethereum().address(extKey.xpub()).toHexString(true),
@@ -87,8 +87,8 @@ class DefaultMnemonicImportInteractor(
             bip39.worldList.localeString(),
             derivationPath
         )
-        keyStoreService.add(keyStoreItem, password, secretStorage)
-        return keyStoreItem
+        signerStoreService.add(signerStoreItem, password, secretStorage)
+        return signerStoreItem
     }
 
     @Throws(Error::class)
@@ -109,8 +109,8 @@ class DefaultMnemonicImportInteractor(
 
     override fun pasteToClipboard(text: String) = ClipboardService().paste(text)
 
-    override fun validationError(password: String, type: KeyStoreItem.PasswordType): String? =
+    override fun validationError(password: String, type: SignerStoreItem.PasswordType): String? =
         passwordService.validationError(password, type)
 
-    override fun keyStoreItemsCount(): Int = keyStoreService.items().count()
+    override fun keyStoreItemsCount(): Int = signerStoreService.items().count()
 }

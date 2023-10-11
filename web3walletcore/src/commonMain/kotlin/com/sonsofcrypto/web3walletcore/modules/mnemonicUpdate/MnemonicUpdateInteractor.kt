@@ -1,33 +1,33 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate
 
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3walletcore.services.clipboard.ClipboardService
 
 interface MnemonicUpdateInteractor {
     @Throws(SecretStorage.Error::class)
-    fun setup(keyStoreItem: KeyStoreItem, password: String, salt: String)
+    fun setup(signerStoreItem: SignerStoreItem, password: String, salt: String)
     fun mnemonic(): String
     fun pasteToClipboard(text: String)
     fun update(
-        keyStoreItem: KeyStoreItem, name: String, iCloudSecretStorage: Boolean
-    ): KeyStoreItem?
-    fun delete(keyStoreItem: KeyStoreItem)
+        signerStoreItem: SignerStoreItem, name: String, iCloudSecretStorage: Boolean
+    ): SignerStoreItem?
+    fun delete(signerStoreItem: SignerStoreItem)
 }
 
 class DefaultMnemonicUpdateInteractor(
-    private val keyStoreService: KeyStoreService,
+    private val signerStoreService: SignerStoreService,
 ): MnemonicUpdateInteractor {
     private var password: String = ""
     private var salt: String = ""
     private var mnemonic: String = ""
 
     @Throws(SecretStorage.Error::class)
-    override fun setup(keyStoreItem: KeyStoreItem, password: String, salt: String) {
+    override fun setup(signerStoreItem: SignerStoreItem, password: String, salt: String) {
         this.password = password
         this.salt = salt
-        val result = keyStoreService.secretStorage(keyStoreItem, password)?.decrypt(password)
+        val result = signerStoreService.secretStorage(signerStoreItem, password)?.decrypt(password)
         mnemonic = result?.mnemonic ?: ""
     }
 
@@ -36,31 +36,31 @@ class DefaultMnemonicUpdateInteractor(
     override fun pasteToClipboard(text: String) = ClipboardService().paste(text)
 
     override fun update(
-        keyStoreItem: KeyStoreItem, name: String, iCloudSecretStorage: Boolean,
-    ): KeyStoreItem? {
-        val secretStorage = keyStoreService.secretStorage(keyStoreItem, password) ?: return null
-        val item = KeyStoreItem(
-            keyStoreItem.uuid,
+        signerStoreItem: SignerStoreItem, name: String, iCloudSecretStorage: Boolean,
+    ): SignerStoreItem? {
+        val secretStorage = signerStoreService.secretStorage(signerStoreItem, password) ?: return null
+        val item = SignerStoreItem(
+            signerStoreItem.uuid,
             name,
-            keyStoreItem.sortOrder,
-            keyStoreItem.type,
-            keyStoreItem.passUnlockWithBio,
+            signerStoreItem.sortOrder,
+            signerStoreItem.type,
+            signerStoreItem.passUnlockWithBio,
             iCloudSecretStorage,
-            keyStoreItem.saltMnemonic,
-            keyStoreItem.passwordType,
-            keyStoreItem.derivationPath,
-            keyStoreItem.addresses,
+            signerStoreItem.saltMnemonic,
+            signerStoreItem.passwordType,
+            signerStoreItem.derivationPath,
+            signerStoreItem.addresses,
         )
-        keyStoreService.add(item, password, secretStorage)
+        signerStoreService.add(item, password, secretStorage)
         return item
     }
 
-    override fun delete(keyStoreItem: KeyStoreItem) {
-        if (keyStoreItem.uuid == keyStoreService.selected?.uuid) {
-            keyStoreService.remove(keyStoreItem)
-            keyStoreService.selected = keyStoreService.items().firstOrNull()
+    override fun delete(signerStoreItem: SignerStoreItem) {
+        if (signerStoreItem.uuid == signerStoreService.selected?.uuid) {
+            signerStoreService.remove(signerStoreItem)
+            signerStoreService.selected = signerStoreService.items().firstOrNull()
         } else {
-            keyStoreService.remove(keyStoreItem)
+            signerStoreService.remove(signerStoreItem)
         }
     }
 }

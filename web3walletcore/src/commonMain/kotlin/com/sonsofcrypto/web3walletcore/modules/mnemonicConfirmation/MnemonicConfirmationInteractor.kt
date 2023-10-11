@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation
 
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3walletcore.services.actions.Action
 import com.sonsofcrypto.web3walletcore.services.actions.ActionsService
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicService
@@ -16,7 +16,7 @@ interface MnemonicConfirmationInteractor {
 }
 
 class DefaultMnemonicConfirmationInteractor(
-    private val keyStoreService: KeyStoreService,
+    private val signerStoreService: SignerStoreService,
     private val actionsService: ActionsService,
     private val mnemonicService: MnemonicService,
 ): MnemonicConfirmationInteractor {
@@ -34,7 +34,7 @@ class DefaultMnemonicConfirmationInteractor(
         mnemonicService.mnemonicError(mnemonic, salt) == null
 
     override fun showSalt(): Boolean {
-        val keyStoreItem = keyStoreService.selected ?: return false
+        val keyStoreItem = signerStoreService.selected ?: return false
         return keyStoreItem.saltMnemonic
     }
 

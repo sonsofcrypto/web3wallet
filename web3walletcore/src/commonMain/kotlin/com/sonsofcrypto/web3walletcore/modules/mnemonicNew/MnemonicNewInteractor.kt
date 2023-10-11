@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicNew
 
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.types.Bip44
@@ -22,39 +22,39 @@ data class MnemonicNewInteractorData(
     val passUnlockWithBio: Boolean,
     val iCloudSecretStorage: Boolean,
     val saltMnemonic: Boolean,
-    val passwordType: KeyStoreItem.PasswordType,
+    val passwordType: SignerStoreItem.PasswordType,
 )
 
 interface MnemonicNewInteractor {
     @Throws(Exception::class)
     fun createKeyStoreItem(
         data: MnemonicNewInteractorData, password: String, salt: String
-    ): KeyStoreItem
+    ): SignerStoreItem
     fun generateMnemonic(): String
     fun generatePassword(): String
     fun pasteToClipboard(text: String)
-    fun validationError(password: String, type: KeyStoreItem.PasswordType): String?
+    fun validationError(password: String, type: SignerStoreItem.PasswordType): String?
     fun keyStoreItemsCount(): Int
 }
 
 class DefaultMnemonicNewInteractor(
-    private val keyStoreService: KeyStoreService,
+    private val signerStoreService: SignerStoreService,
     private val passwordService: PasswordService,
 ): MnemonicNewInteractor {
 
     override fun createKeyStoreItem(
         data: MnemonicNewInteractorData, password: String, salt: String
-    ): KeyStoreItem {
+    ): SignerStoreItem {
         val worldList = WordList.fromLocaleString("en")
         val bip39 = Bip39(data.mnemonic, salt, worldList)
         val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
         val derivationPath = Network.ethereum().defaultDerivationPath()
         val extKey = bip44.deriveChildKey(derivationPath)
-        val keyStoreItem = KeyStoreItem(
+        val signerStoreItem = SignerStoreItem(
             UUIDService().uuidString(),
             data.name,
-            (keyStoreService.items().lastOrNull()?.sortOrder ?: 0u) + 100u,
-            KeyStoreItem.Type.MNEMONIC,
+            (signerStoreService.items().lastOrNull()?.sortOrder ?: 0u) + 100u,
+            SignerStoreItem.Type.MNEMONIC,
             data.passUnlockWithBio,
             data.iCloudSecretStorage,
             data.saltMnemonic,
@@ -63,7 +63,7 @@ class DefaultMnemonicNewInteractor(
             addresses(bip44)
         )
         val secretStorage = SecretStorage.encryptDefault(
-            keyStoreItem.uuid,
+            signerStoreItem.uuid,
             extKey.key,
             password,
             Network.ethereum().address(extKey.xpub()).toHexString(true),
@@ -71,15 +71,15 @@ class DefaultMnemonicNewInteractor(
             bip39.worldList.localeString(),
             derivationPath
         )
-        keyStoreService.add(keyStoreItem, password, secretStorage)
-        return keyStoreItem
+        signerStoreService.add(signerStoreItem, password, secretStorage)
+        return signerStoreItem
     }
 
     override fun generateMnemonic(): String = Bip39.from().mnemonic.joinToString(" ")
 
     @Throws(Error::class)
     private fun addresses(bip44: Bip44): Map<String, String> {
-        val addresses: MutableMap<String, String> = emptyMap<String, String>().toMutableMap()
+        val addresses: MutableMap<String, String> = mutableMapOf()
         NetworksService.supportedNetworks().forEach {
             val path = it.defaultDerivationPath()
             val xPub = bip44.deriveChildKey(path).xpub()
@@ -94,8 +94,8 @@ class DefaultMnemonicNewInteractor(
 
     override fun validationError(
         password: String,
-        type: KeyStoreItem.PasswordType
+        type: SignerStoreItem.PasswordType
     ): String? = passwordService.validationError(password, type)
 
-    override fun keyStoreItemsCount(): Int = keyStoreService.items().count()
+    override fun keyStoreItemsCount(): Int = signerStoreService.items().count()
 }

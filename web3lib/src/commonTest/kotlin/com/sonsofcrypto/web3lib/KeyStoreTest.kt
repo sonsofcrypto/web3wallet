@@ -22,7 +22,7 @@ class KeyStoreTest {
         val data = secureRand(32)
         val password = "testpass"
         val secretStorage = SecretStorage.encrypt(
-            id = testMockKeyStoreItem.uuid,
+            id = testMockSignerStoreItem.uuid,
             data = data,
             password = password,
             address = "67ca77ce83b9668460ab6263dc202a788443510c",
@@ -52,7 +52,7 @@ class KeyStoreTest {
 
     @Test
     fun testKeyStore() {
-        val keyStore = DefaultKeyStoreService(
+        val keyStore = DefaultSignerStoreService(
             KeyValueStore("KeyStoreItemsTest2"),
             MockKeyChainService()
         )
@@ -60,7 +60,7 @@ class KeyStoreTest {
 
         val password = "testpass"
         val secretStorage = SecretStorage.encrypt(
-            id = testMockKeyStoreItem.uuid,
+            id = testMockSignerStoreItem.uuid,
             data = secureRand(32),
             password = password,
             address = "67ca77ce83b9668460ab6263dc202a788443510c",
@@ -68,17 +68,17 @@ class KeyStoreTest {
             mnemonicLocale = null,
             mnemonicPath = null,
         )
-        keyStore.add(testMockKeyStoreItem, password, secretStorage)
+        keyStore.add(testMockSignerStoreItem, password, secretStorage)
         assertTrue(
             keyStore.items().size == 1,
             "Did not save KeyStore item"
         )
         assertTrue(
-            keyStore.items().first() == testMockKeyStoreItem,
-            "Stored item does not equal \n${keyStore.items().first()}\n${testMockKeyStoreItem}"
+            keyStore.items().first() == testMockSignerStoreItem,
+            "Stored item does not equal \n${keyStore.items().first()}\n${testMockSignerStoreItem}"
         )
         assertTrue(
-            keyStore.secretStorage(testMockKeyStoreItem, password) != null,
+            keyStore.secretStorage(testMockSignerStoreItem, password) != null,
             "Failed secret storage"
         )
 
@@ -88,14 +88,14 @@ class KeyStoreTest {
 
     @Test
     fun testKeyStoreSelected() {
-        val keyStore = DefaultKeyStoreService(
+        val keyStore = DefaultSignerStoreService(
             KeyValueStore("KeyStoreItemsTest2"),
             MockKeyChainService()
         )
         keyStore.items().forEach { keyStore.remove(it) }
-        keyStore.selected = testMockKeyStoreItem
+        keyStore.selected = testMockSignerStoreItem
         assertTrue(
-            keyStore.selected == testMockKeyStoreItem,
+            keyStore.selected == testMockSignerStoreItem,
             "Failed selected"
         )
     }
@@ -108,7 +108,7 @@ class KeyStoreTest {
         val data = bip44.deriveChildKey(path).key
         val password = "testpass"
         val secretStorage = SecretStorage.encrypt(
-            id = testMockKeyStoreItem.uuid,
+            id = testMockSignerStoreItem.uuid,
             data = data,
             password = password,
             address = "67ca77ce83b9668460ab6263dc202a788443510c",
@@ -182,15 +182,15 @@ private val mockSecretStorageString = """
 }
 """.trimIndent()
 
-val testMockKeyStoreItem = KeyStoreItem(
+val testMockSignerStoreItem = SignerStoreItem(
     uuid = "uuid001",
     name = "wallet mock",
     sortOrder = 0u,
-    type = KeyStoreItem.Type.MNEMONIC,
+    type = SignerStoreItem.Type.MNEMONIC,
     passUnlockWithBio = true,
     iCloudSecretStorage = true,
     saltMnemonic = true,
-    passwordType = KeyStoreItem.PasswordType.PASS,
+    passwordType = SignerStoreItem.PasswordType.PASS,
     addresses = mapOf(
         "m/44'/60'/0'/0/0" to "71C7656EC7ab88b098defB751B7401B5f6d8976F",
         "m/44'/80'/0'/0/0" to "71C7656EC7ab88b098defB751B7401B5f6d8976F",

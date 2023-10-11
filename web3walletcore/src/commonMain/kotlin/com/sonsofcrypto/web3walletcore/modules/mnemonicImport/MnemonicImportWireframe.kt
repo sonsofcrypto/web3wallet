@@ -1,9 +1,9 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicImport
 
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 
 data class MnemonicImportWireframeContext(
-    val handler: ((KeyStoreItem) -> Unit),
+    val handler: ((SignerStoreItem) -> Unit),
 )
 
 sealed class MnemonicImportWireframeDestination {

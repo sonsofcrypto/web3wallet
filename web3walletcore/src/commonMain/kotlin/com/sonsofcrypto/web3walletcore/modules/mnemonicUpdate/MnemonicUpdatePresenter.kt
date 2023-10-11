@@ -33,8 +33,8 @@ class DefaultMnemonicUpdatePresenter(
     private val context: MnemonicUpdateWireframeContext,
 ): MnemonicUpdatePresenter {
     private var mnemonic = interactor.mnemonic()
-    private var name = context.keyStoreItem.name
-    private var iCloudSecretStorage = context.keyStoreItem.iCloudSecretStorage
+    private var name = context.signerStoreItem.name
+    private var iCloudSecretStorage = context.signerStoreItem.iCloudSecretStorage
     private var ctaTapped = false
 
     override fun present() {
@@ -57,7 +57,7 @@ class DefaultMnemonicUpdatePresenter(
                 ctaTapped = true
                 if (!isValidForm) return updateView()
                 val updatedItem = interactor.update(
-                    context.keyStoreItem, name, iCloudSecretStorage
+                    context.signerStoreItem, name, iCloudSecretStorage
                 ) ?: return wireframe.navigate(Alert(errorAlertContext()))
                 context.onUpdateHandler(updatedItem)
                 wireframe.navigate(Dismiss)
@@ -69,7 +69,7 @@ class DefaultMnemonicUpdatePresenter(
                 wireframe.navigate(Alert(deleteConfirmationAlertContext()))
             }
             is MnemonicUpdatePresenterEvent.Delete -> {
-                interactor.delete(context.keyStoreItem)
+                interactor.delete(context.signerStoreItem)
                 context.onDeleteHandler()
                 wireframe.navigate(Dismiss)
             }
@@ -78,10 +78,10 @@ class DefaultMnemonicUpdatePresenter(
 
     private fun authenticateContext(): AuthenticateWireframeContext = AuthenticateWireframeContext(
         Localized("authenticate.title.unlock"),
-        context.keyStoreItem,
+        context.signerStoreItem,
     ) { authData, error ->
         if (authData != null && error == null) {
-            interactor.setup(context.keyStoreItem, authData.password, authData.salt)
+            interactor.setup(context.signerStoreItem, authData.password, authData.salt)
             mnemonic = interactor.mnemonic()
             if (mnemonic.isEmpty()) { wireframe.navigate(Dismiss) }
             else updateView()
