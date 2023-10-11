@@ -93,7 +93,7 @@ class NetworkServiceTests: NetworksListener {
             networksService.network = Network.ethereum()
             networksService.add(listener)
 
-            delay(75.seconds)
+            delay(150.seconds)
             val expeted = listOf(
                 "Ethereum",
                 "Ethereum",

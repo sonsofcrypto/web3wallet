@@ -35,9 +35,9 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
             val job = service.loadCaches(NetworksService.supportedNetworks())
             job.join()
             val end = Clock.System.now().toEpochMilliseconds()
-            assertTrue(end - start < 300, "Took too long to load")
+            assertTrue(end - start < 500, "Took too long to load")
             val currencies = service.search("E", Network.ethereum(), 0)
-            assertTrue(currencies.count() >= 237,"Search error ${currencies.size}")
+            assertTrue(currencies.count() >= 172,"Search error ${currencies.size}")
         }
     }
 

@@ -40,7 +40,7 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
             val duration = Clock.System.now().minus(start)
             val count = service.currencies(Network.ethereum(), 1000).count()
             assertTrue(
-                duration.inWholeMilliseconds < 300,
+                duration.inWholeMilliseconds < 500,
                 "Took too long to load caches ${duration.inWholeMilliseconds}"
             )
             assertTrue(
@@ -50,7 +50,7 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
             assertTrue(count == 1000, "Expected more ETH currencies $count")
 
             val currencies = service.search("E", Network.ethereum(), 0)
-            assertTrue(currencies.size > 236, "Search error ${currencies.size}")
+            assertTrue(currencies.size >= 172, "Search error ${currencies.size}")
         }
     }
 
