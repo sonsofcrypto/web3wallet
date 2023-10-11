@@ -3,8 +3,8 @@ package com.sonsofcrypto.web3lib.services
 import com.sonsofcrypto.web3lib.KeyStoreTest
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
-import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.DefaultSignerStoreService
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworkInfo
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
@@ -24,11 +24,11 @@ class NetworkServiceTests: NetworksListener {
 
     @Test
     fun testProviderStore() {
-        val keyStoreService = DefaultKeyStoreService(
+        val keyStoreService = DefaultSignerStoreService(
             KeyValueStore("networkServiceTests_keyStoreService"),
             KeyStoreTest.MockKeyChainService()
         )
-        keyStoreService.selected = mockKeyStoreItem
+        keyStoreService.selected = mockSignerStoreItem
 
         val networksService = DefaultNetworksService(
             KeyValueStore("networkServiceTests"),
@@ -36,7 +36,7 @@ class NetworkServiceTests: NetworksListener {
             DefaultPollService(),
             DefaultNodeService(),
         )
-        networksService.keyStoreItem = mockKeyStoreItem
+        networksService.signerStoreItem = mockSignerStoreItem
 
         val provider = ProviderPocket(Network.sepolia())
         networksService.setProvider(provider, Network.sepolia())
@@ -67,11 +67,11 @@ class NetworkServiceTests: NetworksListener {
             val pollService = DefaultPollService()
             pollService.boostInterval()
 
-            val keyStoreService = DefaultKeyStoreService(
+            val keyStoreService = DefaultSignerStoreService(
                 KeyValueStore("networkServiceTests_keyStoreService2"),
                 KeyStoreTest.MockKeyChainService()
             )
-            keyStoreService.selected = mockKeyStoreItem
+            keyStoreService.selected = mockSignerStoreItem
 
             val networksService = DefaultNetworksService(
                 KeyValueStore("networkServiceTests2"),
@@ -87,7 +87,7 @@ class NetworkServiceTests: NetworksListener {
                 ProviderPocket(Network.ethereum()),
                 Network.ethereum()
             )
-            networksService.keyStoreItem = mockKeyStoreItem
+            networksService.signerStoreItem = mockSignerStoreItem
             networksService.setNetwork(Network.ethereum(), true)
             networksService.setNetwork(Network.sepolia(), true)
             networksService.network = Network.ethereum()
@@ -118,15 +118,15 @@ class NetworkServiceTests: NetworksListener {
         }
     }
 
-    private val mockKeyStoreItem = KeyStoreItem(
+    private val mockSignerStoreItem = SignerStoreItem(
         uuid = "uuid001",
         name = "wallet mock",
         sortOrder = 0u,
-        type = KeyStoreItem.Type.MNEMONIC,
+        type = SignerStoreItem.Type.MNEMONIC,
         passUnlockWithBio = true,
         iCloudSecretStorage = true,
         saltMnemonic = true,
-        passwordType = KeyStoreItem.PasswordType.PASS,
+        passwordType = SignerStoreItem.PasswordType.PASS,
         addresses = mapOf(
             "m/44'/60'/0'/0/0" to "71C7656EC7ab88b098defB751B7401B5f6d8976F",
             "m/44'/80'/0'/0/0" to "71C7656EC7ab88b098defB751B7401B5f6d8976F",

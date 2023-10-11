@@ -1,19 +1,19 @@
 package com.sonsofcrypto.web3walletcore.services.password
 
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 
 interface PasswordService {
-    fun validationError(password: String, type: KeyStoreItem.PasswordType): String?
+    fun validationError(password: String, type: SignerStoreItem.PasswordType): String?
 }
 
 class DefaultPasswordService: PasswordService {
 
-    override fun validationError(password: String, type: KeyStoreItem.PasswordType): String? =
+    override fun validationError(password: String, type: SignerStoreItem.PasswordType): String? =
         when (type) {
-            KeyStoreItem.PasswordType.PIN -> pinValidationError(password)
-            KeyStoreItem.PasswordType.PASS -> passValidationError(password)
-            KeyStoreItem.PasswordType.BIO -> null
+            SignerStoreItem.PasswordType.PIN -> pinValidationError(password)
+            SignerStoreItem.PasswordType.PASS -> passValidationError(password)
+            SignerStoreItem.PasswordType.BIO -> null
         }
 
 

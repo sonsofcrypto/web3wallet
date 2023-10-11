@@ -5,11 +5,11 @@ import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.services.currencyStore.DefaultCurrencyStoreService
 import com.sonsofcrypto.web3lib.services.currencyStore.defaultCurrencies
-import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
+import com.sonsofcrypto.web3lib.services.keyStore.DefaultSignerStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyChainService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyChainServiceErr
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.ServiceType
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
@@ -44,7 +44,7 @@ class CommonTest {
 
 class TestEnvServices(
     val currencyStoreService: CurrencyStoreService,
-    val keyStoreService: KeyStoreService,
+    val signerStoreService: SignerStoreService,
     val networksService: NetworksService,
     val walletService: WalletService,
 )
@@ -58,12 +58,12 @@ fun testEnvCurrencyStore(prefix: String = "test"): CurrencyStoreService =
         KeyValueStore("$prefix.userCurrencyStore"),
     )
 
-fun testEnvKeyStore(prefix: String = "Test"): KeyStoreService {
-    val keyStore = DefaultKeyStoreService(
+fun testEnvKeyStore(prefix: String = "Test"): SignerStoreService {
+    val keyStore = DefaultSignerStoreService(
         KeyValueStore("$prefix.keyStore"),
         MockKeyChainService()
     )
-    keyStore.selected = mockKeyStoreItem
+    keyStore.selected = mockSignerStoreItem
     return keyStore
 }
 
@@ -71,11 +71,11 @@ fun testEnvNetworkService(
     prefix: String = "test",
     network: Network = Network.sepolia(),
     pollService: PollService = DefaultPollService(),
-    keyStoreService: KeyStoreService? = null
+    signerStoreService: SignerStoreService? = null
 ): NetworksService {
     val service = DefaultNetworksService(
         KeyValueStore("$prefix.networkService"),
-        keyStoreService ?: testEnvKeyStore(prefix),
+        signerStoreService ?: testEnvKeyStore(prefix),
         pollService,
         DefaultNodeService()
     )
@@ -166,15 +166,15 @@ class MockKeyChainService: KeyChainService {
     }
 }
 
-val mockKeyStoreItem = KeyStoreItem(
+val mockSignerStoreItem = SignerStoreItem(
     uuid = "uuid001",
     name = "wallet mock",
     sortOrder = 0u,
-    type = KeyStoreItem.Type.MNEMONIC,
+    type = SignerStoreItem.Type.MNEMONIC,
     passUnlockWithBio = true,
     iCloudSecretStorage = false,
     saltMnemonic = false,
-    passwordType = KeyStoreItem.PasswordType.PASS,
+    passwordType = SignerStoreItem.PasswordType.PASS,
     addresses = mapOf(
         "m/44'/60'/0'/0/0" to "0xA52fD940629625371775d2D7271A35a09BC2B49e",
     ),

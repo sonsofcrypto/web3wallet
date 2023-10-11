@@ -1,8 +1,8 @@
 package com.sonsofcrypto.web3walletcore.modules.authenticate
 
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.BIO
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.PIN
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticatePresenterEvent.DidCancel
@@ -44,7 +44,7 @@ class DefaultAuthenticatePresenter(
         updateView()
     }
 
-    private fun keyStoreItem(): KeyStoreItem? = context.keyStoreItem ?: interactor.keyStoreItem()
+    private fun keyStoreItem(): SignerStoreItem? = context.signerStoreItem ?: interactor.keyStoreItem()
 
     override fun handle(event: AuthenticatePresenterEvent) {
         when (event) {

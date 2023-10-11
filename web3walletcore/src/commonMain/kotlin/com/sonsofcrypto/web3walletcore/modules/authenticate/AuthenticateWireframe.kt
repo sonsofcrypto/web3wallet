@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.authenticate
 
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 
 data class AuthenticateData(
     val password: String,
@@ -9,7 +9,7 @@ data class AuthenticateData(
 
 data class AuthenticateWireframeContext(
     val title: String,
-    val keyStoreItem: KeyStoreItem?,
+    val signerStoreItem: SignerStoreItem?,
     val handler: (AuthenticateData?, Error?) -> Unit,
 )
 

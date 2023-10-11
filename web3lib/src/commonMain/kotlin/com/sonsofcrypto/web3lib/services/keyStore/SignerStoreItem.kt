@@ -2,16 +2,16 @@ package com.sonsofcrypto.web3lib.services.keyStore
 
 import kotlinx.serialization.Serializable
 /**
- * `KeyStoreItem` contains metadata about `SecretStorage` items. Allows access
+ * `SignerStoreItem` contains metadata about `SecretStorage` items. Allows access
  * to non-sensitive data without authentication
  */
 @Serializable
-data class KeyStoreItem(
+data class SignerStoreItem(
     /** Item UUID */
     val uuid: String,
-    /** Custom user name of `KeyStoreItem` */
+    /** Custom user name of `SignerStoreItem` */
     val name: String,
-    /** Sort order of an `KeyStoreItem` */
+    /** Sort order of an `SignerStoreItem` */
     val sortOrder: UInt,
     /** Type of wallet it represents [MNEMONIC, PRVKEY, PUBKEY, HARDWARE, MULTISIG,] */
     val type: Type,

@@ -4,8 +4,8 @@ import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.ProviderLocal
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.services.networks.ProviderInfo.Type.ALCHEMY
 import com.sonsofcrypto.web3lib.services.networks.ProviderInfo.Type.LOCAL
 import com.sonsofcrypto.web3lib.services.networks.ProviderInfo.Type.POCKET
@@ -50,7 +50,7 @@ interface NetworksListener { fun handle(event: NetworksEvent) }
  */
 interface NetworksService {
     /** Selected `KeyStoreItem` setting rebuilds networks, providers, wallets */
-    var keyStoreItem: KeyStoreItem?
+    var signerStoreItem: SignerStoreItem?
     /** Selected `Network`, when set rebuilds networks, providers & wallets */
     var network: Network?
     /** Enabled networks for selected `NetworksService.keyStoreItem` */
@@ -99,12 +99,12 @@ interface NetworksService {
 /** DefaultNetworksService */
 class DefaultNetworksService(
     private val store: KeyValueStore,
-    private val keyStoreService: KeyStoreService,
+    private val signerStoreService: SignerStoreService,
     private val pollService: PollService,
     private val nodeService: NodeService,
 ): NetworksService {
 
-    override var keyStoreItem: KeyStoreItem? = null
+    override var signerStoreItem: SignerStoreItem? = null
         set(value) {
             field = value
             emit(NetworksEvent.KeyStoreItemDidChange)
@@ -115,7 +115,7 @@ class DefaultNetworksService(
     override var network: Network? = null
         set(value) {
             field = value
-            store[selectedNetworkKey(keyStoreItem)] = value
+            store[selectedNetworkKey(signerStoreItem)] = value
             emit(NetworksEvent.NetworkDidChange(value))
             updatePollingLoop()
         }
@@ -126,7 +126,7 @@ class DefaultNetworksService(
             updateProviders()
             updateWallets()
             emit(NetworksEvent.EnabledNetworksDidChange(value))
-            setStoredNetworks(value, keyStoreItem)
+            setStoredNetworks(value, signerStoreItem)
         }
 
     private var providers: MutableMap<Network, Provider> = mutableMapOf()
@@ -136,7 +136,7 @@ class DefaultNetworksService(
     private val uiScope = CoroutineScope(uiDispatcher)
 
     init {
-        keyStoreItem = keyStoreService.selected
+        signerStoreItem = signerStoreService.selected
         updatePollingLoop()
     }
 
@@ -187,8 +187,8 @@ class DefaultNetworksService(
 
     override fun wallet(network: Network): Wallet? {
         wallets[network.id()]?.let { return it }
-        keyStoreItem?.let {
-            wallets[network.id()] = Wallet(it, keyStoreService, provider(network))
+        signerStoreItem?.let {
+            wallets[network.id()] = Wallet(it, signerStoreService, provider(network))
         }
         return wallets[network.id()]
     }
@@ -230,12 +230,12 @@ class DefaultNetworksService(
         enabledNetworks.forEach { wallet(it) }
     }
 
-    private fun defaultNetworks(keyStoreItem: KeyStoreItem?): List<Network> {
-        getStoredNetworks(keyStoreItem)?.let { return it }
+    private fun defaultNetworks(signerStoreItem: SignerStoreItem?): List<Network> {
+        getStoredNetworks(signerStoreItem)?.let { return it }
         return listOf(Network.ethereum())
     }
 
-    private fun defaultSelectedNetwork(item: KeyStoreItem?): Network? {
+    private fun defaultSelectedNetwork(item: SignerStoreItem?): Network? {
         return store[selectedNetworkKey(item)] ?: enabledNetworks.first()
     }
 
@@ -250,7 +250,7 @@ class DefaultNetworksService(
         }
     }
 
-    private fun getStoredNetworks(item: KeyStoreItem?): List<Network>? {
+    private fun getStoredNetworks(item: SignerStoreItem?): List<Network>? {
         store.get<String>(networksKey(item))?.let {
             return Json.decodeFromString(it)
         }
@@ -259,7 +259,7 @@ class DefaultNetworksService(
 
     private fun setStoredNetworks(
         networks: List<Network>,
-        item: KeyStoreItem?
+        item: SignerStoreItem?
     ) {
         store[networksKey(item)] = Json.encodeToString(networks)
     }
@@ -326,12 +326,12 @@ class DefaultNetworksService(
             ?: store.get<NetworkInfo>(networkInfoKey(network))
             ?: NetworkInfo.zero()
 
-    private fun selectedNetworkKey(item: KeyStoreItem?): String {
+    private fun selectedNetworkKey(item: SignerStoreItem?): String {
         return "last_selected_network_${item?.uuid ?: ""}"
     }
 
-    private fun networksKey(keyStoreItem: KeyStoreItem?): String {
-        return "enabled_networks_${keyStoreItem?.uuid ?: ""}"
+    private fun networksKey(signerStoreItem: SignerStoreItem?): String {
+        return "enabled_networks_${signerStoreItem?.uuid ?: ""}"
     }
 
     private fun providerKey(network: Network): String {

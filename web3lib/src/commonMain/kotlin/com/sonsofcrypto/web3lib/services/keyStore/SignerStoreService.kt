@@ -10,47 +10,47 @@ private val selectedKey = "selected_uuid"
 /**
  * Handles management of `KeyStoreItem`s and `SecretStorage` items.
  */
-interface KeyStoreService {
+interface SignerStoreService {
     /** Latest selected `KeyStoreItem` (persists between launches) */
-    var selected: KeyStoreItem?
+    var selected: SignerStoreItem?
     /** Add `KeyStoreItem` using password and SecreteStorage.
      *
      * NOTE: It first attempts to delete any `KeyStoreItem` or `SecreteStorage`
      * that might be present with same `KeyStoreItem.uuid`
      */
-    fun add(item: KeyStoreItem, password: String, secretStorage: SecretStorage)
+    fun add(item: SignerStoreItem, password: String, secretStorage: SecretStorage)
     /** Removes `KeyStoreItem` and its corresponding `SecretStorage` */
-    fun remove(item: KeyStoreItem)
+    fun remove(item: SignerStoreItem)
     /** Lists all the items in `KeyStore` */
-    fun items(): List<KeyStoreItem>
+    fun items(): List<SignerStoreItem>
     /** Retrieves `SecretStorage` for `KeyStoreItem` using password */
-    fun secretStorage(item: KeyStoreItem, password: String): SecretStorage?
+    fun secretStorage(item: SignerStoreItem, password: String): SecretStorage?
     /** Does device support biometrics authentication */
     fun biometricsSupported(): Boolean
     /** Authenticate with biometrics */
     fun biometricsAuthenticate(title: String, handler: (Boolean, Error?) -> Unit)
     /** Retrieves password from keychain if one is present */
-    fun password(item: KeyStoreItem): String?
+    fun password(item: SignerStoreItem): String?
 }
 
-class DefaultKeyStoreService(
+class DefaultSignerStoreService(
     private val store: KeyValueStore,
     private val keyChainService: KeyChainService
-) : KeyStoreService {
+) : SignerStoreService {
 
-    override var selected: KeyStoreItem?
-    get() = store.get<KeyStoreItem>(selectedKey)
+    override var selected: SignerStoreItem?
+    get() = store.get<SignerStoreItem>(selectedKey)
     set(value) = store.set(selectedKey, value)
 
-    override fun add(item: KeyStoreItem, password: String, secretStorage: SecretStorage) {
+    override fun add(item: SignerStoreItem, password: String, secretStorage: SecretStorage) {
         this.remove(item)
         when {
-            item.passwordType == KeyStoreItem.PasswordType.BIO ||
+            item.passwordType == SignerStoreItem.PasswordType.BIO ||
             item.passUnlockWithBio -> keyChainService.set(
                 item.uuid,
                 ProtoBuf.encodeToByteArray(password),
                 ServiceType.PASSWORD,
-                item.passwordType == KeyStoreItem.PasswordType.BIO
+                item.passwordType == SignerStoreItem.PasswordType.BIO
             )
         }
         keyChainService.set(
@@ -62,20 +62,20 @@ class DefaultKeyStoreService(
         store[item.uuid] = item
     }
 
-    override fun remove(item: KeyStoreItem) {
+    override fun remove(item: SignerStoreItem) {
         keyChainService.remove(item.uuid, ServiceType.PASSWORD)
         keyChainService.remove(item.uuid, ServiceType.SECRET_STORAGE)
         store[item.uuid] = null
     }
 
-    override fun items(): List<KeyStoreItem> {
+    override fun items(): List<SignerStoreItem> {
         return store.allKeys()
             .filter { it != selectedKey }
-            .mapNotNull { store.get<KeyStoreItem>(it) }
+            .mapNotNull { store.get<SignerStoreItem>(it) }
             .sortedBy { it.sortOrder }
     }
 
-    override fun secretStorage(item: KeyStoreItem, password: String): SecretStorage? {
+    override fun secretStorage(item: SignerStoreItem, password: String): SecretStorage? {
         return try {
             ProtoBuf.decodeFromByteArray<SecretStorage>(
                 keyChainService.get(item.uuid, ServiceType.SECRET_STORAGE)
@@ -89,7 +89,7 @@ class DefaultKeyStoreService(
         keyChainService.biometricsAuthenticate(title, handler)
     }
 
-    override fun password(item: KeyStoreItem): String? {
+    override fun password(item: SignerStoreItem): String? {
         return try {
             ProtoBuf.decodeFromByteArray<String>(
                 keyChainService.get(item.uuid, ServiceType.PASSWORD)

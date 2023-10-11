@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3walletcore.modules.signers
 
 import com.sonsofcrypto.web3lib.formatters.Formatters
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
@@ -125,9 +125,9 @@ class DefaultSignersPresenter(
         }
     }
 
-    private fun handleNewKeyStoreItem(keyStoreItem: KeyStoreItem) {
-        interactor.selected = keyStoreItem
-        val idx = interactor.items.indexOf(keyStoreItem)
+    private fun handleNewKeyStoreItem(signerStoreItem: SignerStoreItem) {
+        interactor.selected = signerStoreItem
+        val idx = interactor.items.indexOf(signerStoreItem)
         if (idx != -1) { targetView = KeyStoreItemAt(idx) }
         updateView()
         targetView = None
@@ -203,9 +203,9 @@ class DefaultSignersPresenter(
             EXPANDED
         )
 
-    private fun formattedAddress(keyStoreItem: KeyStoreItem): String? {
+    private fun formattedAddress(signerStoreItem: SignerStoreItem): String? {
         // TODO: Review here when supporting other networks
-        val address = keyStoreItem.addresses[keyStoreItem.derivationPath]
+        val address = signerStoreItem.addresses[signerStoreItem.derivationPath]
             ?: return null
         return Formatters.networkAddress.format(address, 10, Network.ethereum())
     }

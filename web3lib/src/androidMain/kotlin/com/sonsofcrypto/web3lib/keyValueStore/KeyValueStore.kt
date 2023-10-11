@@ -22,7 +22,6 @@ actual class KeyValueStore {
             )
         } else {
             settings = UnitTestSettings(name)
-//            println("[WARN] MapSettings (in memory) only $name, will not persist, context is null")
         }
     }
 

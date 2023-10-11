@@ -1,8 +1,8 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicImport
 
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.BIO
-import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.PIN
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.common.mnemonic.MnemonicPresenterCommon
 import com.sonsofcrypto.web3walletcore.common.viewModels.MnemonicWordInfo
@@ -51,7 +51,7 @@ class DefaultMnemonicImportPresenter(
     private var iCloudSecretStorage = false
     private var saltMnemonicOn = false
     private var salt = ""
-    private var passwordType: KeyStoreItem.PasswordType = BIO
+    private var passwordType: SignerStoreItem.PasswordType = BIO
     private var password = ""
     private var passUnlockWithBio = true
     private var selectedLocation = 0
@@ -99,7 +99,7 @@ class DefaultMnemonicImportPresenter(
             is MnemonicImportPresenterEvent.DidSelectCta -> {
                 ctaTapped = true
                 if (!isValidForm) return updateView()
-                if (passwordType == KeyStoreItem.PasswordType.BIO) {
+                if (passwordType == SignerStoreItem.PasswordType.BIO) {
                     password = interactor.generatePassword()
                 }
                 try {
@@ -249,8 +249,8 @@ class DefaultMnemonicImportPresenter(
 
     private val placeholderType: String get() = if (passwordType == PIN) "pinType" else "passType"
 
-    private fun passwordTypes(): List<KeyStoreItem.PasswordType> =
-        KeyStoreItem.PasswordType.values().map { it }
+    private fun passwordTypes(): List<SignerStoreItem.PasswordType> =
+        SignerStoreItem.PasswordType.values().map { it }
 
     private fun selectedPasswordTypeIdx(): Int {
         val index = passwordTypes().indexOf(passwordType)
