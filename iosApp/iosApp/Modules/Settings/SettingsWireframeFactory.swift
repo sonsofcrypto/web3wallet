@@ -19,20 +19,20 @@ class DefaultSettingsWireframeFactory {
     private let improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory
     private let mailWireframeFactory: MailService
     private let settingsService: SettingsService
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
 
     init(
         webViewWireframeFactory: WebViewWireframeFactory,
         improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory,
         mailWireframeFactory: MailService,
         settingsService: SettingsService,
-        keyStoreService: KeyStoreService
+        signerStoreService: SignerStoreService
     ) {
         self.webViewWireframeFactory = webViewWireframeFactory
         self.improvementProposalsWireframeFactory = improvementProposalsWireframeFactory
         self.mailWireframeFactory = mailWireframeFactory
         self.settingsService = settingsService
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
     }
 }
 
@@ -51,7 +51,7 @@ extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
             improvementProposalsWireframeFactory: improvementProposalsWireframeFactory,
             mailWireframeFactory: mailWireframeFactory,
             settingsService: settingsService,
-            keyStoreService: keyStoreService
+            signerStoreService: signerStoreService
         )
     }
 }
@@ -67,7 +67,7 @@ final class SettingsWireframeFactoryAssembler: AssemblerComponent {
                 improvementProposalsWireframeFactory: resolver.resolve(),
                 mailWireframeFactory: resolver.resolve(),
                 settingsService: resolver.resolve(),
-                keyStoreService: resolver.resolve()
+                signerStoreService: resolver.resolve()
             )
         }
     }

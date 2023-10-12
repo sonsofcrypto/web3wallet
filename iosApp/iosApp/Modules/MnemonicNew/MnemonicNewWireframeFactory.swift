@@ -17,16 +17,16 @@ protocol MnemonicNewWireframeFactory {
 // MARK: - DefaultMnemonicNewWireframeFactory
 
 final class DefaultMnemonicNewWireframeFactory {
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
     private let passwordService: PasswordService
     private let settingsService: SettingsService
     
     init(
-        keyStoreService: KeyStoreService,
+        signerStoreService: SignerStoreService,
         passwordService: PasswordService,
         settingsService: SettingsService
     ) {
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
         self.passwordService = passwordService
         self.settingsService = settingsService
     }
@@ -41,7 +41,7 @@ extension DefaultMnemonicNewWireframeFactory: MnemonicNewWireframeFactory {
         DefaultMnemonicNewWireframe(
             parent,
             context: context,
-            keyStoreService: keyStoreService,
+            signerStoreService: signerStoreService,
             passwordService: passwordService,
             settingsService: settingsService
         )
@@ -55,7 +55,7 @@ final class MnemonicNewWireframeFactoryAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> MnemonicNewWireframeFactory in
             DefaultMnemonicNewWireframeFactory(
-                keyStoreService: resolver.resolve(),
+                signerStoreService: resolver.resolve(),
                 passwordService: resolver.resolve(),
                 settingsService: resolver.resolve()
             )

@@ -8,7 +8,7 @@ import web3walletcore
 final class DefaultMnemonicNewWireframe {
     private weak var parent: UIViewController!
     private let context: MnemonicNewWireframeContext
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
     private let passwordService: PasswordService
     private let settingsService: SettingsService
 
@@ -17,13 +17,13 @@ final class DefaultMnemonicNewWireframe {
     init(
         _ parent: UIViewController?,
         context: MnemonicNewWireframeContext,
-        keyStoreService: KeyStoreService,
+        signerStoreService: SignerStoreService,
         passwordService: PasswordService,
         settingsService: SettingsService
     ) {
         self.parent = parent
         self.context = context
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
         self.passwordService = passwordService
         self.settingsService = settingsService
     }
@@ -63,7 +63,7 @@ private extension DefaultMnemonicNewWireframe {
 
     func wireUp() -> UIViewController {
         let interactor = DefaultMnemonicNewInteractor(
-            keyStoreService: keyStoreService,
+            signerStoreService: signerStoreService,
             passwordService: passwordService
         )
         let vc: MnemonicNewViewController = UIStoryboard(.mnemonicNew).instantiate()

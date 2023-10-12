@@ -12,7 +12,7 @@ class DefaultSettingsWireframe {
     private let improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory
     private let mailWireframeFactory: MailService
     private let settingsService: SettingsService
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
 
     private weak var vc: UIViewController?
 
@@ -23,7 +23,7 @@ class DefaultSettingsWireframe {
         improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory,
         mailWireframeFactory: MailService,
         settingsService: SettingsService,
-        keyStoreService: KeyStoreService
+        signerStoreService: SignerStoreService
     ) {
         self.parent = parent
         self.screenId = screenId
@@ -31,7 +31,7 @@ class DefaultSettingsWireframe {
         self.improvementProposalsWireframeFactory = improvementProposalsWireframeFactory
         self.mailWireframeFactory = mailWireframeFactory
         self.settingsService = settingsService
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
     }
 }
 
@@ -84,7 +84,7 @@ extension DefaultSettingsWireframe {
                 improvementProposalsWireframeFactory: improvementProposalsWireframeFactory,
                 mailWireframeFactory: mailWireframeFactory,
                 settingsService: settingsService,
-                keyStoreService: keyStoreService
+                signerStoreService: signerStoreService
             ).present()
         }
     }
@@ -99,7 +99,7 @@ extension DefaultSettingsWireframe {
             wireframe: self,
             interactor: DefaultSettingsInteractor(
                 settingsService: settingsService,
-                keyStoreService: keyStoreService
+                signerStoreService: signerStoreService
             ),
             screenId: screenId
         )

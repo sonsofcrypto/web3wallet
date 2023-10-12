@@ -14,18 +14,18 @@ protocol MnemonicImportWireframeFactory {
 }
 
 final class DefaultMnemonicImportWireframeFactory {
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
     private let mnemonicService: MnemonicService
     private let passwordService: PasswordService
     private let settingsService: SettingsService
 
     init(
-        keyStoreService: KeyStoreService,
+        signerStoreService: SignerStoreService,
         mnemonicService: MnemonicService,
         passwordService: PasswordService,
         settingsService: SettingsService
     ) {
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
         self.mnemonicService = mnemonicService
         self.passwordService = passwordService
         self.settingsService = settingsService
@@ -40,7 +40,7 @@ extension DefaultMnemonicImportWireframeFactory: MnemonicImportWireframeFactory 
         DefaultMnemonicImportWireframe(
             parent,
             context: context,
-            keyStoreService: keyStoreService,
+            signerStoreService: signerStoreService,
             mnemonicService: mnemonicService,
             passwordService: passwordService,
             settingsService: settingsService
@@ -53,7 +53,7 @@ final class MnemonicImportWireframeFactoryAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> MnemonicImportWireframeFactory in
             DefaultMnemonicImportWireframeFactory(
-                keyStoreService: resolver.resolve(),
+                signerStoreService: resolver.resolve(),
                 mnemonicService: resolver.resolve(),
                 passwordService: resolver.resolve(),
                 settingsService: resolver.resolve()

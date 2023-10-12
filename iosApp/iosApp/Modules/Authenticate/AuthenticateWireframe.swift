@@ -8,18 +8,18 @@ import web3walletcore
 final class DefaultAuthenticateWireframe {
     private weak var parent: UIViewController?
     private var context: AuthenticateWireframeContext
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
 
     private weak var vc: UIViewController?
 
     init(
         _ parent: UIViewController?,
         context: AuthenticateWireframeContext,
-        keyStoreService: KeyStoreService
+        signerStoreService: SignerStoreService
     ) {
         self.parent = parent
         self.context = context
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
     }
 }
 
@@ -42,7 +42,7 @@ private extension DefaultAuthenticateWireframe {
 
     func wireUp() -> UIViewController {
         let interactor = DefaultAuthenticateInteractor(
-            keyStoreService: keyStoreService
+            signerStoreService: signerStoreService
         )
         let vc: AuthenticateViewController = UIStoryboard(.authenticate).instantiate()
         let presenter = DefaultAuthenticatePresenter(

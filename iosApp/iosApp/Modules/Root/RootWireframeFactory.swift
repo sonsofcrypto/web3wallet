@@ -20,7 +20,7 @@ final class DefaultRootWireframeFactory {
     private let degenWireframeFactory: DegenWireframeFactory
     private let nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory
     private let settingsWireframeFactory: SettingsWireframeFactory
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
 
     init(
         keyStoreWireframeFactory: SignersWireframeFactory,
@@ -29,7 +29,7 @@ final class DefaultRootWireframeFactory {
         degenWireframeFactory: DegenWireframeFactory,
         nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
         settingsWireframeFactory: SettingsWireframeFactory,
-        keyStoreService: KeyStoreService
+        signerStoreService: SignerStoreService
     ) {
         self.keyStoreWireframeFactory = keyStoreWireframeFactory
         self.networksWireframeFactory = networksWireframeFactory
@@ -37,7 +37,7 @@ final class DefaultRootWireframeFactory {
         self.degenWireframeFactory = degenWireframeFactory
         self.nftsDashboardWireframeFactory = nftsDashboardWireframeFactory
         self.settingsWireframeFactory = settingsWireframeFactory
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
     }
 }
 
@@ -54,7 +54,7 @@ extension DefaultRootWireframeFactory: RootWireframeFactory {
             degenWireframeFactory: degenWireframeFactory,
             nftsDashboardWireframeFactory: nftsDashboardWireframeFactory,
             settingsWireframeFactory: settingsWireframeFactory,
-            keyStoreService: keyStoreService
+            signerStoreService: signerStoreService
         )
     }
 }
@@ -72,7 +72,7 @@ final class RootWireframeFactoryAssembler: AssemblerComponent {
                 degenWireframeFactory: resolver.resolve(),
                 nftsDashboardWireframeFactory: resolver.resolve(),
                 settingsWireframeFactory: resolver.resolve(),
-                keyStoreService: resolver.resolve()
+                signerStoreService: resolver.resolve()
             )
         }
     }

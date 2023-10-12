@@ -15,18 +15,18 @@ protocol MnemonicUpdateWireframeFactory {
 // MARK: - DefaultMnemonicWireframeFactory
 
 final class DefaultMnemonicUpdateWireframeFactory {
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let settingsService: SettingsService
     
     init(
-        keyStoreService: KeyStoreService,
+        signerStoreService: SignerStoreService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         settingsService: SettingsService
     ) {
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.settingsService = settingsService
@@ -44,7 +44,7 @@ extension DefaultMnemonicUpdateWireframeFactory: MnemonicUpdateWireframeFactory 
         DefaultMnemonicUpdateWireframe(
             parent,
             context: context,
-            keyStoreService: keyStoreService,
+            signerStoreService: signerStoreService,
             authenticateWireframeFactory: authenticateWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             settingsService: settingsService
@@ -59,7 +59,7 @@ final class MnemonicUpdateWireframeFactoryAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> MnemonicUpdateWireframeFactory in
             DefaultMnemonicUpdateWireframeFactory(
-                keyStoreService: resolver.resolve(),
+                signerStoreService: resolver.resolve(),
                 authenticateWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
                 settingsService: resolver.resolve()
