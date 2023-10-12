@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.contract
+package com.sonsofcrypto.web3lib.abi
 
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import kotlinx.serialization.Serializable

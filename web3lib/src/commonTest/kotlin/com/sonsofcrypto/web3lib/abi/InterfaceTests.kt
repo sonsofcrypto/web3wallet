@@ -1,6 +1,6 @@
-package com.sonsofcrypto.web3lib.contract
+package com.sonsofcrypto.web3lib.abi
 
-import com.sonsofcrypto.web3lib.contract.Fragment.Format.FULL_SIGNATURE
+import com.sonsofcrypto.web3lib.abi.Fragment.Format.FULL_SIGNATURE
 import com.sonsofcrypto.web3lib.provider.model.QuantityHexString
 import com.sonsofcrypto.web3lib.provider.utils.stringValue
 import com.sonsofcrypto.web3lib.utils.BigInt

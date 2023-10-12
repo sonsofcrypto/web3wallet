@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib.services.poll
 
-import com.sonsofcrypto.web3lib.contract.Interface
-import com.sonsofcrypto.web3lib.contract.Multicall3
+import com.sonsofcrypto.web3lib.abi.Interface
+import com.sonsofcrypto.web3lib.abi.Multicall3
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.call
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData

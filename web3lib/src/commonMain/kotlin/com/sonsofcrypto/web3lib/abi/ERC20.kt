@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.contract
+package com.sonsofcrypto.web3lib.abi
 
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.signer.SignerIntf

@@ -1,8 +1,8 @@
 package com.sonsofcrypto.web3lib.services.networks
 
-import com.sonsofcrypto.web3lib.contract.Call3
-import com.sonsofcrypto.web3lib.contract.Interface
-import com.sonsofcrypto.web3lib.contract.Multicall3
+import com.sonsofcrypto.web3lib.abi.Call3
+import com.sonsofcrypto.web3lib.abi.Interface
+import com.sonsofcrypto.web3lib.abi.Multicall3
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlinx.serialization.Serializable
