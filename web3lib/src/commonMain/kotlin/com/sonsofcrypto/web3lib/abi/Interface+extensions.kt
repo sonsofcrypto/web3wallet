@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.contract
+package com.sonsofcrypto.web3lib.abi
 
 fun Interface.Companion.ERC20(): Interface {
     val jsonString = """

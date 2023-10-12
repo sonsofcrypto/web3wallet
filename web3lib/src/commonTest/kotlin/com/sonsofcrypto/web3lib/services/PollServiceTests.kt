@@ -1,9 +1,9 @@
 package com.sonsofcrypto.web3lib.services
 
 import com.sonsofcrypto.web3lib.Global
-import com.sonsofcrypto.web3lib.contract.ERC20
-import com.sonsofcrypto.web3lib.contract.Interface
-import com.sonsofcrypto.web3lib.contract.Multicall3
+import com.sonsofcrypto.web3lib.abi.ERC20
+import com.sonsofcrypto.web3lib.abi.Interface
+import com.sonsofcrypto.web3lib.abi.Multicall3
 import com.sonsofcrypto.web3lib.expectedBalance
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.services.currencyStore.sepoliaDefaultCurrencies

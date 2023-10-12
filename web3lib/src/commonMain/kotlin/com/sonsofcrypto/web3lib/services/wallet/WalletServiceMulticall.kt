@@ -1,8 +1,8 @@
 package com.sonsofcrypto.web3lib.services.wallet
 
-import com.sonsofcrypto.web3lib.contract.ERC20
-import com.sonsofcrypto.web3lib.contract.Interface
-import com.sonsofcrypto.web3lib.contract.Multicall3
+import com.sonsofcrypto.web3lib.abi.ERC20
+import com.sonsofcrypto.web3lib.abi.Interface
+import com.sonsofcrypto.web3lib.abi.Multicall3
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.model.*
 import com.sonsofcrypto.web3lib.services.currencyStore.*
