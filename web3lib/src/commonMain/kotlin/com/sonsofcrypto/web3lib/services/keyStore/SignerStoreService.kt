@@ -8,7 +8,7 @@ import kotlinx.serialization.protobuf.ProtoBuf
 private val selectedKey = "selected_uuid"
 
 /**
- * Handles management of `KeyStoreItem`s and `SecretStorage` items.
+ * Handles management of `SignerStoreItem`s and `SecretStorage` items.
  */
 interface SignerStoreService {
     /** Latest selected `KeyStoreItem` (persists between launches) */

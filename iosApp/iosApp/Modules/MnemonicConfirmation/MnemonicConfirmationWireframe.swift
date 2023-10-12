@@ -7,7 +7,7 @@ import web3walletcore
 
 final class DefaultMnemonicConfirmationWireframe {
     private weak var parent: UIViewController?
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
     private let actionsService: ActionsService
     private let mnemonicService: MnemonicService
     
@@ -15,12 +15,12 @@ final class DefaultMnemonicConfirmationWireframe {
 
     init(
         _ parent: UIViewController?,
-        keyStoreService: KeyStoreService,
+        signerStoreService: SignerStoreService,
         actionsService: ActionsService,
         mnemonicService: MnemonicService
     ) {
         self.parent = parent
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
         self.actionsService = actionsService
         self.mnemonicService = mnemonicService
     }
@@ -44,7 +44,7 @@ private extension DefaultMnemonicConfirmationWireframe {
 
     func wireUp() -> UIViewController {
         let interactor = DefaultMnemonicConfirmationInteractor(
-            keyStoreService: keyStoreService,
+            signerStoreService: signerStoreService,
             actionsService: actionsService,
             mnemonicService: mnemonicService
         )

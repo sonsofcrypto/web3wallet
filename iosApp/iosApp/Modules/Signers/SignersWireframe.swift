@@ -9,7 +9,7 @@ import web3walletcore
 
 final class DefaultSignersWireframe {
     private weak var parent: UIViewController?
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
     private let networksService: NetworksService
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
@@ -20,7 +20,7 @@ final class DefaultSignersWireframe {
 
     init(
         _ parent: UIViewController?,
-        keyStoreService: KeyStoreService,
+        signerStoreService: SignerStoreService,
         networksService: NetworksService,
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
@@ -28,7 +28,7 @@ final class DefaultSignersWireframe {
         alertWireframeFactory: AlertWireframeFactory
     ) {
         self.parent = parent
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
         self.networksService = networksService
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
@@ -71,7 +71,7 @@ extension DefaultSignersWireframe {
         }
         if let input = destination as? SignersWireframeDestination.EditSignersItem {
             let context = MnemonicUpdateWireframeContext(
-                keyStoreItem: input.item,
+                signerStoreItem: input.item,
                 onUpdateHandler: input.handler,
                 onDeleteHandler: input.deleteHandler
             )
@@ -93,7 +93,7 @@ private extension DefaultSignersWireframe {
 
     func wireUp() -> UIViewController {
         let interactor = DefaultSignersInteractor(
-            keyStoreService: keyStoreService,
+            signerStoreService: signerStoreService,
             networksService: networksService
         )
         let vc: SignersViewController = UIStoryboard(.main).instantiate()

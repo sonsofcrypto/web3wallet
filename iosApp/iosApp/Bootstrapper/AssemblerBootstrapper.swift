@@ -30,10 +30,10 @@ private extension AssemblerBootstrapper {
             // Services
             SettingsServiceAssembler(),
             PollServiceAssembler(),
-            KeyStoreServiceAssembler(),
+            SignerStoreServiceAssembler(),
             KeyChainServiceAssembler(),
             DegenServiceAssembler(),
-            KeyStoreServiceAssembler(),
+            SignerStoreServiceAssembler(),
             KeyChainServiceAssembler(),
             NFTsServiceAssembler(),
             ReachabilityServiceAssembler(),

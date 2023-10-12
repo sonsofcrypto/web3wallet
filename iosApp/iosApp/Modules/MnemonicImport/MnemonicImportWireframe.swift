@@ -10,7 +10,7 @@ final class DefaultMnemonicImportWireframe {
     private let context: MnemonicImportWireframeContext
     private let mnemonicService: MnemonicService
     private let passwordService: PasswordService
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
     private let settingsService: SettingsService
 
     private weak var vc: UIViewController?
@@ -18,14 +18,14 @@ final class DefaultMnemonicImportWireframe {
     init(
         _ parent: UIViewController?,
         context: MnemonicImportWireframeContext,
-        keyStoreService: KeyStoreService,
+        signerStoreService: SignerStoreService,
         mnemonicService: MnemonicService,
         passwordService: PasswordService,
         settingsService: SettingsService
     ) {
         self.parent = parent
         self.context = context
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
         self.mnemonicService = mnemonicService
         self.passwordService = passwordService
         self.settingsService = settingsService
@@ -66,7 +66,7 @@ private extension DefaultMnemonicImportWireframe {
 
     func wireUp() -> UIViewController {
         let interactor = DefaultMnemonicImportInteractor(
-            keyStoreService: keyStoreService,
+            signerStoreService: signerStoreService,
             mnemonicService: mnemonicService,
             passwordService: passwordService
         )

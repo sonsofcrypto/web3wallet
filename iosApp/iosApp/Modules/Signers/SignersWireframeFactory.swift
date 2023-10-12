@@ -15,7 +15,7 @@ protocol SignersWireframeFactory {
 
 final class DefaultSignersWireframeFactory {
 
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
     private let networksService: NetworksService
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
@@ -23,14 +23,14 @@ final class DefaultSignersWireframeFactory {
     private let alertWireframeFactory: AlertWireframeFactory
 
     init(
-        keyStoreService: KeyStoreService,
+        signerStoreService: SignerStoreService,
         networksService: NetworksService,
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory
     ) {
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
         self.networksService = networksService
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
@@ -48,7 +48,7 @@ extension DefaultSignersWireframeFactory: SignersWireframeFactory {
     ) -> SignersWireframe {
         DefaultSignersWireframe(
             parent,
-            keyStoreService: keyStoreService,
+            signerStoreService: signerStoreService,
             networksService: networksService,
             newMnemonic: newMnemonic,
             updateMnemonic: updateMnemonic,
@@ -65,7 +65,7 @@ final class SignersWireframeFactoryAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> SignersWireframeFactory in
             DefaultSignersWireframeFactory(
-                keyStoreService: resolver.resolve(),
+                signerStoreService: resolver.resolve(),
                 networksService: resolver.resolve(),
                 newMnemonic: resolver.resolve(),
                 updateMnemonic: resolver.resolve(),

@@ -8,7 +8,7 @@ import web3walletcore
 final class DefaultMnemonicUpdateWireframe {
     private weak var parent: UIViewController?
     private let context: MnemonicUpdateWireframeContext
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let settingsService: SettingsService
@@ -18,14 +18,14 @@ final class DefaultMnemonicUpdateWireframe {
     init(
         _ parent: UIViewController?,
         context: MnemonicUpdateWireframeContext,
-        keyStoreService: KeyStoreService,
+        signerStoreService: SignerStoreService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         settingsService: SettingsService
     ) {
         self.parent = parent
         self.context = context
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.settingsService = settingsService
@@ -68,7 +68,7 @@ private extension DefaultMnemonicUpdateWireframe {
 
     func wireUp() -> UIViewController {
         let interactor = DefaultMnemonicUpdateInteractor(
-            keyStoreService: keyStoreService
+            signerStoreService: signerStoreService
         )
         let vc: MnemonicUpdateViewController = UIStoryboard(.mnemonicUpdate).instantiate()
         let presenter = DefaultMnemonicUpdatePresenter(

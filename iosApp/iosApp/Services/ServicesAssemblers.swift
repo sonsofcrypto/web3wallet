@@ -107,7 +107,7 @@ final class NetworksServiceAssembler: AssemblerComponent {
         registry.register(scope: .singleton) { resolver -> NetworksService in
             DefaultNetworksService(
                 store: KeyValueStore(name: "\(DefaultNetworksService.self)"),
-                keyStoreService: resolver.resolve(),
+                signerStoreService: resolver.resolve(),
                 pollService: resolver.resolve(),
                 nodeService: resolver.resolve()
             )
@@ -123,10 +123,10 @@ final class NetworksServiceAssembler: AssemblerComponent {
 //    }
 //}
 
-final class KeyStoreServiceAssembler: AssemblerComponent {
+final class SignerStoreServiceAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .singleton) { resolver -> KeyStoreService in
-            DefaultKeyStoreService(
+        registry.register(scope: .singleton) { resolver -> SignerStoreService in
+            DefaultSignerStoreService(
                 store: KeyValueStore(name: "keyStore"),
                 keyChainService: resolver.resolve()
             )

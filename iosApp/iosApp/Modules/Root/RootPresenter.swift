@@ -12,16 +12,16 @@ protocol RootPresenter {
 final class DefaultRootPresenter {
     private weak var view: RootView?
     private let wireframe: RootWireframe
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
 
     init(
         view: RootView,
         wireframe: RootWireframe,
-        keyStoreService: KeyStoreService
+        signerStoreService: SignerStoreService
     ) {
         self.view = view
         self.wireframe = wireframe
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
     }
 }
 
@@ -29,7 +29,7 @@ extension DefaultRootPresenter: RootPresenter {
 
     func present() {
         wireframe.navigate(
-            to: keyStoreService.items().isEmpty ? .keyStore : .dashboard,
+            to: signerStoreService.items().isEmpty ? .keyStore : .dashboard,
             animated: false
         )
     }

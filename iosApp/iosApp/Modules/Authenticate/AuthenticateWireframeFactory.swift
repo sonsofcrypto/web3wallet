@@ -17,10 +17,10 @@ protocol AuthenticateWireframeFactory {
 // MARK: - DefaultAuthenticateWireframeFactory
 
 final class DefaultAuthenticateWireframeFactory {
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
 
-    init(keyStoreService: KeyStoreService) {
-        self.keyStoreService = keyStoreService
+    init(signerStoreService: SignerStoreService) {
+        self.signerStoreService = signerStoreService
     }
 }
 
@@ -33,7 +33,7 @@ extension DefaultAuthenticateWireframeFactory: AuthenticateWireframeFactory {
         DefaultAuthenticateWireframe(
             parent,
             context: context,
-            keyStoreService: keyStoreService
+            signerStoreService: signerStoreService
         )
     }
 }
@@ -45,7 +45,7 @@ final class AuthenticateWireframeFactoryAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> AuthenticateWireframeFactory in
             DefaultAuthenticateWireframeFactory(
-                keyStoreService: resolver.resolve()
+                signerStoreService: resolver.resolve()
             )
         }
     }

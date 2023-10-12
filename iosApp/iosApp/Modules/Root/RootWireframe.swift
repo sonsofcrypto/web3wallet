@@ -36,7 +36,7 @@ final class DefaultRootWireframe {
     private let degenWireframeFactory: DegenWireframeFactory
     private let nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory
     private let settingsWireframeFactory: SettingsWireframeFactory
-    private let keyStoreService: KeyStoreService
+    private let signerStoreService: SignerStoreService
 
     init(
         window: UIWindow?,
@@ -46,7 +46,7 @@ final class DefaultRootWireframe {
         degenWireframeFactory: DegenWireframeFactory,
         nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
         settingsWireframeFactory: SettingsWireframeFactory,
-        keyStoreService: KeyStoreService
+        signerStoreService: SignerStoreService
     ) {
         self.window = window
         self.keyStoreWireframeFactory = keyStoreWireframeFactory
@@ -55,7 +55,7 @@ final class DefaultRootWireframe {
         self.degenWireframeFactory = degenWireframeFactory
         self.nftsDashboardWireframeFactory = nftsDashboardWireframeFactory
         self.settingsWireframeFactory = settingsWireframeFactory
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
     }
 }
 
@@ -93,7 +93,7 @@ private extension DefaultRootWireframe {
         let presenter = DefaultRootPresenter(
             view: vc,
             wireframe: self,
-            keyStoreService: keyStoreService
+            signerStoreService: signerStoreService
         )
         vc.presenter = presenter
         return vc

@@ -17,19 +17,19 @@ protocol OnboardingService: AnyObject {
 final class DefaultOnboardingService {
 
     let defaults: UserDefaults
-    let keyStoreService: KeyStoreService
+    let signerStoreService: SignerStoreService
     let keyChainService: KeyChainService
 
     init(
         defaults: UserDefaults,
-        keyStoreService: KeyStoreService,
+        signerStoreService: SignerStoreService,
         keyChainService: KeyChainService
     ) {
         self.defaults = defaults
-        self.keyStoreService = keyStoreService
+        self.signerStoreService = signerStoreService
         self.keyChainService = keyChainService
 
-        if shouldCreateWalletAtFirstLaunch() && keyStoreService.items().isEmpty {
+        if shouldCreateWalletAtFirstLaunch() && signerStoreService.items().isEmpty {
             do {
                 try createDefaultKeyStoreItem()
             } catch {
@@ -76,7 +76,7 @@ private extension DefaultOnboardingService {
         let keyStoreItem = KeyStoreItem(
             uuid: UUID().uuidString,
             name: walletName(),
-            sortOrder: (keyStoreService.items().last?.sortOrder ?? 0) + 100,
+            sortOrder: (signerStoreService.items().last?.sortOrder ?? 0) + 100,
             type: .mnemonic,
             passUnlockWithBio: true,
             iCloudSecretStorage: true,
@@ -95,7 +95,7 @@ private extension DefaultOnboardingService {
             mnemonicLocale: bip39.worldList.localeString(),
             mnemonicPath: derivationPath()
         )
-        keyStoreService.add(
+        signerStoreService.add(
             item: keyStoreItem,
             password: password,
             secretStorage: secretStorage
@@ -104,13 +104,13 @@ private extension DefaultOnboardingService {
     }
 
     func walletName() -> String {
-        guard !keyStoreService.items().isEmpty else {
+        guard !signerStoreService.items().isEmpty else {
             return Localized("mnemonicNew.defaultWalletName")
         }
 
         return String(
             format: Localized("mnemonicNew.defaultNthWalletName"),
-            keyStoreService.items().count
+            signerStoreService.items().count
         )
     }
 
