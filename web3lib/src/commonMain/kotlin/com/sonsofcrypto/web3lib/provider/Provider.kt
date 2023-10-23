@@ -113,12 +113,7 @@ abstract class Provider {
     abstract fun removeAllListeners(providerEvent: ProviderEvent? = null): Provider
 
     /** Errors */
-    sealed class Error(
-        message: String? = null,
-        cause: Throwable? = null
-    ) : kotlin.Error(message, cause) {
-
-        constructor(cause: Throwable) : this(null, cause)
+    sealed class Error(message: String? = null) : Exception(message) {
 
         /** Unable to compute `FeeData` due to missing `Block.baseFeePerGas` */
         object feeDataNullBaseFeePerGas :
