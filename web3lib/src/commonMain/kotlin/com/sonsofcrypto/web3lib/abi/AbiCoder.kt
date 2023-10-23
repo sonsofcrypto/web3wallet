@@ -169,10 +169,7 @@ class Writer(val wordSize: Int = 32) {
     }
 
     /** Errors */
-    sealed class Error(message: String? = null, cause: Throwable? = null)
-        : Exception(message, cause) {
-
-        constructor(cause: Throwable) : this(null, cause)
+    sealed class Error(message: String? = null) : Exception(message) {
 
         data class OutOfBounds(val value: BigInt, val wordSize: Int):
             Error("Out of bounds $value, $wordSize, ${value.toByteArray().size}")
@@ -239,10 +236,7 @@ class Reader(
     }
 
     /** Errors */
-    sealed class Error(message: String? = null, cause: Throwable? = null)
-        : Exception(message, cause) {
-
-        constructor(cause: Throwable) : this(null, cause)
+    sealed class Error(message: String? = null) : Exception(message) {
 
         data class OutOfBounds(val data: ByteArray, val offset: Int, val length: Int):
             Error("Out of bounds Range($offset, ${length}), Size ${data.size}")

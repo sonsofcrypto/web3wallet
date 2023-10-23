@@ -128,12 +128,7 @@ class ExtKey(
     }
 
     /** Exceptions */
-    sealed class Error(
-        message: String? = null,
-        cause: Throwable? = null
-    ) : Exception(message, cause) {
-
-        constructor(cause: Throwable) : this(null, cause)
+    sealed class Error(message: String? = null) : Exception(message) {
 
         /** Entropy size does not math bip39 standard */
         object HardenedFromPub : Error("Can not derive hardened key from xpub")
