@@ -8,6 +8,7 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.MNEMONIC
 import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
 import com.sonsofcrypto.web3lib.types.Network
@@ -21,23 +22,33 @@ import kotlin.test.assertTrue
 
 class SignersServiceTests {
 
-    @Test
-    fun testNewMnemonic() {
-        val keyStore = DefaultSignerStoreService(
-            KeyValueStore("SignersServiceTests"),
+    private fun cleanSignerStoreService(): SignerStoreService {
+        val service = DefaultSignerStoreService(
+            KeyValueStore("SignerServiceTests"),
             KeyStoreTest.MockKeyChainService()
         )
-        keyStore.items().forEach { keyStore.remove(it) }
+        service.items().forEach { service.remove(it) }
+        return service
+    }
 
-        val name = "Test Mnemonic"
-        val password = randomString(32)
-        val salt = ""
+    private data class MnemonicSignerItems(
+        val signerStoreItem: SignerStoreItem,
+        val secretStorage: SecretStorage,
+        val bip39: Bip39,
+    )
+
+    private fun newMnemonicSigner(
+        name: String = "Test Mnemonic",
+        password: String = randomString(32),
+        salt: String = "",
+        network: Network = Network.ethereum(),
+        derivationPath: String? = null
+    ): MnemonicSignerItems {
         val worldList = WordList.fromLocaleString("en")
         val bip39 = Bip39.from(ES128, salt, worldList)
         val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
-        val network = Network.ethereum()
-        val derivationPath = network.defaultDerivationPath()
-        val extKey = bip44.deriveChildKey(derivationPath)
+        val keyPath = derivationPath ?: network.defaultDerivationPath()
+        val extKey = bip44.deriveChildKey(keyPath)
         val signerStoreItem = SignerStoreItem(
             uuid = randomString(32),
             name = name,
@@ -47,11 +58,11 @@ class SignersServiceTests {
             iCloudSecretStorage = false,
             saltMnemonic = false,
             passwordType = BIO,
-            derivationPath = derivationPath,
+            derivationPath = keyPath,
             addresses = mapOf<String, String>(
                 Pair(
-                    derivationPath,
-                    network.address(bip44.deriveChildKey(derivationPath).xpub())
+                    keyPath,
+                    network.address(bip44.deriveChildKey(keyPath).xpub())
                         .toHexString(true)
                 )
             )
@@ -65,27 +76,33 @@ class SignersServiceTests {
             bip39.worldList.localeString(),
             derivationPath
         )
+        return MnemonicSignerItems(signerStoreItem, secretStorage, bip39)
+    }
 
-        keyStore.add(signerStoreItem, password, secretStorage)
+    @Test
+    fun testNewMnemonic() {
+        val service = cleanSignerStoreService()
+        val password = randomString(32)
+        val signer = newMnemonicSigner(
+            name = "Test Mnemonic",
+            password = password,
+        )
+        service.add(signer.signerStoreItem, password, signer.secretStorage)
 
+        assertTrue(service.items().size == 1, "Did not save KeyStore item")
         assertTrue(
-            keyStore.items().size == 1,
-            "Did not save KeyStore item"
+            signer.signerStoreItem == service.items().first(),
+            "Store err \n${service.items().first()}\n${signer.signerStoreItem}"
         )
-        assertTrue(
-            signerStoreItem == keyStore.items().first(),
-            "Stored item does not equal \n${keyStore.items().first()}\n$signerStoreItem"
-        )
-        val decryptedMnemonic = keyStore.secretStorage(signerStoreItem, password)
+        
+        val decryptedMnemonic = service
+            .secretStorage(signer.signerStoreItem, password)
             ?.decrypt(password)
             ?.mnemonic
         assertTrue(
-            bip39.mnemonic.joinToString(" ") == decryptedMnemonic,
-            "Decrypted Mnemonic\n$decryptedMnemonic|\n${bip39.mnemonic.joinToString(" ")}|"
+            signer.bip39.mnemonic.joinToString(" ") == decryptedMnemonic,
+            "\n$decryptedMnemonic|\n${signer.bip39.mnemonic.joinToString(" ")}|"
         )
-
-//        keyStore.items().forEach { keyStore.remove(it) }
-//        assertTrue(keyStore.items().size == 0, "Failed to remove items")
     }
 
     @Test
