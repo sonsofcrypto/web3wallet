@@ -4,6 +4,7 @@ import android.content.Context.MODE_PRIVATE
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings
 import com.sonsofcrypto.web3lib.appContextProvider.application
+import com.sonsofcrypto.web3lib.utils.extensions.stdJson
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
@@ -37,7 +38,7 @@ actual class KeyValueStore {
             val data = settings.getStringOrNull(key)
             if (data != null) {
                 try {
-                    Json.decodeFromString(T::class.serializer(), data)
+                    stdJson.decodeFromString(T::class.serializer(), data)
                 } catch (e: Exception) {
                     null
                 }
@@ -58,7 +59,7 @@ actual class KeyValueStore {
             Boolean::class -> settings.putBoolean(key, value as Boolean)
             else -> settings.putString(
                 key,
-                Json.encodeToString(T::class.serializer(), value)
+                stdJson.encodeToString(T::class.serializer(), value)
             )
         }
 

@@ -36,14 +36,15 @@ interface SignerStoreService {
         password: String,
         salt: String
     ): SignerStoreItem
-    /** */
-//    @Throws(Throwable::class)
-//    fun addAccount(
-//        item: SignerStoreItem,
-//        password: String,
-//        salt: String,
-//        derivationPath: String? = null
-//    ): SignerStoreItem
+    /** Creates SignerStoreItem item at `derivationPath` or last path component
+     * + 1 */
+    @Throws(Throwable::class)
+    fun addAccount(
+        item: SignerStoreItem,
+        password: String,
+        salt: String,
+        derivationPath: String? = null
+    ): SignerStoreItem
     /** Add `KeyStoreItem` using password and SecreteStorage.
      *
      * NOTE: It first attempts to delete any `KeyStoreItem` or `SecreteStorage`
@@ -92,7 +93,7 @@ class DefaultSignerStoreService(
             saltMnemonic = config.saltMnemonic,
             passwordType = config.passwordType,
             derivationPath = derivationPath,
-            addresses = addresses(bip44)
+            addresses = this.addresses(bip44)
         )
         val secretStorage = SecretStorage.encryptDefault(
             id = signerStoreItem.uuid,
@@ -103,7 +104,7 @@ class DefaultSignerStoreService(
             mnemonicLocale = bip39.worldList.localeString(),
             mnemonicPath = derivationPath
         )
-        add(signerStoreItem, password, secretStorage)
+        this.add(signerStoreItem, password, secretStorage)
         return signerStoreItem
     }
 
@@ -117,6 +118,18 @@ class DefaultSignerStoreService(
             addresses[path] = it.address(xPub).toHexString(true)
         }
         return addresses
+    }
+
+    @Throws(Throwable::class)
+    override fun addAccount(
+        item: SignerStoreItem,
+        password: String,
+        salt: String,
+        derivationPath: String?
+    ): SignerStoreItem {
+        if (item.type != SignerStoreItem.Type.MNEMONIC)
+            throw Error.AddAccountForNonMnemonic
+
     }
 
     override fun add(
@@ -176,5 +189,12 @@ class DefaultSignerStoreService(
                 keyChainService.get(item.uuid, ServiceType.PASSWORD)
             )
         } catch (error: Throwable) { null }
+    }
+
+    /** Exceptions */
+    sealed class Error(message: String? = null) : Exception(message) {
+        /** Attempting to add account to non-mnemonic signer */
+        object AddAccountForNonMnemonic :
+            Error("Attempting to add account to non-mnemonic signer")
     }
 }
