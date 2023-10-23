@@ -17,7 +17,7 @@ import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicService
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicWord
 import com.sonsofcrypto.web3walletcore.services.password.PasswordService
-import com.sonsofcrypto.web3walletcore.services.uuid.UUIDService
+import com.sonsofcrypto.web3lib.services.uuid.UUIDService
 
 data class MnemonicImportInteractorData(
     val mnemonic: List<String>,

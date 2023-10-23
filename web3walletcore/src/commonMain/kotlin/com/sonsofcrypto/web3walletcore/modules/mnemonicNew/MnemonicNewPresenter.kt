@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3walletcore.modules.mnemonicNew
 
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
+import com.sonsofcrypto.web3lib.services.keyStore.MnemonicSignerConfig
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.common.viewModels.SectionFooterViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.SegmentWithTextAndSwitchCellViewModel
@@ -86,7 +87,7 @@ class DefaultMnemonicNewPresenter(
                 }
                 try {
                     createDefaultNameIfNeeded()
-                    val item = interactor.createKeyStoreItem(keyStoreItemData, password, salt)
+                    val item = interactor.createMnemonicSigner(mnemonicSignerConfig, password, salt)
                     context.handler(item)
                     wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
                 } catch (e: Throwable) {
@@ -100,14 +101,14 @@ class DefaultMnemonicNewPresenter(
         }
     }
 
-    private val keyStoreItemData: MnemonicNewInteractorData
-        get() = MnemonicNewInteractorData(
-        mnemonic.trim().split(" "),
-        name,
-        passUnlockWithBio,
-        iCloudSecretStorage,
-        saltMnemonicOn,
-        passwordType
+    private val mnemonicSignerConfig: MnemonicSignerConfig
+        get() = MnemonicSignerConfig(
+        mnemonic = mnemonic.trim().split(" "),
+        name = name,
+        passUnlockWithBio = passUnlockWithBio,
+        iCloudSecretStorage = iCloudSecretStorage,
+        saltMnemonic = saltMnemonicOn,
+        passwordType = passwordType,
     )
 
     private fun updateView() {

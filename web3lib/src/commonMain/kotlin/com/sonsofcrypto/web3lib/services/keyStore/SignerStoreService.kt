@@ -1,18 +1,49 @@
 package com.sonsofcrypto.web3lib.services.keyStore
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.services.networks.NetworksService
+import com.sonsofcrypto.web3lib.services.uuid.UUIDService
+import com.sonsofcrypto.web3lib.types.Bip44
+import com.sonsofcrypto.web3lib.types.ExtKey
+import com.sonsofcrypto.web3lib.types.Network
+import com.sonsofcrypto.web3lib.utils.bip39.Bip39
+import com.sonsofcrypto.web3lib.utils.bip39.WordList
+import com.sonsofcrypto.web3lib.utils.bip39.localeString
+import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import kotlinx.serialization.decodeFromByteArray
 import kotlinx.serialization.encodeToByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
 
 private val selectedKey = "selected_uuid"
 
-/**
- * Handles management of `SignerStoreItem`s and `SecretStorage` items.
- */
+data class MnemonicSignerConfig(
+    val mnemonic: List<String>,
+    val name: String,
+    val passUnlockWithBio: Boolean,
+    val iCloudSecretStorage: Boolean,
+    val saltMnemonic: Boolean,
+    val passwordType: SignerStoreItem.PasswordType,
+    val wordList: WordList = WordList.fromLocaleString("en"),
+)
+
+/** Handles management of `SignerStoreItem`s and `SecretStorage` items. */
 interface SignerStoreService {
     /** Latest selected `KeyStoreItem` (persists between launches) */
     var selected: SignerStoreItem?
+    /** Create `SignerStoreItem` & `SecretStorage` with `MnemonicSignerConfig`*/
+    fun createMnemonicSigner(
+        config: MnemonicSignerConfig,
+        password: String,
+        salt: String
+    ): SignerStoreItem
+    /** */
+//    @Throws(Throwable::class)
+//    fun addAccount(
+//        item: SignerStoreItem,
+//        password: String,
+//        salt: String,
+//        derivationPath: String? = null
+//    ): SignerStoreItem
     /** Add `KeyStoreItem` using password and SecreteStorage.
      *
      * NOTE: It first attempts to delete any `KeyStoreItem` or `SecreteStorage`
@@ -42,7 +73,57 @@ class DefaultSignerStoreService(
     get() = store.get<SignerStoreItem>(selectedKey)
     set(value) = store.set(selectedKey, value)
 
-    override fun add(item: SignerStoreItem, password: String, secretStorage: SecretStorage) {
+    override fun createMnemonicSigner(
+        config: MnemonicSignerConfig,
+        password: String,
+        salt: String
+    ): SignerStoreItem {
+        val bip39 = Bip39(config.mnemonic, salt, config.wordList)
+        val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
+        val derivationPath = Network.ethereum().defaultDerivationPath()
+        val extKey = bip44.deriveChildKey(derivationPath)
+        val signerStoreItem = SignerStoreItem(
+            uuid = UUIDService().uuidString(),
+            name = config.name,
+            sortOrder = (items().lastOrNull()?.sortOrder ?: 0u) + 100u,
+            type = SignerStoreItem.Type.MNEMONIC,
+            passUnlockWithBio = config.passUnlockWithBio,
+            iCloudSecretStorage = config.iCloudSecretStorage,
+            saltMnemonic = config.saltMnemonic,
+            passwordType = config.passwordType,
+            derivationPath = derivationPath,
+            addresses = addresses(bip44)
+        )
+        val secretStorage = SecretStorage.encryptDefault(
+            id = signerStoreItem.uuid,
+            data = extKey.key,
+            password = password,
+            address = Network.ethereum().address(extKey.xpub()).toHexString(true),
+            mnemonic = bip39.mnemonic.joinToString(" "),
+            mnemonicLocale = bip39.worldList.localeString(),
+            mnemonicPath = derivationPath
+        )
+        add(signerStoreItem, password, secretStorage)
+        return signerStoreItem
+    }
+
+    // TODO("Refactor this away. Ideally we don't want network in signers")
+    @Throws(Throwable::class)
+    private fun addresses(bip44: Bip44): Map<String, String> {
+        val addresses: MutableMap<String, String> = mutableMapOf()
+        NetworksService.supportedNetworks().forEach {
+            val path = it.defaultDerivationPath()
+            val xPub = bip44.deriveChildKey(path).xpub()
+            addresses[path] = it.address(xPub).toHexString(true)
+        }
+        return addresses
+    }
+
+    override fun add(
+        item: SignerStoreItem,
+        password: String,
+        secretStorage: SecretStorage
+    ) {
         this.remove(item)
         when {
             item.passwordType == SignerStoreItem.PasswordType.BIO ||
