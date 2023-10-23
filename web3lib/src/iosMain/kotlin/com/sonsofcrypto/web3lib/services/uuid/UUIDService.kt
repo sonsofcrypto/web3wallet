@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3walletcore.services.uuid
+package com.sonsofcrypto.web3lib.services.uuid
 
 import platform.Foundation.NSUUID
 
