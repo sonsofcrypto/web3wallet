@@ -57,6 +57,11 @@ class SignersServiceTests {
     }
 
     @Test
+    fun testAddAccount() {
+
+    }
+
+    @Test
     fun testLoadAfterMigration() {
         val keyStore = DefaultSignerStoreService(
             KeyValueStore("SignersServiceTests"),

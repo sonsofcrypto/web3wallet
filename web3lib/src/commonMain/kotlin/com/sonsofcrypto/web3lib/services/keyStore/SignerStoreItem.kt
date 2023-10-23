@@ -13,7 +13,7 @@ data class SignerStoreItem(
     val name: String,
     /** Sort order of an `SignerStoreItem` */
     val sortOrder: UInt,
-    /** Type of wallet it represents [MNEMONIC, PRVKEY, PUBKEY, HARDWARE, MULTISIG,] */
+    /** Type of signer [MNEMONIC, PRVKEY, PUBKEY, HARDWARE, MULTISIG] */
     val type: Type,
     /** Allow password access from keychain, biometric auth instead of typing in */
     val passUnlockWithBio: Boolean = false,
@@ -28,6 +28,8 @@ data class SignerStoreItem(
     val derivationPath: String = "m/44'/60'/0'/0/0",
     /** Key is a derivation path eg m/44'/60'/0'/0/0, values are hex strings*/
     val addresses: Map<String, String>,
+    /** Used for grouping items */
+    val parentId: String? = null,
 ) {
     @Serializable
     enum class Type {
@@ -44,7 +46,6 @@ data class SignerStoreItem(
         if (saltMnemonic) {
             return false
         }
-
         return when {
             passUnlockWithBio || passwordType == PasswordType.BIO -> true
             else -> false
