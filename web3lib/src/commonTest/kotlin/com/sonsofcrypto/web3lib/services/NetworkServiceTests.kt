@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3lib.services
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
+import com.sonsofcrypto.web3lib.services.address.DefaultAddressService
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultSignerStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
@@ -25,7 +26,8 @@ class NetworkServiceTests: NetworksListener {
     fun testProviderStore() {
         val keyStoreService = DefaultSignerStoreService(
             KeyValueStore("networkServiceTests_keyStoreService"),
-            MockKeyChainService()
+            MockKeyChainService(),
+            DefaultAddressService(),
         )
         keyStoreService.selected = mockSignerStoreItem
 
@@ -68,7 +70,8 @@ class NetworkServiceTests: NetworksListener {
 
             val keyStoreService = DefaultSignerStoreService(
                 KeyValueStore("networkServiceTests_keyStoreService2"),
-                MockKeyChainService()
+                MockKeyChainService(),
+                DefaultAddressService(),
             )
             keyStoreService.selected = mockSignerStoreItem
 

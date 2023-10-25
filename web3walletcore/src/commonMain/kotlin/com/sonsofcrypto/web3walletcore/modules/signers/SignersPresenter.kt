@@ -14,9 +14,9 @@ import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.Sel
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.CONNECT_HARDWARE_WALLET
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.CREATE_MULTI_SIG
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.IMPORT_ADDRESS
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.IMPORT_MNEMONIC
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.IMPORT_PRIV_KEY
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.IMPORT_ADDRESS
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.MORE_OPTION
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.NEW_MNEMONIC
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.SheetMode
@@ -32,11 +32,11 @@ import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestinati
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.DashboardOnboarding
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.EditSignersItem
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.ImportAddress
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.SignersFullscreen
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.ImportMnemonic
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.ImportPrivateKey
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.Networks
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.NewMnemonic
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.SignersFullscreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

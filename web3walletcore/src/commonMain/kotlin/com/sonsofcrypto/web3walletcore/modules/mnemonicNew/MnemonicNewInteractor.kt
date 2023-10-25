@@ -1,11 +1,9 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicNew
 
 import com.sonsofcrypto.web3lib.services.address.AddressService
+import com.sonsofcrypto.web3lib.services.keyStore.MnemonicSignerConfig
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
-import com.sonsofcrypto.web3lib.services.keyStore.MnemonicSignerConfig
-import com.sonsofcrypto.web3lib.services.networks.NetworksService
-import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.secureRand

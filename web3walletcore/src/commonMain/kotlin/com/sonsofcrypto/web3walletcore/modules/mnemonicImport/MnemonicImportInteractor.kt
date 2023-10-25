@@ -2,13 +2,12 @@ package com.sonsofcrypto.web3walletcore.modules.mnemonicImport
 
 import com.sonsofcrypto.web3lib.services.address.AddressService
 import com.sonsofcrypto.web3lib.services.address.defaultDerivationPath
+import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
-import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
-import com.sonsofcrypto.web3lib.services.networks.NetworksService
+import com.sonsofcrypto.web3lib.services.uuid.UUIDService
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey.Version.MAINNETPRV
-import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.bip39.localeString
@@ -19,7 +18,6 @@ import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicService
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicWord
 import com.sonsofcrypto.web3walletcore.services.password.PasswordService
-import com.sonsofcrypto.web3lib.services.uuid.UUIDService
 
 data class MnemonicImportInteractorData(
     val mnemonic: List<String>,

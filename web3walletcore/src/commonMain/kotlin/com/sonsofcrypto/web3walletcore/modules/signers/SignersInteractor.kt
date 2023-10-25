@@ -1,8 +1,8 @@
 package com.sonsofcrypto.web3walletcore.modules.signers
 
+import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
-import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 
 interface SignersInteractor {

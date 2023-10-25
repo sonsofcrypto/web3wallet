@@ -6,7 +6,6 @@ import com.russhwolf.settings.SharedPreferencesSettings
 import com.sonsofcrypto.web3lib.appContextProvider.application
 import com.sonsofcrypto.web3lib.utils.extensions.stdJson
 import kotlinx.serialization.InternalSerializationApi
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 
 
