@@ -1,5 +1,7 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicImport
 
+import com.sonsofcrypto.web3lib.services.address.AddressService
+import com.sonsofcrypto.web3lib.services.address.defaultDerivationPath
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
@@ -46,6 +48,7 @@ class DefaultMnemonicImportInteractor(
     private val signerStoreService: SignerStoreService,
     private val mnemonicService: MnemonicService,
     private val passwordService: PasswordService,
+    private val addressService: AddressService,
 ): MnemonicImportInteractor {
 
     override fun potentialMnemonicWords(prefix: String?): List<String> =
@@ -64,8 +67,11 @@ class DefaultMnemonicImportInteractor(
         val worldList = WordList.fromLocaleString("en")
         val bip39 = Bip39(data.mnemonic, salt, worldList)
         val bip44 = Bip44(bip39.seed(), MAINNETPRV)
-        val derivationPath = Network.ethereum().defaultDerivationPath()
+        val derivationPath = AddressService.defaultDerivationPath()
         val extKey = bip44.deriveChildKey(derivationPath)
+        val address = addressService.address(
+            bip44.deriveChildKey(derivationPath).xpub()
+        )
         val signerStoreItem = SignerStoreItem(
             UUIDService().uuidString(),
             data.name,
@@ -76,30 +82,19 @@ class DefaultMnemonicImportInteractor(
             data.saltMnemonic,
             data.passwordType,
             derivationPath,
-            addresses(bip44)
+            mapOf(derivationPath to address)
         )
         val secretStorage = SecretStorage.encryptDefault(
             signerStoreItem.uuid,
             extKey.key,
             password,
-            Network.ethereum().address(extKey.xpub()).toHexString(true),
+            address,
             bip39.mnemonic.joinToString(" "),
             bip39.worldList.localeString(),
             derivationPath
         )
         signerStoreService.add(signerStoreItem, password, secretStorage)
         return signerStoreItem
-    }
-
-    @Throws(Error::class)
-    private fun addresses(bip44: Bip44): Map<String, String> {
-        val addresses: MutableMap<String, String> = emptyMap<String, String>().toMutableMap()
-        NetworksService.supportedNetworks().forEach {
-            val path = it.defaultDerivationPath()
-            val xPub = bip44.deriveChildKey(path).xpub()
-            addresses[path] = it.address(xPub).toHexString(true)
-        }
-        return addresses
     }
 
     override fun mnemonicError(mnemonic: List<String>, salt: String): MnemonicServiceError? =

@@ -1,15 +1,14 @@
 package com.sonsofcrypto.web3lib.services.keyStore
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3lib.services.networks.NetworksService
+import com.sonsofcrypto.web3lib.services.address.AddressService
+import com.sonsofcrypto.web3lib.services.address.defaultDerivationPath
 import com.sonsofcrypto.web3lib.services.uuid.UUIDService
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
-import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.bip39.localeString
-import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import kotlinx.serialization.decodeFromByteArray
 import kotlinx.serialization.encodeToByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
@@ -24,6 +23,8 @@ data class MnemonicSignerConfig(
     val saltMnemonic: Boolean,
     val passwordType: SignerStoreItem.PasswordType,
     val wordList: WordList = WordList.fromLocaleString("en"),
+    val derivationPath: String = AddressService.defaultDerivationPath(),
+    val sortOrder: UInt? = null,
 )
 
 /** Handles management of `SignerStoreItem`s and `SecretStorage` items. */
@@ -47,8 +48,8 @@ interface SignerStoreService {
     ): SignerStoreItem
     /** Add `KeyStoreItem` using password and SecreteStorage.
      *
-     * NOTE: It first attempts to delete any `KeyStoreItem` or `SecreteStorage`
-     * that might be present with same `KeyStoreItem.uuid`
+     * NOTE: It first attempts to delete any `SignerStoreItem` or
+     * `SecreteStorage` that might be present with same `SignerStoreItem.uuid`
      */
     fun add(item: SignerStoreItem, password: String, secretStorage: SecretStorage)
     /** Removes `KeyStoreItem` and its corresponding `SecretStorage` */
@@ -60,14 +61,15 @@ interface SignerStoreService {
     /** Does device support biometrics authentication */
     fun biometricsSupported(): Boolean
     /** Authenticate with biometrics */
-    fun biometricsAuthenticate(title: String, handler: (Boolean, Error?) -> Unit)
+    fun biometricAuthenticate(title: String, handler: (Boolean, Error?) -> Unit)
     /** Retrieves password from keychain if one is present */
     fun password(item: SignerStoreItem): String?
 }
 
 class DefaultSignerStoreService(
     private val store: KeyValueStore,
-    private val keyChainService: KeyChainService
+    private val keyChainService: KeyChainService,
+    private val addressService: AddressService,
 ) : SignerStoreService {
 
     override var selected: SignerStoreItem?
@@ -81,8 +83,10 @@ class DefaultSignerStoreService(
     ): SignerStoreItem {
         val bip39 = Bip39(config.mnemonic, salt, config.wordList)
         val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
-        val derivationPath = Network.ethereum().defaultDerivationPath()
-        val extKey = bip44.deriveChildKey(derivationPath)
+        val extKey = bip44.deriveChildKey(config.derivationPath)
+        val address = addressService.address(
+            bip44.deriveChildKey(config.derivationPath).xpub()
+        )
         val signerStoreItem = SignerStoreItem(
             uuid = UUIDService().uuidString(),
             name = config.name,
@@ -92,32 +96,20 @@ class DefaultSignerStoreService(
             iCloudSecretStorage = config.iCloudSecretStorage,
             saltMnemonic = config.saltMnemonic,
             passwordType = config.passwordType,
-            derivationPath = derivationPath,
-            addresses = this.addresses(bip44)
+            derivationPath = config.derivationPath,
+            addresses = mapOf(config.derivationPath to address)
         )
         val secretStorage = SecretStorage.encryptDefault(
             id = signerStoreItem.uuid,
             data = extKey.key,
             password = password,
-            address = Network.ethereum().address(extKey.xpub()).toHexString(true),
+            address = address,
             mnemonic = bip39.mnemonic.joinToString(" "),
             mnemonicLocale = bip39.worldList.localeString(),
-            mnemonicPath = derivationPath
+            mnemonicPath = config.derivationPath
         )
         this.add(signerStoreItem, password, secretStorage)
         return signerStoreItem
-    }
-
-    // TODO("Refactor this away. Ideally we don't want network in signers")
-    @Throws(Throwable::class)
-    private fun addresses(bip44: Bip44): Map<String, String> {
-        val addresses: MutableMap<String, String> = mutableMapOf()
-        NetworksService.supportedNetworks().forEach {
-            val path = it.defaultDerivationPath()
-            val xPub = bip44.deriveChildKey(path).xpub()
-            addresses[path] = it.address(xPub).toHexString(true)
-        }
-        return addresses
     }
 
     @Throws(Throwable::class)
@@ -128,8 +120,25 @@ class DefaultSignerStoreService(
         derivationPath: String?
     ): SignerStoreItem {
         if (item.type != SignerStoreItem.Type.MNEMONIC)
-            throw Error.AddAccountForNonMnemonic
-
+            throw Err.AddAccountForNonMnemonic
+        val path = derivationPath ?: this.nextDerivationPath(item)
+        val decrypted = this.secretStorage(item, password)?.decrypt(password)
+            ?: throw Err.AddAccountDecryptFailed
+        return createMnemonicSigner(
+            MnemonicSignerConfig(
+                mnemonic = decrypted.mnemonic!!.split(" "),
+                name = item.name + ", acc: ${lastDerivationPathComponent(path)}",
+                passUnlockWithBio = item.passUnlockWithBio ,
+                iCloudSecretStorage = item.iCloudSecretStorage,
+                saltMnemonic = item.saltMnemonic,
+                passwordType = item.passwordType,
+                wordList = WordList.fromLocaleString(decrypted.mnemonicLocale),
+                derivationPath = path,
+                sortOrder =  item.sortOrder + 1u,
+            ),
+            password,
+            salt,
+        )
     }
 
     override fun add(
@@ -154,6 +163,7 @@ class DefaultSignerStoreService(
             item.iCloudSecretStorage
         )
         store[item.uuid] = item
+        fixSortOrderIfNeeded(item)
     }
 
     override fun remove(item: SignerStoreItem) {
@@ -177,9 +187,10 @@ class DefaultSignerStoreService(
         } catch (exception: Exception) { null }
     }
 
-    override fun biometricsSupported(): Boolean = keyChainService.biometricsSupported()
+    override fun biometricsSupported(): Boolean
+        = keyChainService.biometricsSupported()
 
-    override fun biometricsAuthenticate(title: String, handler: (Boolean, Error?) -> Unit) {
+    override fun biometricAuthenticate(title: String, handler: (Boolean, Error?) -> Unit) {
         keyChainService.biometricsAuthenticate(title, handler)
     }
 
@@ -191,10 +202,41 @@ class DefaultSignerStoreService(
         } catch (error: Throwable) { null }
     }
 
+    private fun fixSortOrderIfNeeded(insertedItem: SignerStoreItem) {
+        TODO("Implement")
+    }
+
+    @Throws(Throwable::class)
+    private fun nextDerivationPath(item: SignerStoreItem): String {
+        if (item.type != SignerStoreItem.Type.MNEMONIC)
+            throw Err.AddAccountForNonMnemonic
+        if (item.parentId != null) {
+            val lastItem = this.items()
+                .filter { it.parentId == item.parentId }
+                .sortedBy { lastDerivationPathComponent(it.derivationPath) }
+                .lastOrNull()
+            if (lastItem?.derivationPath != null)
+                return incrementedDerivationPath(lastItem.derivationPath)
+        }
+        return incrementedDerivationPath(item.derivationPath)
+    }
+
+    private fun lastDerivationPathComponent(path: String): Int
+            = path.split("/").last().toInt()
+
+    private fun incrementedDerivationPath(path: String): String {
+        val splitPath = path.split("/")
+        val nextIdx = splitPath.last().toInt() + 1
+        return (splitPath.dropLast(1) + nextIdx.toString()).joinToString("/")
+    }
+
     /** Exceptions */
-    sealed class Error(message: String? = null) : Exception(message) {
+    sealed class Err(message: String? = null) : Exception(message) {
         /** Attempting to add account to non-mnemonic signer */
         object AddAccountForNonMnemonic :
-            Error("Attempting to add account to non-mnemonic signer")
+            Err("Attempting to add account to non-mnemonic signer")
+        /** Failed while attempting to decrypt existing mnemonic */
+        object AddAccountDecryptFailed :
+            Err("Failed to decrypt parent secrete storage")
     }
 }
