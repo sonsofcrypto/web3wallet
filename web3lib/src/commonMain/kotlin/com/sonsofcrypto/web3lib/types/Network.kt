@@ -14,16 +14,6 @@ data class Network(
 
     fun id(): String = chainId.toString()
 
-    fun defaultDerivationPath(): String {
-        return "m/44'/60'/0'/0/0"
-    }
-
-    fun address(pubKey: ExtKey): AddressBytes {
-        val uncompressed = pubKey.uncompressedPub()
-        val bytes = uncompressed.copyOfRange(1, uncompressed.size) // (strip prefix 0x04)
-        return keccak256(bytes).copyOfRange(12, 32)
-    }
-
     fun l1(network: Network): Network {
         return when (network.chainId) {
             sepolia().chainId,
@@ -52,7 +42,6 @@ data class Network(
         return chainId == (other as? Network)?.chainId
     }
 
-    // TODO: Get address for Georly
     fun multicall3Address(): String = when (chainId) {
         ethereum().chainId,
         goerli().chainId,

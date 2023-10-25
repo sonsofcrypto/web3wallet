@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicNew
 
+import com.sonsofcrypto.web3lib.services.address.AddressService
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.MnemonicSignerConfig
@@ -35,6 +36,7 @@ interface MnemonicNewInteractor {
 class DefaultMnemonicNewInteractor(
     private val signerStoreService: SignerStoreService,
     private val passwordService: PasswordService,
+    private val addressService: AddressService,
 ): MnemonicNewInteractor {
 
     override fun createMnemonicSigner(
@@ -44,17 +46,6 @@ class DefaultMnemonicNewInteractor(
     }
 
     override fun generateMnemonic(): String = Bip39.from().mnemonic.joinToString(" ")
-
-    @Throws(Error::class)
-    private fun addresses(bip44: Bip44): Map<String, String> {
-        val addresses: MutableMap<String, String> = mutableMapOf()
-        NetworksService.supportedNetworks().forEach {
-            val path = it.defaultDerivationPath()
-            val xPub = bip44.deriveChildKey(path).xpub()
-            addresses[path] = it.address(xPub).toHexString(true)
-        }
-        return addresses
-    }
 
     override fun generatePassword(): String = secureRand(32).toHexString()
 

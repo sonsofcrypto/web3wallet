@@ -28,7 +28,7 @@ class DefaultAuthenticateInteractor(
         title: String,
         handler: (AuthenticateData?, Error?) -> Unit
     ) {
-        signerStoreService.biometricsAuthenticate(title) { success: Boolean, error: Error? ->
+        signerStoreService.biometricAuthenticate(title) { success: Boolean, error: Error? ->
             if (success) {
                 val password = signerStoreService.password(item) ?: ""
                 handler(AuthenticateData(password, ""), null)

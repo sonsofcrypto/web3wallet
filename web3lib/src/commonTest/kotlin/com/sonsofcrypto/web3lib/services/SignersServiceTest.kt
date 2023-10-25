@@ -3,6 +3,9 @@ package com.sonsofcrypto.web3lib.services
 import com.sonsofcrypto.web3lib.BuildKonfig
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.randomString
+import com.sonsofcrypto.web3lib.services.address.AddressService
+import com.sonsofcrypto.web3lib.services.address.DefaultAddressService
+import com.sonsofcrypto.web3lib.services.address.defaultDerivationPath
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultSignerStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyChainService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyChainServiceErr
@@ -29,6 +32,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class SignersServiceTests {
+
+    private val addressService = DefaultAddressService()
 
     @Test
     fun testNewMnemonic() {
@@ -95,10 +100,9 @@ class SignersServiceTests {
         val worldList = WordList.fromLocaleString("en")
         val bip39 = Bip39.from(ES128, salt, worldList)
         val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
-        val keyPath = derivationPath ?: network.defaultDerivationPath()
+        val keyPath = derivationPath ?: AddressService.defaultDerivationPath()
         val extKey = bip44.deriveChildKey(keyPath)
-        val address = network.address(bip44.deriveChildKey(keyPath).xpub())
-            .toHexString(true)
+        val address = addressService.address(bip44.deriveChildKey(keyPath).xpub())
         val signerStoreItem = SignerStoreItem(
             uuid = randomString(32),
             name = name,
@@ -115,7 +119,7 @@ class SignersServiceTests {
             signerStoreItem.uuid,
             extKey.key,
             password,
-            network.address(extKey.xpub()).toHexString(true),
+            address,
             bip39.mnemonic.joinToString(" "),
             bip39.worldList.localeString(),
             derivationPath
