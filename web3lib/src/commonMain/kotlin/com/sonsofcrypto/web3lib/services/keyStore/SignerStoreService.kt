@@ -64,6 +64,8 @@ interface SignerStoreService {
     fun biometricAuthenticate(title: String, handler: (Boolean, Error?) -> Unit)
     /** Retrieves password from keychain if one is present */
     fun password(item: SignerStoreItem): String?
+    /** Updates sort order of `SignerStoreItem` */
+    fun updateSortOrder(item: SignerStoreItem, idx: UInt)
 }
 
 class DefaultSignerStoreService(
@@ -202,8 +204,24 @@ class DefaultSignerStoreService(
         } catch (error: Throwable) { null }
     }
 
+    override fun updateSortOrder(item: SignerStoreItem, idx: UInt) {
+        store[item.uuid] = item.copy(sortOrder = idx)
+    }
+
     private fun fixSortOrderIfNeeded(insertedItem: SignerStoreItem) {
-        TODO("Implement")
+        val items = this.items()
+        var prevSortOrder: UInt = 0u
+        items.forEachIndexed { idx, item ->
+            if (prevSortOrder == item.sortOrder) {
+                prevSortOrder += 1u
+                this.updateSortOrder(
+                    if (item.uuid == insertedItem.uuid) items[idx - 1] else item,
+                    prevSortOrder
+                )
+            } else {
+                prevSortOrder = item.sortOrder
+            }
+        }
     }
 
     @Throws(Throwable::class)
