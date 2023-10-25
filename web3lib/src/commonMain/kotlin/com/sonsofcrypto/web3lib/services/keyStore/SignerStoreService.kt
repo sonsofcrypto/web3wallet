@@ -208,16 +208,19 @@ class DefaultSignerStoreService(
         store[item.uuid] = item.copy(sortOrder = idx)
     }
 
+    @OptIn(kotlin.ExperimentalStdlibApi::class)
     private fun fixSortOrderIfNeeded(insertedItem: SignerStoreItem) {
         val items = this.items()
-        var prevSortOrder: UInt = 0u
-        items.forEachIndexed { idx, item ->
+        if (items.count() < 2)
+            return
+        var prevSortOrder = items[0].sortOrder
+        for (i in 1..<items.count()) {
+            var item = items[i]
             if (prevSortOrder == item.sortOrder) {
                 prevSortOrder += 1u
-                this.updateSortOrder(
-                    if (item.uuid == insertedItem.uuid) items[idx - 1] else item,
-                    prevSortOrder
-                )
+                if (item.uuid == insertedItem.uuid)
+                    item = items[i - 1]
+                this.updateSortOrder(item, prevSortOrder)
             } else {
                 prevSortOrder = item.sortOrder
             }

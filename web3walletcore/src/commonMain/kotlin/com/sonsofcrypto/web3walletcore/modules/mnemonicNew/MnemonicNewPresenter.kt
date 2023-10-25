@@ -1,8 +1,8 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicNew
 
+import com.sonsofcrypto.web3lib.services.keyStore.MnemonicSignerConfig
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
-import com.sonsofcrypto.web3lib.services.keyStore.MnemonicSignerConfig
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.common.viewModels.SectionFooterViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.SegmentWithTextAndSwitchCellViewModel

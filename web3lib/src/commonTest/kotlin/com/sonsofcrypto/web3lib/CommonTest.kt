@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3lib
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.services.address.DefaultAddressService
 import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.services.currencyStore.DefaultCurrencyStoreService
@@ -8,9 +9,9 @@ import com.sonsofcrypto.web3lib.services.currencyStore.defaultCurrencies
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultSignerStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyChainService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyChainServiceErr
+import com.sonsofcrypto.web3lib.services.keyStore.ServiceType
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
-import com.sonsofcrypto.web3lib.services.keyStore.ServiceType
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
@@ -61,7 +62,8 @@ fun testEnvCurrencyStore(prefix: String = "test"): CurrencyStoreService =
 fun testEnvKeyStore(prefix: String = "Test"): SignerStoreService {
     val keyStore = DefaultSignerStoreService(
         KeyValueStore("$prefix.keyStore"),
-        MockKeyChainService()
+        MockKeyChainService(),
+        DefaultAddressService(),
     )
     keyStore.selected = mockSignerStoreItem
     return keyStore

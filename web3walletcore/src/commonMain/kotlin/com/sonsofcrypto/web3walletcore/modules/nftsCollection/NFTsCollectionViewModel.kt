@@ -1,8 +1,5 @@
 package com.sonsofcrypto.web3walletcore.modules.nftsCollection
 
-import com.sonsofcrypto.web3walletcore.services.nfts.NFTCollection
-import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
-
 
 sealed class NFTsCollectionViewModel {
     object Loading : NFTsCollectionViewModel()

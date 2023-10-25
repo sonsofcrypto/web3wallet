@@ -8,9 +8,9 @@ import com.sonsofcrypto.web3lib.services.currencyStore.defaultCurrencies
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultSignerStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyChainService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyChainServiceErr
+import com.sonsofcrypto.web3lib.services.keyStore.ServiceType
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
-import com.sonsofcrypto.web3lib.services.keyStore.ServiceType
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService

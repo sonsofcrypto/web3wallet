@@ -17,7 +17,6 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.MNEMONIC
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
-import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39.EntropySize.ES128
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
@@ -63,23 +62,35 @@ class SignersServiceTests {
 
     @Test
     fun testAddAccount() {
+        val service = cleanSignerStoreService("SignerServiceTestsAddAccount")
+        val pass = "Password"
+        val salt = ""
+        val parent = newMnemonicSigner("Parent", pass, "", privTestMnemonic())
+        service.add(parent.signerStoreItem, pass, parent.secretStorage)
+        val acc1 = service.addAccount(parent.signerStoreItem, pass, salt)
+        val acc2 = service.addAccount(parent.signerStoreItem, pass, salt)
 
+        println("addresses: ${parent.signerStoreItem.addresses}")
+        println("derivationPath: ${parent.signerStoreItem.derivationPath}")
+        println("sortOrder: ${parent.signerStoreItem.sortOrder}")
+        println("addresses: ${acc1.addresses}")
+        println("derivationPath: ${acc1.derivationPath}")
+        println("sortOrder: ${acc1.sortOrder}")
+        println("addresses: ${acc2.addresses}")
+        println("derivationPath: ${acc2.derivationPath}")
+        println("sortOrder: ${acc2.sortOrder}")
     }
 
     @Test
     fun testLoadAfterMigration() {
-        val keyStore = DefaultSignerStoreService(
-            KeyValueStore("SignersServiceTests"),
-            MockKeyChainService()
-        )
-        println("${keyStore.items().first()}")
+        val service = testSignerStoreService("SignerServiceTests")
+        println("${service.items().first()}")
     }
 
-    private fun cleanSignerStoreService(): SignerStoreService {
-        val service = DefaultSignerStoreService(
-            KeyValueStore("SignerServiceTests"),
-            MockKeyChainService()
-        )
+    private fun cleanSignerStoreService(
+        name: String = "SignerServiceTests"
+    ): SignerStoreService {
+        val service = testSignerStoreService(name)
         service.items().forEach { service.remove(it) }
         return service
     }
@@ -94,11 +105,12 @@ class SignersServiceTests {
         name: String = "Test Mnemonic",
         password: String = randomString(32),
         salt: String = "",
-        network: Network = Network.ethereum(),
+        mnemonic: List<String>? = null,
         derivationPath: String? = null
     ): MnemonicSignerItems {
         val worldList = WordList.fromLocaleString("en")
-        val bip39 = Bip39.from(ES128, salt, worldList)
+        val bip39 = if (mnemonic != null)  Bip39(mnemonic, salt, worldList)
+                    else Bip39.from(ES128, salt, worldList)
         val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
         val keyPath = derivationPath ?: AddressService.defaultDerivationPath()
         val extKey = bip44.deriveChildKey(keyPath)
@@ -167,12 +179,9 @@ class SignersServiceTests {
     }
 
     @Test
-    fun testKeyStore() {
-        val keyStore = DefaultSignerStoreService(
-            KeyValueStore("KeyStoreItemsTest2"),
-            MockKeyChainService()
-        )
-        keyStore.items().forEach { keyStore.remove(it) }
+    fun testSignerStore() {
+        val service = testSignerStoreService("KeyStoreItemsTest2")
+        service.items().forEach { service.remove(it) }
 
         val password = "testpass"
         val secretStorage = SecretStorage.encrypt(
@@ -184,31 +193,28 @@ class SignersServiceTests {
             mnemonicLocale = null,
             mnemonicPath = null,
         )
-        keyStore.add(testMockSignerStoreItem, password, secretStorage)
-        assertTrue(keyStore.items().size == 1, "Did not save KeyStore item")
+        service.add(testMockSignerStoreItem, password, secretStorage)
+        assertTrue(service.items().size == 1, "Did not save KeyStore item")
         assertEquals(
-            keyStore.items().first(),
+            service.items().first(),
             testMockSignerStoreItem,
             "Stored item does not equal"
-                + "\n${keyStore.items().first()}\n$testMockSignerStoreItem"
+                + "\n${service.items().first()}\n$testMockSignerStoreItem"
         )
         assertTrue(
-            keyStore.secretStorage(testMockSignerStoreItem, password) != null,
+            service.secretStorage(testMockSignerStoreItem, password) != null,
             "Failed secret storage"
         )
-        keyStore.items().forEach { keyStore.remove(it) }
-        assertTrue(keyStore.items().size == 0, "Failed to remove items")
+        service.items().forEach { service.remove(it) }
+        assertTrue(service.items().size == 0, "Failed to remove items")
     }
 
     @Test
     fun testKeyStoreSelected() {
-        val keyStore = DefaultSignerStoreService(
-            KeyValueStore("KeyStoreItemsTest2"),
-            MockKeyChainService()
-        )
-        keyStore.items().forEach { keyStore.remove(it) }
-        keyStore.selected = testMockSignerStoreItem
-        assertEquals(keyStore.selected, testMockSignerStoreItem, "Fail select")
+        val service = testSignerStoreService("KeyStoreItemsTest2")
+        service.items().forEach { service.remove(it) }
+        service.selected = testMockSignerStoreItem
+        assertEquals(service.selected, testMockSignerStoreItem, "Fail select")
     }
 
     @Test
@@ -243,9 +249,15 @@ class SignersServiceTests {
         )
     }
 
+    private fun testSignerStoreService(name: String): SignerStoreService
+        = DefaultSignerStoreService(
+            KeyValueStore(name),
+            MockKeyChainService(),
+            DefaultAddressService()
+        )
+
     private fun privTestMnemonic(): List<String>
         = BuildKonfig.testMnemonic.split(" ")
-
 }
 
 class MockKeyChainService: KeyChainService {

@@ -1,6 +1,5 @@
 package com.sonsofcrypto.web3lib.types
 
-import com.sonsofcrypto.web3lib.utils.keccak256
 import kotlinx.serialization.Serializable
 
 @Serializable
