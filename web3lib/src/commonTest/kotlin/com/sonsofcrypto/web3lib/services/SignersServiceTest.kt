@@ -15,6 +15,7 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.MNEMONIC
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
+import com.sonsofcrypto.web3lib.services.uuid.UUIDService
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
@@ -30,7 +31,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class SignersServiceTests {
+class SignerServiceTests {
 
     private val addressService = DefaultAddressService()
 
@@ -60,25 +61,42 @@ class SignersServiceTests {
         )
     }
 
+    private fun printItems(service: SignerStoreService) {
+        println("===")
+        service.items().forEach {
+            println("${it.uuid} ${it.sortOrder} ${it.derivationPath} ${it.parentId}")
+        }
+        println("===")
+    }
+
     @Test
     fun testAddAccount() {
         val service = cleanSignerStoreService("SignerServiceTestsAddAccount")
         val pass = "Password"
         val salt = ""
         val parent = newMnemonicSigner("Parent", pass, "", privTestMnemonic())
+        val parentItem = parent.signerStoreItem
         service.add(parent.signerStoreItem, pass, parent.secretStorage)
-        val acc1 = service.addAccount(parent.signerStoreItem, pass, salt)
-        val acc2 = service.addAccount(parent.signerStoreItem, pass, salt)
-
-        println("addresses: ${parent.signerStoreItem.addresses}")
-        println("derivationPath: ${parent.signerStoreItem.derivationPath}")
-        println("sortOrder: ${parent.signerStoreItem.sortOrder}")
-        println("addresses: ${acc1.addresses}")
-        println("derivationPath: ${acc1.derivationPath}")
-        println("sortOrder: ${acc1.sortOrder}")
-        println("addresses: ${acc2.addresses}")
-        println("derivationPath: ${acc2.derivationPath}")
-        println("sortOrder: ${acc2.sortOrder}")
+        val acc1 = service.addAccount(parentItem, pass, salt)
+        val acc2 = service.addAccount(parentItem, pass, salt)
+        val acc3 = service.addAccount(acc2, pass, salt)
+        printItems(service)
+        listOf(acc1, acc2, acc3).forEach {
+            val msg = "Unexpected parent id: \n${parent.signerStoreItem} \n$it"
+            assertEquals(it.parentId, parentItem.uuid, msg)
+        }
+        mapOf(
+            "0xA52fD940629625371775d2D7271A35a09BC2B49e" to parentItem,
+            "0xb18834d0278B9f8E6c1bbAE78e1737B17aF09Cd5" to acc1,
+            "0xCDae565C3314811822C0f161459325D1bc28AACE" to acc2,
+        ).forEach { (key, itm) ->
+            val m = "Unexpected address: $key $itm"
+            assertEquals(key.lowercase(), itm.addresses[itm.derivationPath], m)
+        }
+//        listOf(parentItem, acc1, acc2, acc3).forEachIndexed { idx, item ->
+//            val msg = "Unexpected sortOrder: $idx ${item.sortOrder}"
+//            assertEquals(idx.toUInt(), item.sortOrder, msg)
+//        }
     }
 
     @Test
@@ -116,7 +134,7 @@ class SignersServiceTests {
         val extKey = bip44.deriveChildKey(keyPath)
         val address = addressService.address(bip44.deriveChildKey(keyPath).xpub())
         val signerStoreItem = SignerStoreItem(
-            uuid = randomString(32),
+            uuid = UUIDService().uuidString(),
             name = name,
             sortOrder = 0u,
             type = MNEMONIC,

@@ -25,6 +25,7 @@ data class MnemonicSignerConfig(
     val wordList: WordList = WordList.fromLocaleString("en"),
     val derivationPath: String = AddressService.defaultDerivationPath(),
     val sortOrder: UInt? = null,
+    val parentId: String? = null,
 )
 
 /** Handles management of `SignerStoreItem`s and `SecretStorage` items. */
@@ -99,7 +100,8 @@ class DefaultSignerStoreService(
             saltMnemonic = config.saltMnemonic,
             passwordType = config.passwordType,
             derivationPath = config.derivationPath,
-            addresses = mapOf(config.derivationPath to address)
+            addresses = mapOf(config.derivationPath to address),
+            parentId = config.parentId
         )
         val secretStorage = SecretStorage.encryptDefault(
             id = signerStoreItem.uuid,
@@ -137,6 +139,7 @@ class DefaultSignerStoreService(
                 wordList = WordList.fromLocaleString(decrypted.mnemonicLocale),
                 derivationPath = path,
                 sortOrder =  item.sortOrder + 1u,
+                parentId = item.parentId ?: item.uuid
             ),
             password,
             salt,
@@ -231,15 +234,11 @@ class DefaultSignerStoreService(
     private fun nextDerivationPath(item: SignerStoreItem): String {
         if (item.type != SignerStoreItem.Type.MNEMONIC)
             throw Err.AddAccountForNonMnemonic
-        if (item.parentId != null) {
-            val lastItem = this.items()
-                .filter { it.parentId == item.parentId }
-                .sortedBy { lastDerivationPathComponent(it.derivationPath) }
-                .lastOrNull()
-            if (lastItem?.derivationPath != null)
-                return incrementedDerivationPath(lastItem.derivationPath)
-        }
-        return incrementedDerivationPath(item.derivationPath)
+        val lastItem = this.items()
+            .filter { it.parentId == item.uuid || it.parentId == item.parentId }
+            .sortedBy { lastDerivationPathComponent(it.derivationPath) }
+            .lastOrNull()
+        return incrementedDerivationPath((lastItem ?: item).derivationPath)
     }
 
     private fun lastDerivationPathComponent(path: String): Int
