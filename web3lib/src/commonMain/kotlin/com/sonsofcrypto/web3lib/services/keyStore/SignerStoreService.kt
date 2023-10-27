@@ -3,6 +3,7 @@ package com.sonsofcrypto.web3lib.services.keyStore
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.address.AddressService
 import com.sonsofcrypto.web3lib.services.address.defaultDerivationPath
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.MNEMONIC
 import com.sonsofcrypto.web3lib.services.uuid.UUIDService
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
@@ -12,6 +13,7 @@ import com.sonsofcrypto.web3lib.utils.bip39.localeString
 import kotlinx.serialization.decodeFromByteArray
 import kotlinx.serialization.encodeToByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
+import kotlin.math.max
 
 private val selectedKey = "selected_uuid"
 
@@ -57,6 +59,8 @@ interface SignerStoreService {
     fun remove(item: SignerStoreItem)
     /** Lists all the items in `KeyStore` */
     fun items(): List<SignerStoreItem>
+    /** Get `SignerStoreItem` by uuid */
+    fun signerStoreItem(uuid: String): SignerStoreItem?
     /** Retrieves `SecretStorage` for `KeyStoreItem` using password */
     fun secretStorage(item: SignerStoreItem, password: String): SecretStorage?
     /** Does device support biometrics authentication */
@@ -65,8 +69,8 @@ interface SignerStoreService {
     fun biometricAuthenticate(title: String, handler: (Boolean, Error?) -> Unit)
     /** Retrieves password from keychain if one is present */
     fun password(item: SignerStoreItem): String?
-    /** Updates sort order of `SignerStoreItem` */
-    fun updateSortOrder(item: SignerStoreItem, idx: UInt)
+    /** Updates sort order of `SignerStoreItem`, & of other items */
+    fun setSortOrder(item: SignerStoreItem, idx: UInt)
 }
 
 class DefaultSignerStoreService(
@@ -93,8 +97,9 @@ class DefaultSignerStoreService(
         val signerStoreItem = SignerStoreItem(
             uuid = UUIDService().uuidString(),
             name = config.name,
-            sortOrder = (items().lastOrNull()?.sortOrder ?: 0u) + 100u,
-            type = SignerStoreItem.Type.MNEMONIC,
+            sortOrder = config.sortOrder
+                ?: ((items().lastOrNull()?.sortOrder ?: 0u) + 100u),
+            type = MNEMONIC,
             passUnlockWithBio = config.passUnlockWithBio,
             iCloudSecretStorage = config.iCloudSecretStorage,
             saltMnemonic = config.saltMnemonic,
@@ -123,7 +128,7 @@ class DefaultSignerStoreService(
         salt: String,
         derivationPath: String?
     ): SignerStoreItem {
-        if (item.type != SignerStoreItem.Type.MNEMONIC)
+        if (item.type != MNEMONIC)
             throw Err.AddAccountForNonMnemonic
         val path = derivationPath ?: this.nextDerivationPath(item)
         val decrypted = this.secretStorage(item, password)?.decrypt(password)
@@ -138,7 +143,7 @@ class DefaultSignerStoreService(
                 passwordType = item.passwordType,
                 wordList = WordList.fromLocaleString(decrypted.mnemonicLocale),
                 derivationPath = path,
-                sortOrder =  item.sortOrder + 1u,
+                sortOrder = nextAccountSortOrder(item),
                 parentId = item.parentId ?: item.uuid
             ),
             password,
@@ -168,7 +173,6 @@ class DefaultSignerStoreService(
             item.iCloudSecretStorage
         )
         store[item.uuid] = item
-        fixSortOrderIfNeeded(item)
     }
 
     override fun remove(item: SignerStoreItem) {
@@ -183,6 +187,8 @@ class DefaultSignerStoreService(
             .mapNotNull { store.get<SignerStoreItem>(it) }
             .sortedBy { it.sortOrder }
     }
+
+    override fun signerStoreItem(uuid: String): SignerStoreItem? = store[uuid]
 
     override fun secretStorage(item: SignerStoreItem, password: String): SecretStorage? {
         return try {
@@ -207,38 +213,44 @@ class DefaultSignerStoreService(
         } catch (error: Throwable) { null }
     }
 
-    override fun updateSortOrder(item: SignerStoreItem, idx: UInt) {
-        store[item.uuid] = item.copy(sortOrder = idx)
+    override fun setSortOrder(item: SignerStoreItem, idx: UInt) {
+        items().forEach {
+            if (it.sortOrder >= idx) updateSortOrder(it, it.sortOrder + 1u)
+        }
+        updateSortOrder(item, idx)
     }
 
-    @OptIn(kotlin.ExperimentalStdlibApi::class)
-    private fun fixSortOrderIfNeeded(insertedItem: SignerStoreItem) {
-        val items = this.items()
-        if (items.count() < 2)
-            return
-        var prevSortOrder = items[0].sortOrder
-        for (i in 1..<items.count()) {
-            var item = items[i]
-            if (prevSortOrder == item.sortOrder) {
-                prevSortOrder += 1u
-                if (item.uuid == insertedItem.uuid)
-                    item = items[i - 1]
-                this.updateSortOrder(item, prevSortOrder)
-            } else {
-                prevSortOrder = item.sortOrder
-            }
-        }
+    private fun updateSortOrder(item: SignerStoreItem, idx: UInt) {
+        store[item.uuid] = item.copy(sortOrder = idx)
     }
 
     @Throws(Throwable::class)
     private fun nextDerivationPath(item: SignerStoreItem): String {
-        if (item.type != SignerStoreItem.Type.MNEMONIC)
+        if (item.type != MNEMONIC)
             throw Err.AddAccountForNonMnemonic
         val lastItem = this.items()
             .filter { it.parentId == item.uuid || it.parentId == item.parentId }
             .sortedBy { lastDerivationPathComponent(it.derivationPath) }
             .lastOrNull()
         return incrementedDerivationPath((lastItem ?: item).derivationPath)
+    }
+
+    @OptIn(kotlin.ExperimentalStdlibApi::class)
+    private fun nextAccountSortOrder(item: SignerStoreItem): UInt {
+        val items = items()
+        val itemIdx = items.indexOfFirst { it.uuid == item.uuid }
+        if (itemIdx == -1) {
+            return items.last().sortOrder + 1u
+        }
+        var sortOrder = item.sortOrder + 1u
+        for (i in itemIdx + 1..<items.count()) {
+            val curr = items[i]
+            if (curr.parentId != null && (curr.parentId == item.parentId || curr.parentId == item.uuid))
+                sortOrder = max(sortOrder, curr.sortOrder + 1u)
+            else
+                updateSortOrder(curr, curr.sortOrder + 1u)
+        }
+        return sortOrder
     }
 
     private fun lastDerivationPathComponent(path: String): Int
