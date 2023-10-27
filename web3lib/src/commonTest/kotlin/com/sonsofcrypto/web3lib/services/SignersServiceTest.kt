@@ -61,14 +61,6 @@ class SignerServiceTests {
         )
     }
 
-    private fun printItems(service: SignerStoreService) {
-        println("===")
-        service.items().forEach {
-            println("${it.uuid} ${it.sortOrder} ${it.derivationPath} ${it.parentId}")
-        }
-        println("===")
-    }
-
     @Test
     fun testAddAccount() {
         val service = cleanSignerStoreService("SignerServiceTestsAddAccount")
@@ -80,7 +72,6 @@ class SignerServiceTests {
         val acc1 = service.addAccount(parentItem, pass, salt)
         val acc2 = service.addAccount(parentItem, pass, salt)
         val acc3 = service.addAccount(acc2, pass, salt)
-        printItems(service)
         listOf(acc1, acc2, acc3).forEach {
             val msg = "Unexpected parent id: \n${parent.signerStoreItem} \n$it"
             assertEquals(it.parentId, parentItem.uuid, msg)
@@ -93,10 +84,30 @@ class SignerServiceTests {
             val m = "Unexpected address: $key $itm"
             assertEquals(key.lowercase(), itm.addresses[itm.derivationPath], m)
         }
-//        listOf(parentItem, acc1, acc2, acc3).forEachIndexed { idx, item ->
-//            val msg = "Unexpected sortOrder: $idx ${item.sortOrder}"
-//            assertEquals(idx.toUInt(), item.sortOrder, msg)
-//        }
+        listOf(parentItem, acc1, acc2, acc3).forEachIndexed { idx, item ->
+            val storeItem = service.signerStoreItem(item.uuid)
+            val msg = "Unexpected sortOrder: $idx ${item.sortOrder}"
+            assertEquals(storeItem!!.sortOrder, idx.toUInt(), msg)
+        }
+    }
+
+    @Test
+    fun testInsertAccount() {
+        val service = cleanSignerStoreService("SignerServiceTestsAddAccount")
+        val pass = "Password"
+        val salt = ""
+        val parent = newMnemonicSigner("Parent", pass, "", privTestMnemonic())
+        val another = newMnemonicSigner("Another", pass, "", sortOrder = 1u)
+        val parentItem = parent.signerStoreItem
+        service.add(parent.signerStoreItem, pass, parent.secretStorage)
+        service.add(another.signerStoreItem, pass, another.secretStorage)
+        val acc1 = service.addAccount(parentItem, pass, salt)
+        val acc2 = service.addAccount(parentItem, pass, salt)
+        val acc3 = service.addAccount(acc2, pass, salt)
+        service.items().forEachIndexed { idx, item ->
+            val msg = "Unexpected sortOrder: $idx ${item.sortOrder}"
+            assertEquals(item.sortOrder, idx.toUInt(), msg)
+        }
     }
 
     @Test
@@ -124,7 +135,8 @@ class SignerServiceTests {
         password: String = randomString(32),
         salt: String = "",
         mnemonic: List<String>? = null,
-        derivationPath: String? = null
+        derivationPath: String? = null,
+        sortOrder: UInt = 0u,
     ): MnemonicSignerItems {
         val worldList = WordList.fromLocaleString("en")
         val bip39 = if (mnemonic != null)  Bip39(mnemonic, salt, worldList)
@@ -136,7 +148,7 @@ class SignerServiceTests {
         val signerStoreItem = SignerStoreItem(
             uuid = UUIDService().uuidString(),
             name = name,
-            sortOrder = 0u,
+            sortOrder = sortOrder,
             type = MNEMONIC,
             passUnlockWithBio = true,
             iCloudSecretStorage = false,
@@ -273,6 +285,14 @@ class SignerServiceTests {
             MockKeyChainService(),
             DefaultAddressService()
         )
+
+    private fun printItems(service: SignerStoreService) {
+        println("===")
+        service.items().forEach {
+            println("${it.uuid} ${it.sortOrder} ${it.derivationPath} ${it.parentId}")
+        }
+        println("===")
+    }
 
     private fun privTestMnemonic(): List<String>
         = BuildKonfig.testMnemonic.split(" ")
