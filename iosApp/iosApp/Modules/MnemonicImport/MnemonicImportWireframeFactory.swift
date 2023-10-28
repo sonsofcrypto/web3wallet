@@ -18,17 +18,20 @@ final class DefaultMnemonicImportWireframeFactory {
     private let mnemonicService: MnemonicService
     private let passwordService: PasswordService
     private let settingsService: SettingsService
+    private let addressService: AddressService
 
     init(
         signerStoreService: SignerStoreService,
         mnemonicService: MnemonicService,
         passwordService: PasswordService,
-        settingsService: SettingsService
+        settingsService: SettingsService,
+        addressService: AddressService
     ) {
         self.signerStoreService = signerStoreService
         self.mnemonicService = mnemonicService
         self.passwordService = passwordService
         self.settingsService = settingsService
+        self.addressService = addressService
     }
 }
 
@@ -43,7 +46,8 @@ extension DefaultMnemonicImportWireframeFactory: MnemonicImportWireframeFactory 
             signerStoreService: signerStoreService,
             mnemonicService: mnemonicService,
             passwordService: passwordService,
-            settingsService: settingsService
+            settingsService: settingsService,
+            addressService: addressService
         )
     }
 }
@@ -56,7 +60,8 @@ final class MnemonicImportWireframeFactoryAssembler: AssemblerComponent {
                 signerStoreService: resolver.resolve(),
                 mnemonicService: resolver.resolve(),
                 passwordService: resolver.resolve(),
-                settingsService: resolver.resolve()
+                settingsService: resolver.resolve(),
+                addressService: resolver.resolve()
             )
         }
     }

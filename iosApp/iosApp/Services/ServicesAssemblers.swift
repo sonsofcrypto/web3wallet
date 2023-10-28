@@ -16,6 +16,15 @@ final class PollServiceAssembler: AssemblerComponent {
     }
 }
 
+final class AddressServiceAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .singleton) { resolver -> AddressService in
+            DefaultAddressService()
+        }
+    }
+}
+
 final class SettingsServiceAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
@@ -128,7 +137,8 @@ final class SignerStoreServiceAssembler: AssemblerComponent {
         registry.register(scope: .singleton) { resolver -> SignerStoreService in
             DefaultSignerStoreService(
                 store: KeyValueStore(name: "keyStore"),
-                keyChainService: resolver.resolve()
+                keyChainService: resolver.resolve(),
+                addressService: resolver.resolve()
             )
         }
     }

@@ -11,6 +11,7 @@ final class DefaultMnemonicNewWireframe {
     private let signerStoreService: SignerStoreService
     private let passwordService: PasswordService
     private let settingsService: SettingsService
+    private let addressService: AddressService
 
     private weak var vc: UIViewController!
 
@@ -19,13 +20,15 @@ final class DefaultMnemonicNewWireframe {
         context: MnemonicNewWireframeContext,
         signerStoreService: SignerStoreService,
         passwordService: PasswordService,
-        settingsService: SettingsService
+        settingsService: SettingsService,
+        addressService: AddressService
     ) {
         self.parent = parent
         self.context = context
         self.signerStoreService = signerStoreService
         self.passwordService = passwordService
         self.settingsService = settingsService
+        self.addressService = addressService
     }
 }
 
@@ -64,7 +67,8 @@ private extension DefaultMnemonicNewWireframe {
     func wireUp() -> UIViewController {
         let interactor = DefaultMnemonicNewInteractor(
             signerStoreService: signerStoreService,
-            passwordService: passwordService
+            passwordService: passwordService,
+            addressService: addressService
         )
         let vc: MnemonicNewViewController = UIStoryboard(.mnemonicNew).instantiate()
         let presenter = DefaultMnemonicNewPresenter(
