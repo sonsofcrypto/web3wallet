@@ -5,8 +5,7 @@
 import UIKit
 import web3walletcore
 
-final class SwitchCollectionViewCell: CollectionViewCell {
-
+final class SwitchCollectionViewCell: ThemeCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var onOffSwitch: OnOffSwitch!
 
@@ -14,13 +13,6 @@ final class SwitchCollectionViewCell: CollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureUI()
-    }
-    
-    override func setSelected(_ selected: Bool) {}
-
-    func configureUI() {
-        titleLabel.apply(style: .body)
         onOffSwitch.addTarget(
             self,
             action: #selector(switchAction(_:)),
@@ -28,15 +20,17 @@ final class SwitchCollectionViewCell: CollectionViewCell {
         )
     }
 
+    override func applyTheme(_ theme: ThemeProtocol) {
+        super.applyTheme(theme)
+        titleLabel.apply(style: .body)
+    }
+
     @objc func switchAction(_ sender: UISwitch) {
         switchChangeHandler?(sender.isOn)
     }
-}
-
-extension SwitchCollectionViewCell {
 
     func update(
-        with viewModel: SwitchCollectionViewModel,
+        with viewModel: CellViewModel.Switch,
         handler: ((Bool)->Void)? = nil
     ) -> Self {
         switchChangeHandler = handler

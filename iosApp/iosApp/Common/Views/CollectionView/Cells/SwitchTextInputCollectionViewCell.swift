@@ -5,8 +5,7 @@
 import UIKit
 import web3walletcore
 
-final class SwitchTextInputCollectionViewCell: CollectionViewCell {
-
+final class SwitchTextInputCollectionViewCell: ThemeCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var onOffSwitch: OnOffSwitch!
     @IBOutlet weak var textField: TextField!
@@ -15,74 +14,12 @@ final class SwitchTextInputCollectionViewCell: CollectionViewCell {
     @IBOutlet weak var hStack: UIStackView!
 
     private var switchAction: ((Bool)->Void)?
-    private var textChangeHandler: ((String)->Void)?
+    private var inputHandler: ((String)->Void)?
     private var descriptionAction: (()->Void)?
 
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        configureUI()
-    }
-    
-    override func setSelected(_ selected: Bool) {}
-}
-
-extension SwitchTextInputCollectionViewCell {
-    
-    @objc func switchAction(_ sender: UISwitch) {
-        switchAction?(sender.isOn)
-    }
-
-    @objc func descriptionAction(_ sender: Any) {
-        descriptionAction?()
-    }
-}
-
-extension SwitchTextInputCollectionViewCell: UITextFieldDelegate {
-
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-
-        textChangeHandler?(textField.text ?? "")
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        textField.resignFirstResponder()
-        return false
-    }
-}
-
-extension SwitchTextInputCollectionViewCell {
-    
-    func update(
-        with viewModel: SwitchTextInputCollectionViewModel,
-        switchAction: ((Bool)->Void)?,
-        textChangeHandler: ((String)->Void)?,
-        descriptionAction: (()->Void)?
-    ) -> Self {
-        update(
-            title: viewModel.title,
-            onOff: viewModel.onOff,
-            text: viewModel.text,
-            placeholder: viewModel.placeholder,
-            description: viewModel.description,
-            descriptionHighlightedWords: viewModel.descriptionHighlightedWords,
-            switchAction: switchAction,
-            textChangeHandler: textChangeHandler,
-            descriptionAction: descriptionAction
-        )
-        return self
-    }
-}
-
-private extension SwitchTextInputCollectionViewCell {
-    
-    func configureUI() {
-        
-        titleLabel.apply(style: .body)
-        
         textField.delegate = self
-
         descriptionLabel.addGestureRecognizer(
             .init(target: self, action: #selector(descriptionAction(_:)))
         )
@@ -93,52 +30,71 @@ private extension SwitchTextInputCollectionViewCell {
         )
     }
 
+    override func applyTheme(_ theme: ThemeProtocol) {
+        super.applyTheme(theme)
+        titleLabel.apply(style: .body)
+    }
+
     func update(
-        title: String,
-        onOff: Bool,
-        text: String,
-        placeholder: String,
-        description: String,
-        descriptionHighlightedWords: [String],
-        switchAction: ((Bool)->Void)?,
-        textChangeHandler: ((String)->Void)?,
-        descriptionAction: (()->Void)?
-    ) {
-        titleLabel.text = title
-        onOffSwitch.setOn(onOff, animated: false)
-        textField.text = text
+        with viewModel: CellViewModel.SwitchTextInput,
+        switchHandler: ((Bool)->Void)?,
+        inputHandler: ((String)->Void)?,
+        learnMoreHandler: (()->Void)?
+    ) -> Self {
+        titleLabel.text = viewModel.title
+        onOffSwitch.setOn(viewModel.onOff, animated: false)
+        textField.text = viewModel.text
+        textField.placeholderAttrText = viewModel.placeholder
 
-        textField.placeholderAttrText = placeholder
-
-        let attrStr = NSMutableAttributedString(
-            string: description,
-            attributes: sectionFooter()
-        )
-
-        var hlAttrs  = sectionFooter()
+        var hlAttrs  = descriptionAttrs()
         hlAttrs[.foregroundColor] = Theme.color.textSecondary
 
-        descriptionHighlightedWords.forEach {
+        let attrStr = NSMutableAttributedString(
+            string: viewModel.description,
+            attributes: descriptionAttrs()
+        )
+
+        viewModel.descriptionHighlightedWords.forEach {
             let range = NSString(string: description).range(of: $0)
             attrStr.setAttributes(hlAttrs, range: range)
         }
 
         descriptionLabel.attributedText = attrStr
-        vStack.setCustomSpacing(onOff ? 2 : 2, after: hStack)
+        vStack.setCustomSpacing(2, after: hStack)
 
-        self.switchAction = switchAction
-        self.textChangeHandler = textChangeHandler
-        self.descriptionAction = descriptionAction
+        self.switchAction = switchHandler
+        self.inputHandler = inputHandler
+        self.descriptionAction = learnMoreHandler
+        return self
     }
 
-    func sectionFooter() -> [NSAttributedString.Key: Any] {
+    @objc func switchAction(_ sender: UISwitch) {
+        switchAction?(sender.isOn)
+    }
+
+    @objc func descriptionAction(_ sender: Any) {
+        descriptionAction?()
+    }
+
+    private func descriptionAttrs() -> [NSAttributedString.Key: Any] {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
-        
         return [
             .font: Theme.font.callout,
             .foregroundColor: Theme.color.textTertiary,
             .paragraphStyle: paragraphStyle
         ]
+    }
+}
+
+extension SwitchTextInputCollectionViewCell: UITextFieldDelegate {
+
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        inputHandler?(textField.text ?? "")
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
     }
 }

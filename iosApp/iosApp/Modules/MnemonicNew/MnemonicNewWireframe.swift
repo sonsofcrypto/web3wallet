@@ -70,7 +70,7 @@ private extension DefaultMnemonicNewWireframe {
             passwordService: passwordService,
             addressService: addressService
         )
-        let vc: MnemonicNewViewController = UIStoryboard(.mnemonicNew).instantiate()
+        let vc: MnemonicNewViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultMnemonicNewPresenter(
             view: WeakRef(referred: vc),
             wireframe: self,

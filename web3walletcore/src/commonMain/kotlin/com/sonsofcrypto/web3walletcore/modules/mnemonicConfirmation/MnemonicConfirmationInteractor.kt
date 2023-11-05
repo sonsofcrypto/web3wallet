@@ -7,6 +7,7 @@ import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicService
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicWord
 
 interface MnemonicConfirmationInteractor {
+    fun prefix(mnemonic: String, cursorLocation: Int): String
     fun potentialMnemonicWords(prefix: String?): List<String>
     fun findInvalidWords(mnemonic: String?): List<MnemonicWord>
     fun isValidPrefix(prefix: String): Boolean
@@ -20,6 +21,9 @@ class DefaultMnemonicConfirmationInteractor(
     private val actionsService: ActionsService,
     private val mnemonicService: MnemonicService,
 ): MnemonicConfirmationInteractor {
+
+    override fun prefix(mnemonic: String, cursorLocation: Int): String =
+        mnemonicService.prefix(mnemonic, cursorLocation)
 
     override fun potentialMnemonicWords(prefix: String?): List<String> =
         mnemonicService.potentialMnemonicWords(prefix)

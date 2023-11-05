@@ -48,7 +48,7 @@ private extension DefaultMnemonicConfirmationWireframe {
             actionsService: actionsService,
             mnemonicService: mnemonicService
         )
-        let vc: MnemonicConfirmationViewController = UIStoryboard(.mnemonicConfirmation).instantiate()
+        let vc: MnemonicConfirmationViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultMnemonicConfirmationPresenter(
             view: WeakRef(referred: vc),
             wireframe: self,

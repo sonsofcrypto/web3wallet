@@ -10,7 +10,7 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory.DETAIL
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory.NONE
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Label
-import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Item
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
 import com.sonsofcrypto.web3walletcore.extensions.Localized
@@ -159,32 +159,32 @@ class DefaultSettingsPresenter(
         Section(
             Localized("settings"),
             listOf(
-                Item(Label(Localized("settings.themes"), DETAIL)),
-                Item(Label(Localized("settings.uitweaks"), DETAIL)),
-                Item(Label(Localized("settings.improvement"), DETAIL)),
-                Item(Label(Localized("settings.feedback"), DETAIL)),
+                Label(Localized("settings.themes"), DETAIL),
+                Label(Localized("settings.uitweaks"), DETAIL),
+                Label(Localized("settings.improvement"), DETAIL),
+                Label(Localized("settings.feedback"), DETAIL),
             ) + (
                 if (EnvUtils().isProd()) emptyList()
-                else listOf(Item(Label(Localized("settings.developer"), DETAIL)))
+                else listOf(Label(Localized("settings.developer"), DETAIL))
             ),
             null,
         ),
         Section(
             Localized("sonsofcrypto"),
             listOf(
-                Item(Label(Localized("settings.soc.website"), DETAIL)),
-                Item(Label(Localized("settings.soc.twitter"), DETAIL)),
-                Item(Label(Localized("settings.soc.telegram"), DETAIL)),
-                Item(Label(Localized("settings.soc.substack"), DETAIL)),
+                Label(Localized("settings.soc.website"), DETAIL),
+                Label(Localized("settings.soc.twitter"), DETAIL),
+                Label(Localized("settings.soc.telegram"), DETAIL),
+                Label(Localized("settings.soc.substack"), DETAIL),
             ),
             null,
         ),
         Section(
             Localized("settings.docs.title"),
             listOf(
-                Item(Label(Localized("settings.docs.cyberspace"), DETAIL)),
-                Item(Label(Localized("settings.docs.cypherpunkmanifesto"), DETAIL)),
-                Item(Label(Localized("settings.docs.netoworkstate"), DETAIL)),
+                Label(Localized("settings.docs.cyberspace"), DETAIL),
+                Label(Localized("settings.docs.cypherpunkmanifesto"), DETAIL),
+                Label(Localized("settings.docs.netoworkstate"), DETAIL),
             ),
         null,
         )
@@ -198,7 +198,7 @@ class DefaultSettingsPresenter(
                 "settings.themes.miami.dark",
                 "settings.themes.vanilla.light",
                 "settings.themes.vanilla.dark",
-            ).mapIndexed { i, s -> Item(Label(Localized(s), themeAcc(i))) },
+            ).mapIndexed { idx, str -> Label(Localized(str), themeAcc(idx)) },
             null,
         )
     )
@@ -219,7 +219,7 @@ class DefaultSettingsPresenter(
             listOf(
                 "settings.uitweaks.nft.carousel.regular",
                 "settings.uitweaks.nft.carousel.large"
-            ).mapIndexed{ i, s -> Item(Label(Localized(s), carouselAcc(i))) },
+            ).mapIndexed{ idx, str -> Label(Localized(str), carouselAcc(idx)) },
             null,
         )
     )
@@ -235,12 +235,12 @@ class DefaultSettingsPresenter(
     private fun sectionsForDeveloper(): List<Section> = listOf(
         Section(
             "warning this will delete all mnemonics",
-            listOf(
-                Item(Label(Localized("settings.developer.resetKeyStore"), NONE)),
+            listOf(Label(Localized("settings.developer.resetKeyStore"), NONE)),
+            Footer.Text(
+                "Be very CAREFULLY this will delete all mnemonic. Only " +
+                "intended for testing and development. If you are not sure " +
+                "LEAVE FROM THIS SCREEN NOW! "
             ),
-            "Be very CAREFULLY this will delete all mnemonic. Only intended " +
-            "for testing and development. If you are not sure LEAVE FROM THIS" +
-            " SCREEN NOW! ",
         )
     )
 }

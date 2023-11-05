@@ -9,9 +9,11 @@ import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError.INVALID_WORD_COUNT
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError.OTHER
 
+// TODO: Clean up
 enum class MnemonicServiceError { INVALID_WORD_COUNT, OTHER }
 
 interface MnemonicService {
+    fun prefix(mnemonic: String, cursorLocation: Int): String
     fun potentialMnemonicWords(prefix: String?): List<String>
     fun findInvalidWords(mnemonic: String?): List<MnemonicWord>
     fun isValidPrefix(prefix: String): Boolean
@@ -38,6 +40,18 @@ class DefaultMnemonicService(): MnemonicService {
             WORDLIST_ENGLISH.map { trie.insert(it) }
             return trie
         }
+
+    override fun prefix(mnemonic: String, cursorLocation: Int): String {
+        var prefix = ""
+        for (i in 0 until mnemonic.count()) {
+            val char = mnemonic[i]
+            if (i == cursorLocation)
+                return prefix
+            prefix += char
+            if (char == ' ') { prefix = "" }
+        }
+        return prefix
+    }
 
     override fun potentialMnemonicWords(prefix: String?): List<String> {
         if (prefix == potentialMnemonicWordsPrefix) return potentialMnemonicWordsResult

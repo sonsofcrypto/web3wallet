@@ -27,17 +27,7 @@ final class MnemonicConfirmationViewController: UIViewController {
         configureUI()
         presenter.present()
     }
-}
 
-extension MnemonicConfirmationViewController {
-    
-    @IBAction func ctaAction(_ sender: Any) {
-        presenter.handleEvent(MnemonicConfirmationPresenterEvent.Confirm())
-    }
-}
-
-extension MnemonicConfirmationViewController {
-    
     func update(with viewModel: MnemonicConfirmationViewModel) {
         self.viewModel = viewModel
         refresh()
@@ -45,6 +35,10 @@ extension MnemonicConfirmationViewController {
             firstTime = false
             textView.becomeFirstResponder()
         }
+    }
+
+    @IBAction func ctaAction(_ sender: Any) {
+        presenter.handleEvent(.Confirm())
     }
 }
 
@@ -64,7 +58,7 @@ extension MnemonicConfirmationViewController: UITextViewDelegate {
         presenter.handleEvent(
             .MnemonicChanged(
                 to: textView.text,
-                selectedLocation: textView.selectedRange.location.int32
+                cursorLocation: textView.selectedRange.location.int32
             )
         )
     }
@@ -79,12 +73,11 @@ private extension MnemonicConfirmationViewController {
                 self?.presenter.handleEvent(
                     .MnemonicChanged(
                         to: newMnemonic,
-                        selectedLocation: selectedLocation.int32
+                        cursorLocation: selectedLocation.int32
                     )
                 )
             }
         )
-        view.add(.targetAction(.init(target: self, selector: #selector(dismissKeyboard))))
         title = Localized("mnemonicConfirmation.title")
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: .init(systemName: "xmark"),
@@ -111,16 +104,14 @@ private extension MnemonicConfirmationViewController {
         saltTextField.text = nil
         saltTextField.delegate = self
         saltTextField.placeholderAttrText = Localized("mnemonicConfirmation.salt.placeholder")
-        saltTextField.addDoneInputAccessoryView(
-            with: .targetAction(.init(target: self, selector: #selector(dismissKeyboard)))
-        )
+        saltTextField.addDoneToolbar(self, action: #selector(dismissKeyboard))
         button.style = .primary
         button.setTitle(Localized("mnemonicConfirmation.cta"), for: .normal)
     }
     
     @objc func dismissKeyboard() { textView.resignFirstResponder() }
 
-    @objc func dismissTapped() { presenter.handleEvent(MnemonicConfirmationPresenterEvent.Dismiss()) }
+    @objc func dismissTapped() { presenter.handleEvent(.Dismiss()) }
 }
 
 private extension MnemonicConfirmationViewController {

@@ -6,8 +6,7 @@ import UIKit
 import web3walletcore
 
 
-class SettingsViewController: UICollectionViewController,
-  UICollectionViewDelegateFlowLayout {
+class SettingsViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var presenter: SettingsPresenter!
 
@@ -133,7 +132,7 @@ class SettingsViewController: UICollectionViewController,
         referenceSizeForFooterInSection section: Int
     ) -> CGSize {
         String.estimateSize(
-            viewModel?.sections[section].footer,
+            viewModel?.sections[section].footer?.text(),
             font: Theme.font.sectionFooter,
             maxWidth: cellSize.width,
             extraHeight: Theme.padding
@@ -197,7 +196,7 @@ private extension SettingsViewController {
     }
 
     func viewModel(at idxPath: IndexPath) -> CellViewModel? {
-        viewModel?.sections[idxPath.section].items[idxPath.item].cellViewModel
+        viewModel?.sections[idxPath.section].items[idxPath.item]
     }
 
 }

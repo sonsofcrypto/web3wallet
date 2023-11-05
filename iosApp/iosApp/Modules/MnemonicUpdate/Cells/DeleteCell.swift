@@ -3,17 +3,15 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
-final class MnemonicUpdateDeleteCell: UICollectionViewCell {
-
+final class DeleteCell: ThemeCell {
     @IBOutlet weak var button: Button!
 
-    struct Handler {
-        let onDelete: () -> Void
-    }
-    
-    private var handler: Handler!
-    
+    typealias Handler = () -> Void
+
+    private var handler: Handler?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -25,24 +23,25 @@ final class MnemonicUpdateDeleteCell: UICollectionViewCell {
     }
 }
 
-extension MnemonicUpdateDeleteCell {
+extension DeleteCell {
 
-    func update(
-        with title: String,
-        handler: Handler
-    ) -> Self {
+    func update(with title: String, handler: Handler?) -> Self {
         self.handler = handler
         button.setTitle(title, for: .normal)
         return self
     }
+
+    func update(with viewModel: CellViewModel.Button, handler: Handler?) -> Self {
+        return update(with: viewModel.title, handler: handler)
+    }
 }
 
-private extension MnemonicUpdateDeleteCell {
+private extension DeleteCell {
     
     func configureUI() {
         let button = Button(type: .custom)
         button.style = .primary(action: .destructive)
-        button.addTarget(self, action: #selector(onDeleteTapped), for: .touchUpInside)
+        button.addTar(self, action: #selector(buttonAction))
         self.button = button
         addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -55,5 +54,5 @@ private extension MnemonicUpdateDeleteCell {
         )
     }
     
-    @objc func onDeleteTapped() { handler.onDelete() }
+    @objc func buttonAction() { handler?() }
 }

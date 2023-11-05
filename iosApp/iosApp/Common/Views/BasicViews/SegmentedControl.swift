@@ -24,6 +24,7 @@ final class SegmentedControl: UISegmentedControl {
         super.traitCollectionDidChange(previousTraitCollection)
         configureUI()
     }
+
 }
 
 private extension SegmentedControl {
@@ -61,4 +62,8 @@ private extension SegmentedControl {
             barMetrics: .default
         )
     }
+}
+
+extension UISegmentedControl {
+    var selectedIdx: Int { selectedSegmentIndex }
 }

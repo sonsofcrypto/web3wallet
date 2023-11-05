@@ -5,18 +5,13 @@
 import UIKit
 import web3walletcore
 
-final class MnemonicImportCell: CollectionViewCell {
-    typealias OnMnemonicChanged = ((mnemonic: String, selectedLocation: Int)) -> Void
+final class MnemonicImportCell: ThemeCell {
+    typealias InputHandler = (_ mnemonic: String, _ cursorLocation: Int) -> Void
 
     @IBOutlet weak var textView: UITextView!
-    
-    struct Handler {
-        let onMnemonicChanged: OnMnemonicChanged
-    }
 
-    private var viewModel: MnemonicImportViewModel.SectionMnemonic!
-    private var handler: Handler!
-    
+    private var viewModel: MnemonicInputViewModel?
+    private var handler: InputHandler?
     private let inputAccessoryViewHeight: CGFloat = 40
     private var mnemonicImportHelper: MnemonicImportHelper!
 
@@ -24,43 +19,42 @@ final class MnemonicImportCell: CollectionViewCell {
         super.awakeFromNib()
         configure()
     }
-    
-    override func setSelected(_ selected: Bool) {}
+
+    override func applyTheme(_ theme: ThemeProtocol) {
+        super.applyTheme(theme)
+        textView.applyStyle(.body)
+    }
 
     func update(
-        with viewModel: MnemonicImportViewModel.SectionMnemonic,
-        handler: Handler
-    ) -> MnemonicImportCell {
+        with viewModel: MnemonicInputViewModel?,
+        handler: @escaping InputHandler
+    ) -> Self {
         self.viewModel = viewModel
         self.handler = handler
-        textView.isEditable = true
-        textView.isUserInteractionEnabled = true
         refreshTextView()
         return self
     }
 }
 
 extension MnemonicImportCell: UITextViewDelegate {
-    
     func textViewDidChange(_ textView: UITextView) {
-        handler.onMnemonicChanged((textView.text, textView.selectedRange.location))
+        handler?(textView.text, textView.selectedRange.location)
     }
 }
 
 private extension MnemonicImportCell {
     
     func configure() {
-        mnemonicImportHelper = MnemonicImportHelper(
-            textView: textView,
-            onMnemonicChangedHandler: { [weak self] newMnemonic, selectedLocation in
-                self?.handler.onMnemonicChanged((newMnemonic, selectedLocation))
-            }
-        )
+        applyTheme(Theme)
         textView.delegate = self
-        textView.applyStyle(.body)
-        textView.backgroundColor = .clear
         textView.inputAccessoryView = mnemonicImportHelper.inputAccessoryView(
             size: .init(width: contentView.frame.width, height: inputAccessoryViewHeight)
+        )
+        mnemonicImportHelper = MnemonicImportHelper(
+            textView: textView,
+            onMnemonicChangedHandler: { [weak self] newMnemonic, cursorLocation in
+                self?.handler?(newMnemonic, cursorLocation)
+            }
         )
     }
 }
@@ -68,6 +62,7 @@ private extension MnemonicImportCell {
 private extension MnemonicImportCell {
     
     func refreshTextView() {
+        guard let viewModel = self.viewModel else { return }
         if let text = viewModel.mnemonicToUpdate { textView.text = text }
         let selectedRange = textView.selectedRange
         let attributedText = NSMutableAttributedString(
@@ -89,10 +84,7 @@ private extension MnemonicImportCell {
                     .foregroundColor: Theme.color.navBarTint,
                     .font: Theme.font.body
                 ],
-                range: .init(
-                    location: location,
-                    length: wordInfo.word.count
-                )
+                range: .init(location: location, length: wordInfo.word.count)
             )
             location += wordInfo.word.count + 1
             hasInvalidWords = true
@@ -101,7 +93,10 @@ private extension MnemonicImportCell {
         layer.borderWidth = hasInvalidWords ? 2 : 0
         layer.borderColor = hasInvalidWords ? Theme.color.navBarTint.cgColor : nil
         textView.inputAccessoryView?.removeAllSubview()
-        mnemonicImportHelper.addWords(viewModel.potentialWords, to: textView.inputAccessoryView)
+        mnemonicImportHelper.addWords(
+            viewModel.potentialWords,
+            to: textView.inputAccessoryView
+        )
         textView.selectedRange = selectedRange
     }
 }
