@@ -1,9 +1,15 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate
 
 import com.sonsofcrypto.web3lib.utils.WeakRef
-import com.sonsofcrypto.web3walletcore.common.viewModels.SectionFooterViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.SwitchCollectionViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.TextInputCollectionViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Button
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Button.ButtonType.DESTRUCTIVE
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Text
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWireframeContext
@@ -119,9 +125,7 @@ class DefaultMnemonicUpdatePresenter(
             )
         ),
         { idx ->
-            if (idx == 0) {
-                handle(MnemonicUpdatePresenterEvent.Delete)
-            }
+            if (idx == 0) { handle(MnemonicUpdatePresenterEvent.Delete) }
         },
         350.toDouble()
     )
@@ -130,59 +134,44 @@ class DefaultMnemonicUpdatePresenter(
         view.get()?.update(viewModel())
     }
 
-    private fun viewModel(): MnemonicUpdateViewModel {
-        val sections = mutableListOf<MnemonicUpdateViewModel.Section>()
-        sections.add(mnemonicSection())
-        sections.add(optionsSection())
-        sections.add(deleteSection())
-        return MnemonicUpdateViewModel(
-            sections,
-            Localized("mnemonic.cta.update"),
-        )
-    }
-
-    private fun mnemonicSection(): MnemonicUpdateViewModel.Section =
-        MnemonicUpdateViewModel.Section(
-            listOf(MnemonicUpdateViewModel.Section.Item.Mnemonic(mnemonic)),
-            mnemonicFooterDefault()
-        )
-
-    private fun mnemonicFooterDefault(): SectionFooterViewModel = SectionFooterViewModel(
-        Localized("mnemonic.footer"),
-        listOf(
-            Localized("mnemonic.footerHighlightWord0"),
-            Localized("mnemonic.footerHighlightWord1"),
-        )
+    private fun viewModel(): Screen = Screen(
+        Localized("mnemonicConfirmation.title"),
+        listOf(mnemonicSection(), optionsSection(), deleteSection()),
+        listOf(Localized("mnemonic.cta.update")),
     )
 
-    private fun optionsSection(): MnemonicUpdateViewModel.Section = MnemonicUpdateViewModel.Section(
-        optionSectionsItems(),
-        null
-    )
-
-    private fun deleteSection(): MnemonicUpdateViewModel.Section = MnemonicUpdateViewModel.Section(
-        listOf(
-            MnemonicUpdateViewModel.Section.Item.Delete(
-                Localized("mnemonic.cta.delete")
+    private fun mnemonicSection(): Section = Section(
+        null,
+        listOf(Text(mnemonic)),
+        HighlightWords(
+            Localized("mnemonic.footer"),
+            listOf(
+                Localized("mnemonic.footerHighlightWord0"),
+                Localized("mnemonic.footerHighlightWord1"),
             )
         ),
-        null
     )
 
-    private fun optionSectionsItems(): List<MnemonicUpdateViewModel.Section.Item> = listOf(
-        MnemonicUpdateViewModel.Section.Item.TextInput(
-            TextInputCollectionViewModel(
+    private fun optionsSection(): Section = Section(
+        null,
+        listOf(
+            CellViewModel.TextInput(
                 Localized("mnemonic.name.title"),
                 name,
                 Localized("mnemonic.name.placeholder"),
-            )
-        ),
-        MnemonicUpdateViewModel.Section.Item.Switch(
-            SwitchCollectionViewModel(
+            ),
+            CellViewModel.Switch(
                 Localized("mnemonic.iCould.title"),
                 iCloudSecretStorage,
             )
-        )
+        ),
+        null
+    )
+
+    private fun deleteSection(): Section = Section(
+        null,
+        listOf(Button(Localized("mnemonic.cta.delete"), DESTRUCTIVE)),
+        null,
     )
 
     private val isValidForm: Boolean get() = passwordErrorMessage == null

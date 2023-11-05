@@ -2,19 +2,31 @@ package com.sonsofcrypto.web3walletcore.common.viewModels
 
 sealed class CollectionViewModel {
 
-    data class Item(
-        val cellViewModel: CellViewModel,
-    ): CollectionViewModel()
-
     data class Section(
         val header: String?,
-        val items: List<Item>,
-        val footer: String?
+        val items: List<CellViewModel>,
+        val footer: Footer?
     ): CollectionViewModel()
 
     data class Screen(
         val id: String,
-        val sections: List<Section>
+        val sections: List<Section>,
+        val ctaItems: List<String> = emptyList()
     ): CollectionViewModel()
 
+    sealed class Footer() {
+        data class Text(val text: String): Footer()
+        data class HighlightWords(
+            val text: String,
+            val words: List<String>
+        ): Footer()
+
+        fun text(): String? = when (this) {
+            is Text -> this.text
+            is HighlightWords -> this.text
+            else -> null
+        }
+    }
 }
+
+

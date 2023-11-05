@@ -74,7 +74,7 @@ private extension DefaultMnemonicImportWireframe {
             passwordService: passwordService,
             addressService: addressService
         )
-        let vc: MnemonicImportViewController = UIStoryboard(.mnemonicImport).instantiate()
+        let vc: MnemonicImportViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultMnemonicImportPresenter(
             view: WeakRef(referred: vc),
             wireframe: self,

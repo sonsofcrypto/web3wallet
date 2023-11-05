@@ -39,11 +39,6 @@ extension SectionHeaderView {
         return self
     }
 
-    func update(with viewModel: SectionHeaderViewModel?) -> Self {
-        label.text = viewModel?.title
-        return self
-    }
-
     func update(with viewModel: CollectionViewModel.Section?) -> Self {
         label.text = viewModel?.header?.uppercased()
         return self

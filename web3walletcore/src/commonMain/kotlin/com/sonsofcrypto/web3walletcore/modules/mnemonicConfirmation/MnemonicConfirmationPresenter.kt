@@ -1,17 +1,19 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation
 
 import com.sonsofcrypto.web3lib.utils.WeakRef
-import com.sonsofcrypto.web3walletcore.common.mnemonic.MnemonicPresenterCommon
-import com.sonsofcrypto.web3walletcore.common.viewModels.MnemonicWordInfo
+import com.sonsofcrypto.web3lib.utils.extensions.stripLeadingWhiteSpace
+import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicInputViewModel
+import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicPresenterHelper
 import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationWireframeDestination.Dismiss
 
 sealed class MnemonicConfirmationPresenterEvent {
     object Dismiss: MnemonicConfirmationPresenterEvent()
-    data class MnemonicChanged(
-        val to: String, val selectedLocation: Int
-    ): MnemonicConfirmationPresenterEvent()
-    data class SaltChanged(val to: String): MnemonicConfirmationPresenterEvent()
     object Confirm: MnemonicConfirmationPresenterEvent()
+    data class SaltChanged(val to: String): MnemonicConfirmationPresenterEvent()
+    data class MnemonicChanged(
+        val to: String,
+        val cursorLocation: Int
+    ): MnemonicConfirmationPresenterEvent()
 }
 
 interface MnemonicConfirmationPresenter {
@@ -26,19 +28,20 @@ class DefaultMnemonicConfirmationPresenter(
 ): MnemonicConfirmationPresenter {
     private var mnemonic = ""
     private var salt = ""
-    private var selectedLocation = 0
+    private var cursorLocation = 0
     private var ctaTapped = false
-    private val common = MnemonicPresenterCommon()
+    private val common = MnemonicPresenterHelper()
 
     override fun present() { updateView() }
 
     override fun handle(event: MnemonicConfirmationPresenterEvent) {
         when (event) {
-            is MnemonicConfirmationPresenterEvent.Dismiss -> wireframe.navigate(Dismiss)
+            is MnemonicConfirmationPresenterEvent.Dismiss ->
+                wireframe.navigate(Dismiss)
             is MnemonicConfirmationPresenterEvent.MnemonicChanged -> {
-                val result = common.clearBlanksFromFrontOf(event.to, event.selectedLocation)
-                mnemonic = result.first
-                selectedLocation = result.second
+                mnemonic = event.to.stripLeadingWhiteSpace()
+                cursorLocation = event.cursorLocation -
+                        (event.to.count() -  mnemonic.count())
                 updateView(event.to != mnemonic)
             }
             is MnemonicConfirmationPresenterEvent.SaltChanged -> {
@@ -66,16 +69,16 @@ class DefaultMnemonicConfirmationPresenter(
     }
 
     private fun viewModel(updateMnemonic: Boolean = false): MnemonicConfirmationViewModel {
-        val prefixForPotentialWords = common.findPrefixForPotentialWords(mnemonic, selectedLocation)
+        val prefixForPotentialWords = interactor.prefix(mnemonic, cursorLocation)
         val potentialWords = interactor.potentialMnemonicWords(prefixForPotentialWords)
         var wordsInfo = interactor.findInvalidWords(mnemonic)
-        wordsInfo = common.updateWordsInfo(wordsInfo, prefixForPotentialWords, selectedLocation) {
+        wordsInfo = common.updateWordsInfo(wordsInfo, prefixForPotentialWords, cursorLocation) {
             interactor.isValidPrefix(it)
         }
         val isMnemonicValid = interactor.isMnemonicValid(mnemonic.trim(), salt)
         return MnemonicConfirmationViewModel(
             potentialWords,
-            wordsInfo.map { MnemonicWordInfo(it.word, it.isInvalid) },
+            wordsInfo.map { MnemonicInputViewModel.Word(it.word, it.isInvalid) },
             if (ctaTapped) isMnemonicValid else null,
             if (updateMnemonic) mnemonic else null,
             interactor.showSalt()

@@ -5,49 +5,34 @@
 import UIKit
 import web3walletcore
 
-final class MnemonicNewCell: UICollectionViewCell {
-    typealias TextChangeHandler = (String) -> Void
-
+final class MnemonicNewCell: ThemeCell {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var overlay: UIVisualEffectView!
     @IBOutlet weak var overlayLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        configure()
+        applyTheme(Theme)
     }
-
-    func configure() {
-        layer.cornerRadius = Theme.cornerRadius
-        backgroundColor = Theme.color.bgPrimary
-        var attrs: [NSAttributedString.Key: Any] = [
+    
+    override func applyTheme(_ theme: ThemeProtocol) {
+        backgroundColor = theme.color.bgPrimary
+        textView.typingAttributes = [
             .font: Theme.font.body,
             .foregroundColor: Theme.color.textPrimary
         ]
-        attrs[.font] = Theme.font.body
-        textView.typingAttributes = attrs
-        textView.backgroundColor = .clear
-        overlay.layer.cornerRadius = Theme.cornerRadiusSmall
-        overlay.clipsToBounds = true
+        [layer, overlay.layer].forEach {
+            $0.cornerRadius = theme.cornerRadius
+        }
         overlayLabel.numberOfLines = 2
         overlayLabel.text = Localized("mnemonic.tapToReveal")
-        overlayLabel.font = Theme.font.body
-        overlayLabel.textColor = Theme.color.textPrimary
+        overlayLabel.font = theme.font.body
+        overlayLabel.textColor = theme.color.textPrimary
     }
     
-    func textShadow(_ tint: UIColor) -> NSShadow {
-        let shadow = NSShadow()
-        shadow.shadowOffset = .zero
-        shadow.shadowBlurRadius = Theme.cornerRadiusSmall.half
-        shadow.shadowColor = tint
-        return shadow
-    }
-
-    func update(with viewModel: MnemonicNewViewModel.SectionItemMnemonic?) -> MnemonicNewCell {
+    func update(with viewModel: CellViewModel.Text) -> MnemonicNewCell {
         textView.isEditable = false
-        textView.isUserInteractionEnabled = false
-        textView.text = viewModel?.mnemonic
-        overlay.isHidden = true
+        textView.text = viewModel.text
         return self
     }
 }

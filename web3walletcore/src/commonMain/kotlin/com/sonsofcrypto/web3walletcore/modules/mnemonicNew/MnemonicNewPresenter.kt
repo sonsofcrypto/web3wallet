@@ -3,11 +3,14 @@ package com.sonsofcrypto.web3walletcore.modules.mnemonicNew
 import com.sonsofcrypto.web3lib.services.keyStore.MnemonicSignerConfig
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
-import com.sonsofcrypto.web3walletcore.common.viewModels.SectionFooterViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.SegmentWithTextAndSwitchCellViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.SwitchCollectionViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.TextInputCollectionViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.DEFAULT
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.NUMBER_PAD
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 
 sealed class MnemonicNewPresenterEvent {
@@ -87,7 +90,9 @@ class DefaultMnemonicNewPresenter(
                 }
                 try {
                     createDefaultNameIfNeeded()
-                    val item = interactor.createMnemonicSigner(mnemonicSignerConfig, password, salt)
+                    val item = interactor.createMnemonicSigner(
+                        mnemonicSignerConfig, password, salt
+                    )
                     context.handler(item)
                     wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
                 } catch (e: Throwable) {
@@ -115,77 +120,61 @@ class DefaultMnemonicNewPresenter(
         view.get()?.update(viewModel())
     }
 
-    private fun viewModel(): MnemonicNewViewModel {
-        val sections = mutableListOf<MnemonicNewViewModel.Section>()
-        sections.add(mnemonicSection())
-        sections.add(optionsSection())
-        return MnemonicNewViewModel(
-            sections,
-            Localized("mnemonic.cta.new"),
-        )
-    }
+    private fun viewModel(): Screen = Screen(
+        Localized("mnemonic.title.new"),
+        listOf(mnemonicSection(), optionsSection()),
+        listOf(Localized("mnemonic.cta.new"))
+    )
 
-    private fun mnemonicSection(): MnemonicNewViewModel.Section =
-        MnemonicNewViewModel.Section(
-            listOf(MnemonicNewViewModel.Section.Item.Mnemonic(mnemonic)),
-            mnemonicFooterDefault()
-        )
+    private fun mnemonicSection(): Section = Section(
+        null,
+        listOf(CellViewModel.Text(mnemonic)),
+        HighlightWords(
+            Localized("mnemonic.footer"),
+            listOf(
+                Localized("mnemonic.footerHighlightWord0"),
+                Localized("mnemonic.footerHighlightWord1"),
+            )
+        ),
+    )
 
-    private fun mnemonicFooterDefault(): SectionFooterViewModel = SectionFooterViewModel(
-        Localized("mnemonic.footer"),
+    private fun optionsSection(): Section = Section(
+        null,
         listOf(
-            Localized("mnemonic.footerHighlightWord0"),
-            Localized("mnemonic.footerHighlightWord1"),
-        )
-    )
-
-    private fun optionsSection(): MnemonicNewViewModel.Section = MnemonicNewViewModel.Section(
-        optionSectionsItems(),
-        null
-    )
-
-    private fun optionSectionsItems(): List<MnemonicNewViewModel.Section.Item> = listOf(
-        MnemonicNewViewModel.Section.Item.TextInput(
-            TextInputCollectionViewModel(
+            CellViewModel.TextInput(
                 Localized("mnemonic.name.title"),
                 name,
                 Localized("mnemonic.name.placeholder"),
-            )
-        ),
-        MnemonicNewViewModel.Section.Item.Switch(
-            SwitchCollectionViewModel(
+            ),
+            CellViewModel.Switch(
                 Localized("mnemonic.iCould.title"),
                 iCloudSecretStorage,
-            )
-        ),
-//        MnemonicNewViewModel.Section.Item.SwitchWithTextInput(
-//            SwitchTextInputCollectionViewModel(
-//                Localized("mnemonic.salt.title"),
-//                saltMnemonicOn,
-//                salt,
-//                Localized("mnemonic.salt.placeholder"),
-//                Localized("mnemonic.salt.description"),
-//                listOf(
-//                    Localized("mnemonic.salt.descriptionHighlight")
-//                ),
-//            )
-//        ),
-        MnemonicNewViewModel.Section.Item.SegmentWithTextAndSwitchInput(
-            SegmentWithTextAndSwitchCellViewModel(
+            ),
+//          CellViewModel.SwitchWithTextInput(
+//              Localized("mnemonic.salt.title"),
+//              saltMnemonicOn,
+//              salt,
+//              Localized("mnemonic.salt.placeholder"),
+//              Localized("mnemonic.salt.description"),
+//              listOf(Localized("mnemonic.salt.descriptionHighlight")),
+//          ),
+            CellViewModel.SegmentWithTextAndSwitch(
                 Localized("mnemonic.passType.title"),
                 passwordTypes().map { it.name.lowercase() },
                 selectedPasswordTypeIdx(),
                 password,
-                if (passwordType == SignerStoreItem.PasswordType.PIN) SegmentWithTextAndSwitchCellViewModel.KeyboardType.NUMBER_PAD else SegmentWithTextAndSwitchCellViewModel.KeyboardType.DEFAULT,
+                if (passwordType == PIN) NUMBER_PAD else DEFAULT,
                 Localized("mnemonic.$placeholderType.placeholder"),
                 passwordErrorMessage,
                 Localized("mnemonic.passType.allowFaceId"),
                 passUnlockWithBio,
-            )
-        )
+            ),
+        ),
+        null
     )
 
-    private val placeholderType: String get() = if (passwordType == SignerStoreItem.PasswordType.PIN) "pinType" else "passType"
+    private val placeholderType: String get()
+        = if (passwordType == PIN) "pinType" else "passType"
 
     private fun passwordTypes(): List<SignerStoreItem.PasswordType> =
         SignerStoreItem.PasswordType.values().map { it }

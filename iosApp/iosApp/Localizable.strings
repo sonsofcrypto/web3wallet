@@ -444,7 +444,7 @@
 
 "mnemonic.error.invalid" = "Invalid mnemonic, the words entered are invalid.";
 "mnemonic.error.invalid.wordCount" = "Typically 12 (or 15, 18, 21, 24) words separated by spaces.";
-"mnemonic.error.invalid.wordCount.highlight0" = "12 (or 15, 18, 21, 24) words";
+"mnemonic.error.invalid.wordCount.highlight" = "12 (or 15, 18, 21, 24) words";
 
 "validation.error.pin.min.length" = "Minimum 6 characters";
 "validation.error.pin.weak" = "First 2 digits should be different";

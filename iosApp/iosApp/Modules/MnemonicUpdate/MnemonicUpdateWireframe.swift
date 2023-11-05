@@ -70,7 +70,7 @@ private extension DefaultMnemonicUpdateWireframe {
         let interactor = DefaultMnemonicUpdateInteractor(
             signerStoreService: signerStoreService
         )
-        let vc: MnemonicUpdateViewController = UIStoryboard(.mnemonicUpdate).instantiate()
+        let vc: MnemonicUpdateViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultMnemonicUpdatePresenter(
             view: WeakRef(referred: vc),
             wireframe: self,

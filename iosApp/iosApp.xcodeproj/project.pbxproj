@@ -151,7 +151,6 @@
 		1C60C314285724D1003BE25D /* AccountWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C24C285724D0003BE25D /* AccountWireframe.swift */; };
 		1C60C315285724D1003BE25D /* AccountWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C24D285724D0003BE25D /* AccountWireframeFactory.swift */; };
 		1C60C31A285724D1003BE25D /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C252285724D0003BE25D /* AccountView.swift */; };
-		1C60C327285724D1003BE25D /* MnemonicConfirmation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C261285724D0003BE25D /* MnemonicConfirmation.storyboard */; };
 		1C60C328285724D1003BE25D /* MnemonicConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C262285724D0003BE25D /* MnemonicConfirmationView.swift */; };
 		1C60C32A285724D1003BE25D /* MnemonicConfirmationWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C264285724D0003BE25D /* MnemonicConfirmationWireframeFactory.swift */; };
 		1C60C32B285724D1003BE25D /* MnemonicConfirmationWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C265285724D0003BE25D /* MnemonicConfirmationWireframe.swift */; };
@@ -219,7 +218,7 @@
 		1C7F864B28D20E490073FD95 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F862328D20E490073FD95 /* CALayer+Extension.swift */; };
 		1C7F864C28D20E490073FD95 /* NSCollectionLayout+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F862428D20E490073FD95 /* NSCollectionLayout+Extensions.swift */; };
 		1C7F864D28D20E490073FD95 /* NSLocalizedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F862528D20E490073FD95 /* NSLocalizedString+Extension.swift */; };
-		1C7FC97B28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */; };
+		1C7FC97B28AE7A3A00FC9175 /* DeleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97A28AE7A3A00FC9175 /* DeleteCell.swift */; };
 		1C7FC98128AFB32600FC9175 /* PasswordValidatorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */; };
 		1C7FC98328B5272500FC9175 /* ConfirmationCultCastVoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98228B5272500FC9175 /* ConfirmationCultCastVoteView.swift */; };
 		1C7FC98828B60A1A00FC9175 /* ThemePickerWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98728B60A1A00FC9175 /* ThemePickerWireframe.swift */; };
@@ -278,7 +277,6 @@
 		1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE1F284D5840008312DE /* FeatureFlags.swift */; };
 		1CD843EA287218C800E6D359 /* OCR-A Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1CD843E9287218C100E6D359 /* OCR-A Regular.ttf */; };
 		1CD843F82874215F00E6D359 /* MnemonicNewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD843F42874215E00E6D359 /* MnemonicNewCell.swift */; };
-		1CD843FC287423EB00E6D359 /* MnemonicNew.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CD843FB287423EB00E6D359 /* MnemonicNew.storyboard */; };
 		1CDED5EC2897C5F300DF34A7 /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5EB2897C5F300DF34A7 /* ScrollView.swift */; };
 		1CDED5FD289C4C4800DF34A7 /* NFTSendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5FC289C4C4800DF34A7 /* NFTSendWireframe.swift */; };
 		1CDED5FF289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5FE289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift */; };
@@ -359,7 +357,6 @@
 		D1976B0E287EFAE10063FC9C /* MnemonicImportWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B05287EFAE10063FC9C /* MnemonicImportWireframe.swift */; };
 		D1976B11287EFAE10063FC9C /* MnemonicImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B08287EFAE10063FC9C /* MnemonicImportView.swift */; };
 		D1976B12287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B09287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift */; };
-		D1976B14287EFAE10063FC9C /* MnemonicImport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1976B0B287EFAE10063FC9C /* MnemonicImport.storyboard */; };
 		D1A12A60287D333900606FC8 /* AuthenticateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A59287D333900606FC8 /* AuthenticateView.swift */; };
 		D1A12A64287D333900606FC8 /* AuthenticateWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5D287D333900606FC8 /* AuthenticateWireframeFactory.swift */; };
 		D1A12A66287D333900606FC8 /* AuthenticateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5F287D333900606FC8 /* AuthenticateWireframe.swift */; };
@@ -369,7 +366,6 @@
 		D1ED7261287C1122005805CF /* CurrencySendToAddressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ED725E287C1122005805CF /* CurrencySendToAddressCollectionViewCell.swift */; };
 		D1EF5BC7287BEE92004CAD82 /* MnemonicUpdateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BBE287BEE92004CAD82 /* MnemonicUpdateCell.swift */; };
 		D1EF5BC9287BEE92004CAD82 /* MnemonicUpdateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */; };
-		D1EF5BCB287BEE92004CAD82 /* MnemonicUpdate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1EF5BC2287BEE92004CAD82 /* MnemonicUpdate.storyboard */; };
 		D1EF5BCD287BEE92004CAD82 /* MnemonicUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC4287BEE92004CAD82 /* MnemonicUpdateView.swift */; };
 		D1EF5BCE287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC5287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift */; };
 /* End PBXBuildFile section */
@@ -549,7 +545,6 @@
 		1C60C24C285724D0003BE25D /* AccountWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountWireframe.swift; sourceTree = "<group>"; };
 		1C60C24D285724D0003BE25D /* AccountWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C252285724D0003BE25D /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
-		1C60C261285724D0003BE25D /* MnemonicConfirmation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MnemonicConfirmation.storyboard; sourceTree = "<group>"; };
 		1C60C262285724D0003BE25D /* MnemonicConfirmationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationView.swift; sourceTree = "<group>"; };
 		1C60C264285724D0003BE25D /* MnemonicConfirmationWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C265285724D0003BE25D /* MnemonicConfirmationWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationWireframe.swift; sourceTree = "<group>"; };
@@ -617,7 +612,7 @@
 		1C7F862328D20E490073FD95 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+Extension.swift"; sourceTree = "<group>"; };
 		1C7F862428D20E490073FD95 /* NSCollectionLayout+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCollectionLayout+Extensions.swift"; sourceTree = "<group>"; };
 		1C7F862528D20E490073FD95 /* NSLocalizedString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLocalizedString+Extension.swift"; sourceTree = "<group>"; };
-		1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateDeleteCell.swift; sourceTree = "<group>"; };
+		1C7FC97A28AE7A3A00FC9175 /* DeleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCell.swift; sourceTree = "<group>"; };
 		1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordValidatorHelper.swift; sourceTree = "<group>"; };
 		1C7FC98228B5272500FC9175 /* ConfirmationCultCastVoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationCultCastVoteView.swift; sourceTree = "<group>"; };
 		1C7FC98728B60A1A00FC9175 /* ThemePickerWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerWireframe.swift; sourceTree = "<group>"; };
@@ -676,7 +671,6 @@
 		1CD3FE1F284D5840008312DE /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
 		1CD843E9287218C100E6D359 /* OCR-A Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OCR-A Regular.ttf"; sourceTree = "<group>"; };
 		1CD843F42874215E00E6D359 /* MnemonicNewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewCell.swift; sourceTree = "<group>"; };
-		1CD843FB287423EB00E6D359 /* MnemonicNew.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MnemonicNew.storyboard; sourceTree = "<group>"; };
 		1CDED5EB2897C5F300DF34A7 /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
 		1CDED5FC289C4C4800DF34A7 /* NFTSendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendWireframe.swift; sourceTree = "<group>"; };
 		1CDED5FE289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendWireframeFactory.swift; sourceTree = "<group>"; };
@@ -763,7 +757,6 @@
 		D1976B05287EFAE10063FC9C /* MnemonicImportWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportWireframe.swift; sourceTree = "<group>"; };
 		D1976B08287EFAE10063FC9C /* MnemonicImportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportView.swift; sourceTree = "<group>"; };
 		D1976B09287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportWireframeFactory.swift; sourceTree = "<group>"; };
-		D1976B0B287EFAE10063FC9C /* MnemonicImport.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MnemonicImport.storyboard; sourceTree = "<group>"; };
 		D1A12A59287D333900606FC8 /* AuthenticateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateView.swift; sourceTree = "<group>"; };
 		D1A12A5D287D333900606FC8 /* AuthenticateWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateWireframeFactory.swift; sourceTree = "<group>"; };
 		D1A12A5F287D333900606FC8 /* AuthenticateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateWireframe.swift; sourceTree = "<group>"; };
@@ -773,7 +766,6 @@
 		D1ED725E287C1122005805CF /* CurrencySendToAddressCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencySendToAddressCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1EF5BBE287BEE92004CAD82 /* MnemonicUpdateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateCell.swift; sourceTree = "<group>"; };
 		D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateWireframe.swift; sourceTree = "<group>"; };
-		D1EF5BC2287BEE92004CAD82 /* MnemonicUpdate.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MnemonicUpdate.storyboard; sourceTree = "<group>"; };
 		D1EF5BC4287BEE92004CAD82 /* MnemonicUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateView.swift; sourceTree = "<group>"; };
 		D1EF5BC5287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateWireframeFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1123,7 +1115,6 @@
 		1C60C202285724D0003BE25D /* MnemonicNew */ = {
 			isa = PBXGroup;
 			children = (
-				1CD843FB287423EB00E6D359 /* MnemonicNew.storyboard */,
 				1C60C209285724D0003BE25D /* MnemonicNewView.swift */,
 				1C60C204285724D0003BE25D /* MnemonicNewWireframe.swift */,
 				1C60C206285724D0003BE25D /* MnemonicNewWireframeFactory.swift */,
@@ -1242,7 +1233,6 @@
 		1C60C25F285724D0003BE25D /* MnemonicConfirmation */ = {
 			isa = PBXGroup;
 			children = (
-				1C60C261285724D0003BE25D /* MnemonicConfirmation.storyboard */,
 				1C60C262285724D0003BE25D /* MnemonicConfirmationView.swift */,
 				1C60C265285724D0003BE25D /* MnemonicConfirmationWireframe.swift */,
 				1C60C264285724D0003BE25D /* MnemonicConfirmationWireframeFactory.swift */,
@@ -1837,7 +1827,6 @@
 		D1976B01287EFAE10063FC9C /* MnemonicImport */ = {
 			isa = PBXGroup;
 			children = (
-				D1976B0B287EFAE10063FC9C /* MnemonicImport.storyboard */,
 				D1976B08287EFAE10063FC9C /* MnemonicImportView.swift */,
 				D1976B05287EFAE10063FC9C /* MnemonicImportWireframe.swift */,
 				D1976B09287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift */,
@@ -1878,7 +1867,6 @@
 		D1EF5BBC287BEE92004CAD82 /* MnemonicUpdate */ = {
 			isa = PBXGroup;
 			children = (
-				D1EF5BC2287BEE92004CAD82 /* MnemonicUpdate.storyboard */,
 				D1EF5BC4287BEE92004CAD82 /* MnemonicUpdateView.swift */,
 				D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */,
 				D1EF5BC5287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift */,
@@ -1891,7 +1879,7 @@
 			isa = PBXGroup;
 			children = (
 				D1EF5BBE287BEE92004CAD82 /* MnemonicUpdateCell.swift */,
-				1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */,
+				1C7FC97A28AE7A3A00FC9175 /* DeleteCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2032,7 +2020,6 @@
 				1CAC5609286EFFC300CCB2B6 /* SFProDisplay-Regular.otf in Resources */,
 				D11A990A27B8615B00EDFDD0 /* NothingYouCouldDo-Regular.ttf in Resources */,
 				1C54DC5328683DDA00E378F6 /* NaokoAA-Bold.otf in Resources */,
-				1CD843FC287423EB00E6D359 /* MnemonicNew.storyboard in Resources */,
 				D11A990527B8615B00EDFDD0 /* GothicA1-ExtraBold.ttf in Resources */,
 				D11A990827B8615B00EDFDD0 /* GothicA1-Black.ttf in Resources */,
 				1CAC5603286EFFC300CCB2B6 /* SFProText-BoldItalic.otf in Resources */,
@@ -2064,7 +2051,6 @@
 				1CB8B0B5288C34B900024E7C /* CultProposal.storyboard in Resources */,
 				1C60C2B6285724D0003BE25D /* CurrencyPicker.storyboard in Resources */,
 				D14ECE3927B833E500228F90 /* Localizable.strings in Resources */,
-				D1EF5BCB287BEE92004CAD82 /* MnemonicUpdate.storyboard in Resources */,
 				1CE006482889A08A002D1EB3 /* Alert.storyboard in Resources */,
 				D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */,
 				1CAC5601286EFFC300CCB2B6 /* SFProText-Regular.otf in Resources */,
@@ -2075,7 +2061,6 @@
 				D157F7D427B69B6400578FF8 /* Assets.xcassets in Resources */,
 				D11A990327B8615B00EDFDD0 /* GothicA1-Thin.ttf in Resources */,
 				1CD843EA287218C800E6D359 /* OCR-A Regular.ttf in Resources */,
-				D1976B14287EFAE10063FC9C /* MnemonicImport.storyboard in Resources */,
 				D11A990927B8615B00EDFDD0 /* GothicA1-SemiBold.ttf in Resources */,
 				1C9E31A3287580E500DD2031 /* CurrencySend.storyboard in Resources */,
 				D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */,
@@ -2089,7 +2074,6 @@
 				1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */,
 				1CAC5602286EFFC300CCB2B6 /* SFProText-Bold.otf in Resources */,
 				1C54DC5728683DDA00E378F6 /* NaokoAA-Medium.otf in Resources */,
-				1C60C327285724D1003BE25D /* MnemonicConfirmation.storyboard in Resources */,
 				1A4C33A130E35EBC0BC27B07 /* mock-candles.json in Resources */,
 				1A4C3A41389B5EC22F3B2B88 /* Authenticate.storyboard in Resources */,
 			);
@@ -2330,7 +2314,7 @@
 				1C60C312285724D1003BE25D /* AccountHeaderCell.swift in Sources */,
 				D1976B11287EFAE10063FC9C /* MnemonicImportView.swift in Sources */,
 				1A4C3B697503D478741295DB /* TextField.swift in Sources */,
-				1C7FC97B28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift in Sources */,
+				1C7FC97B28AE7A3A00FC9175 /* DeleteCell.swift in Sources */,
 				1C9E3195287580B600DD2031 /* CurrencySendWireframe.swift in Sources */,
 				1CDED5FD289C4C4800DF34A7 /* NFTSendWireframe.swift in Sources */,
 				1CB8B0C2288DD94B00024E7C /* CultProposalDetailStatusView.swift in Sources */,

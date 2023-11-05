@@ -57,9 +57,9 @@ final class MnemonicUpdateCell: UICollectionViewCell {
 extension MnemonicUpdateCell {
 
     func update(
-        with viewModel: MnemonicUpdateViewModel.SectionItemMnemonic?
+        with viewModel: CellViewModel.Text?
     ) -> MnemonicUpdateCell {
-        textView.text = viewModel?.mnemonic ?? ""
+        textView.text = viewModel?.text ?? ""
         return self
     }
 }
@@ -72,8 +72,12 @@ extension MnemonicUpdateCell {
         if overlay.alpha == 1 {
             UIView.animate(
                 withDuration: 0.2,
-                animations: { [weak self] in self?.overlay.alpha = 0; self?.resetCountdownLabel() },
-                completion: { [weak self] _ in self?.resetCountdownLabel() }
+                animations: { [weak self] in
+                    self?.overlay.alpha = 0; self?.resetCountdownLabel()
+                },
+                completion: { [weak self] _ in
+                    self?.resetCountdownLabel()
+                }
             )
             return
         }
@@ -86,8 +90,12 @@ extension MnemonicUpdateCell {
                 UIView.animate(
                     withDuration: 0.2,
                     delay: 0.5,
-                    animations: { [weak self] in self?.overlay.alpha = 0; self?.resetCountdownLabel() },
-                    completion: { [weak self] _ in self?.resetCountdownLabel() }
+                    animations: { [weak self] in
+                        self?.overlay.alpha = 0; self?.resetCountdownLabel()
+                    },
+                    completion: { [weak self] _ in
+                        self?.resetCountdownLabel()
+                    }
                 )
             }
         )

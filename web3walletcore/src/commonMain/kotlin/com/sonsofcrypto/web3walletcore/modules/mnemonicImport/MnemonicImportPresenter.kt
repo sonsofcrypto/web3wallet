@@ -4,23 +4,22 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
-import com.sonsofcrypto.web3walletcore.common.mnemonic.MnemonicPresenterCommon
-import com.sonsofcrypto.web3walletcore.common.viewModels.MnemonicWordInfo
-import com.sonsofcrypto.web3walletcore.common.viewModels.SectionFooterViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.SegmentWithTextAndSwitchCellViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.SegmentWithTextAndSwitchCellViewModel.KeyboardType.DEFAULT
-import com.sonsofcrypto.web3walletcore.common.viewModels.SegmentWithTextAndSwitchCellViewModel.KeyboardType.NUMBER_PAD
-import com.sonsofcrypto.web3walletcore.common.viewModels.SwitchCollectionViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.TextInputCollectionViewModel
+import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicPresenterHelper
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.DEFAULT
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.NUMBER_PAD
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportViewModel.Section
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportWireframeDestination.Dismiss
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError
+import com.sonsofcrypto.web3lib.utils.extensions.stripLeadingWhiteSpace
+import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicInputViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
 
 sealed class MnemonicImportPresenterEvent {
-    data class MnemonicChanged(
-        val to: String, val selectedLocation: Int
-    ): MnemonicImportPresenterEvent()
+    data class MnemonicChanged(val to: String, val cursorLocation: Int): MnemonicImportPresenterEvent()
     data class DidChangeName(val name: String): MnemonicImportPresenterEvent()
     data class DidChangeICouldBackup(val onOff: Boolean): MnemonicImportPresenterEvent()
     data class SaltSwitchDidChange(val onOff: Boolean): MnemonicImportPresenterEvent()
@@ -45,7 +44,7 @@ class DefaultMnemonicImportPresenter(
     private val interactor: MnemonicImportInteractor,
     private val context: MnemonicImportWireframeContext,
 ): MnemonicImportPresenter {
-    private val common = MnemonicPresenterCommon()
+    private val helper = MnemonicPresenterHelper()
     private var mnemonic = ""
     private var name = ""
     private var iCloudSecretStorage = false
@@ -54,66 +53,68 @@ class DefaultMnemonicImportPresenter(
     private var passwordType: SignerStoreItem.PasswordType = BIO
     private var password = ""
     private var passUnlockWithBio = true
-    private var selectedLocation = 0
+    private var cursorLocation = 0
     private var ctaTapped = false
 
     override fun present() { updateView() }
 
-    override fun handle(event: MnemonicImportPresenterEvent) {
-        when (event) {
-            is MnemonicImportPresenterEvent.MnemonicChanged -> {
-                val result = common.clearBlanksFromFrontOf(event.to, event.selectedLocation)
-                mnemonic = result.first
-                selectedLocation = result.second
-                updateView(event.to != mnemonic)
-            }
-            is MnemonicImportPresenterEvent.DidChangeName -> {
-                name = event.name
-            }
-            is MnemonicImportPresenterEvent.DidChangeICouldBackup -> {
-                iCloudSecretStorage = event.onOff
-            }
-            is MnemonicImportPresenterEvent.SaltSwitchDidChange -> {
-                saltMnemonicOn = event.onOff
-            }
-            is MnemonicImportPresenterEvent.DidChangeSalt -> {
-                salt = event.salt
-            }
-            is MnemonicImportPresenterEvent.SaltLearnMoreAction -> {
-                wireframe.navigate(MnemonicImportWireframeDestination.LearnMoreSalt)
-            }
-            is MnemonicImportPresenterEvent.PassTypeDidChange -> {
-                passwordType = passwordTypes()[event.idx]
+    override fun handle(event: MnemonicImportPresenterEvent): Unit =  when (event) {
+        is MnemonicImportPresenterEvent.MnemonicChanged -> {
+            mnemonic = event.to.stripLeadingWhiteSpace()
+            cursorLocation = event.cursorLocation -
+                (event.to.count() -  mnemonic.count())
+            updateView(event.to != mnemonic)
+        }
+        is MnemonicImportPresenterEvent.DidChangeName -> {
+            name = event.name
+        }
+        is MnemonicImportPresenterEvent.DidChangeICouldBackup -> {
+            iCloudSecretStorage = event.onOff
+        }
+        is MnemonicImportPresenterEvent.SaltSwitchDidChange -> {
+            saltMnemonicOn = event.onOff
+        }
+        is MnemonicImportPresenterEvent.DidChangeSalt -> {
+            salt = event.salt
+        }
+        is MnemonicImportPresenterEvent.SaltLearnMoreAction -> {
+            wireframe.navigate(MnemonicImportWireframeDestination.LearnMoreSalt)
+        }
+        is MnemonicImportPresenterEvent.PassTypeDidChange -> {
+            passwordType = passwordTypes()[event.idx]
+            updateView()
+        }
+        is MnemonicImportPresenterEvent.PasswordDidChange -> {
+            password = event.text
+            updateView()
+        }
+        is MnemonicImportPresenterEvent.AllowFaceIdDidChange -> {
+            passUnlockWithBio = event.onOff
+        }
+        is MnemonicImportPresenterEvent.DidTapMnemonic -> {
+            interactor.pasteToClipboard(mnemonic.trim())
+        }
+        is MnemonicImportPresenterEvent.DidSelectCta -> {
+            ctaTapped = true
+            if (!isValidForm) {
                 updateView()
-            }
-            is MnemonicImportPresenterEvent.PasswordDidChange -> {
-                password = event.text
-                updateView()
-            }
-            is MnemonicImportPresenterEvent.AllowFaceIdDidChange -> {
-                passUnlockWithBio = event.onOff
-            }
-            is MnemonicImportPresenterEvent.DidTapMnemonic -> {
-                interactor.pasteToClipboard(mnemonic.trim())
-            }
-            is MnemonicImportPresenterEvent.DidSelectCta -> {
-                ctaTapped = true
-                if (!isValidForm) return updateView()
+            } else {
                 if (passwordType == SignerStoreItem.PasswordType.BIO) {
                     password = interactor.generatePassword()
                 }
                 try {
                     createDefaultNameIfNeeded()
-                    val item = interactor.createKeyStoreItem(keyStoreItemData, password, salt)
+                    val item = interactor
+                        .createKeyStoreItem(keyStoreItemData, password, salt)
                     context.handler(item)
                     wireframe.navigate(Dismiss)
                 } catch (e: Throwable) {
                     // TODO: Handle error
                 }
             }
-            is MnemonicImportPresenterEvent.DidSelectDismiss -> {
-                wireframe.navigate(Dismiss)
-            }
+        }
+        is MnemonicImportPresenterEvent.DidSelectDismiss -> {
+            wireframe.navigate(Dismiss)
         }
     }
 
@@ -127,113 +128,87 @@ class DefaultMnemonicImportPresenter(
     )
 
     private fun updateView(updateMnemonic: Boolean = false) {
-        view.get()?.update(viewModel(updateMnemonic))
+        view.get()?.update(viewModel(), mnemonicItem(updateMnemonic))
     }
 
-    private fun viewModel(updateMnemonic: Boolean = false): MnemonicImportViewModel {
-        val sections = mutableListOf<Section>()
+    private fun viewModel(): CollectionViewModel.Screen {
         val error = interactor.mnemonicError(mnemonic.trim().split(" "), salt)
-        sections.add(mnemonicSection(updateMnemonic, error))
-        if (error == null) { sections.add(optionsSection()) }
-        return MnemonicImportViewModel(
+        var sections = mutableListOf(mnemonicSection(error))
+        if (error == null)
+            sections.add(optionsSection())
+        return CollectionViewModel.Screen(
+            Localized(""),
             sections,
-            Localized("mnemonic.cta.import"),
+            listOf(Localized("mnemonic.cta.import")),
         )
     }
 
-    private fun mnemonicSection(updateMnemonic: Boolean, error: MnemonicServiceError?): Section =
-        Section(
-            listOf(mnemonicItem(updateMnemonic)),
-            mnemonicFooterDefault(),
-            // mnemonicFooter(error)
-        )
+    private fun mnemonicSection(err: MnemonicServiceError?): Section = Section(
+        null,
+        listOf(CellViewModel.Text(mnemonic)),
+        mnemonicFooter(err),
+    )
 
-    private fun mnemonicItem(updateMnemonic: Boolean): Section.Item {
-        val common = MnemonicPresenterCommon()
-        val prefixForPotentialWords = common.findPrefixForPotentialWords(mnemonic, selectedLocation)
-        val potentialWords = interactor.potentialMnemonicWords(prefixForPotentialWords)
+    // TODO: Clean up
+    private fun mnemonicItem(updateMnemonic: Boolean): MnemonicInputViewModel {
+        val helper = MnemonicPresenterHelper()
+        val currentWord = interactor.prefix(mnemonic, cursorLocation)
+        val potentialWords = interactor.potentialMnemonicWords(currentWord)
         var wordsInfo = interactor.findInvalidWords(mnemonic)
-        wordsInfo = common.updateWordsInfo(wordsInfo, prefixForPotentialWords, selectedLocation) {
+        wordsInfo = helper.updateWordsInfo(wordsInfo, currentWord, cursorLocation) {
             interactor.isValidPrefix(it)
         }
         val isMnemonicValid = interactor.isMnemonicValid(mnemonic.trim(), salt)
-        return Section.Item.Mnemonic(
-            Section.Mnemonic(
-                potentialWords,
-                wordsInfo.map { MnemonicWordInfo(it.word, it.isInvalid) },
-                if (ctaTapped) isMnemonicValid else null,
-                if (updateMnemonic) mnemonic else null,
+        return MnemonicInputViewModel(
+            potentialWords,
+            wordsInfo.map { MnemonicInputViewModel.Word(it.word, it.isInvalid) },
+            if (ctaTapped) isMnemonicValid else null,
+            if (updateMnemonic) mnemonic else null,
+        )
+    }
+
+    private fun mnemonicFooter(error: MnemonicServiceError? = null): Footer {
+        if (error == null)
+            return HighlightWords(
+                Localized("mnemonic.footer"),
+                listOf(
+                    Localized("mnemonic.footerHighlightWord0"),
+                    Localized("mnemonic.footerHighlightWord1"),
+                )
             )
-        )
-    }
-
-    private fun mnemonicFooter(error: MnemonicServiceError?): SectionFooterViewModel = error?.let {
-        return mnemonicFooterError(it)
-    }.run {
-        mnemonicFooterDefault()
-    }
-
-    private fun mnemonicFooterDefault(): SectionFooterViewModel = SectionFooterViewModel(
-        Localized("mnemonic.footer"),
-        listOf(
-            Localized("mnemonic.footerHighlightWord0"),
-            Localized("mnemonic.footerHighlightWord1"),
-        )
-    )
-
-    private fun mnemonicFooterError(error: MnemonicServiceError): SectionFooterViewModel =
-        when (error) {
-            MnemonicServiceError.INVALID_WORD_COUNT -> {
-                SectionFooterViewModel(
-                    Localized("mnemonic.error.invalid.wordCount"),
-                    listOf(
-                        Localized("mnemonic.error.invalid.wordCount.highlight0")
-                    )
-                )
-            }
-            MnemonicServiceError.OTHER -> {
-                SectionFooterViewModel(
-                    Localized("mnemonic.error.invalid"),
-                    listOf(
-                        Localized("mnemonic.error.invalid")
-                    )
-                )
-            }
+        return when (error) {
+            MnemonicServiceError.INVALID_WORD_COUNT -> HighlightWords(
+                Localized("mnemonic.error.invalid.wordCount"),
+                listOf(Localized("mnemonic.error.invalid.wordCount.highlight"))
+            )
+            MnemonicServiceError.OTHER -> HighlightWords(
+                Localized("mnemonic.error.invalid"),
+                listOf(Localized("mnemonic.error.invalid"))
+            )
         }
+    }
 
     private fun optionsSection(): Section = Section(
-        optionSectionsItems(),
-        null
-    )
-
-    private fun optionSectionsItems(): List<Section.Item> = listOf(
-        Section.Item.TextInput(
-            TextInputCollectionViewModel(
+        null,
+        listOf(
+            CellViewModel.TextInput(
                 Localized("mnemonic.name.title"),
                 name,
                 Localized("mnemonic.name.placeholder"),
-            )
-        ),
-        Section.Item.Switch(
-            SwitchCollectionViewModel(
+            ),
+            CellViewModel.Switch(
                 Localized("mnemonic.iCould.title"),
                 iCloudSecretStorage,
-            )
-        ),
-//        Section.Item.SwitchWithTextInput(
-//            SwitchTextInputCollectionViewModel(
-//                Localized("mnemonic.salt.title"),
-//                saltMnemonicOn,
-//                salt,
-//                Localized("mnemonic.salt.placeholder"),
-//                Localized("mnemonic.salt.description"),
-//                listOf(
-//                    Localized("mnemonic.salt.descriptionHighlight")
-//                ),
-//            )
+            ),
+//        CellViewModel.SwitchWithTextInput(
+//            Localized("mnemonic.salt.title"),
+//            saltMnemonicOn,
+//            salt,
+//            Localized("mnemonic.salt.placeholder"),
+//            Localized("mnemonic.salt.description"),
+//            listOf(Localized("mnemonic.salt.descriptionHighlight")),
 //        ),
-        Section.Item.SegmentWithTextAndSwitchInput(
-            SegmentWithTextAndSwitchCellViewModel(
+            CellViewModel.SegmentWithTextAndSwitch(
                 Localized("mnemonic.passType.title"),
                 passwordTypes().map { it.name.lowercase() },
                 selectedPasswordTypeIdx(),
@@ -244,7 +219,8 @@ class DefaultMnemonicImportPresenter(
                 Localized("mnemonic.passType.allowFaceId"),
                 passUnlockWithBio,
             )
-        )
+        ),
+        null,
     )
 
     private val placeholderType: String get() = if (passwordType == PIN) "pinType" else "passType"

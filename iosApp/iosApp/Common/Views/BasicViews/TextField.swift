@@ -29,11 +29,15 @@ class TextField: UITextField {
 }
 
 extension TextField {
-    
-    func addDoneInputAccessoryView(
-        with targetAction: TargetActionViewModel
-    ) {
-        
+
+    func addDoneToolbarOld(with targetAction: TargetActionViewModel) {
+        switch targetAction {
+        case let .targetAction(ta):
+            addDoneToolbar(ta.target, action: ta.selector)
+        }
+    }
+
+    func addDoneToolbar(_ target: Any?, action: Selector) {
         let view = UIView(
             frame: .init(
                 origin: .zero,
@@ -51,7 +55,8 @@ extension TextField {
         doneAction.titleLabel?.textAlignment = .right
         doneAction.setTitle(Localized("done"), for: .normal)
         doneAction.setTitleColor(Theme.color.textPrimary, for: .normal)
-        doneAction.add(targetAction)
+        doneAction.addTarget(self, action: action, for: .touchUpInside)
+
         view.addSubview(doneAction)
         doneAction.addConstraints(
             [

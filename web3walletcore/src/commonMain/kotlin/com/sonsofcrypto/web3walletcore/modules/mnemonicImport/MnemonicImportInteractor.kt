@@ -29,6 +29,7 @@ data class MnemonicImportInteractorData(
 )
 
 interface MnemonicImportInteractor {
+    fun prefix(mnemonic: String, cursorLocation: Int): String
     fun potentialMnemonicWords(prefix: String?): List<String>
     fun findInvalidWords(mnemonic: String?): List<MnemonicWord>
     fun isValidPrefix(prefix: String): Boolean
@@ -48,6 +49,9 @@ class DefaultMnemonicImportInteractor(
     private val passwordService: PasswordService,
     private val addressService: AddressService,
 ): MnemonicImportInteractor {
+
+    override fun prefix(mnemonic: String, cursorLocation: Int): String =
+        mnemonicService.prefix(mnemonic, cursorLocation)
 
     override fun potentialMnemonicWords(prefix: String?): List<String> =
         mnemonicService.potentialMnemonicWords(prefix)
