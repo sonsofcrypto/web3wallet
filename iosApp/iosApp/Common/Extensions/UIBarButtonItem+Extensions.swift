@@ -5,7 +5,7 @@
 import UIKit
 
 extension UIBarButtonItem {
-    
+
     convenience init(
         imageName: String,
         style: UIBarButtonItem.Style = .plain,

@@ -71,15 +71,13 @@ private extension QRCodeScanViewController {
         let showBackButton = (navigationController?.viewControllers.count ?? 0) > 1
         guard showBackButton else {
             return UIBarButtonItem(
-                image: .init(systemName: "xmark"),
-                style: .plain,
+                sysImgName: "xmark",
                 target: self,
                 action: #selector(closeTapped)
             )
         }
         return UIBarButtonItem(
-            image: "chevron.left".assetImage,
-            style: .plain,
+            sysImgName: "chevron.left",
             target: self,
             action: #selector(closeTapped)
         )

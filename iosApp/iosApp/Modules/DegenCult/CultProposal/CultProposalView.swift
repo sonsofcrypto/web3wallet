@@ -113,7 +113,8 @@ private extension CultProposalViewController {
     }
         
     func setTitle(with index: Int) {
-        let cultIcon = "degen-cult-icon".assetImage?.resize(to: .init(width: 32, height: 32))
+        let cultIcon = UIImage(named: "degen-cult-icon")?
+            .resize(to: .init(width: 32, height: 32))
         let imageView = UIImageView(image: cultIcon)
         let titleLabel = UILabel()
         titleLabel.text = viewModel.title + " \(index) " + Localized("cult.proposal.title.of") + " \(viewModel.proposals.count)"
@@ -126,8 +127,7 @@ private extension CultProposalViewController {
     func configureUI() {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: "chevron.left".assetImage,
-            style: .plain,
+            sysImgName: "chevron.left",
             target: self,
             action: #selector(dismissTapped)
         )

@@ -47,7 +47,7 @@ extension DefaultSettingsWireframe {
             let nc = NavigationController(rootViewController: vc)
             nc.tabBarItem = UITabBarItem(
                 title: Localized("settings"),
-                image: "tab_icon_settings".assetImage,
+                image: UIImage(named: "tab_icon_settings"),
                 tag: 3
             )
             let vcs = (tabVc.viewControllers ?? []) + [nc]

@@ -334,8 +334,7 @@ private extension AccountViewController {
         title = Localized("wallets")
         navigationItem.rightBarButtonItem = UIBarButtonItem.smallLabel()
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: "chevron.left".assetImage,
-            style: .plain,
+            sysImgName: "chevron.left",
             target: self,
             action: #selector(dismissAction)
         )

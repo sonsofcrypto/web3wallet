@@ -36,7 +36,7 @@ extension DashboardTableWalletCell {
         showBottomSeparator: Bool = true
     ) -> Self {
         guard let viewModel = viewModel else { return self }
-        currencyImageView.image = viewModel.imageName.assetImage
+        currencyImageView.image = UIImage(named: viewModel.imageName)
         fiatPriceLabel.attributedText = .init(
             Formatters.Companion.shared.fiat.format(
                 amount: viewModel.fiatPrice.bigDec,

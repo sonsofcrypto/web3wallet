@@ -29,7 +29,7 @@ final class SignersCell: CollectionViewCell {
             action: #selector(accessoryAction(_:)),
             for: .touchUpInside
         )
-        arrowForward.image = "chevron.right".assetImage
+        arrowForward.image = UIImage(systemName: "chevron.right")
         accessoryButton.tintColor = Theme.color.textPrimary
         arrowForward.tintColor = Theme.color.textPrimary
     }
