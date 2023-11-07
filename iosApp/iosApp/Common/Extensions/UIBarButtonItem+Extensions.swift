@@ -12,12 +12,18 @@ extension UIBarButtonItem {
         target: Any?,
         action: Selector?
     ) {
-        self.init(
-            image: imageName.assetImage,
-            style: .plain,
-            target: target,
-            action: action
-        )
+        let image = UIImage(named: imageName)
+        self.init(image: image, style: .plain, target: target, action: action)
+    }
+
+    convenience init(
+        sysImgName: String,
+        style: UIBarButtonItem.Style = .plain,
+        target: Any?,
+        action: Selector?
+    ) {
+        let image = UIImage(systemName: sysImgName)
+        self.init(image: image, style: .plain, target: target, action: action)
     }
 
     convenience init(

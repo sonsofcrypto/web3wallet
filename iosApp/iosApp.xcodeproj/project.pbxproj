@@ -321,6 +321,7 @@
 		2DC2CA1BB3426CD144AE0590 /* FPSCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C3CCFB57B631938128A4 /* FPSCounter.swift */; };
 		2DC2CA50F84C2639C6C30EF5 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C4B6C92D814FB1D50384 /* Double+Extensions.swift */; };
 		2DC2CBB26FD729F8384ED4A6 /* NFTsDashboardCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CA6DB2985E8753EA28D7 /* NFTsDashboardCollectionCell.swift */; };
+		2DC2CC0CAF4FB724C7E46D6F /* NotificationCenter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C5F6967254E33338C759 /* NotificationCenter+Extensions.swift */; };
 		2DC2CCCCB98B20D9CF264A9E /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C486937A338F1B4E4CFB /* UIImageExtension.swift */; };
 		2DC2CD37E996AD6BCD84AB58 /* NFTsDashboardCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CF5B30C63B61DBD39B20 /* NFTsDashboardCarouselCell.swift */; };
 		2DC2CD424EFF6FB6BC106BB6 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C8FA05735FD6B546BA4B /* StringExtensions.swift */; };
@@ -712,6 +713,7 @@
 		2DC2C4716D8E32D5CE26DDA2 /* AlertWireframe+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertWireframe+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C486937A338F1B4E4CFB /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		2DC2C4B6C92D814FB1D50384 /* Double+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		2DC2C5F6967254E33338C759 /* NotificationCenter+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C7C91B9C13F1D182D921 /* UIControl+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C8FA05735FD6B546BA4B /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		2DC2C9A15E44BDD7C7864D81 /* CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
@@ -1424,6 +1426,7 @@
 				1C5D24DE28E1A3DD007DA557 /* UIViewController+Extensions.swift */,
 				1C54BB3B291B9F400009F158 /* Web3walletcore+Extensions.swift */,
 				2DC2C7C91B9C13F1D182D921 /* UIControl+Extensions.swift */,
+				2DC2C5F6967254E33338C759 /* NotificationCenter+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2412,6 +2415,7 @@
 				2DC2CA1BB3426CD144AE0590 /* FPSCounter.swift in Sources */,
 				2DC2CE81DB04333AC1E6833F /* ThemeBlurView.swift in Sources */,
 				2DC2CF60440C5C9E64FCD9AF /* UIControl+Extensions.swift in Sources */,
+				2DC2CC0CAF4FB724C7E46D6F /* NotificationCenter+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

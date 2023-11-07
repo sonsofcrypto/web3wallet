@@ -300,12 +300,12 @@ private extension DashboardViewController {
     func configureUI() {
         title = Localized("web3wallet").uppercased()
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            imageName: "chevron.left",
+            sysImgName: "chevron.left",
             target: self,
             action: #selector(navBarLeftActionTapped)
         )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            imageName: "qrcode.viewfinder",
+            sysImgName: "qrcode.viewfinder",
             target: self,
             action: #selector(navBarRightActionTapped)
         )

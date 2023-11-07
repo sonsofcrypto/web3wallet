@@ -56,11 +56,6 @@ final class MnemonicNewViewController: BaseViewController {
         let cells = cv.visibleCells
             .map { cv.indexPath(for: $0) }
             .compactMap { $0 }
-        print("Visible cells \(cells.count)")
-        cv.visibleCells.forEach {
-            let idxPath = cv.indexPath(for: $0)
-            print("\(type(of: $0)) \(idxPath?.section) \(idxPath?.item)")
-        }
         didAppear
             ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
             : cv.reloadData()        
@@ -351,24 +346,19 @@ private extension MnemonicNewViewController {
     func configureUI() {
         title = Localized("mnemonic.title.new")
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: "chevron.left".assetImage,
-            style: .plain,
+            sysImgName: "chevron.left",
             target: self,
             action: #selector(dismissAction(_:))
         )
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        let constraint = cv.bottomAnchor.constraint(
-            equalTo: view.keyboardLayoutGuide.topAnchor
-        )
-        constraint.priority = .required
-        constraint.isActive = true
-        NotificationCenter.default.addObserver(
+        NotificationCenter.addKeyboardObserver(
             self,
-            selector: #selector(showKeyboard),
-            name: UIApplication.keyboardWillShowNotification,
-            object: nil
+            selector: #selector(keyboardWillShow)
         )
-        ctaButton.style = .primary
+        NotificationCenter.addKeyboardObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            event: .willHide
+        )
         let edgePan = UIScreenEdgePanGestureRecognizer(
             target: self,
             action: #selector(handleGesture(_:))
@@ -376,6 +366,7 @@ private extension MnemonicNewViewController {
         edgePan.edges = [UIRectEdge.left]
         view.addGestureRecognizer(edgePan)
         applyTheme(Theme)
+        ctaButton.style = .primary
     }
 
     func applyTheme(_ theme: ThemeProtocol) {
@@ -386,18 +377,24 @@ private extension MnemonicNewViewController {
         (cv?.overscrollView?.subviews.first as? UILabel)?
             .textColor = theme.color.textPrimary
     }
-    
-    @objc func showKeyboard(notification: Notification) {
-        let frameKey = UIResponder.keyboardFrameEndUserInfoKey
-        guard let firstResponder = collectionView.firstResponder,
-              let keyboardFrame = notification.userInfo?[frameKey] as? NSValue
-        else { return }
-        let frame = view.convert(firstResponder.bounds, from: firstResponder)
-        let y = frame.maxY + Theme.padding * 2
-        guard y > keyboardFrame.cgRectValue.origin.y - 40,
-              let idxPath = cv.indexPath(for: cv.visibleCells.last!)
-        else { return }
-        cv.scrollToItem(at: idxPath, at: .top, animated: true)
+
+    @objc func keyboardWillShow(notification: Notification) {
+        let key = UIResponder.keyboardFrameEndUserInfoKey
+        let keyboardInfo = notification.userInfo?[key] as! NSValue
+        let keyboardSize = keyboardInfo.cgRectValue.size
+        collectionView.contentInset.bottom = keyboardSize.height
+
+        let firstResponderIdxPath = cv.indexPathsForVisibleItems.filter {
+            cv.cellForItem(at: $0)?.firstResponder != nil
+        }.first
+
+        if let idxPath = firstResponderIdxPath {
+            cv.scrollToItem(at: idxPath, at: .centeredVertically, animated: true)
+        }
+    }
+
+    @objc func keyboardWillHide(notification: Notification) {
+        collectionView.contentInset.bottom = Theme.padding * 2
     }
 
     func viewModel(at idxPath: IndexPath) -> CellViewModel? {
