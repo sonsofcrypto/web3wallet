@@ -123,7 +123,7 @@
 "keyStore.importAddress" = "Import address (View only)";
 "keyStore.createMultiSig" = "Create multisig wallet";
 
-"mnemonic.title.new" = "New wallet";
+"mnemonic.title.new" = "New Mnemonic";
 "mnemonic.title.import" = "Import wallet";
 "mnemonic.title.update" = "Edit wallet";
 "mnemonic.tapToReveal" = "Tap to reveal mnemonic";

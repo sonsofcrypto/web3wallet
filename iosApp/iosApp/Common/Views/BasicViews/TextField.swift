@@ -55,7 +55,7 @@ extension TextField {
         doneAction.titleLabel?.textAlignment = .right
         doneAction.setTitle(Localized("done"), for: .normal)
         doneAction.setTitleColor(Theme.color.textPrimary, for: .normal)
-        doneAction.addTarget(self, action: action, for: .touchUpInside)
+        doneAction.addTarget(target, action: action, for: .touchUpInside)
 
         view.addSubview(doneAction)
         doneAction.addConstraints(

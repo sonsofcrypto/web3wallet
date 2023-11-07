@@ -14,7 +14,7 @@ class TableFlowLayout: UICollectionViewFlowLayout {
     private var prevBoundsWidth: CGFloat = 0
     private var sectionsCount: Int = 0
     private(set) var itemsCount: [Int: Int] = [:]
-    private(set) var separatorHeight: CGFloat = 0.5
+    private(set) var separatorHeight: CGFloat = 0.666667
     
     override func prepare() {
         super.prepare()

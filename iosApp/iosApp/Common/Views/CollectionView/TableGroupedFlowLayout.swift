@@ -47,6 +47,7 @@ class TableGroupedFlowLayout: TableFlowLayout {
     override func layoutAttributesForItem(
         at indexPath: IndexPath
     ) -> UICollectionViewLayoutAttributes? {
+        print("[TableGroupedFlowLayout] \(indexPath.section) \(indexPath.item)")
         let attr = super.layoutAttributesForItem(at: indexPath)
 
         if indexPath.item == 0 {
@@ -77,28 +78,28 @@ class TableGroupedFlowLayout: TableFlowLayout {
                 at: IndexPath(item: 0, section: indexPath.section)
             ),
             let bottomAttr = layoutAttributesForItem(
-                at: IndexPath(item: itemCnt, section: indexPath.section)
+                at: IndexPath(item: itemCnt - 1, section: indexPath.section)
             ) {
-            let attr = TableFlowLayoutAttributes(
-                forDecorationViewOfKind: SectionBackgroundView.elementKind,
-                with:indexPath
-            )
-            attr.zIndex = -10
-            attr.backgroundColor = sectionBackgroundColor
-            attr.borderColor = sectionBackgroundBorderColor
-            attr.cornerMask = [
-                .layerMinXMinYCorner,
-                .layerMaxXMinYCorner,
-                .layerMinXMaxYCorner,
-                .layerMaxXMaxYCorner,
-            ]
-            attr.frame = CGRect(
-                origin: topAttr.frame.origin,
-                size: .init(
-                    width: topAttr.bounds.width,
-                    height: bottomAttr.frame.minY - topAttr.frame.minY)
-            )
-            return attr
+                let attr = TableFlowLayoutAttributes(
+                    forDecorationViewOfKind: SectionBackgroundView.elementKind,
+                    with:indexPath
+                )
+                attr.zIndex = -10
+                attr.backgroundColor = sectionBackgroundColor
+                attr.borderColor = sectionBackgroundBorderColor
+                attr.cornerMask = [
+                    .layerMinXMinYCorner,
+                    .layerMaxXMinYCorner,
+                    .layerMinXMaxYCorner,
+                    .layerMaxXMaxYCorner,
+                ]
+                attr.frame = CGRect(
+                    origin: topAttr.frame.origin,
+                    size: .init(
+                        width: topAttr.bounds.width,
+                        height: bottomAttr.frame.maxY - topAttr.frame.minY)
+                )
+                return attr
         }
         
         if elementKind == SeparatorCellView.elementKind &&

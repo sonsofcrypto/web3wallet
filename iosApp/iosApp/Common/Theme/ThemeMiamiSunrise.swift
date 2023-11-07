@@ -35,8 +35,9 @@ struct ThemeMiamiSunrise: ThemeProtocol {
         var tabBarBackground: UIColor { Palette.lightBlack }
         var tabBarTint: UIColor { Palette.blue }
         var tabBarTintSelected: UIColor { Palette.pink }
-        var collectionSectionStroke: UIColor { UIColor.clear }
-        var collectionSeparator: UIColor { Palette.white3 }
+
+        var collectionSectionStroke: UIColor { Palette.white01 }
+        var collectionSeparator: UIColor { Palette.white18 }
 
         var stroke: UIColor { Palette.lightGray }
         var separatorPrimary: UIColor { Palette.lighterGray }
@@ -65,6 +66,7 @@ struct ThemeMiamiSunrise: ThemeProtocol {
         static let white6: UIColor = .white.withAlpha(0.6)
         static let white3: UIColor = .white.withAlpha(0.3)
         static let white18: UIColor = .white.withAlpha(0.18)
+        static let white01: UIColor = .white.withAlpha(0.1)
         static let red: UIColor = .init(variants: [.init(rgb: 0xE6350F), .init(rgb: 0xF0421D)])
         static let orange: UIColor = .init(variants: [.init(rgb: 0xF29A36), .init(rgb: 0xF08D1D)])
         static let teal: UIColor = .init(variants: [.init(rgb: 0x13CEC4), .init(rgb: 0x10B0A8)])
