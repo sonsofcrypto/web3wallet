@@ -55,7 +55,7 @@ extension SignersCell {
                 Theme.color.buttonBgPrimary
             ]
         )
-        indexImage.image = image.applyingSymbolConfiguration(config)
+        indexImage.image = image?.applyingSymbolConfiguration(config)
         titleLabel.text = viewModel?.title
         subtitleLabel.text = viewModel?.address
         subtitleLabel.isHidden = viewModel?.address?.isEmpty ?? true
