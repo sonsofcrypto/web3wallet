@@ -36,7 +36,7 @@ final class CurrencyPickerTokenCell: UICollectionViewCell {
     }
 
     func update(with viewModel: CurrencyPickerViewModel.Currency) {
-        iconImageView.image = viewModel.imageName.assetImage
+        iconImageView.image = UIImage(named: viewModel.imageName)
         symbolLabel.text = viewModel.symbol.uppercased()
         nameLabel.text = viewModel.name
         updateIsSelected(with: viewModel.isSelected?.boolValue)
@@ -51,9 +51,9 @@ private extension CurrencyPickerTokenCell {
         if let isSelected = isSelected {
             multiSelectView.isHidden = false
             multiSelectTick.tintColor = Theme.color.textSecondary
-            multiSelectTick.image = isSelected
-            ? "checkmark.circle.fill".assetImage
-            : "circle".assetImage
+            multiSelectTick.image = UIImage(
+                systemName: isSelected ? "checkmark.circle.fill" : "circle"
+            )
         } else {
             multiSelectView.isHidden = true
         }

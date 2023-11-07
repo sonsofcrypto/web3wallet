@@ -7,11 +7,9 @@ final class CurrencySwapLimitCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         let imageView = UIImageView(
-            image: "coming-soon-meme".assetImage!.withRenderingMode(
-                .alwaysTemplate
-            ).withTintColor(
-                Theme.color.textPrimary
-            )
+            image: UIImage(named: "coming-soon-meme")!
+                .withRenderingMode(.alwaysTemplate)
+                .withTintColor(Theme.color.textPrimary)
         )
         imageView.tintColor = Theme.color.textPrimary
         addSubview(imageView)

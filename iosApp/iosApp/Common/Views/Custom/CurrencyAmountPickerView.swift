@@ -103,8 +103,9 @@ extension CurrencyAmountPickerView {
         updateSendAmountTextField()
         updateSendAmountLabel()
         updateBalanceLabel()
-                
-        currencyIconImageView.image = viewModel.symbolIconName.assetImage
+
+        // TODO: Add placeholder
+        currencyIconImageView.image = UIImage(named: viewModel.symbolIconName)
         currencyLabel.text = viewModel.symbol
         
         if viewModel.becomeFirstResponder { amountTextField.becomeFirstResponder() }

@@ -105,8 +105,7 @@ private extension CurrencyPickerViewController {
         if viewModel.allowMultipleSelection {
             if viewModel.showAddCustomCurrency {
                 navigationItem.leftBarButtonItem = UIBarButtonItem(
-                    image: "plus".assetImage,
-                    style: .plain,
+                    imageName: "plus",
                     target: self,
                     action: #selector(addCustomCurrency)
                 )
@@ -133,8 +132,7 @@ private extension CurrencyPickerViewController {
             }
             if viewModel.showAddCustomCurrency {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(
-                    image: "plus".assetImage,
-                    style: .plain,
+                    imageName: "plus",
                     target: self,
                     action: #selector(addCustomCurrency)
                 )

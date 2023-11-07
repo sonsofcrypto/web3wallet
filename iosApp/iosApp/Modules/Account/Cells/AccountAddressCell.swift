@@ -14,12 +14,12 @@ final class AccountAddressCell: CollectionViewCell {
         titleLabel.apply(style: .callout, weight: .regular)
         layer.cornerRadius = Theme.cornerRadiusSmall * 2
         copyImage.tintColor = Theme.color.textPrimary
+        copyImage.image = UIImage(systemName: "square.on.square")
     }
     
     override func setSelected(_ selected: Bool) {}
 
     func update(with viewModel: AccountViewModel.Address) {
         titleLabel.text = viewModel.addressFormatted
-        copyImage.image = viewModel.copyIcon.assetImage
     }
 }

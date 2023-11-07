@@ -61,7 +61,7 @@ final class CultProposalFooterSupplementaryView: UICollectionReusableView {
 extension CultProposalFooterSupplementaryView {
 
     func update(with viewModel: CultProposalsViewModel.Footer) {
-        imageView.image = viewModel.imageName.assetImage
+        imageView.image = UIImage(named: viewModel.imageName)
         label.text = viewModel.text
     }
 }

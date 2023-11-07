@@ -59,7 +59,7 @@ private extension ConfirmationSendView {
     }
     
     func currencyView(with iconName: String) -> UIView {
-        let image = UIImageView(image: iconName.assetImage)
+        let image = UIImageView(imgName: iconName)
         image.layer.cornerRadius = 16
         image.clipsToBounds = true
         let view = UIView()

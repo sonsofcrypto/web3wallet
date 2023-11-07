@@ -57,7 +57,7 @@ private extension ConfirmationApproveUniswapView {
     }
     
     func tokenView(with iconName: String) -> UIView {
-        let image = UIImageView(image: iconName.assetImage)
+        let image = UIImageView(imgName: iconName)
         image.layer.cornerRadius = 20
         image.clipsToBounds = true
         let view = UIView()

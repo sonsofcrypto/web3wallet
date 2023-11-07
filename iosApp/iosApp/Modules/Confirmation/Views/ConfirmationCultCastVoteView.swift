@@ -65,7 +65,7 @@ private extension ConfirmationCultCastVoteView {
     
     func cultLogo() -> UIView {
         let image = UIImageView()
-        image.image = "cult-dao-big-icon".assetImage
+        image.image = UIImage(named: "cult-dao-big-icon")
         image.contentMode = .scaleAspectFit
         let view = UIView()
         view.backgroundColor = .clear

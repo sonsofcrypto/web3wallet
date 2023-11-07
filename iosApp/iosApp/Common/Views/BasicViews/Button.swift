@@ -275,9 +275,8 @@ final class CustomVerticalButton: UIView {
         with viewModel: ViewModel
     ) {
         nameLabel.text = viewModel.title
-        iconImageView.image = viewModel.imageName.assetImage
-        ?? viewModel.imageName.assetImage
-        
+        iconImageView.image = UIImage(named: viewModel.imageName)
+            ?? UIImage(systemName: viewModel.imageName)
         self.onTap = viewModel.onTap
     }
 }
