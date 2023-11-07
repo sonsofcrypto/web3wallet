@@ -54,7 +54,7 @@ public class Reachability {
             case .notReachable: return "No Connection"
             }
         }
-    }
+    } 
 
     public enum Connection: CustomStringConvertible {
         case unavailable, wifi, cellular

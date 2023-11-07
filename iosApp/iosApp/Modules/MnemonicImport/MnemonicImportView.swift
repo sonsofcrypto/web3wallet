@@ -407,8 +407,8 @@ private extension MnemonicImportViewController {
         collectionView.contentInset.bottom = keyboardSize.height
 
         let firstResponderIdxPath = cv.indexPathsForVisibleItems.filter {
-                    cv.cellForItem(at: $0)?.firstResponder != nil
-                }.first
+            cv.cellForItem(at: $0)?.firstResponder != nil
+        }.first
 
         if let idxPath = firstResponderIdxPath {
             cv.scrollToItem(at: idxPath, at: .centeredVertically, animated: true)

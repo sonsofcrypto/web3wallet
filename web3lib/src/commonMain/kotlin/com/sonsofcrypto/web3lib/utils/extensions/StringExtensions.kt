@@ -5,8 +5,12 @@ fun String.isHexString(): Boolean {
 }
 
 fun String.stripLeadingWhiteSpace(): String {
+    if (this.isEmpty()) return this
     var stripped = this
     listOf(" ", "\t", "\n")
-        .forEach { stripped = stripped.replaceFirst(it, "")  }
+        .forEach {
+            if (it == stripped.first().toString())
+                stripped = stripped.replaceFirst(it, "")
+        }
     return stripped
 }

@@ -12,7 +12,7 @@ final class MnemonicImportCell: ThemeCell {
 
     private var viewModel: MnemonicInputViewModel?
     private var handler: InputHandler?
-    private let inputAccessoryViewHeight: CGFloat = 40
+    private let inputAccessoryViewHeight: CGFloat = 44
     private var mnemonicImportHelper: MnemonicImportHelper!
 
     override func awakeFromNib() {
@@ -92,6 +92,7 @@ private extension MnemonicImportCell {
         textView.attributedText = attributedText
         layer.borderWidth = hasInvalidWords ? 2 : 0
         layer.borderColor = hasInvalidWords ? Theme.color.navBarTint.cgColor : nil
+        layer.cornerRadius = Theme.cornerRadius
         textView.inputAccessoryView?.removeAllSubview()
         mnemonicImportHelper.addWords(
             viewModel.potentialWords,
