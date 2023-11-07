@@ -62,7 +62,7 @@ class DefaultMnemonicImportPresenter(
         is MnemonicImportPresenterEvent.MnemonicChanged -> {
             mnemonic = event.to.stripLeadingWhiteSpace()
             cursorLocation = event.cursorLocation -
-                (event.to.count() -  mnemonic.count())
+                (event.to.count() - mnemonic.count())
             updateView(event.to != mnemonic)
         }
         is MnemonicImportPresenterEvent.DidChangeName -> {

@@ -18,7 +18,15 @@ class TableFlowLayout: UICollectionViewFlowLayout {
     
     override func prepare() {
         super.prepare()
-        
+
+        sectionsCount = collectionView?.numberOfSections ?? 0
+        if sectionsCount != 0 {
+            (0..<sectionsCount).forEach {
+                let cnt = collectionView?.numberOfItems(inSection: $0) ?? 0
+                itemsCount[$0] = cnt
+            }
+        }
+
         guard !isRegistered else { return }
         isRegistered = true
         
@@ -30,16 +38,8 @@ class TableFlowLayout: UICollectionViewFlowLayout {
             SeparatorCellView.self,
             forDecorationViewOfKind:"\(SeparatorCellView.self)"
         )
-        
-        sectionsCount = collectionView?.numberOfSections ?? 0
-        if sectionsCount != 0 {
-            (0..<sectionsCount).forEach {
-                let cnt = collectionView?.numberOfItems(inSection: $0) ?? 0
-                itemsCount[$0] = cnt
-            }
-        }
     }
-    
+
     override func shouldInvalidateLayout(
         forBoundsChange newBounds: CGRect
     ) -> Bool {
