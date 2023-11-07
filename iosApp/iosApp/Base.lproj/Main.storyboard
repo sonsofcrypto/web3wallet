@@ -202,7 +202,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="www-v4-rjC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1794" y="1252"/>
+            <point key="canvasLocation" x="601" y="1487"/>
         </scene>
         <!--Ts Collection View Controller-->
         <scene sceneID="LZ3-lR-qok">
@@ -246,7 +246,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Te-Ty-260" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2522" y="1247"/>
+            <point key="canvasLocation" x="1294" y="1487"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="Ujb-W2-v0C">
@@ -350,7 +350,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LTZ-4H-416" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1794" y="2003"/>
+            <point key="canvasLocation" x="601" y="2163"/>
         </scene>
         <!--Signers-->
         <scene sceneID="b01-w3-BPv">
@@ -628,7 +628,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="IjV-Lq-TfQ" customClass="CollectionView" customModule="iosApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="19" id="kuk-ZD-zvs">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="19" id="kuk-ZD-zvs" customClass="TableGroupedFlowLayout" customModule="iosApp" customModuleProvider="target">
                                     <size key="itemSize" width="343" height="149"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="50" height="50"/>
@@ -649,7 +649,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                 </textView>
-                                                <visualEffectView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mRg-K5-Nm2">
+                                                <visualEffectView hidden="YES" opaque="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mRg-K5-Nm2">
                                                     <rect key="frame" x="1" y="1" width="341" height="147"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="gOJ-C4-lfG">
                                                         <rect key="frame" x="0.0" y="0.0" width="341" height="147"/>
@@ -679,6 +679,7 @@
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="tZe-Jr-Kn4" secondAttribute="bottom" constant="16" id="5VW-dw-cMj"/>
                                                 <constraint firstAttribute="bottom" secondItem="mRg-K5-Nm2" secondAttribute="bottom" constant="1" id="9Dj-Fa-xkm"/>
@@ -1031,10 +1032,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ENI-IK-B8y">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ENI-IK-B8y" customClass="CollectionView" customModule="iosApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="19" id="1WU-cy-oZb">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="19" id="1WU-cy-oZb" customClass="TableGroupedFlowLayout" customModule="iosApp" customModuleProvider="target">
                                     <size key="itemSize" width="343" height="149"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="50" height="50"/>
@@ -1388,7 +1389,6 @@
                     <connections>
                         <outlet property="collectionView" destination="ENI-IK-B8y" id="Nfa-2B-JnF"/>
                         <outlet property="ctaButton" destination="wZr-Ig-iaP" id="hvk-G6-mZM"/>
-                        <outlet property="ctaButtonBottomConstraint" destination="hGP-qU-YL0" id="Xr4-E7-PfG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JMT-1a-wKq" sceneMemberID="firstResponder"/>
@@ -1403,10 +1403,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gba-hS-DqO">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gba-hS-DqO" customClass="CollectionView" customModule="iosApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="698"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="19" id="8JV-dg-Wn1">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="19" id="8JV-dg-Wn1" customClass="TableGroupedFlowLayout" customModule="iosApp" customModuleProvider="target">
                                     <size key="itemSize" width="343" height="149"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="50" height="50"/>
@@ -1814,7 +1814,6 @@
                     <connections>
                         <outlet property="collectionView" destination="gba-hS-DqO" id="hts-GI-dfT"/>
                         <outlet property="ctaButton" destination="fdI-sO-Vvv" id="UfI-vM-fYq"/>
-                        <outlet property="ctaButtonBottomConstraint" destination="RFH-aj-fXg" id="tLo-ij-Nvp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7xG-tx-u80" sceneMemberID="firstResponder"/>

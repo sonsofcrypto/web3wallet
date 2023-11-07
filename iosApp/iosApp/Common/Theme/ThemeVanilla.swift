@@ -35,7 +35,8 @@ struct ThemeVanilla: ThemeProtocol {
         var tabBarBackground: UIColor { .systemBackground }
         var tabBarTint: UIColor { Palette.blue }
         var tabBarTintSelected: UIColor { Palette.pink }
-        var collectionSectionStroke: UIColor { UIColor.clear }
+
+        var collectionSectionStroke: UIColor { UIColor.quaternaryLabel.withAlpha(0.1) }
         var collectionSeparator: UIColor { .quaternaryLabel }
 
         var stroke: UIColor { .label }

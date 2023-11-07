@@ -85,6 +85,7 @@ final class SegmentWithTextAndSwitchCell: ThemeCell {
             self.group1.alpha = sender.selectedSegmentIndex == 2 ? 0 : 1
             self.group2.alpha = sender.selectedSegmentIndex == 2 ? 0 : 1
         }
+        print("[SegmentWithTextAndSwitch] \(sender.selectedSegmentIndex)")
         selectSegmentAction?(sender.selectedSegmentIndex)
 
         // NOTE: Not ideal to assume here that Pin is segement at index 0

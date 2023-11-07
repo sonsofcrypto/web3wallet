@@ -38,6 +38,14 @@ final class MnemonicNewViewController: BaseViewController {
         super.viewDidAppear(animated)
         didAppear = true
     }
+
+    override func traitCollectionDidChange(
+        _ previousTraitCollection: UITraitCollection?
+    ) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyTheme(Theme)
+        cv?.collectionViewLayout.invalidateLayout()
+    }
     
     // MARK: - MnemonicView
     
@@ -45,10 +53,17 @@ final class MnemonicNewViewController: BaseViewController {
         self.viewModel = viewModel
         guard let cv = collectionView else { return }
         ctaButton.setTitle(viewModel.ctaItems.last, for: .normal)
-        let cells = cv.indexPathsForVisibleItems
+        let cells = cv.visibleCells
+            .map { cv.indexPath(for: $0) }
+            .compactMap { $0 }
+        print("Visible cells \(cells.count)")
+        cv.visibleCells.forEach {
+            let idxPath = cv.indexPath(for: $0)
+            print("\(type(of: $0)) \(idxPath?.section) \(idxPath?.item)")
+        }
         didAppear
             ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
-            : cv.reloadData()
+            : cv.reloadData()        
     }
 
     // MARK: - Actions
@@ -360,6 +375,16 @@ private extension MnemonicNewViewController {
         )
         edgePan.edges = [UIRectEdge.left]
         view.addGestureRecognizer(edgePan)
+        applyTheme(Theme)
+    }
+
+    func applyTheme(_ theme: ThemeProtocol) {
+        cv?.separatorInsets = .with(left: theme.padding)
+        cv?.sectionBackgroundColor = theme.color.bgPrimary
+        cv?.sectionBorderColor = theme.color.collectionSectionStroke
+        cv?.separatorColor = theme.color.collectionSeparator
+        (cv?.overscrollView?.subviews.first as? UILabel)?
+            .textColor = theme.color.textPrimary
     }
     
     @objc func showKeyboard(notification: Notification) {

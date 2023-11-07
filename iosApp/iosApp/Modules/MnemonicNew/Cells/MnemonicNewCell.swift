@@ -16,10 +16,9 @@ final class MnemonicNewCell: ThemeCell {
     }
     
     override func applyTheme(_ theme: ThemeProtocol) {
-        backgroundColor = theme.color.bgPrimary
         textView.typingAttributes = [
-            .font: Theme.font.body,
-            .foregroundColor: Theme.color.textPrimary
+            .font: theme.font.body,
+            .foregroundColor: theme.color.textPrimary
         ]
         [layer, overlay.layer].forEach {
             $0.cornerRadius = theme.cornerRadius
