@@ -43,6 +43,14 @@ final class MnemonicImportViewController: BaseViewController {
         (cell as? MnemonicImportCell)?.textView.becomeFirstResponder()
     }
 
+    override func traitCollectionDidChange(
+        _ previousTraitCollection: UITraitCollection?
+    ) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyTheme(Theme)
+        cv?.collectionViewLayout.invalidateLayout()
+    }
+
     // MARK: - MnemonicImportView
 
     func update(
@@ -58,14 +66,15 @@ final class MnemonicImportViewController: BaseViewController {
         guard let cv = collectionView else { return }
         ctaButton.setTitle(viewModel.ctaItems.last, for: .normal)
 
-        let cells = cv.indexPathsForVisibleItems
         let idxs = IndexSet(0..<viewModel.sections.count)
+        let cells = cv.visibleCells
+            .map { cv.indexPath(for: $0) }
+            .compactMap { $0 }
 
         if needsUpdate && !needsReload && didAppear {
             cv.performBatchUpdates({ cv.reloadSections(idxs) })
             return
         }
-
         updateFootersIfNeeded(viewModel)
         !needsReload && didAppear
             ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
@@ -363,37 +372,51 @@ private extension MnemonicImportViewController {
             target: self,
             action: #selector(dismissAction(_:))
         )
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        let constraint = collectionView.bottomAnchor.constraint(
-            equalTo: view.keyboardLayoutGuide.topAnchor
+        NotificationCenter.addKeyboardObserver(
+            self,
+            selector: #selector(keyboardWillShow)
         )
-        constraint.priority = .required
-        constraint.isActive = true
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(showKeyboard),
-            name: UIApplication.keyboardWillShowNotification,
-            object: nil
+        NotificationCenter.addKeyboardObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            event: .willHide
         )
-        ctaButton.style = .primary
         let edgePan = UIScreenEdgePanGestureRecognizer(
             target: self,
             action: #selector(handleGesture(_:))
         )
         edgePan.edges = [UIRectEdge.left]
         view.addGestureRecognizer(edgePan)
+        applyTheme(Theme)
+        ctaButton.style = .primary
     }
-    
-    @objc func showKeyboard(notification: Notification) {
-        let frameKey = UIResponder.keyboardFrameEndUserInfoKey
-        guard let firstResponder = collectionView.firstResponder,
-              let keyboardFrame = notification.userInfo?[frameKey] as? NSValue
-        else { return }
-        let frame = view.convert(firstResponder.bounds, from: firstResponder)
-        let y = frame.maxY + Theme.padding * 2
-        guard y > keyboardFrame.cgRectValue.origin.y - 40,
-              let idxPath = cv.indexPath(for: cv.visibleCells.last!)
-        else { return }
-        cv.scrollToItem(at: idxPath, at: .top, animated: true)
+
+    func applyTheme(_ theme: ThemeProtocol) {
+        cv?.separatorInsets = .with(left: theme.padding)
+        cv?.sectionBackgroundColor = theme.color.bgPrimary
+        cv?.sectionBorderColor = theme.color.collectionSectionStroke
+        cv?.separatorColor = theme.color.collectionSeparator
+        (cv?.overscrollView?.subviews.first as? UILabel)?
+            .textColor = theme.color.textPrimary
+    }
+
+    @objc func keyboardWillShow(notification: Notification) {
+        let key = UIResponder.keyboardFrameEndUserInfoKey
+        let keyboardInfo = notification.userInfo?[key] as! NSValue
+        let keyboardSize = keyboardInfo.cgRectValue.size
+        collectionView.contentInset.bottom = keyboardSize.height
+
+        let firstResponderIdxPath = cv.indexPathsForVisibleItems.filter {
+                    cv.cellForItem(at: $0)?.firstResponder != nil
+                }.first
+
+        if let idxPath = firstResponderIdxPath {
+            cv.scrollToItem(at: idxPath, at: .centeredVertically, animated: true)
+        }
+    }
+
+    @objc func keyboardWillHide(notification: Notification) {
+        collectionView.contentInset.bottom = Theme.padding * 2
     }
 
     func viewModel(at idxPath: IndexPath) -> CellViewModel? {

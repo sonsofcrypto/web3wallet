@@ -47,7 +47,6 @@ class TableGroupedFlowLayout: TableFlowLayout {
     override func layoutAttributesForItem(
         at indexPath: IndexPath
     ) -> UICollectionViewLayoutAttributes? {
-        print("[TableGroupedFlowLayout] \(indexPath.section) \(indexPath.item)")
         let attr = super.layoutAttributesForItem(at: indexPath)
 
         if indexPath.item == 0 {

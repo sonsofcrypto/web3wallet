@@ -47,14 +47,14 @@ private extension MnemonicImportCell {
     func configure() {
         applyTheme(Theme)
         textView.delegate = self
-        textView.inputAccessoryView = mnemonicImportHelper.inputAccessoryView(
-            size: .init(width: contentView.frame.width, height: inputAccessoryViewHeight)
-        )
         mnemonicImportHelper = MnemonicImportHelper(
             textView: textView,
             onMnemonicChangedHandler: { [weak self] newMnemonic, cursorLocation in
                 self?.handler?(newMnemonic, cursorLocation)
             }
+        )
+        textView.inputAccessoryView = mnemonicImportHelper.inputAccessoryView(
+            size: .init(width: contentView.frame.width, height: inputAccessoryViewHeight)
         )
     }
 }
