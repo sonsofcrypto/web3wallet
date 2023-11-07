@@ -35,6 +35,23 @@ extension UIBarButtonItem {
         self.init(image: image, style: style, target: target, action: action)
     }
 
+    convenience init(
+        with title: String?,
+        style: UIBarButtonItem.Style = .plain,
+        target: Any?,
+        action: Selector?
+    ) {
+        self.init(title: title, style: style, target: target, action: action)
+    }
+
+    convenience init(
+        system: UIBarButtonItem.SystemItem,
+        target: Any? = nil,
+        action: Selector? = nil
+    ) {
+        self.init(barButtonSystemItem: system, target: nil, action: nil)
+    }
+
     static func smallLabel(_ title: String = "") -> UIBarButtonItem {
         let label = UILabel(with: .subheadline)
         label.font = UIFont.font(.gothicA1, style: .regular, size: .caption1)
