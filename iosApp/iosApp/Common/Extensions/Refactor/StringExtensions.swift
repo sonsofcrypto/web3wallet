@@ -6,18 +6,6 @@ import UIKit
 
 extension String {
 
-    var loadIconData: Data {
-        assetImage!.pngData()!
-    }
-
-    var assetImage: UIImage? {
-        UIImage.loadImage(named: self)
-    }
-
-    var qrCodeData: Data? {
-        data(using: .isoLatin1, allowLossyConversion: false)
-    }
-
     var decimals: String? {
         let split = self.split(separator: ".")
         guard split.count == 2 else { return nil }
@@ -25,7 +13,7 @@ extension String {
     }
 
     static func currencySymbol(
-            with currencyCode: String = "USD"
+        with currencyCode: String = "USD"
     ) -> String {
         let formatter = NumberFormatter()
         formatter.currencyCode = "usd"
