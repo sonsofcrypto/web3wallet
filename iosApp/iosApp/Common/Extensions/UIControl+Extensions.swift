@@ -11,7 +11,7 @@ extension UIControl {
         action: Selector,
         for controlEvents: UIControl.Event = .touchUpInside
     ) {
-        addTarget(self, action: action, for: controlEvents)
+        addTarget(target, action: action, for: controlEvents)
     }
 
     func removeAllTargets(_ controlEvents: UIControl.Event = .touchUpInside) {

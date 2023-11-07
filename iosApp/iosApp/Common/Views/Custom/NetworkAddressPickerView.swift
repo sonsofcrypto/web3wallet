@@ -30,9 +30,8 @@ final class NetworkAddressPickerView: UIView {
         qrCodeScanButton.addTarget(self, action: #selector(qrCodeScanTapped), for: .touchUpInside)
         textField.delegate = self
         textField.textContentType = .none
-        textField.addDoneToolbarOld(
-            with: .targetAction(.init(target: self, selector: #selector(resignFirstResponder)))
-        )
+        textField.addDoneToolbar(self, action: #selector(resignFirstResponder))
+
         let pasteAction = UIButton(type: .custom)
         pasteAction.setTitle(Localized("paste"), for: .normal)
         pasteAction.titleLabel?.font = Theme.font.subheadlineBold

@@ -45,9 +45,7 @@ final class CurrencyAmountPickerView: UIView {
         fiatSymbol.isHidden = true
         amountTextField.font = Theme.font.title3
         amountTextField.delegate = self
-        amountTextField.addDoneToolbarOld(
-            with: .targetAction(.init(target: self, selector: #selector(resignFirstResponder)))
-        )
+        amountTextField.addDoneToolbar(self, action: #selector(resignFirstResponder))
         
         let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(flipMode))
         flipImageView.image = UIImage(systemName: "arrow.left.arrow.right")
