@@ -117,7 +117,7 @@ private extension AlertViewController {
         let imageView = UIImageView()
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
-        imageView.image = name.assetImage
+        imageView.image = UIImage(named: name) ?? UIImage(systemName: name)
         imageView.tintColor = Theme.color.textPrimary.withAlpha(0.75)
         let wrappingView = UIView()
         wrappingView.backgroundColor = .clear

@@ -48,7 +48,7 @@ extension SignersCell {
         index: Int
     ) -> Self {
         self.handler = handler
-        let image = "\(index + 1).square.fill".assetImage!
+        let image = UIImage(systemName: "\(index + 1).square.fill")
         let config = UIImage.SymbolConfiguration(
             paletteColors: [
                 Theme.color.textPrimary,

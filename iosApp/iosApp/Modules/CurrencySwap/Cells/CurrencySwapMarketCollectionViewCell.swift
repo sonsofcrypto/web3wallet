@@ -37,7 +37,7 @@ final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
         imageView.superview?.layer.cornerRadius = Theme.cornerRadius.half.half
         imageView.superview?.backgroundColor = Theme.color.bgPrimary
         imageView.tintColor = Theme.color.textSecondary
-        imageView.image = "arrow.up.arrow.down".assetImage
+        imageView.image = UIImage(systemName: "arrow.up.arrow.down")
         imageView.isHidden = false
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(flip))
         imageView.superview?.superview?.addGestureRecognizer(tapGesture)
@@ -114,7 +114,7 @@ extension CurrencySwapMarketCollectionViewCell {
         if viewModel.isCalculating { showLoading() }
         else { hideLoading() }
         button.setImage(
-            viewModel.providerAsset.assetImage?.resize(
+            UIImage(named: viewModel.providerAsset)?.resize(
                 to: .init(width: 24, height: 24)
             ),
             for: .normal

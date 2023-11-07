@@ -28,7 +28,6 @@ data class AccountViewModel(
     data class Address(
         val addressFormatted: String,
         val address: String,
-        val copyIcon: String,
     )
 
     data class MarketInfo(

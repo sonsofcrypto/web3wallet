@@ -20,7 +20,7 @@ final class CurrencyPickerNetworkCell: CollectionViewCell {
     }
     
     func update(with viewModel: CurrencyPickerViewModel.Network) {
-        iconImageView.image = viewModel.iconName.assetImage
+        iconImageView.image = UIImage(named: viewModel.iconName)
         nameLabel.text = viewModel.name
         layer.borderWidth = viewModel.isSelected ? 1.0 : 0.0
         nameLabel.textColor = viewModel.isSelected ? Theme.color.textPrimary : Theme.color.textSecondary

@@ -111,7 +111,6 @@ class DefaultAccountPresenter(
             interactor.address(context.network), 12, context.network
         ),
         interactor.address(context.network),
-        "square.on.square"
     )
 
     private fun candlesViewModel(): CandlesViewModel = CandlesViewModel.loaded(

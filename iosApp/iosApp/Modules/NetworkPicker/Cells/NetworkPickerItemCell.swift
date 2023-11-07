@@ -22,9 +22,9 @@ final class NetworkPickerItemCell: UICollectionViewCell {
         with viewModel: NetworkPickerViewModel.Item,
         and width: CGFloat
     ) {
-        if let image = viewModel.imageName?.assetImage {
+        if let imgName = viewModel.imageName {
             iconImageView.isHidden = false
-            iconImageView.image = image
+            iconImageView.image = UIImage(named: imgName)
         } else {
             iconImageView.isHidden = true
         }

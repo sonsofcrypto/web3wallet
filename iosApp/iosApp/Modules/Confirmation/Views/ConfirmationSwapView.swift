@@ -61,7 +61,7 @@ private extension ConfirmationSwapView {
     }
     
     func currencyView(with imageName: String) -> UIView {
-        let image = UIImageView(image: imageName.assetImage)
+        let image = UIImageView(imgName: imageName)
         image.layer.cornerRadius = 16
         image.clipsToBounds = true
         let view = UIView()
@@ -80,7 +80,7 @@ private extension ConfirmationSwapView {
     }
     
     func arrowDown() -> UIView {
-        let imageView = UIImageView(image: "arrow.down".assetImage)
+        let imageView = UIImageView(sysImgName: "arrow.down")
         imageView.tintColor = Theme.color.textPrimary
         let backgroundView = UIView()
         backgroundView.backgroundColor = Theme.color.bgPrimary
@@ -163,7 +163,7 @@ private extension ConfirmationSwapView {
         let providerLabel = UILabel()
         providerLabel.apply(style: .body)
         providerLabel.text = Localized("confirmation.provider")
-        let icon = UIImageView(image: viewModel.provider.iconName.assetImage)
+        let icon = UIImageView(imgName: viewModel.provider.iconName)
         let providerName = UILabel()
         providerName.apply(style: .body)
         providerName.text = viewModel.provider.name.capitalized

@@ -36,7 +36,7 @@ extension CurrencySwapProviderView {
         self.handler = handler
         button.setTitle(viewModel.name, for: .normal)
         button.style = .secondarySmall(
-            leftImage: viewModel.iconName.assetImage?.resize(
+            leftImage: UIImage(named: viewModel.iconName)?.resize(
                 to: .init(width: 24, height: 24)
             )
         )
