@@ -123,15 +123,13 @@ private extension CurrencySwapViewController {
     func configureUI() {
         if (navigationController?.viewControllers.count ?? 0) > 1 {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: "chevron.left".assetImage,
-                style: .plain,
+                sysImgName: "chevron.left",
                 target: self,
                 action: #selector(navBarLeftActionTapped)
             )
         } else {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: .init(systemName: "xmark"),
-                style: .plain,
+                sysImgName: "xmark",
                 target: self,
                 action: #selector(navBarLeftActionTapped)
             )

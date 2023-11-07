@@ -67,7 +67,7 @@ private extension AuthenticateViewController {
     func configureUI() {
         title = Localized("authenticate")
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            with: "chevron.left".assetImage,
+            sysImgName: "chevron.left",
             target: self,
             action: #selector(dismissAction(_:))
         )

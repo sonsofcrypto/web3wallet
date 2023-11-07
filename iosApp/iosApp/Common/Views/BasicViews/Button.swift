@@ -274,7 +274,6 @@ final class CustomVerticalButton: UIView {
     func update(
         with viewModel: ViewModel
     ) {
-        
         nameLabel.text = viewModel.title
         iconImageView.image = viewModel.imageName.assetImage
         ?? viewModel.imageName.assetImage

@@ -51,10 +51,8 @@ extension CurrencyAddViewController {
     
    func configureNavigationBar() {
        title = viewModel?.title
-
        navigationItem.leftBarButtonItem = UIBarButtonItem(
-        image: "chevron.left".assetImage,
-           style: .plain,
+           sysImgName: "chevron.left",
            target: self,
            action: #selector(navBarLeftActionTapped)
        )

@@ -27,8 +27,8 @@ final class NavigationController: UINavigationController {
             .font: Theme.font.navTitle
         ]
         appearance.setBackIndicatorImage(
-            "chevron.left".assetImage,
-            transitionMaskImage: "chevron.left".assetImage
+            UIImage(systemName: "chevron.left"),
+            transitionMaskImage: UIImage(systemName: "chevron.left")
         )
 
         navigationBar.standardAppearance = appearance

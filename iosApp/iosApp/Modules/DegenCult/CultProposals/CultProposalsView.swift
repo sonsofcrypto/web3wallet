@@ -145,7 +145,8 @@ private extension CultProposalsViewController {
     }
     
     func setDefaultTitle() {
-        let cultIcon = "degen-cult-icon".assetImage?.resize(to: .init(width: 32, height: 32))
+        let cultIcon = UIImage(named: "degen-cult-icon")?
+            .resize(to: .init(width: 32, height: 32))
         let imageView = UIImageView(image: cultIcon)
         let titleLabel = UILabel()
         titleLabel.text = Localized("cult.proposals.title")

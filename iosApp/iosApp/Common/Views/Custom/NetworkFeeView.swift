@@ -16,11 +16,11 @@ final class NetworkFeeView: UIView {
         super.awakeFromNib()
         nameLabel.apply(style: .footnote)
         nameLabel.text = Localized("networkFeeView.estimatedFee")
-        networkFeeCurrencyIcon.image = "send-ethereum-token".assetImage
+        networkFeeCurrencyIcon.image = UIImage(systemName: "send-ethereum-token")
         networkFeeButton.style = .secondarySmall(
-            leftImage: "dashboard-charging-station".assetImage
+            leftImage: UIImage(systemName: "dashboard-charging-station")
         )
-        networkFeeButton.addTarget(self, action: #selector(changeNetworkFee), for: .touchUpInside)
+        networkFeeButton.addTar(self, action: #selector(changeNetworkFee))
     }
 }
 

@@ -45,13 +45,10 @@ private extension NFTDetailViewController {
         mainScrollView.addConstraints(.toEdges)
         let showBack = (navigationController?.viewControllers.count ?? 0) > 1
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: showBack ? "chevron.left".assetImage : "xmark".assetImage,
-            style: .plain,
+            sysImgName: showBack ? "chevron.left" : "xmark",
             target: self,
             action: #selector(dismissTapped)
         )
-        // TODO: Enable once switcher to collection view
-        // (mainScrollView as? ScrollView)?.overScrollView.image = "overscroll_ape".assetImage
     }
     
     @objc func dismissTapped() {

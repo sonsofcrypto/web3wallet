@@ -359,8 +359,7 @@ private extension MnemonicImportViewController {
     func configureUI() {
         title = Localized("mnemonic.title.import")
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: "chevron.left".assetImage,
-            style: .plain,
+            sysImgName: "chevron.left",
             target: self,
             action: #selector(dismissAction(_:))
         )

@@ -86,7 +86,7 @@ private extension DefaultNFTsDashboardWireframe {
         self.vc = nc
         nc.tabBarItem = UITabBarItem(
             title: Localized("nfts"),
-            image: "tab_icon_nfts".assetImage,
+            image: UIImage(named: "tab_icon_nfts"),
             tag: 2
         )
         return nc

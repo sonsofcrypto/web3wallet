@@ -311,7 +311,7 @@ private extension DashboardViewController {
         )
         navigationController?.tabBarItem = UITabBarItem(
             title: Localized("dashboard.tab.title"),
-            image: "tab_icon_dashboard".assetImage,
+            image: UIImage(named: "tab_icon_dashboard"),
             tag: 0
         )
         edgeCardsController?.delegate = self

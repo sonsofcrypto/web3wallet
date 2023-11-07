@@ -94,8 +94,7 @@ private extension NFTSendViewController {
     func configureUI() {
         if (navigationController?.viewControllers.count ?? 0) > 1 {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: "chevron.left".assetImage,
-                style: .plain,
+                sysImgName: "chevron.left",
                 target: self,
                 action: #selector(navBarLeftActionTapped)
             )

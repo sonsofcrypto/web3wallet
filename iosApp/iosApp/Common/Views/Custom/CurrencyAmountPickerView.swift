@@ -50,7 +50,7 @@ final class CurrencyAmountPickerView: UIView {
         )
         
         let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(flipMode))
-        flipImageView.image = "arrow.left.arrow.right".assetImage
+        flipImageView.image = UIImage(systemName: "arrow.left.arrow.right")
         flipImageView.tintColor = Theme.color.textPrimary
         flipImageView.isUserInteractionEnabled = true
         flipImageView.addGestureRecognizer(tapGesture1)
@@ -69,7 +69,7 @@ final class CurrencyAmountPickerView: UIView {
         currencyView.addGestureRecognizer(tapGesture)
         currencyIconImageView.layer.cornerRadius = currencyIconImageView.frame.size.width * 0.5
         currencyLabel.apply(style: .body)
-        currencyDropdownImageView.image = "chevron.down".assetImage
+        currencyDropdownImageView.image = UIImage(systemName: "chevron.down")
         currencyDropdownImageView.tintColor = Theme.color.textPrimary
 
         balanceLabel.font = Theme.font.footnote

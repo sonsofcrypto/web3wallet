@@ -79,7 +79,7 @@ private extension DefaultDegenWireframe {
         let nc = NavigationController(rootViewController: vc)
         nc.tabBarItem = UITabBarItem(
             title: Localized("degen"),
-            image: "tab_icon_degen".assetImage,
+            image: UIImage(named: "tab_icon_degen"),
             tag: 1
         )
         self.vc = nc
