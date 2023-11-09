@@ -256,7 +256,7 @@ final class CustomVerticalButton: UIView {
         self.nameLabel = nameLabel
         
         let vStack = VStackView([wrapperView, nameLabel])
-        vStack.spacing = Theme.padding.half
+        vStack.spacing = Theme.paddingHalf
         addSubview(vStack)
         
         vStack.addConstraints(

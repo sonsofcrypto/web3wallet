@@ -54,9 +54,9 @@ final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
         button.style = .primary
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         stackView.setCustomSpacing(Theme.padding, after: currencyTo)
-        stackView.setCustomSpacing(Theme.padding.half.half, after: currencySwapProviderView)
-        stackView.setCustomSpacing(Theme.padding.half.half, after: currencySwapPriceView)
-        stackView.setCustomSpacing(Theme.padding.half, after: currencySwapSlippageView)
+        stackView.setCustomSpacing(Theme.paddingHalf.half, after: currencySwapProviderView)
+        stackView.setCustomSpacing(Theme.paddingHalf.half, after: currencySwapPriceView)
+        stackView.setCustomSpacing(Theme.paddingHalf, after: currencySwapSlippageView)
         stackView.setCustomSpacing(Theme.padding, after: networkFeeView)
     }
     

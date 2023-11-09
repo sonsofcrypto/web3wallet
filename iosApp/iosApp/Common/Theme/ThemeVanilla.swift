@@ -10,6 +10,7 @@ struct ThemeVanilla: ThemeProtocol {
     let supportedVariants: [ThemeVariant] = [.light, .dark]
     let statusBarStyle: UIStatusBarStyle = .default
     let padding: CGFloat = 16
+    let paddingHalf: CGFloat = 8
     let cornerRadius: CGFloat = 14
     let cornerRadiusSmall: CGFloat = 8
     let shadowRadius: CGFloat = 4

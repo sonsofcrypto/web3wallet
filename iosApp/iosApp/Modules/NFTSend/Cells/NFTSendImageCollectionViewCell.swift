@@ -57,7 +57,7 @@ private extension NFTSendImageCollectionViewCell {
         )
         let containerView = UIView()
         let vStackView = VStackView(views)
-        vStackView.spacing = Theme.padding.half
+        vStackView.spacing = Theme.paddingHalf
         vStackView.clipsToBounds = true
         containerView.addSubview(vStackView)
         vStackView.addConstraints(
@@ -65,7 +65,7 @@ private extension NFTSendImageCollectionViewCell {
                 .layout(anchor: .topAnchor),
                 .layout(
                     anchor: .bottomAnchor,
-                    constant: .equalTo(constant: Theme.padding.half)
+                    constant: .equalTo(constant: Theme.paddingHalf)
                 ),
                 .layout(anchor: .centerXAnchor)
             ]

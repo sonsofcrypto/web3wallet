@@ -55,7 +55,7 @@ private extension ConfirmationTxFailedView {
             label(with: .body, and: viewModel.error, numberOfLines: 4)
         ]
         let stackView = VStackView(views)
-        stackView.spacing = Theme.padding.half
+        stackView.spacing = Theme.paddingHalf
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.tag = 12

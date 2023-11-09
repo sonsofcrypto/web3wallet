@@ -10,6 +10,7 @@ struct ThemeMiamiSunrise: ThemeProtocol {
     let supportedVariants: [ThemeVariant] = [.light, .dark]
     let statusBarStyle: UIStatusBarStyle = .lightContent
     let padding: CGFloat = 16
+    let paddingHalf: CGFloat = 8
     let cornerRadius: CGFloat = 16
     let cornerRadiusSmall: CGFloat = 8
     let shadowRadius: CGFloat = 4
