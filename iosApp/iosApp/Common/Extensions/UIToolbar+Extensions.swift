@@ -30,8 +30,11 @@ extension UIToolbar {
         layout.minimumInteritemSpacing = Theme.paddingHalf
         let collectionView = UICollectionView(
             frame: toolbar.bounds,
-            collectionViewLayout: <#T##UICollectionViewLayout##UIKit.UICollectionViewLayout#>
+            collectionViewLayout: layout
         )
+        collectionView.backgroundColor = .clear
+        toolbar.setItems([.init(customView: collectionView)], animated: false)
+        return toolbar
     }
 
     func wrapInInputView() -> UIInputView {

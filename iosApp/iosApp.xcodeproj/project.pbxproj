@@ -318,6 +318,7 @@
 		2DC2C9901F566790509A07AC /* UIView+Toast+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C18C65C1FB607E58F687 /* UIView+Toast+Extensions.swift */; };
 		2DC2C9BD5DE2813FCC617F20 /* ButtonsSheetViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CBF8C62A6A6D9D6E9648 /* ButtonsSheetViewCell.swift */; };
 		2DC2C9D1FB74B5B96901DF84 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C41CD86FECDF03FCCBE8 /* UILabel+Extensions.swift */; };
+		2DC2C9D9EC56173B33DF06FA /* PlainTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C18D29998109474100FE /* PlainTextCell.swift */; };
 		2DC2CA0CCE7CABC9108BF9AA /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CE81AB1FAA8B931C37CE /* UITextView+Extensions.swift */; };
 		2DC2CA1BB3426CD144AE0590 /* FPSCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C3CCFB57B631938128A4 /* FPSCounter.swift */; };
 		2DC2CA50F84C2639C6C30EF5 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C4B6C92D814FB1D50384 /* Double+Extensions.swift */; };
@@ -706,6 +707,7 @@
 		1F871F672AC18F320002A1AC /* LabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		1FC997DA2AC6C48E00EAF032 /* ServicesAssemblers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssemblers.swift; sourceTree = "<group>"; };
 		2DC2C18C65C1FB607E58F687 /* UIView+Toast+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Toast+Extensions.swift"; sourceTree = "<group>"; };
+		2DC2C18D29998109474100FE /* PlainTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlainTextCell.swift; sourceTree = "<group>"; };
 		2DC2C24534389C71A56B59FF /* SunLogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SunLogoView.swift; sourceTree = "<group>"; };
 		2DC2C36EEBD7DC01205DEFA8 /* CollectionBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionBackgroundView.swift; sourceTree = "<group>"; };
 		2DC2C3CCFB57B631938128A4 /* FPSCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPSCounter.swift; sourceTree = "<group>"; };
@@ -836,6 +838,7 @@
 				1A4C31ABF9D50601A55F94D0 /* SwitchTextInputCollectionViewCell.swift */,
 				1A4C3E9049D6DF4AB69A8CF5 /* TextInputCollectionViewCell.swift */,
 				2DC2C36EEBD7DC01205DEFA8 /* CollectionBackgroundView.swift */,
+				2DC2C18D29998109474100FE /* PlainTextCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2420,6 +2423,7 @@
 				2DC2CF60440C5C9E64FCD9AF /* UIControl+Extensions.swift in Sources */,
 				2DC2CC0CAF4FB724C7E46D6F /* NotificationCenter+Extensions.swift in Sources */,
 				2DC2C620CFC47846ACCE3962 /* UIToolbar+Extensions.swift in Sources */,
+				2DC2C9D9EC56173B33DF06FA /* PlainTextCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
