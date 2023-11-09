@@ -363,6 +363,8 @@ extension MnemonicImportViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
+// MARK: - Configure UI
+
 private extension MnemonicImportViewController {
     
     func configureUI() {

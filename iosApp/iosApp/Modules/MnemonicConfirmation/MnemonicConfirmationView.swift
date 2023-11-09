@@ -104,7 +104,9 @@ private extension MnemonicConfirmationViewController {
         saltTextField.text = nil
         saltTextField.delegate = self
         saltTextField.placeholderAttrText = Localized("mnemonicConfirmation.salt.placeholder")
-        saltTextField.addDoneToolbar(self, action: #selector(dismissKeyboard))
+        saltTextField.inputView = UIToolbar
+            .withDoneButton(self, action: #selector(dismissKeyboard))
+            .wrapInInputView()
         button.style = .primary
         button.setTitle(Localized("mnemonicConfirmation.cta"), for: .normal)
     }

@@ -107,7 +107,9 @@ final class SegmentWithTextAndSwitchCell: ThemeCell {
         textField.delegate = self
         textField.keyboardType = .numberPad
         textField.returnKeyType = .done
-        textField.addDoneToolbar(self, action: #selector(dismissKeyboard))
+        textField.inputView = UIToolbar
+            .withDoneButton(self, action: #selector(dismissKeyboard))
+            .wrapInInputView()
 
         onOffSwitch.addTarget(
             self,

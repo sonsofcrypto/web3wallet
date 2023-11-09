@@ -31,43 +31,6 @@ class TextField: UITextField {
     }
 }
 
-extension TextField {
-
-    func addDoneToolbar(
-        _ target: Any?,
-        action: Selector,
-        keyboardStyle: Bool = true
-    ) {
-        let toolbar = addToolbar(keyboardStyle: keyboardStyle)
-        let title = Localized("done")
-        let items = [
-            UIBarButtonItem(system: .flexibleSpace),
-            UIBarButtonItem(with: title, target: target, action: action)
-        ]
-        toolbar.setItems(items, animated: false)
-    }
-
-    func addToolbar(keyboardStyle: Bool = false) -> UIToolbar {
-        let width = AppDelegate.keyWindow()?.bounds.width ?? 320
-        let frame = CGRect(origin: .zero, size: .init(width: width, height: 44))
-        let toolbar = UIToolbar(frame: frame)
-        if keyboardStyle {
-            toolbar.backgroundColor = .clear
-            toolbar.setBackgroundImage(
-                UIImage(),
-                forToolbarPosition: .any,
-                barMetrics: .default
-            )
-            let inputView = UIInputView(frame: frame, inputViewStyle: .keyboard)
-            inputView.addSubview(toolbar)
-            inputAccessoryView = inputView
-        } else {
-            inputAccessoryView = toolbar
-        }
-        return toolbar
-    }
-}
-
 private extension TextField {
     
     func configure() {

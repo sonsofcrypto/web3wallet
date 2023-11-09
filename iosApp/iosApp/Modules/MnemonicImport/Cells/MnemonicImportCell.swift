@@ -47,6 +47,7 @@ private extension MnemonicImportCell {
     func configure() {
         applyTheme(Theme)
         textView.delegate = self
+
         mnemonicImportHelper = MnemonicImportHelper(
             textView: textView,
             onMnemonicChangedHandler: { [weak self] newMnemonic, cursorLocation in
@@ -56,6 +57,8 @@ private extension MnemonicImportCell {
         textView.inputAccessoryView = mnemonicImportHelper.inputAccessoryView(
             size: .init(width: contentView.frame.width, height: inputAccessoryViewHeight)
         )
+        let toolbar = UIToolbar.keyboardToolbar()
+        textView.inputAccessoryView = toolbar.wrapInInputView()
     }
 }
 

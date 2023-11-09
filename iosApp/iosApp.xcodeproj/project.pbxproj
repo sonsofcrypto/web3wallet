@@ -311,6 +311,7 @@
 		1FC997DB2AC6C48E00EAF032 /* ServicesAssemblers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC997DA2AC6C48E00EAF032 /* ServicesAssemblers.swift */; };
 		2DC2C012B95A4F8F35D1D6FB /* Formatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CD3EC5E4207469E46E7C /* Formatter+Extensions.swift */; };
 		2DC2C26F1F43B153BACAD338 /* CollectionBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C36EEBD7DC01205DEFA8 /* CollectionBackgroundView.swift */; };
+		2DC2C620CFC47846ACCE3962 /* UIToolbar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C99C34B1CD6C6DE24FB8 /* UIToolbar+Extensions.swift */; };
 		2DC2C661E437984DDF1C0E33 /* AlertWireframe+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C4716D8E32D5CE26DDA2 /* AlertWireframe+Extensions.swift */; };
 		2DC2C7C3A650E3B9EB8B0D3B /* SunLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C24534389C71A56B59FF /* SunLogoView.swift */; };
 		2DC2C8B1CFC018D58D54D527 /* LogoAnimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C41558C39C7EFB97BC1F /* LogoAnimView.swift */; };
@@ -716,6 +717,7 @@
 		2DC2C5F6967254E33338C759 /* NotificationCenter+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C7C91B9C13F1D182D921 /* UIControl+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C8FA05735FD6B546BA4B /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		2DC2C99C34B1CD6C6DE24FB8 /* UIToolbar+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIToolbar+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C9A15E44BDD7C7864D81 /* CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		2DC2CA1C756CB56666E04D0A /* ThemeBlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeBlurView.swift; sourceTree = "<group>"; };
 		2DC2CA6DB2985E8753EA28D7 /* NFTsDashboardCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsDashboardCollectionCell.swift; sourceTree = "<group>"; };
@@ -1427,6 +1429,7 @@
 				1C54BB3B291B9F400009F158 /* Web3walletcore+Extensions.swift */,
 				2DC2C7C91B9C13F1D182D921 /* UIControl+Extensions.swift */,
 				2DC2C5F6967254E33338C759 /* NotificationCenter+Extensions.swift */,
+				2DC2C99C34B1CD6C6DE24FB8 /* UIToolbar+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2416,6 +2419,7 @@
 				2DC2CE81DB04333AC1E6833F /* ThemeBlurView.swift in Sources */,
 				2DC2CF60440C5C9E64FCD9AF /* UIControl+Extensions.swift in Sources */,
 				2DC2CC0CAF4FB724C7E46D6F /* NotificationCenter+Extensions.swift in Sources */,
+				2DC2C620CFC47846ACCE3962 /* UIToolbar+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

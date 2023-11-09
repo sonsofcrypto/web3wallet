@@ -93,7 +93,9 @@ private extension CurrencyAddInputView {
         textField.autocorrectionType = .no
         textField.spellCheckingType = .no
         textField.clearButtonMode = .whileEditing
-        textField.addDoneToolbar(self, action: #selector(dismissKeyboard))
+        textField.inputView = UIToolbar
+            .withDoneButton(self, action: #selector(dismissKeyboard))
+            .wrapInInputView()
         textField.delegate = self
         stackView.addArrangedSubview(textField)
         self.textField = textField

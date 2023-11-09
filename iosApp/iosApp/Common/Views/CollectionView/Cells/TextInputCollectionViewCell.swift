@@ -15,7 +15,9 @@ final class TextInputCollectionViewCell: ThemeCell {
         super.awakeFromNib()
         titleLabel.adjustsFontSizeToFitWidth = true
         textField.delegate = self
-        textField.addDoneToolbar(self, action: #selector(resignFirstResponder))
+        textField.inputView = UIToolbar
+            .withDoneButton(self, action: #selector(resignFirstResponder))
+            .wrapInInputView()
     }
             
     override func applyTheme(_ theme: ThemeProtocol) {
