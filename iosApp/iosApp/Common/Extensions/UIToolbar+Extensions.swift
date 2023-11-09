@@ -27,7 +27,7 @@ extension UIToolbar {
         let toolbar = keyboardToolbar()
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = Theme.padding.half
+        layout.minimumInteritemSpacing = Theme.paddingHalf
         let collectionView = UICollectionView(
             frame: toolbar.bounds,
             collectionViewLayout: <#T##UICollectionViewLayout##UIKit.UICollectionViewLayout#>

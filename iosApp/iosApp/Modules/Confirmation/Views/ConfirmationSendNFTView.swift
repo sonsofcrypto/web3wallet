@@ -33,7 +33,7 @@ private extension ConfirmationSendNFTView {
             confirmButton()
         ]
         let stackView = VStackView(views)
-        stackView.spacing = Theme.padding.half
+        stackView.spacing = Theme.paddingHalf
         stackView.setCustomSpacing(Theme.padding, after: views[0])
         stackView.setCustomSpacing(Theme.padding, after: views[1])
         stackView.setCustomSpacing(Theme.padding, after: views[2])

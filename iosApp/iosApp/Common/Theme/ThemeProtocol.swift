@@ -23,6 +23,7 @@ protocol ThemeProtocol {
     var supportedVariants: [ThemeVariant] { get }
     var statusBarStyle: UIStatusBarStyle { get }
     var padding: CGFloat { get }
+    var paddingHalf: CGFloat { get }
     // TODO(Anon): To be consolidated further
     var cornerRadius: CGFloat { get }
     var cornerRadiusSmall: CGFloat { get }

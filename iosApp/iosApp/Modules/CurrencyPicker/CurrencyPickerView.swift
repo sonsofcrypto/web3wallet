@@ -292,7 +292,7 @@ private extension CurrencyPickerViewController {
         )
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.orthogonalScrollingBehavior = .continuous
-        section.interGroupSpacing = Theme.padding.half
+        section.interGroupSpacing = Theme.paddingHalf
         section.contentInsets = .init(
             top: 0,
             leading: Theme.padding,

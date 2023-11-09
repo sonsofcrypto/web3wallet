@@ -45,7 +45,7 @@ private extension DashboardHeaderTitleView {
         rightAction.textColor = Theme.color.textPrimary
         rightAction.isHidden = true
         rightAction.add(.targetAction(.init(target: self, selector: #selector(moreTapped))))
-        let offset = ThemeVanilla.isCurrent() ? 0 : -Theme.padding.half + 1
+        let offset = ThemeVanilla.isCurrent() ? 0 : -Theme.paddingHalf + 1
         stack.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stack)
         stack.contraintToSuperView(bottom: offset)

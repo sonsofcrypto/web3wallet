@@ -52,10 +52,10 @@ extension NSDirectionalEdgeInsets {
 
     static var paddingHalf: Self {
         .init(
-            top: Theme.padding.half,
-            leading: Theme.padding.half,
-            bottom: Theme.padding.half,
-            trailing: Theme.padding.half
+            top: Theme.paddingHalf,
+            leading: Theme.paddingHalf,
+            bottom: Theme.paddingHalf,
+            trailing: Theme.paddingHalf
         )
     }
 

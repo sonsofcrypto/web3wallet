@@ -42,12 +42,12 @@ private extension NFTDetailViewController {
             propertyValue.textAlignment = .left
             propertyValue.text = $0.value
             let hStack = HStackView([propertyName, propertyValue])
-            hStack.spacing = Theme.padding.half
+            hStack.spacing = Theme.paddingHalf
             propertyName.setContentHuggingPriority(.required, for: .horizontal)
             rows.append(hStack)
         }
         let vStack = VStackView(rows)
-        vStack.spacing = Theme.padding.half
+        vStack.spacing = Theme.paddingHalf
         return vStack
     }
 }
