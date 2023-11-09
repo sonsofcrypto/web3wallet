@@ -1404,7 +1404,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gba-hS-DqO" customClass="CollectionView" customModule="iosApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="698"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="19" id="8JV-dg-Wn1" customClass="TableGroupedFlowLayout" customModule="iosApp" customModuleProvider="target">
                                     <size key="itemSize" width="343" height="149"/>
@@ -1805,8 +1805,8 @@
                             <constraint firstItem="dCO-2M-T98" firstAttribute="leading" secondItem="bWg-rx-Kjk" secondAttribute="leading" constant="16" id="5X1-tP-bsO"/>
                             <constraint firstItem="bWg-rx-Kjk" firstAttribute="trailing" secondItem="dCO-2M-T98" secondAttribute="trailing" constant="16" id="8Xr-3o-v5m"/>
                             <constraint firstItem="gba-hS-DqO" firstAttribute="leading" secondItem="bWg-rx-Kjk" secondAttribute="leading" id="JaM-JI-h5y"/>
+                            <constraint firstItem="bWg-rx-Kjk" firstAttribute="bottom" secondItem="gba-hS-DqO" secondAttribute="bottom" id="Ptm-P2-FKa"/>
                             <constraint firstItem="dCO-2M-T98" firstAttribute="bottom" secondItem="bWg-rx-Kjk" secondAttribute="bottom" id="RFH-aj-fXg"/>
-                            <constraint firstItem="dCO-2M-T98" firstAttribute="top" secondItem="gba-hS-DqO" secondAttribute="bottom" constant="16" id="kjC-0L-EOA"/>
                             <constraint firstItem="gba-hS-DqO" firstAttribute="trailing" secondItem="bWg-rx-Kjk" secondAttribute="trailing" id="ssX-8O-KNi"/>
                         </constraints>
                     </view>

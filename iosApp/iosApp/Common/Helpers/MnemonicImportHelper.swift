@@ -22,32 +22,20 @@ final class MnemonicImportHelper {
     private var potentialWords: [String] = []
     
     func inputAccessoryView(size: CGSize) -> UIView {
-        let scrollView = UIScrollView(
-            frame: .init(
-                origin: .zero,
-                size: size
-            )
-        )
+        let scrollView = UIScrollView(frame: .init(origin: .zero, size: size))
         scrollView.backgroundColor = Theme.color.navBarBackground
         addWords([], to: scrollView)
         return scrollView
     }
     
-    func addWords(
-        _ potentialWords: [String],
-        to view: UIView?
-    ) {
+    func addWords(_ potentialWords: [String], to view: UIView?) {
         guard let view = view else { return }
         self.potentialWords = potentialWords
         var labels = [UILabel]()
         for (index, word) in potentialWords.enumerated() {
             let label = UILabel(with: .body)
             label.text = word
-            label.addConstraints(
-                [
-                    .hugging(axis: .horizontal)
-                ]
-            )
+            label.addConstraints([.hugging(axis: .horizontal)])
             label.add(
                 .targetAction(.init(target: self, selector: #selector(wordSelectedFromInputView(sender:))))
             )

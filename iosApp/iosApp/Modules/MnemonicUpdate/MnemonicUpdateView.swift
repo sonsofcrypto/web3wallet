@@ -38,6 +38,14 @@ final class MnemonicUpdateViewController: BaseViewController {
         super.viewDidAppear(animated)
         didAppear = true
     }
+
+    override func traitCollectionDidChange(
+            _ previousTraitCollection: UITraitCollection?
+    ) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyTheme(Theme)
+        cv?.collectionViewLayout.invalidateLayout()
+    }
     
     @IBAction func ctaAction(_ sender: Any) {
         presenter.handleEvent(MnemonicUpdatePresenterEvent.Update())
@@ -61,8 +69,10 @@ extension MnemonicUpdateViewController {
         guard let cv = collectionView else { return }
         ctaButton.setTitle(viewModel.ctaItems.last, for: .normal)
 
-        let cells = cv.indexPathsForVisibleItems
         let idxs = IndexSet(0..<viewModel.sections.count)
+        let cells = cv.visibleCells
+            .map { cv.indexPath(for: $0) }
+            .compactMap { $0 }
 
         if needsUpdate && !needsReload && didAppear {
             cv.performBatchUpdates({ cv.reloadSections(idxs) })
@@ -303,25 +313,63 @@ private extension MnemonicUpdateViewController {
             target: self,
             action: #selector(dismissAction(_:))
         )
+        NotificationCenter.addKeyboardObserver(
+                self,
+                selector: #selector(keyboardWillShow)
+        )
+        NotificationCenter.addKeyboardObserver(
+                self,
+                selector: #selector(keyboardWillHide),
+                event: .willHide
+        )
         collectionView.register(
             DeleteCell.self,
             forCellWithReuseIdentifier: "\(DeleteCell.self)"
         )
-        ctaButton.style = .primary
         let edgePan = UIScreenEdgePanGestureRecognizer(
             target: self,
             action: #selector(handleGesture(_:))
         )
         edgePan.edges = [UIRectEdge.left]
         view.addGestureRecognizer(edgePan)
+        applyTheme(Theme)
         registerForBackgroundNotifications()
+        ctaButton.style = .primary
     }
-    
+
+    func applyTheme(_ theme: ThemeProtocol) {
+        cv?.separatorInsets = .with(left: theme.padding)
+        cv?.sectionBackgroundColor = theme.color.bgPrimary
+        cv?.sectionBorderColor = theme.color.collectionSectionStroke
+        cv?.separatorColor = theme.color.collectionSeparator
+        (cv?.overscrollView?.subviews.first as? UILabel)?
+            .textColor = theme.color.textPrimary
+    }
+
+    @objc func keyboardWillShow(notification: Notification) {
+        let key = UIResponder.keyboardFrameEndUserInfoKey
+        let keyboardInfo = notification.userInfo?[key] as! NSValue
+        let keyboardSize = keyboardInfo.cgRectValue.size
+        collectionView.contentInset.bottom = keyboardSize.height
+
+        let firstResponderIdxPath = cv.indexPathsForVisibleItems.filter {
+            cv.cellForItem(at: $0)?.firstResponder != nil
+        }.first
+
+        if let idxPath = firstResponderIdxPath {
+            cv.scrollToItem(at: idxPath, at: .centeredVertically, animated: true)
+        }
+    }
+
+    @objc func keyboardWillHide(notification: Notification) {
+        collectionView.contentInset.bottom = Theme.padding * 2
+    }
+
     func registerForBackgroundNotifications() {
         NotificationCenter.default.addObserver(
-            self, selector: #selector(didEnterBackground),
-            name: UIApplication.didEnterBackgroundNotification,
-            object: nil
+            self,
+            selector: #selector(didEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification
         )
     }
     
