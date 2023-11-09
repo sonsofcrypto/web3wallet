@@ -52,6 +52,10 @@ extension UICollectionView {
         )
     }
 
+    func register<T: UICollectionViewCell>(_ type: T.Type) {
+        register(type, forCellWithReuseIdentifier: "\(T.self)")
+    }
+
 
     func deselectAllExcept(
         _ idxPaths: [IndexPath]? = nil,
