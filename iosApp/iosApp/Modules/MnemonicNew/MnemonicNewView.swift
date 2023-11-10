@@ -367,8 +367,8 @@ private extension MnemonicNewViewController {
         edgePan.edges = [UIRectEdge.left]
         view.addGestureRecognizer(edgePan)
         cv.pinOverscrollToBottom = true
-        ctaButton.style = .primary
         applyTheme(Theme)
+        ctaButton.style = .primary
     }
 
     func layoutOverscrollView() {
