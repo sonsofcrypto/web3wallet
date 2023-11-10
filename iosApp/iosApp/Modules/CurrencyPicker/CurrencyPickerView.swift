@@ -68,7 +68,7 @@ private extension CurrencyPickerViewController {
         searchTextField.text = nil
         searchTextField.delegate = self
         searchTextField.placeholder = Localized("search")
-        searchTextField.inputView = UIToolbar
+        searchTextField.inputAccessoryView = UIToolbar
                 .withDoneButton(self, action: #selector(clearSearchAnddismissKeyboard))
                 .wrapInInputView()
 

@@ -142,7 +142,6 @@ private extension Button {
     }
     
     func updateSecondaryStyle(leftImage: UIImage?) {
-        
         var configuration = UIButton.Configuration.plain()
         configuration.titleTextAttributesTransformer = .init{ incoming in
             var outgoing = incoming

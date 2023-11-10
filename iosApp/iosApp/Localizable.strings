@@ -127,7 +127,7 @@
 "mnemonic.title.import" = "Import wallet";
 "mnemonic.title.update" = "Edit wallet";
 "mnemonic.tapToReveal" = "Tap to reveal mnemonic";
-"mnemonic.footer" = "Write down mnemonic above. Never share it with anyone. All of the accounts/wallets are derived from it. If lost crypto is unrecoverable";
+"mnemonic.footer" = "Write down mnemonic above. Never share it with anyone. All of the accounts/wallets are derived from it. If lost crypto is unrecoverable.";
 "mnemonic.footerHighlightWord0" = "Never";
 "mnemonic.footerHighlightWord1" = "unrecoverable";
 "mnemonic.name.title" = "Wallet name";
