@@ -33,6 +33,7 @@ extension UIToolbar {
             collectionViewLayout: layout
         )
         collectionView.backgroundColor = .clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         toolbar.setItems([.init(customView: collectionView)], animated: false)
         return toolbar
     }
@@ -45,6 +46,7 @@ extension UIToolbar {
             barMetrics: .default
         )
         let inputView = UIInputView(frame: frame, inputViewStyle: .keyboard)
+        inputView.translatesAutoresizingMaskIntoConstraints = false
         inputView.addSubview(self)
         return inputView
     }

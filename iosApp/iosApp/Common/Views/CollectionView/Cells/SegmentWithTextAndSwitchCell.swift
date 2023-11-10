@@ -105,7 +105,6 @@ final class SegmentWithTextAndSwitchCell: ThemeCell {
     private func configureUI() {
         textField.delegate = self
         textField.keyboardType = .numberPad
-        textField.returnKeyType = .done
         textField.inputAccessoryView = UIToolbar
             .withDoneButton(self, action: #selector(dismissKeyboard))
             .wrapInInputView()
