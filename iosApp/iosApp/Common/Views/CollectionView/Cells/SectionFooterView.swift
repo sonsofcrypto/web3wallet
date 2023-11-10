@@ -45,9 +45,9 @@ private extension SectionFooterView {
 
     func sectionFooter() -> [NSAttributedString.Key: Any] {
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6
+        paragraphStyle.lineSpacing = 2
         return [
-            .font: Theme.font.sectionHeader,
+            .font: Theme.font.sectionFooter,
             .foregroundColor: Theme.color.textSecondary,
             .paragraphStyle: paragraphStyle
         ]

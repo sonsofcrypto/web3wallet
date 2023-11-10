@@ -45,7 +45,7 @@ final class CurrencyAmountPickerView: UIView {
         fiatSymbol.isHidden = true
         amountTextField.font = Theme.font.title3
         amountTextField.delegate = self
-        amountTextField.inputView = UIToolbar
+        amountTextField.inputAccessoryView = UIToolbar
             .withDoneButton(self, action: #selector(resignFirstResponder))
             .wrapInInputView()
 

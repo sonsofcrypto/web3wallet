@@ -17,7 +17,7 @@ class CollectionView: UICollectionView {
     /// `overscrollView` top is at the end of the scroll area. `abovescrollView`
     /// bottom is at the end of scroll area. It is recommended to set
     /// `contentInset.bottom` to height of the `abovescrollView`
-    var abovescrollView: UIView? {
+    @IBOutlet var abovescrollView: UIView? {
         didSet { didSetNewOverscrollView(abovescrollView, old: oldValue)}
     }
     /// View in on the top of content

@@ -5,17 +5,16 @@
 import UIKit
 import web3walletcore
 
-final class MnemonicNewViewController: BaseViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
+final class MnemonicNewViewController: UICollectionViewController {
     @IBOutlet weak var ctaButton: Button!
-
+    
     var presenter: MnemonicNewPresenter!
 
-    private var viewModel: CollectionViewModel.Screen?
-    private var cv: CollectionView! { (collectionView as! CollectionView) }
     private var didAppear: Bool = false
     private var prevSize: CGSize = .zero
     private var cellSize: CGSize = .zero
+    private var viewModel: CollectionViewModel.Screen?
+    private var cv: CollectionView! { (collectionView as! CollectionView) }
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
     private var interactiveTransitioning: CardFlipInteractiveTransitioning?
 
@@ -32,6 +31,7 @@ final class MnemonicNewViewController: BaseViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         recomputeSizeIfNeeded()
+        layoutOverscrollView()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -58,7 +58,7 @@ final class MnemonicNewViewController: BaseViewController {
             .compactMap { $0 }
         didAppear
             ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
-            : cv.reloadData()        
+            : cv.reloadData()
     }
 
     // MARK: - Actions
@@ -74,20 +74,20 @@ final class MnemonicNewViewController: BaseViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension MnemonicNewViewController: UICollectionViewDataSource {
+extension MnemonicNewViewController {
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         viewModel?.sections.count ?? 0
     }
 
-    func collectionView(
+    override func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
         viewModel?.sections[safe: section]?.items.count ?? 0
     }
 
-    func collectionView(
+    override func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
@@ -136,7 +136,7 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
         fatalError("Not implemented")
     }
 
-    func collectionView(
+    override func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
@@ -156,9 +156,9 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 
-extension MnemonicNewViewController: UICollectionViewDelegate {
+extension MnemonicNewViewController {
 
-    func collectionView(
+    override func collectionView(
         _ collectionView: UICollectionView,
         shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
@@ -250,12 +250,13 @@ extension MnemonicNewViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForFooterInSection section: Int
     ) -> CGSize {
-        String.estimateSize(
+        let size = String.estimateSize(
             viewModel?.sections[section].footer?.text(),
             font: Theme.font.sectionFooter,
             maxWidth: cellSize.width,
             extraHeight: Theme.padding
         )
+        return size
     }
 }
 
@@ -365,8 +366,17 @@ private extension MnemonicNewViewController {
         )
         edgePan.edges = [UIRectEdge.left]
         view.addGestureRecognizer(edgePan)
-        applyTheme(Theme)
+        cv.pinOverscrollToBottom = true
         ctaButton.style = .primary
+        applyTheme(Theme)
+    }
+
+    func layoutOverscrollView() {
+        ctaButton.bounds.size.height = Theme.buttonHeight
+        cv.abovescrollView?.bounds.size.width = view.bounds.size.width
+        cv.abovescrollView?.bounds.size.height = ctaButton.bounds.height
+            + view.safeAreaInsets.bottom
+            + Theme.padding
     }
 
     func applyTheme(_ theme: ThemeProtocol) {
@@ -379,11 +389,6 @@ private extension MnemonicNewViewController {
     }
 
     @objc func keyboardWillShow(notification: Notification) {
-        let key = UIResponder.keyboardFrameEndUserInfoKey
-        let keyboardInfo = notification.userInfo?[key] as! NSValue
-        let keyboardSize = keyboardInfo.cgRectValue.size
-        collectionView.contentInset.bottom = keyboardSize.height
-
         let firstResponderIdxPath = cv.indexPathsForVisibleItems.filter {
             cv.cellForItem(at: $0)?.firstResponder != nil
         }.first
