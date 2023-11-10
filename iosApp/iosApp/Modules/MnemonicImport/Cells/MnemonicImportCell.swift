@@ -13,8 +13,6 @@ final class MnemonicImportCell: ThemeCell, UICollectionViewDataSource,
 
     private var viewModel: MnemonicInputViewModel?
     private var handler: InputHandler?
-    private let inputAccessoryViewHeight: CGFloat = 44
-    private var mnemonicImportHelper: MnemonicImportHelper!
     private var toolbarCollectionView: UICollectionView?
 
     override func awakeFromNib() {

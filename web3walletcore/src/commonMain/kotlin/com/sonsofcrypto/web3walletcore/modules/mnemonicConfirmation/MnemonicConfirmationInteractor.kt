@@ -4,6 +4,7 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3walletcore.services.actions.Action
 import com.sonsofcrypto.web3walletcore.services.actions.ActionsService
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicService
+import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicWord
 
 interface MnemonicConfirmationInteractor {
@@ -14,6 +15,7 @@ interface MnemonicConfirmationInteractor {
     fun isMnemonicValid(mnemonic: String, salt: String?): Boolean
     fun showSalt(): Boolean
     fun markConfirmActionComplete()
+    fun mnemonicError(mnemonic: List<String>, salt: String): MnemonicServiceError?
 }
 
 class DefaultMnemonicConfirmationInteractor(
@@ -45,4 +47,10 @@ class DefaultMnemonicConfirmationInteractor(
     override fun markConfirmActionComplete() {
         actionsService.markComplete(Action.ConfirmMnemonic)
     }
+
+    override fun mnemonicError(
+        mnemonic: List<String>,
+        salt: String
+    ): MnemonicServiceError? =
+        mnemonicService.mnemonicError(mnemonic.joinToString(" "), salt)
 }

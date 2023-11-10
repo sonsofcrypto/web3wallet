@@ -70,11 +70,8 @@ final class MnemonicNewViewController: UICollectionViewController {
     @IBAction func dismissAction(_ sender: Any?) {
         presenter.handleEvent(MnemonicNewPresenterEvent.DidSelectDismiss())
     }
-}
 
-// MARK: - UICollectionViewDataSource
-
-extension MnemonicNewViewController {
+    // MARK: - UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         viewModel?.sections.count ?? 0
@@ -200,11 +197,8 @@ extension MnemonicNewViewController {
     func allowFaceIdDidChange(_ onOff: Bool) {
         presenter.handleEvent(.AllowFaceIdDidChange(onOff: onOff))
     }
-}
 
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension MnemonicNewViewController: UICollectionViewDelegateFlowLayout {
+    // MARK: - UICollectionViewDelegateFlowLayout
 
     func collectionView(
         _ collectionView: UICollectionView,

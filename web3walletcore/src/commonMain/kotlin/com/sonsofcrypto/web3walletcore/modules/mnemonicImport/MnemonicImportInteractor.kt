@@ -99,7 +99,10 @@ class DefaultMnemonicImportInteractor(
         return signerStoreItem
     }
 
-    override fun mnemonicError(mnemonic: List<String>, salt: String): MnemonicServiceError? =
+    override fun mnemonicError(
+        mnemonic: List<String>,
+        salt: String
+    ): MnemonicServiceError? =
         mnemonicService.mnemonicError(mnemonic.joinToString(" "), salt)
 
     override fun generatePassword(): String = secureRand(32).toHexString()
