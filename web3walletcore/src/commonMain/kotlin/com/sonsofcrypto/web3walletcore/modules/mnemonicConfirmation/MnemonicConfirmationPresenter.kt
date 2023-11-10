@@ -4,7 +4,11 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.extensions.stripLeadingWhiteSpace
 import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicInputViewModel
 import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicPresenterHelper
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
+import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationWireframeDestination.Dismiss
+import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError
 
 sealed class MnemonicConfirmationPresenterEvent {
     object Dismiss: MnemonicConfirmationPresenterEvent()
@@ -65,23 +69,99 @@ class DefaultMnemonicConfirmationPresenter(
     }
 
     private fun updateView(updateMnemonic: Boolean = false) {
-        view.get()?.update(viewModel(updateMnemonic))
+        view.get()?.update(viewModel(), mnemonicItem(updateMnemonic))
     }
 
-    private fun viewModel(updateMnemonic: Boolean = false): MnemonicConfirmationViewModel {
-        val prefixForPotentialWords = interactor.prefix(mnemonic, cursorLocation)
-        val potentialWords = interactor.potentialMnemonicWords(prefixForPotentialWords)
+    private fun viewModel(): CollectionViewModel.Screen {
+        val error = interactor.mnemonicError(mnemonic.trim().split(" "), salt)
+        var sections = mutableListOf(mnemonicSection(error))
+        if (error == null && interactor.showSalt())
+            sections.add(saltSection())
+        return CollectionViewModel.Screen(
+            Localized("mnemonicConfirmation.title"),
+            sections,
+            listOf(ctaString()),
+        )
+    }
+
+    private fun ctaString(): String = if (ctaTapped) {
+        val isValid = interactor.isMnemonicValid(mnemonic.trim(), salt)
+        if (isValid) Localized("mnemonicConfirmation.cta.congratulations")
+        else Localized("mnemonicConfirmation.cta.invalid")
+    } else Localized("mnemonicConfirmation.cta")
+
+//    private fun viewModelOld(updateMnemonic: Boolean = false): MnemonicConfirmationViewModel {
+//        val prefixForPotentialWords = interactor.prefix(mnemonic, cursorLocation)
+//        val potentialWords = interactor.potentialMnemonicWords(prefixForPotentialWords)
+//        var wordsInfo = interactor.findInvalidWords(mnemonic)
+//        wordsInfo = common.updateWordsInfo(wordsInfo, prefixForPotentialWords, cursorLocation) {
+//            interactor.isValidPrefix(it)
+//        }
+//        val isMnemonicValid = interactor.isMnemonicValid(mnemonic.trim(), salt)
+//        return MnemonicConfirmationViewModel(
+//            potentialWords = potentialWords,
+//            wordsInfo = wordsInfo.map { MnemonicInputViewModel.Word(it.word, it.isInvalid) },
+//            isValid = if (ctaTapped) isMnemonicValid else null,
+//            mnemonicToUpdate = if (updateMnemonic) mnemonic else null,
+//            showSalt = interactor.showSalt()
+//        )
+//    }
+
+    private fun saltSection(): CollectionViewModel.Section = CollectionViewModel.Section(
+        Localized("mnemonicConfirmation.salt"),
+        listOf(
+            CellViewModel.TextInput(
+                "",
+                salt,
+                Localized("mnemonicConfirmation.salt.placeholder"),
+            ),
+        ),
+        null,
+    )
+
+    private fun mnemonicSection(err: MnemonicServiceError?): CollectionViewModel.Section =
+        CollectionViewModel.Section(
+            Localized("mnemonicConfirmation.confirm.wallet"),
+            listOf(CellViewModel.Text(mnemonic)),
+            mnemonicFooter(err),
+        )
+
+    // TODO: Clean up
+    private fun mnemonicItem(updateMnemonic: Boolean): MnemonicInputViewModel {
+        val helper = MnemonicPresenterHelper()
+        val currentWord = interactor.prefix(mnemonic, cursorLocation)
+        val potentialWords = interactor.potentialMnemonicWords(currentWord)
         var wordsInfo = interactor.findInvalidWords(mnemonic)
-        wordsInfo = common.updateWordsInfo(wordsInfo, prefixForPotentialWords, cursorLocation) {
+        wordsInfo = helper.updateWordsInfo(wordsInfo, currentWord, cursorLocation) {
             interactor.isValidPrefix(it)
         }
         val isMnemonicValid = interactor.isMnemonicValid(mnemonic.trim(), salt)
-        return MnemonicConfirmationViewModel(
+        return MnemonicInputViewModel(
             potentialWords,
             wordsInfo.map { MnemonicInputViewModel.Word(it.word, it.isInvalid) },
             if (ctaTapped) isMnemonicValid else null,
             if (updateMnemonic) mnemonic else null,
-            interactor.showSalt()
         )
+    }
+
+    private fun mnemonicFooter(error: MnemonicServiceError? = null): CollectionViewModel.Footer {
+        if (error == null)
+            return CollectionViewModel.Footer.HighlightWords(
+                Localized("mnemonic.footer"),
+                listOf(
+                    Localized("mnemonic.footerHighlightWord0"),
+                    Localized("mnemonic.footerHighlightWord1"),
+                )
+            )
+        return when (error) {
+            MnemonicServiceError.INVALID_WORD_COUNT -> CollectionViewModel.Footer.HighlightWords(
+                Localized("mnemonic.error.invalid.wordCount"),
+                listOf(Localized("mnemonic.error.invalid.wordCount.highlight"))
+            )
+            MnemonicServiceError.OTHER -> CollectionViewModel.Footer.HighlightWords(
+                Localized("mnemonic.error.invalid"),
+                listOf(Localized("mnemonic.error.invalid"))
+            )
+        }
     }
 }

@@ -152,7 +152,6 @@ class SettingsViewController: UICollectionViewController, UICollectionViewDelega
             )
         )
     }
-    
 }
 
 // MARK: - Configure UI

@@ -5,182 +5,245 @@
 import UIKit
 import web3walletcore
 
-final class MnemonicConfirmationViewController: UIViewController {
-    @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var textViewContainer: UIView!
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var saltContainer: UIStackView!
-    @IBOutlet weak var saltLabel: UILabel!
-    @IBOutlet weak var saltTextFieldView: UIView!
-    @IBOutlet weak var saltTextField: TextField!
-    @IBOutlet weak var button: Button!
+final class MnemonicConfirmationViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    @IBOutlet weak var ctaButton: Button!
 
     var presenter: MnemonicConfirmationPresenter!
-    
-    private var viewModel: MnemonicConfirmationViewModel!
-    private let inputAccessoryViewHeight: CGFloat = 40
-    private var firstTime = true
-    private var mnemonicImportHelper: MnemonicImportHelper!
-        
+
+    private var didAppear: Bool = false
+    private var prevSize: CGSize = .zero
+    private var cellSize: CGSize = .zero
+    private var mnemonicInputViewModel: MnemonicInputViewModel?
+    private var viewModel: CollectionViewModel.Screen?
+    private var cv: CollectionView! { (collectionView as! CollectionView) }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         presenter.present()
     }
 
-    func update(with viewModel: MnemonicConfirmationViewModel) {
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        recomputeSizeIfNeeded()
+        layoutOverscrollView()
+    }
+
+    override func traitCollectionDidChange(
+        _ previousTraitCollection: UITraitCollection?
+    ) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyTheme(Theme)
+        cv?.collectionViewLayout.invalidateLayout()
+    }
+
+    func update(
+        with viewModel: CollectionViewModel.Screen,
+        mnemonicInputViewModel: MnemonicInputViewModel
+    ) {
         self.viewModel = viewModel
-        refresh()
-        if firstTime {
-            firstTime = false
-            textView.becomeFirstResponder()
+        self.mnemonicInputViewModel = mnemonicInputViewModel
+        guard let cv = collectionView else { return }
+        ctaButton.setTitle(viewModel.ctaItems.last, for: .normal)
+        let cells = cv.visibleCells
+            .map { cv.indexPath(for: $0) }
+            .compactMap { $0 }
+        didAppear
+            ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
+            : cv.reloadData()
+    }
+
+    // MARK: - UICollectionViewDataSource
+
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        viewModel?.sections.count ?? 0
+    }
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        viewModel?.sections[safe: section]?.items.count ?? 0
+    }
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let viewModel = self.viewModel(at: indexPath) else {
+            fatalError("Wrong number of items in section \(indexPath)")
+        }
+        switch viewModel {
+        case let vm as CellViewModel.Text:
+            return cv.dequeue(MnemonicImportCell.self, for: indexPath)
+                .update(with: mnemonicInputViewModel) { [weak self] str, loc in
+                    self?.mnemonicDidChange(str, cursorLocation: loc)
+                }
+        case let vm as CellViewModel.TextInput:
+            return cv.dequeue(TextInputCollectionViewCell.self, for: indexPath)
+                .update(
+                    with: vm,
+                    inputHandler: { [weak self] t in self?.saltDidChange(t) }
+                )
+        default:
+            ()
+        }
+        fatalError("Not implemented")
+    }
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            return cv.dequeue(SectionHeaderView.self, for: indexPath, kind: kind)
+                .update(with: viewModel?.sections[indexPath.section])
+        default:
+            fatalError("Failed to handle \(kind) \(indexPath)")
         }
     }
+
+    // MARK: - CTAs
 
     @IBAction func ctaAction(_ sender: Any) {
         presenter.handleEvent(.Confirm())
     }
-}
 
-extension MnemonicConfirmationViewController: UITextViewDelegate {
-    
-    func textView(
-        _ textView: UITextView,
-        shouldChangeTextIn range: NSRange,
-        replacementText text: String
-    ) -> Bool {
-        guard text == "\n" else { return true }
-        textView.resignFirstResponder()
-        return false
+    @IBAction func dismissAction(_ sender: Any?) {
+        presenter.handleEvent(.Dismiss())
     }
-    
-    func textViewDidChange(_ textView: UITextView) {
+
+    func mnemonicDidChange(_ mnemonic: String, cursorLocation: Int) {
         presenter.handleEvent(
-            .MnemonicChanged(
-                to: textView.text,
-                cursorLocation: textView.selectedRange.location.int32
-            )
+            .MnemonicChanged(to: mnemonic, cursorLocation: cursorLocation.int32)
         )
     }
+
+    func saltDidChange(_ salt: String) {
+        presenter.handleEvent(.SaltChanged(to: salt))
+    }
+
+    // MARK: - UICollectionViewDelegateFlowLayout
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        guard let viewModel = viewModel(at: indexPath) else { return cellSize }
+        switch viewModel {
+        case _ as CellViewModel.Text:
+            return CGSize(
+                width: cellSize.width,
+                height: Constant.mnemonicCellHeight
+            )
+        default:
+            return cellSize
+        }
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        String.estimateSize(
+            viewModel?.sections[section].header,
+            font: Theme.font.sectionHeader,
+            maxWidth: cellSize.width,
+            extraHeight: Theme.padding.twice,
+            minHeight: Theme.padding
+        )
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForFooterInSection section: Int
+    ) -> CGSize {
+        .zero
+    }
 }
+
+// MARK: - Configure
 
 private extension MnemonicConfirmationViewController {
     
     func configureUI() {
-        mnemonicImportHelper = MnemonicImportHelper(
-            textView: textView,
-            onMnemonicChangedHandler: { [weak self] newMnemonic, selectedLocation in
-                self?.presenter.handleEvent(
-                    .MnemonicChanged(
-                        to: newMnemonic,
-                        cursorLocation: selectedLocation.int32
-                    )
-                )
-            }
-        )
         title = Localized("mnemonicConfirmation.title")
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: .init(systemName: "xmark"),
-            style: .plain,
+            sysImgName: "xmark",
             target: self,
-            action: #selector(dismissTapped)
+            action: #selector(dismissAction)
         )
-        statusLabel.text = Localized("mnemonicConfirmation.confirm.wallet")
-        statusLabel.font = Theme.font.body
-        statusLabel.textColor = Theme.color.textPrimary
-        statusLabel.textAlignment = .left
-        textViewContainer.backgroundColor = Theme.color.bgPrimary
-        textViewContainer.layer.cornerRadius = Theme.cornerRadiusSmall
-        textView.delegate = self
-        textView.applyStyle(.body)
-        textView.inputAccessoryView = mnemonicImportHelper.inputAccessoryView(
-            size: .init(width: view.frame.width, height: inputAccessoryViewHeight)
+        NotificationCenter.addKeyboardObserver(
+            self,
+            selector: #selector(keyboardWillShow)
         )
-        saltLabel.text = Localized("mnemonicConfirmation.salt")
-        saltLabel.apply(style: .headline)
-        saltTextFieldView.backgroundColor = Theme.color.bgPrimary
-        saltTextFieldView.layer.cornerRadius = Theme.cornerRadiusSmall
-        saltTextField.backgroundColor = .clear
-        saltTextField.text = nil
-        saltTextField.delegate = self
-        saltTextField.placeholderAttrText = Localized("mnemonicConfirmation.salt.placeholder")
-        saltTextField.inputAccessoryView = UIToolbar
-            .withDoneButton(self, action: #selector(dismissKeyboard))
-            .wrapInInputView()
-        button.style = .primary
-        button.setTitle(Localized("mnemonicConfirmation.cta"), for: .normal)
+        NotificationCenter.addKeyboardObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            event: .willHide
+        )
+        cv.pinOverscrollToBottom = true
+        applyTheme(Theme)
+        ctaButton.style = .primary
     }
-    
-    @objc func dismissKeyboard() { textView.resignFirstResponder() }
 
-    @objc func dismissTapped() { presenter.handleEvent(.Dismiss()) }
+    func layoutOverscrollView() {
+        ctaButton.bounds.size.height = Theme.buttonHeight
+        cv.abovescrollView?.bounds.size.width = view.bounds.size.width
+        cv.abovescrollView?.bounds.size.height = ctaButton.bounds.height
+            + view.safeAreaInsets.bottom
+            + Theme.padding
+    }
+
+    func applyTheme(_ theme: ThemeProtocol) {
+        cv?.separatorInsets = .with(left: theme.padding)
+        cv?.sectionBackgroundColor = theme.color.bgPrimary
+        cv?.sectionBorderColor = theme.color.collectionSectionStroke
+        cv?.separatorColor = theme.color.collectionSeparator
+        (cv?.overscrollView?.subviews.first as? UILabel)?
+            .textColor = theme.color.textPrimary
+    }
+
+    @objc func keyboardWillShow(notification: Notification) {
+        let firstResponderIdxPath = cv.indexPathsForVisibleItems.filter {
+            cv.cellForItem(at: $0)?.firstResponder != nil
+        }.first
+
+        if let idxPath = firstResponderIdxPath {
+            cv.scrollToItem(at: idxPath, at: .centeredVertically, animated: true)
+        }
+    }
+
+    @objc func keyboardWillHide(notification: Notification) {
+        collectionView.contentInset.bottom = Theme.padding * 2
+    }
+
+    func viewModel(at idxPath: IndexPath) -> CellViewModel? {
+        return viewModel?.sections[idxPath.section].items[idxPath.item]
+    }
+
+    func recomputeSizeIfNeeded() {
+        guard prevSize.width != view.bounds.size.width else { return }
+        prevSize = view.bounds.size
+        cellSize = .init(
+            width: view.bounds.size.width - Theme.padding * 2,
+            height: Theme.cellHeight
+        )
+    }
 }
+
+// MARK: - Constants
 
 private extension MnemonicConfirmationViewController {
-    
-    func refresh() {
-        refreshTextView()
-        saltContainer.isHidden = !viewModel.showSalt
-        refreshCTA()
-    }
-    
-    func refreshTextView() {
-        if let text = viewModel.mnemonicToUpdate {
-            textView.text = text
-        }
-        let selectedRange = textView.selectedRange
-        let attributedText = NSMutableAttributedString(
-            string: textView.text,
-            attributes: [
-                .font: Theme.font.body,
-                .foregroundColor: Theme.color.textPrimary
-            ]
-        )
-        var location = 0
-        var hasInvalidWords = false
-        for wordInfo in viewModel.wordsInfo {
-            guard wordInfo.isInvalid else {
-                location += wordInfo.word.count + 1
-                continue
-            }
-            attributedText.setAttributes(
-                [
-                    .foregroundColor: Theme.color.navBarTint,
-                    .font: Theme.font.body
-                ],
-                range: .init(
-                    location: location,
-                    length: wordInfo.word.count
-                )
-            )
-            location += wordInfo.word.count + 1
-            hasInvalidWords = true
-        }
-        textView.attributedText = attributedText
-        textViewContainer.layer.borderWidth = hasInvalidWords ? 2 : 0
-        textViewContainer.layer.borderColor = hasInvalidWords ? Theme.color.navBarTint.cgColor : nil
-        textView.inputAccessoryView?.removeAllSubview()
-        mnemonicImportHelper.addWords(viewModel.potentialWords, to: textView.inputAccessoryView)
-        textView.selectedRange = selectedRange
-    }
-    
-    func refreshCTA() {
-        guard let isValid = viewModel.isValid?.boolValue else {
-            button.setTitle(Localized("mnemonicConfirmation.cta"), for: .normal)
-            return
-        }
-        
-        if isValid {
-            button.setTitle(Localized("mnemonicConfirmation.cta.congratulations"), for: .normal)
-        } else {
-            button.setTitle(Localized("mnemonicConfirmation.cta.invalid"), for: .normal)
-        }
-    }
-}
 
-extension MnemonicConfirmationViewController: UITextFieldDelegate {
-    
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        presenter.handleEvent(MnemonicConfirmationPresenterEvent.SaltChanged(to: textField.text ?? ""))
+    enum Constant {
+        static let mnemonicCellHeight: CGFloat = 110
+        static let cellSaltOpenHeight: CGFloat = 142
+        static let cellPassOpenHeight: CGFloat = 138
     }
 }

@@ -40,7 +40,7 @@ final class MnemonicUpdateViewController: UICollectionViewController {
     }
 
     override func traitCollectionDidChange(
-            _ previousTraitCollection: UITraitCollection?
+        _ previousTraitCollection: UITraitCollection?
     ) {
         super.traitCollectionDidChange(previousTraitCollection)
         applyTheme(Theme)
