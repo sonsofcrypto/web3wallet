@@ -5,7 +5,8 @@
 import UIKit
 import web3walletcore
 
-final class MnemonicConfirmationViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+final class MnemonicConfirmationViewController: UICollectionViewController,
+    UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var ctaButton: Button!
 
     var presenter: MnemonicConfirmationPresenter!
@@ -43,11 +44,14 @@ final class MnemonicConfirmationViewController: UICollectionViewController, UICo
     ) {
         self.viewModel = viewModel
         self.mnemonicInputViewModel = mnemonicInputViewModel
+
         guard let cv = collectionView else { return }
         ctaButton.setTitle(viewModel.ctaItems.last, for: .normal)
+
         let cells = cv.visibleCells
             .map { cv.indexPath(for: $0) }
             .compactMap { $0 }
+
         didAppear
             ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
             : cv.reloadData()

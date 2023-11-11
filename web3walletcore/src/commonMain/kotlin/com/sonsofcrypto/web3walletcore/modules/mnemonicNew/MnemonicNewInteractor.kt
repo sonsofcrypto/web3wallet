@@ -54,5 +54,5 @@ class DefaultMnemonicNewInteractor(
         type: SignerStoreItem.PasswordType
     ): String? = passwordService.validationError(password, type)
 
-    override fun keyStoreItemsCount(): Int = signerStoreService.items().count()
+    override fun keyStoreItemsCount(): Int = signerStoreService.items().count
 }
