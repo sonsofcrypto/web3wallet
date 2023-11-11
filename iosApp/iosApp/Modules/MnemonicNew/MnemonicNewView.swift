@@ -5,7 +5,8 @@
 import UIKit
 import web3walletcore
 
-final class MnemonicNewViewController: UICollectionViewController {
+final class MnemonicNewViewController: UICollectionViewController,
+    UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var ctaButton: Button!
     
     var presenter: MnemonicNewPresenter!

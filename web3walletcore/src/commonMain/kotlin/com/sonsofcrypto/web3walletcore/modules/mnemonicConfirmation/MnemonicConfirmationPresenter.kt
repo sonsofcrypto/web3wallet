@@ -90,23 +90,6 @@ class DefaultMnemonicConfirmationPresenter(
         else Localized("mnemonicConfirmation.cta.invalid")
     } else Localized("mnemonicConfirmation.cta")
 
-//    private fun viewModelOld(updateMnemonic: Boolean = false): MnemonicConfirmationViewModel {
-//        val prefixForPotentialWords = interactor.prefix(mnemonic, cursorLocation)
-//        val potentialWords = interactor.potentialMnemonicWords(prefixForPotentialWords)
-//        var wordsInfo = interactor.findInvalidWords(mnemonic)
-//        wordsInfo = common.updateWordsInfo(wordsInfo, prefixForPotentialWords, cursorLocation) {
-//            interactor.isValidPrefix(it)
-//        }
-//        val isMnemonicValid = interactor.isMnemonicValid(mnemonic.trim(), salt)
-//        return MnemonicConfirmationViewModel(
-//            potentialWords = potentialWords,
-//            wordsInfo = wordsInfo.map { MnemonicInputViewModel.Word(it.word, it.isInvalid) },
-//            isValid = if (ctaTapped) isMnemonicValid else null,
-//            mnemonicToUpdate = if (updateMnemonic) mnemonic else null,
-//            showSalt = interactor.showSalt()
-//        )
-//    }
-
     private fun saltSection(): CollectionViewModel.Section = CollectionViewModel.Section(
         Localized("mnemonicConfirmation.salt"),
         listOf(

@@ -13,8 +13,8 @@ final class SignersViewController: BaseViewController {
     @IBOutlet weak var buttonsCollectionView: UICollectionView!
     @IBOutlet weak var buttonBackgroundView: UIVisualEffectView!
     @IBOutlet weak var buttonHandleView: UIView!
+    @IBOutlet weak var buttonsCollectionTopConstraint: NSLayoutConstraint!
     
-
     var presenter: SignersPresenter!
 
     private var viewModel: SignersViewModel?
@@ -30,6 +30,7 @@ final class SignersViewController: BaseViewController {
         configureUI()
         presenter?.present()
         prevViewSize = view.bounds.size
+        buttonsCollectionTopConstraint.constant = 0
     }
 
     override func viewWillLayoutSubviews() {
