@@ -36,6 +36,8 @@ class DefaultMnemonicNewInteractor(
     private val passwordService: PasswordService,
     private val addressService: AddressService,
 ): MnemonicNewInteractor {
+    private var signer: SignerStoreItem? = null
+    private var accounts: MutableList<SignerStoreItem> = mutableListOf()
 
     override fun createMnemonicSigner(
         config: MnemonicSignerConfig, password: String, salt: String
@@ -54,5 +56,7 @@ class DefaultMnemonicNewInteractor(
         type: SignerStoreItem.PasswordType
     ): String? = passwordService.validationError(password, type)
 
-    override fun keyStoreItemsCount(): Int = signerStoreService.items().count
+    override fun keyStoreItemsCount(): Int = signerStoreService.items().count()
+
+
 }
