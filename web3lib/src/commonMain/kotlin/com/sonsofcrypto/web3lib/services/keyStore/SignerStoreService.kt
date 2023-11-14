@@ -34,7 +34,13 @@ data class MnemonicSignerConfig(
 interface SignerStoreService {
     /** Latest selected `KeyStoreItem` (persists between launches) */
     var selected: SignerStoreItem?
-    /** Create `SignerStoreItem` & `SecretStorage` with `MnemonicSignerConfig`*/
+    /** Generates `SignerStoreItem` & `SecretStorage` without adding to store */
+    fun generateMnemonicSigner(
+        config: MnemonicSignerConfig,
+        password: String,
+        salt: String
+    ): Pair<SignerStoreItem, SecretStorage>
+    /** Create `SignerStoreItem` & `SecretStorage` & adds it to store */
     fun createMnemonicSigner(
         config: MnemonicSignerConfig,
         password: String,
@@ -43,11 +49,21 @@ interface SignerStoreService {
     /** Creates SignerStoreItem item at `derivationPath` or last path component
      * + 1 */
     @Throws(Throwable::class)
+    fun generateAccount(
+        item: SignerStoreItem,
+        password: String,
+        salt: String,
+        derivationPath: String?,
+        name: String?,
+    ): Pair<SignerStoreItem, SecretStorage>
+    /** Generates accounts and adds it to store */
+    @Throws(Throwable::class)
     fun addAccount(
         item: SignerStoreItem,
         password: String,
         salt: String,
-        derivationPath: String? = null
+        derivationPath: String? = null,
+        name: String? = null,
     ): SignerStoreItem
     /** Add `KeyStoreItem` using password and SecreteStorage.
      *
@@ -83,11 +99,11 @@ class DefaultSignerStoreService(
     get() = store.get<SignerStoreItem>(selectedKey)
     set(value) = store.set(selectedKey, value)
 
-    override fun createMnemonicSigner(
+    override fun generateMnemonicSigner(
         config: MnemonicSignerConfig,
         password: String,
         salt: String
-    ): SignerStoreItem {
+    ): Pair<SignerStoreItem, SecretStorage> {
         val bip39 = Bip39(config.mnemonic, salt, config.wordList)
         val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
         val extKey = bip44.deriveChildKey(config.derivationPath)
@@ -117,26 +133,41 @@ class DefaultSignerStoreService(
             mnemonicLocale = bip39.worldList.localeString(),
             mnemonicPath = config.derivationPath
         )
+        return Pair(signerStoreItem, secretStorage)
+    }
+
+    override fun createMnemonicSigner(
+        config: MnemonicSignerConfig,
+        password: String,
+        salt: String
+    ): SignerStoreItem {
+        val (signerStoreItem, secretStorage) = this.generateMnemonicSigner(
+            config = config,
+            password = password,
+            salt = salt,
+        )
         this.add(signerStoreItem, password, secretStorage)
         return signerStoreItem
     }
 
     @Throws(Throwable::class)
-    override fun addAccount(
+    override fun generateAccount(
         item: SignerStoreItem,
         password: String,
         salt: String,
-        derivationPath: String?
-    ): SignerStoreItem {
+        derivationPath: String?,
+        name: String?,
+    ): Pair<SignerStoreItem, SecretStorage> {
         if (item.type != MNEMONIC)
             throw Err.AddAccountForNonMnemonic
         val path = derivationPath ?: this.nextDerivationPath(item)
         val decrypted = this.secretStorage(item, password)?.decrypt(password)
             ?: throw Err.AddAccountDecryptFailed
-        return createMnemonicSigner(
+        return generateMnemonicSigner(
             MnemonicSignerConfig(
                 mnemonic = decrypted.mnemonic!!.split(" "),
-                name = item.name + ", acc: ${lastDerivationPathComponent(path)}",
+                name = name ?:
+                (item.name + ", acc: ${lastDerivationPathComponent(path)}"),
                 passUnlockWithBio = item.passUnlockWithBio ,
                 iCloudSecretStorage = item.iCloudSecretStorage,
                 saltMnemonic = item.saltMnemonic,
@@ -149,6 +180,25 @@ class DefaultSignerStoreService(
             password,
             salt,
         )
+    }
+
+    @Throws(Throwable::class)
+    override fun addAccount(
+        item: SignerStoreItem,
+        password: String,
+        salt: String,
+        derivationPath: String?,
+        name: String?,
+    ): SignerStoreItem {
+        val (signerStoreItem, secreteStorage) = generateAccount(
+            item,
+            password,
+            salt,
+            derivationPath,
+            name
+        )
+        add(signerStoreItem, password, secreteStorage)
+        return signerStoreItem
     }
 
     override fun add(
