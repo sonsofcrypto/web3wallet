@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3walletcore.common.viewModels
 
 sealed class CellViewModel {
     enum class Accessory {
-        NONE, DETAIL, CHECKMARK
+        NONE, DETAIL, CHECKMARK, COPY
     }
 
     data class Label(

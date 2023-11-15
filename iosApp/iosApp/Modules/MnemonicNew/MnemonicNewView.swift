@@ -7,6 +7,7 @@ import web3walletcore
 
 final class MnemonicNewViewController: UICollectionViewController,
     UICollectionViewDelegateFlowLayout {
+    @IBOutlet weak var addAccountButton: Button!
     @IBOutlet weak var ctaButton: Button!
     
     var presenter: MnemonicNewPresenter!
@@ -51,25 +52,33 @@ final class MnemonicNewViewController: UICollectionViewController,
     // MARK: - MnemonicView
     
     func update(with viewModel: CollectionViewModel.Screen) {
+        let prevViewModel = self.viewModel
         self.viewModel = viewModel
+
         guard let cv = collectionView else { return }
+
+        addAccountButton.setTitle(viewModel.ctaItems.first, for: .normal)
         ctaButton.setTitle(viewModel.ctaItems.last, for: .normal)
-        let cells = cv.visibleCells
-            .map { cv.indexPath(for: $0) }
-            .compactMap { $0 }
-        didAppear
-            ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
-            : cv.reloadData()
+
+        cv.reloadAnimatedIfNeeded(
+            prevVM: prevViewModel,
+            currVM: viewModel,
+            reloadOnly: !didAppear
+        )
     }
 
     // MARK: - Actions
     
     @IBAction func ctaAction(_ sender: Any) {
-        presenter.handleEvent(MnemonicNewPresenterEvent.DidSelectCta())
+        presenter.handleEvent(.CreateMnemonic())
+    }
+    
+    @IBAction func addAccountAction(_ sender: Any) {
+        presenter.handleEvent(.AddAccount())
     }
 
     @IBAction func dismissAction(_ sender: Any?) {
-        presenter.handleEvent(MnemonicNewPresenterEvent.DidSelectDismiss())
+        presenter.handleEvent(MnemonicNewPresenterEvent.Dismiss())
     }
 
     // MARK: - UICollectionViewDataSource
@@ -91,6 +100,9 @@ final class MnemonicNewViewController: UICollectionViewController,
     ) -> UICollectionViewCell {
         guard let viewModel = self.viewModel(at: indexPath) else {
             fatalError("Wrong number of items in section \(indexPath)")
+        }
+        if isAccountsSection(indexPath) {
+            return accountCell(indexPath, viewModel: viewModel)
         }
         switch viewModel {
         case let vm as CellViewModel.Text:
@@ -133,6 +145,27 @@ final class MnemonicNewViewController: UICollectionViewController,
         }
         fatalError("Not implemented")
     }
+    
+    func accountCell(
+        _ idxPath: IndexPath,
+        viewModel: CellViewModel
+    ) -> UICollectionViewCell {
+        switch viewModel {
+        case let vm as CellViewModel.TextInput:
+            return cv.dequeue(TextInputCollectionViewCell.self, for: idxPath)
+                .update(
+                    with: vm,
+                    inputHandler: { [weak self] name in
+                        self?.changeAccountName(name, idxPath: idxPath)
+                    }
+                )
+        case let vm as CellViewModel.Label:
+            return cv.dequeue(LabelCell.self, for: idxPath).update(with: vm)
+        default:
+            ()
+        }
+        fatalError("Not implemented")
+    }
 
     override func collectionView(
         _ collectionView: UICollectionView,
@@ -140,12 +173,12 @@ final class MnemonicNewViewController: UICollectionViewController,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
         switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            return cv.dequeue(SectionHeaderView.self, for: indexPath, kind: kind)
+                .update(with: viewModel?.sections[safe: indexPath.section])
         case UICollectionView.elementKindSectionFooter:
-            guard let section = viewModel?.sections[indexPath.section] else {
-                fatalError("Failed to handle \(kind) \(indexPath)")
-            }
             return cv.dequeue(SectionFooterView.self, for: indexPath, kind: kind)
-                .update(with: section)
+                .update(with: viewModel?.sections[safe: indexPath.section])
         default:
             fatalError("Failed to handle \(kind) \(indexPath)")
         }
@@ -160,43 +193,55 @@ extension MnemonicNewViewController {
         _ collectionView: UICollectionView,
         shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
-        guard indexPath == .init(row: 0, section: 0) else { return false }
-        let cell = collectionView.cellForItem(at: .init(item: 0, section: 0))
-        (cell as? MnemonicNewCell)?.animateCopiedToPasteboard()
-        presenter.handleEvent(.DidTapMnemonic())
+        let cell = cv.cellForItem(at: indexPath)
+        if indexPath.isZero() {
+            presenter.handleEvent(.CopyMnemonic())
+            (cell as? MnemonicNewCell)?.animateCopiedToPasteboard()
+        }
+        guard isAccountsSection(indexPath) else { return false }
+        (cell as? LabelCell)?.animateCopy()
+        presenter.handleEvent(
+            .CopyAccountAddress(idx: indexPath.section.int32 - 2)
+        )
         return false
     }
 
     func nameDidChange(_ name: String) {
-        presenter.handleEvent(.DidChangeName(name: name))
+        presenter.handleEvent(.SetName(name: name))
     }
 
     func iCloudBackupDidChange(_ onOff: Bool) {
-        presenter.handleEvent(.DidChangeICouldBackup(onOff: onOff))
+        presenter.handleEvent(.SetICouldBackup(onOff: onOff))
     }
 
     func saltSwitchDidChange(_ onOff: Bool) {
-        presenter.handleEvent(.SaltSwitchDidChange(onOff: onOff))
+        presenter.handleEvent(.SaltSwitch(onOff: onOff))
     }
 
     func saltTextDidChange(_ text: String) {
-        presenter.handleEvent(.DidChangeSalt(salt: text))
+        presenter.handleEvent(.SetSalt(salt: text))
     }
 
     func saltLearnAction() {
-        presenter.handleEvent(.SaltLearnMoreAction())
+        presenter.handleEvent(.SaltLearnMore())
     }
 
     func passTypeDidChange(_ idx: Int) {
-        presenter.handleEvent(.PassTypeDidChange(idx: idx.int32))
+        presenter.handleEvent(.SetPassType(idx: idx.int32))
     }
 
     func passwordDidChange(_ text: String) {
-        presenter.handleEvent(.PasswordDidChange(text: text))
+        presenter.handleEvent(.SetPassword(text: text))
     }
 
     func allowFaceIdDidChange(_ onOff: Bool) {
-        presenter.handleEvent(.AllowFaceIdDidChange(onOff: onOff))
+        presenter.handleEvent(.SetAllowFaceId(onOff: onOff))
+    }
+    
+    func changeAccountName(_ name: String, idxPath: IndexPath) {
+        presenter.handleEvent(
+            .SetAccountName(name: name, idx: idxPath.section.int32 - 2)
+        )
     }
 
     // MARK: - UICollectionViewDelegateFlowLayout
@@ -237,7 +282,14 @@ extension MnemonicNewViewController {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
-        .zero
+        String.estimateSize(
+            (viewModel?.sections[safe: section]?.header)?.text(),
+            font: Theme.font.sectionHeader,
+            maxWidth: cellSize.width,
+            extraHeight: Theme.padding.twice,
+            minHeight: Theme.padding
+        )
+        
     }
 
     func collectionView(
@@ -245,13 +297,12 @@ extension MnemonicNewViewController {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForFooterInSection section: Int
     ) -> CGSize {
-        let size = String.estimateSize(
+         String.estimateSize(
             viewModel?.sections[section].footer?.text(),
             font: Theme.font.sectionFooter,
             maxWidth: cellSize.width,
             extraHeight: Theme.padding
         )
-        return size
     }
 }
 
@@ -363,15 +414,16 @@ private extension MnemonicNewViewController {
         view.addGestureRecognizer(edgePan)
         cv.pinOverscrollToBottom = true
         applyTheme(Theme)
+        addAccountButton.style = .secondary
         ctaButton.style = .primary
     }
 
     func layoutOverscrollView() {
         ctaButton.bounds.size.height = Theme.buttonHeight
         cv.abovescrollView?.bounds.size.width = view.bounds.size.width
-        cv.abovescrollView?.bounds.size.height = ctaButton.bounds.height
+        cv.abovescrollView?.bounds.size.height = ctaButton.bounds.height * 2
             + view.safeAreaInsets.bottom
-            + Theme.padding
+            + Theme.padding * 2
     }
 
     func applyTheme(_ theme: ThemeProtocol) {
@@ -379,6 +431,7 @@ private extension MnemonicNewViewController {
         cv?.sectionBackgroundColor = theme.color.bgPrimary
         cv?.sectionBorderColor = theme.color.collectionSectionStroke
         cv?.separatorColor = theme.color.collectionSeparator
+        cv?.contentInset.bottom = bottomInset()
         (cv?.overscrollView?.subviews.first as? UILabel)?
             .textColor = theme.color.textPrimary
     }
@@ -394,7 +447,11 @@ private extension MnemonicNewViewController {
     }
 
     @objc func keyboardWillHide(notification: Notification) {
-        collectionView.contentInset.bottom = Theme.padding * 2
+        cv.contentInset.bottom = bottomInset()
+    }
+
+    func bottomInset() -> CGFloat {
+        (cv.abovescrollView?.bounds.height ?? Theme.padding) + Theme.padding
     }
 
     func viewModel(at idxPath: IndexPath) -> CellViewModel? {
@@ -408,6 +465,10 @@ private extension MnemonicNewViewController {
             width: view.bounds.size.width - Theme.padding * 2,
             height: Theme.cellHeight
         )
+    }
+    
+    func isAccountsSection(_ idxPath: IndexPath) -> Bool {
+        return idxPath.section > 1
     }
 }
 

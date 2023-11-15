@@ -1,7 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicImport
 
 import com.sonsofcrypto.web3lib.services.address.AddressService
-import com.sonsofcrypto.web3lib.services.address.defaultDerivationPath
 import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
@@ -11,6 +10,7 @@ import com.sonsofcrypto.web3lib.types.ExtKey.Version.MAINNETPRV
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.bip39.localeString
+import com.sonsofcrypto.web3lib.utils.defaultDerivationPath
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.secureRand
 import com.sonsofcrypto.web3walletcore.services.clipboard.ClipboardService
@@ -69,7 +69,7 @@ class DefaultMnemonicImportInteractor(
         val worldList = WordList.fromLocaleString("en")
         val bip39 = Bip39(data.mnemonic, salt, worldList)
         val bip44 = Bip44(bip39.seed(), MAINNETPRV)
-        val derivationPath = AddressService.defaultDerivationPath()
+        val derivationPath = defaultDerivationPath()
         val extKey = bip44.deriveChildKey(derivationPath)
         val address = addressService.address(
             bip44.deriveChildKey(derivationPath).xpub()

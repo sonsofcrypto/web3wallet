@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3walletcore.common.viewModels
 sealed class CollectionViewModel {
 
     data class Section(
-        val header: String?,
+        val header: Header?,
         val items: List<CellViewModel>,
         val footer: Footer?
     ): CollectionViewModel()
@@ -13,6 +13,17 @@ sealed class CollectionViewModel {
         val sections: List<Section>,
         val ctaItems: List<String> = emptyList()
     ): CollectionViewModel()
+
+    sealed class Header() {
+        data class Title(
+            val leading: String? = null,
+            val trailing: String? = null
+        ): Header()
+
+        fun text(): String? = when (this) {
+            is Title -> this.leading
+        }
+    }
 
     sealed class Footer() {
         data class Text(val text: String): Footer()
@@ -24,7 +35,6 @@ sealed class CollectionViewModel {
         fun text(): String? = when (this) {
             is Text -> this.text
             is HighlightWords -> this.text
-            else -> null
         }
     }
 }

@@ -12,9 +12,6 @@ interface AddressService {
     companion object
 }
 
-fun AddressService.Companion.defaultDerivationPath(): String
-    = "m/44'/60'/0'/0/0"
-
 class DefaultAddressService: AddressService {
 
     override fun address(pubKey: ExtKey): String

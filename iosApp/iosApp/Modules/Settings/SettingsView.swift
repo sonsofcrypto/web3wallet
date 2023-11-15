@@ -118,7 +118,7 @@ class SettingsViewController: UICollectionViewController, UICollectionViewDelega
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
         String.estimateSize(
-            viewModel?.sections[section].header,
+            viewModel?.sections[section].header?.text(),
             font: Theme.font.sectionHeader,
             maxWidth: cellSize.width,
             extraHeight: Theme.padding.twice,

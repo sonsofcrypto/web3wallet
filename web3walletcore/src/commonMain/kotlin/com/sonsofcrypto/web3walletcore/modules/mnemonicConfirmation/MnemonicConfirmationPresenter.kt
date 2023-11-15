@@ -6,6 +6,7 @@ import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicInputViewModel
 import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicPresenterHelper
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationWireframeDestination.Dismiss
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError
@@ -91,7 +92,7 @@ class DefaultMnemonicConfirmationPresenter(
     } else Localized("mnemonicConfirmation.cta")
 
     private fun saltSection(): CollectionViewModel.Section = CollectionViewModel.Section(
-        Localized("mnemonicConfirmation.salt"),
+        Title(Localized("mnemonicConfirmation.salt")),
         listOf(
             CellViewModel.TextInput(
                 "",
@@ -104,7 +105,7 @@ class DefaultMnemonicConfirmationPresenter(
 
     private fun mnemonicSection(err: MnemonicServiceError?): CollectionViewModel.Section =
         CollectionViewModel.Section(
-            Localized("mnemonicConfirmation.confirm.wallet"),
+            Title(Localized("mnemonicConfirmation.confirm.wallet")),
             listOf(CellViewModel.Text(mnemonic)),
             mnemonicFooter(err),
         )

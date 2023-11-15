@@ -25,10 +25,13 @@ class ThemeReusableView: UICollectionReusableView {
 
 class SectionHeaderView: ThemeReusableView {
     @IBOutlet weak var label: UILabel!
-
+    @IBOutlet weak var trailingLabel: UILabel!
+    
     override func applyTheme(_ theme: ThemeProtocol) {
-        label.textColor = theme.color.textSecondary
-        label.font = theme.font.sectionHeader
+        [label, trailingLabel].forEach {
+            $0?.textColor = theme.color.textSecondary
+            $0?.font = theme.font.sectionHeader
+        }
     }
 }
 
@@ -40,7 +43,10 @@ extension SectionHeaderView {
     }
 
     func update(with viewModel: CollectionViewModel.Section?) -> Self {
-        label.text = viewModel?.header?.uppercased()
+        if let vm = viewModel?.header as? CollectionViewModel.HeaderTitle {
+            label.text = vm.leading?.uppercased()
+            trailingLabel?.text = vm.trailing?.uppercased()
+        }
         return self
     }
 }

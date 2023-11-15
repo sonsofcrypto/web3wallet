@@ -202,7 +202,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="www-v4-rjC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="601" y="1487"/>
+            <point key="canvasLocation" x="600.79999999999995" y="1486.6995073891626"/>
         </scene>
         <!--Ts Collection View Controller-->
         <scene sceneID="LZ3-lR-qok">
@@ -628,13 +628,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="0.0" id="wOI-VF-gGx" customClass="TableGroupedFlowLayout" customModule="iosApp" customModuleProvider="target">
                             <size key="itemSize" width="335" height="46"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="headerReferenceSize" width="50" height="50"/>
                             <size key="footerReferenceSize" width="50" height="46"/>
-                            <inset key="sectionInset" minX="0.0" minY="16" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="NewMnemonicCell" reuseIdentifier="MnemonicNewCell" id="o5k-bI-WOQ" customClass="MnemonicNewCell" customModule="iosApp" customModuleProvider="target">
-                                <rect key="frame" x="16" y="16" width="343" height="149"/>
+                                <rect key="frame" x="16" y="50" width="343" height="149"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="E5p-Y0-jqd">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="149"/>
@@ -697,7 +697,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TextInputCollectionViewCell" id="4y4-ak-K0x" customClass="TextInputCollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                <rect key="frame" x="16" y="166" width="343" height="46"/>
+                                <rect key="frame" x="16" y="200" width="343" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="8wA-Cr-QTk">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="46"/>
@@ -734,7 +734,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SwitchCollectionViewCell" id="EVb-NI-62Q" customClass="SwitchCollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                <rect key="frame" x="16" y="213" width="343" height="46"/>
+                                <rect key="frame" x="16" y="247" width="343" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="VZB-GZ-yiP">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="46"/>
@@ -769,7 +769,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SwitchTextInputCollectionViewCell" id="xXt-ly-QCg" customClass="SwitchTextInputCollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                <rect key="frame" x="16" y="260" width="343" height="142"/>
+                                <rect key="frame" x="16" y="294" width="343" height="142"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="SMR-Y2-dST">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="142"/>
@@ -827,7 +827,7 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SegmentWithTextAndSwitchCell" id="WMK-1m-I8r" customClass="SegmentWithTextAndSwitchCell" customModule="iosApp" customModuleProvider="target">
-                                <rect key="frame" x="16" y="403" width="343" height="142"/>
+                                <rect key="frame" x="16" y="437" width="343" height="142"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="f8N-gL-oIy">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="142"/>
@@ -960,9 +960,77 @@
                                     <outlet property="vStack" destination="ge7-AC-E6o" id="4z2-Dj-P5u"/>
                                 </connections>
                             </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LabelCell" id="sfE-jq-lJb" customClass="LabelCell" customModule="iosApp" customModuleProvider="target">
+                                <rect key="frame" x="16" y="580" width="343" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="mty-RS-NwC">
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="46"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="sgD-VT-W7j">
+                                            <rect key="frame" x="16" y="0.0" width="315" height="46"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dRe-CY-v1V">
+                                                    <rect key="frame" x="0.0" y="0.0" width="257" height="46"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="juY-UX-IOK">
+                                                    <rect key="frame" x="265" y="0.0" width="50" height="46"/>
+                                                </imageView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="sgD-VT-W7j" firstAttribute="top" secondItem="mty-RS-NwC" secondAttribute="top" id="041-mJ-dr2"/>
+                                        <constraint firstItem="sgD-VT-W7j" firstAttribute="leading" secondItem="mty-RS-NwC" secondAttribute="leading" constant="16" id="7Ce-6a-kgo"/>
+                                        <constraint firstAttribute="trailing" secondItem="sgD-VT-W7j" secondAttribute="trailing" constant="12" id="HdK-h3-OJA"/>
+                                        <constraint firstAttribute="bottom" secondItem="sgD-VT-W7j" secondAttribute="bottom" id="SCU-Jh-TBy"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="343" height="46"/>
+                                <connections>
+                                    <outlet property="accessoryImageView" destination="juY-UX-IOK" id="7GA-P1-7Mu"/>
+                                    <outlet property="label" destination="dRe-CY-v1V" id="P0X-IC-dYR"/>
+                                </connections>
+                            </collectionViewCell>
                         </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="SectionHeaderView" id="5dO-vx-KpP" customClass="SectionHeaderView" customModule="iosApp" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2bZ-aR-bVG">
+                                    <rect key="frame" x="20" y="0.0" width="335" height="42"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="248" verticalHuggingPriority="248" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="749" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RAD-Kc-ytX">
+                                            <rect key="frame" x="0.0" y="0.0" width="285" height="42"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jpb-23-Zl5">
+                                            <rect key="frame" x="285" y="0.0" width="50" height="42"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="2bZ-aR-bVG" firstAttribute="leading" secondItem="5dO-vx-KpP" secondAttribute="leading" constant="20" id="7ff-aQ-KGJ"/>
+                                <constraint firstAttribute="bottom" secondItem="2bZ-aR-bVG" secondAttribute="bottom" constant="8" id="Dhs-Fc-SJ1"/>
+                                <constraint firstAttribute="trailing" secondItem="2bZ-aR-bVG" secondAttribute="trailing" constant="20" id="GxM-wy-ndY"/>
+                                <constraint firstItem="2bZ-aR-bVG" firstAttribute="top" relation="greaterThanOrEqual" secondItem="5dO-vx-KpP" secondAttribute="top" id="unq-PT-DTR"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="label" destination="RAD-Kc-ytX" id="S7q-hR-XgE"/>
+                                <outlet property="trailingLabel" destination="jpb-23-Zl5" id="f3L-9o-FFS"/>
+                            </connections>
+                        </collectionReusableView>
                         <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="SectionFooterView" id="DhL-3Y-ewv" customClass="SectionFooterView" customModule="iosApp" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="545" width="375" height="46"/>
+                            <rect key="frame" x="0.0" y="626" width="375" height="46"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Emw-11-DIV">
@@ -989,6 +1057,7 @@
                         </connections>
                     </collectionView>
                     <connections>
+                        <outlet property="addAccountButton" destination="TRb-Pk-8bD" id="PCM-L5-kA1"/>
                         <outlet property="ctaButton" destination="auf-5P-pFm" id="WD6-ud-AKW"/>
                     </connections>
                 </collectionViewController>
@@ -997,8 +1066,17 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRb-Pk-8bD" customClass="Button" customModule="iosApp" customModuleProvider="target">
+                            <rect key="frame" x="16" y="7" width="343" height="46"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                            <connections>
+                                <action selector="addAccountAction:" destination="2md-6h-pex" eventType="touchUpInside" id="Lrf-sf-cnV"/>
+                            </connections>
+                        </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="auf-5P-pFm" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                            <rect key="frame" x="16" y="16" width="343" height="46"/>
+                            <rect key="frame" x="16" y="69" width="343" height="46"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" title="Button"/>
@@ -1008,10 +1086,9 @@
                         </button>
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="fG9-Qh-hj6"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1294" y="117"/>
+            <point key="canvasLocation" x="1293.5999999999999" y="116.74876847290641"/>
         </scene>
         <!--Mnemonic Import View Controller-->
         <scene sceneID="lO3-4k-sBT">
