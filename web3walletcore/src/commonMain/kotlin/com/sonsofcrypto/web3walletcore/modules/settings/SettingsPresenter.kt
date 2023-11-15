@@ -10,7 +10,9 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory.DETAIL
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory.NONE
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Label
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
 import com.sonsofcrypto.web3walletcore.extensions.Localized
@@ -157,7 +159,7 @@ class DefaultSettingsPresenter(
 
     private fun sectionsForRoot(): List<Section> = listOf(
         Section(
-            Localized("settings"),
+            Title(Localized("settings")),
             listOf(
                 Label(Localized("settings.themes"), DETAIL),
                 Label(Localized("settings.uitweaks"), DETAIL),
@@ -170,7 +172,7 @@ class DefaultSettingsPresenter(
             null,
         ),
         Section(
-            Localized("sonsofcrypto"),
+            Title(Localized("sonsofcrypto")),
             listOf(
                 Label(Localized("settings.soc.website"), DETAIL),
                 Label(Localized("settings.soc.twitter"), DETAIL),
@@ -180,7 +182,7 @@ class DefaultSettingsPresenter(
             null,
         ),
         Section(
-            Localized("settings.docs.title"),
+            Title(Localized("settings.docs.title")),
             listOf(
                 Label(Localized("settings.docs.cyberspace"), DETAIL),
                 Label(Localized("settings.docs.cypherpunkmanifesto"), DETAIL),
@@ -215,7 +217,7 @@ class DefaultSettingsPresenter(
 
     private fun sectionsForUITweaks(): List<Section> = listOf(
         Section(
-            Localized("settings.uitweaks.nft.carousel.title"),
+            Title(Localized("settings.uitweaks.nft.carousel.title")),
             listOf(
                 "settings.uitweaks.nft.carousel.regular",
                 "settings.uitweaks.nft.carousel.large"
@@ -234,7 +236,7 @@ class DefaultSettingsPresenter(
 
     private fun sectionsForDeveloper(): List<Section> = listOf(
         Section(
-            "warning this will delete all mnemonics",
+            Title("warning this will delete all mnemonics"),
             listOf(Label(Localized("settings.developer.resetKeyStore"), NONE)),
             Footer.Text(
                 "Be very CAREFULLY this will delete all mnemonic. Only " +

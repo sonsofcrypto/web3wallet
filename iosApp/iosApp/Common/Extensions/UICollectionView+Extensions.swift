@@ -97,3 +97,112 @@ extension UICollectionView {
         }
     }
 }
+
+// MARK - CellViewModel reloading
+
+import web3walletcore
+
+protocol AutoDiffInfo {
+    var sectionsCount: Int { get }
+    func itemCount(_ section: Int) -> Int
+    func itemType(_ idxPath: IndexPath) -> String
+}
+
+extension UICollectionView {
+
+    func reloadAnimatedIfNeeded(
+        prevVM: AutoDiffInfo?,
+        currVM: AutoDiffInfo?,
+        force: Bool = false,
+        reloadOnly: Bool = false
+    ) {
+        guard !reloadOnly else { reloadData(); return }
+
+        var insertSections: IndexSet? = nil
+        var removeSections: IndexSet? = nil
+        var insertItems: [IndexPath] = []
+        var removeItems: [IndexPath] = []
+        var reconfigItems: [IndexPath] = []
+        var reloadItems: [IndexPath] = []
+
+        // Handle section insertion deletion
+        let prevSecCnt = prevVM?.sectionsCount ?? 0
+        let currSecCnt = currVM?.sectionsCount ?? 0
+
+        if prevSecCnt > currSecCnt {
+            removeSections = IndexSet(currSecCnt..<prevSecCnt)
+        }
+        if currSecCnt > prevSecCnt {
+            insertSections = IndexSet(prevSecCnt..<currSecCnt)
+        }
+
+        // Handle items within sections
+        for idx in 0..<min(prevSecCnt, currSecCnt) {
+            guard let currVM = currVM, let prevVM = prevVM else { continue }
+            let currItemCnt = currVM.itemCount(idx)
+            let prevItemCnt = prevVM.itemCount(idx)
+
+            // delete cells in section
+            if prevItemCnt > currItemCnt {
+                let items = (currItemCnt..<prevItemCnt)
+                    .map { IndexPath(item: $0, section: idx)}
+                removeItems.append(contentsOf: items)
+            }
+            // insert cells in section
+            if currItemCnt > prevItemCnt {
+                let items = (prevItemCnt..<currItemCnt)
+                    .map { IndexPath(item: $0, section: idx)}
+                insertItems.append(contentsOf: items)
+            }
+            // Reconfigure or reload
+            for itmIdx in 0..<min(prevItemCnt, currItemCnt) {
+                let idxPath = IndexPath(item: itmIdx, section: idx)
+                if currVM.itemType(idxPath) == prevVM.itemType(idxPath) {
+                    reconfigItems.append(idxPath)
+                } else {
+                    reloadItems.append(idxPath)
+                }
+            }
+        }
+
+        let cv = self
+        let nilExp = [insertSections, removeSections]
+        let emptyExp = [insertItems, removeItems, reloadItems]
+
+        // Check if do not need to reload, just update
+        if nilExp.filter { $0 != nil }.isEmpty &&
+           emptyExp.filter { !$0.isEmpty }.isEmpty &&
+           !force {
+               reconfigureItems(at:
+                   visibleCells.map { indexPath(for: $0) }.compactMap{ $0 }
+               )
+        }
+
+        performBatchUpdates {
+            if let sections = removeSections { cv.deleteSections(sections) }
+            if let sections = insertSections { cv.insertSections(sections) }
+            if removeItems.count > 0 { cv.deleteItems(at: removeItems) }
+            if insertItems.count > 0 { cv.insertItems(at: insertItems) }
+            if reconfigItems.count > 0 { cv.reconfigureItems(at: reconfigItems) }
+            if reloadItems.count > 0 { cv.reloadItems(at: reloadItems) }
+        }
+    }
+}
+
+// MARK: - CollectionViewModel.Screen
+
+extension CollectionViewModel.Screen: AutoDiffInfo {
+    var sectionsCount: Int { sections.count }
+
+    func itemCount(_ section: Int) -> Int {
+        sections[safe: section]?.items.count ?? 0
+    }
+
+    func itemType(_ idxPath: IndexPath) -> String {
+        guard
+            let section = sections[safe: idxPath.section],
+            let item = section.items[safe: idxPath.item]
+        else { return "" }
+        return "\(type(of: item))"
+    }
+}

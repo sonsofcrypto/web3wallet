@@ -5,8 +5,6 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Button
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Button.ButtonType.DESTRUCTIVE
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Text
-import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section

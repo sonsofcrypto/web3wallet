@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3lib.services.keyStore
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.address.AddressService
-import com.sonsofcrypto.web3lib.services.address.defaultDerivationPath
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.MNEMONIC
 import com.sonsofcrypto.web3lib.services.uuid.UUIDService
 import com.sonsofcrypto.web3lib.types.Bip44
@@ -10,6 +9,9 @@ import com.sonsofcrypto.web3lib.types.ExtKey
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.bip39.localeString
+import com.sonsofcrypto.web3lib.utils.defaultDerivationPath
+import com.sonsofcrypto.web3lib.utils.incrementedDerivationPath
+import com.sonsofcrypto.web3lib.utils.lastDerivationPathComponent
 import kotlinx.serialization.decodeFromByteArray
 import kotlinx.serialization.encodeToByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
@@ -25,7 +27,7 @@ data class MnemonicSignerConfig(
     val saltMnemonic: Boolean,
     val passwordType: SignerStoreItem.PasswordType,
     val wordList: WordList = WordList.fromLocaleString("en"),
-    val derivationPath: String = AddressService.defaultDerivationPath(),
+    val derivationPath: String = defaultDerivationPath(),
     val sortOrder: UInt? = null,
     val parentId: String? = null,
 )
@@ -75,6 +77,8 @@ interface SignerStoreService {
     fun remove(item: SignerStoreItem)
     /** Lists all the items in `KeyStore` */
     fun items(): List<SignerStoreItem>
+    /** Returns only mnemonic items with m/44'/60'/0'/0/0 */
+    fun mnemonicSignerItems(): List<SignerStoreItem>
     /** Get `SignerStoreItem` by uuid */
     fun signerStoreItem(uuid: String): SignerStoreItem?
     /** Retrieves `SecretStorage` for `KeyStoreItem` using password */
@@ -238,6 +242,9 @@ class DefaultSignerStoreService(
             .sortedBy { it.sortOrder }
     }
 
+    override fun mnemonicSignerItems(): List<SignerStoreItem> =
+        items().filter { it.type == MNEMONIC && it.parentId == null }
+
     override fun signerStoreItem(uuid: String): SignerStoreItem? = store[uuid]
 
     override fun secretStorage(item: SignerStoreItem, password: String): SecretStorage? {
@@ -301,15 +308,6 @@ class DefaultSignerStoreService(
                 updateSortOrder(curr, curr.sortOrder + 1u)
         }
         return sortOrder
-    }
-
-    private fun lastDerivationPathComponent(path: String): Int
-            = path.split("/").last().toInt()
-
-    private fun incrementedDerivationPath(path: String): String {
-        val splitPath = path.split("/")
-        val nextIdx = splitPath.last().toInt() + 1
-        return (splitPath.dropLast(1) + nextIdx.toString()).joinToString("/")
     }
 
     /** Exceptions */

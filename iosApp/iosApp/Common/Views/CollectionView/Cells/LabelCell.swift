@@ -27,6 +27,10 @@ class LabelCell: ThemeCell {
         label.font = theme.font.callout
         accessoryImageView.tintColor = theme.color.textPrimary
     }
+    
+    func animateCopy() {
+        
+    }
 
     private func updateAccessoryView(_ accType: CellViewModel.Label.Accessory) {
         guard accType != accessoryType else { return }
@@ -36,6 +40,9 @@ class LabelCell: ThemeCell {
             accessoryImageView.image = UIImage(systemName: "chevron.right")
         case .checkmark:
             accessoryImageView.image = UIImage(systemName: "checkmark")
+        case .theCopy:
+            accessoryImageView.image = UIImage(systemName: "square.on.square")
+
         default:
             accessoryImageView.image = nil
         }

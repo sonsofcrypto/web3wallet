@@ -124,6 +124,7 @@
 "keyStore.createMultiSig" = "Create multisig wallet";
 
 "mnemonic.title.new" = "New Mnemonic";
+"mnemonic.title.add.account" = "Add Account";
 "mnemonic.title.import" = "Import wallet";
 "mnemonic.title.update" = "Edit wallet";
 "mnemonic.tapToReveal" = "Tap to reveal mnemonic";
@@ -155,6 +156,8 @@
 "mnemonic.error.invalid.name" = "Please enter a name.";
 "mnemonic.update.failed.alert.title" = "Oops 😬";
 "mnemonic.update.failed.alert.message" = "Unable to update your wallet. Please try again.";
+"mnemonic.account.name" = "Name";
+"mnemonic.account.name.placeholder" = "Account name";
 
 "networks.header.l1s" = "Layer #1s";
 "networks.header.l2s" = "Layer #2s";
