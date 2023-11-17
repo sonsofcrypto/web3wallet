@@ -14,4 +14,10 @@ extension UIImage {
     func heightWidthRatio() -> CGFloat {
         size.height / size.width
     }
+
+    func resize(to size: CGSize) -> UIImage {
+        UIGraphicsImageRenderer(size: size).image { _ in
+            draw(in: .init(origin: .zero, size: size))
+        }
+    }
 }

@@ -20,7 +20,7 @@ extension UIView {
 
         return view
     }
-
+    
     class func hSpace(
             value: CGFloat = Theme.padding
     ) -> UIView {
@@ -37,7 +37,7 @@ extension UIView {
     }
 
     class func dividerLine(
-            backgroundColor: UIColor = Theme.color.separatorSecondary,
+            backgroundColor: UIColor = Theme.color.collectionSeparator,
             height: CGFloat = 1
     ) -> UIView {
 

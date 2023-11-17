@@ -23,7 +23,6 @@ final class CultProposalDetailGuardianView: UIView {
         backgroundColor = Theme.color.bgPrimary
         layer.cornerRadius = Theme.cornerRadius
         titleLabel.apply(style: .headline, weight: .bold)
-        separatorView.backgroundColor = Theme.color.separatorSecondary
         stackView.setCustomSpacing(Theme.padding * 0.75, after: titleLabel)
         stackView.setCustomSpacing(Theme.padding * 0.75, after: separatorView)
         nameLabel.apply(style: .subheadline)

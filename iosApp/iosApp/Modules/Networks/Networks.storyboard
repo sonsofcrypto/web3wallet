@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -60,16 +61,16 @@
                                                             <rect key="frame" x="46" y="0.0" width="265" height="101"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0Cv-dJ-6lZ">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="265" height="31"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="265" height="34"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xi-Fa-Osp">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="170" height="31"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="170" height="34"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dlv-eb-kn9">
-                                                                            <rect key="frame" x="178" y="0.0" width="30" height="31"/>
+                                                                            <rect key="frame" x="178" y="0.0" width="30" height="34"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="30" id="Pbd-9u-UWy"/>
                                                                             </constraints>
@@ -77,28 +78,28 @@
                                                                             <buttonConfiguration key="configuration" style="plain" image="gearshape" catalog="system"/>
                                                                         </button>
                                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OaH-fe-Awd" customClass="OnOffSwitch" customModule="iosApp" customModuleProvider="target">
-                                                                            <rect key="frame" x="216" y="0.0" width="51" height="31"/>
+                                                                            <rect key="frame" x="216" y="0.0" width="51" height="34"/>
                                                                         </switch>
                                                                     </subviews>
                                                                 </stackView>
-                                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="265" placeholderIntrinsicHeight="0.33000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="qWd-03-bRn" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="39" width="265" height="33.5"/>
+                                                                <view contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" placeholderIntrinsicWidth="265" placeholderIntrinsicHeight="0.33000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="qWd-03-bRn" customClass="TransparentLineView" customModule="iosApp" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="42" width="265" height="0.5"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 </view>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="GXC-A4-ytl">
-                                                                    <rect key="frame" x="0.0" y="80.5" width="265" height="20.5"/>
+                                                                    <rect key="frame" x="0.0" y="50.5" width="265" height="50.5"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rCU-bv-kz8">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="265" height="20.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="265" height="50.5"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfx-pk-BMV">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="41.5" height="20.5"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="41.5" height="50.5"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tv7-kV-CiH">
-                                                                                    <rect key="frame" x="49.5" y="0.0" width="215.5" height="20.5"/>
+                                                                                    <rect key="frame" x="49.5" y="0.0" width="215.5" height="50.5"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
@@ -192,7 +193,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="gearshape" catalog="system" width="128" height="121"/>
+        <image name="gearshape" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

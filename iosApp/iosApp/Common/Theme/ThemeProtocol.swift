@@ -30,12 +30,11 @@ protocol ThemeProtocol {
     var shadowRadius: CGFloat { get }
     var cellHeightLarge: CGFloat { get }
     var cellHeight: CGFloat { get }
+    var lineHeight: CGFloat { get }
     var sectionHeaderHeight: CGFloat { get }
     var buttonHeight: CGFloat { get }
     var buttonSmallHeight: CGFloat { get }
     var buttonHeightExtraSmall: CGFloat { get }
-    var blurRadius: CGFloat { get }
-    var blurTintAlpha: CGFloat { get }
 }
 
 // TODO(Anon): This can be further consolidated
@@ -59,8 +58,7 @@ protocol ThemeColorProtocol {
     var collectionSeparator: UIColor { get }
 
     var stroke: UIColor { get }
-    var separatorPrimary: UIColor { get }
-    var separatorSecondary: UIColor { get }
+    var separator: UIColor { get }
     var buttonBgPrimary: UIColor { get }
     var buttonBgPrimaryDisabled: UIColor { get }
     var buttonTextPrimary: UIColor { get }

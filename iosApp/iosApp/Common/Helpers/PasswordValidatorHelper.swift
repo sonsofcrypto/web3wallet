@@ -3,15 +3,12 @@
 // SPDX-License-Identifier: MIT
 
 struct PasswordValidatorHelper {
-    
     enum `Type` {
-        
         case pin
         case pass
     }
     
     func validate(_ text: String, type: `Type`) -> String? {
-        
         switch type {
         case .pin:
             return makePinValidationError(for: text)
@@ -51,7 +48,7 @@ private extension PasswordValidatorHelper {
         guard isValidRegex(text: text, regex: #"(?=.*\d)"#) else {
             return Localized("validation.error.pass.min.digit")
         }
-                
+
         return nil
     }
 

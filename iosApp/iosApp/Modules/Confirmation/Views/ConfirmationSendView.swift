@@ -124,7 +124,7 @@ private extension ConfirmationSendView {
     
     func dividerLine() -> UIView {
         let divider = UIView()
-        divider.backgroundColor = Theme.color.separatorSecondary
+        divider.backgroundColor = Theme.color.collectionSeparator
         let view = UIView()
         view.backgroundColor = .clear
         view.addSubview(divider)
