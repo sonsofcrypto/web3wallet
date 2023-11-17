@@ -413,6 +413,7 @@ private extension MnemonicNewViewController {
         edgePan.edges = [UIRectEdge.left]
         view.addGestureRecognizer(edgePan)
         cv.pinOverscrollToBottom = true
+        cv.stickAboveToBottom = true
         applyTheme(Theme)
         addAccountButton.style = .secondary
         ctaButton.style = .primary
@@ -441,6 +442,8 @@ private extension MnemonicNewViewController {
             cv.cellForItem(at: $0)?.firstResponder != nil
         }.first
 
+        cv.contentInset.bottom = Theme.padding
+
         if let idxPath = firstResponderIdxPath {
             cv.scrollToItem(at: idxPath, at: .centeredVertically, animated: true)
         }
@@ -455,7 +458,7 @@ private extension MnemonicNewViewController {
     }
 
     func viewModel(at idxPath: IndexPath) -> CellViewModel? {
-        return viewModel?.sections[idxPath.section].items[idxPath.item]
+        viewModel?.sections[idxPath.section].items[idxPath.item]
     }
 
     func recomputeSizeIfNeeded() {
@@ -468,7 +471,7 @@ private extension MnemonicNewViewController {
     }
     
     func isAccountsSection(_ idxPath: IndexPath) -> Bool {
-        return idxPath.section > 1
+        idxPath.section > 1
     }
 }
 

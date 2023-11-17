@@ -8,6 +8,10 @@ protocol Progressable {
     func setProgress(_ progress: CGFloat)
 }
 
+protocol ContentScrollInfo {
+    func contentBehindBottomView(contentBehind: Bool)
+}
+
 @IBDesignable
 class CollectionView: UICollectionView {
     /// View at the end of visible content
@@ -28,6 +32,8 @@ class CollectionView: UICollectionView {
     var pinTopScrollToTop: Bool = false
     /// When oversrolling `abovescrollView` & `overscrollView` pinned to bottom.
     var pinOverscrollToBottom: Bool = false
+    /// `abovescrollView` always show at the bottom.
+    var stickAboveToBottom: Bool = false
     /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
     var separatorInsets: UIEdgeInsets = .init(top: 0, left: 16, bottom: 0, right: 0) {
         didSet { tableLayout()?.separatorInsets = separatorInsets }
@@ -62,11 +68,14 @@ class CollectionView: UICollectionView {
         super.layoutSubviews()
         repairViewsHierarchyIfNeeded()
 
-        let pin = pinOverscrollToBottom
-
         layoutTopOverscrollView(topscrollView, pin: pinTopScrollToTop)
-        layoutOverscrollView(overscrollView, pinToBottom: pin)
-        layoutOverscrollView(abovescrollView, aboveLine: true, pinToBottom: pin)
+        layoutOverscrollView(overscrollView, pinToBottom: pinOverscrollToBottom)
+        layoutOverscrollView(
+            abovescrollView,
+            aboveLine: true,
+            pinToBottom: pinOverscrollToBottom,
+            stickToBottom: stickAboveToBottom
+        )
     }
 
     private func layoutTopOverscrollView(_ view: UIView?, pin: Bool = false) {
@@ -82,7 +91,8 @@ class CollectionView: UICollectionView {
     private func layoutOverscrollView(
         _ view: UIView?,
         aboveLine: Bool = false,
-        pinToBottom: Bool = false
+        pinToBottom: Bool = false,
+        stickToBottom: Bool = false
     ) {
         guard let view = view else { return }
 
@@ -92,7 +102,10 @@ class CollectionView: UICollectionView {
         var y: CGFloat = 0
 
         // Content size large enough to scroll
-        if contentSize.height + adjInset.top + adjInset.bottom > bounds.height {
+        if
+            contentSize.height + adjInset.top + adjInset.bottom > bounds.height
+            && !stickToBottom
+        {
             y = contentSize.height + adjInset.bottom - btmOffsetAdj
         // Content does not fill entire view case (not scrolling)
         } else {

@@ -22,8 +22,8 @@ class ThemeBlurView: VisualEffectView {
 
     func applyTheme(_ theme: ThemeProtocol) {
         colorTint = theme.color.bgPrimary
-        colorTintAlpha = theme.blurTintAlpha
-        blurRadius = theme.blurRadius
+        colorTintAlpha = 0.18
+        blurRadius = Theme.padding
         scale = 1
     }
 }

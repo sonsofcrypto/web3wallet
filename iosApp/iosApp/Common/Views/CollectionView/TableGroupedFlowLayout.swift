@@ -4,8 +4,6 @@
 
 import UIKit
 
-private let separatorHeight: CGFloat = 1
-
 class TableGroupedFlowLayout: TableFlowLayout {
     
     override func layoutAttributesForElements(

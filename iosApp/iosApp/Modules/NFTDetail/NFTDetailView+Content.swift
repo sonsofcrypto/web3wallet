@@ -52,7 +52,7 @@ private extension NFTDetailViewController {
         let button = Button()
         button.style = .primary
         button.setTitle(Localized("nft.detail.button.send"), for: .normal)
-        button.add(.targetAction(.init(target: self, selector: #selector(sendNFT))))
+        button.addTar(self, action: #selector(sendNFT))
         return button
     }
     

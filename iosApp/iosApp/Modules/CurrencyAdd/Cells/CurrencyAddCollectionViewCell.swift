@@ -36,7 +36,7 @@ final class CurrencyAddCollectionViewCell: UICollectionViewCell {
         detailsView.backgroundColor = Theme.color.bgPrimary
         detailsView.layer.cornerRadius = Theme.cornerRadiusSmall
         (detailsView.subviews.first as? UIStackView)?.arrangedSubviews.forEach {
-            if $0.tag == 10 { $0.backgroundColor = Theme.color.separatorSecondary }
+            if $0.tag == 10 { $0.backgroundColor = Theme.color.collectionSeparator }
         }
         saveButton.style = .primary
         saveButton.addTarget(self, action: #selector(addTokenTapped), for: .touchUpInside)

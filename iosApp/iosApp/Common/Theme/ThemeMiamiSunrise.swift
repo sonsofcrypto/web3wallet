@@ -16,12 +16,11 @@ struct ThemeMiamiSunrise: ThemeProtocol {
     let shadowRadius: CGFloat = 4
     let cellHeightLarge: CGFloat = 64
     let cellHeight: CGFloat = 46
+    let lineHeight: CGFloat = 0.666667
     let sectionHeaderHeight: CGFloat = 46
     let buttonHeight: CGFloat = 46
     let buttonSmallHeight: CGFloat = 32
     let buttonHeightExtraSmall: CGFloat = 24
-    let blurRadius: CGFloat = 16
-    let blurTintAlpha: CGFloat = 0.18
 
     class ThemeColor: ThemeColorProtocol {
         var textPrimary: UIColor { Palette.white }
@@ -41,8 +40,7 @@ struct ThemeMiamiSunrise: ThemeProtocol {
         var collectionSeparator: UIColor { Palette.white18 }
 
         var stroke: UIColor { Palette.lightGray }
-        var separatorPrimary: UIColor { Palette.lighterGray }
-        var separatorSecondary: UIColor { Palette.white3 }
+        var separator: UIColor { Palette.lighterGray }
         var buttonBgPrimary: UIColor { .init(variants: [Palette.blue, Palette.pink]) }
         var buttonBgPrimaryDisabled: UIColor { Palette.gray }
         var buttonTextPrimary: UIColor { Palette.white }

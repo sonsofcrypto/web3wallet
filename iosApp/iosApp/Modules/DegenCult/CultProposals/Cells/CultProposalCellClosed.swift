@@ -29,7 +29,7 @@ final class CultProposalCellClosed: CollectionViewCell {
         result1Label.apply(style: .callout, weight: .bold)
         result2Label.apply(style: .callout)
         let statusView = CultProposalStatus()
-        statusView.backgroundColor = Theme.color.separatorPrimary
+        statusView.backgroundColor = Theme.color.separator
         addSubview(statusView)
         self.statusView = statusView
         statusView.addConstraints(
