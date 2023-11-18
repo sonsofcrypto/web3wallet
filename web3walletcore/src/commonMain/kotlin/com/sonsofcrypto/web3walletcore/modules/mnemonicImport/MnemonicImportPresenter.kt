@@ -16,6 +16,7 @@ import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportWire
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError
 import com.sonsofcrypto.web3lib.utils.extensions.stripLeadingWhiteSpace
 import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicInputViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
 
 sealed class MnemonicImportPresenterEvent {
@@ -139,7 +140,7 @@ class DefaultMnemonicImportPresenter(
         return CollectionViewModel.Screen(
             Localized(""),
             sections,
-            listOf(Localized("mnemonic.cta.import")),
+            listOf(ButtonViewModel(Localized("mnemonic.cta.import"))),
         )
     }
 

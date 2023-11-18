@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate
 
 import com.sonsofcrypto.web3lib.utils.WeakRef
+import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Button
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Button.ButtonType.DESTRUCTIVE
@@ -135,7 +136,7 @@ class DefaultMnemonicUpdatePresenter(
     private fun viewModel(): Screen = Screen(
         Localized("mnemonicConfirmation.title"),
         listOf(mnemonicSection(), optionsSection(), deleteSection()),
-        listOf(Localized("mnemonic.cta.update")),
+        listOf(ButtonViewModel(Localized("mnemonic.cta.update"))),
     )
 
     private fun mnemonicSection(): Section = Section(

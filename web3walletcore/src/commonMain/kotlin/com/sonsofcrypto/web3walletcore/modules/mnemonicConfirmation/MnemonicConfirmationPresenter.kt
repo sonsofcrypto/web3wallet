@@ -4,6 +4,7 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.extensions.stripLeadingWhiteSpace
 import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicInputViewModel
 import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicPresenterHelper
+import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title
@@ -81,7 +82,7 @@ class DefaultMnemonicConfirmationPresenter(
         return CollectionViewModel.Screen(
             Localized("mnemonicConfirmation.title"),
             sections,
-            listOf(ctaString()),
+            listOf(ButtonViewModel(ctaString())),
         )
     }
 

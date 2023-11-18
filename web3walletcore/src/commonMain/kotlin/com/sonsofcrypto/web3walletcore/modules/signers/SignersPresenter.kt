@@ -196,7 +196,7 @@ class DefaultSignersPresenter(
                 Button(Localized("keyStore.newMnemonic"), NEW_MNEMONIC),
                 Button(Localized("keyStore.importMnemonic"), IMPORT_MNEMONIC),
                 Button(Localized("keyStore.importPrivateKey"), IMPORT_PRIV_KEY),
-                Button(Localized("keyStore.importPublicKey"), IMPORT_ADDRESS),
+                Button(Localized("keyStore.importAddress"), IMPORT_ADDRESS),
                 Button(Localized("keyStore.connectHardwareWallet"), CONNECT_HARDWARE_WALLET),
                 Button(Localized("keyStore.createMultiSig"), CREATE_MULTI_SIG)
             ),

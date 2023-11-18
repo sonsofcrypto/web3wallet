@@ -71,9 +71,9 @@ class CollectionViewController: UICollectionViewController,
         applyTheme(Theme)
     }
 
-    func setCTAButtons(buttons: [ButtonContainer.ButtonViewModel]) {
-        let needsLayout = ctaButtonsContainer.buttons.count != buttons.count
-        ctaButtonsContainer.setButtons(buttons)
+    func updateButtons(with viewModel: [ButtonViewModel]) {
+        let needsLayout = ctaButtonsContainer.buttons.count != viewModel.count
+        ctaButtonsContainer.setButtons(viewModel)
         layoutAboveScrollView()
     }
 

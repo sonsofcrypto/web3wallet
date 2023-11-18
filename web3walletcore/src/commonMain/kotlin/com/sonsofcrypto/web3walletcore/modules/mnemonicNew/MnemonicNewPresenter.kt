@@ -5,6 +5,8 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
+import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Style.SECONDARY
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory.COPY
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Label
@@ -127,8 +129,8 @@ class DefaultMnemonicNewPresenter(
         Localized("mnemonic.title.new"),
         listOf(mnemonicSection(), optionsSection()) + accountsSections(),
         listOf(
-            Localized("mnemonic.title.add.account"),
-            Localized("mnemonic.cta.new")
+            ButtonViewModel(Localized("mnemonic.title.add.account"), SECONDARY),
+            ButtonViewModel(Localized("mnemonic.cta.new"))
         )
     )
 
@@ -194,7 +196,7 @@ class DefaultMnemonicNewPresenter(
                         Localized("mnemonic.account.name.placeholder"),
                     ),
                     Label(
-                        "Address: ${formatter.format(interactor.accountAddress(it))}",
+                        "Address ${interactor.accountAddress(it)}",
                         COPY,
                     ),
                 ),
