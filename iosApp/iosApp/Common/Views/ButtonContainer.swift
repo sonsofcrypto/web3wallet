@@ -27,19 +27,19 @@ class ButtonContainer: UIView, ContentScrollInfo {
     weak var delegate: ButtonContainerDelegate?
 
     private(set) var buttons: [ButtonViewModel] = []
-    private lazy var backgroundView: ThemeBlurView = {
-        let view = ThemeBlurView()
-        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        view.layer.cornerRadius = Theme.cornerRadius
-        view.clipsToBounds = true
-        insertSubview(view, at: 0)
-        return view
-    }()
-    private lazy var stackView: UIStackView = {
-        let stackView = VStackView([], distribution: .fillEqually, spacing: Theme.padding)
-        addSubview(stackView)
-        return stackView
-    }()
+    private weak var backgroundView: ThemeBlurView!
+    private weak var stackView: VStackView!
+    private var stackHeightConstraint: NSLayoutConstraint!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configureUI()
+    }
 
     func setButtons(_ buttons: [ButtonViewModel]) {
         while stackView.arrangedSubviews.count > buttons.count
@@ -48,9 +48,7 @@ class ButtonContainer: UIView, ContentScrollInfo {
         }
 
         while stackView.arrangedSubviews.count < buttons.count {
-            let button = UIButton(type: .custom)
-            button.backgroundColor = UIColor.red.withAlphaComponent(0.25)
-            button.translatesAutoresizingMaskIntoConstraints = false
+            let button = Button(type: .custom)
             button.addTar(self, action: #selector(buttonAction(_:)))
             stackView.addArrangedSubview(button)
         }
@@ -61,8 +59,8 @@ class ButtonContainer: UIView, ContentScrollInfo {
             (view as? UIButton)?.setTitle(button.title, for: .normal)
             (view as? Button)?.setButtonViewModelStyle(button.style)
         }
-
         self.buttons = buttons
+        stackHeightConstraint.constant = stackViewHeight()
     }
 
     @objc func buttonAction(_ sender: UIButton) {
@@ -84,15 +82,34 @@ class ButtonContainer: UIView, ContentScrollInfo {
         )
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        var frame = CGRect(zeroOrigin: intrinsicContentSize)
-            .insetBy(dx: Theme.padding, dy: 0)
-        frame.origin.y = Theme.padding
-//        frame.size.height -= Theme.padding
-        stackView.frame = frame
-        backgroundView.frame = bounds
-        stackView.backgroundColor = .green
+    private func configureUI() {
+        let bgView = ThemeBlurView()
+        bgView.translatesAutoresizingMaskIntoConstraints = false
+        bgView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        bgView.layer.cornerRadius = Theme.cornerRadius
+        bgView.clipsToBounds = true
+        addSubview(bgView)
+        bgView.contraintToSuperView()
+        backgroundView = bgView
+
+        let vStack = VStackView([], distribution: .fillEqually, spacing: Theme.padding)
+        vStack.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(vStack)
+        let sv = self
+        let mrg = Theme.padding
+        sv.addConstraints([
+            vStack.leadingAnchor.constraint(equalTo: sv.leadingAnchor, constant: mrg),
+            vStack.trailingAnchor.constraint(equalTo: sv.trailingAnchor, constant: -mrg),
+            vStack.topAnchor.constraint(equalTo: sv.topAnchor, constant: mrg),
+        ])
+        let heightConst = vStack.heightAnchor.constraint(equalToConstant: mrg)
+        stackHeightConstraint = heightConst
+        stackView = vStack
     }
-    
+
+    private func stackViewHeight() -> CGFloat {
+        CGFloat(buttons.count) * Theme.buttonHeight
+            + CGFloat(buttons.count - 1) * Theme.padding
+    }
 }
+

@@ -27,6 +27,7 @@ struct ThemeVanilla: ThemeProtocol {
         var textSecondary: UIColor { .secondaryLabel }
         var textTertiary: UIColor { .tertiaryLabel }
         var bgPrimary: UIColor { .secondarySystemBackground }
+        var bgBlurTint: UIColor { .secondarySystemBackground }
         var bgGradientTop: UIColor { .systemBackground }
         var bgGradientBtm: UIColor { .systemBackground }
         var navBarBackground: UIColor { .systemBackground }
