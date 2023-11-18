@@ -28,4 +28,11 @@ class ThemeBlurView: VisualEffectView {
         colorTint = Theme.color.bgBlurTint
         blurRadius = Theme.padding
     }
+
+    func round() -> Self {
+        clipsToBounds = true
+        layer.maskedCorners = .all
+        layer.cornerRadius = Theme.cornerRadius
+        return self
+    }
 }

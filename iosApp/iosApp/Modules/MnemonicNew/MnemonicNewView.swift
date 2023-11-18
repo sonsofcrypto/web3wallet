@@ -179,7 +179,7 @@ extension MnemonicNewViewController {
             (cell as? MnemonicNewCell)?.animateCopiedToPasteboard()
         }
         guard isAccountsSection(indexPath) else { return false }
-        (cell as? LabelCell)?.animateCopy()
+        (cell as? LabelCell)?.animateCopyToPasteboard()
         presenter.handleEvent(
             .CopyAccountAddress(idx: indexPath.section.int32 - 2)
         )

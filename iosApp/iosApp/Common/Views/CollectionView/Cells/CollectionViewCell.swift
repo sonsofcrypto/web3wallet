@@ -35,6 +35,45 @@ class ThemeCell: UICollectionViewCell {
     }
 }
 
+extension ThemeCell {
+
+    func animateCopyToPasteboard() {
+        let tx = bounds.width
+        let ty = bounds.height
+        let blur = ThemeBlurView().round()
+        blur.frame = contentView.bounds
+        blur.transform = CGAffineTransformMakeTranslation(tx, 0)
+        addSubview(blur)
+
+        let label = UILabel(
+            color: Theme.color.textPrimary,
+            text: Localized("copiedToPasteboard")
+        )
+        blur.contentView.addSubview(label)
+        label.center = blur.bounds.midXY
+        label.frame.origin.x += Theme.padding
+
+        let imageView = UIImageView(sysImgName: "square.on.square")
+        imageView.center = bounds.midXY
+        imageView.frame.origin.x = label.frame.origin.x - Theme.padding.twice
+        imageView.tintColor = Theme.color.textPrimary
+        blur.contentView.addSubview(imageView)
+
+        UIView.springAnimate(
+            animations: { blur.transform = .identity },
+            completion: { _ in
+                UIView.springAnimate(
+                    delay: 2,
+                    animations: {
+                        blur.transform = CGAffineTransformMakeTranslation(0, ty)
+                        blur.alpha = 0
+                    },
+                    completion: { _ in blur.removeFromSuperview() }
+                )
+            })
+    }
+}
+
 class CollectionViewCell: UICollectionViewCell {
 
     override var isSelected: Bool {
