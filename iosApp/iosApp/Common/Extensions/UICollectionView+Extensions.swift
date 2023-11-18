@@ -96,6 +96,11 @@ extension UICollectionView {
             }
         }
     }
+
+    func lastIdxPath() -> IndexPath {
+        let sec = numberOfSections - 1
+        return IndexPath(item: numberOfItems(inSection: sec) - 1, section: sec)
+    }
 }
 
 // MARK - CellViewModel reloading

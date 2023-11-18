@@ -49,7 +49,13 @@ final class MnemonicNewViewController: CollectionViewController {
         didSelectButtonAt idx: Int
     ) {
         switch idx {
-        case 0: presenter.handleEvent(.AddAccount())
+        case 0:
+            presenter.handleEvent(.AddAccount())
+            cv.scrollToItem(
+                at: cv.lastIdxPath(),
+                at: .centeredVertically,
+                animated: true
+            )
         case 1: presenter.handleEvent(.CreateMnemonic())
         default: ()
         }
