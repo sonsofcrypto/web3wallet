@@ -27,13 +27,11 @@ class LabelCell: ThemeCell {
         label.font = theme.font.callout
         accessoryImageView.tintColor = theme.color.textPrimary
     }
-    
-    func animateCopy() {
-        
-    }
 
     private func updateAccessoryView(_ accType: CellViewModel.Label.Accessory) {
-        guard accType != accessoryType else { return }
+        guard accType != accessoryType else {
+            return
+        }
         accessoryType = accType
         switch accType {
         case .detail:
