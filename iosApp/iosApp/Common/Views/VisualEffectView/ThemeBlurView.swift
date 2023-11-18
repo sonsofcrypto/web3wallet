@@ -25,7 +25,7 @@ class ThemeBlurView: VisualEffectView {
         layer.borderColor = Theme.color.collectionSectionStroke.cgColor
         layer.borderWidth = 1
 
-        colorTint = Theme.color.bgPrimary
+        colorTint = Theme.color.bgBlurTint
         blurRadius = Theme.padding
     }
 }

@@ -43,6 +43,7 @@ protocol ThemeColorProtocol {
     var textSecondary: UIColor { get }
     var textTertiary: UIColor { get }
     var bgPrimary: UIColor { get }
+    var bgBlurTint: UIColor { get }
     var bgGradientTop: UIColor { get }
     var bgGradientBtm: UIColor { get }
 

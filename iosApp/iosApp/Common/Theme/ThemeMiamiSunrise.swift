@@ -27,6 +27,7 @@ struct ThemeMiamiSunrise: ThemeProtocol {
         var textSecondary: UIColor { Palette.white6 }
         var textTertiary: UIColor { Palette.white3 }
         var bgPrimary: UIColor { Palette.white18 }
+        var bgBlurTint: UIColor { Palette.bgBlurTint }
         var bgGradientTop: UIColor { .init(variants: [Palette.blue, Palette.pink]) }
         var bgGradientBtm: UIColor { .init(variants: [Palette.pinkLight, Palette.purple]) }
         var navBarBackground: UIColor { Palette.lightBlack }
@@ -76,6 +77,7 @@ struct ThemeMiamiSunrise: ThemeProtocol {
         static let gray: UIColor = .init(rgb: 0x8E8E92)
         static let lightGray: UIColor = .init(variants: [.init(rgb: 0x787880).withAlpha(0.2), .init(rgb: 0x787880).withAlpha(0.36)])
         static let lighterGray: UIColor = .init(rgb: 0xC6C6C8)
+        static let bgBlurTint: UIColor = .init(rgb: 0xA5ADBC).withAlpha(0.4)
     }
 
     // TODO(Anon): We should not keep this in memory at all times. Font palette + `.bold()`
