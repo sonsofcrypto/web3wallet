@@ -618,7 +618,7 @@
             </objects>
             <point key="canvasLocation" x="600.79999999999995" y="119.70443349753695"/>
         </scene>
-        <!--Mnemonic New View Controller-->
+        <!--Mnemonic New-->
         <scene sceneID="vTL-BT-zLk">
             <objects>
                 <collectionViewController storyboardIdentifier="MnemonicNewViewController" id="2md-6h-pex" customClass="MnemonicNewViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -1051,42 +1051,21 @@
                             </connections>
                         </collectionReusableView>
                         <connections>
-                            <outlet property="abovescrollView" destination="4pk-TL-BGT" id="Clu-fP-xVq"/>
                             <outlet property="dataSource" destination="2md-6h-pex" id="6Nl-DS-QWN"/>
                             <outlet property="delegate" destination="2md-6h-pex" id="oqS-6e-lRx"/>
                         </connections>
                     </collectionView>
-                    <connections>
-                        <outlet property="addAccountButton" destination="TRb-Pk-8bD" id="PCM-L5-kA1"/>
-                        <outlet property="ctaButton" destination="auf-5P-pFm" id="WD6-ud-AKW"/>
-                    </connections>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Mnemonic New" id="ODW-6R-3ew">
+                        <barButtonItem key="leftBarButtonItem" image="chevron.left" catalog="system" id="hch-km-ZMf">
+                            <connections>
+                                <action selector="dismissAction:" destination="2md-6h-pex" id="bzg-9A-kjg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="INi-2x-m6y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="4pk-TL-BGT" userLabel="CTA Buttons">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRb-Pk-8bD" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                            <rect key="frame" x="16" y="7" width="343" height="46"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                            <connections>
-                                <action selector="addAccountAction:" destination="2md-6h-pex" eventType="touchUpInside" id="Lrf-sf-cnV"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="auf-5P-pFm" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                            <rect key="frame" x="16" y="69" width="343" height="46"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                            <connections>
-                                <action selector="ctaAction:" destination="2md-6h-pex" eventType="touchUpInside" id="hLa-gn-eEq"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <viewLayoutGuide key="safeArea" id="fG9-Qh-hj6"/>
-                </view>
             </objects>
             <point key="canvasLocation" x="1293.5999999999999" y="116.74876847290641"/>
         </scene>
@@ -2006,6 +1985,7 @@
     </scenes>
     <color key="tintColor" name="tintPrimary"/>
     <resources>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="openbeta_a" width="50" height="50"/>
         <image name="openbeta_b" width="50" height="50"/>

@@ -26,7 +26,13 @@ class ThemeReusableView: UICollectionReusableView {
 class SectionHeaderView: ThemeReusableView {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var trailingLabel: UILabel!
-    
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        label.text = nil
+        trailingLabel?.text = nil
+    }
+
     override func applyTheme(_ theme: ThemeProtocol) {
         [label, trailingLabel].forEach {
             $0?.textColor = theme.color.textSecondary

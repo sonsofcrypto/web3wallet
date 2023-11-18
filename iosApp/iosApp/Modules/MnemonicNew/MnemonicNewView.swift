@@ -5,80 +5,54 @@
 import UIKit
 import web3walletcore
 
-final class MnemonicNewViewController: UICollectionViewController,
-    UICollectionViewDelegateFlowLayout {
-    @IBOutlet weak var addAccountButton: Button!
-    @IBOutlet weak var ctaButton: Button!
-    
+final class MnemonicNewViewController: CollectionViewController {
+
     var presenter: MnemonicNewPresenter!
 
-    private var didAppear: Bool = false
-    private var prevSize: CGSize = .zero
-    private var cellSize: CGSize = .zero
-    private var viewModel: CollectionViewModel.Screen?
-    private var cv: CollectionView! { (collectionView as! CollectionView) }
-    private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
-    private var interactiveTransitioning: CardFlipInteractiveTransitioning?
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-        
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureUI()
-        presenter?.present()
+    override func configureUI() {
+        title = Localized("mnemonic.title.new")
+        enableCardFlipTransitioning = true
+        super.configureUI()
+        presenter.present()
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        recomputeSizeIfNeeded()
-        layoutOverscrollView()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        didAppear = true
-    }
-
-    override func traitCollectionDidChange(
-        _ previousTraitCollection: UITraitCollection?
-    ) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        applyTheme(Theme)
-        cv?.collectionViewLayout.invalidateLayout()
-    }
-    
     // MARK: - MnemonicView
-    
+
     func update(with viewModel: CollectionViewModel.Screen) {
         let prevViewModel = self.viewModel
         self.viewModel = viewModel
 
         guard let cv = collectionView else { return }
 
-        addAccountButton.setTitle(viewModel.ctaItems.first, for: .normal)
-        ctaButton.setTitle(viewModel.ctaItems.last, for: .normal)
-
         cv.reloadAnimatedIfNeeded(
             prevVM: prevViewModel,
             currVM: viewModel,
             reloadOnly: !didAppear
         )
+
+        setCTAButtons(
+            buttons: [
+                .init(title: viewModel.ctaItems.first ?? "", style: .secondary),
+                .init(title: viewModel.ctaItems.last ?? "", style: .primary),
+            ]
+        )
     }
 
     // MARK: - Actions
-    
-    @IBAction func ctaAction(_ sender: Any) {
-        presenter.handleEvent(.CreateMnemonic())
-    }
-    
-    @IBAction func addAccountAction(_ sender: Any) {
-        presenter.handleEvent(.AddAccount())
-    }
 
     @IBAction func dismissAction(_ sender: Any?) {
         presenter.handleEvent(MnemonicNewPresenterEvent.Dismiss())
+    }
+
+    override func buttonContainer(
+        _ buttonContainer: ButtonContainer,
+        didSelectButtonAt idx: Int
+    ) {
+        switch idx {
+        case 0: presenter.handleEvent(.AddAccount())
+        case 1: presenter.handleEvent(.CreateMnemonic())
+        default: ()
+        }
     }
 
     // MARK: - UICollectionViewDataSource
@@ -276,200 +250,12 @@ extension MnemonicNewViewController {
             return cellSize
         }
     }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForHeaderInSection section: Int
-    ) -> CGSize {
-        String.estimateSize(
-            (viewModel?.sections[safe: section]?.header)?.text(),
-            font: Theme.font.sectionHeader,
-            maxWidth: cellSize.width,
-            extraHeight: Theme.padding.twice,
-            minHeight: Theme.padding
-        )
-        
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForFooterInSection section: Int
-    ) -> CGSize {
-         String.estimateSize(
-            viewModel?.sections[section].footer?.text(),
-            font: Theme.font.sectionFooter,
-            maxWidth: cellSize.width,
-            extraHeight: Theme.padding
-        )
-    }
-}
-
-// MARK: - UIViewControllerTransitioningDelegate
-
-extension MnemonicNewViewController: UIViewControllerTransitioningDelegate {
-
-    func animationController(
-        forPresented presented: UIViewController,
-        presenting: UIViewController,
-        source: UIViewController
-    ) -> UIViewControllerAnimatedTransitioning? {
-        let presentedVc = (presented as? UINavigationController)?.topVc
-        let sourceNav = (source as? UINavigationController)
-        let targetView = (source as? TargetViewTransitionDatasource)?.targetView()
-            ?? (sourceNav?.topVc as? TargetViewTransitionDatasource)?.targetView()
-            ?? presenting.view
-        guard presentedVc == self, let targetView = targetView else {
-            animatedTransitioning = nil
-            return nil
-        }
-        animatedTransitioning = CardFlipAnimatedTransitioning(
-            targetView: targetView,
-            handler: { [weak self] in self?.animatedTransitioning = nil }
-        )
-        return animatedTransitioning
-    }
-
-    func animationController(
-        forDismissed dismissed: UIViewController
-    ) -> UIViewControllerAnimatedTransitioning? {
-        guard dismissed == self || dismissed == navigationController else {
-            animatedTransitioning = nil
-            return nil
-        }
-        let presenting = dismissed.presentingViewController
-        guard let visVc = (presenting as? EdgeCardsController)?.visibleViewController,
-            let topVc = (visVc as? UINavigationController)?.topVc,
-            let targetView = (topVc as? TargetViewTransitionDatasource)?.targetView()
-        else {
-            animatedTransitioning = nil
-            return nil
-        }
-        animatedTransitioning = CardFlipAnimatedTransitioning(
-            targetView: targetView,
-            isPresenting: false,
-            scaleAdjustment: 0.05,
-            handler: { [weak self] in self?.animatedTransitioning = nil }
-        )
-        return animatedTransitioning
-    }
-
-    func interactionControllerForDismissal(
-        using animator: UIViewControllerAnimatedTransitioning
-    ) -> UIViewControllerInteractiveTransitioning? {
-        interactiveTransitioning
-    }
-
-    @objc func handleGesture(_ recognizer: UIPanGestureRecognizer) {
-        let location = recognizer.location(in: view.window!)
-        let pct = (location.x * 0.5) / view.bounds.width
-        switch recognizer.state {
-        case .began:
-            interactiveTransitioning = CardFlipInteractiveTransitioning(
-                handler: { [weak self] in self?.interactiveTransitioning = nil }
-            )
-            dismiss(animated: true)
-        case .changed:
-            interactiveTransitioning?.update(pct)
-        case .cancelled:
-            interactiveTransitioning?.cancel()
-        case .ended:
-            let completed = recognizer.velocity(in: view.window!).x >= 0
-            interactiveTransitioning?.completionSpeed = completed ? 1.5 : 0.1
-            completed
-                ? interactiveTransitioning?.finish()
-                : interactiveTransitioning?.cancel()
-        default:
-            ()
-        }
-    }
 }
 
 // MARK: - Configure UI
 
 private extension MnemonicNewViewController {
-    
-    func configureUI() {
-        title = Localized("mnemonic.title.new")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            sysImgName: "chevron.left",
-            target: self,
-            action: #selector(dismissAction(_:))
-        )
-        NotificationCenter.addKeyboardObserver(
-            self,
-            selector: #selector(keyboardWillShow)
-        )
-        NotificationCenter.addKeyboardObserver(
-            self,
-            selector: #selector(keyboardWillHide),
-            event: .willHide
-        )
-        let edgePan = UIScreenEdgePanGestureRecognizer(
-            target: self,
-            action: #selector(handleGesture(_:))
-        )
-        edgePan.edges = [UIRectEdge.left]
-        view.addGestureRecognizer(edgePan)
-        cv.pinOverscrollToBottom = true
-        cv.stickAboveToBottom = true
-        applyTheme(Theme)
-        addAccountButton.style = .secondary
-        ctaButton.style = .primary
-    }
 
-    func layoutOverscrollView() {
-        ctaButton.bounds.size.height = Theme.buttonHeight
-        cv.abovescrollView?.bounds.size.width = view.bounds.size.width
-        cv.abovescrollView?.bounds.size.height = ctaButton.bounds.height * 2
-            + view.safeAreaInsets.bottom
-            + Theme.padding * 2
-    }
-
-    func applyTheme(_ theme: ThemeProtocol) {
-        cv?.separatorInsets = .with(left: theme.padding)
-        cv?.sectionBackgroundColor = theme.color.bgPrimary
-        cv?.sectionBorderColor = theme.color.collectionSectionStroke
-        cv?.separatorColor = theme.color.collectionSeparator
-        cv?.contentInset.bottom = bottomInset()
-        (cv?.overscrollView?.subviews.first as? UILabel)?
-            .textColor = theme.color.textPrimary
-    }
-
-    @objc func keyboardWillShow(notification: Notification) {
-        let firstResponderIdxPath = cv.indexPathsForVisibleItems.filter {
-            cv.cellForItem(at: $0)?.firstResponder != nil
-        }.first
-
-        cv.contentInset.bottom = Theme.padding
-
-        if let idxPath = firstResponderIdxPath {
-            cv.scrollToItem(at: idxPath, at: .centeredVertically, animated: true)
-        }
-    }
-
-    @objc func keyboardWillHide(notification: Notification) {
-        cv.contentInset.bottom = bottomInset()
-    }
-
-    func bottomInset() -> CGFloat {
-        (cv.abovescrollView?.bounds.height ?? Theme.padding) + Theme.padding
-    }
-
-    func viewModel(at idxPath: IndexPath) -> CellViewModel? {
-        viewModel?.sections[idxPath.section].items[idxPath.item]
-    }
-
-    func recomputeSizeIfNeeded() {
-        guard prevSize.width != view.bounds.size.width else { return }
-        prevSize = view.bounds.size
-        cellSize = .init(
-            width: view.bounds.size.width - Theme.padding * 2,
-            height: Theme.cellHeight
-        )
-    }
-    
     func isAccountsSection(_ idxPath: IndexPath) -> Bool {
         idxPath.section > 1
     }

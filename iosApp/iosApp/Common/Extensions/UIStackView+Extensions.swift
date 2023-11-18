@@ -7,7 +7,7 @@ import UIKit
 class HStackView: UIStackView {
 
     convenience init(
-        _ views: [UIView],
+        _ views: [UIView] = [],
         alignment: Alignment = .fill,
         distribution: Distribution = .fill,
         spacing: CGFloat = 0
@@ -28,7 +28,7 @@ class VStackView: UIStackView {
     }
 
     convenience init(
-        _ views: [UIView],
+        _ views: [UIView] = [],
         alignment: Alignment = .fill,
         distribution: Distribution = .fill,
         spacing: CGFloat = 0
@@ -36,6 +36,7 @@ class VStackView: UIStackView {
         self.init(arrangedSubviews: views)
         self.axis = .vertical
         self.alignment = alignment
+        self.distribution = distribution
         self.spacing = spacing
     }
 
