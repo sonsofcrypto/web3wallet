@@ -11,7 +11,7 @@ sealed class CollectionViewModel {
     data class Screen(
         val id: String,
         val sections: List<Section>,
-        val ctaItems: List<String> = emptyList()
+        val ctaItems: List<ButtonViewModel> = emptyList()
     ): CollectionViewModel()
 
     sealed class Header() {

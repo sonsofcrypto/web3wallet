@@ -46,7 +46,7 @@ final class MnemonicConfirmationViewController: UICollectionViewController,
         self.mnemonicInputViewModel = mnemonicInputViewModel
 
         guard let cv = collectionView else { return }
-        ctaButton.setTitle(viewModel.ctaItems.last, for: .normal)
+        ctaButton.setTitle(viewModel.ctaItems.last?.title, for: .normal)
 
         let cells = cv.visibleCells
             .map { cv.indexPath(for: $0) }

@@ -64,7 +64,7 @@ final class MnemonicImportViewController: UICollectionViewController {
         self.mnemonicInputViewModel = mnemonicInputViewModel
 
         guard let cv = collectionView else { return }
-        ctaButton.setTitle(viewModel.ctaItems.last, for: .normal)
+        ctaButton.setTitle(viewModel.ctaItems.last?.title, for: .normal)
 
         let idxs = IndexSet(0..<viewModel.sections.count)
         let cells = cv.visibleCells

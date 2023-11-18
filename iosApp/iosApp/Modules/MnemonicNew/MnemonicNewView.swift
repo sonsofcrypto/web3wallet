@@ -21,20 +21,12 @@ final class MnemonicNewViewController: CollectionViewController {
     func update(with viewModel: CollectionViewModel.Screen) {
         let prevViewModel = self.viewModel
         self.viewModel = viewModel
-
         guard let cv = collectionView else { return }
-
+        updateButtons(with: viewModel.ctaItems)
         cv.reloadAnimatedIfNeeded(
             prevVM: prevViewModel,
             currVM: viewModel,
             reloadOnly: !didAppear
-        )
-
-        setCTAButtons(
-            buttons: [
-                .init(title: viewModel.ctaItems.first ?? "", style: .secondary),
-                .init(title: viewModel.ctaItems.last ?? "", style: .primary),
-            ]
         )
     }
 
@@ -42,6 +34,44 @@ final class MnemonicNewViewController: CollectionViewController {
 
     @IBAction func dismissAction(_ sender: Any?) {
         presenter.handleEvent(MnemonicNewPresenterEvent.Dismiss())
+    }
+
+    func nameDidChange(_ name: String) {
+        presenter.handleEvent(.SetName(name: name))
+    }
+
+    func iCloudBackupDidChange(_ onOff: Bool) {
+        presenter.handleEvent(.SetICouldBackup(onOff: onOff))
+    }
+
+    func saltSwitchDidChange(_ onOff: Bool) {
+        presenter.handleEvent(.SaltSwitch(onOff: onOff))
+    }
+
+    func saltTextDidChange(_ text: String) {
+        presenter.handleEvent(.SetSalt(salt: text))
+    }
+
+    func saltLearnAction() {
+        presenter.handleEvent(.SaltLearnMore())
+    }
+
+    func passTypeDidChange(_ idx: Int) {
+        presenter.handleEvent(.SetPassType(idx: idx.int32))
+    }
+
+    func passwordDidChange(_ text: String) {
+        presenter.handleEvent(.SetPassword(text: text))
+    }
+
+    func allowFaceIdDidChange(_ onOff: Bool) {
+        presenter.handleEvent(.SetAllowFaceId(onOff: onOff))
+    }
+
+    func changeAccountName(_ name: String, idxPath: IndexPath) {
+        presenter.handleEvent(
+            .SetAccountName(name: name, idx: idxPath.section.int32 - 2)
+        )
     }
 
     override func buttonContainer(
@@ -184,44 +214,6 @@ extension MnemonicNewViewController {
             .CopyAccountAddress(idx: indexPath.section.int32 - 2)
         )
         return false
-    }
-
-    func nameDidChange(_ name: String) {
-        presenter.handleEvent(.SetName(name: name))
-    }
-
-    func iCloudBackupDidChange(_ onOff: Bool) {
-        presenter.handleEvent(.SetICouldBackup(onOff: onOff))
-    }
-
-    func saltSwitchDidChange(_ onOff: Bool) {
-        presenter.handleEvent(.SaltSwitch(onOff: onOff))
-    }
-
-    func saltTextDidChange(_ text: String) {
-        presenter.handleEvent(.SetSalt(salt: text))
-    }
-
-    func saltLearnAction() {
-        presenter.handleEvent(.SaltLearnMore())
-    }
-
-    func passTypeDidChange(_ idx: Int) {
-        presenter.handleEvent(.SetPassType(idx: idx.int32))
-    }
-
-    func passwordDidChange(_ text: String) {
-        presenter.handleEvent(.SetPassword(text: text))
-    }
-
-    func allowFaceIdDidChange(_ onOff: Bool) {
-        presenter.handleEvent(.SetAllowFaceId(onOff: onOff))
-    }
-    
-    func changeAccountName(_ name: String, idxPath: IndexPath) {
-        presenter.handleEvent(
-            .SetAccountName(name: name, idx: idxPath.section.int32 - 2)
-        )
     }
 
     // MARK: - UICollectionViewDelegateFlowLayout

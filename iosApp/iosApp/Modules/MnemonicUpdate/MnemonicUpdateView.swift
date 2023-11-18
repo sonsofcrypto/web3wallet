@@ -64,7 +64,7 @@ final class MnemonicUpdateViewController: UICollectionViewController {
         self.viewModel = viewModel
 
         guard let cv = collectionView else { return }
-        ctaButton.setTitle(viewModel.ctaItems.last, for: .normal)
+        ctaButton.setTitle(viewModel.ctaItems.last?.title, for: .normal)
 
         let idxs = IndexSet(0..<viewModel.sections.count)
         let cells = cv.visibleCells

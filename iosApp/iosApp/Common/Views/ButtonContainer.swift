@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 protocol ButtonContainerDelegate: class {
     func buttonContainer(
@@ -12,17 +13,6 @@ protocol ButtonContainerDelegate: class {
 }
 
 class ButtonContainer: UIView, ContentScrollInfo {
-
-    struct ButtonViewModel {
-        let title: String
-        let style: Style
-
-        enum Style {
-            case primary
-            case secondary
-            case destructive
-        }
-    }
 
     weak var delegate: ButtonContainerDelegate?
 

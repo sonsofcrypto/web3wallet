@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 class Button: UIButton {
     
@@ -49,7 +50,12 @@ class Button: UIButton {
         return size
     }
 
-    func setButtonViewModelStyle(_ style: ButtonContainer.ButtonViewModel.Style) {
+    func update(with viewModel: ButtonViewModel) {
+        setTitle(viewModel.title, for: .normal)
+        setButtonViewModelStyle(viewModel.style)
+    }
+
+    func setButtonViewModelStyle(_ style: ButtonViewModel.Style) {
         switch style {
         case .primary:
             self.style = .primary(action: .default)
@@ -57,6 +63,8 @@ class Button: UIButton {
             self.style = .secondary
         case .destructive:
             self.style = .primary(action: .destructive)
+        default:
+            ()
         }
     }
 }
