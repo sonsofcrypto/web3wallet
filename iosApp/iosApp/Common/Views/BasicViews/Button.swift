@@ -48,6 +48,17 @@ class Button: UIButton {
         }
         return size
     }
+
+    func setButtonViewModelStyle(_ style: ButtonContainer.ButtonViewModel.Style) {
+        switch style {
+        case .primary:
+            self.style = .primary(action: .default)
+        case .secondary:
+            self.style = .secondary
+        case .destructive:
+            self.style = .primary(action: .destructive)
+        }
+    }
 }
 
 extension Button {

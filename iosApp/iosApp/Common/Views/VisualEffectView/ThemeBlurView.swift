@@ -5,7 +5,7 @@
 import UIKit
 
 class ThemeBlurView: VisualEffectView {
-    
+
     override init(effect: UIVisualEffect?) {
         super.init(effect: effect)
         configureUI()
@@ -21,9 +21,11 @@ class ThemeBlurView: VisualEffectView {
     }
 
     func applyTheme(_ theme: ThemeProtocol) {
-        colorTint = theme.color.bgPrimary
-        colorTintAlpha = 0.18
-        blurRadius = Theme.padding
         scale = 1
+        layer.borderColor = Theme.color.collectionSectionStroke.cgColor
+        layer.borderWidth = 1
+
+        colorTint = Theme.color.bgPrimary
+        blurRadius = Theme.padding
     }
 }

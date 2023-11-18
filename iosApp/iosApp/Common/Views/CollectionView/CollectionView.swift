@@ -9,7 +9,7 @@ protocol Progressable {
 }
 
 protocol ContentScrollInfo {
-    func contentBehindBottomView(contentBehind: Bool)
+    func contentBehindBottomView(_ isBehind: Bool)
 }
 
 @IBDesignable
@@ -33,7 +33,9 @@ class CollectionView: UICollectionView {
     /// When oversrolling `abovescrollView` & `overscrollView` pinned to bottom.
     var pinOverscrollToBottom: Bool = false
     /// `abovescrollView` always show at the bottom.
-    var stickAboveToBottom: Bool = false
+    var stickAbovescrollViewToBottom: Bool = false
+    /// Places `abovescrollView` above cells
+    var abovescrollViewAboveCells: Bool = false
     /// Only valid with `TableGroupedFlowLayout` & `TableGroupedFlowLayout`
     var separatorInsets: UIEdgeInsets = .init(top: 0, left: 16, bottom: 0, right: 0) {
         didSet { tableLayout()?.separatorInsets = separatorInsets }
@@ -74,7 +76,7 @@ class CollectionView: UICollectionView {
             abovescrollView,
             aboveLine: true,
             pinToBottom: pinOverscrollToBottom,
-            stickToBottom: stickAboveToBottom
+            stickToBottom: stickAbovescrollViewToBottom
         )
     }
 
@@ -131,6 +133,10 @@ class CollectionView: UICollectionView {
             }
         }
 
+        if let infoView = view as? ContentScrollInfo {
+            infoView.contentBehindBottomView(contentSize.height > y)
+        }
+
         view.frame = CGRect(
             origin: .init(x: bounds.midX - view.bounds.width / 2, y: y),
             size: CGSize(width: view.bounds.width, height: view.bounds.height)
@@ -171,6 +177,10 @@ class CollectionView: UICollectionView {
 
         if let view = topscrollView, subviews[safe: baseIdx] != view {
             insertSubview(view, at: baseIdx)
+        }
+
+        if abovescrollViewAboveCells, let view = abovescrollView {
+            addSubview(view)
         }
     }
     
