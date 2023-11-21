@@ -47,7 +47,7 @@ class ButtonContainer: UIView, ContentScrollInfo {
             let button = buttons[idx]
             view.tag = idx
             (view as? UIButton)?.setTitle(button.title, for: .normal)
-            (view as? Button)?.kind = button.style.toKind()
+            (view as? Button)?.kind = button.kind.toKind()
         }
         self.buttons = buttons
         stackHeightConstraint.constant = stackViewHeight()
