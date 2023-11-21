@@ -2,10 +2,10 @@ package com.sonsofcrypto.web3walletcore.common.viewModels
 
 class ButtonViewModel(
     val title: String,
-    val style: Style = Style.PRIMARY,
+    val kind: Kind = Kind.PRIMARY,
     val iconName: String? = null,
 ) {
-    enum class Style {
+    enum class Kind {
         PRIMARY, SECONDARY, DESTRUCTIVE
     }
 }
