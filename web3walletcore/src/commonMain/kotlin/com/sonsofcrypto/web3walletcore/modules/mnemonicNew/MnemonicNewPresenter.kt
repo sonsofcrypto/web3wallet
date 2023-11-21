@@ -5,7 +5,7 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.B
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Style.SECONDARY
+import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.SECONDARY
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.*
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.KeyValueList.Item
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.DEFAULT

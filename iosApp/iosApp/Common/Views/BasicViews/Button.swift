@@ -43,6 +43,23 @@ class Button: UIButton {
         didSet { applyTheme(Theme) }
     }
 
+    convenience init(
+        _ title: String? = nil,
+        image: UIImage? = nil,
+        kind: Kind = .primary,
+        variant: Variant = .regular,
+        imagePosition: ImagePosition = .none,
+        forceSingleLineText: Bool = false
+    ) {
+        self.init(type: .custom)
+        setTitle(title, for: .normal)
+        setImage(image, for: .normal)
+        self.kind = kind
+        self.variant = variant
+        self.imagePosition = imagePosition
+        self.forceSingleLineText = forceSingleLineText
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         clipsToBounds = true
@@ -105,7 +122,7 @@ class Button: UIButton {
 
     func titleFont(_ theme: ThemeProtocol) -> UIFont {
         switch variant {
-        case .regular: return theme.font.body
+        case .regular: return Theme.font.title3
         case .compact, .compactInCell: return theme.font.callout
         case .small: return theme.font.footnote
         }
@@ -132,7 +149,10 @@ class Button: UIButton {
     }
 
     func cornerRadius(_ theme: ThemeProtocol) -> CGFloat {
-        theme.cornerRadius.half
+        switch variant {
+        case .compact, .compactInCell: return theme.cornerRadius.half
+        default: return theme.cornerRadius
+        }
     }
 
     override class func prepareForInterfaceBuilder() {
@@ -162,7 +182,7 @@ class Button: UIButton {
 
 extension ButtonViewModel.Style {
 
-    func toStyle() -> Button.Kind {
+    func toKind() -> Button.Kind {
         switch self {
         case .primary: return .primary
         case .secondary: return .secondary
