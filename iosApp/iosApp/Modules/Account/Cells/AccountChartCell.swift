@@ -10,7 +10,7 @@ final class AccountChartCell: CollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        layer.cornerRadius = Theme.cornerRadiusSmall * 2
+        layer.cornerRadius = Theme.cornerRadius
     }
     
     override func setSelected(_ selected: Bool) {}

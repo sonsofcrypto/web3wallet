@@ -153,7 +153,7 @@ class DefaultCurrencyAddPresenter(
     private fun formattedAddress(): String? {
         val contractAddress = contractAddress ?: return null
         if (!network.isValidAddress(contractAddress)) return null
-        return Formatters.networkAddress.format(contractAddress, 10, network)
+        return Formatters.address.format(contractAddress, 10, network)
     }
 
     private fun saveButtonTitle(): String =

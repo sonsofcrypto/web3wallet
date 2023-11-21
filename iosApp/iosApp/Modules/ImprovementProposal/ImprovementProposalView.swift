@@ -12,7 +12,7 @@ final class ImprovementProposalViewController: BaseViewController {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var bodyTextView: UITextView!
-    @IBOutlet weak var voteButton: Button!
+    @IBOutlet weak var voteButton: OldButton!
 
     var presenter: ImprovementProposalPresenter!
 

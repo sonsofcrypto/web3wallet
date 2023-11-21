@@ -195,7 +195,7 @@ extension SignersViewController {
         title = Localized("wallets")
         collectionView.showsVerticalScrollIndicator = false
         configureInsets()
-        buttonBackgroundView.layer.cornerRadius = Theme.cornerRadiusSmall * 2
+        buttonBackgroundView.layer.cornerRadius = Theme.cornerRadius
         buttonBackgroundView.layer.maskedCorners = [
             .layerMaxXMinYCorner,
             .layerMinXMinYCorner

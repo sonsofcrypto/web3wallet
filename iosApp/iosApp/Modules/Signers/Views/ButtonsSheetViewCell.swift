@@ -39,18 +39,18 @@ private extension ButtonsSheetViewCell {
     
     func applyPrimary() {
         titleLabel.font = Theme.font.title3
-        titleLabel.textColor = Theme.color.buttonTextPrimary
+        titleLabel.textColor = Theme.color.textPrimary
         backgroundColor = Theme.color.buttonBgPrimary
-        layer.cornerRadius = Theme.cornerRadiusSmall
+        layer.cornerRadius = Theme.cornerRadius.half
         layer.borderWidth = 0
     }
     
     func applySecondary() {
         titleLabel.font = Theme.font.title3
-        titleLabel.textColor = Theme.color.buttonTextSecondary
+        titleLabel.textColor = Theme.color.textPrimary
         backgroundColor = .clear
-        layer.cornerRadius = Theme.cornerRadiusSmall
-        layer.borderColor = Theme.color.buttonTextSecondary.cgColor
+        layer.cornerRadius = Theme.cornerRadius.half
+        layer.borderColor = Theme.color.textPrimary.cgColor
         layer.borderWidth = 1
     }
 }

@@ -6,7 +6,7 @@ import UIKit
 import web3walletcore
 
 final class DeleteCell: ThemeCell {
-    @IBOutlet weak var button: Button!
+    @IBOutlet weak var button: OldButton!
 
     typealias Handler = () -> Void
 
@@ -39,7 +39,7 @@ extension DeleteCell {
 private extension DeleteCell {
     
     func configureUI() {
-        let button = Button(type: .custom)
+        let button = OldButton(type: .custom)
         button.style = .primary(action: .destructive)
         button.addTar(self, action: #selector(buttonAction))
         self.button = button

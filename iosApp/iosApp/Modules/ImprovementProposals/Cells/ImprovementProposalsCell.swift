@@ -8,7 +8,7 @@ import web3walletcore
 final class ImprovementProposalsCell: CollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var voteButton: Button!
+    @IBOutlet weak var voteButton: OldButton!
     @IBOutlet weak var chevronImageView: UIImageView!
 
     private var voteHandler: (()->Void)?

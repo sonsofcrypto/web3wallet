@@ -123,7 +123,7 @@ private extension ConfirmationCultCastVoteView {
     }
     
     func confirmButton() -> UIButton {
-        let button = Button()
+        let button = OldButton()
         button.style = .primary
         button.setTitle(Localized("confirmation.cultCastVote.confirm"), for: .normal)
         button.addTarget(self, action: #selector(confirmTapped), for: .touchUpInside)

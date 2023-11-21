@@ -6,7 +6,7 @@ import web3walletcore
 
 final class CurrencySendCTACollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var networkFeeView: NetworkFeeView!
-    @IBOutlet weak var button: Button!
+    @IBOutlet weak var button: OldButton!
     
     struct Handler {
         let onNetworkFeesTapped: () -> Void

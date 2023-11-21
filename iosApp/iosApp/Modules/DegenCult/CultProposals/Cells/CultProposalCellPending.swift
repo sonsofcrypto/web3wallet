@@ -18,8 +18,8 @@ final class CultProposalCellPending: CollectionViewCell {
     @IBOutlet weak var rejectedVoteView: CultProposalVoteView!
     @IBOutlet weak var rejectedVotes: UILabel!
     @IBOutlet weak var chevronImageView: UIImageView!
-    @IBOutlet weak var approveButton: Button!
-    @IBOutlet weak var rejectButton: Button!
+    @IBOutlet weak var approveButton: OldButton!
+    @IBOutlet weak var rejectButton: OldButton!
     private weak var statusView: CultProposalStatus!
 
     private var timer: Timer? = nil

@@ -10,7 +10,7 @@ class NFTsDashboardRefreshCell: ThemeCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
-    @IBOutlet weak var button: Button!
+    @IBOutlet weak var button: OldButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()

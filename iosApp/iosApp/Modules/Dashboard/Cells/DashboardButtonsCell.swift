@@ -6,9 +6,9 @@ import UIKit
 import web3walletcore
 
 final class DashboardButtonsCell: UICollectionViewCell {
-    @IBOutlet weak var receiveButton: Button!
-    @IBOutlet weak var sendButton: Button!
-    @IBOutlet weak var tradeButton: Button!
+    @IBOutlet weak var receiveButton: OldButton!
+    @IBOutlet weak var sendButton: OldButton!
+    @IBOutlet weak var tradeButton: OldButton!
     @IBOutlet weak var stack: UIStackView!
 
     typealias Handler = ()->Void
@@ -62,7 +62,7 @@ extension DashboardButtonsCell {
         self.swapHandler = swapHandler
 
         viewModel.forEach {
-            let button: Button? = button(for: $0.type)
+            let button: OldButton? = button(for: $0.type)
             button?.setTitle($0.title, for: .normal)
             button?.style = .dashboardAction(
                 leftImage: UIImage(named: $0.imageName)
@@ -74,7 +74,7 @@ extension DashboardButtonsCell {
 
     private func button(
             for type: DashboardViewModel.SectionItemsButtonType
-    ) -> Button? {
+    ) -> OldButton? {
         switch type {
         case .receive:
             return receiveButton

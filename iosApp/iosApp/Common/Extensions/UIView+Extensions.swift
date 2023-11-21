@@ -94,3 +94,50 @@ extension UIView {
         ])
     }
 }
+
+extension UIView {
+
+    func animateCopyToPasteboard(_ text: String? = nil, maxLines: Int = 0) {
+        let ty = bounds.height
+        let blur = ThemeBlurView().round()
+        blur.frame = bounds
+        blur.transform = CGAffineTransformMakeTranslation(bounds.width, 0)
+        addSubview(blur)
+
+        let attrStr = NSMutableAttributedString(string: "")
+        let imgAttachment = NSTextAttachment()
+        imgAttachment.image = UIImage(systemName: "square.on.square")?
+            .withTintColor(Theme.color.textPrimary)
+        attrStr.append(NSAttributedString(attachment: imgAttachment))
+        attrStr.append(
+            NSAttributedString(string: " " + Localized("copiedToPasteboard"))
+        )
+
+        if let text = text {
+            attrStr.append(NSAttributedString(string: "\n" + text))
+        }
+
+        let label = UILabel(color: Theme.color.textPrimary)
+        label.numberOfLines = maxLines
+        label.attributedText = attrStr
+        blur.contentView.addSubview(label)
+        label.frame = CGRect(center: blur.bounds.midXY, size: blur.bounds.size)
+            .insetBy(dx: Theme.paddingHalf, dy: Theme.paddingHalf)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
+
+        UIView.springAnimate(
+            animations: { blur.transform = .identity },
+            completion: { _ in
+                UIView.springAnimate(
+                    delay: 2,
+                    animations: {
+                        blur.transform = CGAffineTransformMakeTranslation(0, ty)
+                        blur.alpha = 0
+                    },
+                    completion: { _ in blur.removeFromSuperview() }
+                )
+            })
+    }
+}

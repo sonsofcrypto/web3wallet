@@ -137,7 +137,12 @@ final class NFTsDashboardViewController: UICollectionViewController,
     ) -> CGSize {
         section == 0 && (viewModel?.nfts_().isEmpty ?? true)
             ? .zero
-            : .init(width: view.bounds.width, height: Theme.sectionHeaderHeight)
+            : String.estimateSize(
+                "HEADER",
+                font: Theme.font.sectionHeader,
+                maxWidth: view.bounds.width,
+                extraHeight: Theme.padding.twice
+        )
     }
 
     func collectionView(

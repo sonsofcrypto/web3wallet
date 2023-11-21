@@ -342,7 +342,7 @@ private extension AccountViewController {
         insets.bottom += Theme.padding
         collectionView.contentInset = insets
         collectionView.refreshControl = refreshControl
-        refreshControl.tintColor = Theme.color.activityIndicator
+        refreshControl.tintColor = Theme.color.textPrimary
         refreshControl.addTarget(
             self,
             action: #selector(didPullToRefresh(_:)),

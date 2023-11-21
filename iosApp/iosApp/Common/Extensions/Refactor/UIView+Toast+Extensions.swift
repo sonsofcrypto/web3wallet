@@ -28,7 +28,7 @@ extension UIView {
         toastView.autoresizingMask = [.flexibleWidth]
 
         let backgroundView = UIView()
-        backgroundView.layer.cornerRadius = Theme.cornerRadiusSmall
+        backgroundView.layer.cornerRadius = Theme.cornerRadius.half
         backgroundView.backgroundColor = Theme.color.tabBarBackground
         toastView.addSubview(backgroundView)
         backgroundView.frame = toastView.bounds

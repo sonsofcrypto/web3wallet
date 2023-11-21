@@ -12,15 +12,13 @@ struct ThemeVanilla: ThemeProtocol {
     let padding: CGFloat = 16
     let paddingHalf: CGFloat = 8
     let cornerRadius: CGFloat = 14
-    let cornerRadiusSmall: CGFloat = 8
-    let shadowRadius: CGFloat = 4
     let cellHeightLarge: CGFloat = 64
     let cellHeight: CGFloat = 46
     let lineHeight: CGFloat = 0.666667
-    let sectionHeaderHeight: CGFloat = 46
     let buttonHeight: CGFloat = 46
     let buttonSmallHeight: CGFloat = 32
     let buttonHeightExtraSmall: CGFloat = 24
+    let buttonInCellHeight: CGFloat = 32
 
     class ThemeColor: ThemeColorProtocol {
         var textPrimary: UIColor { .label }
@@ -43,11 +41,9 @@ struct ThemeVanilla: ThemeProtocol {
         var stroke: UIColor { .label }
         var separator: UIColor { .tertiaryLabel }
         var buttonBgPrimary: UIColor { Palette.blue }
-        var buttonBgPrimaryDisabled: UIColor { .systemGray }
-        var buttonTextPrimary: UIColor { .label }
         var buttonBgSecondary: UIColor { .secondarySystemBackground }
-        var buttonTextSecondary: UIColor { .label }
         var switchOnTint: UIColor { Palette.orange }
+
         var segmentedControlBackground: UIColor { .tertiarySystemBackground }
         var segmentedControlBackgroundSelected: UIColor { .secondarySystemBackground }
         var segmentedControlText: UIColor { .secondaryLabel }
@@ -55,7 +51,6 @@ struct ThemeVanilla: ThemeProtocol {
         var priceUp: UIColor { Palette.green }
         var priceDown: UIColor { Palette.red }
         var dashboardTVCryptoBalance: UIColor { Palette.orange }
-        var activityIndicator: UIColor { .label }
         var destructive: UIColor { Palette.red }
     }
 

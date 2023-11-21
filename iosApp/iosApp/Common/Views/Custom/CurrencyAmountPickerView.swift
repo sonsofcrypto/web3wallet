@@ -17,7 +17,7 @@ final class CurrencyAmountPickerView: UIView {
     @IBOutlet weak var currencyLabel: UILabel!
     @IBOutlet weak var currencyDropdownImageView: UIImageView!
     @IBOutlet weak var balanceLabel: UILabel!
-    @IBOutlet weak var maxButton: Button!
+    @IBOutlet weak var maxButton: OldButton!
     
     private enum Mode {
         case currency

@@ -207,7 +207,7 @@ class DefaultSignersPresenter(
         // TODO: Review here when supporting other networks
         val address = signerStoreItem.addresses[signerStoreItem.derivationPath]
             ?: return null
-        return Formatters.networkAddress.format(address, 10, Network.ethereum())
+        return Formatters.address.format(address, 10, Network.ethereum())
     }
 }
 

@@ -48,8 +48,8 @@ private extension NFTDetailViewController {
         return vStackView
     }
     
-    func makeSendButton() -> Button {
-        let button = Button()
+    func makeSendButton() -> OldButton {
+        let button = OldButton()
         button.style = .primary
         button.setTitle(Localized("nft.detail.button.send"), for: .normal)
         button.addTar(self, action: #selector(sendNFT))

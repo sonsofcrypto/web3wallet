@@ -186,7 +186,7 @@ extension MnemonicImportPresenter {
 extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
     func navigate(destination_____________________ destination: MnemonicNewWireframeDestination) { navigate(to: destination) }
 }
-extension MnemonicNewViewController: MnemonicNewView {
+extension MnemonicNewViewController: MnemonicNewView {    
     func update(viewModel: CollectionViewModel.Screen) { update(with: viewModel) }
 }
 extension MnemonicNewPresenter {

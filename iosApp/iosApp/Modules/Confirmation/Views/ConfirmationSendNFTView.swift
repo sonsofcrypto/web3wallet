@@ -48,7 +48,7 @@ private extension ConfirmationSendNFTView {
             fallBackUrl: nftItem.gatewayImageUrl,
             fallBackText: nftItem.fallbackText
         )
-        image.layer.cornerRadius = Theme.cornerRadiusSmall
+        image.layer.cornerRadius = Theme.cornerRadius.half
         image.clipsToBounds = true
         let view = UIView()
         view.backgroundColor = .clear
@@ -151,7 +151,7 @@ private extension ConfirmationSendNFTView {
     }
     
     func confirmButton() -> UIButton {
-        let button = Button()
+        let button = OldButton()
         button.style = .primary
         button.setTitle(Localized("confirmation.sendNFT.confirm"), for: .normal)
         button.addTarget(self, action: #selector(confirmTapped), for: .touchUpInside)

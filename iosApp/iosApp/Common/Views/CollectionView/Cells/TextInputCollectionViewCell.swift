@@ -19,12 +19,12 @@ final class TextInputCollectionViewCell: ThemeCell {
             .withDoneButton(self, action: #selector(resignFirstResponder))
             .wrapInInputView()
     }
-            
+
     override func applyTheme(_ theme: ThemeProtocol) {
         titleLabel.font = Theme.font.body
         titleLabel.textColor = Theme.color.textPrimary
     }
-    
+
     func update(
         with viewModel: CellViewModel.TextInput?,
         inputHandler: ((String)->Void)? = nil

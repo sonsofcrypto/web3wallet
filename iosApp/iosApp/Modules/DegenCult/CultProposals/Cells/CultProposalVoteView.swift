@@ -15,7 +15,7 @@ final class CultProposalVoteView: UIView {
     private lazy var pctLabel: UILabel = UILabel(with: .callout)
     private lazy var progressView: UIView = {
         let view = UIView(frame: bounds)
-        view.layer.cornerRadius = Theme.cornerRadiusSmall
+        view.layer.cornerRadius = Theme.cornerRadius.half
         insertSubview(view, at: 0)
         return view
     }()
@@ -29,7 +29,7 @@ final class CultProposalVoteView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = Theme.color.bgPrimary
-        layer.cornerRadius = Theme.cornerRadiusSmall
+        layer.cornerRadius = Theme.cornerRadius.half
     }
 
     func update(viewModel: CultProposalsViewModel.Vote, progressColor: UIColor) {

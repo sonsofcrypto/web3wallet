@@ -42,7 +42,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="WnD-eS-KMs">
                                                     <rect key="frame" x="0.0" y="0.0" width="343" height="60"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BRV-5u-nlb" customClass="Button" customModule="iosApp" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BRV-5u-nlb" customClass="OldButton" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="109" height="60"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" title="Button" image="button:BRV-5u-nlb:image"/>
@@ -50,7 +50,7 @@
                                                                 <action selector="receiveTapped" destination="iRS-bM-l9Q" eventType="touchUpInside" id="cu6-GN-ouD"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fK5-V4-qwA" customClass="Button" customModule="iosApp" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fK5-V4-qwA" customClass="OldButton" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="117" y="0.0" width="109" height="60"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" title="Button"/>
@@ -58,7 +58,7 @@
                                                                 <action selector="sendTapped" destination="iRS-bM-l9Q" eventType="touchUpInside" id="cu4-0m-XbN"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3B2-ne-SvS" customClass="Button" customModule="iosApp" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3B2-ne-SvS" customClass="OldButton" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="234" y="0.0" width="109" height="60"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" title="Button"/>

@@ -72,10 +72,10 @@ private extension AuthenticateViewController {
             action: #selector(dismissAction(_:))
         )
         passwordTextField.textAlignment = .center
-        passwordTextField.superview?.layer.cornerRadius = Theme.cornerRadiusSmall
+        passwordTextField.superview?.layer.cornerRadius = Theme.cornerRadius.half
         passwordTextField.superview?.backgroundColor = Theme.color.bgPrimary
         saltTextField.textAlignment = .center
-        saltTextField.superview?.layer.cornerRadius = Theme.cornerRadiusSmall
+        saltTextField.superview?.layer.cornerRadius = Theme.cornerRadius.half
         saltTextField.superview?.backgroundColor = Theme.color.bgPrimary
         navigationController?.view.isHidden = true
         view.isHidden = true

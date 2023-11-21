@@ -1,21 +1,17 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicNew
 
-import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Style.SECONDARY
-import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory.COPY
-import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Label
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.*
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.KeyValueList.Item
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.DEFAULT
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.NUMBER_PAD
-import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.TextInput
-import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
-import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.Text
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
@@ -34,7 +30,9 @@ sealed class MnemonicNewPresenterEvent {
     object AddAccount: MnemonicNewPresenterEvent()
     data class SetAccountName(val name: String, val idx: Int): MnemonicNewPresenterEvent()
     data class CopyAccountAddress(val idx: Int): MnemonicNewPresenterEvent()
-//    data class CopyPrivKey(val idx: Int): MnemonicNewPresenterEvent()
+    data class ViewPrivKey(val idx: Int): MnemonicNewPresenterEvent()
+    object ToggleHideAccounts: MnemonicNewPresenterEvent()
+    object ToggleExpertMode: MnemonicNewPresenterEvent()
     object CreateMnemonic: MnemonicNewPresenterEvent()
     object Dismiss: MnemonicNewPresenterEvent()
 }
@@ -51,6 +49,8 @@ class DefaultMnemonicNewPresenter(
     private val context: MnemonicNewWireframeContext,
 ): MnemonicNewPresenter {
     private var ctaTapped = false
+    private var expertMode: Boolean = false
+    private var showHiddenAccounts: Boolean = false
 
     override fun present() { updateView() }
 
@@ -96,9 +96,18 @@ class DefaultMnemonicNewPresenter(
                 val address = interactor.accountAddress(event.idx)
                 interactor.pasteToClipboard(address)
             }
-//            is MnemonicNewPresenterEvent.CopyPrivKey -> {
-//                interactor.
-//            }
+            is MnemonicNewPresenterEvent.ViewPrivKey -> {
+                val key = interactor.accountPrivKey(event.idx)
+                interactor.pasteToClipboard(key)
+            }
+            is MnemonicNewPresenterEvent.ToggleHideAccounts -> {
+                showHiddenAccounts = !showHiddenAccounts
+                updateView()
+            }
+            is MnemonicNewPresenterEvent.ToggleExpertMode -> {
+                expertMode = !expertMode
+                updateView()
+            }
             is MnemonicNewPresenterEvent.CreateMnemonic -> {
                 ctaTapped = true
                 if (!isValidForm) return updateView()
@@ -136,7 +145,7 @@ class DefaultMnemonicNewPresenter(
 
     private fun mnemonicSection(): Section = Section(
         null,
-        listOf(CellViewModel.Text(interactor.mnemonic())),
+        listOf(Text(interactor.mnemonic())),
         HighlightWords(
             Localized("mnemonic.footer"),
             listOf(
@@ -154,7 +163,7 @@ class DefaultMnemonicNewPresenter(
                 interactor.name,
                 Localized("mnemonic.name.placeholder"),
             ),
-            CellViewModel.Switch(
+            Switch(
                 Localized("mnemonic.iCould.title"),
                 interactor.iCloudSecretStorage,
             ),
@@ -166,7 +175,7 @@ class DefaultMnemonicNewPresenter(
 //              Localized("mnemonic.salt.description"),
 //              listOf(Localized("mnemonic.salt.descriptionHighlight")),
 //          ),
-            CellViewModel.SegmentWithTextAndSwitch(
+            SegmentWithTextAndSwitch(
                 Localized("mnemonic.passType.title"),
                 passwordTypes().map { it.name.lowercase() },
                 selectedPasswordTypeIdx(),
@@ -182,28 +191,32 @@ class DefaultMnemonicNewPresenter(
     )
 
     @OptIn(ExperimentalStdlibApi::class)
-    private fun accountsSections(): List<Section> {
-        if (interactor.accountsCount() <= 1)
-            return emptyList()
-        val formatter = Formatters.networkAddress
-        return (0..<interactor.accountsCount()).map {
+    private fun accountsSections(): List<Section>
+        = if (interactor.accountsCount() <= 1)
+            emptyList()
+        else (0..<interactor.accountsCount()).map {
             Section(
                 Title("Account $it", interactor.accountDerivationPath(it)),
                 listOf(
-                    TextInput(
-                        Localized("mnemonic.account.name"),
-                        interactor.accountName(it),
-                        Localized("mnemonic.account.name.placeholder"),
-                    ),
-                    Label(
-                        "Address ${interactor.accountAddress(it)}",
-                        COPY,
-                    ),
+                    KeyValueList(
+                         listOf(
+                             Item(
+                                 Localized("mnemonic.account.name"),
+                                 interactor.accountName(it),
+                                 Localized("mnemonic.account.name.placeholder"),
+                             ),
+                             Item(
+                                 Localized("mnemonic.copy.address"),
+                                 Localized("mnemonic.view.privKey"),
+                                 interactor.accountAddress(it),
+                             ),
+                         )
+                    )
                 ),
-                null
+                Footer.Text(interactor.accountAddress(it)),
             )
         }
-    }
+
 
     private val placeholderType: String get()
         = if (interactor.passwordType == PIN) "pinType" else "passType"

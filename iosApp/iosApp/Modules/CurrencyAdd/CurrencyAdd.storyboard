@@ -145,7 +145,7 @@
                                                                 <constraint firstItem="wSD-NM-Jdo" firstAttribute="top" secondItem="fo3-Rt-kEn" secondAttribute="top" constant="16" id="mhs-ey-57e"/>
                                                             </constraints>
                                                         </view>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHj-QN-S7Q" customClass="Button" customModule="iosApp" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHj-QN-S7Q" customClass="OldButton" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="1173" width="382" height="34.5"/>
                                                             <state key="normal" title="Button"/>
                                                             <buttonConfiguration key="configuration" style="plain" title="Button"/>

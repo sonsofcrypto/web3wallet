@@ -44,6 +44,7 @@ interface MnemonicNewInteractor {
     fun accountName(idx: Int): String
     fun accountDerivationPath(idx: Int): String
     fun accountAddress(idx: Int): String
+    fun accountPrivKey(idx: Int): String
     fun setAccountName(name: String, idx: Int)
     fun accountsCount(): Int
 }
@@ -64,6 +65,7 @@ class DefaultMnemonicNewInteractor(
     )
     
     override var name: String = ""
+        get() { return accountName(0) }
         set(value) { field = value; setAccountName(value, 0); }
 
     override var salt: String = ""
@@ -142,6 +144,11 @@ class DefaultMnemonicNewInteractor(
     override fun accountDerivationPath(idx: Int): String = accountPaths[idx]
 
     override fun accountAddress(idx: Int): String = accountAddresses[idx]
+
+    override fun accountPrivKey(idx: Int): String {
+        return bip44.deriveChildKey(accountDerivationPath(idx))
+            .base58WithChecksumString()
+    }
 
     override fun setAccountName(name: String, idx: Int) {
         accountNames[idx] = name

@@ -62,7 +62,7 @@ private extension CurrencyPickerViewController {
         view.backgroundColor = Theme.color.bgGradientBtm
         searchContainerBox.backgroundColor = Theme.color.navBarBackground
         searchTextFieldBox.backgroundColor = Theme.color.bgPrimary
-        searchTextFieldBox.layer.cornerRadius = Theme.cornerRadiusSmall
+        searchTextFieldBox.layer.cornerRadius = Theme.cornerRadius.half
         searchImageView.tintColor = Theme.color.textSecondary
         searchTextField.backgroundColor = .clear
         searchTextField.text = nil

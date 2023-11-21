@@ -107,7 +107,7 @@ class DefaultAccountPresenter(
     )
 
     private fun addressViewModel(): AccountViewModel.Address = AccountViewModel.Address(
-        Formatters.Companion.networkAddress.format(
+        Formatters.Companion.address.format(
             interactor.address(context.network), 12, context.network
         ),
         interactor.address(context.network),
@@ -161,7 +161,7 @@ class DefaultAccountPresenter(
         val address = if (isReceive) t.from else t.to
         val data = AccountViewModel.Transaction.Data(
             date,
-            Formatters.networkAddress.format(address, 10, context.network),
+            Formatters.address.format(address, 10, context.network),
             Formatters.currency.format(t.amount, context.currency, Custom(20u)),
             Formatters.fiat.format(fiatPrice, Custom(12u), "usd"),
             isReceive,

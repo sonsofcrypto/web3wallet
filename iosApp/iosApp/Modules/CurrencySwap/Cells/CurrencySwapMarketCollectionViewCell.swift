@@ -14,8 +14,8 @@ final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var currencySwapPriceView: CurrencySwapPriceView!
     @IBOutlet weak var currencySwapSlippageView: CurrencySwapSlippageView!
     @IBOutlet weak var networkFeeView: NetworkFeeView!
-    @IBOutlet weak var approveButton: Button!
-    @IBOutlet weak var button: Button!
+    @IBOutlet weak var approveButton: OldButton!
+    @IBOutlet weak var button: OldButton!
 
     private var handler: Handler!
     
@@ -43,7 +43,7 @@ final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
         imageView.superview?.superview?.addGestureRecognizer(tapGesture)
         imageView.superview?.superview?.isUserInteractionEnabled = true
         loadingIndicator.isHidden = true
-        loadingIndicator.color = Theme.color.activityIndicator
+        loadingIndicator.color = Theme.color.textPrimary
         currencyTo.maxButton.isHidden = true
         approveButton.style = .primary
         approveButton.addTarget(self, action: #selector(approveButtonTapped), for: .touchUpInside)

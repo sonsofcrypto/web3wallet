@@ -182,7 +182,7 @@ private extension QRCodeScanViewController {
         view.layer.cornerRadius = 24
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.startAnimating()
-        activityIndicator.color = Theme.color.activityIndicator
+        activityIndicator.color = Theme.color.textPrimary
         view.addSubview(activityIndicator)
         activityIndicator.addConstraints(
             [

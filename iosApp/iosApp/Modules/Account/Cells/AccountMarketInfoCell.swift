@@ -22,7 +22,7 @@ final class AccountMarketInfoCell: CollectionViewCell {
         marketCapTitleLabel.text = Localized("account.marketInfo.marketCap")
         priceTitleLabel.text = Localized("account.marketInfo.price")
         volumeTitleLabel.text = Localized("account.marketInfo.volume")
-        layer.cornerRadius = Theme.cornerRadiusSmall * 2
+        layer.cornerRadius = Theme.cornerRadius
     }
     
     override func setSelected(_ selected: Bool) {}

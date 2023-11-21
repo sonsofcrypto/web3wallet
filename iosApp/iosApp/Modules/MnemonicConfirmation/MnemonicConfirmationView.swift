@@ -7,7 +7,7 @@ import web3walletcore
 
 final class MnemonicConfirmationViewController: UICollectionViewController,
     UICollectionViewDelegateFlowLayout {
-    @IBOutlet weak var ctaButton: Button!
+    @IBOutlet weak var ctaButton: OldButton!
 
     var presenter: MnemonicConfirmationPresenter!
 
