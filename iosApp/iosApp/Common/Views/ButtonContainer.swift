@@ -38,7 +38,7 @@ class ButtonContainer: UIView, ContentScrollInfo {
         }
 
         while stackView.arrangedSubviews.count < buttons.count {
-            let button = Button(type: .custom)
+            let button = OldButton(type: .custom)
             button.addTar(self, action: #selector(buttonAction(_:)))
             stackView.addArrangedSubview(button)
         }
@@ -47,7 +47,7 @@ class ButtonContainer: UIView, ContentScrollInfo {
             let button = buttons[idx]
             view.tag = idx
             (view as? UIButton)?.setTitle(button.title, for: .normal)
-            (view as? Button)?.setButtonViewModelStyle(button.style)
+            (view as? OldButton)?.setButtonViewModelStyle(button.style)
         }
         self.buttons = buttons
         stackHeightConstraint.constant = stackViewHeight()

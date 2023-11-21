@@ -6,7 +6,7 @@ import web3walletcore
 
 final class CurrencySwapSlippageView: UIView {
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var button: Button!
+    @IBOutlet weak var button: OldButton!
     
     struct Handler {
         let onSlippageTapped: () -> Void

@@ -112,8 +112,8 @@ private extension ConfirmationTxFailedView {
         return label
     }
     
-    func reportIssueButton() -> Button {
-        let button = Button()
+    func reportIssueButton() -> OldButton {
+        let button = OldButton()
         button.style = .secondary
         button.setTitle(viewModel.ctaSecondary, for: .normal)
         button.addTarget(self, action: #selector(onCTASecondaryTapped), for: .touchUpInside)
@@ -125,8 +125,8 @@ private extension ConfirmationTxFailedView {
         return button
     }
     
-    func ctaButton() -> Button {
-        let button = Button()
+    func ctaButton() -> OldButton {
+        let button = OldButton()
         button.style = .primary
         button.setTitle(viewModel.cta, for: .normal)
         button.addTarget(self, action: #selector(onCTATapped), for: .touchUpInside)

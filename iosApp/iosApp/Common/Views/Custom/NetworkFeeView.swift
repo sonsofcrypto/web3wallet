@@ -8,7 +8,7 @@ final class NetworkFeeView: UIView {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var networkFeeCurrencyIcon: UIImageView!
     @IBOutlet weak var networkEstimateFeeLabel: UILabel!
-    @IBOutlet weak var networkFeeButton: Button!
+    @IBOutlet weak var networkFeeButton: OldButton!
     
     private var handler: (() -> Void)!
     

@@ -331,7 +331,7 @@ private extension DashboardViewController {
         cv?.pinOverscrollToBottom = true
         cv?.layer.sublayerTransform = CATransform3D.m34()
         cv?.backgroundView = nil // sublayer transform does not work with bgView
-        cv?.refreshControl?.tintColor = Theme.color.activityIndicator
+        cv?.refreshControl?.tintColor = Theme.color.textPrimary
         cv?.refreshControl?.addTarget(
             self,
             action: #selector(didPullToRefresh(_:)),

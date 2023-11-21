@@ -85,7 +85,7 @@ private extension ConfirmationSwapView {
         let backgroundView = UIView()
         backgroundView.backgroundColor = Theme.color.bgPrimary
         backgroundView.addSubview(imageView)
-        backgroundView.layer.cornerRadius = Theme.cornerRadiusSmall.half
+        backgroundView.layer.cornerRadius = Theme.cornerRadius.half.half
         imageView.addConstraints(
             [
                 .layout(anchor: .centerXAnchor),
@@ -223,7 +223,7 @@ private extension ConfirmationSwapView {
     }
     
     func confirmButton() -> UIButton {
-        let button = Button()
+        let button = OldButton()
         button.style = .primary
         button.setTitle(Localized("confirmation.swap.confirm"), for: .normal)
         button.addTarget(self, action: #selector(confirmTapped), for: .touchUpInside)

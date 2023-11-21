@@ -8,6 +8,7 @@ import web3walletcore
 
 class LabelCell: ThemeCell {
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var trailingLabel: UILabel!
     @IBOutlet weak var accessoryImageView: UIImageView!
     @IBOutlet weak var contentStackView: UIStackView!
 
@@ -18,14 +19,17 @@ class LabelCell: ThemeCell {
             return self
         }
         label.text = vm.text
+        trailingLabel?.text = vm.trailingText
         updateAccessoryView(vm.accessory)
         return self
     }
 
     override func applyTheme(_ theme: ThemeProtocol) {
-        label.textColor = theme.color.textPrimary
-        label.font = theme.font.callout
         accessoryImageView.tintColor = theme.color.textPrimary
+        [label, trailingLabel].forEach {
+            $0?.textColor = theme.color.textPrimary
+            $0?.font = theme.font.callout
+        }
     }
 
     private func updateAccessoryView(_ accType: CellViewModel.Label.Accessory) {

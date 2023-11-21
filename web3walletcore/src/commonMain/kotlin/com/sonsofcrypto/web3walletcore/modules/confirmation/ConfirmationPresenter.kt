@@ -200,8 +200,8 @@ class DefaultConfirmationPresenter(
         from: String, to: String, network: Network
     ): ConfirmationAddressViewModel =
         ConfirmationAddressViewModel(
-            Formatters.networkAddress.format(from, 8, network),
-            Formatters.networkAddress.format(to, 8, network),
+            Formatters.address.format(from, 8, network),
+            Formatters.address.format(to, 8, network),
         )
 
     private fun providerViewModel(provider: Provider): ConfirmationProviderViewModel =

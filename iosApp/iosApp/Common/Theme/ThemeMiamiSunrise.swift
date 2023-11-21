@@ -12,15 +12,13 @@ struct ThemeMiamiSunrise: ThemeProtocol {
     let padding: CGFloat = 16
     let paddingHalf: CGFloat = 8
     let cornerRadius: CGFloat = 16
-    let cornerRadiusSmall: CGFloat = 8
-    let shadowRadius: CGFloat = 4
     let cellHeightLarge: CGFloat = 64
     let cellHeight: CGFloat = 46
     let lineHeight: CGFloat = 0.666667
-    let sectionHeaderHeight: CGFloat = 46
     let buttonHeight: CGFloat = 46
     let buttonSmallHeight: CGFloat = 32
     let buttonHeightExtraSmall: CGFloat = 24
+    let buttonInCellHeight: CGFloat = 32
 
     class ThemeColor: ThemeColorProtocol {
         var textPrimary: UIColor { Palette.white }
@@ -43,11 +41,9 @@ struct ThemeMiamiSunrise: ThemeProtocol {
         var stroke: UIColor { Palette.lightGray }
         var separator: UIColor { Palette.lighterGray }
         var buttonBgPrimary: UIColor { .init(variants: [Palette.blue, Palette.pink]) }
-        var buttonBgPrimaryDisabled: UIColor { Palette.gray }
-        var buttonTextPrimary: UIColor { Palette.white }
-        var buttonBgSecondary: UIColor { Palette.lightGray }
-        var buttonTextSecondary: UIColor { Palette.white }
+        var buttonBgSecondary: UIColor { UIColor.clear }
         var switchOnTint: UIColor { Palette.orange }
+
         var segmentedControlBackground: UIColor { Palette.lighterGray.withAlpha(0.1) }
         var segmentedControlBackgroundSelected: UIColor { Palette.white18 }
         var segmentedControlText: UIColor { Palette.white }
@@ -55,7 +51,6 @@ struct ThemeMiamiSunrise: ThemeProtocol {
         var priceUp: UIColor { Palette.teal }
         var priceDown: UIColor { Palette.pink }
         var dashboardTVCryptoBalance: UIColor { Palette.orange }
-        var activityIndicator: UIColor { Palette.white }
         var destructive: UIColor { Palette.red }
     }
 

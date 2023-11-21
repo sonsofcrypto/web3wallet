@@ -110,7 +110,7 @@ class DefaultNFTSendPresenter(
     private fun formattedAddress(address: String?): String {
         address ?: return ""
         if (!context.network.isValidAddress(address)) { return address }
-        return Formatters.networkAddress.format(address, 8, context.network)
+        return Formatters.address.format(address, 8, context.network)
     }
 
     private fun sendViewModel(): NFTSendViewModel.Item.Send =

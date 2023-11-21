@@ -9,8 +9,6 @@ var Theme: ThemeProtocol = loadThemeFromSettings() {
     didSet { AppDelegate.rebootApp() }
 }
 
-//var Theme: ThemeProtocol = loadThemeFromSettings()
-
 enum ThemeVariant: String {
     case light
     case dark
@@ -26,15 +24,13 @@ protocol ThemeProtocol {
     var paddingHalf: CGFloat { get }
     // TODO(Anon): To be consolidated further
     var cornerRadius: CGFloat { get }
-    var cornerRadiusSmall: CGFloat { get }
-    var shadowRadius: CGFloat { get }
     var cellHeightLarge: CGFloat { get }
     var cellHeight: CGFloat { get }
     var lineHeight: CGFloat { get }
-    var sectionHeaderHeight: CGFloat { get }
     var buttonHeight: CGFloat { get }
     var buttonSmallHeight: CGFloat { get }
     var buttonHeightExtraSmall: CGFloat { get }
+    var buttonInCellHeight: CGFloat { get }
 }
 
 // TODO(Anon): This can be further consolidated
@@ -61,10 +57,7 @@ protocol ThemeColorProtocol {
     var stroke: UIColor { get }
     var separator: UIColor { get }
     var buttonBgPrimary: UIColor { get }
-    var buttonBgPrimaryDisabled: UIColor { get }
-    var buttonTextPrimary: UIColor { get }
     var buttonBgSecondary: UIColor { get }
-    var buttonTextSecondary: UIColor { get }
     var switchOnTint: UIColor { get }
     // TODO(Anon): Definitely dont need all this for segmented control
     var segmentedControlBackground: UIColor { get }
@@ -74,7 +67,6 @@ protocol ThemeColorProtocol {
     var priceUp: UIColor { get }
     var priceDown: UIColor { get }
     var dashboardTVCryptoBalance: UIColor { get }
-    var activityIndicator: UIColor { get }
     var destructive: UIColor { get }
 }
 

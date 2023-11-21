@@ -6,7 +6,7 @@ import UIKit
 import web3walletcore
 
 final class MnemonicImportViewController: UICollectionViewController {
-    @IBOutlet weak var ctaButton: Button!
+    @IBOutlet weak var ctaButton: OldButton!
 
     var presenter: MnemonicImportPresenter!
 

@@ -22,7 +22,7 @@ final class CurrencyAddCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var nameView: CurrencyAddInputView!
     @IBOutlet weak var symbolView: CurrencyAddInputView!
     @IBOutlet weak var decimalView: CurrencyAddInputView!
-    @IBOutlet weak var saveButton: Button!
+    @IBOutlet weak var saveButton: OldButton!
     
     @IBOutlet weak var widthLayoutConstraint: NSLayoutConstraint!
     
@@ -32,9 +32,9 @@ final class CurrencyAddCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
         networkDetailsView.backgroundColor = Theme.color.bgPrimary
-        networkDetailsView.layer.cornerRadius = Theme.cornerRadiusSmall
+        networkDetailsView.layer.cornerRadius = Theme.cornerRadius.half
         detailsView.backgroundColor = Theme.color.bgPrimary
-        detailsView.layer.cornerRadius = Theme.cornerRadiusSmall
+        detailsView.layer.cornerRadius = Theme.cornerRadius.half
         (detailsView.subviews.first as? UIStackView)?.arrangedSubviews.forEach {
             if $0.tag == 10 { $0.backgroundColor = Theme.color.collectionSeparator }
         }

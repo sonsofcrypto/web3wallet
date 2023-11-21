@@ -111,16 +111,16 @@ private extension ConfirmationTxSuccessView {
         return label
     }
     
-    func ctaButton() -> Button {
-        let button = Button()
+    func ctaButton() -> OldButton {
+        let button = OldButton()
         button.style = .primary
         button.setTitle(viewModel.cta, for: .normal)
         button.addTarget(self, action: #selector(onCTATapped), for: .touchUpInside)
         return button
     }
     
-    func viewEtherScanButton() -> Button {
-        let button = Button()
+    func viewEtherScanButton() -> OldButton {
+        let button = OldButton()
         button.style = .secondary
         button.setTitle(viewModel.ctaSecondary, for: .normal)
         button.addTarget(self, action: #selector(onCTASecondaryTapped), for: .touchUpInside)

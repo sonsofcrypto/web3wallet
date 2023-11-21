@@ -67,7 +67,7 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AFH-Yn-ZM8" customClass="Button" customModule="iosApp" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AFH-Yn-ZM8" customClass="OldButton" customModule="iosApp" customModuleProvider="target">
                                                     <rect key="frame" x="208" y="28.5" width="80" height="34.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="80" id="lvT-cM-FYk"/>

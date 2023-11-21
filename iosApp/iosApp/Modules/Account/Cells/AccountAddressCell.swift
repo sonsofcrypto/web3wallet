@@ -12,7 +12,7 @@ final class AccountAddressCell: CollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.apply(style: .callout, weight: .regular)
-        layer.cornerRadius = Theme.cornerRadiusSmall * 2
+        layer.cornerRadius = Theme.cornerRadius
         copyImage.tintColor = Theme.color.textPrimary
         copyImage.image = UIImage(systemName: "square.on.square")
     }

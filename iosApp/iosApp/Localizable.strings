@@ -58,6 +58,7 @@
 "sonsofcrypto" = "sons of crypto";
 "ipfs.image.unavailable" = "¯\\_(ツ)_/¯\n\nImage not available on ipfs\n\n";
 "copiedToPasteboard" = "Copied to pasteboard";
+"address" = "Address";
 
 
 "error.alert.title" = "Oops! 😬";
@@ -158,8 +159,11 @@
 "mnemonic.error.invalid.name" = "Please enter a name.";
 "mnemonic.update.failed.alert.title" = "Oops 😬";
 "mnemonic.update.failed.alert.message" = "Unable to update your wallet. Please try again.";
-"mnemonic.account.name" = "Name";
+"mnemonic.account.name" = "Account Name";
 "mnemonic.account.name.placeholder" = "Account name";
+"mnemonic.privkey" = "Private Key";
+"mnemonic.copy.address" = "Copy address";
+"mnemonic.view.privKey" = "View priv key";
 
 "networks.header.l1s" = "Layer #1s";
 "networks.header.l2s" = "Layer #2s";

@@ -15,8 +15,8 @@ final class AccountTransactionLoadingCell: CollectionViewCell {
         label.apply(style: .callout)
         label.textColor = Theme.color.textPrimary
         label.numberOfLines = 0
-        layer.cornerRadius = Theme.cornerRadiusSmall * 2
-        activityIndicator.color = Theme.color.activityIndicator
+        layer.cornerRadius = Theme.cornerRadius
+        activityIndicator.color = Theme.color.textPrimary
     }
     
     override func setSelected(_ selected: Bool) {}

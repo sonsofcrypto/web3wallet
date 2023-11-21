@@ -30,48 +30,15 @@ final class MnemonicNewViewController: CollectionViewController {
         )
     }
 
-    // MARK: - Actions
-
-    @IBAction func dismissAction(_ sender: Any?) {
-        presenter.handleEvent(MnemonicNewPresenterEvent.Dismiss())
+    func presentAlert(viewModel: AlertViewModel) {
+        print("presentAlert \(viewModel)")
     }
 
-    func nameDidChange(_ name: String) {
-        presenter.handleEvent(.SetName(name: name))
-    }
-
-    func iCloudBackupDidChange(_ onOff: Bool) {
-        presenter.handleEvent(.SetICouldBackup(onOff: onOff))
-    }
-
-    func saltSwitchDidChange(_ onOff: Bool) {
-        presenter.handleEvent(.SaltSwitch(onOff: onOff))
-    }
-
-    func saltTextDidChange(_ text: String) {
-        presenter.handleEvent(.SetSalt(salt: text))
-    }
-
-    func saltLearnAction() {
-        presenter.handleEvent(.SaltLearnMore())
-    }
-
-    func passTypeDidChange(_ idx: Int) {
-        presenter.handleEvent(.SetPassType(idx: idx.int32))
-    }
-
-    func passwordDidChange(_ text: String) {
-        presenter.handleEvent(.SetPassword(text: text))
-    }
-
-    func allowFaceIdDidChange(_ onOff: Bool) {
-        presenter.handleEvent(.SetAllowFaceId(onOff: onOff))
-    }
-
-    func changeAccountName(_ name: String, idxPath: IndexPath) {
-        presenter.handleEvent(
-            .SetAccountName(name: name, idx: idxPath.section.int32 - 2)
-        )
+    override func keyboardWillHide(notification: Notification) {
+        super.keyboardWillHide(notification: notification)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.presenter.present()
+        }
     }
 
     override func buttonContainer(
@@ -112,7 +79,9 @@ final class MnemonicNewViewController: CollectionViewController {
             fatalError("Wrong number of items in section \(indexPath)")
         }
         if isAccountsSection(indexPath) {
-            return accountCell(indexPath, viewModel: viewModel)
+            let cell = accountCell(indexPath, viewModel: viewModel)
+            (cell as? SwipeCollectionViewCell)?.delegate = self
+            return cell
         }
         switch viewModel {
         case let vm as CellViewModel.Text:
@@ -160,21 +129,16 @@ final class MnemonicNewViewController: CollectionViewController {
         _ idxPath: IndexPath,
         viewModel: CellViewModel
     ) -> UICollectionViewCell {
-        switch viewModel {
-        case let vm as CellViewModel.TextInput:
-            return cv.dequeue(TextInputCollectionViewCell.self, for: idxPath)
-                .update(
-                    with: vm,
-                    inputHandler: { [weak self] name in
-                        self?.changeAccountName(name, idxPath: idxPath)
-                    }
-                )
-        case let vm as CellViewModel.Label:
-            return cv.dequeue(LabelCell.self, for: idxPath).update(with: vm)
-        default:
-            ()
+        guard let vm = viewModel as? CellViewModel.KeyValueList else {
+            fatalError("Not implemented")
         }
-        fatalError("Not implemented")
+        return cv.dequeue(MnemonicAccountCell.self, for: idxPath)
+            .update(
+                with: vm,
+                nameHandler: { [weak self] t in self?.setAccountName(t, idxPath)},
+                addressHandler: { [weak self] in self?.copyAddress(idxPath) },
+                privKeyHandler: { [weak self] in self?.viewPrivKey(idxPath) }
+            )
     }
 
     override func collectionView(
@@ -187,17 +151,46 @@ final class MnemonicNewViewController: CollectionViewController {
             return cv.dequeue(SectionHeaderView.self, for: indexPath, kind: kind)
                 .update(with: viewModel?.sections[safe: indexPath.section])
         case UICollectionView.elementKindSectionFooter:
-            return cv.dequeue(SectionFooterView.self, for: indexPath, kind: kind)
-                .update(with: viewModel?.sections[safe: indexPath.section])
+            let footer = cv.dequeue(
+                SectionFooterView.self,
+                for: indexPath,
+                kind: kind
+            ).update(with: viewModel?.sections[safe: indexPath.section])
+            if isAccountsSection(indexPath) {
+                footer.label.adjustsFontSizeToFitWidth = true
+                footer.label.textAlignment = .center
+                footer.label.numberOfLines = 1
+                footer.layoutMargins = .init(
+                    top: 9, left: 20, bottom: 0, right: 20
+                )
+            }
+            return footer
         default:
             fatalError("Failed to handle \(kind) \(indexPath)")
         }
     }
-}
 
-// MARK: - UICollectionViewDelegate
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForFooterInSection section: Int
+    ) -> CGSize {
+        if isAccountsSection(IndexPath(item: 0, section: section)) {
+            return String.estimateSize(
+                "TEST",
+                font: Theme.font.sectionFooter,
+                maxWidth: cellSize.width,
+                extraHeight: Theme.paddingHalf + 1
+            )
+        }
+        return super.collectionView(
+            collectionView,
+            layout: collectionViewLayout,
+            referenceSizeForFooterInSection: section
+        )
+    }
 
-extension MnemonicNewViewController {
+    // MARK: - UICollectionViewDelegate
 
     override func collectionView(
         _ collectionView: UICollectionView,
@@ -208,16 +201,11 @@ extension MnemonicNewViewController {
             presenter.handleEvent(.CopyMnemonic())
             (cell as? MnemonicNewCell)?.animateCopiedToPasteboard()
         }
-        guard isAccountsSection(indexPath) else { return false }
-        (cell as? LabelCell)?.animateCopyToPasteboard()
-        presenter.handleEvent(
-            .CopyAccountAddress(idx: indexPath.section.int32 - 2)
-        )
         return false
     }
-
+    
     // MARK: - UICollectionViewDelegateFlowLayout
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -244,9 +232,103 @@ extension MnemonicNewViewController {
                     ? Constant.cellPassOpenHeight
                     : cellSize.height
             )
+        case let vm as CellViewModel.KeyValueList:
+            return CGSize(
+                width: cellSize.width,
+                height: cellSize.height * CGFloat(vm.items.count)
+            )
         default:
             return cellSize
         }
+    }
+
+    // MARK: - Actions
+
+    @IBAction func dismissAction(_ sender: Any?) {
+        presenter.handleEvent(MnemonicNewPresenterEvent.Dismiss())
+    }
+
+    @IBAction func toggleExpertMode(_ sender: Any?) {
+        presenter.handleEvent(.ToggleExpertMode())
+    }
+
+    @IBAction func toggleShowHidden(_ sender: Any?) {
+        presenter.handleEvent(.ToggleHideAccounts())
+    }
+
+    func nameDidChange(_ name: String) {
+        presenter.handleEvent(.SetName(name: name))
+    }
+
+    func iCloudBackupDidChange(_ onOff: Bool) {
+        presenter.handleEvent(.SetICouldBackup(onOff: onOff))
+    }
+
+    func saltSwitchDidChange(_ onOff: Bool) {
+        presenter.handleEvent(.SaltSwitch(onOff: onOff))
+    }
+
+    func saltTextDidChange(_ text: String) {
+        presenter.handleEvent(.SetSalt(salt: text))
+    }
+
+    func saltLearnAction() {
+        presenter.handleEvent(.SaltLearnMore())
+    }
+
+    func passTypeDidChange(_ idx: Int) {
+        presenter.handleEvent(.SetPassType(idx: idx.int32))
+    }
+
+    func passwordDidChange(_ text: String) {
+        presenter.handleEvent(.SetPassword(text: text))
+    }
+
+    func allowFaceIdDidChange(_ onOff: Bool) {
+        presenter.handleEvent(.SetAllowFaceId(onOff: onOff))
+    }
+
+    func setAccountName(_ name: String, _ idxPath: IndexPath) {
+        presenter.handleEvent(
+            .SetAccountName(name: name, idx: idxPath.section.int32 - 2)
+        )
+    }
+
+    func copyAddress(_ idxPath: IndexPath) {
+        presenter.handleEvent(
+            .CopyAccountAddress(idx: idxPath.section.int32 - 2)
+        )
+    }
+
+    func viewPrivKey(_ idxPath: IndexPath) {
+        presenter.handleEvent(.ViewPrivKey(idx: idxPath.section.int32 - 2))
+    }
+}
+
+// MARK: - SwipeCollectionViewCellDelegate
+
+extension MnemonicNewViewController: SwipeCollectionViewCellDelegate {
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        editActionsForItemAt indexPath: IndexPath,
+        for orientation: SwipeActionsOrientation
+    ) -> [SwipeAction]? {
+        let flag = SwipeAction(style: .default, title: "Hide") { [weak self] act, idxPath in
+            print("Selected option \(indexPath)")
+        }
+        flag.hidesWhenSelected = true
+        return [flag]
+    }
+    
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        editActionsOptionsForItemAt indexPath: IndexPath,
+        for orientation: SwipeActionsOrientation
+    ) -> SwipeOptions {
+        var options = SwipeOptions()
+        return options
     }
 }
 

@@ -8,7 +8,8 @@ sealed class CellViewModel {
     data class Label(
         val text: String,
         val accessory: Accessory = Accessory.NONE,
-        val selected: Boolean = false
+        val selected: Boolean = false,
+        val trailingText: String? = null,
     ): CellViewModel()
 
     data class Text(val text: String?): CellViewModel()
@@ -53,5 +54,17 @@ sealed class CellViewModel {
         val type: ButtonType
     ): CellViewModel() {
         enum class ButtonType { PRIMARY, SECONDARY, DESTRUCTIVE }
+    }
+
+    data class KeyValueList(
+        val items: List<Item>,
+        val userInfo: Any? = null
+    ): CellViewModel() {
+        data class Item(
+            val key: String,
+            val value: String,
+            val placeholder: String? = null,
+            val userInfo: Any? = null
+        )
     }
 }

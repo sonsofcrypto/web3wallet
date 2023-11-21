@@ -39,7 +39,8 @@ final class MnemonicImportCell: ThemeCell, UICollectionViewDataSource,
         return self
     }
 
-    func configure() {
+    override func configure() {
+        super.configure()
         applyTheme(Theme)
         let toolbar = UIToolbar.collectionViewToolbar()
         toolbarCollectionView = toolbar.items?.first?.customView as? UICollectionView

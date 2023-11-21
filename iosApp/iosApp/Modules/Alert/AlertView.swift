@@ -122,7 +122,7 @@ private extension AlertViewController {
         let wrappingView = UIView()
         wrappingView.backgroundColor = .clear
         wrappingView.clipsToBounds = true
-        wrappingView.layer.cornerRadius = Theme.cornerRadiusSmall
+        wrappingView.layer.cornerRadius = Theme.cornerRadius.half
         wrappingView.addSubview(imageView)
         imageView.addConstraints(
             [
@@ -146,11 +146,11 @@ private extension AlertViewController {
         webView.loadFileURL(url, allowingReadAccessTo: url)
         let request = URLRequest(url: url)
         webView.load(request)
-        webView.layer.cornerRadius = Theme.cornerRadiusSmall
+        webView.layer.cornerRadius = Theme.cornerRadius.half
         let wrappingView = UIView()
         wrappingView.backgroundColor = .clear
         wrappingView.clipsToBounds = true
-        wrappingView.layer.cornerRadius = Theme.cornerRadiusSmall
+        wrappingView.layer.cornerRadius = Theme.cornerRadius.half
         wrappingView.addSubview(webView)
         webView.addConstraints(
             [
@@ -168,7 +168,7 @@ private extension AlertViewController {
         guard !actions.isEmpty else { return [] }
         var actionViews = [UIView]()
         for (idx, item) in actions.enumerated() {
-            let button = Button()
+            let button = OldButton()
             switch item.type {
             case .primary:
                 button.style = .primary

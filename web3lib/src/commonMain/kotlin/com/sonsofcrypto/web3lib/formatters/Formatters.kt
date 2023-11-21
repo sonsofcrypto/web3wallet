@@ -10,7 +10,7 @@ class Formatters {
         val fiat = FiatFormatter()
         val pct = PctFormatter()
         val date = DateFormatter()
-        val networkAddress = NetworkAddressFormatter()
+        val address = NetworkAddressFormatter()
 
         fun crypto(amount: BigInt, decimals: UInt, mul: Double): Double {
             return BigDec.from(amount)
