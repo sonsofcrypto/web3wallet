@@ -149,10 +149,11 @@ class Button: UIButton {
     }
 
     func cornerRadius(_ theme: ThemeProtocol) -> CGFloat {
-        switch variant {
-        case .compact, .compactInCell: return theme.cornerRadius.half
-        default: return theme.cornerRadius
-        }
+        theme.cornerRadius.half
+//        switch variant {
+//        case .compact, .compactInCell: return theme.cornerRadius.half
+//        default: return theme.cornerRadius
+//        }
     }
 
     override class func prepareForInterfaceBuilder() {
