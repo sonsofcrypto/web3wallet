@@ -68,7 +68,8 @@ private extension DefaultMnemonicNewWireframe {
         let interactor = DefaultMnemonicNewInteractor(
             signerStoreService: signerStoreService,
             passwordService: passwordService,
-            addressService: addressService
+            addressService: addressService,
+            settingsService: settingsService
         )
         let vc: MnemonicNewViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultMnemonicNewPresenter(

@@ -129,7 +129,6 @@
 "keyStore.createMultiSig" = "Create multisig wallet";
 
 "mnemonic.title.new" = "New Mnemonic";
-"mnemonic.title.add.account" = "Add Account";
 "mnemonic.title.import" = "Import wallet";
 "mnemonic.title.update" = "Edit wallet";
 "mnemonic.tapToReveal" = "Tap to reveal mnemonic";
@@ -153,6 +152,8 @@
 "mnemonic.passType.allowFaceId" = "Allow unlock with FaceID";
 "mnemonic.pasteboard" = "Mnemonic copied to pasteboard\n(for 30 seconds)";
 "mnemonic.cta.new" = "Create new wallet";
+"mnemonic.cta.account" = "Add Account";
+"mnemonic.cta.custom" = "Add At Custom Derivation Path";
 "mnemonic.cta.update" = "Update";
 "mnemonic.cta.delete" = "Delete";
 "mnemonic.cta.import" = "Import";
