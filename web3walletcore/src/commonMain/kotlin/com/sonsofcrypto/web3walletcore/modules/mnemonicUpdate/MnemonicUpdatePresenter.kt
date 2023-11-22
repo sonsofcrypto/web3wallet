@@ -136,7 +136,7 @@ class DefaultMnemonicUpdatePresenter(
     private fun viewModel(): Screen = Screen(
         Localized("mnemonicConfirmation.title"),
         listOf(mnemonicSection(), optionsSection(), deleteSection()),
-        listOf(ButtonViewModel(Localized("mnemonic.cta.update"))),
+        ctaItems = listOf(ButtonViewModel(Localized("mnemonic.cta.update"))),
     )
 
     private fun mnemonicSection(): Section = Section(

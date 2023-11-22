@@ -52,10 +52,10 @@ class OldButton: UIButton {
 
     func update(with viewModel: ButtonViewModel) {
         setTitle(viewModel.title, for: .normal)
-        setButtonViewModelStyle(viewModel.style)
+        setButtonViewModelStyle(viewModel.kind)
     }
 
-    func setButtonViewModelStyle(_ style: ButtonViewModel.Style) {
+    func setButtonViewModelStyle(_ style: ButtonViewModel.Kind) {
         switch style {
         case .primary:
             self.style = .primary(action: .default)

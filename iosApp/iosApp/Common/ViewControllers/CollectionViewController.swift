@@ -13,7 +13,7 @@ class CollectionViewController: UICollectionViewController,
     var viewModel: CollectionViewModel.Screen?
     var cv: CollectionView! { (collectionView as! CollectionView) }
     var ctaButtonsContainer: ButtonContainer = .init()
-
+    var cellSwipeOption =  SwipeOptions()
     var enableCardFlipTransitioning: Bool = false
 
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
@@ -71,7 +71,35 @@ class CollectionViewController: UICollectionViewController,
         applyTheme(Theme)
     }
 
-    func updateButtons(with viewModel: [ButtonViewModel]) {
+    func updateRightBarButtons(
+        with viewModel: [CollectionViewModel.Screen.BarButton]
+    ) {
+        viewModel.enumerated().forEach { idx, vm in
+            let btn = navigationItem.rightBarButtonItems?[safe: idx]
+            if let sysImg = vm.image as? ImageMedia.SysName, !vm.hidden {
+                btn?.image = UIImage(systemName: sysImg.name)
+            }
+            if #available(iOS 16.0, *) { btn?.isHidden = vm.hidden }
+            else { vm.hidden ? btn?.image = nil : () }
+        }
+    }
+
+    func updateHeadersAndFooters() {
+        var kind = UICollectionView.elementKindSectionHeader
+        cv.indexPathsForVisibleSupplementaryElements(ofKind: kind).forEach {
+            let header = cv.supplementaryView(forElementKind: kind, at: $0)
+            let vm = viewModel?.sections[$0.section]
+            (header as? SectionHeaderView)?.update(with: vm)
+        }
+        kind = UICollectionView.elementKindSectionFooter
+        cv.indexPathsForVisibleSupplementaryElements(ofKind: kind).forEach {
+            let header = cv.supplementaryView(forElementKind: kind, at: $0)
+            let vm = viewModel?.sections[$0.section]
+            (header as? SectionFooterView)?.update(with: vm)
+        }
+    }
+
+    func updateCtaButtons(with viewModel: [ButtonViewModel]) {
         let needsLayout = ctaButtonsContainer.buttons.count != viewModel.count
         ctaButtonsContainer.setButtons(viewModel)
         layoutAboveScrollView()
@@ -155,7 +183,6 @@ class CollectionViewController: UICollectionViewController,
             extraHeight: Theme.padding.twice,
             minHeight: Theme.padding
         )
-
     }
 
     func collectionView(

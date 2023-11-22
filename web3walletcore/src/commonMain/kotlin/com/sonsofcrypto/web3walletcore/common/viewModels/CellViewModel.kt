@@ -58,13 +58,13 @@ sealed class CellViewModel {
 
     data class KeyValueList(
         val items: List<Item>,
-        val userInfo: Any? = null
+        val userInfo: Map<String, Any>? = null
     ): CellViewModel() {
         data class Item(
             val key: String,
             val value: String,
             val placeholder: String? = null,
-            val userInfo: Any? = null
+            val userInfo: Map<String, Any>? = null
         )
     }
 }

@@ -37,6 +37,8 @@
 "reject" = "Reject";
 "new" = "New";
 "search" = "Search";
+"hide" = "Hide";
+"show" = "Show";
 "time.ago.day" = "%@ day ago";
 "time.ago.days" = "%@ days ago";
 "time.ago.hour" = "%@ hour ago";

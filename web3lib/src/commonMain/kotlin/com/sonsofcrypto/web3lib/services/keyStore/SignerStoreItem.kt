@@ -30,6 +30,8 @@ data class SignerStoreItem(
     val addresses: Map<String, String>,
     /** Used for grouping items */
     val parentId: String? = null,
+    /** weather item should be shown in UI */
+    val hidden: Boolean? = false,
 ) {
     @Serializable
     enum class Type {

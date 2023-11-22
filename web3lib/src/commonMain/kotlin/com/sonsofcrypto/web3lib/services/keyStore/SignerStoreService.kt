@@ -30,6 +30,7 @@ data class MnemonicSignerConfig(
     val derivationPath: String = defaultDerivationPath(),
     val sortOrder: UInt? = null,
     val parentId: String? = null,
+    val hidden: Boolean? = false,
 )
 
 /** Handles management of `SignerStoreItem`s and `SecretStorage` items. */
@@ -57,6 +58,7 @@ interface SignerStoreService {
         salt: String,
         derivationPath: String?,
         name: String?,
+        hidden: Boolean? = false,
     ): Pair<SignerStoreItem, SecretStorage>
     /** Generates accounts and adds it to store */
     @Throws(Throwable::class)
@@ -66,6 +68,7 @@ interface SignerStoreService {
         salt: String,
         derivationPath: String? = null,
         name: String? = null,
+        hidden: Boolean? = false,
     ): SignerStoreItem
     /** Add `KeyStoreItem` using password and SecreteStorage.
      *
@@ -126,7 +129,8 @@ class DefaultSignerStoreService(
             passwordType = config.passwordType,
             derivationPath = config.derivationPath,
             addresses = mapOf(config.derivationPath to address),
-            parentId = config.parentId
+            parentId = config.parentId,
+            hidden = config.hidden,
         )
         val secretStorage = SecretStorage.encryptDefault(
             id = signerStoreItem.uuid,
@@ -161,6 +165,7 @@ class DefaultSignerStoreService(
         salt: String,
         derivationPath: String?,
         name: String?,
+        hidden: Boolean?,
     ): Pair<SignerStoreItem, SecretStorage> {
         if (item.type != MNEMONIC)
             throw Err.AddAccountForNonMnemonic
@@ -179,7 +184,8 @@ class DefaultSignerStoreService(
                 wordList = WordList.fromLocaleString(decrypted.mnemonicLocale),
                 derivationPath = path,
                 sortOrder = nextAccountSortOrder(item),
-                parentId = item.parentId ?: item.uuid
+                parentId = item.parentId ?: item.uuid,
+                hidden = hidden,
             ),
             password,
             salt,
@@ -193,13 +199,10 @@ class DefaultSignerStoreService(
         salt: String,
         derivationPath: String?,
         name: String?,
+        hidden: Boolean?,
     ): SignerStoreItem {
         val (signerStoreItem, secreteStorage) = generateAccount(
-            item,
-            password,
-            salt,
-            derivationPath,
-            name
+            item, password, salt, derivationPath, name, hidden
         )
         add(signerStoreItem, password, secreteStorage)
         return signerStoreItem

@@ -22,12 +22,14 @@ final class MnemonicNewViewController: CollectionViewController {
         let prevViewModel = self.viewModel
         self.viewModel = viewModel
         guard let cv = collectionView else { return }
-        updateButtons(with: viewModel.ctaItems)
+        updateRightBarButtons(with: viewModel.rightBarButtons)
+        updateCtaButtons(with: viewModel.ctaItems)
         cv.reloadAnimatedIfNeeded(
             prevVM: prevViewModel,
             currVM: viewModel,
             reloadOnly: !didAppear
         )
+        updateHeadersAndFooters()
     }
 
     func presentAlert(viewModel: AlertViewModel) {
@@ -294,6 +296,12 @@ final class MnemonicNewViewController: CollectionViewController {
         )
     }
 
+    func setAccountHidden(_ hidden: Bool, _ idxPath: IndexPath) {
+        presenter.handleEvent(
+            .SetAccountHidden(hidden: hidden, idx: idxPath.section.int32 - 2)
+        )
+    }
+
     func copyAddress(_ idxPath: IndexPath) {
         presenter.handleEvent(
             .CopyAccountAddress(idx: idxPath.section.int32 - 2)
@@ -314,21 +322,30 @@ extension MnemonicNewViewController: SwipeCollectionViewCellDelegate {
         editActionsForItemAt indexPath: IndexPath,
         for orientation: SwipeActionsOrientation
     ) -> [SwipeAction]? {
-        let flag = SwipeAction(style: .default, title: "Hide") { [weak self] act, idxPath in
-            print("Selected option \(indexPath)")
-        }
+        guard
+            orientation == .right,
+            let vm = viewModel(at: indexPath) as? CellViewModel.KeyValueList,
+            let isHidden = vm.userInfo?["isHidden"] as? Bool
+        else { return nil }
+
+        let flag = SwipeAction(
+            style: .default,
+            title: Localized(isHidden ? "show" : "hide"),
+            handler: { [weak self] act, idxPath in
+                self?.setAccountHidden(!isHidden, indexPath)
+            }
+        )
+        flag.image = UIImage(systemName: isHidden ? "eye" : "eye.slash")
         flag.hidesWhenSelected = true
         return [flag]
     }
-    
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         editActionsOptionsForItemAt indexPath: IndexPath,
         for orientation: SwipeActionsOrientation
     ) -> SwipeOptions {
-        var options = SwipeOptions()
-        return options
+        cellSwipeOption
     }
 }
 
