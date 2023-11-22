@@ -82,7 +82,7 @@ class DefaultMnemonicConfirmationPresenter(
         return CollectionViewModel.Screen(
             Localized("mnemonicConfirmation.title"),
             sections,
-            listOf(ButtonViewModel(ctaString())),
+            ctaItems = listOf(ButtonViewModel(ctaString())),
         )
     }
 

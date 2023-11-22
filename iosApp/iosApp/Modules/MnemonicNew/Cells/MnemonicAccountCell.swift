@@ -20,6 +20,7 @@ class MnemonicAccountCell: ThemeCell {
     private var addressHandler: Handler?
     private var privKeyHandler: Handler?
     private var address: String?
+    private var showAsHidden: Bool = false
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,6 +43,9 @@ class MnemonicAccountCell: ThemeCell {
         let height = copyAddressButton.intrinsicContentSize.height
         btnStackView.bounds.size.height = height
         btnStackView.center.y = btnStackView.superview?.bounds.midY ?? 0
+        [nameLabel, nameTextField, btnStackView].forEach {
+            $0?.alpha = showAsHidden ? 0.5 : 1
+        }
     }
 
     override func resignFirstResponder() -> Bool {
@@ -87,6 +91,7 @@ extension MnemonicAccountCell {
         self.nameHandler = nameHandler
         self.addressHandler = addressHandler
         self.privKeyHandler = privKeyHandler
+        self.showAsHidden = (viewModel.userInfo?["isHidden"] as? Bool) ?? false
         return self
     }
 }

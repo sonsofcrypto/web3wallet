@@ -12,6 +12,7 @@ import com.sonsofcrypto.web3lib.utils.bip39.Bip39.EntropySize.ES128
 import com.sonsofcrypto.web3lib.utils.defaultDerivationPath
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.incrementedDerivationPath
+import com.sonsofcrypto.web3lib.utils.lastDerivationPathComponent
 import com.sonsofcrypto.web3lib.utils.secureRand
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.services.clipboard.ClipboardService
@@ -26,6 +27,8 @@ interface MnemonicNewInteractor {
     var passwordType: SignerStoreItem.PasswordType
     var password: String
     var passUnlockWithBio: Boolean
+
+    var showHidden: Boolean
 
     fun mnemonic(): String
     @Throws(Exception::class)
@@ -45,9 +48,20 @@ interface MnemonicNewInteractor {
     fun accountDerivationPath(idx: Int): String
     fun accountAddress(idx: Int): String
     fun accountPrivKey(idx: Int): String
+    fun accountIsHidden(idx: Int): Boolean
+    fun absoluteAccountIdx(idx: Int): Int
     fun setAccountName(name: String, idx: Int)
+    fun setAccountHidden(hidden: Boolean, idx: Int)
     fun accountsCount(): Int
+    fun hiddenAccountsCount(): Int
 }
+
+private class Account(
+    var name: String = "",
+    var derivationPath: String = "",
+    var address: String = "",
+    var isHidden: Boolean = false
+)
 
 class DefaultMnemonicNewInteractor(
     private val signerStoreService: SignerStoreService,
@@ -56,14 +70,8 @@ class DefaultMnemonicNewInteractor(
 ): MnemonicNewInteractor {
     private var bip39: Bip39 = Bip39.from(ES128)
     private var bip44: Bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
-    private var accountNames: MutableList<String> = mutableListOf("")
-    private var accountAddresses: MutableList<String> = mutableListOf(
-        addressService.address(bip44.deriveChildKey(defaultDerivationPath()))
-    )
-    private var accountPaths: MutableList<String> =  mutableListOf(
-        defaultDerivationPath()
-    )
-    
+    private var accounts: MutableList<Account> = mutableListOf(defaultAccount())
+
     override var name: String = ""
         get() { return accountName(0) }
         set(value) { field = value; setAccountName(value, 0); }
@@ -81,6 +89,7 @@ class DefaultMnemonicNewInteractor(
     override var passwordType: SignerStoreItem.PasswordType = BIO
     override var password: String = ""
     override var passUnlockWithBio: Boolean = true
+    override var showHidden: Boolean = false
 
     override fun mnemonic(): String = bip39.mnemonic.joinToString(" ")
 
@@ -98,10 +107,11 @@ class DefaultMnemonicNewInteractor(
             password,
             salt
         )
-        for (i in 1..<accountPaths.count()) {
-            val path = accountPaths[i]
-            val name = accountNames[i]
-            signerStoreService.addAccount(item, password, salt, path, name)
+        for (i in 1..<accounts.count()) {
+            val path = accounts[i].derivationPath
+            val name = accounts[i].name
+            val hide = accounts[i].isHidden
+            signerStoreService.addAccount(item, password, salt, path, name, hide)
         }
         return item
     }
@@ -132,37 +142,60 @@ class DefaultMnemonicNewInteractor(
 
     override fun addAccount() {
         generateDefaultNameIfNeeded()
-        accountNames.add("$name, acc: ${accountsCount()}")
-        accountPaths.add(incrementedDerivationPath(accountPaths.last()))
-        accountAddresses.add(
-            addressService.address(bip44.deriveChildKey(accountPaths.last()))
-        )
+        val name = "$name, acc: ${accountsCount()}"
+        val path = incrementedDerivationPath(accounts.last().derivationPath)
+        val address = addressService.address(bip44.deriveChildKey(path))
+        accounts.add(Account(name, path, address, false))
     }
 
-    override fun accountName(idx: Int): String = accountNames[idx]
+    override fun accountName(idx: Int): String = account(idx).name
 
-    override fun accountDerivationPath(idx: Int): String = accountPaths[idx]
+    override fun accountDerivationPath(idx: Int): String = account(idx)
+        .derivationPath
 
-    override fun accountAddress(idx: Int): String = accountAddresses[idx]
+    override fun accountAddress(idx: Int): String = account(idx).address
 
     override fun accountPrivKey(idx: Int): String {
         return bip44.deriveChildKey(accountDerivationPath(idx))
             .base58WithChecksumString()
     }
 
+    override fun accountIsHidden(idx: Int): Boolean = account(idx).isHidden
+
+    override fun absoluteAccountIdx(idx: Int): Int
+        = lastDerivationPathComponent(account(idx).derivationPath)
+
     override fun setAccountName(name: String, idx: Int) {
-        accountNames[idx] = name
+        account(idx).name = name
     }
 
-    override fun accountsCount(): Int  = accountNames.count()
+    override fun setAccountHidden(hidden: Boolean, idx: Int) {
+        account(idx).isHidden = hidden
+    }
+
+    override fun accountsCount(): Int  = if (showHidden) accounts.count()
+        else visibleAccounts().count()
+
+    override fun hiddenAccountsCount(): Int = accounts.count { it.isHidden }
 
     private fun regenerateAccountsAndAddresses() {
         bip39 = Bip39(bip39.mnemonic, salt, bip39.worldList)
         bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
-        accountPaths.forEachIndexed { idx, path ->
-            accountAddresses[idx] = addressService.address(
-                bip44.deriveChildKey(path)
+        accounts.forEachIndexed { idx, acc ->
+            acc.address = addressService.address(
+                bip44.deriveChildKey(acc.derivationPath)
             )
         }
+    }
+
+    private fun account(idx: Int): Account = if (showHidden) accounts[idx]
+        else visibleAccounts()[idx]
+
+    private fun visibleAccounts(): List<Account> = accounts.filter { !it.isHidden }
+
+    private fun defaultAccount(): Account {
+        val path = defaultDerivationPath()
+        val address = addressService.address(bip44.deriveChildKey(path))
+        return Account("", path, address, false)
     }
 }

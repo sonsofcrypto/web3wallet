@@ -11,7 +11,8 @@ sealed class CollectionViewModel {
     data class Screen(
         val id: String,
         val sections: List<Section>,
-        val ctaItems: List<ButtonViewModel> = emptyList()
+        val rightBarButtons: List<BarButton> = emptyList(),
+        val ctaItems: List<ButtonViewModel> = emptyList(),
     ): CollectionViewModel()
 
     sealed class Header() {
@@ -37,6 +38,12 @@ sealed class CollectionViewModel {
             is HighlightWords -> this.text
         }
     }
+
+    data class BarButton(
+        val title: String? = null,
+        val image: ImageMedia? = null,
+        val hidden: Boolean = false
+    )
 }
 
 

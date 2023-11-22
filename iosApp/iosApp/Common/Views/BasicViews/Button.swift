@@ -181,7 +181,7 @@ class Button: UIButton {
     }
 }
 
-extension ButtonViewModel.Style {
+extension ButtonViewModel.Kind {
 
     func toKind() -> Button.Kind {
         switch self {

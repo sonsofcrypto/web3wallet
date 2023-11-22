@@ -10,11 +10,16 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.*
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.KeyValueList.Item
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.DEFAULT
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.NUMBER_PAD
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.entries
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.BarButton
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 
 sealed class MnemonicNewPresenterEvent {
@@ -29,6 +34,7 @@ sealed class MnemonicNewPresenterEvent {
     data class SetAllowFaceId(val onOff: Boolean): MnemonicNewPresenterEvent()
     object AddAccount: MnemonicNewPresenterEvent()
     data class SetAccountName(val name: String, val idx: Int): MnemonicNewPresenterEvent()
+    data class SetAccountHidden(val hidden: Boolean, val idx: Int): MnemonicNewPresenterEvent()
     data class CopyAccountAddress(val idx: Int): MnemonicNewPresenterEvent()
     data class ViewPrivKey(val idx: Int): MnemonicNewPresenterEvent()
     object ToggleHideAccounts: MnemonicNewPresenterEvent()
@@ -50,7 +56,6 @@ class DefaultMnemonicNewPresenter(
 ): MnemonicNewPresenter {
     private var ctaTapped = false
     private var expertMode: Boolean = false
-    private var showHiddenAccounts: Boolean = false
 
     override fun present() { updateView() }
 
@@ -92,6 +97,10 @@ class DefaultMnemonicNewPresenter(
             is MnemonicNewPresenterEvent.SetAccountName -> {
                 interactor.setAccountName(event.name, event.idx)
             }
+            is MnemonicNewPresenterEvent.SetAccountHidden -> {
+                interactor.setAccountHidden(event.hidden, event.idx)
+                updateView()
+            }
             is MnemonicNewPresenterEvent.CopyAccountAddress -> {
                 val address = interactor.accountAddress(event.idx)
                 interactor.pasteToClipboard(address)
@@ -101,7 +110,7 @@ class DefaultMnemonicNewPresenter(
                 interactor.pasteToClipboard(key)
             }
             is MnemonicNewPresenterEvent.ToggleHideAccounts -> {
-                showHiddenAccounts = !showHiddenAccounts
+                interactor.showHidden = !interactor.showHidden
                 updateView()
             }
             is MnemonicNewPresenterEvent.ToggleExpertMode -> {
@@ -137,6 +146,14 @@ class DefaultMnemonicNewPresenter(
     private fun viewModel(): Screen = Screen(
         Localized("mnemonic.title.new"),
         listOf(mnemonicSection(), optionsSection()) + accountsSections(),
+        listOf(
+            BarButton(null, SysName("brain"), true),
+            BarButton(
+                null,
+                SysName(if (interactor.showHidden) "eye.slash" else "eye"),
+                interactor.hiddenAccountsCount() == 0
+            )
+        ),
         listOf(
             ButtonViewModel(Localized("mnemonic.title.add.account"), SECONDARY),
             ButtonViewModel(Localized("mnemonic.cta.new"))
@@ -196,7 +213,10 @@ class DefaultMnemonicNewPresenter(
             emptyList()
         else (0..<interactor.accountsCount()).map {
             Section(
-                Title("Account $it", interactor.accountDerivationPath(it)),
+                Title(
+                    "Account ${interactor.absoluteAccountIdx(it)}",
+                    interactor.accountDerivationPath(it)
+                ),
                 listOf(
                     KeyValueList(
                          listOf(
@@ -210,7 +230,8 @@ class DefaultMnemonicNewPresenter(
                                  Localized("mnemonic.view.privKey"),
                                  interactor.accountAddress(it),
                              ),
-                         )
+                         ),
+                        mapOf("isHidden" to interactor.accountIsHidden(it))
                     )
                 ),
                 Footer.Text(interactor.accountAddress(it)),

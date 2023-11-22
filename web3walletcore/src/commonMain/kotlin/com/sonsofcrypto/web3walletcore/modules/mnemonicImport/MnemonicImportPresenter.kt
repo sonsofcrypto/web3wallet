@@ -140,7 +140,7 @@ class DefaultMnemonicImportPresenter(
         return CollectionViewModel.Screen(
             Localized(""),
             sections,
-            listOf(ButtonViewModel(Localized("mnemonic.cta.import"))),
+            ctaItems = listOf(ButtonViewModel(Localized("mnemonic.cta.import"))),
         )
     }
 
