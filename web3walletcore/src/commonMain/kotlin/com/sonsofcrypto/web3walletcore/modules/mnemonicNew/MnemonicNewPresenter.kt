@@ -10,15 +10,12 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.*
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.KeyValueList.Item
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.DEFAULT
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.NUMBER_PAD
-import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.entries
-import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.BarButton
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
-import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
 import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 
@@ -32,14 +29,12 @@ sealed class MnemonicNewPresenterEvent {
     data class SetPassType(val idx: Int): MnemonicNewPresenterEvent()
     data class SetPassword(val text: String): MnemonicNewPresenterEvent()
     data class SetAllowFaceId(val onOff: Boolean): MnemonicNewPresenterEvent()
-    object AddAccount: MnemonicNewPresenterEvent()
     data class SetAccountName(val name: String, val idx: Int): MnemonicNewPresenterEvent()
     data class SetAccountHidden(val hidden: Boolean, val idx: Int): MnemonicNewPresenterEvent()
     data class CopyAccountAddress(val idx: Int): MnemonicNewPresenterEvent()
     data class ViewPrivKey(val idx: Int): MnemonicNewPresenterEvent()
-    object ToggleHideAccounts: MnemonicNewPresenterEvent()
-    object ToggleExpertMode: MnemonicNewPresenterEvent()
-    object CreateMnemonic: MnemonicNewPresenterEvent()
+    data class RightBarButtonAction(val idx: Int): MnemonicNewPresenterEvent()
+    data class CTAAction(val idx: Int): MnemonicNewPresenterEvent()
     object Dismiss: MnemonicNewPresenterEvent()
 }
 
@@ -55,7 +50,7 @@ class DefaultMnemonicNewPresenter(
     private val context: MnemonicNewWireframeContext,
 ): MnemonicNewPresenter {
     private var ctaTapped = false
-    private var expertMode: Boolean = false
+    private var localExpertMode: Boolean = false
 
     override fun present() { updateView() }
 
@@ -90,10 +85,6 @@ class DefaultMnemonicNewPresenter(
             is MnemonicNewPresenterEvent.CopyMnemonic -> {
                 interactor.pasteToClipboard(interactor.mnemonic().trim())
             }
-            is MnemonicNewPresenterEvent.AddAccount -> {
-                interactor.addAccount()
-                updateView()
-            }
             is MnemonicNewPresenterEvent.SetAccountName -> {
                 interactor.setAccountName(event.name, event.idx)
             }
@@ -109,33 +100,47 @@ class DefaultMnemonicNewPresenter(
                 val key = interactor.accountPrivKey(event.idx)
                 interactor.pasteToClipboard(key)
             }
-            is MnemonicNewPresenterEvent.ToggleHideAccounts -> {
-                interactor.showHidden = !interactor.showHidden
+            is MnemonicNewPresenterEvent.RightBarButtonAction -> {
+                if (event.idx == 0) localExpertMode = !localExpertMode
+                else localExpertMode = !localExpertMode
                 updateView()
             }
-            is MnemonicNewPresenterEvent.ToggleExpertMode -> {
-                expertMode = !expertMode
-                updateView()
-            }
-            is MnemonicNewPresenterEvent.CreateMnemonic -> {
-                ctaTapped = true
-                if (!isValidForm) return updateView()
-                if (interactor.passwordType == BIO) {
-                    interactor.password = interactor.generatePassword()
+            is MnemonicNewPresenterEvent.CTAAction -> {
+                if (!expertMode()) {
+                    createWallet()
+                    return
                 }
-                try {
-                    interactor.generateDefaultNameIfNeeded()
-                    val item = interactor.createMnemonicSigner()
-                    context.handler(item)
-                    wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
-                } catch (e: Throwable) {
-                    // TODO: Handle error
-                    println("[ERROR] $e")
+                when (event.idx) {
+                    2 -> {
+                        println("Present custom derivation path alert")
+                    }
+                    1 -> {
+                        interactor.addAccount()
+                        updateView()
+                    }
+                    0 -> createWallet()
                 }
             }
             is MnemonicNewPresenterEvent.Dismiss -> {
                 wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
             }
+        }
+    }
+
+    private fun createWallet() {
+        ctaTapped = true
+        if (!isValidForm) return updateView()
+        if (interactor.passwordType == BIO) {
+            interactor.password = interactor.generatePassword()
+        }
+        try {
+            interactor.generateDefaultNameIfNeeded()
+            val item = interactor.createMnemonicSigner()
+            context.handler(item)
+            wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
+        } catch (e: Throwable) {
+            // TODO: Handle error
+            println("[ERROR] $e")
         }
     }
 
@@ -147,17 +152,20 @@ class DefaultMnemonicNewPresenter(
         Localized("mnemonic.title.new"),
         listOf(mnemonicSection(), optionsSection()) + accountsSections(),
         listOf(
-            BarButton(null, SysName("brain"), true),
+            BarButton(null, SysName("brain"), interactor.globalExpertMode()),
             BarButton(
                 null,
                 SysName(if (interactor.showHidden) "eye.slash" else "eye"),
                 interactor.hiddenAccountsCount() == 0
             )
         ),
-        listOf(
-            ButtonViewModel(Localized("mnemonic.title.add.account"), SECONDARY),
-            ButtonViewModel(Localized("mnemonic.cta.new"))
-        )
+        if (expertMode())
+            listOf(
+                ButtonViewModel(Localized("mnemonic.cta.custom"), SECONDARY),
+                ButtonViewModel(Localized("mnemonic.cta.account"), SECONDARY),
+                ButtonViewModel(Localized("mnemonic.cta.new"))
+            )
+        else listOf(ButtonViewModel(Localized("mnemonic.cta.new")))
     )
 
     private fun mnemonicSection(): Section = Section(
@@ -258,5 +266,9 @@ class DefaultMnemonicNewPresenter(
             interactor.password,
             interactor.passwordType
         )
+    }
+
+    private fun expertMode(): Boolean {
+        return expertMode() || localExpertMode
     }
 }

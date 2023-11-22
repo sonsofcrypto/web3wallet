@@ -12,6 +12,7 @@ interface SettingsService {
     var themeId: ThemeId
     var themeVariant: ThemeVariant
     var nftCarouselSize: NFTCarouselSize
+    var expertMode: Boolean
 }
 
 class DefaultSettingsService(
@@ -35,5 +36,9 @@ class DefaultSettingsService(
             it.raw == (store.get<String>("nftCarouselSize") ?: "")
         } ?: NFTCarouselSize.REGULAR
         set(size) = store.set("nftCarouselSize", size.raw)
+
+    override var expertMode: Boolean
+        get() = store.get<Boolean>("expertMode") ?: false
+        set(mode) = store.set("expertMode", mode)
 }
 

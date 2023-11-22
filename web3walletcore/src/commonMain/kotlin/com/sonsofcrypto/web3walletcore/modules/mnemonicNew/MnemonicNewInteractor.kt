@@ -17,6 +17,7 @@ import com.sonsofcrypto.web3lib.utils.secureRand
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.services.clipboard.ClipboardService
 import com.sonsofcrypto.web3walletcore.services.password.PasswordService
+import com.sonsofcrypto.web3walletcore.services.settings.SettingsService
 
 interface MnemonicNewInteractor {
     var name: String
@@ -54,6 +55,7 @@ interface MnemonicNewInteractor {
     fun setAccountHidden(hidden: Boolean, idx: Int)
     fun accountsCount(): Int
     fun hiddenAccountsCount(): Int
+    fun globalExpertMode(): Boolean
 }
 
 private class Account(
@@ -67,6 +69,7 @@ class DefaultMnemonicNewInteractor(
     private val signerStoreService: SignerStoreService,
     private val passwordService: PasswordService,
     private val addressService: AddressService,
+    private val settingsService: SettingsService
 ): MnemonicNewInteractor {
     private var bip39: Bip39 = Bip39.from(ES128)
     private var bip44: Bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
@@ -177,6 +180,8 @@ class DefaultMnemonicNewInteractor(
         else visibleAccounts().count()
 
     override fun hiddenAccountsCount(): Int = accounts.count { it.isHidden }
+
+    override fun globalExpertMode(): Boolean = settingsService.expertMode
 
     private fun regenerateAccountsAndAddresses() {
         bip39 = Bip39(bip39.mnemonic, salt, bip39.worldList)
