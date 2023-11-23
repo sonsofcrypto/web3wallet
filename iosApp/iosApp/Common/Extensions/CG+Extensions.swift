@@ -61,3 +61,8 @@ extension CGPoint {
         return point
     }
 }
+
+func CGAffTransTransl(_ tx: CGFloat, ty: CGFloat) -> CGAffineTransform {
+    CGAffineTransform(translationX: tx, y: ty)
+}
+

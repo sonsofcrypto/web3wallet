@@ -330,6 +330,7 @@
 		1FC997DB2AC6C48E00EAF032 /* ServicesAssemblers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC997DA2AC6C48E00EAF032 /* ServicesAssemblers.swift */; };
 		2DC2C012B95A4F8F35D1D6FB /* Formatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CD3EC5E4207469E46E7C /* Formatter+Extensions.swift */; };
 		2DC2C26F1F43B153BACAD338 /* CollectionBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C36EEBD7DC01205DEFA8 /* CollectionBackgroundView.swift */; };
+		2DC2C35C9D973A9C14FF5BBA /* ButtonSheeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C1FCC42A2BD3CAB3F3C2 /* ButtonSheeContainer.swift */; };
 		2DC2C5651044E7CB9670CEB4 /* MnemonicAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CB3BFED47B008618518A /* MnemonicAccountCell.swift */; };
 		2DC2C5BF26E94CE01CF01FA2 /* ButtonContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C5BEBEB0676D2BF77A9B /* ButtonContainer.swift */; };
 		2DC2C5BFEF1C945B36C7CAA2 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C2138CB5F68D2DE85E9C /* Button.swift */; };
@@ -750,6 +751,7 @@
 		1FC997DA2AC6C48E00EAF032 /* ServicesAssemblers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssemblers.swift; sourceTree = "<group>"; };
 		2DC2C18C65C1FB607E58F687 /* UIView+Toast+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Toast+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C18D29998109474100FE /* PlainTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlainTextCell.swift; sourceTree = "<group>"; };
+		2DC2C1FCC42A2BD3CAB3F3C2 /* ButtonSheeContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonSheeContainer.swift; sourceTree = "<group>"; };
 		2DC2C2138CB5F68D2DE85E9C /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		2DC2C24534389C71A56B59FF /* SunLogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SunLogoView.swift; sourceTree = "<group>"; };
 		2DC2C36EEBD7DC01205DEFA8 /* CollectionBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionBackgroundView.swift; sourceTree = "<group>"; };
@@ -1892,6 +1894,7 @@
 				1A4C3D0B11BD0F9527397998 /* VisualEffectView */,
 				2DC2C5BEBEB0676D2BF77A9B /* ButtonContainer.swift */,
 				1F0452BB2B08C1C500BC5922 /* SwipeCellKit */,
+				2DC2C1FCC42A2BD3CAB3F3C2 /* ButtonSheeContainer.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2524,6 +2527,7 @@
 				2DC2C5BF26E94CE01CF01FA2 /* ButtonContainer.swift in Sources */,
 				2DC2C5651044E7CB9670CEB4 /* MnemonicAccountCell.swift in Sources */,
 				2DC2C5BFEF1C945B36C7CAA2 /* Button.swift in Sources */,
+				2DC2C35C9D973A9C14FF5BBA /* ButtonSheeContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
