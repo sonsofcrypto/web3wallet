@@ -31,10 +31,16 @@ class ButtonContainer: UIView, ContentScrollInfo {
         configureUI()
     }
 
-    func setButtons(_ buttons: [ButtonViewModel]) {
+    func setCTAButtons(_ buttons: [ButtonViewModel]) {
+        UIView.springAnimate {
+            self._setCTAButtons(buttons)
+        }
+    }
+
+    private func _setCTAButtons(_ buttons: [ButtonViewModel]) {
         while stackView.arrangedSubviews.count > buttons.count
           && !stackView.arrangedSubviews.isEmpty {
-            stackView.removeArrangedSubview(stackView.arrangedSubviews.last!)
+            stackView.arrangedSubviews.last?.removeFromSuperview()
         }
 
         while stackView.arrangedSubviews.count < buttons.count {
@@ -51,6 +57,7 @@ class ButtonContainer: UIView, ContentScrollInfo {
         }
         self.buttons = buttons
         stackHeightConstraint.constant = stackViewHeight()
+        print("Arrange subviews count", buttons.count, stackView.arrangedSubviews.count)
     }
 
     @objc func buttonAction(_ sender: UIButton) {

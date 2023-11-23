@@ -18,20 +18,6 @@ final class MnemonicNewViewController: CollectionViewController {
 
     // MARK: - MnemonicView
 
-    func update(with viewModel: CollectionViewModel.Screen) {
-        let prevViewModel = self.viewModel
-        self.viewModel = viewModel
-        guard let cv = collectionView else { return }
-        updateRightBarButtons(with: viewModel.rightBarButtons)
-        updateCtaButtons(with: viewModel.ctaItems)
-        cv.reloadAnimatedIfNeeded(
-            prevVM: prevViewModel,
-            currVM: viewModel,
-            reloadOnly: !didAppear
-        )
-        updateHeadersAndFooters()
-    }
-
     func presentAlert(viewModel: AlertViewModel) {
         print("presentAlert \(viewModel)")
     }
@@ -40,23 +26,6 @@ final class MnemonicNewViewController: CollectionViewController {
         super.keyboardWillHide(notification: notification)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
             self?.presenter.present()
-        }
-    }
-
-    override func buttonContainer(
-        _ buttonContainer: ButtonContainer,
-        didSelectButtonAt idx: Int
-    ) {
-        switch idx {
-        case 0:
-            presenter.handleEvent(.AddAccount())
-            cv.scrollToItem(
-                at: cv.lastIdxPath(),
-                at: .centeredVertically,
-                animated: true
-            )
-        case 1: presenter.handleEvent(.CreateMnemonic())
-        default: ()
         }
     }
 
@@ -250,12 +219,16 @@ final class MnemonicNewViewController: CollectionViewController {
         presenter.handleEvent(MnemonicNewPresenterEvent.Dismiss())
     }
 
-    @IBAction func toggleExpertMode(_ sender: Any?) {
-        presenter.handleEvent(.ToggleExpertMode())
+    override func buttonContainer(
+        _ buttonContainer: ButtonContainer,
+        didSelectButtonAt idx: Int
+    ) {
+        presenter.handleEvent(.CTAAction(idx: idx.int32))
     }
 
-    @IBAction func toggleShowHidden(_ sender: Any?) {
-        presenter.handleEvent(.ToggleHideAccounts())
+    @IBAction override func rightBarButtonAction(_ sender: Any?) {
+        guard let sender = sender as? UIBarButtonItem else { return }
+        presenter.handleEvent(.RightBarButtonAction(idx: sender.tag.int32))
     }
 
     func nameDidChange(_ name: String) {
