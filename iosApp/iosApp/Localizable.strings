@@ -153,7 +153,7 @@
 "mnemonic.pasteboard" = "Mnemonic copied to pasteboard\n(for 30 seconds)";
 "mnemonic.cta.new" = "Create new wallet";
 "mnemonic.cta.account" = "Add Account";
-"mnemonic.cta.custom" = "Add At Custom Derivation Path";
+"mnemonic.cta.custom" = "Custom Derivation Path";
 "mnemonic.cta.update" = "Update";
 "mnemonic.cta.delete" = "Delete";
 "mnemonic.cta.import" = "Import";

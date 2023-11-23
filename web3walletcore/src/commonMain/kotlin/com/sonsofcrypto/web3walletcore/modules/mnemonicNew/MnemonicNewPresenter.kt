@@ -101,8 +101,8 @@ class DefaultMnemonicNewPresenter(
                 interactor.pasteToClipboard(key)
             }
             is MnemonicNewPresenterEvent.RightBarButtonAction -> {
-                if (event.idx == 0) localExpertMode = !localExpertMode
-                else localExpertMode = !localExpertMode
+                if (event.idx == 1) localExpertMode = !localExpertMode
+                else interactor.showHidden = !interactor.showHidden
                 updateView()
             }
             is MnemonicNewPresenterEvent.CTAAction -> {
@@ -152,12 +152,12 @@ class DefaultMnemonicNewPresenter(
         Localized("mnemonic.title.new"),
         listOf(mnemonicSection(), optionsSection()) + accountsSections(),
         listOf(
-            BarButton(null, SysName("brain"), interactor.globalExpertMode()),
             BarButton(
                 null,
                 SysName(if (interactor.showHidden) "eye.slash" else "eye"),
                 interactor.hiddenAccountsCount() == 0
-            )
+            ),
+            BarButton(null, SysName("brain"), interactor.globalExpertMode()),
         ),
         if (expertMode())
             listOf(
@@ -269,6 +269,6 @@ class DefaultMnemonicNewPresenter(
     }
 
     private fun expertMode(): Boolean {
-        return expertMode() || localExpertMode
+        return interactor.globalExpertMode() || localExpertMode
     }
 }

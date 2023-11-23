@@ -45,6 +45,20 @@ class CollectionViewController: UICollectionViewController,
         cv?.collectionViewLayout.invalidateLayout()
     }
 
+    func update(with viewModel: CollectionViewModel.Screen) {
+        let prevViewModel = self.viewModel
+        self.viewModel = viewModel
+        guard let cv = collectionView else { return }
+        updateCtaButtons(with: viewModel.ctaItems)
+        updateRightBarButtons(with: viewModel.rightBarButtons)
+        cv.reloadAnimatedIfNeeded(
+            prevVM: prevViewModel,
+            currVM: viewModel,
+            reloadOnly: !didAppear
+        )
+        updateHeadersAndFooters()
+    }
+
     func configureUI() {
         NotificationCenter.addKeyboardObserver(
             self,
@@ -71,19 +85,6 @@ class CollectionViewController: UICollectionViewController,
         applyTheme(Theme)
     }
 
-    func updateRightBarButtons(
-        with viewModel: [CollectionViewModel.Screen.BarButton]
-    ) {
-        viewModel.enumerated().forEach { idx, vm in
-            let btn = navigationItem.rightBarButtonItems?[safe: idx]
-            if let sysImg = vm.image as? ImageMedia.SysName, !vm.hidden {
-                btn?.image = UIImage(systemName: sysImg.name)
-            }
-            if #available(iOS 16.0, *) { btn?.isHidden = vm.hidden }
-            else { vm.hidden ? btn?.image = nil : () }
-        }
-    }
-
     func updateHeadersAndFooters() {
         var kind = UICollectionView.elementKindSectionHeader
         cv.indexPathsForVisibleSupplementaryElements(ofKind: kind).forEach {
@@ -99,10 +100,42 @@ class CollectionViewController: UICollectionViewController,
         }
     }
 
+    func updateRightBarButtons(
+        with viewModel: [CollectionViewModel.Screen.BarButton]
+    ) {
+        var buttons = navigationItem.rightBarButtonItems ?? []
+        while buttons.count > viewModel.count { buttons.removeLast() }
+        while buttons.count < viewModel.count {
+            let button = UIBarButtonItem(
+                with: "",
+                target: self,
+                action: #selector(rightBarButtonAction(_:))
+            )
+            buttons.append(button)
+        }
+        viewModel.enumerated().forEach { idx, vm in
+            let button = buttons[idx]
+            if #available(iOS 16.0, *) { button.isHidden = vm.hidden }
+            else { vm.hidden ? button.image = nil : () }
+            if let sysImg = vm.image as? ImageMedia.SysName, !vm.hidden {
+                button.image = UIImage(systemName: sysImg.name)
+                button.title = nil
+                button.tag = idx
+            }
+        }
+        navigationItem.setRightBarButtonItems(buttons, animated: false)
+    }
+
+    @IBAction func rightBarButtonAction(_ sender: Any?) {
+        print("Right bar button action", sender)
+    }
+
     func updateCtaButtons(with viewModel: [ButtonViewModel]) {
         let needsLayout = ctaButtonsContainer.buttons.count != viewModel.count
-        ctaButtonsContainer.setButtons(viewModel)
-        layoutAboveScrollView()
+        ctaButtonsContainer.setCTAButtons(viewModel)
+        if needsLayout {
+            layoutAboveScrollView()
+        }
     }
 
     func buttonContainer(
