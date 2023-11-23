@@ -109,4 +109,3 @@ class ButtonContainer: UIView, ContentScrollInfo {
             + CGFloat(buttons.count - 1) * Theme.padding
     }
 }
-
