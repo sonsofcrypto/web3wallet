@@ -10,7 +10,7 @@ final class AlertViewController: BaseViewController {
     var presenter: AlertPresenter!
     var contentHeight: CGFloat!
 
-    private var viewModel: AlertViewModel!
+    private var viewModel: AlertViewModelOld!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +40,7 @@ extension AlertViewController: UIViewControllerTransitioningDelegate, ModalDismi
 
 extension AlertViewController {
     
-    func update(with viewModel: AlertViewModel) {
+    func update(with viewModel: AlertViewModelOld) {
         self.viewModel = viewModel
         title = viewModel.context.title
         presentAlert(with: viewModel)
@@ -53,7 +53,7 @@ private extension AlertViewController {
         presenter.handleEvent(AlertPresenterEvent.Dismiss())
     }
         
-    func presentAlert(with viewModel: AlertViewModel) {
+    func presentAlert(with viewModel: AlertViewModelOld) {
         let alertView = alertContent(with: viewModel.context)
         view.addSubview(alertView)
         alertView.addConstraints(

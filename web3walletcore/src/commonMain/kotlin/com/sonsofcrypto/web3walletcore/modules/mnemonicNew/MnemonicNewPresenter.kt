@@ -111,15 +111,11 @@ class DefaultMnemonicNewPresenter(
                     return
                 }
                 when (event.idx) {
-                    2 -> {
-                        println("Present custom derivation path alert")
-                    }
-                    1 -> {
-                        interactor.addAccount()
-                        updateView()
-                    }
-                    0 -> createWallet()
+                    0 -> interactor.addAccount()
+                    1 -> createWallet()
+                    2 -> println("Present custom derivation path alert")
                 }
+                updateView()
             }
             is MnemonicNewPresenterEvent.Dismiss -> {
                 wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
@@ -161,9 +157,9 @@ class DefaultMnemonicNewPresenter(
         ),
         if (expertMode())
             listOf(
-                ButtonViewModel(Localized("mnemonic.cta.custom"), SECONDARY),
                 ButtonViewModel(Localized("mnemonic.cta.account"), SECONDARY),
-                ButtonViewModel(Localized("mnemonic.cta.new"))
+                ButtonViewModel(Localized("mnemonic.cta.new")),
+                ButtonViewModel(Localized("mnemonic.cta.custom"), SECONDARY),
             )
         else listOf(ButtonViewModel(Localized("mnemonic.cta.new")))
     )

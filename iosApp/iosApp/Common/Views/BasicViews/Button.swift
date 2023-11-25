@@ -181,6 +181,14 @@ class Button: UIButton {
     }
 }
 
+extension Button {
+
+    func update(with viewModel: ButtonViewModel) {
+        setTitle(viewModel.title, for: .normal)
+        kind = viewModel.kind.toKind()
+    }
+}
+
 extension ButtonViewModel.Kind {
 
     func toKind() -> Button.Kind {

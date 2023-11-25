@@ -1,5 +1,5 @@
 package com.sonsofcrypto.web3walletcore.modules.alert
 
-data class AlertViewModel(
+data class AlertViewModelOld(
     val context: AlertWireframeContext,
 )

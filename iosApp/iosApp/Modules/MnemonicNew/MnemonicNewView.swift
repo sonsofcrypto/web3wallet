@@ -18,7 +18,7 @@ final class MnemonicNewViewController: CollectionViewController {
 
     // MARK: - MnemonicView
 
-    func presentAlert(viewModel: AlertViewModel) {
+    func presentAlert(viewModel: AlertViewModelOld) {
         print("presentAlert \(viewModel)")
     }
 
@@ -219,9 +219,9 @@ final class MnemonicNewViewController: CollectionViewController {
         presenter.handleEvent(MnemonicNewPresenterEvent.Dismiss())
     }
 
-    override func buttonContainer(
-        _ buttonContainer: ButtonContainer,
-        didSelectButtonAt idx: Int
+    override func buttonSheetContainer(
+        _ bsc: ButtonSheetContainer,
+        didSelect idx: Int
     ) {
         presenter.handleEvent(.CTAAction(idx: idx.int32))
     }

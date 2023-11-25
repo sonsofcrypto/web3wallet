@@ -5,6 +5,28 @@
 import UIKit
 import web3walletcore
 
+final class ButtonCell: UICollectionViewCell {
+    private lazy var button: Button = {
+        let button = Button(frame: bounds)
+        button.isUserInteractionEnabled = false
+        addSubview(button)
+        return button
+    }()
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        button.frame = bounds
+    }
+}
+
+extension ButtonCell {
+
+    func update(with viewModel: ButtonViewModel) -> Self {
+        button.update(with: viewModel)
+        return self
+    }
+}
+
 final class ButtonsSheetViewCell: UICollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!

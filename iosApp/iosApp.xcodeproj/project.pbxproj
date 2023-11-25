@@ -332,7 +332,6 @@
 		2DC2C26F1F43B153BACAD338 /* CollectionBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C36EEBD7DC01205DEFA8 /* CollectionBackgroundView.swift */; };
 		2DC2C35C9D973A9C14FF5BBA /* ButtonSheeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C1FCC42A2BD3CAB3F3C2 /* ButtonSheeContainer.swift */; };
 		2DC2C5651044E7CB9670CEB4 /* MnemonicAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CB3BFED47B008618518A /* MnemonicAccountCell.swift */; };
-		2DC2C5BF26E94CE01CF01FA2 /* ButtonContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C5BEBEB0676D2BF77A9B /* ButtonContainer.swift */; };
 		2DC2C5BFEF1C945B36C7CAA2 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C2138CB5F68D2DE85E9C /* Button.swift */; };
 		2DC2C620CFC47846ACCE3962 /* UIToolbar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C99C34B1CD6C6DE24FB8 /* UIToolbar+Extensions.swift */; };
 		2DC2C661E437984DDF1C0E33 /* AlertWireframe+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C4716D8E32D5CE26DDA2 /* AlertWireframe+Extensions.swift */; };
@@ -760,7 +759,6 @@
 		2DC2C41CD86FECDF03FCCBE8 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C4716D8E32D5CE26DDA2 /* AlertWireframe+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertWireframe+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C4B6C92D814FB1D50384 /* Double+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
-		2DC2C5BEBEB0676D2BF77A9B /* ButtonContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonContainer.swift; sourceTree = "<group>"; };
 		2DC2C5F6967254E33338C759 /* NotificationCenter+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C7C91B9C13F1D182D921 /* UIControl+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C8FA05735FD6B546BA4B /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
@@ -1892,7 +1890,6 @@
 				D116CF2927C31C42005542AA /* iCarousel */,
 				1F5E64682AACA58A000A1548 /* ImageCache */,
 				1A4C3D0B11BD0F9527397998 /* VisualEffectView */,
-				2DC2C5BEBEB0676D2BF77A9B /* ButtonContainer.swift */,
 				1F0452BB2B08C1C500BC5922 /* SwipeCellKit */,
 				2DC2C1FCC42A2BD3CAB3F3C2 /* ButtonSheeContainer.swift */,
 			);
@@ -2524,7 +2521,6 @@
 				2DC2CDED6615715B3DDC1F33 /* TargetActionViewModel.swift in Sources */,
 				2DC2C6BD39680F02B8C9C8F8 /* CollectionViewController.swift in Sources */,
 				1F0452DF2B08C1C500BC5922 /* SwipeActionTransitioning.swift in Sources */,
-				2DC2C5BF26E94CE01CF01FA2 /* ButtonContainer.swift in Sources */,
 				2DC2C5651044E7CB9670CEB4 /* MnemonicAccountCell.swift in Sources */,
 				2DC2C5BFEF1C945B36C7CAA2 /* Button.swift in Sources */,
 				2DC2C35C9D973A9C14FF5BBA /* ButtonSheeContainer.swift in Sources */,

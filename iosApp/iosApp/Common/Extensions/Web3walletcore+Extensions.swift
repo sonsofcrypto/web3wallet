@@ -21,7 +21,7 @@ extension DefaultAlertWireframe: AlertWireframe {
     func navigate(destination__________ destination: AlertWireframeDestination) { navigate(to: destination) }
 }
 extension AlertViewController: AlertView {
-    func update(viewModel_________ viewModel: AlertViewModel) { update(with: viewModel) }
+    func update(viewModel_________ viewModel: AlertViewModelOld) { update(with: viewModel) }
 }
 extension AlertPresenter {
     func handleEvent(_ event: AlertPresenterEvent) { handle(event_______________: event) }
