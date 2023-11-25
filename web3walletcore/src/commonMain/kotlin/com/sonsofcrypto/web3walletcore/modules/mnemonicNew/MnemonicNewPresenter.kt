@@ -4,6 +4,11 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.CANCEL
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.RegularAlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.SECONDARY
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.*
@@ -34,6 +39,7 @@ sealed class MnemonicNewPresenterEvent {
     data class CopyAccountAddress(val idx: Int): MnemonicNewPresenterEvent()
     data class ViewPrivKey(val idx: Int): MnemonicNewPresenterEvent()
     data class RightBarButtonAction(val idx: Int): MnemonicNewPresenterEvent()
+    data class AlertAction(val idx: Int): MnemonicNewPresenterEvent()
     data class CTAAction(val idx: Int): MnemonicNewPresenterEvent()
     object Dismiss: MnemonicNewPresenterEvent()
 }
@@ -51,6 +57,9 @@ class DefaultMnemonicNewPresenter(
 ): MnemonicNewPresenter {
     private var ctaTapped = false
     private var localExpertMode: Boolean = false
+    /** -1 alert not presented. Else it is idx of account alert is about */
+    private var presentingPrivKeyAlert: Int = -1
+    private var presentingCustomDerivationAlert: Boolean = false
 
     override fun present() { updateView() }
 
@@ -97,13 +106,22 @@ class DefaultMnemonicNewPresenter(
                 interactor.pasteToClipboard(address)
             }
             is MnemonicNewPresenterEvent.ViewPrivKey -> {
-                val key = interactor.accountPrivKey(event.idx)
-                interactor.pasteToClipboard(key)
+                presentingPrivKeyAlert = event.idx
+                view.get()?.presentAlert(privKeyAlertViewModel(event.idx))
             }
             is MnemonicNewPresenterEvent.RightBarButtonAction -> {
                 if (event.idx == 1) localExpertMode = !localExpertMode
                 else interactor.showHidden = !interactor.showHidden
                 updateView()
+            }
+            is MnemonicNewPresenterEvent.AlertAction -> {
+                if (presentingPrivKeyAlert > -1) {
+                    handlerPrivKeyAlertAction(event.idx)
+                }
+                if (presentingCustomDerivationAlert) {
+
+                    presentingCustomDerivationAlert = false
+                }
             }
             is MnemonicNewPresenterEvent.CTAAction -> {
                 if (!expertMode()) {
@@ -113,7 +131,10 @@ class DefaultMnemonicNewPresenter(
                 when (event.idx) {
                     0 -> interactor.addAccount()
                     1 -> createWallet()
-                    2 -> println("Present custom derivation path alert")
+                    2 -> {
+                        presentingCustomDerivationAlert = true
+                        view.get()?.presentAlert(customDerivationAlertViewModel())
+                    }
                 }
                 updateView()
             }
@@ -138,6 +159,15 @@ class DefaultMnemonicNewPresenter(
             // TODO: Handle error
             println("[ERROR] $e")
         }
+    }
+
+    private fun handlerPrivKeyAlertAction(actionIdx: Int) {
+        if (actionIdx == 2) return;
+        val accIdx = presentingPrivKeyAlert
+        val key = interactor.accountPrivKey(accIdx, actionIdx == 1)
+        interactor.pasteToClipboard(key)
+        // Toast alert
+        presentingPrivKeyAlert = -1
     }
 
     private fun updateView() {
@@ -242,6 +272,23 @@ class DefaultMnemonicNewPresenter(
             )
         }
 
+    private fun customDerivationAlertViewModel(): AlertViewModel {
+        TODO("Implement")
+    }
+
+    private fun privKeyAlertViewModel(accIdx: Int): AlertViewModel
+        = RegularAlertViewModel(
+            Localized("mnemonic.privKey.alert.title"),
+            "Private key hex:"
+                + "\n${interactor.accountPrivKey(accIdx)}\n"
+                + "XPRV (Base58Check):"
+                + "\n${interactor.accountPrivKey(accIdx, true)}\n",
+            listOf(
+                Action(Localized("mnemonic.privKey.alert.btnPriv"), NORMAL),
+                Action(Localized("mnemonic.privKey.alert.btnXprv"), NORMAL),
+                Action(Localized("cancel"), CANCEL),
+            ),
+        )
 
     private val placeholderType: String get()
         = if (interactor.passwordType == PIN) "pinType" else "passType"

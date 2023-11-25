@@ -20,7 +20,7 @@ sealed class AlertViewModel() {
         val title: String,
         val body: String = "",
         val inputText: String = "",
-        val inputPlaceholde: String = "",
+        val inputPlaceholder: String = "",
         val actions: List<Action> = listOf(
             Action(Localized("Done"), NORMAL),
             Action(Localized("Cancel"), CANCEL),
