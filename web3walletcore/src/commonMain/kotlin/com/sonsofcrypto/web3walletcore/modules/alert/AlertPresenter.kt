@@ -32,6 +32,6 @@ class DefaultAlertPresenter(
     }
 
     private fun updateView() {
-        view.get()?.update(AlertViewModel(context))
+        view.get()?.update(AlertViewModelOld(context))
     }
 }

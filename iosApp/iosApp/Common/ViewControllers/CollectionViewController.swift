@@ -6,13 +6,13 @@ import UIKit
 import web3walletcore
 
 class CollectionViewController: UICollectionViewController,
-        UICollectionViewDelegateFlowLayout, ButtonContainerDelegate {
+        UICollectionViewDelegateFlowLayout, ButtonSheetContainerDelegate {
     var didAppear: Bool = false
     var prevSize: CGSize = .zero
     var cellSize: CGSize = .zero
     var viewModel: CollectionViewModel.Screen?
     var cv: CollectionView! { (collectionView as! CollectionView) }
-    var ctaButtonsContainer: ButtonContainer = .init()
+    var ctaButtonsContainer: ButtonSheetContainer = .init()
     var cellSwipeOption =  SwipeOptions()
     var enableCardFlipTransitioning: Bool = false
 
@@ -132,24 +132,27 @@ class CollectionViewController: UICollectionViewController,
 
     func updateCtaButtons(with viewModel: [ButtonViewModel]) {
         let needsLayout = ctaButtonsContainer.buttons.count != viewModel.count
-        ctaButtonsContainer.setCTAButtons(viewModel)
         if needsLayout {
-            layoutAboveScrollView()
+            UIView.springAnimate { self.layoutAboveScrollView() }
         }
+        ctaButtonsContainer.setButtons(
+            viewModel,
+            compactCount: 2,
+            sheetState: .auto,
+            animated: true
+        )
     }
 
-    func buttonContainer(
-        _ buttonContainer: ButtonContainer,
-        didSelectButtonAt idx: Int
-    ) {
+    func buttonSheetContainer(_ bsc: ButtonSheetContainer, didSelect idx: Int) {
         print("buttonContainer didSelectButtonAt \(idx)")
     }
 
     func layoutAboveScrollView() {
+        let btnCnt = viewModel?.ctaItems.count ?? 0
+        let size = ctaButtonsContainer.intrinsicContentSize(for: btnCnt)
         cv.abovescrollView?.bounds.size = .init(
             width: view.bounds.width,
-            height: ctaButtonsContainer.intrinsicContentSize.height
-                + cv.safeAreaInsets.bottom - Theme.paddingHalf
+            height: size.height + cv.safeAreaInsets.bottom - Theme.paddingHalf
         )
         cv.contentInset.bottom = bottomInset()
     }
