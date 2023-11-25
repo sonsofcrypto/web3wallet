@@ -4,30 +4,34 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.K
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 
-sealed class AlertViewModel() {
+sealed class AlertViewModel(
+    open val title: String,
+    open val body: String,
+    open val actions: List<Action>,
+    open val imageMedia: ImageMedia? = null,
+) {
 
     data class RegularAlertViewModel(
-        val title: String,
-        val body: String,
-        val actions: List<Action> = listOf(
+        override val title: String,
+        override val body: String,
+        override val actions: List<Action> = listOf(
             Action(Localized("Done"), NORMAL),
             Action(Localized("Cancel"), CANCEL),
         ),
-        val imageMedia: ImageMedia? = null,
-    ): AlertViewModel()
+        override val imageMedia: ImageMedia? = null,
+    ): AlertViewModel(title, body, actions, imageMedia)
 
     data class InputAlertViewModel(
-        val title: String,
-        val body: String = "",
+        override val title: String,
+        override val body: String = "",
         val inputText: String = "",
         val inputPlaceholder: String = "",
-        val actions: List<Action> = listOf(
+        override val actions: List<Action> = listOf(
             Action(Localized("Done"), NORMAL),
             Action(Localized("Cancel"), CANCEL),
         ),
-        val imageMedia: ImageMedia? = null,
-    )
-
+        override val imageMedia: ImageMedia? = null,
+    ): AlertViewModel(title, body, actions, imageMedia)
 
     data class Action(
         val title: String,

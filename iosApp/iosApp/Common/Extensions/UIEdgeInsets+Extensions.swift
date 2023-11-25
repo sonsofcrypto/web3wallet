@@ -14,4 +14,8 @@ extension UIEdgeInsets {
     ) -> UIEdgeInsets {
         UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
     }
+
+    static func with(all: CGFloat = 0) -> UIEdgeInsets {
+        UIEdgeInsets(top: all, left: all, bottom: all, right: all)
+    }
 }

@@ -168,6 +168,8 @@
 "mnemonic.copy.address" = "Copy address";
 "mnemonic.view.privKey" = "View priv key";
 "mnemonic.privKey.alert.title" = "Copy Private Key";
+"mnemonic.privKey.alert.body.priv" = "Private key hex:";
+"mnemonic.privKey.alert.body.xprv" = "XPRV (Base58Check):";
 "mnemonic.privKey.alert.btnPriv" = "Copy Private Key";
 "mnemonic.privKey.alert.btnXprv" = "Copy Extended Private Key (xprv)";
 
