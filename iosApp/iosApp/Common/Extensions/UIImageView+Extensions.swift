@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 extension UIImageView {
 
@@ -12,5 +13,20 @@ extension UIImageView {
 
     convenience init(sysImgName: String) {
         self.init(image: UIImage(systemName: sysImgName))
+    }
+
+    func setImageMedia(_ imageMedia: ImageMedia? ) {
+        guard let media = imageMedia else { image = nil; return }
+        switch media {
+        case is ImageMedia.Name:
+            image = UIImage(named: (media as! ImageMedia.Name).name)
+        case is ImageMedia.SysName:
+            image = UIImage(systemName: (media as! ImageMedia.SysName).name)
+        case is ImageMedia.Url:
+            setImage(url: (media as! ImageMedia.Url).url)
+        case is ImageMedia.Data:
+            image = UIImage(data: (media as! ImageMedia.Data).data.toDataFull())
+        default: ()
+        }
     }
 }

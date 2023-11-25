@@ -21,6 +21,7 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Foo
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
 import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 
@@ -279,15 +280,16 @@ class DefaultMnemonicNewPresenter(
     private fun privKeyAlertViewModel(accIdx: Int): AlertViewModel
         = RegularAlertViewModel(
             Localized("mnemonic.privKey.alert.title"),
-            "Private key hex:"
-                + "\n${interactor.accountPrivKey(accIdx)}\n"
-                + "XPRV (Base58Check):"
+            Localized("mnemonic.privKey.alert.body.priv")
+                + "\n${interactor.accountPrivKey(accIdx)}\n\n"
+                + Localized("mnemonic.privKey.alert.body.xprv")
                 + "\n${interactor.accountPrivKey(accIdx, true)}\n",
             listOf(
                 Action(Localized("mnemonic.privKey.alert.btnPriv"), NORMAL),
                 Action(Localized("mnemonic.privKey.alert.btnXprv"), NORMAL),
                 Action(Localized("cancel"), CANCEL),
             ),
+            SysName("key.horizontal")
         )
 
     private val placeholderType: String get()

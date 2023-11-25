@@ -162,7 +162,7 @@ class DefaultMnemonicNewInteractor(
     override fun accountPrivKey(idx: Int, xprv: Boolean): String {
         val key = bip44.deriveChildKey(accountDerivationPath(idx))
         return if (xprv) key.base58WithChecksumString()
-            else key.bytes().toHexString(false)
+            else key.key.toHexString(false)
     }
 
     override fun accountIsHidden(idx: Int): Boolean = account(idx).isHidden

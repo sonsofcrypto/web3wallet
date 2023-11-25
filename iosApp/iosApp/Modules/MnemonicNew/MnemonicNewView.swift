@@ -18,8 +18,14 @@ final class MnemonicNewViewController: CollectionViewController {
 
     // MARK: - MnemonicView
 
-    func presentAlert(viewModel: AlertViewModelOld) {
-        print("presentAlert \(viewModel)")
+    func presentAlert(viewModel: AlertViewModel) {
+        let alertVc = AlertController(
+            viewModel,
+            handler: { [weak self] idx in
+                self?.presenter.handleEvent(.AlertAction(idx: idx.int32))
+            }
+        )
+        present(alertVc, animated: true)
     }
 
     override func keyboardWillHide(notification: Notification) {
