@@ -48,7 +48,8 @@ interface MnemonicNewInteractor {
     fun accountName(idx: Int): String
     fun accountDerivationPath(idx: Int): String
     fun accountAddress(idx: Int): String
-    fun accountPrivKey(idx: Int): String
+    /** if xprv is false returns prv key hex string else xprv hex string */
+    fun accountPrivKey(idx: Int, xprv: Boolean = false): String
     fun accountIsHidden(idx: Int): Boolean
     fun absoluteAccountIdx(idx: Int): Int
     fun setAccountName(name: String, idx: Int)
@@ -158,9 +159,10 @@ class DefaultMnemonicNewInteractor(
 
     override fun accountAddress(idx: Int): String = account(idx).address
 
-    override fun accountPrivKey(idx: Int): String {
-        return bip44.deriveChildKey(accountDerivationPath(idx))
-            .base58WithChecksumString()
+    override fun accountPrivKey(idx: Int, xprv: Boolean): String {
+        val key = bip44.deriveChildKey(accountDerivationPath(idx))
+        return if (xprv) key.base58WithChecksumString()
+            else key.bytes().toHexString(false)
     }
 
     override fun accountIsHidden(idx: Int): Boolean = account(idx).isHidden

@@ -167,6 +167,9 @@
 "mnemonic.privkey" = "Private Key";
 "mnemonic.copy.address" = "Copy address";
 "mnemonic.view.privKey" = "View priv key";
+"mnemonic.privKey.alert.title" = "Copy Private Key";
+"mnemonic.privKey.alert.btnPriv" = "Copy Private Key";
+"mnemonic.privKey.alert.btnXprv" = "Copy Extended Private Key (xprv)";
 
 "networks.header.l1s" = "Layer #1s";
 "networks.header.l2s" = "Layer #2s";
