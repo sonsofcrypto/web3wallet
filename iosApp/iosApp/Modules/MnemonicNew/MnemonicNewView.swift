@@ -230,6 +230,11 @@ final class MnemonicNewViewController: CollectionViewController {
         didSelect idx: Int
     ) {
         presenter.handleEvent(.CTAAction(idx: idx.int32))
+        let sectionCnt = cv.numberOfSections
+        if idx == 0 && ctaButtonsContainer.buttons.count > 1 && sectionCnt > 2 {
+            let ip = IndexPath(item: 0, section: cv.numberOfSections - 1)
+            cv.scrollToItem(at: ip, at: .centeredVertically, animated: true)
+        }
     }
 
     @IBAction override func rightBarButtonAction(_ sender: Any?) {
