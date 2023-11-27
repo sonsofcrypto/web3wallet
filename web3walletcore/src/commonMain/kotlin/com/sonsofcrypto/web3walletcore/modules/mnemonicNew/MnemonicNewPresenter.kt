@@ -4,10 +4,12 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
+import com.sonsofcrypto.web3lib.utils.isValidDerivationPath
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.CANCEL
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.InputAlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.RegularAlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.SECONDARY
@@ -40,7 +42,7 @@ sealed class MnemonicNewPresenterEvent {
     data class CopyAccountAddress(val idx: Int): MnemonicNewPresenterEvent()
     data class ViewPrivKey(val idx: Int): MnemonicNewPresenterEvent()
     data class RightBarButtonAction(val idx: Int): MnemonicNewPresenterEvent()
-    data class AlertAction(val idx: Int): MnemonicNewPresenterEvent()
+    data class AlertAction(val idx: Int, val text: String?): MnemonicNewPresenterEvent()
     data class CTAAction(val idx: Int): MnemonicNewPresenterEvent()
     object Dismiss: MnemonicNewPresenterEvent()
 }
@@ -49,7 +51,6 @@ interface MnemonicNewPresenter {
     fun present()
     fun handle(event: MnemonicNewPresenterEvent)
 }
-
 class DefaultMnemonicNewPresenter(
     private val view: WeakRef<MnemonicNewView>,
     private val wireframe: MnemonicNewWireframe,
@@ -120,8 +121,7 @@ class DefaultMnemonicNewPresenter(
                     handlerPrivKeyAlertAction(event.idx)
                 }
                 if (presentingCustomDerivationAlert) {
-
-                    presentingCustomDerivationAlert = false
+                    handleCustomDerivationPath(event.idx, event.text)
                 }
             }
             is MnemonicNewPresenterEvent.CTAAction -> {
@@ -163,12 +163,39 @@ class DefaultMnemonicNewPresenter(
     }
 
     private fun handlerPrivKeyAlertAction(actionIdx: Int) {
+        presentingPrivKeyAlert = -1
         if (actionIdx == 2) return;
         val accIdx = presentingPrivKeyAlert
         val key = interactor.accountPrivKey(accIdx, actionIdx == 1)
         interactor.pasteToClipboard(key)
         // Toast alert
-        presentingPrivKeyAlert = -1
+    }
+
+    private fun handleCustomDerivationPath(actionIdx: Int, path: String?) {
+        presentingCustomDerivationAlert = false
+        if (actionIdx == 1 || path == null) return;
+        if (isValidDerivationPath(path)) {
+            try {
+                interactor.addAccount(path)
+                updateView()
+            }
+            catch (err: Throwable) {
+                println(err)
+                presentCustomDerivationPathError(path)
+            }
+        } else presentCustomDerivationPathError(path)
+    }
+
+    private fun presentCustomDerivationPathError(path: String?) {
+        view.get()?.presentAlert(
+            RegularAlertViewModel(
+                Localized("Invalid derivation path"),
+                (path ?: "")
+                    + Localized("mnemonic.alert.customDerivationError.body"),
+                listOf(Action("ok", NORMAL)),
+                SysName("x.circle"),
+            )
+        )
     }
 
     private fun updateView() {
@@ -273,20 +300,29 @@ class DefaultMnemonicNewPresenter(
             )
         }
 
-    private fun customDerivationAlertViewModel(): AlertViewModel {
-        TODO("Implement")
-    }
+    private fun customDerivationAlertViewModel(): AlertViewModel
+        = InputAlertViewModel(
+            Localized("mnemonic.alert.customDerivation.title"),
+            Localized("mnemonic.alert.customDerivation.body"),
+            "",
+            "m/44'/60'/0'/0/0",
+            listOf(
+                Action(Localized("mnemonic.alert.customDerivation.cta"), NORMAL),
+                Action(Localized("cancel"), CANCEL),
+            ),
+            SysName("key.radiowaves.forward")
+        )
 
     private fun privKeyAlertViewModel(accIdx: Int): AlertViewModel
         = RegularAlertViewModel(
-            Localized("mnemonic.privKey.alert.title"),
-            Localized("mnemonic.privKey.alert.body.priv")
+            Localized("mnemonic.alert.privKey.title"),
+            Localized("mnemonic.alert.privKey.body.priv")
                 + "\n${interactor.accountPrivKey(accIdx)}\n\n"
-                + Localized("mnemonic.privKey.alert.body.xprv")
+                + Localized("mnemonic.alert.privKey.body.xprv")
                 + "\n${interactor.accountPrivKey(accIdx, true)}\n",
             listOf(
-                Action(Localized("mnemonic.privKey.alert.btnPriv"), NORMAL),
-                Action(Localized("mnemonic.privKey.alert.btnXprv"), NORMAL),
+                Action(Localized("mnemonic.alert.privKey.btnPriv"), NORMAL),
+                Action(Localized("mnemonic.alert.privKey.btnXprv"), NORMAL),
                 Action(Localized("cancel"), CANCEL),
             ),
             SysName("key.horizontal")
@@ -317,3 +353,4 @@ class DefaultMnemonicNewPresenter(
         return interactor.globalExpertMode() || localExpertMode
     }
 }
+

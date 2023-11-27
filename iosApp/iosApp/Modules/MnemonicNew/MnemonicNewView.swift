@@ -21,8 +21,8 @@ final class MnemonicNewViewController: CollectionViewController {
     func presentAlert(viewModel: AlertViewModel) {
         let alertVc = AlertController(
             viewModel,
-            handler: { [weak self] idx in
-                self?.presenter.handleEvent(.AlertAction(idx: idx.int32))
+            handler: { [weak self] i, t in
+                self?.presenter.handleEvent(.AlertAction(idx: i.int32, text: t))
             }
         )
         present(alertVc, animated: true)

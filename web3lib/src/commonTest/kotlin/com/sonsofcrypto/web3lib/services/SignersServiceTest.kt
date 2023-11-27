@@ -5,7 +5,6 @@ import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.randomString
 import com.sonsofcrypto.web3lib.services.address.AddressService
 import com.sonsofcrypto.web3lib.services.address.DefaultAddressService
-import com.sonsofcrypto.web3lib.services.address.defaultDerivationPath
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultSignerStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyChainService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyChainServiceErr
@@ -22,6 +21,7 @@ import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39.EntropySize.ES128
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.bip39.localeString
+import com.sonsofcrypto.web3lib.utils.defaultDerivationPath
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.secureRand
 import kotlinx.serialization.decodeFromString
@@ -142,7 +142,7 @@ class SignerServiceTests {
         val bip39 = if (mnemonic != null)  Bip39(mnemonic, salt, worldList)
                     else Bip39.from(ES128, salt, worldList)
         val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
-        val keyPath = derivationPath ?: AddressService.defaultDerivationPath()
+        val keyPath = derivationPath ?: defaultDerivationPath()
         val extKey = bip44.deriveChildKey(keyPath)
         val address = addressService.address(bip44.deriveChildKey(keyPath).xpub())
         val signerStoreItem = SignerStoreItem(
