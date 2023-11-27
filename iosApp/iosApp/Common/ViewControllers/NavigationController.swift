@@ -180,13 +180,13 @@ extension NavigationController {
 
     private final class ToastView: UIScrollView {
         private lazy var bgView = ThemeBlurView().round()
-        private lazy var imageView = UIImageView()
+        private lazy var imgView = UIImageView()
         private lazy var label = UILabel(
             Theme.font.body,
             color: Theme.color.textPrimary
         )
         private lazy var stack = HStackView(
-            [imageView, label],
+            [imgView, label],
             spacing: Theme.padding
         )
         private var _contentSize = CGSize.zero
@@ -208,8 +208,8 @@ extension NavigationController {
             self.top = top
             
             if let media = media {
-                imageView.setImageMedia(media)
-                imageView.isHidden = false
+                imgView.setImageMedia(media)
+                imgView.isHidden = false
             }
             
             contentSize = updateContentSize()
@@ -240,10 +240,17 @@ extension NavigationController {
         override func layoutSubviews() {
             super.layoutSubviews()
             let padding = Theme.padding
+
             bgView.frame = .init(zeroOrigin: _contentSize)
                 .insetBy(dx: padding.half, dy: padding)
-            bgView.frame.size.height -= padding
+
+            if !top {
+                bgView.frame.size.height -= padding
+            }
+
             stack.frame = bgView.frame.insetBy(dx: padding, dy: padding)
+            label.preferredMaxLayoutWidth = stack.bounds.width
+                - (imgView.isHidden ? 0 : Constant.imgWidth + stack.spacing)
             
             if top && contentOffset.y > _contentSize.height.half {
                 removeAnimated()
@@ -258,8 +265,8 @@ extension NavigationController {
 
         private func updateContentSize() -> CGSize {
             let padding = Theme.padding
-            let width = bounds.width - padding * 4
-            let imgWidth = imageView.image != nil ? Constant.imgWidth + stack.spacing : 0
+            let width = bounds.width - padding * 3
+            let imgWidth = imgView.isHidden ? 0 : Constant.imgWidth + padding
             let textSize = String.estimateSize(
                 label.text,
                 font: label.font,
@@ -275,20 +282,24 @@ extension NavigationController {
         }
 
         private func configureUI() {
-            imageView.isHidden = true
-            imageView.contentMode = .scaleAspectFit
-            imageView.tintColor = label.textColor
+            imgView.isHidden = true
+            imgView.contentMode = .scaleAspectFit
+            imgView.tintColor = label.textColor
             label.numberOfLines = 0
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            label.translatesAutoresizingMaskIntoConstraints = false
-            stack.translatesAutoresizingMaskIntoConstraints = true
+            label.lineBreakMode = .byWordWrapping
+            
+            [imgView, label, stack].forEach {
+                $0.translatesAutoresizingMaskIntoConstraints = false
+            }
+            
             addSubview(bgView)
             addSubview(stack)
+
             isPagingEnabled = true
             showsVerticalScrollIndicator = false
-            addConstraint(imageView.widthAnchor.constraint(equalToConstant: Constant.imgWidth))
-//            stack.backgroundColor = .green
-//            label.backgroundColor = .orange
+
+            let w = Constant.imgWidth
+            addConstraint(imgView.widthAnchor.constraint(equalToConstant: w))
         }
     }
     
