@@ -23,8 +23,10 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Foo
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
-import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
 import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
+import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position.BOTTOM
+import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position.TOP
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 
 sealed class MnemonicNewPresenterEvent {
@@ -112,7 +114,7 @@ class DefaultMnemonicNewPresenter(
                 view.get()?.presentAlert(privKeyAlertViewModel(event.idx))
             }
             is MnemonicNewPresenterEvent.RightBarButtonAction -> {
-                if (event.idx == 1) localExpertMode = !localExpertMode
+                if (event.idx == 1) toggleExpertMode()
                 else interactor.showHidden = !interactor.showHidden
                 updateView()
             }
@@ -163,12 +165,18 @@ class DefaultMnemonicNewPresenter(
     }
 
     private fun handlerPrivKeyAlertAction(actionIdx: Int) {
+        val accIdx = presentingPrivKeyAlert
         presentingPrivKeyAlert = -1
         if (actionIdx == 2) return;
-        val accIdx = presentingPrivKeyAlert
         val key = interactor.accountPrivKey(accIdx, actionIdx == 1)
         interactor.pasteToClipboard(key)
-        // Toast alert
+        view.get()?.presentToast(
+            ToastViewModel(
+                Localized("mnemonic.toast.copy.privKey"),
+                SysName("square.on.square"),
+                TOP
+            )
+        )
     }
 
     private fun handleCustomDerivationPath(actionIdx: Int, path: String?) {
@@ -195,6 +203,14 @@ class DefaultMnemonicNewPresenter(
                 listOf(Action("ok", NORMAL)),
                 SysName("x.circle"),
             )
+        )
+    }
+
+    private fun toggleExpertMode() {
+        localExpertMode = !localExpertMode
+        if (!localExpertMode) return
+        view.get()?.presentToast(
+            ToastViewModel(Localized("toast.expertMode"), SysName("brain"), TOP)
         )
     }
 
