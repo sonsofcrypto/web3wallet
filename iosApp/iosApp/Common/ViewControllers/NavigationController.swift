@@ -146,3 +146,155 @@ private extension NavigationController {
         (viewController?.navigationItem as? NavigationItem)?.contentView
     }
 }
+
+// MARK: - Toast
+
+extension NavigationController {
+
+    func toast(_ text: String, media: String?, top: Bool = true) {
+        let toastView = ToastView(frame: view.bounds)
+        view.insertSubview(toastView, belowSubview: navigationBar)
+        toastView.update(text, media: media, top: top)
+        toastView.bounds.size = toastView.intrinsicContentSize
+        toastView.frame.origin.y = top
+            ? navigationBar.frame.maxY
+            : view.bounds.maxY - toastView.bounds.size.height
+        
+        let y = toastView.intrinsicContentSize.height
+        toastView.transform = CGAffineTransformMakeTranslation(0, top ? -y : y)
+        UIView.springAnimate { toastView.transform = .identity }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
+            toastView.removeAnimated()
+        }
+    }
+
+    func toast(_ viewModel: ToastViewModel) {
+        toast(
+            viewModel.text,
+            media: viewModel.media,
+            top: viewModel.position == .top
+        )
+    }
+
+    private final class ToastView: UIScrollView {
+        private lazy var bgView = ThemeBlurView().round()
+        private lazy var imageView = UIImageView()
+        private lazy var label = UILabel(
+            Theme.font.callout,
+            color: Theme.color.textPrimary
+        )
+        private lazy var stack = HStackView(
+            [imageView, label],
+            spacing: Theme.padding
+        )
+        private var _contentSize = CGSize.zero
+        private var top = true
+        private var removing = false
+
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            configureUI()
+        }
+
+        required init?(coder: NSCoder) {
+            super.init(coder: coder)
+            configureUI()
+        }
+
+        func update(_ text: String, media: String?, top: Bool = true) {
+            self.label.text = text
+            self.top = top
+            
+            if let media = media {
+                // imageView.setImageMedia(media)
+                imageView.image = UIImage(systemName: media)
+                imageView.isHidden = false
+            }
+            
+            contentSize = updateContentSize()
+            
+            if top {
+                contentInset.bottom = _contentSize.height
+            } else {
+                contentInset.top = _contentSize.height
+            }
+            
+            contentOffset.y = 0
+        }
+
+        func removeAnimated() {
+            guard !removing else { return }
+            removing = true
+            UIView.springAnimate(
+                animations: { [weak self] in
+                    let top = self?.top ?? true
+                    let y = (self?._contentSize.height ?? 0) * (top ? -1 : 1)
+                    self?.transform = CGAffineTransformMakeTranslation(0, y)
+                    self?.alpha = 0
+                },
+                completion: { [weak self] _ in self?.removeFromSuperview() }
+            )
+        }
+        
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            let padding = Theme.padding
+            bgView.frame = .init(zeroOrigin: _contentSize)
+                .insetBy(dx: padding.half, dy: padding)
+            bgView.frame.size.height -= padding
+            stack.frame = bgView.frame.insetBy(dx: padding, dy: padding)
+            
+            if top && contentOffset.y > _contentSize.height.half {
+                removeAnimated()
+            } else if !top && contentOffset.y < -_contentSize.height.half {
+                removeAnimated()
+            }
+        }
+
+        override var intrinsicContentSize: CGSize {
+            return _contentSize
+        }
+
+        private func updateContentSize() -> CGSize {
+            let padding = Theme.padding
+            let width = bounds.width - padding
+            let imgWidth = imageView.image != nil ? 36 + stack.spacing : 0
+            let textSize = String.estimateSize(
+                label.text,
+                font: label.font,
+                maxWidth: width - imgWidth,
+                extraHeight: 0,
+                minHeight: Theme.padding
+            )
+            _contentSize = .init(
+                width: bounds.width,
+                height: textSize.height + padding * 4 + (top ? 0 : padding)
+            )
+            return _contentSize
+        }
+
+        private func configureUI() {
+            imageView.isHidden = true
+            imageView.contentMode = .scaleAspectFit
+            imageView.tintColor = label.textColor
+            label.numberOfLines = 0
+            stack.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(bgView)
+            addSubview(stack)
+            isPagingEnabled = true
+            showsVerticalScrollIndicator = false
+        }
+    }
+}
+
+struct ToastViewModel {
+    let text: String
+    let media: String
+    let position: Position
+
+    enum Position {
+        case top
+        case bottom
+    }
+}

@@ -240,6 +240,11 @@ final class MnemonicNewViewController: CollectionViewController {
     @IBAction override func rightBarButtonAction(_ sender: Any?) {
         guard let sender = sender as? UIBarButtonItem else { return }
         presenter.handleEvent(.RightBarButtonAction(idx: sender.tag.int32))
+        if sender.tag == 1 {
+            navigationController?
+                .asNavVc?
+                .toast("Testing text\nlorem ipsum", media: "brain", top: false)
+        }
     }
 
     func nameDidChange(_ name: String) {
