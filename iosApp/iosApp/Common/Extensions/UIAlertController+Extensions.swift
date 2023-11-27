@@ -30,7 +30,7 @@ extension AlertController {
 
     convenience init(
         _ viewModel: AlertViewModel,
-        handler: @escaping (_ idx: Int)->()
+        handler: @escaping (_ idx: Int, _ text: String?)->()
     ) {
         self.init(
             title: viewModel.title,
@@ -42,11 +42,20 @@ extension AlertController {
                 .init(title:
                     action.title,
                     style: action.actionStyle(),
-                    handler: { _ in handler(idx) }
+                    handler: { [weak self] _ in
+                        handler(idx, self?.textFields?.first?.text)
+                    }
                 )
             )
         }
         self.setImageMedia(viewModel.imageMedia, insets: .with(all: -10))
+
+        if let vm = viewModel as? AlertViewModel.InputAlertViewModel {
+            addTextField { field in
+                field.text = vm.inputText
+                field.placeholder = vm.inputPlaceholder
+            }
+        }
     }
 }
 

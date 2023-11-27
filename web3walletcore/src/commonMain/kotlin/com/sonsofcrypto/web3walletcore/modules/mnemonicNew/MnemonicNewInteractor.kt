@@ -44,7 +44,8 @@ interface MnemonicNewInteractor {
         type: SignerStoreItem.PasswordType
     ): String?
 
-    fun addAccount()
+    @Throws(Exception::class)
+    fun addAccount(derivationPath: String? = null)
     fun accountName(idx: Int): String
     fun accountDerivationPath(idx: Int): String
     fun accountAddress(idx: Int): String
@@ -144,10 +145,12 @@ class DefaultMnemonicNewInteractor(
         type: SignerStoreItem.PasswordType
     ): String? = passwordService.validationError(password, type)
 
-    override fun addAccount() {
+    @Throws(Exception::class)
+    override fun addAccount(derivationPath: String?) {
         generateDefaultNameIfNeeded()
         val name = "$name, acc: ${accounts.count()}"
-        val path = incrementedDerivationPath(accounts.last().derivationPath)
+        val path = derivationPath ?:
+            incrementedDerivationPath(accounts.last().derivationPath)
         val address = addressService.address(bip44.deriveChildKey(path))
         accounts.add(Account(name, path, address, false))
     }
