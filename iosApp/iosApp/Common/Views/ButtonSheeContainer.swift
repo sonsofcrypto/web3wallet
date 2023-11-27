@@ -181,7 +181,10 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
     }
 
     private func newCollectionView() -> UICollectionView {
-        let cv = UICollectionView(frame: bounds, collectionViewLayout: layout)
+        let cv = TouchPassThroughCollectionView(
+            frame: bounds,
+            collectionViewLayout: layout
+        )
         cv.contentInset.top = Theme.padding
         cv.register(ButtonCell.self)
         cv.backgroundColor = .clear
