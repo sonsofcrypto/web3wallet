@@ -20,22 +20,31 @@ class SectionBackgroundView: UICollectionReusableView {
     
     func configureUI() {
         clipsToBounds = true
-        layer.cornerRadius = 16
-        layer.borderWidth = borderWidth
+//        layer.cornerRadius = 16
+//        layer.borderWidth = borderWidth
+        addSubview(blurView)
+    }
+    
+    var blurView = ThemeBlurView().round()
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        backgroundColor = .clear
+        blurView.frame = bounds
     }
     
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
         
-        guard let attr = layoutAttributes as? TableFlowLayoutAttributes else {
-            backgroundColor = .systemBackground
-            layer.borderColor = UIColor.secondarySystemBackground.cgColor
-            return
-        }
-        
-        backgroundColor = attr.backgroundColor
-        layer.borderColor = attr.borderColor?.cgColor
-        layer.maskedCorners = attr.cornerMask
+//        guard let attr = layoutAttributes as? TableFlowLayoutAttributes else {
+//            backgroundColor = .systemBackground
+//            layer.borderColor = UIColor.secondarySystemBackground.cgColor
+//            return
+//        }
+//
+//        backgroundColor = attr.backgroundColor
+//        layer.borderColor = attr.borderColor?.cgColor
+//        layer.maskedCorners = attr.cornerMask
     }
     
     static var elementKind: String {

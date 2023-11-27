@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class NavigationItem: UINavigationItem {
     @IBOutlet var contentView: UIView?
@@ -151,7 +152,7 @@ private extension NavigationController {
 
 extension NavigationController {
 
-    func toast(_ text: String, media: String?, top: Bool = true) {
+    func toast(_ text: String, media: ImageMedia?, top: Bool = true) {
         let toastView = ToastView(frame: view.bounds)
         view.insertSubview(toastView, belowSubview: navigationBar)
         toastView.update(text, media: media, top: top)
@@ -181,7 +182,7 @@ extension NavigationController {
         private lazy var bgView = ThemeBlurView().round()
         private lazy var imageView = UIImageView()
         private lazy var label = UILabel(
-            Theme.font.callout,
+            Theme.font.body,
             color: Theme.color.textPrimary
         )
         private lazy var stack = HStackView(
@@ -202,13 +203,12 @@ extension NavigationController {
             configureUI()
         }
 
-        func update(_ text: String, media: String?, top: Bool = true) {
+        func update(_ text: String, media: ImageMedia?, top: Bool = true) {
             self.label.text = text
             self.top = top
             
             if let media = media {
-                // imageView.setImageMedia(media)
-                imageView.image = UIImage(systemName: media)
+                imageView.setImageMedia(media)
                 imageView.isHidden = false
             }
             
@@ -258,14 +258,14 @@ extension NavigationController {
 
         private func updateContentSize() -> CGSize {
             let padding = Theme.padding
-            let width = bounds.width - padding
-            let imgWidth = imageView.image != nil ? 36 + stack.spacing : 0
+            let width = bounds.width - padding * 4
+            let imgWidth = imageView.image != nil ? Constant.imgWidth + stack.spacing : 0
             let textSize = String.estimateSize(
                 label.text,
                 font: label.font,
                 maxWidth: width - imgWidth,
                 extraHeight: 0,
-                minHeight: Theme.padding
+                minHeight: padding
             )
             _contentSize = .init(
                 width: bounds.width,
@@ -279,22 +279,20 @@ extension NavigationController {
             imageView.contentMode = .scaleAspectFit
             imageView.tintColor = label.textColor
             label.numberOfLines = 0
-            stack.translatesAutoresizingMaskIntoConstraints = false
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            label.translatesAutoresizingMaskIntoConstraints = false
+            stack.translatesAutoresizingMaskIntoConstraints = true
             addSubview(bgView)
             addSubview(stack)
             isPagingEnabled = true
             showsVerticalScrollIndicator = false
+            addConstraint(imageView.widthAnchor.constraint(equalToConstant: Constant.imgWidth))
+//            stack.backgroundColor = .green
+//            label.backgroundColor = .orange
         }
     }
-}
-
-struct ToastViewModel {
-    let text: String
-    let media: String
-    let position: Position
-
-    enum Position {
-        case top
-        case bottom
+    
+    enum Constant {
+        static let imgWidth: CGFloat = 34
     }
 }
