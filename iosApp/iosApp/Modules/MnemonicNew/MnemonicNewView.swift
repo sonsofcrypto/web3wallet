@@ -100,6 +100,14 @@ final class MnemonicNewViewController: CollectionViewController {
                 textHandler: { [weak self] t in self?.passwordDidChange(t)},
                 switchHandler: { [weak self] v in self?.allowFaceIdDidChange(v)}
             )
+        case let vm as CellViewModel.SegmentSelection:
+            return cv.dequeue(
+                    SegmentSelectionCell.self,
+                    for: indexPath
+            ).update(
+                with: vm,
+                segmentHandler: { [weak self] i in self?.entropySizeChange(i)}
+            )
         default:
             ()
         }
@@ -276,6 +284,10 @@ final class MnemonicNewViewController: CollectionViewController {
 
     func allowFaceIdDidChange(_ onOff: Bool) {
         presenter.handleEvent(.SetAllowFaceId(onOff: onOff))
+    }
+
+    func entropySizeChange(_ idx: Int) {
+        presenter.handleEvent(.SetEntropySize(idx: idx.int32))
     }
 
     func setAccountName(_ name: String, _ idxPath: IndexPath) {

@@ -6,7 +6,7 @@ import UIKit
 import web3walletcore
 
 final class MnemonicNewCell: ThemeCell {
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var overlay: UIVisualEffectView!
     @IBOutlet weak var overlayLabel: UILabel!
 
@@ -16,10 +16,8 @@ final class MnemonicNewCell: ThemeCell {
     }
     
     override func applyTheme(_ theme: ThemeProtocol) {
-        textView.typingAttributes = [
-            .font: theme.font.body,
-            .foregroundColor: theme.color.textPrimary
-        ]
+        label.font = theme.font.body
+        label.textColor = theme.color.textPrimary
         [layer, overlay.layer].forEach {
             $0.cornerRadius = theme.cornerRadius
         }
@@ -30,8 +28,8 @@ final class MnemonicNewCell: ThemeCell {
     }
     
     func update(with viewModel: CellViewModel.Text) -> MnemonicNewCell {
-        textView.isEditable = false
-        textView.text = viewModel.text
+        label.text = viewModel.text
+        label.font = Theme.font.body
         return self
     }
 }

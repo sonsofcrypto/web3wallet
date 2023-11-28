@@ -28,7 +28,6 @@ interface MnemonicNewInteractor {
     var passwordType: SignerStoreItem.PasswordType
     var password: String
     var passUnlockWithBio: Boolean
-
     var showHidden: Boolean
 
     fun mnemonic(): String
@@ -88,7 +87,7 @@ class DefaultMnemonicNewInteractor(
         set(value) { field = value; regenerateAccountsAndAddresses(); }
 
     override var entropySize: Bip39.EntropySize = ES128
-        set(value) { field = value; regenerateAccountsAndAddresses(); }
+        set(value) { field = value; regenerateMnemonic(); }
 
     override var iCloudSecretStorage: Boolean = false
     override var passwordType: SignerStoreItem.PasswordType = BIO
