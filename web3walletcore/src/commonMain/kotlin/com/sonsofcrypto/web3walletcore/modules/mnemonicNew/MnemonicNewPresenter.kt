@@ -4,7 +4,9 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
+import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.isValidDerivationPath
+import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.CANCEL
@@ -25,9 +27,13 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Scr
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
 import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position.BOTTOM
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position.TOP
 import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 sealed class MnemonicNewPresenterEvent {
     object CopyMnemonic: MnemonicNewPresenterEvent()
@@ -39,6 +45,7 @@ sealed class MnemonicNewPresenterEvent {
     data class SetPassType(val idx: Int): MnemonicNewPresenterEvent()
     data class SetPassword(val text: String): MnemonicNewPresenterEvent()
     data class SetAllowFaceId(val onOff: Boolean): MnemonicNewPresenterEvent()
+    data class SetEntropySize(val idx: Int): MnemonicNewPresenterEvent()
     data class SetAccountName(val name: String, val idx: Int): MnemonicNewPresenterEvent()
     data class SetAccountHidden(val hidden: Boolean, val idx: Int): MnemonicNewPresenterEvent()
     data class CopyAccountAddress(val idx: Int): MnemonicNewPresenterEvent()
@@ -94,6 +101,10 @@ class DefaultMnemonicNewPresenter(
             }
             is MnemonicNewPresenterEvent.SetAllowFaceId -> {
                 interactor.passUnlockWithBio = event.onOff
+            }
+            is MnemonicNewPresenterEvent.SetEntropySize -> {
+                interactor.entropySize = Bip39.EntropySize.values()[event.idx]
+                updateView()
             }
             is MnemonicNewPresenterEvent.CopyMnemonic -> {
                 interactor.pasteToClipboard(interactor.mnemonic().trim())
@@ -209,9 +220,13 @@ class DefaultMnemonicNewPresenter(
     private fun toggleExpertMode() {
         localExpertMode = !localExpertMode
         if (!localExpertMode) return
-        view.get()?.presentToast(
-            ToastViewModel(Localized("toast.expertMode"), SysName("brain"), TOP)
-        )
+        CoroutineScope(uiDispatcher).launch {
+            delay(0.15.seconds)
+            val title = Localized("toast.expertMode")
+            view.get()?.presentToast(
+                ToastViewModel(title, SysName("brain"), TOP)
+            )
+        }
     }
 
     private fun updateView() {
@@ -258,18 +273,21 @@ class DefaultMnemonicNewPresenter(
                 interactor.name,
                 Localized("mnemonic.name.placeholder"),
             ),
+        )  + (
+            if (expertMode()) listOf(
+                SegmentSelection(
+                    Localized("mnemonic.size.title"),
+                    Bip39.validWordCounts().map { it.toString() },
+                    Bip39.EntropySize.values().indexOf(interactor.entropySize),
+                )
+            )
+            else emptyList()
+        )
+        + listOf(
             Switch(
                 Localized("mnemonic.iCould.title"),
                 interactor.iCloudSecretStorage,
             ),
-//          CellViewModel.SwitchWithTextInput(
-//              Localized("mnemonic.salt.title"),
-//              saltMnemonicOn,
-//              salt,
-//              Localized("mnemonic.salt.placeholder"),
-//              Localized("mnemonic.salt.description"),
-//              listOf(Localized("mnemonic.salt.descriptionHighlight")),
-//          ),
             SegmentWithTextAndSwitch(
                 Localized("mnemonic.passType.title"),
                 passwordTypes().map { it.name.lowercase() },
@@ -281,6 +299,14 @@ class DefaultMnemonicNewPresenter(
                 Localized("mnemonic.passType.allowFaceId"),
                 interactor.passUnlockWithBio,
             ),
+//          CellViewModel.SwitchWithTextInput(
+//              Localized("mnemonic.salt.title"),
+//              saltMnemonicOn,
+//              salt,
+//              Localized("mnemonic.salt.placeholder"),
+//              Localized("mnemonic.salt.description"),
+//              listOf(Localized("mnemonic.salt.descriptionHighlight")),
+//          ),
         ),
         null
     )

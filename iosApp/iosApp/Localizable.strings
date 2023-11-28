@@ -180,6 +180,8 @@
 "mnemonic.alert.customDerivationError.title" = "Invalid derivation path";
 "mnemonic.alert.customDerivationError.body" = " is not valid derivation path";
 "mnemonic.toast.copy.privKey" = "Private key copied to to pasteboard for 30 seconds.";
+"mnemonic.size.title" = "Mnemonic size";
+
 "networks.header.l1s" = "Layer #1s";
 "networks.header.l2s" = "Layer #2s";
 "networks.header.l1sTest" = "Layer #1s Testnets";

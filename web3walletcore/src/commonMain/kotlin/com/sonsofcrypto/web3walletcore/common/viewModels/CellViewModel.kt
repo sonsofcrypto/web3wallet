@@ -34,6 +34,12 @@ sealed class CellViewModel {
         val onOff: Boolean,
     ): CellViewModel()
 
+    data class SegmentSelection(
+        val title: String,
+        val values: List<String>,
+        val selectedIdx: Int,
+    ): CellViewModel()
+
     data class SegmentWithTextAndSwitch(
         val title: String,
         val segmentOptions: List<String>,
@@ -48,7 +54,7 @@ sealed class CellViewModel {
         enum class KeyboardType { DEFAULT, NUMBER_PAD }
         val hasHint: Boolean get() = errorMessage != null
     }
-
+    
     data class Button(
         val title: String,
         val type: ButtonType

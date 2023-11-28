@@ -24,3 +24,5 @@ class SelectionCollectionViewCell: CollectionViewCell {
         selectionView?.tintColor = Theme.color.textPrimary
     }
 }
+
+
