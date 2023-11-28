@@ -29,27 +29,47 @@ class TextField: UITextField {
     @objc func clearTapped() {
         text = nil
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyTheme(Theme)
+    }
+
+    func applyTheme(_ theme: ThemeProtocol) {
+        font = theme.font.body
+        textColor = theme.color.textPrimary
+        rightView = makeClearButton()
+        backgroundColor = theme.color.segmentedControlBackground
+        layer.cornerRadius = theme.cornerRadius.half
+        layer.maskedCorners = .all
+    }
+    
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        bounds.insetBy(dx: Theme.paddingHalf, dy: Theme.padding * 0.33)
+    }
+    
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        bounds.insetBy(dx: Theme.paddingHalf, dy: Theme.padding * 0.33)
+    }
 }
 
 private extension TextField {
     
     func configure() {
-        font = Theme.font.body
-        textColor = Theme.color.textPrimary
-        rightView = makeClearButton()
+        applyTheme(Theme)
         rightViewMode = .whileEditing
         clipsToBounds = true
     }
     
     func placeholderAttrs() -> [NSAttributedString.Key: Any] {
-        return [
+        [
             .font: font ?? Theme.font.body,
             .foregroundColor: Theme.color.textSecondary
         ]
     }
     
     func bodyAttrs() -> [NSAttributedString.Key: Any] {
-        return [
+        [
             .font: font ?? Theme.font.body,
             .foregroundColor: Theme.color.textPrimary,
         ]
