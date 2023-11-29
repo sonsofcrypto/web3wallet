@@ -29,6 +29,24 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position.TOP
 import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.AlertAction
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.CTAAction
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.CopyAccountAddress
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.CopyMnemonic
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.Dismiss
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.RightBarButtonAction
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.SaltLearnMore
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.SaltSwitch
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.SetAccountHidden
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.SetAccountName
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.SetAllowFaceId
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.SetEntropySize
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.SetICouldBackup
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.SetName
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.SetPassType
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.SetPassword
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.SetSalt
+import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.ViewPrivKey
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -76,60 +94,48 @@ class DefaultMnemonicNewPresenter(
 
     override fun handle(event: MnemonicNewPresenterEvent) {
         when (event) {
-            is MnemonicNewPresenterEvent.SetName -> {
-                interactor.name = event.name
-            }
-            is MnemonicNewPresenterEvent.SetICouldBackup -> {
-                interactor.iCloudSecretStorage = event.onOff
-            }
-            is MnemonicNewPresenterEvent.SaltSwitch -> {
-                interactor.saltMnemonicOn = event.onOff
-            }
-            is MnemonicNewPresenterEvent.SetSalt -> {
-                interactor.salt = event.salt
-            }
-            is MnemonicNewPresenterEvent.SaltLearnMore -> {
-                wireframe.navigate(MnemonicNewWireframeDestination.LearnMoreSalt)
-            }
-            is MnemonicNewPresenterEvent.SetPassType -> {
+            is SetName -> interactor.name = event.name
+            is SetAccountName -> interactor.setAccountName(event.name, event.idx)
+            is SetICouldBackup -> interactor.iCloudSecretStorage = event.onOff
+            is SaltSwitch -> interactor.saltMnemonicOn = event.onOff
+            is SetSalt -> interactor.salt = event.salt
+            is SetAllowFaceId -> interactor.passUnlockWithBio = event.onOff
+            is SaltLearnMore -> wireframe.navigate(
+                MnemonicNewWireframeDestination.LearnMoreSalt
+            )
+            is SetPassType -> {
                 interactor.passwordType = passwordTypes()[event.idx]
                 updateView()
             }
-            is MnemonicNewPresenterEvent.SetPassword -> {
+            is SetPassword -> {
                 interactor.password = event.text
                 updateView()
             }
-            is MnemonicNewPresenterEvent.SetAllowFaceId -> {
-                interactor.passUnlockWithBio = event.onOff
-            }
-            is MnemonicNewPresenterEvent.SetEntropySize -> {
+            is SetEntropySize -> {
                 interactor.entropySize = Bip39.EntropySize.values()[event.idx]
                 updateView()
             }
-            is MnemonicNewPresenterEvent.CopyMnemonic -> {
-                interactor.pasteToClipboard(interactor.mnemonic().trim())
-            }
-            is MnemonicNewPresenterEvent.SetAccountName -> {
-                interactor.setAccountName(event.name, event.idx)
-            }
-            is MnemonicNewPresenterEvent.SetAccountHidden -> {
+            is CopyMnemonic -> interactor.pasteToClipboard(
+                interactor.mnemonic().trim()
+            )
+            is SetAccountHidden -> {
                 interactor.setAccountHidden(event.hidden, event.idx)
                 updateView()
             }
-            is MnemonicNewPresenterEvent.CopyAccountAddress -> {
+            is CopyAccountAddress -> {
                 val address = interactor.accountAddress(event.idx)
                 interactor.pasteToClipboard(address)
             }
-            is MnemonicNewPresenterEvent.ViewPrivKey -> {
+            is ViewPrivKey -> {
                 presentingPrivKeyAlert = event.idx
                 view.get()?.presentAlert(privKeyAlertViewModel(event.idx))
             }
-            is MnemonicNewPresenterEvent.RightBarButtonAction -> {
+            is RightBarButtonAction -> {
                 if (event.idx == 1) toggleExpertMode()
                 else interactor.showHidden = !interactor.showHidden
                 updateView()
             }
-            is MnemonicNewPresenterEvent.AlertAction -> {
+            is AlertAction -> {
                 if (presentingPrivKeyAlert > -1) {
                     handlerPrivKeyAlertAction(event.idx)
                 }
@@ -137,7 +143,7 @@ class DefaultMnemonicNewPresenter(
                     handleCustomDerivationPath(event.idx, event.text)
                 }
             }
-            is MnemonicNewPresenterEvent.CTAAction -> {
+            is CTAAction -> {
                 if (!expertMode()) {
                     createWallet()
                     return
@@ -152,9 +158,9 @@ class DefaultMnemonicNewPresenter(
                 }
                 updateView()
             }
-            is MnemonicNewPresenterEvent.Dismiss -> {
-                wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
-            }
+            is Dismiss -> wireframe.navigate(
+                MnemonicNewWireframeDestination.Dismiss
+            )
         }
     }
 

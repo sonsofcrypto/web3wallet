@@ -9,7 +9,7 @@ protocol Progressable {
 }
 
 protocol ContentScrollInfo {
-    func contentBehindBottomView(_ isBehind: Bool)
+    func contentMaxY(_ maxY: CGFloat)
 }
 
 @IBDesignable
@@ -97,6 +97,18 @@ class CollectionView: UICollectionView {
         stickToBottom: Bool = false
     ) {
         guard let view = view else { return }
+        
+        // Always at the bottom of the screen, no need for complex stuff
+        if aboveLine && pinToBottom && stickToBottom {
+            view.frame.origin = .init(
+                x: bounds.midX - view.bounds.width / 2,
+                y: bounds.maxY - view.bounds.height
+            )
+            (view as? ContentScrollInfo)?.contentMaxY(
+                convert(.init(x: 0, y: contentSize.height), to: view).y
+            )
+            return
+        }
 
         let adjInset = adjustedContentInset
         let safeInset = safeAreaInsets
@@ -133,14 +145,10 @@ class CollectionView: UICollectionView {
             }
         }
 
-        if let infoView = view as? ContentScrollInfo {
-            infoView.contentBehindBottomView(contentSize.height > y)
-        }
-
-        view.frame = CGRect(
-            origin: .init(x: bounds.midX - view.bounds.width / 2, y: y),
-            size: CGSize(width: view.bounds.width, height: view.bounds.height)
+        (view as? ContentScrollInfo)?.contentMaxY(
+            convert(.init(x: 0, y: contentSize.height), to: view).y
         )
+        view.frame.origin = .init(x: bounds.midX - view.bounds.width / 2, y: y)
 
 //        print(
 //            "bounds.maxY: \(round(bounds.maxY)), y: \(round(y)), "

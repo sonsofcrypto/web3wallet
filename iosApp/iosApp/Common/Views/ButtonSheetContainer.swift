@@ -5,17 +5,32 @@
 import UIKit
 import web3walletcore
 
-protocol ButtonSheetContainerDelegate: AnyObject {
+@objc protocol ButtonSheetContainerDelegate: AnyObject {
     func buttonSheetContainer(_ bsc: ButtonSheetContainer, didSelect idx: Int)
+
+    @objc optional func buttonSheetContainer(
+        _ bsc: ButtonSheetContainer,
+        didChange expanded: Bool
+    )
+
+    @objc optional func buttonSheetContainer(
+        _ bsc: ButtonSheetContainer,
+        visibleContentDidChange height: CGFloat
+    )
 }
 
 class ButtonSheetContainer: UIView, ContentScrollInfo,
-        UICollectionViewDataSource, UICollectionViewDelegate {
+        UICollectionViewDataSource, UICollectionViewDelegate,
+        UICollectionViewDelegateFlowLayout {
 
     weak var delegate: ButtonSheetContainerDelegate?
 
+    var hideBgForNonExpanded: Bool = false
+    var showHandle: Bool = false
+    
     private(set) var isExpanded: Bool = false
     private(set) var buttons: [ButtonViewModel] = []
+    private(set) var expandedButtons: [ButtonViewModel] = []
 
     private var compactCount: Int = -1
     private var hiddenButtonsCount: Int = 0
@@ -45,7 +60,8 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         _ buttons: [ButtonViewModel],
         compactCount: Int = -1,
         sheetState: SheetState = .auto,
-        animated: Bool = false
+        animated: Bool = false,
+        expandedButton: [ButtonViewModel] = []
     ) {
         _ = cv.numberOfItems(inSection: 0)
         let oldButtons = self.buttons
@@ -55,6 +71,7 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         self.cv.frame = CGRect(zeroOrigin: size)
         self.compactCount = compactCount
         self.buttons = buttons
+        self.expandedButtons = expandedButton.isEmpty ? buttons : expandedButton
         hiddenButtonsCount = max(0, buttons.count - compactCount)
 
         !animated
@@ -77,7 +94,8 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
             width: (superview?.bounds.width ?? 320),
             height: CGFloat(btnCnt) * Theme.buttonHeight
                 + max(0, CGFloat(btnCnt - 1)) * Theme.padding
-                + Theme.padding
+                + Theme.padding // Extra sheet when header absent
+                + (showHandle ? Theme.padding * 1 : 0) // Header
         )
     }
 
@@ -108,10 +126,18 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         intrinsicContentSize(for: buttons.count)
     }
 
+    func buttonViewAt(idx: Int) -> UIView? {
+        cv.cellForItem(at: IndexPath(item: idx, section: 0))
+    }
+
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        return cv.hitTest(convert(point, to: cv), with: event)
+    }
+
     // MARK: - ContentScrollInfo
 
-    func contentBehindBottomView(_ isBehind: Bool) {
-        isBehindContent = isBehind
+    func contentMaxY(_ maxY: CGFloat) {
+        isBehindContent = maxY > bounds.height + cv.contentOffset.y
         updateBgViewAlpha()
     }
 
@@ -139,6 +165,14 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         updateBgViewAlpha()
     }
 
+    func setSheetState(_ sheetState: SheetState, animated: Bool = true) {
+        switch sheetState {
+        case .expanded: setExpanded(animated)
+        case .compact: setCompact(animated)
+        default: ()
+        }
+    }
+
     private func setCompact(_ animated: Bool = false) {
         let hiddenCnt = CGFloat(hiddenButtonsCount)
         guard hiddenCnt > 0 else { setExpanded(animated); return }
@@ -159,21 +193,63 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
 
     private func layoutBgView() {
         guard cv.numberOfItems(inSection: 0) > 0 else { return }
-        guard let cell = cv.cellForItem(at: IndexPath.zero) else { return }
-        let ty = cell.convert(cell.bounds, to: self).origin.y - Theme.padding
-        bgView.transform = CGAffineTransformMakeTranslation(0, ty)
+        if showHandle {
+            guard let hearder = cv.visibleSupplementaryViews(
+                ofKind: UICollectionView.elementKindSectionHeader
+            ).first as? HandleHeader else { return }
+            let ty = hearder.convert(hearder.bounds, to: self).origin.y
+            bgView.transform = CGAffineTransformMakeTranslation(0, ty)
+        } else {
+            guard let cell = cv.cellForItem(at: IndexPath.zero) else { return }
+            let ty = cell.convert(cell.bounds, to: self).origin.y - Theme.padding
+            bgView.transform = CGAffineTransformMakeTranslation(0, ty)
+        }
     }
-
+    
     private func updateBgViewAlpha() {
-        let alpha = (isBehindContent || hiddenButtonsCount > 0)  ? 1.0 : 0.0
-        guard alpha != bgView.alpha else { return }
-        UIView.springAnimate(0.1) { self.bgView.alpha = alpha }
+        if isBehindContent {
+            guard bgView.alpha != 1 else { return }
+            UIView.springAnimate(0.1) {
+                self.bgView.alpha = 1
+                self.handleHeader()?.handle.alpha = 1
+            }
+            return
+        }
+        if hideBgForNonExpanded {
+            let offsetY = abs(cv.contentOffset.y)
+            bgView.alpha = min(1, (1 - offsetY / cv.contentInset.top) * 1.5)
+            handleHeader()?.handle.alpha = bgView.alpha
+            return
+        }
+        let alpha = hiddenButtonsCount > 0 ? 1.0 : 0.0
+        if alpha != bgView.alpha {
+            UIView.springAnimate(0.1) {
+                self.bgView.alpha = alpha
+                self.handleHeader()?.handle.alpha = alpha
+            }
+        }
     }
 
     private func updateExpanded() {
         guard hiddenButtonsCount > 0 else { return }
-        isExpanded = cv.contentOffset.y > -Theme.buttonHeight
+        if isExpanded
+           && abs(cv.contentOffset.y) + Theme.buttonHeight - cv.contentInset.top > 0 {
+            isExpanded = false
+            delegate?.buttonSheetContainer?(self, didChange: isExpanded)
+            updateVisibleCell()
+        }
+        if !isExpanded && abs(cv.contentOffset.y) < (Theme.buttonHeight * CGFloat(hiddenButtonsCount) / 2) {
+            isExpanded = true
+            delegate?.buttonSheetContainer?(self, didChange: isExpanded)
+            updateVisibleCell()
+        }
     }
+    
+    private func updateVisibleCell() {
+        
+        cv.reconfigureItems(at: cv.indexPathsForVisibleItems)
+    }
+    
 
     private func configureUI() {
         backgroundColor = .clear
@@ -187,6 +263,7 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         )
         cv.contentInset.top = Theme.padding
         cv.register(ButtonCell.self)
+        cv.register(HandleHeader.self, kind: .header)
         cv.backgroundColor = .clear
         cv.dataSource = self
         cv.delegate = self
@@ -194,6 +271,7 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         cv.isPagingEnabled = true
         cv.clipsToBounds = false
         cv.showsVerticalScrollIndicator = false
+        cv.topAdditionalTouchMargin = -Theme.padding
         addSubview(cv)
         return cv
     }
@@ -202,6 +280,13 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         let bgView = ThemeBlurView().round()
         insertSubview(bgView, at: 0)
         return bgView
+    }
+    
+    private func handleHeader() -> HandleHeader? {
+        guard showHandle else { return nil }
+        return cv.visibleSupplementaryViews(
+            ofKind: UICollectionView.elementKindSectionHeader
+        ).first as? HandleHeader
     }
     
     // MARK: - UICollectionViewDataSource
@@ -222,7 +307,9 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         collectionView.dequeue(ButtonCell.self, for: indexPath)
-            .update(with: buttons[indexPath.item])
+            .update(
+                with: (isExpanded ? expandedButtons : buttons)[indexPath.item]
+            )
     }
 
     // MARK: - UICollectionViewDelegate
@@ -231,17 +318,65 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
+        if !isExpanded { setCompact(false) }
         delegate?.buttonSheetContainer(self, didSelect: indexPath.item)
     }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader else {
+            fatalError("Unexpected supplementary element")
+        }
+        return collectionView
+            .dequeue(HandleHeader.self, for: indexPath, kind: .header)
+    }
 
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        showHandle
+            ? .init(width: bounds.width, height: Theme.padding * 2)
+            : .zero
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        updateExpanded()
         layoutBgView()
+        updateBgViewAlpha()
+        updateExpanded()
     }
 
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        updateExpanded()
         layoutBgView()
+        updateBgViewAlpha()
+        updateExpanded()
+        updateDelegateContentHeight()
+    }
+
+    func scrollViewDidEndDragging(
+        _ scrollView: UIScrollView,
+        willDecelerate decelerate: Bool
+    ) {
+        guard !decelerate else { return }
+        updateDelegateContentHeight()
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        updateExpanded()
+        updateDelegateContentHeight()
+    }
+
+    private func updateDelegateContentHeight() {
+        guard let topView = buttonViewAt(idx: 0) else { return }
+        delegate?.buttonSheetContainer?(
+            self,
+            visibleContentDidChange: bounds.height
+                - topView.convert(.zero, to: self).y
+        )
     }
 }
 
@@ -262,5 +397,36 @@ struct ButtonViewModelAutoDiffInfo: AutoDiffInfo {
 
     func itemType(_ idxPath: IndexPath) -> String {
         "\(buttons[idxPath.item].kind)"
+    }
+}
+
+class HandleHeader: ThemeReusableView {
+    lazy var handle: UIView = {
+        let size = CGSize(
+            width: Theme.padding * 3,
+            height: Theme.paddingHalf.half
+        )
+        let view = UIView(frame: CGRect(zeroOrigin: size))
+        view.layer.cornerRadius = size.height.half
+        view.layer.maskedCorners = .all
+        view.clipsToBounds = true
+        view.backgroundColor = Theme.color.bgPrimary
+        addSubview(view)
+        return view
+    }()
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        handle.center = center
+    }
+
+    override func applyTheme(_ theme: ThemeProtocol) {
+        handle.backgroundColor = Theme.color.bgPrimary
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        var size = self.intrinsicContentSize
+        size.height = Theme.padding
+        return size
     }
 }

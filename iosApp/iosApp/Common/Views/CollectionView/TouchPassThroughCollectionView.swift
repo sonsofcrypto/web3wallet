@@ -6,8 +6,11 @@ import UIKit
 
 class TouchPassThroughCollectionView: UICollectionView {
 
+    /// set to negative value to increase area that will capture touches
+    var topAdditionalTouchMargin: CGFloat = 0
+
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        if point.y >= 0 {
+        if point.y >= topAdditionalTouchMargin {
             return super.hitTest(point, with: event)
         }
         return nil

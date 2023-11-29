@@ -6,10 +6,7 @@ import UIKit
 import web3walletcore
 
 final class SignersCell: CollectionViewCell {
-    
-    struct Handler {
-        let accessoryHandler: (() -> Void)
-    }
+    typealias Handler = ()->()
     
     @IBOutlet weak var indexImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -17,7 +14,7 @@ final class SignersCell: CollectionViewCell {
     @IBOutlet weak var accessoryButton: UIButton!
     @IBOutlet weak var arrowForward: UIImageView!
     
-    private var handler: Handler!
+    private var handler: Handler?
         
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,7 +41,7 @@ extension SignersCell {
     
     func update(
         with viewModel: SignersViewModel.Item?,
-        handler: Handler,
+        handler: @escaping Handler,
         index: Int
     ) -> Self {
         self.handler = handler
@@ -66,6 +63,6 @@ extension SignersCell {
 private extension SignersCell {
     
     @objc func accessoryAction(_ sender: UIButton) {
-        handler.accessoryHandler()
+        handler?()
     }
 }
