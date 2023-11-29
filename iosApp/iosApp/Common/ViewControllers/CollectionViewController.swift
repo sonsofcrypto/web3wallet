@@ -192,7 +192,7 @@ class CollectionViewController: UICollectionViewController,
     }
 
     func recomputeSizeIfNeeded() -> Bool {
-        guard prevSize.width != view.bounds.size.width else { return false}
+        guard prevSize.width != view.bounds.size.width else { return false }
         prevSize = view.bounds.size
         cellSize = .init(
             width: view.bounds.size.width - Theme.padding * 2,

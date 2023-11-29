@@ -5,23 +5,15 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
+import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.PRIMARY
+import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.SECONDARY
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.ChangeButtonsSheetMode
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SelectAccessory
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SelectButtonAt
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SelectErrorActionAt
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SelectSignerItemAt
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.CONNECT_HARDWARE_WALLET
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.CREATE_MULTI_SIG
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.IMPORT_ADDRESS
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.IMPORT_MNEMONIC
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.IMPORT_PRIV_KEY
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.MORE_OPTION
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.Button.Type.NEW_MNEMONIC
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.SheetMode
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.SheetMode.COMPACT
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.ButtonSheetViewModel.SheetMode.EXPANDED
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.AccessoryAction
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.ButtonAction
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.ErrorAlertAction
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SetCTASheet
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SignerAction
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.Item
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.State.Loaded
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.TransitionTargetView.ButtonAt
@@ -42,11 +34,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 sealed class SignersPresenterEvent {
-    data class SelectSignerItemAt(val idx: Int): SignersPresenterEvent()
-    data class SelectAccessory(val idx: Int): SignersPresenterEvent()
-    data class SelectErrorActionAt(val idx: Int): SignersPresenterEvent()
-    data class SelectButtonAt(val idx: Int): SignersPresenterEvent()
-    data class ChangeButtonsSheetMode(val mode: SheetMode): SignersPresenterEvent()
+    data class SignerAction(val idx: Int): SignersPresenterEvent()
+    data class AccessoryAction(val idx: Int): SignersPresenterEvent()
+    data class ErrorAlertAction(val idx: Int): SignersPresenterEvent()
+    data class ButtonAction(val idx: Int): SignersPresenterEvent()
+    data class SetCTASheet(val expanded: Boolean): SignersPresenterEvent()
 }
 
 interface SignersPresenter {
@@ -59,7 +51,7 @@ class DefaultSignersPresenter(
     private val wireframe: SignersWireframe,
     private val interactor: SignersInteractor,
 ): SignersPresenter {
-    private var buttonsSheet: SignersViewModel.ButtonSheetViewModel = buttonsCompact()
+    private var ctaSheetExpanded: Boolean = false
     private var targetView: SignersViewModel.TransitionTargetView = None
     private var initialPresent: Boolean = true
 
@@ -67,11 +59,11 @@ class DefaultSignersPresenter(
 
     override fun handle(event: SignersPresenterEvent) {
         when (event) {
-            is SelectSignerItemAt -> handleDidSelectKeyStoreItem(event.idx)
-            is SelectAccessory -> handleDidSelectAccessory(event.idx)
-            is SelectErrorActionAt -> handleDidSelectErrorAction(event.idx)
-            is SelectButtonAt -> handleButtonAction(event.idx)
-            is ChangeButtonsSheetMode -> handleDidChangeButtonsState(event.mode)
+            is SignerAction -> handleDidSelectKeyStoreItem(event.idx)
+            is AccessoryAction -> handleDidSelectAccessory(event.idx)
+            is ErrorAlertAction -> handleDidSelectErrorAction(event.idx)
+            is ButtonAction -> handleButtonAction(event.idx)
+            is SetCTASheet -> ctaSheetExpanded = event.expanded
         }
     }
 
@@ -110,18 +102,14 @@ class DefaultSignersPresenter(
     private fun handleButtonAction(idx: Int) {
         targetView = ButtonAt(idx)
         view.get()?.updateTargetView(targetView)
-        when (buttonsSheet.buttons[idx].type) {
-            NEW_MNEMONIC -> wireframe.navigate(
-                NewMnemonic { handleNewKeyStoreItem(it) }
-            )
-            IMPORT_MNEMONIC -> wireframe.navigate(
-                ImportMnemonic { handleNewKeyStoreItem(it) }
-            )
-            MORE_OPTION -> handleDidChangeButtonsState(EXPANDED)
-            IMPORT_PRIV_KEY -> wireframe.navigate(ImportPrivateKey)
-            IMPORT_ADDRESS -> wireframe.navigate(ImportAddress)
-            CONNECT_HARDWARE_WALLET -> wireframe.navigate(ConnectHardwareWallet)
-            CREATE_MULTI_SIG -> wireframe.navigate(CreateMultisig)
+        when (idx) {
+            0 -> wireframe.navigate(NewMnemonic { handleNewKeyStoreItem(it) })
+            1 -> wireframe.navigate(ImportMnemonic { handleNewKeyStoreItem(it)})
+            2 -> if (ctaSheetExpanded) wireframe.navigate(ImportPrivateKey)
+                else view.get()?.updateCTASheet(!ctaSheetExpanded)
+            3 -> wireframe.navigate(ImportAddress)
+            4 -> wireframe.navigate(ConnectHardwareWallet)
+            5 -> wireframe.navigate(CreateMultisig)
         }
     }
 
@@ -144,16 +132,6 @@ class DefaultSignersPresenter(
         }
     }
 
-    private fun handleDidChangeButtonsState(mode: SheetMode) {
-        if (buttonsSheet.mode == mode) return
-        if (mode == COMPACT) {
-            buttonsSheet = buttonsCompact()
-        } else if (mode == EXPANDED) {
-            buttonsSheet = buttonsExpanded()
-        }
-        updateView()
-    }
-
     private fun updateView(state: SignersViewModel.State = Loaded) {
         view.get()?.update(viewModel(state))
         initialPresent = false
@@ -165,8 +143,9 @@ class DefaultSignersPresenter(
             state,
             interactor.items.map { Item(it.name, formattedAddress(it)) },
             listOf(selectedIdxs()).filterNotNull(),
-            buttonsSheet,
-            targetView
+            buttonsCompact(),
+            buttonsExpanded(),
+            targetView,
         )
 
     private fun selectedIdxs(): Int? {
@@ -177,31 +156,23 @@ class DefaultSignersPresenter(
         return if (interactor.items.isEmpty()) null else 0
     }
 
-    private fun buttonsCompact(): SignersViewModel.ButtonSheetViewModel =
-        SignersViewModel.ButtonSheetViewModel(
-            listOf(
-                Button(Localized("keyStore.newMnemonic"), NEW_MNEMONIC),
-                Button(Localized("keyStore.importMnemonic"), IMPORT_MNEMONIC),
-                Button(Localized("keyStore.moreOption"), MORE_OPTION),
-                Button(Localized("keyStore.importAddress"), IMPORT_ADDRESS),
-                Button(Localized("keyStore.connectHardwareWallet"), CONNECT_HARDWARE_WALLET),
-                Button(Localized("keyStore.createMultiSig"), CREATE_MULTI_SIG)
-            ),
-            COMPACT
-        )
+    private fun buttonsCompact(): List<ButtonViewModel> = listOf(
+        ButtonViewModel(Localized("keyStore.newMnemonic"), PRIMARY),
+        ButtonViewModel(Localized("keyStore.importMnemonic"), SECONDARY),
+        ButtonViewModel(Localized("keyStore.moreOption"), SECONDARY),
+        ButtonViewModel(Localized("keyStore.importAddress"), SECONDARY),
+        ButtonViewModel(Localized("keyStore.connectHardwareWallet"), SECONDARY),
+        ButtonViewModel(Localized("keyStore.createMultiSig"), SECONDARY)
+    )
 
-    private fun buttonsExpanded(): SignersViewModel.ButtonSheetViewModel =
-        SignersViewModel.ButtonSheetViewModel(
-            listOf(
-                Button(Localized("keyStore.newMnemonic"), NEW_MNEMONIC),
-                Button(Localized("keyStore.importMnemonic"), IMPORT_MNEMONIC),
-                Button(Localized("keyStore.importPrivateKey"), IMPORT_PRIV_KEY),
-                Button(Localized("keyStore.importAddress"), IMPORT_ADDRESS),
-                Button(Localized("keyStore.connectHardwareWallet"), CONNECT_HARDWARE_WALLET),
-                Button(Localized("keyStore.createMultiSig"), CREATE_MULTI_SIG)
-            ),
-            EXPANDED
-        )
+    private fun buttonsExpanded(): List<ButtonViewModel> = listOf(
+        ButtonViewModel(Localized("keyStore.newMnemonic"), PRIMARY),
+        ButtonViewModel(Localized("keyStore.importMnemonic"), SECONDARY),
+        ButtonViewModel(Localized("keyStore.importPrivateKey"), SECONDARY),
+        ButtonViewModel(Localized("keyStore.importAddress"), SECONDARY),
+        ButtonViewModel(Localized("keyStore.connectHardwareWallet"), SECONDARY),
+        ButtonViewModel(Localized("keyStore.createMultiSig"), SECONDARY)
+    )
 
     private fun formattedAddress(signerStoreItem: SignerStoreItem): String? {
         // TODO: Review here when supporting other networks

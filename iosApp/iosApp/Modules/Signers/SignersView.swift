@@ -6,53 +6,42 @@ import UIKit
 import web3walletcore
 
 final class SignersViewController: BaseViewController {
-
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var logoAnimView: LogoAnimView!
     @IBOutlet weak var openBetaView: UIStackView!
-    @IBOutlet weak var buttonsCollectionView: UICollectionView!
-    @IBOutlet weak var buttonBackgroundView: UIVisualEffectView!
-    @IBOutlet weak var buttonHandleView: UIView!
-    @IBOutlet weak var buttonsCollectionTopConstraint: NSLayoutConstraint!
     
     var presenter: SignersPresenter!
 
     private var viewModel: SignersViewModel?
+    private var cv: CollectionView! { (collectionView as! CollectionView) }
+    private var ctaButtonsContainer: ButtonSheetContainer = .init()
     private var transitionTargetView: SignersViewModel.TransitionTargetView
         = SignersViewModel.TransitionTargetViewNone()
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
-    private var prevViewSize: CGSize = .zero
-    private var needsLayoutUI: Bool = false
-    private var viewDidAppear: Bool = false
+    private var didAppear: Bool = false
+    private var prevSize: CGSize = .zero
+    private var cellSize: CGSize = .zero
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         presenter?.present()
-        prevViewSize = view.bounds.size
-        buttonsCollectionTopConstraint.constant = 0
+        prevSize = view.bounds.size
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        if view.bounds.size != prevViewSize {
-            [collectionView, buttonsCollectionView].forEach {
-                $0.frame = view.bounds
-            }
+        if view.bounds.size != prevSize {
+            prevSize = view.bounds.size
             collectionView.collectionViewLayout.invalidateLayout()
-            buttonsCollectionView.collectionViewLayout.invalidateLayout()
-            prevViewSize = view.bounds.size
-            needsLayoutUI = true
+            layoutAboveScrollView()
         }
     }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if needsLayoutUI {
-            configureInsets()
-            setButtonsSheetMode(viewModel?.buttons.mode, animated: false)
-            layoutButtonsBackground()
-            needsLayoutUI = false
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if viewModel?.isEmpty ?? true && !didAppear {
+            ctaButtonsContainer.isHidden = true
         }
     }
 
@@ -60,115 +49,106 @@ final class SignersViewController: BaseViewController {
         super.viewDidAppear(animated)
         animateIntro()
         collectionView.deselectAllExcept(selectedIdxPaths())
-        buttonsCollectionView.deselectAllExcept()
-        viewDidAppear = true
+        didAppear = true
     }
 
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
         collectionView.collectionViewLayout.invalidateLayout()
-        buttonsCollectionView.collectionViewLayout.invalidateLayout()
-        needsLayoutUI = true
+        layoutAboveScrollView()
     }
 }
 
 // MARK: - KeyStoreView
+
 extension SignersViewController {
 
     func update(with viewModel: SignersViewModel) {
-        self.viewModel?.buttons.mode != viewModel.buttons.mode
-            ? setButtonsSheetMode(viewModel.buttons.mode, animated: viewDidAppear)
-            : ()
         self.viewModel = viewModel
         collectionView.reloadData()
         updateLogo(viewModel)
         updateTargetView(targetView: viewModel.targetView)
-        buttonsCollectionView.deselectAllExcept()
         collectionView.deselectAllExcept(
             selectedIdxPaths(),
             animated: presentedViewController == nil,
             scrollPosition: .centeredVertically
         )
+        ctaButtonsContainer.setButtons(
+            viewModel.buttons,
+            compactCount: 3,
+            sheetState: .auto,
+            animated: true,
+            expandedButton: viewModel.expandedButtons
+        )
+        UIView.springAnimate { self.layoutAboveScrollView() }
     }
     
     func updateTargetView(targetView: SignersViewModel.TransitionTargetView) {
         transitionTargetView = targetView
     }
+
+    func updateCTASheet(expanded: Bool) {
+        ctaButtonsContainer.setSheetState(expanded ? .expanded : .compact)
+    }
 }
 
 // MARK: - UICollectionViewDataSource
+
 extension SignersViewController: UICollectionViewDataSource {
     
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        if collectionView == buttonsCollectionView {
-            return viewModel?.buttons.buttons.count ?? 0
-        }
-        return viewModel?.items.count ?? 0
+        viewModel?.items.count ?? 0
     }
 
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
-        switch collectionView {
-            
-        case buttonsCollectionView:
-            let button = viewModel?.buttons.buttons[indexPath.item]
-            return collectionView.dequeue(
-                ButtonsSheetViewCell.self,
-                for: indexPath
-            ).update(with: button)
-            
-        default:
-            return collectionView.dequeue(SignersCell.self, for: indexPath)
-                .update(
-                    with: viewModel?.items[indexPath.item],
-                    handler: .init(accessoryHandler: { [weak self] in
-                        self?.presenter.handleEvent(
-                            .SelectAccessory(idx: indexPath.item.int32)
-                        )
-                    }),
-                    index: indexPath.item
-                )
-        }
+         collectionView.dequeue(SignersCell.self, for: indexPath)
+            .update(
+                with: viewModel?.items[indexPath.item],
+                handler: { [weak self] in self?.accessoryAction(indexPath) },
+                index: indexPath.item
+            )
     }
 }
 
 extension SignersViewController: UICollectionViewDelegate {
 
     func collectionView(
-            _ collectionView: UICollectionView,
-            didSelectItemAt indexPath: IndexPath
-    ) {
-        if collectionView == buttonsCollectionView {
-            presenter.handleEvent(.SelectButtonAt(idx: indexPath.item.int32))
-            return
-        }
-        presenter.handleEvent(.SelectSignerItemAt(idx: indexPath.item.int32))
-    }
-
-    func collectionView(
         _ collectionView: UICollectionView,
-        willDisplay cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath
+        didSelectItemAt indexPath: IndexPath
     ) {
-        layoutButtonsBackground()
+        presenter.handleEvent(.SignerAction(idx: indexPath.item.int32))
     }
 
-    func collectionView(
-        _ collectionView: UICollectionView,
-        didEndDisplaying cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath
-    ) {
-        layoutButtonsBackground()
+    func accessoryAction(_ idxPath: IndexPath) {
+        presenter.handleEvent(.AccessoryAction(idx: idxPath.item.int32))
+    }
+}
+
+extension SignersViewController: ButtonSheetContainerDelegate {
+
+    func buttonSheetContainer(_ bsc: ButtonSheetContainer, didSelect idx: Int) {
+        presenter.handleEvent(.ButtonAction(idx: idx.int32))
     }
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        updateSheetModeIfNeeded(scrollView)
+    func buttonSheetContainer(
+        _ bsc: ButtonSheetContainer,
+        didChange expanded: Bool
+    ) {
+        presenter.handleEvent(.SetCTASheet(expanded: expanded))
+        let bscHeight = bsc.intrinsicContentSize.height
+        let initialOffset = cv.contentOffset
+        cv.contentInset.bottom = expanded ? bscHeight : bscHeight / 2
+        // HACK: This dance is required to force sheet layout prio animation to
+        // avoid wierd UI glitch.
+        let targetOffset = cv.contentOffset
+        cv.setContentOffset(initialOffset, animated: false)
+        cv.setContentOffset(targetOffset, animated: true)
     }
 }
 
@@ -181,9 +161,7 @@ extension SignersViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         .init(
             width: view.bounds.width - Theme.padding * 2,
-            height: collectionView == buttonsCollectionView
-            ? Theme.buttonHeight
-            : Theme.cellHeightLarge
+            height: Theme.cellHeightLarge
         )
     }
 }
@@ -193,17 +171,17 @@ extension SignersViewController {
     
     func configureUI() {
         title = Localized("wallets")
+        collectionView.backgroundView = nil
         collectionView.showsVerticalScrollIndicator = false
-        configureInsets()
-        buttonBackgroundView.layer.cornerRadius = Theme.cornerRadius
-        buttonBackgroundView.layer.maskedCorners = [
-            .layerMaxXMinYCorner,
-            .layerMinXMinYCorner
-        ]
-        buttonBackgroundView.contentView.backgroundColor = Theme.color.bgGradientTop.withAlpha(0.4)
-        buttonHandleView.backgroundColor = Theme.color.textTertiary
-        buttonHandleView.layer.cornerRadius = buttonHandleView.frame.size.height.half
         (view as? ThemeGradientView)?.topClipEnabled = true
+
+        ctaButtonsContainer.hideBgForNonExpanded = true
+        ctaButtonsContainer.showHandle = true
+        cv.abovescrollView = ctaButtonsContainer
+        cv.pinOverscrollToBottom = true
+        cv.stickAbovescrollViewToBottom = true
+        cv.abovescrollViewAboveCells = true
+        ctaButtonsContainer.delegate = self
     }
 
     func updateLogo(_ viewModel: SignersViewModel) {
@@ -230,104 +208,19 @@ extension SignersViewController {
         guard let viewModel = viewModel, !viewModel.items.isEmpty else { return [] }
         return viewModel.selectedIdxs.map { IndexPath(item: $0.intValue, section: 0) }
     }
-}
 
-// MARK: - ButtonsSheet handling
-extension SignersViewController {
-
-    func setButtonsSheetMode(
-        _ mode: SignersViewModel.ButtonSheetViewModelSheetMode? = .compact,
-        animated: Bool = true
-    ) {
-        let targetMode = viewDidAppear ? mode : .hidden
-        buttonsCollectionView.reloadData()
-        guard let mode = targetMode,
-              let cv = buttonsCollectionView,
-              !cv.isDragging else {
-            return
-        }
-        switch mode {
-        case .hidden:
-            buttonsCollectionView.setContentOffset(
-                CGPoint(x: 0, y: -view.bounds.height),
-                animated: false
-            )
-        case .compact:
-            buttonsCollectionView.setContentOffset(
-                CGPoint(x: 0, y: -cv.contentInset.top - cv.safeAreaInsets.top),
-                animated: animated
-            )
-        case .expanded:
-            let y = view.bounds.height - cv.contentSize.height - cv.safeAreaInsets.bottom
-            buttonsCollectionView.setContentOffset(
-                CGPoint(x: 0, y: -y),
-                animated: animated
-            )
-        default:
-            fatalError("Option not handled")
-        }
-    }
-
-    func configureInsets() {
-        let inset = view.bounds.height
-            - Theme.buttonHeight * 3
-            - Theme.padding * 4
-            - buttonsCollectionView.safeAreaInsets.top
-            + 2
-        buttonsCollectionView.contentInset.top = inset
-        collectionView.contentInset.bottom = view.bounds.height - inset
-    }
-
-    func layoutButtonsBackground() {
-        guard let topCell = buttonsCollectionView.visibleCells
-                .sorted(by: { $0.frame.minY < $1.frame.minY })
-                .first else {
-            buttonBackgroundView.frame = .zero
-            return
-        }
-
-        let top = topCell.convert(topCell.bounds.minXY, to: view)
-        buttonBackgroundView.frame = CGRect(
-            x: 0,
-            y: top.y - Theme.padding * 2,
+    func layoutAboveScrollView() {
+        let btnCnt = viewModel?.buttons.count ?? 0
+        let size = ctaButtonsContainer.intrinsicContentSize(for: btnCnt)
+        cv.abovescrollView?.bounds.size = .init(
             width: view.bounds.width,
-            height: view.bounds.height - top.y + Theme.padding * 2
-        )
-
-        guard let cv = buttonsCollectionView else { return }
-
-        if viewModel?.buttons.mode == .compact,
-           (viewModel?.items.count ?? 0) > 4,
-           let idxPath = collectionView.indexPathsForVisibleItems
-               .sorted(by: { $0.item < $1.item }).last,
-           let cell = collectionView.cellForItem(at: idxPath) {
-                let maxY = cell.convert(cell.bounds, to: view).maxY
-                let alpha = maxY > buttonBackgroundView.frame.minY ? 1 : 0
-                UIView.animate(withDuration: 0.2) {
-                    self.buttonBackgroundView.alpha = CGFloat(alpha)
-                }
-        } else {
-            let offsetCompact = cv.contentInset.top + cv.safeAreaInsets.top
-            let offsetExpanded = view.bounds.height - cv.contentSize.height
-                - cv.safeAreaInsets.bottom
-            let alpha = (offsetCompact + cv.contentOffset.y)
-                / (offsetCompact - offsetExpanded)
-            buttonBackgroundView.alpha = min(1, max(0, alpha))
-        }
-    }
-
-    func updateSheetModeIfNeeded(_ scrollView: UIScrollView) {
-        guard scrollView == buttonsCollectionView else { return }
-        layoutButtonsBackground()
-        guard scrollView.isDragging else { return }
-        let cellCnt = buttonsCollectionView.visibleCells.count
-        presenter.handleEvent(
-            .ChangeButtonsSheetMode(mode: cellCnt > 4 ? .expanded : .compact)
+            height: size.height + view.safeAreaInsets.bottom - Theme.paddingHalf
         )
     }
 }
 
 // MARK: - Into animations
+
 extension SignersViewController {
 
     func animateIntro(_ animateButtons: Bool = true) {
@@ -348,9 +241,16 @@ extension SignersViewController {
     }
 
     func animateButtonsIntro() {
-        setButtonsSheetMode(.hidden, animated: false)
+        let height = ctaButtonsContainer.bounds.height
+        let transform = CATransform3DMakeTranslation(0, height, 0)
+        UIView.performWithoutAnimation {
+            ctaButtonsContainer.layer.transform = transform
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.7) { [weak self] in
-            self?.setButtonsSheetMode(.compact, animated: true)
+            self?.ctaButtonsContainer.isHidden = false
+            UIView.springAnimate {
+                self?.ctaButtonsContainer.layer.transform = CATransform3DIdentity
+            }
         }
     }
 
@@ -376,16 +276,17 @@ extension SignersViewController {
 }
 
 // MARK: - UIViewControllerTransitioningDelegate
+
 extension SignersViewController: TargetViewTransitionDatasource {
 
     func targetView() -> UIView? {
-        if let input = transitionTargetView as? SignersViewModel            .TransitionTargetViewKeyStoreItemAt {
-                let idxPath = IndexPath(item: input.idx.int, section: 0)
-                return collectionView.cellForItem(at: idxPath) ?? view
+        if let input = transitionTargetView as? SignersViewModel.TransitionTargetViewKeyStoreItemAt {
+            let idxPath = IndexPath(item: input.idx.int, section: 0)
+            return collectionView.cellForItem(at: idxPath) ?? view
         }
-        if let input = transitionTargetView as? SignersViewModel            .TransitionTargetViewButtonAt {
-                let idxPath = IndexPath(item: input.idx.int, section: 0)
-                return buttonsCollectionView.cellForItem(at: idxPath) ?? view
+        if let input = transitionTargetView as? SignersViewModel.TransitionTargetViewButtonAt {
+            let idxPath = IndexPath(item: input.idx.int, section: 0)
+            return ctaButtonsContainer.buttonViewAt(idx: idxPath.item) ?? view
         }
         return nil
     }
