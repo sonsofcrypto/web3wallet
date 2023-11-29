@@ -141,3 +141,14 @@ extension UIView {
             })
     }
 }
+
+extension UIView {
+
+    func rounded(_ radius: CGFloat = Theme.cornerRadius) -> Self {
+        layer.cornerRadius = radius
+        layer.maskedCorners = .all
+        clipsToBounds = true
+        return self 
+    }
+
+}
