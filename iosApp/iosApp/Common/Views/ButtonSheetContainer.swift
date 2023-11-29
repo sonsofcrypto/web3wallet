@@ -15,7 +15,7 @@ import web3walletcore
 
 class ButtonSheetContainer: UIView, ContentScrollInfo,
         UICollectionViewDataSource, UICollectionViewDelegate,
-        UICollectionViewDelegateFlowLayout {
+        UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching {
 
     weak var delegate: ButtonSheetContainerDelegate?
 
@@ -77,44 +77,44 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         setupInsets(
             btnCnt: buttons.count,
             compCnt: compactCount,
-            wasExpanded: wasExpanded,
+            expanded: wasExpanded,
             sheetState: sheetState,
             animated: animated
-        )
-    }
-
-    func intrinsicContentSize(for btnCnt: Int) -> CGSize {
-        CGSize(
-            width: (superview?.bounds.width ?? 320),
-            height: CGFloat(btnCnt) * Theme.buttonHeight
-                + max(0, CGFloat(btnCnt - 1)) * Theme.padding
-                + Theme.padding // Extra sheet when header absent
-                + (showHandle ? Theme.padding * 1 : 0) // Header
         )
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
         guard prevSize != bounds.size else { return }
-
         prevSize = bounds.size
 
+        let chromeHeight = Theme.padding * (showHandle ? 2 : 1)
         var cvBounds = bounds
-        cvBounds.size.height = intrinsicContentSize.height
+        cvBounds.origin.y = chromeHeight
+        cvBounds.size.height = intrinsicContentSize.height - chromeHeight
         cv.frame = cvBounds
 
         layout.invalidateLayout()
         layout.itemSize.width = bounds.width - Theme.padding * 2
         layout.itemSize.height = Theme.buttonHeight
-        layout.minimumInteritemSpacing = Theme.padding
         layout.minimumLineSpacing = Theme.padding
 
-        cvBounds.size.height += Theme.buttonHeight + Theme.padding
+        cvBounds.origin.y = 0
+        cvBounds.size.height += Theme.buttonHeight
         let transform = bgView.transform
         bgView.transform = .identity
         bgView.frame = cvBounds
         bgView.transform = transform
         handleView()?.center = .init(x: cvBounds.midX, y: Theme.padding)
+    }
+
+    func intrinsicContentSize(for btnCnt: Int) -> CGSize {
+        CGSize(
+            width: (superview?.bounds.width ?? 320),
+            height: CGFloat(btnCnt) * Theme.buttonHeight        // buttons
+                + CGFloat(max(0, btnCnt - 1)) * Theme.padding   // spaces
+                + Theme.padding * (showHandle ?  2 : 1)         // header
+        )
     }
 
     override var intrinsicContentSize: CGSize {
@@ -141,68 +141,39 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
     private func setupInsets(
         btnCnt: Int,
         compCnt: Int,
-        wasExpanded: Bool,
+        expanded: Bool,
         sheetState: SheetState,
         animated: Bool = false
     ) {
         let hiddenCnt = CGFloat(hiddenButtonsCount)
         cv.contentInset.top = hiddenCnt * Theme.buttonHeight
-            + max(0, (hiddenCnt - 1)) * Theme.padding
-            + Theme.padding
-        switch sheetState {
-        case .expanded:
-            setExpanded(animated)
-        case .compact:
-            setCompact(animated)
-        case .auto:
-            wasExpanded ? setExpanded(animated) : setCompact(animated)
-        }
-        updateBgViewAlpha()
+            + hiddenCnt * Theme.padding
+        setSheetState(
+            sheetState == .auto ? expanded ? .expanded : .compact : sheetState,
+            animated: animated
+        )
     }
 
     func setSheetState(_ sheetState: SheetState, animated: Bool = true) {
-        switch sheetState {
-        case .expanded: setExpanded(animated)
-        case .compact: setCompact(animated)
-        default: ()
-        }
+        if sheetState == .expanded { setExpanded(animated) }
+        if sheetState == .compact { setCompact(animated) }
     }
 
     private func setCompact(_ animated: Bool = false) {
         let hiddenCnt = CGFloat(hiddenButtonsCount)
         guard hiddenCnt > 0 else { setExpanded(animated); return }
-        let y = hiddenCnt * Theme.buttonHeight + hiddenCnt * Theme.padding
-        let tranY = y - Theme.padding
+        let y = cv.contentInset.top
+        let tranY = y - Theme.padding * (showHandle ? 2 : 1)
         cv.setContentOffset(.init(x: 0, y: -y), animated: animated)
         !animated ? bgView.transform = CGAffTransTransl(0, ty: tranY) : ()
     }
 
     private func setExpanded(_ animated: Bool = false) {
-        cv.setContentOffset(.init(x: 0, y: -Theme.padding), animated: animated)
+        cv.setContentOffset(.zero, animated: animated)
         !animated
             ? bgView.transform = .identity
-            : DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.layoutBgView()
-            }
-    }
-
-    private func updateExpanded() {
-        guard hiddenButtonsCount > 0 else { return }
-        if isExpanded
-           && abs(cv.contentOffset.y) + Theme.buttonHeight - cv.contentInset.top > 0 {
-            isExpanded = false
-            delegate?.buttonSheetContainer?(self, expanded: isExpanded)
-            updateVisibleCell()
-        }
-        if !isExpanded && abs(cv.contentOffset.y) < (Theme.buttonHeight * CGFloat(hiddenButtonsCount) / 2) {
-            isExpanded = true
-            delegate?.buttonSheetContainer?(self, expanded: isExpanded)
-            updateVisibleCell()
-        }
-    }
-    
-    private func updateVisibleCell() {
-        cv.reconfigureItems(at: cv.indexPathsForVisibleItems)
+            : DispatchQueue.main
+                .asyncAfter(deadline: .now() + 0.1) { self.layoutBgView() }
     }
 
     // MARK: - UICollectionViewDataSource
@@ -226,6 +197,13 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         return collectionView.dequeue(ButtonCell.self, for: indexPath)
             .update(with: vm)
     }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        prefetchItemsAt indexPaths: [IndexPath]
+    ) {
+        // prefetching
+    }
 
     // MARK: - UICollectionViewDelegate
     
@@ -233,13 +211,12 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        if !isExpanded { setCompact(false) }
-        delegate?.buttonSheetContainer(self, didSelect: indexPath.item)
+         if !isExpanded { setCompact(false) }
+         delegate?.buttonSheetContainer(self, didSelect: indexPath.item)
     }
         
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         layoutBgView()
-        updateExpanded()
     }
 
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
@@ -247,12 +224,10 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         updateExpanded()
         updateDelegateContentHeight()
     }
-
-    func scrollViewDidEndDragging(
-        _ scrollView: UIScrollView,
-        willDecelerate decelerate: Bool
-    ) {
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         guard !decelerate else { return }
+        updateExpanded()
         updateDelegateContentHeight()
     }
 
@@ -260,7 +235,7 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         updateExpanded()
         updateDelegateContentHeight()
     }
-
+    
     private func updateDelegateContentHeight() {
         guard let topView = buttonViewAt(idx: 0) else { return }
         let height = bounds.height - topView.convert(.zero, to: self).y
@@ -272,7 +247,7 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
     private func layoutBgView() {
         guard cv.numberOfItems(inSection: 0) > 0 else { return }
         guard let cell = cv.cellForItem(at: IndexPath.zero) else { return }
-        var ty = cell.convert(cell.bounds, to: self).origin.y
+        let ty = cell.convert(cell.bounds, to: self).origin.y
             - Theme.padding * ( showHandle ? 2 : 1)
         bgView.transform = CGAffineTransformMakeTranslation(0, ty)
         updateBgViewAlpha()
@@ -290,7 +265,27 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
             guard alpha != bgView.alpha else { return }
             UIView.springAnimate(0.1) { self.bgView.alpha = alpha }
         }
-        handleView()?.isHidden = showHandle
+        handleView()?.isHidden = !showHandle
+    }
+
+    private func updateExpanded() {
+        guard hiddenButtonsCount > 0 else { return }
+        let btnHeight = Theme.buttonHeight
+        let offsetY = abs(cv.contentOffset.y)
+        if isExpanded && offsetY + btnHeight - cv.contentInset.top > 0 {
+            isExpanded = false
+            delegate?.buttonSheetContainer?(self, expanded: isExpanded)
+            updateVisibleCell()
+        }
+        if !isExpanded && offsetY < btnHeight * CGFloat(hiddenButtonsCount) / 2 {
+            isExpanded = true
+            delegate?.buttonSheetContainer?(self, expanded: isExpanded)
+            updateVisibleCell()
+        }
+    }
+
+    private func updateVisibleCell() {
+        cv.reconfigureItems(at: cv.indexPathsForVisibleItems)
     }
 
     private func handleView() -> UIView? {
@@ -302,7 +297,6 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
     private func configureUI() {
         backgroundColor = .clear
         clipsToBounds = false
-        backgroundColor = UIColor.green.withAlpha(0.3)
     }
 
     private func newCollectionView() -> UICollectionView {
@@ -315,10 +309,12 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         cv.backgroundColor = .clear
         cv.dataSource = self
         cv.delegate = self
+        cv.prefetchDataSource = self
         cv.alwaysBounceVertical = true
-        cv.isPagingEnabled = true
         cv.showsVerticalScrollIndicator = false
-        cv.topAdditionalTouchMargin = -Theme.padding
+        cv.clipsToBounds = false
+        cv.topAdditionalTouchMargin = (showHandle ? 2 : 1) - Theme.padding
+        cv.isPagingEnabled = true
         addSubview(cv)
         return cv
     }
@@ -329,7 +325,7 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         let pad = Theme.padding
         let frame = CGRect(zeroOrigin: .init(width: pad * 3, height: pad / 4))
         let handleView = UIView(frame: frame).rounded(frame.size.height.half)
-        handleView.backgroundColor = .red // Theme.color.bgPrimary
+        handleView.backgroundColor = Theme.color.bgPrimary
         bgView.contentView.addSubview(handleView)
         return bgView
     }
