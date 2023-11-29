@@ -136,10 +136,7 @@ extension SignersViewController: ButtonSheetContainerDelegate {
         presenter.handleEvent(.ButtonAction(idx: idx.int32))
     }
 
-    func buttonSheetContainer(
-        _ bsc: ButtonSheetContainer,
-        didChange expanded: Bool
-    ) {
+    func buttonSheetContainer(_ bsc: ButtonSheetContainer, expanded: Bool) {
         presenter.handleEvent(.SetCTASheet(expanded: expanded))
         let bscHeight = bsc.intrinsicContentSize.height
         let initialOffset = cv.contentOffset
