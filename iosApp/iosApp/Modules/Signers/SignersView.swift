@@ -209,9 +209,10 @@ extension SignersViewController {
     func layoutAboveScrollView() {
         let btnCnt = viewModel?.buttons.count ?? 0
         let size = ctaButtonsContainer.intrinsicContentSize(for: btnCnt)
+        let  bottomInset = view.safeAreaInsets.bottom
         cv.abovescrollView?.bounds.size = .init(
             width: view.bounds.width,
-            height: size.height + view.safeAreaInsets.bottom - Theme.paddingHalf
+            height: size.height + bottomInset
         )
     }
 }
