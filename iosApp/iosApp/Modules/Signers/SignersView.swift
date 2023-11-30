@@ -81,6 +81,7 @@ extension SignersViewController {
             expandedButton: viewModel.expandedButtons
         )
         UIView.springAnimate { self.layoutAboveScrollView() }
+        ctaButtonsContainer.minimizeBgHeight = !viewModel.items.isEmpty
     }
     
     func updateTargetView(targetView: SignersViewModel.TransitionTargetView) {
@@ -214,6 +215,7 @@ extension SignersViewController {
             width: view.bounds.width,
             height: size.height + bottomInset
         )
+
     }
 }
 

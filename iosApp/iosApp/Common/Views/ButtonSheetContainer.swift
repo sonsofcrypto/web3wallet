@@ -19,8 +19,15 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
 
     weak var delegate: ButtonSheetContainerDelegate?
 
+    //// Hides background when not expanded and there is not content behind.
     var hideBgForNonExpanded: Bool = false
+    /// Show handle at the top of the sheet.
     var showHandle: Bool = false
+    /// Blur effect has a quirk when going to off screen. This is a problem for
+    /// edge swipe sheet container. Set true to mitigate the issue
+    var minimizeBgHeight: Bool = false {
+        didSet { if oldValue != minimizeBgHeight { setNeedsLayout() } }
+    }
     
     private(set) var isExpanded: Bool = false
     private(set) var buttons: [ButtonViewModel] = []
@@ -101,6 +108,7 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
 
         cvBounds.origin.y = 0
         cvBounds.size.height += Theme.buttonHeight
+        cvBounds.size.height += minimizeBgHeight ? 0 : Theme.padding.twice
         let transform = bgView.transform
         bgView.transform = .identity
         bgView.frame = cvBounds
