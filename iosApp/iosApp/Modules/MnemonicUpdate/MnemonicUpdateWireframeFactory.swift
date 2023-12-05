@@ -16,20 +16,26 @@ protocol MnemonicUpdateWireframeFactory {
 
 final class DefaultMnemonicUpdateWireframeFactory {
     private let signerStoreService: SignerStoreService
+    private let addressService: AddressService
+    private let clipboardService: ClipboardService
+    private let settingsService: SettingsService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
-    private let settingsService: SettingsService
-    
+
     init(
         signerStoreService: SignerStoreService,
+        addressService: AddressService,
+        clipboardService: ClipboardService,
+        settingsService: SettingsService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
-        alertWireframeFactory: AlertWireframeFactory,
-        settingsService: SettingsService
+        alertWireframeFactory: AlertWireframeFactory
     ) {
         self.signerStoreService = signerStoreService
+        self.addressService = addressService
+        self.clipboardService = clipboardService
+        self.settingsService = settingsService
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
-        self.settingsService = settingsService
     }
 }
 
@@ -45,9 +51,11 @@ extension DefaultMnemonicUpdateWireframeFactory: MnemonicUpdateWireframeFactory 
             parent,
             context: context,
             signerStoreService: signerStoreService,
+            addressService: addressService,
+            clipboardService: clipboardService,
+            settingsService: settingsService,
             authenticateWireframeFactory: authenticateWireframeFactory,
-            alertWireframeFactory: alertWireframeFactory,
-            settingsService: settingsService
+            alertWireframeFactory: alertWireframeFactory
         )
     }
 }
@@ -60,9 +68,11 @@ final class MnemonicUpdateWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> MnemonicUpdateWireframeFactory in
             DefaultMnemonicUpdateWireframeFactory(
                 signerStoreService: resolver.resolve(),
+                addressService: resolver.resolve(),
+                clipboardService: resolver.resolve(),
+                settingsService: resolver.resolve(),
                 authenticateWireframeFactory: resolver.resolve(),
-                alertWireframeFactory: resolver.resolve(),
-                settingsService: resolver.resolve()
+                alertWireframeFactory: resolver.resolve()
             )
         }
     }

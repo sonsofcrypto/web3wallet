@@ -186,9 +186,13 @@ extension MnemonicImportPresenter {
 extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
     func navigate(destination_____________________ destination: MnemonicNewWireframeDestination) { navigate(to: destination) }
 }
+
 extension MnemonicNewViewController: MnemonicNewView {    
     func update(viewModel: CollectionViewModel.Screen) { update(with: viewModel) }
+    func presentToast(viewModel: ToastViewModel) { presentToast(with: viewModel) }
+    func presentAlert(viewModel_ viewModel: AlertViewModel) { presentAlert(with: viewModel) }
 }
+
 extension MnemonicNewPresenter {
     func handleEvent(_ event: MnemonicNewPresenterEvent) { handle(event__________________________: event) }
 }
@@ -199,6 +203,8 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
 }
 extension MnemonicUpdateViewController: MnemonicUpdateView {
     func update(viewModel: CollectionViewModel.Screen) { update(with: viewModel) }
+    func presentAlert(viewModel: AlertViewModelOld) { presentAlert(with: viewModel) }
+
 }
 extension MnemonicUpdatePresenter {
     func handleEvent(_ event: MnemonicUpdatePresenterEvent) { handle(event____: event) }

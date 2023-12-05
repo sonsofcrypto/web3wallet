@@ -59,18 +59,12 @@ interface MnemonicNewInteractor {
     fun globalExpertMode(): Boolean
 }
 
-private class Account(
-    var name: String = "",
-    var derivationPath: String = "",
-    var address: String = "",
-    var isHidden: Boolean = false
-)
-
 class DefaultMnemonicNewInteractor(
     private val signerStoreService: SignerStoreService,
     private val passwordService: PasswordService,
     private val addressService: AddressService,
-    private val settingsService: SettingsService
+    private val clipboardService: ClipboardService,
+    private val settingsService: SettingsService,
 ): MnemonicNewInteractor {
     private var bip39: Bip39 = Bip39.from(ES128)
     private var bip44: Bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
@@ -137,7 +131,7 @@ class DefaultMnemonicNewInteractor(
 
     override fun generatePassword(): String = secureRand(32).toHexString()
 
-    override fun pasteToClipboard(text: String) = ClipboardService().paste(text)
+    override fun pasteToClipboard(text: String) = clipboardService.paste(text)
 
     override fun validationError(
         password: String,
@@ -208,3 +202,10 @@ class DefaultMnemonicNewInteractor(
         return Account("", path, address, false)
     }
 }
+
+private class Account(
+    var name: String = "",
+    var derivationPath: String = "",
+    var address: String = "",
+    var isHidden: Boolean = false
+)

@@ -55,12 +55,7 @@ sealed class CellViewModel {
         val hasHint: Boolean get() = errorMessage != null
     }
     
-    data class Button(
-        val title: String,
-        val type: ButtonType
-    ): CellViewModel() {
-        enum class ButtonType { PRIMARY, SECONDARY, DESTRUCTIVE }
-    }
+    data class Button(val button: ButtonViewModel): CellViewModel()
 
     data class KeyValueList(
         val items: List<Item>,

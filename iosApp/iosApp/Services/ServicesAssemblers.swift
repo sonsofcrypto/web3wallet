@@ -2,10 +2,8 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-
 import Foundation
 import web3walletcore
-
 
 final class PollServiceAssembler: AssemblerComponent {
 
@@ -21,6 +19,15 @@ final class AddressServiceAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .singleton) { resolver -> AddressService in
             DefaultAddressService()
+        }
+    }
+}
+
+final class ClipboardServiceAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .singleton) { resolver -> ClipboardService in
+            ClipboardService()
         }
     }
 }
@@ -99,9 +106,7 @@ final class NodeServiceAssembler: AssemblerComponent {
 final class NFTsServiceAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
-        
         registry.register(scope: .singleton) { resolver -> NFTsService in
-            
             NFTServiceMoralis(
                 networksService: resolver.resolve(),
                 store: KeyValueStore(name: "\(NFTsService.self)")
