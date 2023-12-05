@@ -25,4 +25,8 @@ extension ButtonCell {
         button.update(with: viewModel)
         return self
     }
+
+    func update(with viewModel: CellViewModel.Button) -> Self {
+        update(with: viewModel.button)
+    }
 }

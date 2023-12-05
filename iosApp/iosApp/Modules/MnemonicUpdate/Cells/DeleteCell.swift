@@ -32,7 +32,7 @@ extension DeleteCell {
     }
 
     func update(with viewModel: CellViewModel.Button, handler: Handler?) -> Self {
-        return update(with: viewModel.title, handler: handler)
+        return update(with: viewModel.button.title, handler: handler)
     }
 }
 

@@ -59,6 +59,18 @@ class CollectionViewController: UICollectionViewController,
         updateHeadersAndFooters()
     }
 
+    func presentToast(with viewModel: ToastViewModel) {
+        navigationController?.asNavVc?.toast(viewModel)
+    }
+
+    func presentAlert(with viewModel: AlertViewModel) {
+        print("presentAlert \(viewModel)")
+    }
+
+    func presentAlert(with viewModel: AlertViewModelOld) {
+        print("presentAlert \(viewModel)")
+    }
+
     func configureUI() {
         NotificationCenter.addKeyboardObserver(
             self,

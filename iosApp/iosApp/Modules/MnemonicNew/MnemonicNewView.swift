@@ -18,7 +18,7 @@ final class MnemonicNewViewController: CollectionViewController {
 
     // MARK: - MnemonicView
 
-    func presentAlert(viewModel: AlertViewModel) {
+    override func presentAlert(with viewModel: AlertViewModel) {
         let alertVc = AlertController(
             viewModel,
             handler: { [weak self] i, t in
@@ -26,10 +26,6 @@ final class MnemonicNewViewController: CollectionViewController {
             }
         )
         present(alertVc, animated: true)
-    }
-    
-    func presentToast(viewModel: ToastViewModel) {
-        navigationController?.asNavVc?.toast(viewModel)
     }
 
     override func keyboardWillHide(notification: Notification) {
@@ -70,16 +66,10 @@ final class MnemonicNewViewController: CollectionViewController {
                 .update(with: vm)
         case let vm as CellViewModel.TextInput:
             return cv.dequeue(TextInputCollectionViewCell.self, for: indexPath)
-                .update(
-                    with: vm,
-                    inputHandler: { [weak self] t in self?.nameDidChange(t) }
-                )
+                .update(with: vm) { [weak self] t in self?.nameDidChange(t) }
         case let vm as CellViewModel.Switch:
             return cv.dequeue(SwitchCollectionViewCell.self, for: indexPath)
-                .update(
-                    with: vm,
-                    handler: { [weak self] v in self?.iCloudBackupDidChange(v) }
-                )
+                .update(with: vm) { [weak self] v in self?.backupDidChange(v) }
         case let vm as CellViewModel.SwitchTextInput:
             return cv.dequeue(
                 SwitchTextInputCollectionViewCell.self,
@@ -101,13 +91,8 @@ final class MnemonicNewViewController: CollectionViewController {
                 switchHandler: { [weak self] v in self?.allowFaceIdDidChange(v)}
             )
         case let vm as CellViewModel.SegmentSelection:
-            return cv.dequeue(
-                    SegmentSelectionCell.self,
-                    for: indexPath
-            ).update(
-                with: vm,
-                segmentHandler: { [weak self] i in self?.entropySizeChange(i)}
-            )
+            return cv.dequeue(SegmentSelectionCell.self, for: indexPath)
+                .update(with: vm) { [weak self] i in self?.entropySizeChange(i)}
         default:
             ()
         }
@@ -258,7 +243,7 @@ final class MnemonicNewViewController: CollectionViewController {
         presenter.handleEvent(.SetName(name: name))
     }
 
-    func iCloudBackupDidChange(_ onOff: Bool) {
+    func backupDidChange(_ onOff: Bool) {
         presenter.handleEvent(.SetICouldBackup(onOff: onOff))
     }
 

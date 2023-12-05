@@ -9,9 +9,11 @@ final class DefaultMnemonicUpdateWireframe {
     private weak var parent: UIViewController?
     private let context: MnemonicUpdateWireframeContext
     private let signerStoreService: SignerStoreService
+    private let addressService: AddressService
+    private let clipboardService: ClipboardService
+    private let settingsService: SettingsService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
-    private let settingsService: SettingsService
 
     private weak var vc: UIViewController?
 
@@ -19,16 +21,20 @@ final class DefaultMnemonicUpdateWireframe {
         _ parent: UIViewController?,
         context: MnemonicUpdateWireframeContext,
         signerStoreService: SignerStoreService,
+        addressService: AddressService,
+        clipboardService: ClipboardService,
+        settingsService: SettingsService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
-        alertWireframeFactory: AlertWireframeFactory,
-        settingsService: SettingsService
+        alertWireframeFactory: AlertWireframeFactory
     ) {
         self.parent = parent
         self.context = context
         self.signerStoreService = signerStoreService
+        self.addressService = addressService
+        self.clipboardService = clipboardService
+        self.settingsService = settingsService
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
-        self.settingsService = settingsService
     }
 }
 
@@ -68,7 +74,10 @@ private extension DefaultMnemonicUpdateWireframe {
 
     func wireUp() -> UIViewController {
         let interactor = DefaultMnemonicUpdateInteractor(
-            signerStoreService: signerStoreService
+            signerStoreService: signerStoreService,
+            addressService: addressService,
+            clipboardService: clipboardService,
+            settingsService: settingsService
         )
         let vc: MnemonicUpdateViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultMnemonicUpdatePresenter(

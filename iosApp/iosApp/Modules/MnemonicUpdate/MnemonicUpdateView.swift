@@ -5,80 +5,39 @@
 import UIKit
 import web3walletcore
 
-final class MnemonicUpdateViewController: UICollectionViewController {
-    @IBOutlet weak var ctaButton: OldButton!
+final class MnemonicUpdateViewController: CollectionViewController {
 
     var presenter: MnemonicUpdatePresenter!
 
-    private var didAppear: Bool = false
-    private var prevSize: CGSize = .zero
-    private var cellSize: CGSize = .zero
-    private var viewModel: CollectionViewModel.Screen?
-    private var cv: CollectionView! { (collectionView as! CollectionView) }
-    private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
-    private var interactiveTransitioning: CardFlipInteractiveTransitioning?
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureUI()
-        presenter?.present()
+    override func configureUI() {
+        title = Localized("mnemonic.title.update")
+        cv.register(ButtonCell.self)
+        enableCardFlipTransitioning = true
+        super.configureUI()
+        presenter.present()
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        recomputeSizeIfNeeded()
-        layoutOverscrollView()
+    // MARK: - MnemonicUpdateView
+
+    override func update(with viewModel: CollectionViewModel.Screen) {
+        super.update(with: viewModel)
+        ctaButtonsContainer.setButtons(
+            viewModel.ctaItems,
+            compactCount: -1,
+            sheetState: .expanded,
+            animated: true
+        )
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        didAppear = true
+    override func presentAlert(with viewModel: AlertViewModelOld) {
+        print("present AlertViewModelOld")
     }
 
-    override func traitCollectionDidChange(
-        _ previousTraitCollection: UITraitCollection?
-    ) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        applyTheme(Theme)
-        cv?.collectionViewLayout.invalidateLayout()
-    }
-    
-    @IBAction func ctaAction(_ sender: Any) {
-        presenter.handleEvent(MnemonicUpdatePresenterEvent.Update())
-    }
-    
-    @IBAction func dismissAction(_ sender: Any?) {
-        presenter.handleEvent(MnemonicUpdatePresenterEvent.Dismiss())
-    }
-
-    // MARK: - MnemonicUpdate
-
-    func update(with viewModel: CollectionViewModel.Screen) {
-        let needsReload = needsFullReload(self.viewModel, viewModel: viewModel)
-        let needsUpdate = needsSectionsReload(self.viewModel, viewModel: viewModel)
-
-        self.viewModel = viewModel
-
-        guard let cv = collectionView else { return }
-        ctaButton.setTitle(viewModel.ctaItems.last?.title, for: .normal)
-
-        let idxs = IndexSet(0..<viewModel.sections.count)
-        let cells = cv.visibleCells
-            .map { cv.indexPath(for: $0) }
-            .compactMap { $0 }
-
-        if needsUpdate && !needsReload && didAppear {
-            cv.performBatchUpdates({ cv.reloadSections(idxs) })
-            return
+    override func keyboardWillHide(notification: Notification) {
+        super.keyboardWillHide(notification: notification)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.presenter.present()
         }
-
-        !needsReload && didAppear
-            ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
-            : cv.reloadData()
     }
 
     // MARK: - UICollectionViewDataSource
@@ -98,10 +57,15 @@ final class MnemonicUpdateViewController: UICollectionViewController {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let item = viewModel(at: indexPath) else {
+        guard let viewModel = self.viewModel(at: indexPath) else {
             fatalError("Wrong number of items in section \(indexPath)")
         }
-        switch item {
+        if isAccountsSection(indexPath) {
+            let cell = accountCell(indexPath, viewModel: viewModel)
+            (cell as? SwipeCollectionViewCell)?.delegate = self
+            return cell
+        }
+        switch viewModel {
         case let vm as CellViewModel.Text:
             return cv.dequeue(MnemonicUpdateCell.self, for: indexPath)
                 .update(with: vm)
@@ -112,11 +76,26 @@ final class MnemonicUpdateViewController: UICollectionViewController {
             return cv.dequeue(SwitchCollectionViewCell.self, for: indexPath)
                 .update(with: vm) { [weak self] v in self?.backupDidChange(v) }
         case let vm as CellViewModel.Button:
-            return collectionView.dequeue(DeleteCell.self, for: indexPath)
-                .update(with: vm) { [weak self] in self?.deleteAction() }
+            return cv.dequeue(ButtonCell.self, for: indexPath)
         default:
             fatalError("[MnemonicUpdateView] wrong cellForItemAt \(indexPath)")
         }
+    }
+
+    func accountCell(
+        _ idxPath: IndexPath,
+        viewModel: CellViewModel
+    ) -> UICollectionViewCell {
+        guard let vm = viewModel as? CellViewModel.KeyValueList else {
+            fatalError("Not implemented")
+        }
+        return cv.dequeue(MnemonicAccountCell.self, for: idxPath)
+            .update(
+                with: vm,
+                nameHandler: { [weak self] t in self?.setAccountName(t, idxPath)},
+                addressHandler: { [weak self] in self?.copyAddress(idxPath) },
+                privKeyHandler: { [weak self] in self?.viewPrivKey(idxPath) }
+            )
     }
 
     override func collectionView(
@@ -125,53 +104,57 @@ final class MnemonicUpdateViewController: UICollectionViewController {
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
         switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            return cv.dequeue(SectionHeaderView.self, for: indexPath, kind: kind)
+                .update(with: viewModel?.sections[safe: indexPath.section])
         case UICollectionView.elementKindSectionFooter:
-            guard let section = viewModel?.sections[indexPath.section] else {
-                fatalError("Failed to handle \(kind) \(indexPath)")
+            let footer = cv.dequeue(
+                SectionFooterView.self,
+                for: indexPath,
+                kind: kind
+            ).update(with: viewModel?.sections[safe: indexPath.section])
+            if isAccountsSection(indexPath) {
+                footer.label.adjustsFontSizeToFitWidth = true
+                footer.label.textAlignment = .center
+                footer.label.numberOfLines = 1
+                footer.layoutMargins = .init(
+                    top: 9, left: 20, bottom: 0, right: 20
+                )
             }
-            return cv.dequeue(SectionFooterView.self, for: indexPath, kind: kind)
-                .update(with: section)
+            return footer
         default:
             fatalError("Failed to handle \(kind) \(indexPath)")
         }
     }
 
-    // MARK: - UICollectionViewDelegate
+    // MARK: - UICollectionViewDelegateFlowLayout
 
     override func collectionView(
         _ collectionView: UICollectionView,
-        shouldSelectItemAt indexPath: IndexPath
-    ) -> Bool {
-        guard indexPath == .init(row: 0, section: 0) else { return false }
-        let cell = collectionView.cellForItem(at: .init(item: 0, section: 0))
-        (cell as? MnemonicUpdateCell)?.animateCopiedToPasteboard()
-        presenter.handleEvent(.DidTapMnemonic())
-        return false
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForFooterInSection section: Int
+    ) -> CGSize {
+        if isAccountsSection(IndexPath(item: 0, section: section)) {
+            return String.estimateSize(
+                "TEST",
+                font: Theme.font.sectionFooter,
+                maxWidth: cellSize.width,
+                extraHeight: Theme.paddingHalf + 1
+            )
+        }
+        return super.collectionView(
+            collectionView,
+            layout: collectionViewLayout,
+            referenceSizeForFooterInSection: section
+        )
     }
-
-    func nameDidChange(_ name: String) {
-        presenter.handleEvent(.DidChangeName(name: name))
-    }
-
-    func backupDidChange(_ onOff: Bool) {
-        presenter.handleEvent(.DidChangeICouldBackup(onOff: onOff))
-    }
-
-    func deleteAction() {
-        presenter.handleEvent(.ConfirmDelete())
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension MnemonicUpdateViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        guard let viewModel = viewModel(at: indexPath) else { return cellSize }
+        guard let viewModel = viewModel(at: indexPath) else {return cellSize}
         switch viewModel {
         case _ as CellViewModel.Text:
             return CGSize(
@@ -185,230 +168,137 @@ extension MnemonicUpdateViewController: UICollectionViewDelegateFlowLayout {
                     ? Constant.cellSaltOpenHeight
                     : cellSize.height
             )
+        case let vm as CellViewModel.SegmentWithTextAndSwitch:
+            return CGSize(
+                width: cellSize.width,
+                height: vm.selectedSegment != 2
+                    ? Constant.cellPassOpenHeight
+                    : cellSize.height
+            )
+        case let vm as CellViewModel.KeyValueList:
+            return CGSize(
+                width: cellSize.width,
+                height: cellSize.height * CGFloat(vm.items.count)
+            )
         default:
             return cellSize
         }
     }
 
-    func collectionView(
+    // MARK: - UICollectionViewDelegate
+
+    override func collectionView(
         _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForHeaderInSection section: Int
-    ) -> CGSize {
-        .zero
+        shouldSelectItemAt indexPath: IndexPath
+    ) -> Bool {
+        let cell = cv.cellForItem(at: indexPath)
+        if indexPath.isZero() {
+            presenter.handleEvent(.CopyMnemonic())
+            (cell as? MnemonicNewCell)?.animateCopiedToPasteboard()
+        }
+        return false
     }
 
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForFooterInSection section: Int
-    ) -> CGSize {
-        String.estimateSize(
-            viewModel?.sections[section].footer?.text(),
-            font: Theme.font.sectionFooter,
-            maxWidth: cellSize.width,
-            extraHeight: Theme.padding
+    // MARK: - Actions
+
+    override func buttonSheetContainer(
+        _ bsc: ButtonSheetContainer,
+        didSelect idx: Int
+    ) {
+        presenter.handleEvent(.CTAAction(idx: idx.int32))
+        let sectionCnt = cv.numberOfSections
+        if idx == 0 && ctaButtonsContainer.buttons.count > 1 && sectionCnt > 2 {
+            let ip = IndexPath(item: 0, section: cv.numberOfSections - 1)
+            cv.scrollToItem(at: ip, at: .centeredVertically, animated: true)
+        }
+    }
+
+    @IBAction override func rightBarButtonAction(_ sender: Any?) {
+        guard let sender = sender as? UIBarButtonItem else { return }
+        presenter.handleEvent(.RightBarButtonAction(idx: sender.tag.int32))
+    }
+
+    @IBAction func dismissAction(_ sender: Any?) {
+        presenter.handleEvent(.Dismiss())
+    }
+
+    func nameDidChange(_ name: String) {
+        presenter.handleEvent(.SetName(name: name))
+    }
+
+    func backupDidChange(_ onOff: Bool) {
+        presenter.handleEvent(.SetICouldBackup(onOff: onOff))
+    }
+
+    func deleteAction() {
+        presenter.handleEvent(.ConfirmDelete())
+    }
+
+    func setAccountHidden(_ hidden: Bool, _ idxPath: IndexPath) {
+        presenter.handleEvent(
+            .SetAccountHidden(hidden: hidden, idx: idxPath.section.int32 - 3)
         )
+    }
+
+    func setAccountName(_ name: String, _ idxPath: IndexPath) {
+        presenter.handleEvent(
+            .SetAccountName(name: name, idx: idxPath.section.int32 - 3)
+        )
+    }
+
+    func copyAddress(_ idxPath: IndexPath) {
+        presenter.handleEvent(
+            .CopyAccountAddress(idx: idxPath.section.int32 - 3)
+        )
+    }
+
+    func viewPrivKey(_ idxPath: IndexPath) {
+        presenter.handleEvent(.ViewPrivKey(idx: idxPath.section.int32 - 3))
     }
 }
 
-// MARK: - UIViewControllerTransitioningDelegate
+// MARK: - SwipeCollectionViewCellDelegate
 
-extension MnemonicUpdateViewController: UIViewControllerTransitioningDelegate {
+extension MnemonicUpdateViewController: SwipeCollectionViewCellDelegate {
 
-    func animationController(
-        forPresented presented: UIViewController,
-        presenting: UIViewController,
-        source: UIViewController
-    ) -> UIViewControllerAnimatedTransitioning? {
-        let presentedVc = (presented as? UINavigationController)?.topVc
-        let sourceNav = (source as? UINavigationController)
-        let targetView = (source as? TargetViewTransitionDatasource)?.targetView()
-            ?? (sourceNav?.topVc as? TargetViewTransitionDatasource)?.targetView()
-            ?? presenting.view
-        guard presentedVc == self, let targetView = targetView else {
-            animatedTransitioning = nil
-            return nil
-        }
-        animatedTransitioning = CardFlipAnimatedTransitioning(
-            targetView: targetView,
-            handler: { [weak self] in self?.animatedTransitioning = nil }
+    func collectionView(
+        _ collectionView: UICollectionView,
+        editActionsForItemAt indexPath: IndexPath,
+        for orientation: SwipeActionsOrientation
+    ) -> [SwipeAction]? {
+        guard
+            orientation == .right,
+            let vm = viewModel(at: indexPath) as? CellViewModel.KeyValueList,
+            let isHidden = vm.userInfo?["isHidden"] as? Bool
+        else { return nil }
+
+        let flag = SwipeAction(
+            style: .default,
+            title: Localized(isHidden ? "show" : "hide"),
+            handler: { [weak self] act, idxPath in
+                self?.setAccountHidden(!isHidden, indexPath)
+            }
         )
-        return animatedTransitioning
+        flag.image = UIImage(systemName: isHidden ? "eye" : "eye.slash")
+        flag.hidesWhenSelected = true
+        return [flag]
     }
 
-    func animationController(
-        forDismissed dismissed: UIViewController
-    ) -> UIViewControllerAnimatedTransitioning? {
-        guard dismissed == self || dismissed == navigationController else {
-            animatedTransitioning = nil
-            return nil
-        }
-        let presenting = dismissed.presentingViewController
-        guard let visVc = (presenting as? EdgeCardsController)?.visibleViewController,
-              let topVc = (visVc as? UINavigationController)?.topVc,
-              let targetView = (topVc as? TargetViewTransitionDatasource)?.targetView()
-        else {
-            animatedTransitioning = nil
-            return nil
-        }
-        animatedTransitioning = CardFlipAnimatedTransitioning(
-            targetView: targetView,
-            isPresenting: false,
-            scaleAdjustment: 0.05,
-            handler: { [weak self] in self?.animatedTransitioning = nil }
-        )
-        return animatedTransitioning
-    }
-
-    func interactionControllerForDismissal(
-        using animator: UIViewControllerAnimatedTransitioning
-    ) -> UIViewControllerInteractiveTransitioning? {
-        interactiveTransitioning
-    }
-
-    @objc func handleGesture(_ recognizer: UIPanGestureRecognizer) {
-        let location = recognizer.location(in: view.window!)
-        let pct = (location.x * 0.5) / view.bounds.width
-
-        switch recognizer.state {
-        case .began:
-            interactiveTransitioning = CardFlipInteractiveTransitioning(
-                handler: { [weak self] in self?.interactiveTransitioning = nil }
-            )
-            dismiss(animated: true)
-        case .changed:
-            interactiveTransitioning?.update(pct)
-        case .cancelled:
-            interactiveTransitioning?.cancel()
-        case .ended:
-            let completed = recognizer.velocity(in: view.window!).x >= 0
-            interactiveTransitioning?.completionSpeed = completed ? 1.5 : 0.1
-            completed
-                ? interactiveTransitioning?.finish()
-                : interactiveTransitioning?.cancel()
-        default:
-            ()
-        }
+    func collectionView(
+        _ collectionView: UICollectionView,
+        editActionsOptionsForItemAt indexPath: IndexPath,
+        for orientation: SwipeActionsOrientation
+    ) -> SwipeOptions {
+        cellSwipeOption
     }
 }
 
 // MARK: - Configure UI
 
 private extension MnemonicUpdateViewController {
-    
-    func configureUI() {
-        title = Localized("mnemonic.title.update")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            sysImgName: "chevron.left",
-            target: self,
-            action: #selector(dismissAction(_:))
-        )
-        NotificationCenter.addKeyboardObserver(
-                self,
-                selector: #selector(keyboardWillShow)
-        )
-        NotificationCenter.addKeyboardObserver(
-                self,
-                selector: #selector(keyboardWillHide),
-                event: .willHide
-        )
-        collectionView.register(
-            DeleteCell.self,
-            forCellWithReuseIdentifier: "\(DeleteCell.self)"
-        )
-        let edgePan = UIScreenEdgePanGestureRecognizer(
-            target: self,
-            action: #selector(handleGesture(_:))
-        )
-        edgePan.edges = [UIRectEdge.left]
-        view.addGestureRecognizer(edgePan)
-        cv.pinOverscrollToBottom = true
-        applyTheme(Theme)
-        ctaButton.style = .primary
-        registerForBackgroundNotifications()
-    }
 
-    func layoutOverscrollView() {
-        ctaButton.bounds.size.height = Theme.buttonHeight
-        cv.abovescrollView?.bounds.size.width = view.bounds.size.width
-        cv.abovescrollView?.bounds.size.height = ctaButton.bounds.height
-            + view.safeAreaInsets.bottom
-            + Theme.padding
-    }
-
-    func applyTheme(_ theme: ThemeProtocol) {
-        cv?.separatorInsets = .with(left: theme.padding)
-        cv?.sectionBackgroundColor = theme.color.bgPrimary
-        cv?.sectionBorderColor = theme.color.collectionSectionStroke
-        cv?.separatorColor = theme.color.collectionSeparator
-        (cv?.overscrollView?.subviews.first as? UILabel)?
-            .textColor = theme.color.textPrimary
-    }
-
-    @objc func keyboardWillShow(notification: Notification) {
-        let firstResponderIdxPath = cv.indexPathsForVisibleItems.filter {
-            cv.cellForItem(at: $0)?.firstResponder != nil
-        }.first
-
-        if let idxPath = firstResponderIdxPath {
-            cv.scrollToItem(at: idxPath, at: .centeredVertically, animated: true)
-        }
-    }
-
-    @objc func keyboardWillHide(notification: Notification) {
-        collectionView.contentInset.bottom = Theme.padding * 2
-    }
-
-    func registerForBackgroundNotifications() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(didEnterBackground),
-            name: UIApplication.didEnterBackgroundNotification
-        )
-    }
-    
-    @objc func didEnterBackground() {
-        presenter.handleEvent(MnemonicUpdatePresenterEvent.Dismiss())
-    }
-    
-    func needsReload(
-        _ preViewModel: CollectionViewModel.Screen?,
-        viewModel: CollectionViewModel.Screen
-    ) -> Bool {
-        preViewModel?.sections[1].items.count != viewModel.sections[1].items.count
-    }
-
-    func needsSectionsReload(
-        _ preViewModel: CollectionViewModel.Screen?,
-        viewModel: CollectionViewModel.Screen
-    ) -> Bool {
-        guard viewModel.sections.count > 1 ||
-          (preViewModel?.sections.count ?? 0) > 1 else {
-            return false
-        }
-        return (preViewModel?.sections[safe: 1]?.items.count ?? 0) !=
-            (viewModel.sections[safe: 1]?.items.count ?? 0)
-    }
-
-    func needsFullReload(
-        _ preViewModel: CollectionViewModel.Screen?,
-        viewModel: CollectionViewModel.Screen
-    ) -> Bool {
-        preViewModel?.sections.count != viewModel.sections.count
-    }
-
-    func viewModel(at idxPath: IndexPath) -> CellViewModel? {
-        return viewModel?.sections[idxPath.section].items[idxPath.item]
-    }
-
-    func recomputeSizeIfNeeded() {
-        guard prevSize.width != view.bounds.size.width else { return }
-        prevSize = view.bounds.size
-        cellSize = .init(
-            width: view.bounds.size.width - Theme.padding * 2,
-            height: Theme.cellHeight
-        )
+    func isAccountsSection(_ idxPath: IndexPath) -> Bool {
+        idxPath.section > 2
     }
 }
 

@@ -31,6 +31,7 @@ private extension AssemblerBootstrapper {
             SettingsServiceAssembler(),
             AddressServiceAssembler(),
             PollServiceAssembler(),
+            ClipboardServiceAssembler(),
             SignerStoreServiceAssembler(),
             KeyChainServiceAssembler(),
             DegenServiceAssembler(),

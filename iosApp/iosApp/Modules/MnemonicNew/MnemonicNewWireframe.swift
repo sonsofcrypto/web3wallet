@@ -10,6 +10,7 @@ final class DefaultMnemonicNewWireframe {
     private let context: MnemonicNewWireframeContext
     private let signerStoreService: SignerStoreService
     private let passwordService: PasswordService
+    private let clipboardService: ClipboardService
     private let settingsService: SettingsService
     private let addressService: AddressService
 
@@ -20,6 +21,7 @@ final class DefaultMnemonicNewWireframe {
         context: MnemonicNewWireframeContext,
         signerStoreService: SignerStoreService,
         passwordService: PasswordService,
+        clipboardService: ClipboardService,
         settingsService: SettingsService,
         addressService: AddressService
     ) {
@@ -27,6 +29,7 @@ final class DefaultMnemonicNewWireframe {
         self.context = context
         self.signerStoreService = signerStoreService
         self.passwordService = passwordService
+        self.clipboardService = clipboardService
         self.settingsService = settingsService
         self.addressService = addressService
     }
@@ -69,6 +72,7 @@ private extension DefaultMnemonicNewWireframe {
             signerStoreService: signerStoreService,
             passwordService: passwordService,
             addressService: addressService,
+            clipboardService: clipboardService,
             settingsService: settingsService
         )
         let vc: MnemonicNewViewController = UIStoryboard(.main).instantiate()
