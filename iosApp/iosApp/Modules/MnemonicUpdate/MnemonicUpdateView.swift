@@ -9,8 +9,6 @@ final class MnemonicUpdateViewController: CollectionViewController {
 
     var presenter: MnemonicUpdatePresenter!
     
-    private var prevButtonSectionsCount: Int = 0
-
     override func configureUI() {
         title = Localized("mnemonic.title.update")
         cv.register(ButtonCell.self)
@@ -22,8 +20,9 @@ final class MnemonicUpdateViewController: CollectionViewController {
     // MARK: - MnemonicUpdateView
 
     override func update(with viewModel: CollectionViewModel.Screen) {
+        let buttonSections = buttonsSections()
         let layout = cv.collectionViewLayout as? TableFlowLayout
-        layout?.hiddenSectionIdxs = buttonsSections().map { $0 }
+        layout?.hiddenSectionIdxs = buttonSections.map { $0 }
         super.update(with: viewModel)
         ctaButtonsContainer.setButtons(
             viewModel.ctaItems,
@@ -31,9 +30,6 @@ final class MnemonicUpdateViewController: CollectionViewController {
             sheetState: .auto,
             animated: true
         )
-        if prevButtonSectionsCount != buttonsSectionsCnt() {
-            cv.collectionViewLayout.invalidateLayout()
-        }
     }
 
     override func presentAlert(with viewModel: AlertViewModel) {
@@ -211,7 +207,7 @@ final class MnemonicUpdateViewController: CollectionViewController {
         let buttonSections = buttonsSections()
         switch section {
         case buttonSections.first: return .with(top: Theme.paddingHalf)
-        case buttonSections.last: return .with(top: Theme.padding)
+        case buttonSections.last: return .with(bottom: Theme.padding)
         default: return .zero
         }
     }
@@ -226,6 +222,10 @@ final class MnemonicUpdateViewController: CollectionViewController {
         if indexPath.isZero() {
             presenter.handleEvent(.CopyMnemonic())
             (cell as? MnemonicUpdateCell)?.animateCopiedToPasteboard()
+        }
+        if isButtonSection(indexPath) {
+            let idx = offsetBtnIdx(indexPath)
+            presenter.handleEvent(.CellButtonAction(idx: idx))
         }
         return false
     }
@@ -321,23 +321,26 @@ private extension MnemonicUpdateViewController {
         idxPath.section > (2 + buttonsSectionsCnt() - 1)
     }
 
+    func offsetAccIdx(_ idxPath: IndexPath) -> Int32 {
+        (idxPath.section - (2 + buttonsSectionsCnt())).int32
+    }
+
     func isButtonSection(_ idxPath: IndexPath) -> Bool {
         buttonsSections().contains(idxPath.section)
+    }
+
+    func offsetBtnIdx(_ idxPath: IndexPath) -> Int32 {
+        (idxPath.section - 2).int32
     }
 
     func buttonsSections() -> Range<Int> {
         2..<(buttonsSectionsCnt() + 2)
     }
 
-    func offsetAccIdx(_ idxPath: IndexPath) -> Int32 {
-        (idxPath.section - (2 + buttonsSectionsCnt())).int32
-    }
-
     func buttonsSectionsCnt() -> Int {
         let cnt = viewModel?.sections
             .filter { ($0.items.first as? CellViewModel.Button) != nil }
             .count ?? 0
-        print("button sections count \(cnt)")
         return cnt
     }
 }
