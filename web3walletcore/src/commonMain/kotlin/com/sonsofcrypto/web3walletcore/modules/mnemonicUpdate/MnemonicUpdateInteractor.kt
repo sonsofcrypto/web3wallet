@@ -55,9 +55,9 @@ class DefaultMnemonicUpdateInteractor(
         Account("Two", "M/64/0/0/2", "0x3565b665a433978c3c6a1d85343a9607dcce4e2e", false),
     )
 
-    override var name: String = ""
+    override var name: String
         get() { return accountName(0) }
-        set(value) { field = value; setAccountName(value, 0); }
+        set(value) { setAccountName(value, 0); }
 
     override var salt: String = ""
     override var iCloudSecretStorage: Boolean = false
@@ -133,6 +133,7 @@ class DefaultMnemonicUpdateInteractor(
             = lastDerivationPathComponent(account(idx).derivationPath)
 
     override fun setAccountName(name: String, idx: Int) {
+        println("set account name $name $idx")
         account(idx).name = name
     }
 
