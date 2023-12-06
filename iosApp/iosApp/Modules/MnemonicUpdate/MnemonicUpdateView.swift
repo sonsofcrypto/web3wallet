@@ -14,6 +14,8 @@ final class MnemonicUpdateViewController: CollectionViewController {
         cv.register(ButtonCell.self)
         enableCardFlipTransitioning = true
         super.configureUI()
+        let layout = cv.collectionViewLayout as? TableFlowLayout
+        layout?.hiddenSectionIdxs = buttonsSections().map { $0 }
         presenter.present()
     }
 
@@ -23,14 +25,20 @@ final class MnemonicUpdateViewController: CollectionViewController {
         super.update(with: viewModel)
         ctaButtonsContainer.setButtons(
             viewModel.ctaItems,
-            compactCount: -1,
-            sheetState: .expanded,
+            compactCount: 1,
+            sheetState: .auto,
             animated: true
         )
     }
 
-    override func presentAlert(with viewModel: AlertViewModelOld) {
-        print("present AlertViewModelOld")
+    override func presentAlert(with viewModel: AlertViewModel) {
+        let alertVc = AlertController(
+            viewModel,
+            handler: { [weak self] i, t in
+                self?.presenter.handleEvent(.AlertAction(idx: i.int32, text: t))
+            }
+        )
+        present(alertVc, animated: true)
     }
 
     override func keyboardWillHide(notification: Notification) {
@@ -61,9 +69,7 @@ final class MnemonicUpdateViewController: CollectionViewController {
             fatalError("Wrong number of items in section \(indexPath)")
         }
         if isAccountsSection(indexPath) {
-            let cell = accountCell(indexPath, viewModel: viewModel)
-            (cell as? SwipeCollectionViewCell)?.delegate = self
-            return cell
+            return accountCell(indexPath, viewModel: viewModel)
         }
         switch viewModel {
         case let vm as CellViewModel.Text:
@@ -71,12 +77,15 @@ final class MnemonicUpdateViewController: CollectionViewController {
                 .update(with: vm)
         case let vm as CellViewModel.TextInput:
             return cv.dequeue(TextInputCollectionViewCell.self, for: indexPath)
-                .update(with: vm) { [weak self] t in self?.nameDidChange(t) }
+                .update(with: vm) { [weak self] t in
+                    self?.setAccountName(t, indexPath)
+                }
         case let vm as CellViewModel.Switch:
             return cv.dequeue(SwitchCollectionViewCell.self, for: indexPath)
                 .update(with: vm) { [weak self] v in self?.backupDidChange(v) }
         case let vm as CellViewModel.Button:
             return cv.dequeue(ButtonCell.self, for: indexPath)
+                .update(with: vm)
         default:
             fatalError("[MnemonicUpdateView] wrong cellForItemAt \(indexPath)")
         }
@@ -89,13 +98,15 @@ final class MnemonicUpdateViewController: CollectionViewController {
         guard let vm = viewModel as? CellViewModel.KeyValueList else {
             fatalError("Not implemented")
         }
-        return cv.dequeue(MnemonicAccountCell.self, for: idxPath)
+        let cell = cv.dequeue(MnemonicAccountCell.self, for: idxPath)
             .update(
                 with: vm,
                 nameHandler: { [weak self] t in self?.setAccountName(t, idxPath)},
                 addressHandler: { [weak self] in self?.copyAddress(idxPath) },
                 privKeyHandler: { [weak self] in self?.viewPrivKey(idxPath) }
             )
+        (cell as? SwipeCollectionViewCell)?.delegate = self
+        return cell
     }
 
     override func collectionView(
@@ -161,6 +172,8 @@ final class MnemonicUpdateViewController: CollectionViewController {
                 width: cellSize.width,
                 height: Constant.mnemonicCellHeight
             )
+        case _ as CellViewModel.Button:
+            return CGSize(width: cellSize.width, height: Theme.buttonHeight)
         case let vm as CellViewModel.SwitchTextInput:
             return CGSize(
                 width: cellSize.width,
@@ -185,6 +198,20 @@ final class MnemonicUpdateViewController: CollectionViewController {
         }
     }
 
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
+        if section == buttonsSections().first {
+            return .with(top: Theme.paddingHalf)
+        } else if section == buttonsSections().last {
+            return .with(bottom: Theme.padding)
+        } else {
+            return .zero
+        }
+    }
+
     // MARK: - UICollectionViewDelegate
 
     override func collectionView(
@@ -194,13 +221,46 @@ final class MnemonicUpdateViewController: CollectionViewController {
         let cell = cv.cellForItem(at: indexPath)
         if indexPath.isZero() {
             presenter.handleEvent(.CopyMnemonic())
-            (cell as? MnemonicNewCell)?.animateCopiedToPasteboard()
+            (cell as? MnemonicUpdateCell)?.animateCopiedToPasteboard()
         }
         return false
     }
 
     // MARK: - Actions
 
+    @IBAction func dismissAction(_ sender: Any?) {
+        presenter.handleEvent(.Dismiss())
+    }
+
+    func backupDidChange(_ onOff: Bool) {
+        presenter.handleEvent(.SetICouldBackup(onOff: onOff))
+    }
+
+    func setAccountHidden(_ hidden: Bool, _ idxPath: IndexPath) {
+        presenter.handleEvent(
+            .SetAccountHidden(hidden: hidden, idx: offsetAccIdx(idxPath))
+        )
+    }
+
+    func setAccountName(_ name: String, _ idxPath: IndexPath) {
+        presenter.handleEvent(
+            .SetAccountName(name: name, idx: offsetAccIdx(idxPath))
+        )
+    }
+
+    func copyAddress(_ idxPath: IndexPath) {
+        presenter.handleEvent(.CopyAccountAddress(idx: offsetAccIdx(idxPath)))
+    }
+
+    func viewPrivKey(_ idxPath: IndexPath) {
+        presenter.handleEvent(.ViewPrivKey(idx: offsetAccIdx(idxPath)))
+    }
+
+    @IBAction override func rightBarButtonAction(_ sender: Any?) {
+        guard let sender = sender as? UIBarButtonItem else { return }
+        presenter.handleEvent(.RightBarButtonAction(idx: sender.tag.int32))
+    }
+    
     override func buttonSheetContainer(
         _ bsc: ButtonSheetContainer,
         didSelect idx: Int
@@ -211,49 +271,6 @@ final class MnemonicUpdateViewController: CollectionViewController {
             let ip = IndexPath(item: 0, section: cv.numberOfSections - 1)
             cv.scrollToItem(at: ip, at: .centeredVertically, animated: true)
         }
-    }
-
-    @IBAction override func rightBarButtonAction(_ sender: Any?) {
-        guard let sender = sender as? UIBarButtonItem else { return }
-        presenter.handleEvent(.RightBarButtonAction(idx: sender.tag.int32))
-    }
-
-    @IBAction func dismissAction(_ sender: Any?) {
-        presenter.handleEvent(.Dismiss())
-    }
-
-    func nameDidChange(_ name: String) {
-        presenter.handleEvent(.SetName(name: name))
-    }
-
-    func backupDidChange(_ onOff: Bool) {
-        presenter.handleEvent(.SetICouldBackup(onOff: onOff))
-    }
-
-    func deleteAction() {
-        presenter.handleEvent(.ConfirmDelete())
-    }
-
-    func setAccountHidden(_ hidden: Bool, _ idxPath: IndexPath) {
-        presenter.handleEvent(
-            .SetAccountHidden(hidden: hidden, idx: idxPath.section.int32 - 3)
-        )
-    }
-
-    func setAccountName(_ name: String, _ idxPath: IndexPath) {
-        presenter.handleEvent(
-            .SetAccountName(name: name, idx: idxPath.section.int32 - 3)
-        )
-    }
-
-    func copyAddress(_ idxPath: IndexPath) {
-        presenter.handleEvent(
-            .CopyAccountAddress(idx: idxPath.section.int32 - 3)
-        )
-    }
-
-    func viewPrivKey(_ idxPath: IndexPath) {
-        presenter.handleEvent(.ViewPrivKey(idx: idxPath.section.int32 - 3))
     }
 }
 
@@ -298,7 +315,27 @@ extension MnemonicUpdateViewController: SwipeCollectionViewCellDelegate {
 private extension MnemonicUpdateViewController {
 
     func isAccountsSection(_ idxPath: IndexPath) -> Bool {
-        idxPath.section > 2
+        idxPath.section > (2 + buttonsSectionsCnt() - 1)
+    }
+
+    func isButtonSection(_ idxPath: IndexPath) -> Bool {
+        buttonsSections().contains(idxPath.section)
+    }
+
+    func buttonsSections() -> Range<Int> {
+        2..<(buttonsSectionsCnt() + 2)
+    }
+
+    func offsetAccIdx(_ idxPath: IndexPath) -> Int32 {
+        (idxPath.section - (2 + buttonsSectionsCnt())).int32
+    }
+
+    func buttonsSectionsCnt() -> Int {
+        let cnt = viewModel?.sections
+            .filter { ($0.items.first as? CellViewModel.Button) != nil }
+            .count ?? 0
+        print("button sections count \(cnt)")
+        return cnt
     }
 }
 

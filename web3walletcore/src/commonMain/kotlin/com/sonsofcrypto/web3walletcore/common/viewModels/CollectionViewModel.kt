@@ -3,9 +3,9 @@ package com.sonsofcrypto.web3walletcore.common.viewModels
 sealed class CollectionViewModel {
 
     data class Section(
-        val header: Header?,
-        val items: List<CellViewModel>,
-        val footer: Footer?
+        val header: Header? = null,
+        val items: List<CellViewModel> = emptyList(),
+        val footer: Footer? = null
     ): CollectionViewModel()
 
     data class Screen(

@@ -67,10 +67,6 @@ class CollectionViewController: UICollectionViewController,
         print("presentAlert \(viewModel)")
     }
 
-    func presentAlert(with viewModel: AlertViewModelOld) {
-        print("presentAlert \(viewModel)")
-    }
-
     func configureUI() {
         NotificationCenter.addKeyboardObserver(
             self,
