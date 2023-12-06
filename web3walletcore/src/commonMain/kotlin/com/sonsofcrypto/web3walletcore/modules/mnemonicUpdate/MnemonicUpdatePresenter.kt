@@ -160,7 +160,7 @@ class DefaultMnemonicUpdatePresenter(
             ToastViewModel(
                 Localized("account.action.copy.toast") + "\n" + address,
                 SysName("square.on.square"),
-                ToastViewModel.Position.BOTTOM
+                ToastViewModel.Position.TOP
             )
         )
     }

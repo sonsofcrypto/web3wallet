@@ -133,7 +133,6 @@ class DefaultMnemonicUpdateInteractor(
             = lastDerivationPathComponent(account(idx).derivationPath)
 
     override fun setAccountName(name: String, idx: Int) {
-        println("set account name $name $idx")
         account(idx).name = name
     }
 
