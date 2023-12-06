@@ -96,6 +96,8 @@ class TableGroupedFlowLayout: TableFlowLayout {
                         width: topAttr.bounds.width,
                         height: bottomAttr.frame.maxY - topAttr.frame.minY)
                 )
+                let isHidden = hiddenSectionIdxs.contains(indexPath.section)
+                attr.alpha = isHidden ? 0 : 1
                 return attr
         }
         

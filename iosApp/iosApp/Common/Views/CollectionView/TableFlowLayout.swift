@@ -9,6 +9,7 @@ class TableFlowLayout: UICollectionViewFlowLayout {
     var separatorColor: UIColor = .secondarySystemBackground
     var sectionBackgroundColor: UIColor = .systemBackground
     var sectionBackgroundBorderColor: UIColor = .secondarySystemBackground
+    var hiddenSectionIdxs: [Int] = []
     
     private var isRegistered: Bool = false
     private var prevBoundsWidth: CGFloat = 0

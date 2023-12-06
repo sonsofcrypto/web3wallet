@@ -140,7 +140,7 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
     // MARK: - ContentScrollInfo
 
     func contentMaxY(_ maxY: CGFloat) {
-        isBehindContent = maxY > bounds.height + cv.contentOffset.y
+        isBehindContent = maxY > 0 // bounds.height + cv.contentOffset.y
         updateBgViewAlpha()
     }
 

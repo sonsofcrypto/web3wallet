@@ -37,6 +37,7 @@ interface MnemonicUpdateInteractor {
     fun setAccountHidden(hidden: Boolean, idx: Int)
     fun accountsCount(): Int
     fun hiddenAccountsCount(): Int
+    fun globalExpertMode(): Boolean
 }
 
 class DefaultMnemonicUpdateInteractor(
@@ -49,9 +50,9 @@ class DefaultMnemonicUpdateInteractor(
     private var mnemonic: String = ""
     private var password: String = ""
     private var accounts: MutableList<Account> = mutableListOf(
-        Account("Zero", "M/64/0/0/0", "0xaddress", false),
-        Account("One", "M/64/0/0/1", "0xaddress", true),
-        Account("Two", "M/64/0/0/2", "0xaddress", false),
+        Account("Zero", "M/64/0/0/0", "0x3565b665a433978c3c6a1d85343a9607dcce4e2e", false),
+        Account("One", "M/64/0/0/1", "0x3565b665a433978c3c6a1d85343a9607dcce4e2e", true),
+        Account("Two", "M/64/0/0/2", "0x3565b665a433978c3c6a1d85343a9607dcce4e2e", false),
     )
 
     override var name: String = ""
@@ -143,6 +144,8 @@ class DefaultMnemonicUpdateInteractor(
     else visibleAccounts().count()
 
     override fun hiddenAccountsCount(): Int = accounts.count { it.isHidden }
+
+    override fun globalExpertMode(): Boolean = settingsService.expertMode
 
     private fun account(idx: Int): Account = if (showHidden) accounts[idx]
         else visibleAccounts()[idx]

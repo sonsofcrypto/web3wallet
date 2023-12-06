@@ -11,4 +11,8 @@ extension IndexPath {
     }
 
     static var zero: IndexPath = IndexPath(item: 0, section: 0)
+
+    init(section: Int) {
+        self.init(item: 0, section: section)
+    }
 }

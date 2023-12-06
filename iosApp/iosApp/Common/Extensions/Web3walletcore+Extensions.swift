@@ -190,7 +190,7 @@ extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
 extension MnemonicNewViewController: MnemonicNewView {    
     func update(viewModel: CollectionViewModel.Screen) { update(with: viewModel) }
     func presentToast(viewModel: ToastViewModel) { presentToast(with: viewModel) }
-    func presentAlert(viewModel_ viewModel: AlertViewModel) { presentAlert(with: viewModel) }
+    func presentAlert(viewModel: AlertViewModel) { presentAlert(with: viewModel) }
 }
 
 extension MnemonicNewPresenter {
@@ -201,11 +201,13 @@ extension MnemonicNewPresenter {
 extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
     func navigate(destination: MnemonicUpdateWireframeDestination) { navigate(to: destination) }
 }
+
 extension MnemonicUpdateViewController: MnemonicUpdateView {
     func update(viewModel: CollectionViewModel.Screen) { update(with: viewModel) }
-    func presentAlert(viewModel: AlertViewModelOld) { presentAlert(with: viewModel) }
-
+    func presentAlert(viewModel: AlertViewModel) { presentAlert(with: viewModel) }
+    func presentToast(viewModel: ToastViewModel) { presentToast(with: viewModel) }
 }
+
 extension MnemonicUpdatePresenter {
     func handleEvent(_ event: MnemonicUpdatePresenterEvent) { handle(event____: event) }
 }
