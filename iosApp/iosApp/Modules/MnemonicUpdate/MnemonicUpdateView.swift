@@ -8,20 +8,22 @@ import web3walletcore
 final class MnemonicUpdateViewController: CollectionViewController {
 
     var presenter: MnemonicUpdatePresenter!
+    
+    private var prevButtonSectionsCount: Int = 0
 
     override func configureUI() {
         title = Localized("mnemonic.title.update")
         cv.register(ButtonCell.self)
         enableCardFlipTransitioning = true
         super.configureUI()
-        let layout = cv.collectionViewLayout as? TableFlowLayout
-        layout?.hiddenSectionIdxs = buttonsSections().map { $0 }
         presenter.present()
     }
 
     // MARK: - MnemonicUpdateView
 
     override func update(with viewModel: CollectionViewModel.Screen) {
+        let layout = cv.collectionViewLayout as? TableFlowLayout
+        layout?.hiddenSectionIdxs = buttonsSections().map { $0 }
         super.update(with: viewModel)
         ctaButtonsContainer.setButtons(
             viewModel.ctaItems,
@@ -29,6 +31,9 @@ final class MnemonicUpdateViewController: CollectionViewController {
             sheetState: .auto,
             animated: true
         )
+        if prevButtonSectionsCount != buttonsSectionsCnt() {
+            cv.collectionViewLayout.invalidateLayout()
+        }
     }
 
     override func presentAlert(with viewModel: AlertViewModel) {
@@ -105,7 +110,7 @@ final class MnemonicUpdateViewController: CollectionViewController {
                 addressHandler: { [weak self] in self?.copyAddress(idxPath) },
                 privKeyHandler: { [weak self] in self?.viewPrivKey(idxPath) }
             )
-        (cell as? SwipeCollectionViewCell)?.delegate = self
+        cell.delegate = self
         return cell
     }
 
@@ -203,12 +208,11 @@ final class MnemonicUpdateViewController: CollectionViewController {
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
-        if section == buttonsSections().first {
-            return .with(top: Theme.paddingHalf)
-        } else if section == buttonsSections().last {
-            return .with(bottom: Theme.padding)
-        } else {
-            return .zero
+        let buttonSections = buttonsSections()
+        switch section {
+        case buttonSections.first: return .with(top: Theme.paddingHalf)
+        case buttonSections.last: return .with(top: Theme.padding)
+        default: return .zero
         }
     }
 
@@ -243,9 +247,8 @@ final class MnemonicUpdateViewController: CollectionViewController {
     }
 
     func setAccountName(_ name: String, _ idxPath: IndexPath) {
-        presenter.handleEvent(
-            .SetAccountName(name: name, idx: offsetAccIdx(idxPath))
-        )
+        let ip = idxPath.section == 1 ? 0.int32 : offsetAccIdx(idxPath)
+        presenter.handleEvent(.SetAccountName(name: name, idx: ip))
     }
 
     func copyAddress(_ idxPath: IndexPath) {
