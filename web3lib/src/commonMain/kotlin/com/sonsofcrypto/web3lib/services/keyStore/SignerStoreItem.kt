@@ -53,4 +53,9 @@ data class SignerStoreItem(
             else -> false
         }
     }
+
+    fun primaryAddress(): String {
+        // TODO: Handle signers that require salt to see the address
+        return addresses[derivationPath] ?: "0xAuthenticateToSeeAddress"
+    }
 }

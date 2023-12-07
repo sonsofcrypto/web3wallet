@@ -94,6 +94,8 @@ interface SignerStoreService {
     fun password(item: SignerStoreItem): String?
     /** Updates sort order of `SignerStoreItem`, & of other items */
     fun setSortOrder(item: SignerStoreItem, idx: UInt)
+    /** Updates all properties of the signer with `uuid` */
+    fun update(signer: SignerStoreItem)
 }
 
 class DefaultSignerStoreService(
@@ -278,6 +280,10 @@ class DefaultSignerStoreService(
             if (it.sortOrder >= idx) updateSortOrder(it, it.sortOrder + 1u)
         }
         updateSortOrder(item, idx)
+    }
+
+    override fun update(item: SignerStoreItem) {
+        store[item.uuid] = item
     }
 
     private fun updateSortOrder(item: SignerStoreItem, idx: UInt) {
