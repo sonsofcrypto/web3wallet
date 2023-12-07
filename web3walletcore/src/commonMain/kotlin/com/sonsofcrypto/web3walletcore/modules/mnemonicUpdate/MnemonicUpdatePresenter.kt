@@ -127,6 +127,7 @@ class DefaultMnemonicUpdatePresenter(
         interactor.addAccount(path)
         updateView()
         view.get()?.scrollToBottom()
+        context.addAccountHandler()
     }
 
     private fun handleCellButtonAction(idx: Int) {
