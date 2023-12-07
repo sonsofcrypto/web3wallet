@@ -34,6 +34,7 @@ interface MnemonicUpdateInteractor {
     fun accountDerivationPath(idx: Int): String
     fun accountAddress(idx: Int): String
     /** if xprv is false returns prv key hex string else xprv hex string */
+    @Throws(Exception::class)
     fun accountPrivKey(
         idx: Int,
         xprv: Boolean = false,
@@ -110,11 +111,10 @@ class DefaultMnemonicUpdateInteractor(
 
     @Throws(Exception::class)
     override fun addAccount(derivationPath: String?) {
-        if (bip44 == null) throw Error.Bip44LoadFail
-        val name = "$name, acc: ${signers.count()}"
+        val name = nextAccountName()
         val path = derivationPath
             ?: incrementedDerivationPath(signers.last().derivationPath)
-        signerStoreService.addAccount(
+        val newItem = signerStoreService.addAccount(
             item = signerStoreItem!!,
             password = password,
             salt = salt,
@@ -122,7 +122,7 @@ class DefaultMnemonicUpdateInteractor(
             name = name,
             hidden = false,
         )
-        loadSigners()
+        signers.add(newItem)
     }
 
     override fun accountName(idx: Int): String
@@ -134,6 +134,7 @@ class DefaultMnemonicUpdateInteractor(
     override fun accountAddress(idx: Int): String
         = account(idx).primaryAddress()
 
+    @Throws(Exception::class)
     override fun accountPrivKey(
         idx: Int,
         xprv: Boolean,
@@ -141,7 +142,7 @@ class DefaultMnemonicUpdateInteractor(
         salt: String?,
     ): String {
         if (idx == 0) {
-            if (bip44 == null) return "Failed to retrieve private key"
+            if (bip44 == null) throw Error.Bip44LoadFail
             val key = bip44!!.deriveChildKey(accountDerivationPath(idx))
             return if (xprv) key.base58WithChecksumString()
             else key.key.toHexString(false)
@@ -215,6 +216,9 @@ class DefaultMnemonicUpdateInteractor(
                 name = "$name $mnemonicsCnt"
         }
     }
+
+    private fun nextAccountName(): String
+        = name.substringBefore(", acc: ") + ", acc: ${signers.count()}"
 
     /** Exceptions */
     sealed class Error(message: String? = null) : Exception(message) {

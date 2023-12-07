@@ -101,6 +101,15 @@ extension UICollectionView {
         let sec = numberOfSections - 1
         return IndexPath(item: numberOfItems(inSection: sec) - 1, section: sec)
     }
+
+    func scrollToIdxPath(
+        _ idxPath: IndexPath,
+        at scrollPosition: UICollectionView.ScrollPosition = .centeredVertically,
+        animated: Bool = true
+    ) {
+        scrollToItem(at: idxPath, at: scrollPosition, animated: animated)
+    }
+
 }
 
 // MARK - CellViewModel reloading
