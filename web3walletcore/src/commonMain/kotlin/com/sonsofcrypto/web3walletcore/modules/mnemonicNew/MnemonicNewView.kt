@@ -8,4 +8,5 @@ interface MnemonicNewView {
     fun update(viewModel: CollectionViewModel.Screen)
     fun presentAlert(viewModel: AlertViewModel)
     fun presentToast(viewModel: ToastViewModel)
+    fun scrollToBottom()
 }
