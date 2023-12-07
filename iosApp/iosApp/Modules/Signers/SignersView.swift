@@ -213,7 +213,7 @@ extension SignersViewController {
         let saBtm = view.safeAreaInsets.bottom
         cv.abovescrollView?.bounds.size = .init(
             width: view.bounds.width,
-            height: size.height + saBtm + (saBtm >= 36 ? -Theme.paddingHalf : 0)
+            height: size.height + saBtm + (saBtm >= 34 ? -Theme.paddingHalf : 0)
         )
         (cv.abovescrollView as? ButtonSheetContainer)?.forceLayout()
     }
