@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate
 
 import com.sonsofcrypto.web3lib.utils.WeakRef
+import com.sonsofcrypto.web3lib.utils.isValidDerivationPath
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
@@ -36,7 +37,6 @@ import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWire
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination.Authenticate
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination.Dismiss
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
@@ -82,7 +82,7 @@ class DefaultMnemonicUpdatePresenter(
     }
 
     override fun handle(event: MnemonicUpdatePresenterEvent) =  when (event) {
-        is MnemonicUpdatePresenterEvent.Dismiss -> wireframe.navigate(Dismiss)
+        is MnemonicUpdatePresenterEvent.Dismiss -> dismiss()
         is CopyMnemonic -> interactor.pasteToClipboard(interactor.mnemonic())
         is SetAccountName -> interactor.setAccountName(event.name, event.idx)
         is SetICouldBackup -> interactor.iCloudSecretStorage = event.onOff
@@ -90,7 +90,7 @@ class DefaultMnemonicUpdatePresenter(
         is CopyAccountAddress -> handleCopyAccountAddress(event.idx)
         is ViewPrivKey -> handleViewPrivKey(event.idx)
         is CellButtonAction -> handleCellButtonAction(event.idx)
-        is AlertAction -> handleAlertAction(event.idx)
+        is AlertAction -> handleAlertAction(event.idx, event.text)
         is RightBarButtonAction -> handleRightBarButtonAction(event.idx)
         is CTAAction -> handleCTAAction(event.idx)
     }
@@ -127,7 +127,22 @@ class DefaultMnemonicUpdatePresenter(
         interactor.addAccount(path)
         updateView()
         view.get()?.scrollToBottom()
-        context.addAccountHandler()
+    }
+
+    private fun handleCustomDerivationPath(actionIdx: Int, path: String?) {
+        presentingCustomDerivationAlert = false
+        if (actionIdx == 1 || path == null) return;
+        if (isValidDerivationPath(path)) {
+            try {
+                interactor.addAccount(path)
+                updateView()
+                view.get()?.scrollToBottom()
+            }
+            catch (err: Throwable) {
+                println(err)
+                presentCustomDerivationPathError(path)
+            }
+        } else presentCustomDerivationPathError(path)
     }
 
     private fun handleCellButtonAction(idx: Int) {
@@ -141,8 +156,9 @@ class DefaultMnemonicUpdatePresenter(
         updateView()
     }
 
-    private fun handleAlertAction(idx: Int) = when {
+    private fun handleAlertAction(idx: Int, text: String? = null) = when {
         presentingPrivKeyAlert > -1 -> handlerPrivKeyAlertAction(idx)
+        presentingCustomDerivationAlert -> handleCustomDerivationPath(idx, text)
         else -> Unit
     }
 
@@ -175,7 +191,7 @@ class DefaultMnemonicUpdatePresenter(
     private fun handleDelete() {
         interactor.delete()
         context.deleteHandler()
-        wireframe.navigate(Dismiss)
+        dismiss()
     }
 
     private fun handleUpdate() {
@@ -184,7 +200,7 @@ class DefaultMnemonicUpdatePresenter(
         val updatedItem = interactor.update()
             ?: return wireframe.navigate(Alert(errorAlertContext()))
         context.updateHandler(updatedItem)
-        wireframe.navigate(Dismiss)
+        dismiss()
     }
 
     private fun copyAddress() {
@@ -199,6 +215,18 @@ class DefaultMnemonicUpdatePresenter(
         )
     }
 
+    private fun presentCustomDerivationPathError(path: String?) {
+        view.get()?.presentAlert(
+            AlertViewModel.RegularAlertViewModel(
+                Localized("Invalid derivation path"),
+                (path ?: "")
+                        + Localized("mnemonic.alert.customDerivationError.body"),
+                listOf(Action("ok", NORMAL)),
+                SysName("x.circle"),
+            )
+        )
+    }
+
     private fun toggleExpertMode() {
         localExpertMode = !localExpertMode
         if (!localExpertMode) return
@@ -209,6 +237,11 @@ class DefaultMnemonicUpdatePresenter(
                 ToastViewModel(title, SysName("brain"), ToastViewModel.Position.TOP)
             )
         }
+    }
+
+    private fun dismiss() {
+        context.addAccountHandler()
+        wireframe.navigate(Dismiss)
     }
 
     private fun updateView() {
@@ -347,11 +380,11 @@ class DefaultMnemonicUpdatePresenter(
             context.signerStoreItem,
         ) { auth, error ->
             if (auth == null || error != null) {
-                wireframe.navigate(Dismiss)
+                dismiss()
                 return@AuthenticateWireframeContext
             }
             interactor.setup(context.signerStoreItem, auth.password, auth.salt)
-            if (interactor.mnemonic().isEmpty()) wireframe.navigate(Dismiss)
+            if (interactor.mnemonic().isEmpty()) dismiss()
             else updateView()
         }
 

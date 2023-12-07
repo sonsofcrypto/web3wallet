@@ -8,6 +8,7 @@ import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
+import com.sonsofcrypto.web3lib.utils.defaultDerivationPath
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.incrementedDerivationPath
 import com.sonsofcrypto.web3lib.utils.lastDerivationPathComponent
@@ -112,8 +113,7 @@ class DefaultMnemonicUpdateInteractor(
     @Throws(Exception::class)
     override fun addAccount(derivationPath: String?) {
         val name = nextAccountName()
-        val path = derivationPath
-            ?: incrementedDerivationPath(signers.last().derivationPath)
+        val path = nextDerivationPath(derivationPath)
         val newItem = signerStoreService.addAccount(
             item = signerStoreItem!!,
             password = password,
@@ -200,17 +200,12 @@ class DefaultMnemonicUpdateInteractor(
         val currItm = signerStoreItem ?: return
         val signers = signerStoreService.items().filter {
             val isCurrItm = it.uuid == currItm.uuid
-            val isParentNull = it.parentId != null
+            val isParentNull = it.parentId == null
             val isSameParent = it.parentId == currItm.parentId && !isParentNull
             val isCurrParent = it.parentId == currItm.uuid
-            !isCurrItm && (isCurrParent || isSameParent)
+            val isParentCurr = it.uuid == currItm.parentId
+            !isCurrItm && (isSameParent || isCurrParent || isParentCurr)
         }
-        println("Curr")
-        println("parent: ${currItm.parentId}, uuid: ${currItm.parentId}, name: ${currItm.name}")
-        signerStoreService.items().map {
-            println("parent: ${it.parentId}, uuid: ${it.uuid}, name: ${name}")
-        }
-
         this.signers = (listOf(currItm) + signers).toMutableList()
     }
 
@@ -225,6 +220,9 @@ class DefaultMnemonicUpdateInteractor(
 
     private fun nextAccountName(): String
         = name.substringBefore(", acc: ") + ", acc: ${signers.count()}"
+
+    private fun nextDerivationPath(path: String?): String
+        = path ?: (defaultDerivationPath().dropLast(1) + "${signers.count()}")
 
     /** Exceptions */
     sealed class Error(message: String? = null) : Exception(message) {

@@ -142,8 +142,7 @@ class DefaultMnemonicNewInteractor(
     override fun addAccount(derivationPath: String?) {
         generateDefaultNameIfNeeded()
         val name = "$name, acc: ${accounts.count()}"
-        val path = derivationPath ?:
-            incrementedDerivationPath(accounts.last().derivationPath)
+        val path = nextDerivationPath(derivationPath)
         val address = addressService.address(bip44.deriveChildKey(path))
         accounts.add(Account(name, path, address, false))
     }
@@ -201,6 +200,9 @@ class DefaultMnemonicNewInteractor(
         val address = addressService.address(bip44.deriveChildKey(path))
         return Account("", path, address, false)
     }
+
+    private fun nextDerivationPath(path: String?): String
+        = path ?: (defaultDerivationPath().dropLast(1) + "${accounts.count()}")
 }
 
 private class Account(
