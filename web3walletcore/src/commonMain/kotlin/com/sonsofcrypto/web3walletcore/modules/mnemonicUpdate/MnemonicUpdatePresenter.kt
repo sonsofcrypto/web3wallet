@@ -108,19 +108,37 @@ class DefaultMnemonicUpdatePresenter(
         view.get()?.presentAlert(privKeyAlertViewModel(idx))
     }
 
+    private fun handlerPrivKeyAlertAction(actionIdx: Int) {
+        val accIdx = presentingPrivKeyAlert
+        presentingPrivKeyAlert = -1
+        if (actionIdx == 2) return;
+        val key = interactor.accountPrivKey(accIdx, actionIdx == 1)
+        interactor.pasteToClipboard(key)
+        view.get()?.presentToast(
+            ToastViewModel(
+                Localized("mnemonic.toast.copy.privKey"),
+                SysName("square.on.square"),
+                ToastViewModel.Position.TOP
+            )
+        )
+    }
+
     private fun handleCellButtonAction(idx: Int) {
         when (idx) {
             0 -> copyAddress()
-            1 -> interactor.addAccount()
+            1 -> handleViewPrivKey(0)
+            2 -> interactor.addAccount()
             2 -> handleDelete()
             else -> Unit
         }
         updateView()
     }
 
-    private fun handleAlertAction(idx: Int) {
-        println("handleAlertAction")
+    private fun handleAlertAction(idx: Int) = when {
+        presentingPrivKeyAlert > -1 -> handlerPrivKeyAlertAction(idx)
+        else -> Unit
     }
+
 
     private fun handleRightBarButtonAction(idx: Int) {
         if (idx == 1) toggleExpertMode()
@@ -249,9 +267,7 @@ class DefaultMnemonicUpdatePresenter(
 
     @OptIn(ExperimentalStdlibApi::class)
     private fun accountsSections(): List<Section>
-        = if (interactor.accountsCount() <= 1)
-            emptyList()
-        else (0..<interactor.accountsCount()).map {
+        = (0..<interactor.accountsCount()).map {
             Section(
                 CollectionViewModel.Header.Title(
                     "Account ${interactor.absoluteAccountIdx(it)}",
