@@ -4,7 +4,6 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.execDelayed
 import com.sonsofcrypto.web3lib.utils.isValidDerivationPath
-import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.CANCEL
@@ -24,6 +23,7 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Sec
 import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
 import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position.TOP
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateData
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWireframeContext
@@ -39,13 +39,9 @@ import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePres
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.ViewPrivKey
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination.Authenticate
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination.Dismiss
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 
 sealed class MnemonicUpdatePresenterEvent {
-    object Dismiss: MnemonicUpdatePresenterEvent()
     object CopyMnemonic: MnemonicUpdatePresenterEvent()
     data class SetAccountName(val name: String, val idx: Int): MnemonicUpdatePresenterEvent()
     data class SetICouldBackup(val onOff: Boolean): MnemonicUpdatePresenterEvent()
@@ -56,6 +52,7 @@ sealed class MnemonicUpdatePresenterEvent {
     data class AlertAction(val idx: Int, val text: String?): MnemonicUpdatePresenterEvent()
     data class RightBarButtonAction(val idx: Int): MnemonicUpdatePresenterEvent()
     data class CTAAction(val idx: Int): MnemonicUpdatePresenterEvent()
+    object Dismiss: MnemonicUpdatePresenterEvent()
 }
 
 interface MnemonicUpdatePresenter {
@@ -85,27 +82,59 @@ class DefaultMnemonicUpdatePresenter(
         }
     }
 
+    private fun authContext(
+        item: SignerStoreItem,
+        authForPrivKey: Boolean
+    ): AuthenticateWireframeContext {
+        val title = Localized("authenticate.title.unlock")
+        return AuthenticateWireframeContext(title, item) { auth, err ->
+            if (authForPrivKey) handleAuthPrivKey(item, auth, err)
+            else handleAuthUnlock(item, auth, err)
+        }
+    }
+
+    private fun handleAuthUnlock(
+        item: SignerStoreItem,
+        auth: AuthenticateData?,
+        err: Error?
+    ) {
+        if (auth == null || err != null) { dismiss(); return }
+        interactor.setup(item, auth.password, auth.salt)
+        if (interactor.mnemonic().isEmpty()) dismiss()
+        else updateView()
+    }
+
+    private fun handleAuthPrivKey(
+        item: SignerStoreItem,
+        auth: AuthenticateData?,
+        err: Error?
+    ) {
+        if (auth == null || err != null) return
+        val idx = interactor.idxForAccount(item.uuid)
+        presentingPrivKeyAlert = idx
+        view.get()?.presentAlert(
+            privKeyAlertViewModel(idx, auth.password, auth.salt)
+        )
+    }
+
     override fun handle(event: MnemonicUpdatePresenterEvent) =  when (event) {
-        is MnemonicUpdatePresenterEvent.Dismiss -> dismiss()
         is CopyMnemonic -> interactor.pasteToClipboard(interactor.mnemonic())
         is SetAccountName -> interactor.setAccountName(event.name, event.idx)
         is SetICouldBackup -> interactor.iCloudSecretStorage = event.onOff
-        is SetAccountHidden -> handleSetAccountHidden(event.hidden, event.idx)
-        is CopyAccountAddress -> handleCopyAccountAddress(event.idx)
+        is SetAccountHidden -> {
+            interactor.setAccountHidden(event.hidden, event.idx)
+            updateView()
+        }
+        is CopyAccountAddress -> {
+            interactor.pasteToClipboard(interactor.accountAddress(event.idx))
+        }
         is ViewPrivKey -> handleViewPrivKey(event.idx)
         is CellButtonAction -> handleCellButtonAction(event.idx)
         is AlertAction -> handleAlertAction(event.idx, event.text)
         is RightBarButtonAction -> handleRightBarButtonAction(event.idx)
         is CTAAction -> handleCTAAction(event.idx)
+        is MnemonicUpdatePresenterEvent.Dismiss -> dismiss()
     }
-
-    private fun handleSetAccountHidden(hidden: Boolean, idx: Int) {
-        interactor.setAccountHidden(hidden, idx)
-        updateView()
-    }
-
-    private fun handleCopyAccountAddress(idx: Int)
-        = interactor.pasteToClipboard(interactor.accountAddress(idx))
 
     private fun handleViewPrivKey(idx: Int) {
         if (interactor.isPrimaryAccount(idx)) {
@@ -117,6 +146,24 @@ class DefaultMnemonicUpdatePresenter(
         }
     }
 
+    private fun privKeyAlertViewModel(
+        accIdx: Int,
+        pass: String? = null,
+        salt: String? = null
+    ): AlertViewModel = RegularAlertViewModel(
+        Localized("mnemonic.alert.privKey.title"),
+        Localized("mnemonic.alert.privKey.body.priv")
+                + "\n${interactor.accountPrivKey(accIdx, false, pass, salt)}\n\n"
+                + Localized("mnemonic.alert.privKey.body.xprv")
+                + "\n${interactor.accountPrivKey(accIdx, true, pass, salt)}\n",
+        listOf(
+            Action(Localized("mnemonic.alert.privKey.btnPriv"), NORMAL),
+            Action(Localized("mnemonic.alert.privKey.btnXprv"), NORMAL),
+            Action(Localized("cancel"), CANCEL),
+        ),
+        SysName("key.horizontal")
+    )
+
     private fun handlerPrivKeyAlertAction(actionIdx: Int) {
         val accIdx = presentingPrivKeyAlert
         presentingPrivKeyAlert = -1
@@ -127,9 +174,49 @@ class DefaultMnemonicUpdatePresenter(
             ToastViewModel(
                 Localized("mnemonic.toast.copy.privKey"),
                 SysName("square.on.square"),
-                ToastViewModel.Position.TOP
+                TOP
             )
         )
+    }
+
+    private fun handleCellButtonAction(idx: Int) {
+        when (idx) {
+            0 -> copyAddress()
+            1 -> handleViewPrivKey(0)
+            2 -> { handleAddAccount(); return; }
+            3 -> presentDeleteConfirmation()
+            else -> Unit
+        }
+        updateView()
+    }
+
+    private fun copyAddress() {
+        val address = interactor.accountAddress(0)
+        interactor.pasteToClipboard(address)
+        view.get()?.presentToast(
+            ToastViewModel(
+                Localized("account.action.copy.toast") + "\n" + address,
+                SysName("square.on.square"),
+                TOP
+            )
+        )
+    }
+
+    private fun presentDeleteConfirmation() {
+        presentingDeleteConfirmation = true
+        val alertViewModel = RegularAlertViewModel(
+            Localized("alert.deleteWallet.title"),
+            Localized("alert.deleteWallet.message"),
+            listOf(
+                Action(Localized("cancel"), CANCEL),
+                Action(
+                    Localized("alert.deleteWallet.action.confirm"),
+                    Action.Kind.DESTRUCTIVE
+                ),
+            ),
+            SysName("exclamationmark.triangle", ImageMedia.Tint.DESTRUCTIVE)
+        )
+        view.get()?.presentAlert(alertViewModel)
     }
 
     private fun handleAddAccount(path: String? = null) {
@@ -137,6 +224,66 @@ class DefaultMnemonicUpdatePresenter(
         updateView()
         view.get()?.scrollToBottom()
     }
+
+    private fun handleDeleteAlertAction(idx: Int) {
+        presentingDeleteConfirmation = false
+        if (idx == 0) return;
+        interactor.delete()
+        context.deleteHandler()
+        dismiss()
+    }
+
+    private fun handleAlertAction(idx: Int, text: String? = null) = when {
+        presentingPrivKeyAlert > -1 -> handlerPrivKeyAlertAction(idx)
+        presentingCustomDerivationAlert -> handleCustomDerivationPath(idx, text)
+        presentingDeleteConfirmation -> handleDeleteAlertAction(idx)
+        else -> Unit
+    }
+
+    private fun handleRightBarButtonAction(idx: Int) {
+        if (idx == 1) toggleExpertMode()
+        else interactor.showHidden = !interactor.showHidden
+        updateView()
+    }
+
+    private fun toggleExpertMode() {
+        localExpertMode = !localExpertMode
+        if (localExpertMode) execDelayed(0.15.seconds) {
+            val tlt = Localized("toast.expertMode")
+            view.get()?.presentToast(ToastViewModel(tlt, SysName("brain"), TOP))
+        }
+    }
+
+    private fun handleCTAAction(idx: Int) {
+        when (idx) {
+            0 -> handleUpdate()
+            1 -> {
+                presentingCustomDerivationAlert = true
+                view.get()?.presentAlert(customDerivationAlertViewModel())
+            }
+        }
+        updateView()
+    }
+
+    private fun handleUpdate() {
+        if (interactor.name.isEmpty()) interactor.name = "No name wallet"
+        interactor.update()?.let { context.updateHandler(it) }
+        // HACK: to make sure UI had enough time to update for custom transition
+        execDelayed(0.1.seconds) { wireframe.navigate(Dismiss) }
+    }
+
+    private fun customDerivationAlertViewModel(): AlertViewModel
+        = AlertViewModel.InputAlertViewModel(
+            Localized("mnemonic.alert.customDerivation.title"),
+            Localized("mnemonic.alert.customDerivation.body"),
+            "",
+            "m/44'/60'/0'/0/0",
+            listOf(
+                Action(Localized("mnemonic.alert.customDerivation.cta"), NORMAL),
+                Action(Localized("cancel"), CANCEL),
+            ),
+            SysName("key.radiowaves.forward")
+        )
 
     private fun handleCustomDerivationPath(actionIdx: Int, path: String?) {
         presentingCustomDerivationAlert = false
@@ -154,73 +301,6 @@ class DefaultMnemonicUpdatePresenter(
         } else presentCustomDerivationPathError(path)
     }
 
-    private fun handleCellButtonAction(idx: Int) {
-        when (idx) {
-            0 -> copyAddress()
-            1 -> handleViewPrivKey(0)
-            2 -> { handleAddAccount(); return; }
-            3 -> presentDeleteConfirmation()
-            else -> Unit
-        }
-        updateView()
-    }
-
-    private fun handleAlertAction(idx: Int, text: String? = null) = when {
-        presentingPrivKeyAlert > -1 -> handlerPrivKeyAlertAction(idx)
-        presentingCustomDerivationAlert -> handleCustomDerivationPath(idx, text)
-        presentingDeleteConfirmation -> handleDeleteAlertAction(idx)
-        else -> Unit
-    }
-
-    private fun handleRightBarButtonAction(idx: Int) {
-        if (idx == 1) toggleExpertMode()
-        else interactor.showHidden = !interactor.showHidden
-        updateView()
-    }
-
-    private fun handleCTAAction(idx: Int) {
-        when (idx) {
-            0 -> handleUpdate()
-            1 -> {
-                presentingCustomDerivationAlert = true
-                view.get()?.presentAlert(customDerivationAlertViewModel())
-            }
-        }
-        updateView()
-    }
-
-    private fun presentDeleteConfirmation() {
-        presentingDeleteConfirmation = true
-        view.get()?.presentAlert(deleteAlertViewModel())
-    }
-
-    private fun handleDeleteAlertAction(idx: Int) {
-        presentingDeleteConfirmation = false
-        if (idx == 0) return;
-        interactor.delete()
-        context.deleteHandler()
-        dismiss()
-    }
-
-    private fun handleUpdate() {
-        if (interactor.name.isEmpty()) interactor.name = "No name wallet"
-        interactor.update()?.let { context.updateHandler(it) }
-        // HACK: to make sure UI had enough time to update for custom transition
-        execDelayed(0.1.seconds) { wireframe.navigate(Dismiss) }
-    }
-
-    private fun copyAddress() {
-        handleCopyAccountAddress(0)
-        val address = interactor.accountAddress(0)
-        view.get()?.presentToast(
-            ToastViewModel(
-                Localized("account.action.copy.toast") + "\n" + address,
-                SysName("square.on.square"),
-                ToastViewModel.Position.TOP
-            )
-        )
-    }
-
     private fun presentCustomDerivationPathError(path: String?) {
         view.get()?.presentAlert(
             RegularAlertViewModel(
@@ -231,18 +311,6 @@ class DefaultMnemonicUpdatePresenter(
                 SysName("x.circle"),
             )
         )
-    }
-
-    private fun toggleExpertMode() {
-        localExpertMode = !localExpertMode
-        if (!localExpertMode) return
-        CoroutineScope(uiDispatcher).launch {
-            delay(0.15.seconds)
-            val title = Localized("toast.expertMode")
-            view.get()?.presentToast(
-                ToastViewModel(title, SysName("brain"), ToastViewModel.Position.TOP)
-            )
-        }
     }
 
     private fun dismiss() {
@@ -340,88 +408,7 @@ class DefaultMnemonicUpdatePresenter(
             )
         }
 
-    private fun customDerivationAlertViewModel(): AlertViewModel
-        = AlertViewModel.InputAlertViewModel(
-            Localized("mnemonic.alert.customDerivation.title"),
-            Localized("mnemonic.alert.customDerivation.body"),
-            "",
-            "m/44'/60'/0'/0/0",
-            listOf(
-                Action(Localized("mnemonic.alert.customDerivation.cta"), NORMAL),
-                Action(Localized("cancel"), CANCEL),
-            ),
-            SysName("key.radiowaves.forward")
-        )
-
-    private fun privKeyAlertViewModel(
-        accIdx: Int,
-        pass: String? = null,
-        salt: String? = null
-    ): AlertViewModel = RegularAlertViewModel(
-        Localized("mnemonic.alert.privKey.title"),
-        Localized("mnemonic.alert.privKey.body.priv")
-            + "\n${interactor.accountPrivKey(accIdx, false, pass, salt)}\n\n"
-            + Localized("mnemonic.alert.privKey.body.xprv")
-            + "\n${interactor.accountPrivKey(accIdx, true, pass, salt)}\n",
-        listOf(
-            Action(Localized("mnemonic.alert.privKey.btnPriv"), NORMAL),
-            Action(Localized("mnemonic.alert.privKey.btnXprv"), NORMAL),
-            Action(Localized("cancel"), CANCEL),
-        ),
-        SysName("key.horizontal")
-    )
-
     private fun expertMode(): Boolean {
         return interactor.globalExpertMode() || localExpertMode
     }
-
-    private fun authContext(
-        item: SignerStoreItem,
-        authForPrivKey: Boolean
-    ): AuthenticateWireframeContext {
-        val title = Localized("authenticate.title.unlock")
-        return AuthenticateWireframeContext(title, item) { auth, err ->
-            if (authForPrivKey) handleAuthPrivKey(item, auth, err)
-            else handleAuthUnlock(item, auth, err)
-        }
-    }
-
-    private fun handleAuthUnlock(
-        item: SignerStoreItem,
-        auth: AuthenticateData?,
-        err: Error?
-    ) {
-        if (auth == null || err != null) {
-            dismiss()
-            return
-        }
-        interactor.setup(item, auth.password, auth.salt)
-        if (interactor.mnemonic().isEmpty()) dismiss()
-        else updateView()
-    }
-
-    private fun handleAuthPrivKey(
-        item: SignerStoreItem,
-        auth: AuthenticateData?,
-        err: Error?
-    ) {
-        if (auth == null || err != null) return
-        val idx = interactor.idxForAccount(item.uuid)
-        view.get()?.presentAlert(
-            privKeyAlertViewModel(idx, auth.password, auth.salt)
-        )
-    }
-
-    private fun deleteAlertViewModel(): AlertViewModel = RegularAlertViewModel(
-        Localized("alert.deleteWallet.title"),
-        Localized("alert.deleteWallet.message"),
-        listOf(
-            Action(Localized("cancel"), CANCEL),
-            Action(
-                Localized("alert.deleteWallet.action.confirm"),
-                Action.Kind.DESTRUCTIVE
-            ),
-        ),
-        SysName("exclamationmark.triangle", ImageMedia.Tint.DESTRUCTIVE)
-    )
 }

@@ -183,7 +183,7 @@ class DefaultMnemonicUpdateInteractor(
         = lastDerivationPathComponent(account(idx).derivationPath)
 
     override fun setAccountName(name: String, idx: Int) {
-        if (idx == 0) this.name = name
+        if (isPrimaryAccount(idx)) this.name = name
         else updateSigner(account(idx), account(idx).copy(name = name))
     }
 
