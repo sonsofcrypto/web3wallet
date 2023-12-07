@@ -126,7 +126,8 @@ class DefaultMnemonicUpdateInteractor(
     }
 
     override fun accountName(idx: Int): String
-        = if (idx == 0) name else account(idx).name
+        = if (idx == 0 && signers.first().hidden != true) name
+        else account(idx).name
 
     override fun accountDerivationPath(idx: Int): String
         = account(idx).derivationPath
