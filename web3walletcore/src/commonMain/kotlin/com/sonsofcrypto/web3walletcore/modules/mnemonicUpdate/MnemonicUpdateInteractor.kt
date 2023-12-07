@@ -95,6 +95,8 @@ class DefaultMnemonicUpdateInteractor(
 
     override fun mnemonic(): String = mnemonic
 
+    override fun pasteToClipboard(text: String) = clipboardService.paste(text)
+
     override fun update(): SignerStoreItem? = signerStoreItem?.let {
         updateSigner(
             it,
@@ -122,9 +124,6 @@ class DefaultMnemonicUpdateInteractor(
         = account(idx).uuid == signerStoreItem?.uuid
 
     override fun signer(idx: Int): SignerStoreItem = account(idx)
-
-    override fun pasteToClipboard(text: String)
-        = clipboardService.paste(text)
 
     @Throws(Exception::class)
     override fun addAccount(derivationPath: String?) {
@@ -229,15 +228,6 @@ class DefaultMnemonicUpdateInteractor(
         this.signers = (listOf(currItm) + signers).toMutableList()
     }
 
-    private fun generateDefaultNameIfNeeded() {
-        if (name.isEmpty()) {
-            name = Localized("mnemonic.defaultWalletName")
-            val mnemonicsCnt = signerStoreService.mnemonicSignerItems().count()
-            if (mnemonicsCnt > 0)
-                name = "$name $mnemonicsCnt"
-        }
-    }
-
     private fun nextAccountName(): String
         = name.substringBefore(", acc: ") + ", acc: ${signers.count()}"
 
@@ -246,7 +236,6 @@ class DefaultMnemonicUpdateInteractor(
 
     /** Exceptions */
     sealed class Error(message: String? = null) : Exception(message) {
-
         /** Failed to load bip44 from signer */
         object Bip44LoadFail : Error("Failed to load bip44 from signer")
     }
