@@ -7,6 +7,7 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.CANCEL
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.RegularAlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.DESTRUCTIVE
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.SECONDARY
@@ -18,6 +19,7 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Bar
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
 import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel
 import com.sonsofcrypto.web3walletcore.extensions.Localized
@@ -72,6 +74,7 @@ class DefaultMnemonicUpdatePresenter(
     /** -1 alert not presented. Else it is idx of account alert is about */
     private var presentingPrivKeyAlert: Int = -1
     private var presentingCustomDerivationAlert: Boolean = false
+    private var presentingDeleteConfirmation: Boolean = false
 
     override fun present() {
         updateView()
@@ -150,7 +153,7 @@ class DefaultMnemonicUpdatePresenter(
             0 -> copyAddress()
             1 -> handleViewPrivKey(0)
             2 -> { handleAddAccount(); return; }
-            3 -> handleDelete()
+            3 -> presentDeleteConfirmation()
             else -> Unit
         }
         updateView()
@@ -159,6 +162,7 @@ class DefaultMnemonicUpdatePresenter(
     private fun handleAlertAction(idx: Int, text: String? = null) = when {
         presentingPrivKeyAlert > -1 -> handlerPrivKeyAlertAction(idx)
         presentingCustomDerivationAlert -> handleCustomDerivationPath(idx, text)
+        presentingDeleteConfirmation -> handleDeleteAlertAction(idx)
         else -> Unit
     }
 
@@ -188,7 +192,13 @@ class DefaultMnemonicUpdatePresenter(
         updateView()
     }
 
-    private fun handleDelete() {
+    private fun presentDeleteConfirmation() {
+        presentingDeleteConfirmation = true
+        view.get()?.presentAlert(deleteAlertViewModel())
+    }
+
+    private fun handleDeleteAlertAction(idx: Int) {
+        if (idx == 0) return;
         interactor.delete()
         context.deleteHandler()
         dismiss()
@@ -217,7 +227,7 @@ class DefaultMnemonicUpdatePresenter(
 
     private fun presentCustomDerivationPathError(path: String?) {
         view.get()?.presentAlert(
-            AlertViewModel.RegularAlertViewModel(
+            RegularAlertViewModel(
                 Localized("Invalid derivation path"),
                 (path ?: "")
                         + Localized("mnemonic.alert.customDerivationError.body"),
@@ -348,7 +358,7 @@ class DefaultMnemonicUpdatePresenter(
         )
 
     private fun privKeyAlertViewModel(accIdx: Int): AlertViewModel
-        = AlertViewModel.RegularAlertViewModel(
+        = RegularAlertViewModel(
             Localized("mnemonic.alert.privKey.title"),
             Localized("mnemonic.alert.privKey.body.priv")
                 + "\n${interactor.accountPrivKey(accIdx)}\n\n"
@@ -403,22 +413,16 @@ class DefaultMnemonicUpdatePresenter(
             350.toDouble()
     )
 
-    private fun deleteConfirmationAlertContext(): AlertWireframeContext
-        = AlertWireframeContext(
-            Localized("alert.deleteWallet.title"),
-            null,
-            Localized("alert.deleteWallet.message"),
-            listOf(
-                AlertWireframeContext.Action(
-                    Localized("alert.deleteWallet.action.confirm"),
-                    AlertWireframeContext.Action.Type.DESTRUCTIVE
-                ),
-                AlertWireframeContext.Action(
-                    Localized("cancel"),
-                    AlertWireframeContext.Action.Type.SECONDARY
-                )
+    private fun deleteAlertViewModel(): AlertViewModel = RegularAlertViewModel(
+        Localized("alert.deleteWallet.title"),
+        Localized("alert.deleteWallet.message"),
+        listOf(
+            Action(Localized("cancel"), CANCEL),
+            Action(
+                Localized("alert.deleteWallet.action.confirm"),
+                Action.Kind.DESTRUCTIVE
             ),
-            { idx -> if (idx == 0) handleDelete() },
-            350.toDouble()
+        ),
+        SysName("exclamationmark.triangle", ImageMedia.Tint.DESTRUCTIVE)
     )
 }
