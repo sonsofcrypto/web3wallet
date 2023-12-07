@@ -10,7 +10,6 @@ import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.defaultDerivationPath
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
-import com.sonsofcrypto.web3lib.utils.incrementedDerivationPath
 import com.sonsofcrypto.web3lib.utils.lastDerivationPathComponent
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.services.clipboard.ClipboardService
@@ -28,6 +27,10 @@ interface MnemonicUpdateInteractor {
     fun pasteToClipboard(text: String)
     fun update(): SignerStoreItem?
     fun delete()
+
+    fun idxForAccount(uuid: String): Int
+    fun isPrimaryAccount(idx: Int): Boolean
+    fun signer(idx: Int): SignerStoreItem
 
     @Throws(Exception::class)
     fun addAccount(derivationPath: String? = null)
@@ -107,6 +110,19 @@ class DefaultMnemonicUpdateInteractor(
         signerStoreService.remove(signerStoreItem!!)
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
+    override fun idxForAccount(uuid: String): Int {
+        for (i in 0..<accountsCount()) {
+            if (account(i).uuid == uuid) return i
+        }
+        return -1
+    }
+
+    override fun isPrimaryAccount(idx: Int): Boolean
+        = account(idx).uuid == signerStoreItem?.uuid
+
+    override fun signer(idx: Int): SignerStoreItem = account(idx)
+
     override fun pasteToClipboard(text: String)
         = clipboardService.paste(text)
 
@@ -142,19 +158,22 @@ class DefaultMnemonicUpdateInteractor(
         password: String?,
         salt: String?,
     ): String {
-        if (idx == 0) {
+        if (isPrimaryAccount(idx)) {
             if (bip44 == null) throw Error.Bip44LoadFail
             val key = bip44!!.deriveChildKey(accountDerivationPath(idx))
             return if (xprv) key.base58WithChecksumString()
             else key.key.toHexString(false)
         }
-//        val bip39 =
-//        val bip44 =
-//        val key = bip44.deriveChildKey(accountDerivationPath(idx))
-//        return if (xprv) key.base58WithChecksumString()
-//        else key.key.toHexString(false)
-        // TODO("Implement")
-        return "Priv key"
+        val pass = password ?: throw Error.Bip44LoadFail
+        val item = account(idx)
+        val result = signerStoreService.secretStorage(item, pass)?.decrypt(pass)
+        val mnemonic = result?.mnemonic ?: ""
+        val wordList = WordList.fromLocaleString(result?.mnemonicLocale ?: "en")
+        val bip39 = Bip39(mnemonic.split(" "), salt ?: "", wordList)
+        val bip44 = Bip44(bip39!!.seed(), ExtKey.Version.MAINNETPRV)
+        val key = bip44.deriveChildKey(accountDerivationPath(idx))
+        return if (xprv) key.base58WithChecksumString()
+        else key.key.toHexString(false)
     }
 
     override fun accountIsHidden(idx: Int): Boolean
