@@ -23,7 +23,9 @@ extension UIImageView {
         case is ImageMedia.SysName:
             let media = media as! ImageMedia.SysName
             image = UIImage(systemName: media.name)
-            tintColor = media.tint == .destructive ? Theme.color.destructive : nil
+            if media.tint == .destructive {
+                tintColor = Theme.color.destructive
+            }
         case is ImageMedia.Url:
             setImage(url: (media as! ImageMedia.Url).url)
         case is ImageMedia.Data:

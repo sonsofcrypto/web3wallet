@@ -65,9 +65,9 @@ extension SignersViewController {
 
     func update(with viewModel: SignersViewModel) {
         self.viewModel = viewModel
-        updateTargetView(targetView: viewModel.targetView)
         collectionView.reloadData()
         updateLogo(viewModel)
+        updateTargetView(targetView: viewModel.targetView)
         collectionView.deselectAllExcept(
             selectedIdxPaths(),
             animated: presentedViewController == nil,
@@ -210,12 +210,12 @@ extension SignersViewController {
     func layoutAboveScrollView() {
         let btnCnt = viewModel?.buttons.count ?? 0
         let size = ctaButtonsContainer.intrinsicContentSize(for: btnCnt)
-        let  bottomInset = view.safeAreaInsets.bottom
+        let saBtm = view.safeAreaInsets.bottom
         cv.abovescrollView?.bounds.size = .init(
             width: view.bounds.width,
-            height: size.height + bottomInset
+            height: size.height + saBtm + (saBtm >= 36 ? -Theme.paddingHalf : 0)
         )
-
+        (cv.abovescrollView as? ButtonSheetContainer)?.forceLayout()
     }
 }
 

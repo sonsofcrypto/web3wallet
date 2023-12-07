@@ -90,6 +90,11 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         )
     }
 
+    func forceLayout() {
+        prevSize = .zero
+        setNeedsLayout()
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         guard prevSize != bounds.size else { return }
