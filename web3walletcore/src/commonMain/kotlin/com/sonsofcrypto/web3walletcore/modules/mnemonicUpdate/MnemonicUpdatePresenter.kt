@@ -123,12 +123,18 @@ class DefaultMnemonicUpdatePresenter(
         )
     }
 
+    private fun handleAddAccount(path: String? = null) {
+        interactor.addAccount(path)
+        updateView()
+        view.get()?.scrollToBottom()
+    }
+
     private fun handleCellButtonAction(idx: Int) {
         when (idx) {
             0 -> copyAddress()
             1 -> handleViewPrivKey(0)
-            2 -> interactor.addAccount()
-            2 -> handleDelete()
+            2 -> { handleAddAccount(); return; }
+            3 -> handleDelete()
             else -> Unit
         }
         updateView()

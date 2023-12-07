@@ -42,6 +42,10 @@ final class MnemonicUpdateViewController: CollectionViewController {
         present(alertVc, animated: true)
     }
 
+    func scrollToBottom() {
+        cv.scrollToIdxPath(cv.lastIdxPath())
+    }
+
     override func keyboardWillHide(notification: Notification) {
         super.keyboardWillHide(notification: notification)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
