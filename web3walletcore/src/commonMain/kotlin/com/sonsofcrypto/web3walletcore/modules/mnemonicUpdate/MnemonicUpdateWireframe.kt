@@ -7,6 +7,7 @@ import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWirefram
 data class MnemonicUpdateWireframeContext(
     val signerStoreItem: SignerStoreItem,
     val updateHandler: ((SignerStoreItem) -> Unit),
+    val addAccountHandler: () -> Unit,
     val deleteHandler: (() -> Unit),
 )
 

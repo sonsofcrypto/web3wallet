@@ -205,6 +205,12 @@ class DefaultMnemonicUpdateInteractor(
             val isCurrParent = it.parentId == currItm.uuid
             !isCurrItm && (isCurrParent || isSameParent)
         }
+        println("Curr")
+        println("parent: ${currItm.parentId}, uuid: ${currItm.parentId}, name: ${currItm.name}")
+        signerStoreService.items().map {
+            println("parent: ${it.parentId}, uuid: ${it.uuid}, name: ${name}")
+        }
+
         this.signers = (listOf(currItm) + signers).toMutableList()
     }
 

@@ -73,6 +73,7 @@ extension DefaultSignersWireframe {
             let context = MnemonicUpdateWireframeContext(
                 signerStoreItem: input.item,
                 updateHandler: input.handler,
+                addAccountHandler: input.addAccountHandler,
                 deleteHandler: input.deleteHandler
             )
             updateMnemonic.make(vc, context: context).present()

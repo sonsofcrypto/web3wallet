@@ -81,11 +81,12 @@ class DefaultSignersPresenter(
         wireframe.navigate(
             EditSignersItem(
                 item,
-                handler = {
+                updateHandler = {
                     val newIdx = interactor.indexOf(it)
                     if (newIdx != -1) { targetView = KeyStoreItemAt(newIdx) }
                     updateView()
                 },
+                addAccountHandler = { updateView() },
                 deleteHandler = {
                     targetView = None
                     if (interactor.items.isEmpty()) {

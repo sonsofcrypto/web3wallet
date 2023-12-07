@@ -10,8 +10,9 @@ sealed class SignersWireframeDestination {
     object DashboardOnboarding: SignersWireframeDestination()
     data class EditSignersItem(
         val item: SignerStoreItem,
-        val handler: (SignerStoreItem) -> Unit,
-        val deleteHandler: () -> Unit
+        val updateHandler: (SignerStoreItem) -> Unit,
+        val addAccountHandler: () -> Unit,
+        val deleteHandler: () -> Unit,
     ): SignersWireframeDestination()
     data class NewMnemonic(
         val handler: (SignerStoreItem) -> Unit
