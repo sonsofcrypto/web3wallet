@@ -8,6 +8,7 @@ import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
+import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.incrementedDerivationPath
 import com.sonsofcrypto.web3lib.utils.lastDerivationPathComponent
 import com.sonsofcrypto.web3walletcore.extensions.Localized
@@ -139,6 +140,12 @@ class DefaultMnemonicUpdateInteractor(
         password: String?,
         salt: String?,
     ): String {
+        if (idx == 0) {
+            if (bip44 == null) return "Failed to retrieve private key"
+            val key = bip44!!.deriveChildKey(accountDerivationPath(idx))
+            return if (xprv) key.base58WithChecksumString()
+            else key.key.toHexString(false)
+        }
 //        val bip39 =
 //        val bip44 =
 //        val key = bip44.deriveChildKey(accountDerivationPath(idx))
