@@ -6,8 +6,11 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
-import com.sonsofcrypto.web3lib.utils.extensions.toHexString
+import com.sonsofcrypto.web3lib.utils.bip39.Bip39
+import com.sonsofcrypto.web3lib.utils.bip39.WordList
+import com.sonsofcrypto.web3lib.utils.incrementedDerivationPath
 import com.sonsofcrypto.web3lib.utils.lastDerivationPathComponent
+import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.services.clipboard.ClipboardService
 import com.sonsofcrypto.web3walletcore.services.settings.SettingsService
 
@@ -30,11 +33,16 @@ interface MnemonicUpdateInteractor {
     fun accountDerivationPath(idx: Int): String
     fun accountAddress(idx: Int): String
     /** if xprv is false returns prv key hex string else xprv hex string */
-    fun accountPrivKey(idx: Int, xprv: Boolean = false): String
+    fun accountPrivKey(
+        idx: Int,
+        xprv: Boolean = false,
+        password: String? = null,
+        salt: String? = null,
+    ): String
     fun accountIsHidden(idx: Int): Boolean
     fun absoluteAccountIdx(idx: Int): Int
     fun setAccountName(name: String, idx: Int)
-    fun setAccountHidden(hidden: Boolean, idx: Int)
+    fun setAccountHidden(hidden: Boolean, idx: Int, )
     fun accountsCount(): Int
     fun hiddenAccountsCount(): Int
     fun globalExpertMode(): Boolean
@@ -49,18 +57,14 @@ class DefaultMnemonicUpdateInteractor(
     private var signerStoreItem: SignerStoreItem? = null
     private var mnemonic: String = ""
     private var password: String = ""
-    private var accounts: MutableList<Account> = mutableListOf(
-        Account("Zero", "M/64/0/0/0", "0x3565b665a433978c3c6a1d85343a9607dcce4e2e", false),
-        Account("One", "M/64/0/0/1", "0x3565b665a433978c3c6a1d85343a9607dcce4e2e", true),
-        Account("Two", "M/64/0/0/2", "0x3565b665a433978c3c6a1d85343a9607dcce4e2e", false),
-    )
+    private var signers: MutableList<SignerStoreItem> = mutableListOf()
+    private var bip39: Bip39? = null
+    private var bip44: Bip44? = null
 
-    override var name: String
-        get() { return accountName(0) }
-        set(value) { setAccountName(value, 0); }
+    override var name: String = ""
+    override var iCloudSecretStorage: Boolean = false
 
     override var salt: String = ""
-    override var iCloudSecretStorage: Boolean = false
     override var showHidden: Boolean = false
 
     @Throws(SecretStorage.Error::class)
@@ -69,57 +73,74 @@ class DefaultMnemonicUpdateInteractor(
         password: String,
         salt: String
     ) {
+        this.signerStoreItem = signerStoreItem
         this.password = password
         this.salt = salt
-        this.signerStoreItem = signerStoreItem
         this.name = signerStoreItem.name
         this.iCloudSecretStorage = signerStoreItem.iCloudSecretStorage
         val result = signerStoreService.secretStorage(signerStoreItem, password)
             ?.decrypt(password)
         mnemonic = result?.mnemonic ?: ""
+        val wordList = WordList.fromLocaleString(result?.mnemonicLocale ?: "en")
+        bip39 = Bip39(mnemonic.split(" "), salt, wordList)
+        bip44 = Bip44(bip39!!.seed(), ExtKey.Version.MAINNETPRV)
+        loadSigners()
     }
 
     override fun mnemonic(): String = mnemonic
 
-    override fun update(): SignerStoreItem? {
-        if (signerStoreItem == null) return null
-        val secretStorage = signerStoreService.secretStorage(
-            signerStoreItem!!,
-            password
-        ) ?: return null
-        val item = signerStoreItem!!.copy(
-            name = name,
-            iCloudSecretStorage = iCloudSecretStorage
+    override fun update(): SignerStoreItem? = signerStoreItem?.let {
+        updateSigner(
+            it,
+            it.copy(name = name, iCloudSecretStorage = iCloudSecretStorage)
         )
-        signerStoreService.add(item, password, secretStorage)
-        return item
     }
 
     override fun delete() {
         if (signerStoreItem!!.uuid == signerStoreService.selected?.uuid) {
-            signerStoreService.remove(signerStoreItem!!)
-            signerStoreService.selected = signerStoreService.items().firstOrNull()
-        } else {
-            signerStoreService.remove(signerStoreItem!!)
+            val newSelected = signerStoreService.items().firstOrNull()
+            signerStoreService.selected = newSelected
         }
+        signerStoreService.remove(signerStoreItem!!)
     }
 
-    override fun pasteToClipboard(text: String) = clipboardService.paste(text)
+    override fun pasteToClipboard(text: String)
+        = clipboardService.paste(text)
 
     @Throws(Exception::class)
     override fun addAccount(derivationPath: String?) {
-        println("[MnemonicUpdateInteractor] addAccount")
-        // TODO("Implement")
+        if (bip44 == null) throw Error.Bip44LoadFail
+        val name = "$name, acc: ${signers.count()}"
+        val path = derivationPath
+            ?: incrementedDerivationPath(signers.last().derivationPath)
+        signerStoreService.addAccount(
+            item = signerStoreItem!!,
+            password = password,
+            salt = salt,
+            derivationPath = path,
+            name = name,
+            hidden = false,
+        )
+        loadSigners()
     }
 
-    override fun accountName(idx: Int): String = account(idx).name
+    override fun accountName(idx: Int): String
+        = if (idx == 0) name else account(idx).name
 
-    override fun accountDerivationPath(idx: Int): String = account(idx)
-        .derivationPath
+    override fun accountDerivationPath(idx: Int): String
+        = account(idx).derivationPath
 
-    override fun accountAddress(idx: Int): String = account(idx).address
+    override fun accountAddress(idx: Int): String
+        = account(idx).primaryAddress()
 
-    override fun accountPrivKey(idx: Int, xprv: Boolean): String {
+    override fun accountPrivKey(
+        idx: Int,
+        xprv: Boolean,
+        password: String?,
+        salt: String?,
+    ): String {
+//        val bip39 =
+//        val bip44 =
 //        val key = bip44.deriveChildKey(accountDerivationPath(idx))
 //        return if (xprv) key.base58WithChecksumString()
 //        else key.key.toHexString(false)
@@ -127,30 +148,73 @@ class DefaultMnemonicUpdateInteractor(
         return "Priv key"
     }
 
-    override fun accountIsHidden(idx: Int): Boolean = account(idx).isHidden
+    override fun accountIsHidden(idx: Int): Boolean
+        = if (signers.isEmpty()) false else account(idx).hidden ?: false
 
     override fun absoluteAccountIdx(idx: Int): Int
-            = lastDerivationPathComponent(account(idx).derivationPath)
+        = lastDerivationPathComponent(account(idx).derivationPath)
 
     override fun setAccountName(name: String, idx: Int) {
-        account(idx).name = name
+        if (idx == 0) this.name = name
+        else updateSigner(account(idx), account(idx).copy(name = name))
     }
 
     override fun setAccountHidden(hidden: Boolean, idx: Int) {
-        account(idx).isHidden = hidden
+        updateSigner(account(idx), account(idx).copy(hidden = hidden))
     }
 
-    override fun accountsCount(): Int  = if (showHidden) accounts.count()
-    else visibleAccounts().count()
+    private fun updateSigner(
+        old: SignerStoreItem,
+        new: SignerStoreItem
+    ): SignerStoreItem {
+        signerStoreService.update(new)
+        signers[signers.indexOf(old)] = new
+        return new
+    }
 
-    override fun hiddenAccountsCount(): Int = accounts.count { it.isHidden }
+    override fun accountsCount(): Int
+        = if (showHidden) signers.count() else visibleAccounts().count()
 
-    override fun globalExpertMode(): Boolean = settingsService.expertMode
+    override fun hiddenAccountsCount(): Int
+        = signers.count { it.hidden ?: false }
 
-    private fun account(idx: Int): Account = if (showHidden) accounts[idx]
-        else visibleAccounts()[idx]
+    override fun globalExpertMode(): Boolean
+        = settingsService.expertMode
 
-    private fun visibleAccounts(): List<Account> = accounts.filter { !it.isHidden }
+    private fun account(idx: Int): SignerStoreItem {
+        return if (showHidden) signers[idx] else visibleAccounts()[idx]
+    }
+
+    private fun visibleAccounts(): List<SignerStoreItem>
+        = signers.filter { !(it.hidden ?: false) }
+
+    private fun loadSigners() {
+        val currItm = signerStoreItem ?: return
+        val signers = signerStoreService.items().filter {
+            val isCurrItm = it.uuid == currItm.uuid
+            val isParentNull = it.parentId != null
+            val isSameParent = it.parentId == currItm.parentId && !isParentNull
+            val isCurrParent = it.parentId == currItm.uuid
+            !isCurrItm && (isCurrParent || isSameParent)
+        }
+        this.signers = (listOf(currItm) + signers).toMutableList()
+    }
+
+    private fun generateDefaultNameIfNeeded() {
+        if (name.isEmpty()) {
+            name = Localized("mnemonic.defaultWalletName")
+            val mnemonicsCnt = signerStoreService.mnemonicSignerItems().count()
+            if (mnemonicsCnt > 0)
+                name = "$name $mnemonicsCnt"
+        }
+    }
+
+    /** Exceptions */
+    sealed class Error(message: String? = null) : Exception(message) {
+
+        /** Failed to load bip44 from signer */
+        object Bip44LoadFail : Error("Failed to load bip44 from signer")
+    }
 }
 
 private class Account(

@@ -65,9 +65,9 @@ extension SignersViewController {
 
     func update(with viewModel: SignersViewModel) {
         self.viewModel = viewModel
+        updateTargetView(targetView: viewModel.targetView)
         collectionView.reloadData()
         updateLogo(viewModel)
-        updateTargetView(targetView: viewModel.targetView)
         collectionView.deselectAllExcept(
             selectedIdxPaths(),
             animated: presentedViewController == nil,
@@ -281,12 +281,10 @@ extension SignersViewController: TargetViewTransitionDatasource {
 
     func targetView() -> UIView? {
         if let input = transitionTargetView as? SignersViewModel.TransitionTargetViewKeyStoreItemAt {
-            let idxPath = IndexPath(item: input.idx.int, section: 0)
-            return collectionView.cellForItem(at: idxPath) ?? view
+            return cv.cellForItem(at: IndexPath(item: input.idx.int))
         }
         if let input = transitionTargetView as? SignersViewModel.TransitionTargetViewButtonAt {
-            let idxPath = IndexPath(item: input.idx.int, section: 0)
-            return ctaButtonsContainer.buttonViewAt(idx: idxPath.item) ?? view
+            return ctaButtonsContainer.buttonViewAt(idx: input.idx.int)
         }
         return nil
     }

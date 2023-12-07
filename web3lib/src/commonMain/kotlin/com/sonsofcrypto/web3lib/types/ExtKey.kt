@@ -227,7 +227,8 @@ class Bip44 {
     val masterExtKey: ExtKey
 
     /** Generates master key from seed. Validates that key is compliant */
-    @Throws(Error::class) constructor(seed: ByteArray, version: ExtKey.Version) {
+    @Throws(Error::class)
+    constructor(seed: ByteArray, version: ExtKey.Version) {
         val hmac = hmacSha512("Bitcoin seed".encodeToByteArray(), seed)
         this.seed = seed
         this.masterExtKey = ExtKey(

@@ -36,6 +36,7 @@ import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWire
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination.Authenticate
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination.Dismiss
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
@@ -129,7 +130,15 @@ class DefaultMnemonicUpdatePresenter(
 
     private fun handleCTAAction(idx: Int) {
         when (idx) {
-            0 -> interactor.addAccount() // interactor.addAccount()
+            0 -> {
+                interactor.update()?.let { context.updateHandler(it) }
+                // HACK: to make sure UI had enough time to update for custom
+                // transition to work
+                CoroutineScope(uiDispatcher).launch {
+                    delay(0.15.seconds)
+                    wireframe.navigate(Dismiss)
+                }
+            }
             1 -> {
                 presentingCustomDerivationAlert = true
                 view.get()?.presentAlert(customDerivationAlertViewModel())
@@ -233,6 +242,7 @@ class DefaultMnemonicUpdatePresenter(
 
     private fun buttonsSections(): List<Section> = listOf(
         ButtonViewModel(Localized("mnemonic.copy.address"), SECONDARY),
+        ButtonViewModel(Localized("mnemonic.view.privKey"), SECONDARY),
         ButtonViewModel(Localized("mnemonic.cta.account"), SECONDARY),
         ButtonViewModel(Localized("mnemonic.cta.delete"), DESTRUCTIVE),
     ).map { Section(items = listOf(Button(it))) }

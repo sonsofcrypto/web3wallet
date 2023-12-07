@@ -9,6 +9,7 @@ interface SignersInteractor {
     var selected: SignerStoreItem?
     val items: List<SignerStoreItem>
     fun add(item: SignerStoreItem, password: String, secretStorage: SecretStorage)
+    fun indexOf(item: SignerStoreItem): Int
 }
 
 class DefaultSignersInteractor(
@@ -29,5 +30,9 @@ class DefaultSignersInteractor(
 
     override fun add(item: SignerStoreItem, password: String, secretStorage: SecretStorage) {
         signerStoreService.add(item, password, secretStorage)
+    }
+
+    override fun indexOf(item: SignerStoreItem): Int {
+        return items.indexOfFirst { it.uuid == item.uuid }
     }
 }

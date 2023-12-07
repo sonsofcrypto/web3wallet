@@ -82,7 +82,7 @@ class DefaultSignersPresenter(
             EditSignersItem(
                 item,
                 handler = {
-                    val newIdx = interactor.items.indexOf(it)
+                    val newIdx = interactor.indexOf(it)
                     if (newIdx != -1) { targetView = KeyStoreItemAt(newIdx) }
                     updateView()
                 },
