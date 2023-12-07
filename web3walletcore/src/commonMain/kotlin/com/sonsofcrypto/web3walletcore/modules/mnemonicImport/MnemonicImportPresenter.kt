@@ -4,20 +4,20 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
+import com.sonsofcrypto.web3lib.utils.extensions.stripLeadingWhiteSpace
+import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicInputViewModel
 import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicPresenterHelper
+import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.DEFAULT
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.NUMBER_PAD
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportWireframeDestination.Dismiss
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError
-import com.sonsofcrypto.web3lib.utils.extensions.stripLeadingWhiteSpace
-import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicInputViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
 
 sealed class MnemonicImportPresenterEvent {
     data class MnemonicChanged(val to: String, val cursorLocation: Int): MnemonicImportPresenterEvent()

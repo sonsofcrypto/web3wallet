@@ -1,7 +1,5 @@
 package com.sonsofcrypto.web3lib.utils
 
-import com.sonsofcrypto.web3lib.utils.extensions.subListTo
-
 fun defaultDerivationPath(): String
     = "m/44'/60'/0'/0/0"
 

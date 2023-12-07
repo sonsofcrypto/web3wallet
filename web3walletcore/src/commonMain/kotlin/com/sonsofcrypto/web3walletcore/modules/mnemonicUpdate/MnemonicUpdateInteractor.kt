@@ -11,7 +11,6 @@ import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.defaultDerivationPath
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.lastDerivationPathComponent
-import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.services.clipboard.ClipboardService
 import com.sonsofcrypto.web3walletcore.services.settings.SettingsService
 
