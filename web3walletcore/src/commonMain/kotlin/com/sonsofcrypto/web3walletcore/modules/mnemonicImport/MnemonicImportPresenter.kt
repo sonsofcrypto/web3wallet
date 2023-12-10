@@ -4,34 +4,71 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
+import com.sonsofcrypto.web3lib.utils.execDelayed
 import com.sonsofcrypto.web3lib.utils.extensions.stripLeadingWhiteSpace
+import com.sonsofcrypto.web3lib.utils.isValidDerivationPath
 import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicInputViewModel
 import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicPresenterHelper
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.SECONDARY
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.DEFAULT
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.NUMBER_PAD
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Switch
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.BarButton
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
+import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
+import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position.TOP
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportWireframeDestination.Dismiss
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.AlertAction
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.CTAAction
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.CopyAccountAddress
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.CopyMnemonic
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.Dismiss
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.RightBarButtonAction
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.SaltLearnMore
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.SaltSwitch
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.SetAccountHidden
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.SetAccountName
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.SetAllowFaceId
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.SetICouldBackup
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.SetMnemonic
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.SetName
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.SetPassType
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.SetPassword
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.SetSalt
+import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportPresenterEvent.ViewPrivKey
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError
+import kotlin.time.Duration.Companion.seconds
 
 sealed class MnemonicImportPresenterEvent {
-    data class MnemonicChanged(val to: String, val cursorLocation: Int): MnemonicImportPresenterEvent()
-    data class DidChangeName(val name: String): MnemonicImportPresenterEvent()
-    data class DidChangeICouldBackup(val onOff: Boolean): MnemonicImportPresenterEvent()
-    data class SaltSwitchDidChange(val onOff: Boolean): MnemonicImportPresenterEvent()
-    data class DidChangeSalt(val salt: String): MnemonicImportPresenterEvent()
-    object SaltLearnMoreAction: MnemonicImportPresenterEvent()
-    data class PassTypeDidChange(val idx: Int): MnemonicImportPresenterEvent()
-    data class PasswordDidChange(val text: String): MnemonicImportPresenterEvent()
-    data class AllowFaceIdDidChange(val onOff: Boolean): MnemonicImportPresenterEvent()
-    object DidTapMnemonic: MnemonicImportPresenterEvent()
-    object DidSelectCta: MnemonicImportPresenterEvent()
-    object DidSelectDismiss: MnemonicImportPresenterEvent()
+    data class SetMnemonic(val to: String, val cursorLocation: Int): MnemonicImportPresenterEvent()
+    object CopyMnemonic: MnemonicImportPresenterEvent()
+    data class SetName(val name: String): MnemonicImportPresenterEvent()
+    data class SetICouldBackup(val onOff: Boolean): MnemonicImportPresenterEvent()
+    data class SaltSwitch(val onOff: Boolean): MnemonicImportPresenterEvent()
+    data class SetSalt(val salt: String): MnemonicImportPresenterEvent()
+    object SaltLearnMore: MnemonicImportPresenterEvent()
+    data class SetPassType(val idx: Int): MnemonicImportPresenterEvent()
+    data class SetPassword(val text: String): MnemonicImportPresenterEvent()
+    data class SetAllowFaceId(val onOff: Boolean): MnemonicImportPresenterEvent()
+    data class SetAccountName(val name: String, val idx: Int): MnemonicImportPresenterEvent()
+    data class SetAccountHidden(val hidden: Boolean, val idx: Int): MnemonicImportPresenterEvent()
+    data class CopyAccountAddress(val idx: Int): MnemonicImportPresenterEvent()
+    data class ViewPrivKey(val idx: Int): MnemonicImportPresenterEvent()
+    data class AlertAction(val idx: Int, val text: String?): MnemonicImportPresenterEvent()
+    data class RightBarButtonAction(val idx: Int): MnemonicImportPresenterEvent()
+    data class CTAAction(val idx: Int): MnemonicImportPresenterEvent()
+    object Dismiss: MnemonicImportPresenterEvent()
 }
 
 interface MnemonicImportPresenter {
@@ -45,128 +82,250 @@ class DefaultMnemonicImportPresenter(
     private val interactor: MnemonicImportInteractor,
     private val context: MnemonicImportWireframeContext,
 ): MnemonicImportPresenter {
-    private val helper = MnemonicPresenterHelper()
-    private var mnemonic = ""
-    private var name = ""
-    private var iCloudSecretStorage = false
-    private var saltMnemonicOn = false
-    private var salt = ""
-    private var passwordType: SignerStoreItem.PasswordType = BIO
-    private var password = ""
-    private var passUnlockWithBio = true
-    private var cursorLocation = 0
     private var ctaTapped = false
+    private var localExpertMode: Boolean = false
+    /** -1 alert not presented. Else it is idx of account alert is about */
+    private var presentingPrivKeyAlert: Int = -1
+    private var presentingCustomDerivationAlert: Boolean = false
 
     override fun present() { updateView() }
 
-    override fun handle(event: MnemonicImportPresenterEvent): Unit =  when (event) {
-        is MnemonicImportPresenterEvent.MnemonicChanged -> {
-            mnemonic = event.to.stripLeadingWhiteSpace()
-            cursorLocation = event.cursorLocation -
-                (event.to.count() - mnemonic.count())
-            updateView(event.to != mnemonic)
+    override fun handle(event: MnemonicImportPresenterEvent): Unit = when (event) {
+        is SetMnemonic -> handleSetMnemonic(event.to, event.cursorLocation)
+        is SetName -> interactor.name = event.name
+        is SetICouldBackup -> interactor.iCloudSecretStorage = event.onOff
+        is SaltSwitch -> interactor.saltMnemonicOn = event.onOff
+        is SetSalt -> interactor.salt = event.salt
+        is SaltLearnMore -> handleSaltLearnMore()
+        is SetPassType -> handleSetPassType(event.idx)
+        is SetPassword -> handleSetPassword(event.text)
+        is SetAllowFaceId -> interactor.passUnlockWithBio = event.onOff
+        is CopyMnemonic -> interactor.pasteToClipboard(interactor.mnemonic())
+        is SetAccountName -> interactor.setAccountName(event.name, event.idx)
+        is SetAccountHidden -> handleSetAccountHidden(event.hidden, event.idx)
+        is CopyAccountAddress -> handleCopyAddress(event.idx)
+        is ViewPrivKey -> handleViewPrivKey(event.idx)
+        is AlertAction -> handleAlertAction(event.idx, event.text)
+        is RightBarButtonAction -> handleRightBarButtonAction(event.idx)
+        is CTAAction -> handleCTAAction(event.idx)
+        is Dismiss -> navigateToDismiss()
+    }
+
+    private fun handleSetMnemonic(mnemStr: String, cursorLoc: Int) {
+        val prevMnemStr = interactor.mnemonicStr
+        interactor.mnemonicStr = mnemStr.stripLeadingWhiteSpace()
+        interactor.cursorLoc = cursorLoc - (mnemStr.count()-prevMnemStr.count())
+        updateView(mnemStr != prevMnemStr)
+    }
+
+    private fun handleSaltLearnMore() = wireframe.navigate(
+        MnemonicImportWireframeDestination.LearnMoreSalt
+    )
+
+    private fun handleSetPassType(typeIdx: Int) {
+        interactor.passwordType = passwordTypes()[typeIdx]
+        updateView()
+    }
+
+    private fun handleSetPassword(pass: String) {
+        interactor.password = pass
+        updateView()
+    }
+
+    private fun handleSetAccountHidden(hidden: Boolean, idx: Int) {
+        interactor.setAccountHidden(hidden, idx)
+        updateView()
+    }
+
+    private fun handleCopyAddress(idx: Int) {
+        val address = interactor.accountAddress(idx)
+        interactor.pasteToClipboard(address)
+    }
+
+    private fun handleViewPrivKey(idx: Int) {
+        presentingPrivKeyAlert = idx
+        view.get()?.presentAlert(privKeyAlertViewModel(idx))
+    }
+
+    private fun privKeyAlertViewModel(accIdx: Int): AlertViewModel
+        = AlertViewModel.RegularAlertViewModel(
+            Localized("mnemonic.alert.privKey.title"),
+            Localized("mnemonic.alert.privKey.body.priv")
+                + "\n${interactor.accountPrivKey(accIdx)}\n\n"
+                + Localized("mnemonic.alert.privKey.body.xprv")
+                + "\n${interactor.accountPrivKey(accIdx, true)}\n",
+            listOf(
+                Action(Localized("mnemonic.alert.privKey.btnPriv"), NORMAL),
+                Action(Localized("mnemonic.alert.privKey.btnXprv"), NORMAL),
+                Action(Localized("cancel"), Action.Kind.CANCEL),
+            ),
+            SysName("key.horizontal")
+        )
+
+    private fun handlerPrivKeyAlertAction(actionIdx: Int) {
+        val accIdx = presentingPrivKeyAlert
+        presentingPrivKeyAlert = -1
+        if (actionIdx == 2) return;
+        val key = interactor.accountPrivKey(accIdx, actionIdx == 1)
+        val title = Localized("mnemonic.toast.copy.privKey")
+        interactor.pasteToClipboard(key)
+        presentToast(ToastViewModel((title),
+            SysName("square.on.square"),
+            TOP
+        ))
+    }
+
+    private fun handleAlertAction(idx: Int, text: String?) {
+        if (presentingPrivKeyAlert > -1) {
+            handlerPrivKeyAlertAction(idx)
         }
-        is MnemonicImportPresenterEvent.DidChangeName -> {
-            name = event.name
-        }
-        is MnemonicImportPresenterEvent.DidChangeICouldBackup -> {
-            iCloudSecretStorage = event.onOff
-        }
-        is MnemonicImportPresenterEvent.SaltSwitchDidChange -> {
-            saltMnemonicOn = event.onOff
-        }
-        is MnemonicImportPresenterEvent.DidChangeSalt -> {
-            salt = event.salt
-        }
-        is MnemonicImportPresenterEvent.SaltLearnMoreAction -> {
-            wireframe.navigate(MnemonicImportWireframeDestination.LearnMoreSalt)
-        }
-        is MnemonicImportPresenterEvent.PassTypeDidChange -> {
-            passwordType = passwordTypes()[event.idx]
-            updateView()
-        }
-        is MnemonicImportPresenterEvent.PasswordDidChange -> {
-            password = event.text
-            updateView()
-        }
-        is MnemonicImportPresenterEvent.AllowFaceIdDidChange -> {
-            passUnlockWithBio = event.onOff
-        }
-        is MnemonicImportPresenterEvent.DidTapMnemonic -> {
-            interactor.pasteToClipboard(mnemonic.trim())
-        }
-        is MnemonicImportPresenterEvent.DidSelectCta -> {
-            ctaTapped = true
-            if (!isValidForm) {
-                updateView()
-            } else {
-                if (passwordType == SignerStoreItem.PasswordType.BIO) {
-                    password = interactor.generatePassword()
-                }
-                try {
-                    createDefaultNameIfNeeded()
-                    val item = interactor
-                        .createKeyStoreItem(keyStoreItemData, password, salt)
-                    context.handler(item)
-                    wireframe.navigate(Dismiss)
-                } catch (e: Throwable) {
-                    // TODO: Handle error
-                }
-            }
-        }
-        is MnemonicImportPresenterEvent.DidSelectDismiss -> {
-            wireframe.navigate(Dismiss)
+        if (presentingCustomDerivationAlert) {
+            handleCustomDerivationPath(idx, text)
         }
     }
 
-    private val keyStoreItemData: MnemonicImportInteractorData get() = MnemonicImportInteractorData(
-        mnemonic.trim().split(" "),
-        name,
-        passUnlockWithBio,
-        iCloudSecretStorage,
-        saltMnemonicOn,
-        passwordType
+    private fun handleCustomDerivationPath(actionIdx: Int, path: String?) {
+        presentingCustomDerivationAlert = false
+        if (actionIdx == 1 || path == null) return;
+        if (isValidDerivationPath(path)) {
+            try {
+                interactor.addAccount(path)
+                updateView()
+            }
+            catch (err: Throwable) {
+                println(err)
+                presentCustomDerivationPathError(path)
+            }
+        } else presentCustomDerivationPathError(path)
+    }
+
+    private fun customDerivationAlertViewModel(): AlertViewModel
+        = AlertViewModel.InputAlertViewModel(
+            Localized("mnemonic.alert.customDerivation.title"),
+            Localized("mnemonic.alert.customDerivation.body"),
+            "",
+            "m/44'/60'/0'/0/0",
+            listOf(
+                Action(Localized("mnemonic.alert.customDerivation.cta"), NORMAL),
+                Action(Localized("cancel"), Action.Kind.CANCEL),
+            ),
+            SysName("key.radiowaves.forward")
+        )
+
+    private fun presentCustomDerivationPathError(path: String?) = presentAlert(
+        AlertViewModel.RegularAlertViewModel(
+            Localized("mnemonic.alert.customDerivationErr.title"),
+            (path ?: "") + Localized("mnemonic.alert.customDerivationErr.body"),
+            listOf(Action("ok", NORMAL)),
+            SysName("x.circle"),
+        )
+    )
+
+    private fun handleRightBarButtonAction(idx: Int) {
+        if (idx == 1) toggleExpertMode()
+        else interactor.showHidden = !interactor.showHidden
+        updateView()
+    }
+
+    private fun toggleExpertMode() {
+        localExpertMode = !localExpertMode
+        if (!localExpertMode) return
+        execDelayed(0.15.seconds) {
+            val title = Localized("toast.expertMode")
+            presentToast(ToastViewModel(title, SysName("brain"), TOP))
+        }
+    }
+
+    private fun handleCTAAction(idx: Int) {
+        if (!expertMode()) {
+            handleCreateWallet()
+            return
+        }
+        when (idx) {
+            0 -> handleAddAccount()
+            1 -> handleCreateWallet()
+            2 -> {
+                presentingCustomDerivationAlert = true
+                presentAlert(customDerivationAlertViewModel())
+            }
+        }
+    }
+
+    private fun handleCreateWallet() {
+        ctaTapped = true
+        if (!isValidForm) { updateView(); return }
+        if (interactor.passwordType == BIO) {
+            interactor.password = interactor.generatePassword()
+        }
+        try {
+            interactor.generateDefaultNameIfNeeded()
+            context.handler(interactor.createMnemonicSigner())
+            navigateToDismiss()
+        } catch (e: Throwable) {
+            // TODO: Handle error
+            println("[MnemonicImportPresenter.handleCreateWallet] $e")
+        }
+    }
+
+    private fun handleAddAccount() {
+        interactor.addAccount()
+        updateView()
+        view.get()?.scrollToBottom()
+    }
+
+    private fun navigateToDismiss() = wireframe.navigate(
+        MnemonicImportWireframeDestination.Dismiss
     )
 
     private fun updateView(updateMnemonic: Boolean = false) {
         view.get()?.update(viewModel(), mnemonicItem(updateMnemonic))
     }
 
-    private fun viewModel(): CollectionViewModel.Screen {
-        val error = interactor.mnemonicError(mnemonic.trim().split(" "), salt)
-        var sections = mutableListOf(mnemonicSection(error))
-        if (error == null)
-            sections.add(optionsSection())
-        return CollectionViewModel.Screen(
-            Localized(""),
-            sections,
-            ctaItems = listOf(ButtonViewModel(Localized("mnemonic.cta.import"))),
-        )
-    }
+    private fun presentToast(viewModel: ToastViewModel)
+        = view.get()?.presentToast(viewModel)
 
-    private fun mnemonicSection(err: MnemonicServiceError?): Section = Section(
-        null,
-        listOf(CellViewModel.Text(mnemonic)),
-        mnemonicFooter(err),
+    private fun presentAlert(viewModel: AlertViewModel)
+        = view.get()?.presentAlert(viewModel)
+
+    private fun viewModel(): Screen = Screen(
+        Localized("mnemonic.title.import"),
+        listOf(mnemonicSection()) + (
+            if (interactor.isMnemonicValid())
+                listOf(optionsSection()) + accountsSections()
+            else emptyList()
+        ),
+        listOf(
+            BarButton(
+                null,
+                SysName(if (interactor.showHidden) "eye.slash" else "eye"),
+                interactor.hiddenAccountsCount() == 0
+            ),
+            BarButton(null, SysName("brain"), interactor.globalExpertMode()),
+        ),
+        if (expertMode())
+            listOf(
+                ButtonViewModel(Localized("mnemonic.cta.account"), SECONDARY),
+                ButtonViewModel(Localized("mnemonic.cta.new")),
+                ButtonViewModel(Localized("mnemonic.cta.custom"), SECONDARY),
+            )
+        else listOf(ButtonViewModel(Localized("mnemonic.cta.new")))
     )
 
-    // TODO: Clean up
-    private fun mnemonicItem(updateMnemonic: Boolean): MnemonicInputViewModel {
-        val helper = MnemonicPresenterHelper()
-        val currentWord = interactor.prefix(mnemonic, cursorLocation)
-        val potentialWords = interactor.potentialMnemonicWords(currentWord)
-        var wordsInfo = interactor.findInvalidWords(mnemonic)
-        wordsInfo = helper.updateWordsInfo(wordsInfo, currentWord, cursorLocation) {
-            interactor.isValidPrefix(it)
-        }
-        val isMnemonicValid = interactor.isMnemonicValid(mnemonic.trim(), salt)
-        return MnemonicInputViewModel(
-            potentialWords,
-            wordsInfo.map { MnemonicInputViewModel.Word(it.word, it.isInvalid) },
-            if (ctaTapped) isMnemonicValid else null,
-            if (updateMnemonic) mnemonic else null,
+    private fun mnemonicItem(updateMnemonic: Boolean): MnemonicInputViewModel
+        = MnemonicInputViewModel(
+            interactor.potentialMnemonicWords(),
+            interactor.mnemonicWordsInfo().map {
+                MnemonicInputViewModel.Word(it.word, it.isInvalid)
+            },
+            if (ctaTapped) interactor.isMnemonicValid() else null,
+            if (updateMnemonic) interactor.mnemonic() else null,
         )
-    }
+
+    private fun mnemonicSection(): Section = Section(
+        null,
+        listOf(CellViewModel.Text(interactor.mnemonicStr)),
+        mnemonicFooter(interactor.mnemonicError()),
+    )
 
     private fun mnemonicFooter(error: MnemonicServiceError? = null): Footer {
         if (error == null)
@@ -194,62 +353,91 @@ class DefaultMnemonicImportPresenter(
         listOf(
             CellViewModel.TextInput(
                 Localized("mnemonic.name.title"),
-                name,
+                interactor.name,
                 Localized("mnemonic.name.placeholder"),
             ),
-            CellViewModel.Switch(
+            Switch(
                 Localized("mnemonic.iCould.title"),
-                iCloudSecretStorage,
+                interactor.iCloudSecretStorage,
             ),
-//        CellViewModel.SwitchWithTextInput(
-//            Localized("mnemonic.salt.title"),
-//            saltMnemonicOn,
-//            salt,
-//            Localized("mnemonic.salt.placeholder"),
-//            Localized("mnemonic.salt.description"),
-//            listOf(Localized("mnemonic.salt.descriptionHighlight")),
-//        ),
-            CellViewModel.SegmentWithTextAndSwitch(
+            SegmentWithTextAndSwitch(
                 Localized("mnemonic.passType.title"),
                 passwordTypes().map { it.name.lowercase() },
                 selectedPasswordTypeIdx(),
-                password,
-                if (passwordType == PIN) NUMBER_PAD else DEFAULT,
+                interactor.password,
+                if (interactor.passwordType == PIN) NUMBER_PAD else DEFAULT,
                 Localized("mnemonic.$placeholderType.placeholder"),
                 passwordErrorMessage,
                 Localized("mnemonic.passType.allowFaceId"),
-                passUnlockWithBio,
-            )
+                interactor.passUnlockWithBio,
+            ),
+//          CellViewModel.SwitchWithTextInput(
+//              Localized("mnemonic.salt.title"),
+//              saltMnemonicOn,
+//              salt,
+//              Localized("mnemonic.salt.placeholder"),
+//              Localized("mnemonic.salt.description"),
+//              listOf(Localized("mnemonic.salt.descriptionHighlight")),
+//          ),
         ),
-        null,
+        null
     )
 
-    private val placeholderType: String get() = if (passwordType == PIN) "pinType" else "passType"
+    @OptIn(ExperimentalStdlibApi::class)
+    private fun accountsSections(): List<Section>
+        = if (interactor.accountsCount() <= 1)
+            emptyList()
+        else (0..<interactor.accountsCount()).map {
+            Section(
+                CollectionViewModel.Header.Title(
+                    "Account ${interactor.absoluteAccountIdx(it)}",
+                    interactor.accountDerivationPath(it)
+                ),
+                listOf(
+                    CellViewModel.KeyValueList(
+                        listOf(
+                            CellViewModel.KeyValueList.Item(
+                                Localized("mnemonic.account.name"),
+                                interactor.accountName(it),
+                                Localized("mnemonic.account.name.placeholder"),
+                            ),
+                            CellViewModel.KeyValueList.Item(
+                                Localized("mnemonic.copy.address"),
+                                Localized("mnemonic.view.privKey"),
+                                interactor.accountAddress(it),
+                            ),
+                        ),
+                        mapOf("isHidden" to interactor.accountIsHidden(it))
+                    )
+                ),
+                Footer.Text(interactor.accountAddress(it)),
+            )
+        }
+
+    private val placeholderType: String get()
+        = if (interactor.passwordType == PIN) "pinType" else "passType"
 
     private fun passwordTypes(): List<SignerStoreItem.PasswordType> =
         SignerStoreItem.PasswordType.values().map { it }
 
     private fun selectedPasswordTypeIdx(): Int {
-        val index = passwordTypes().indexOf(passwordType)
+        val index = passwordTypes().indexOf(interactor.passwordType)
         return if (index == -1) return 2 else index
     }
 
     private val isValidForm: Boolean get() {
-        val isMnemonicValid = interactor.isMnemonicValid(mnemonic.trim(), salt)
-        val isPasswordValid = passwordErrorMessage == null
-        return isMnemonicValid && isPasswordValid
+        return interactor.isMnemonicValid() && passwordErrorMessage == null
     }
 
     private val passwordErrorMessage: String? get() {
         if (!ctaTapped) return null
-        return interactor.validationError(password, passwordType)
+        return interactor.passError(
+            interactor.password,
+            interactor.passwordType
+        )
     }
 
-    private fun createDefaultNameIfNeeded() {
-        if (name.isEmpty()) {
-            name = Localized("mnemonic.defaultWalletName")
-            if (interactor.keyStoreItemsCount() > 0)
-                name = "$name ${interactor.keyStoreItemsCount()}"
-        }
+    private fun expertMode(): Boolean {
+        return interactor.globalExpertMode() || localExpertMode
     }
 }
