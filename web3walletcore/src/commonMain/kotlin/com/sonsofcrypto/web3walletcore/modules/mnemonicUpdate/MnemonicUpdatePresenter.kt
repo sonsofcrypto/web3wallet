@@ -112,22 +112,15 @@ class DefaultMnemonicUpdatePresenter(
         if (auth == null || err != null) return
         val idx = interactor.idxForAccount(item.uuid)
         presentingPrivKeyAlert = idx
-        view.get()?.presentAlert(
-            privKeyAlertViewModel(idx, auth.password, auth.salt)
-        )
+        presentAlert(privKeyAlertViewModel(idx, auth.password, auth.salt))
     }
 
     override fun handle(event: MnemonicUpdatePresenterEvent) =  when (event) {
         is CopyMnemonic -> interactor.pasteToClipboard(interactor.mnemonic())
         is SetAccountName -> interactor.setAccountName(event.name, event.idx)
         is SetICouldBackup -> interactor.iCloudSecretStorage = event.onOff
-        is SetAccountHidden -> {
-            interactor.setAccountHidden(event.hidden, event.idx)
-            updateView()
-        }
-        is CopyAccountAddress -> {
-            interactor.pasteToClipboard(interactor.accountAddress(event.idx))
-        }
+        is SetAccountHidden -> handleSetAccountHidden(event.hidden, event.idx)
+        is CopyAccountAddress -> handleCopyAccountAddress(event.idx)
         is ViewPrivKey -> handleViewPrivKey(event.idx)
         is CellButtonAction -> handleCellButtonAction(event.idx)
         is AlertAction -> handleAlertAction(event.idx, event.text)
@@ -136,10 +129,18 @@ class DefaultMnemonicUpdatePresenter(
         is MnemonicUpdatePresenterEvent.Dismiss -> dismiss()
     }
 
+    private fun handleSetAccountHidden(hidden: Boolean, idx: Int) {
+        interactor.setAccountHidden(hidden, idx)
+        updateView()
+    }
+
+    private fun handleCopyAccountAddress(idx: Int)
+        = interactor.pasteToClipboard(interactor.accountAddress(idx))
+
     private fun handleViewPrivKey(idx: Int) {
         if (interactor.isPrimaryAccount(idx)) {
             presentingPrivKeyAlert = idx
-            view.get()?.presentAlert(privKeyAlertViewModel(idx))
+            presentAlert(privKeyAlertViewModel(idx))
         } else {
             val cxt = authContext(interactor.signer(idx), true)
             wireframe.navigate(Authenticate(cxt))
@@ -169,14 +170,9 @@ class DefaultMnemonicUpdatePresenter(
         presentingPrivKeyAlert = -1
         if (actionIdx == 2) return;
         val key = interactor.accountPrivKey(accIdx, actionIdx == 1)
+        val title = Localized("mnemonic.toast.copy.privKey")
         interactor.pasteToClipboard(key)
-        view.get()?.presentToast(
-            ToastViewModel(
-                Localized("mnemonic.toast.copy.privKey"),
-                SysName("square.on.square"),
-                TOP
-            )
-        )
+        presentToast(ToastViewModel(title, SysName("square.on.square"), TOP))
     }
 
     private fun handleCellButtonAction(idx: Int) {
@@ -192,14 +188,9 @@ class DefaultMnemonicUpdatePresenter(
 
     private fun copyAddress() {
         val address = interactor.accountAddress(0)
+        val title = Localized("account.action.copy.toast") + "\n" + address
         interactor.pasteToClipboard(address)
-        view.get()?.presentToast(
-            ToastViewModel(
-                Localized("account.action.copy.toast") + "\n" + address,
-                SysName("square.on.square"),
-                TOP
-            )
-        )
+        presentToast(ToastViewModel(title, SysName("square.on.square"), TOP))
     }
 
     private fun presentDeleteConfirmation() {
@@ -216,7 +207,7 @@ class DefaultMnemonicUpdatePresenter(
             ),
             SysName("exclamationmark.triangle", ImageMedia.Tint.DESTRUCTIVE)
         )
-        view.get()?.presentAlert(alertViewModel)
+        presentAlert(alertViewModel)
     }
 
     private fun handleAddAccount(path: String? = null) {
@@ -250,7 +241,7 @@ class DefaultMnemonicUpdatePresenter(
         localExpertMode = !localExpertMode
         if (localExpertMode) execDelayed(0.15.seconds) {
             val tlt = Localized("toast.expertMode")
-            view.get()?.presentToast(ToastViewModel(tlt, SysName("brain"), TOP))
+            presentToast(ToastViewModel(tlt, SysName("brain"), TOP))
         }
     }
 
@@ -259,7 +250,7 @@ class DefaultMnemonicUpdatePresenter(
             0 -> handleUpdate()
             1 -> {
                 presentingCustomDerivationAlert = true
-                view.get()?.presentAlert(customDerivationAlertViewModel())
+                presentAlert(customDerivationAlertViewModel())
             }
         }
         updateView()
@@ -301,26 +292,28 @@ class DefaultMnemonicUpdatePresenter(
         } else presentCustomDerivationPathError(path)
     }
 
-    private fun presentCustomDerivationPathError(path: String?) {
-        view.get()?.presentAlert(
-            RegularAlertViewModel(
-                Localized("Invalid derivation path"),
-                (path ?: "")
-                        + Localized("mnemonic.alert.customDerivationError.body"),
-                listOf(Action("ok", NORMAL)),
-                SysName("x.circle"),
-            )
+    private fun presentCustomDerivationPathError(path: String?) = presentAlert(
+        RegularAlertViewModel(
+            Localized("mnemonic.alert.customDerivationErr.title"),
+            (path ?: "") + Localized("mnemonic.alert.customDerivationErr.body"),
+            listOf(Action("ok", NORMAL)),
+            SysName("x.circle"),
         )
-    }
+    )
 
     private fun dismiss() {
         context.addAccountHandler()
         wireframe.navigate(Dismiss)
     }
 
-    private fun updateView() {
-        view.get()?.update(viewModel())
-    }
+    private fun updateView()
+        = view.get()?.update(viewModel())
+
+    private fun presentToast(viewModel: ToastViewModel)
+        = view.get()?.presentToast(viewModel)
+
+    private fun presentAlert(viewModel: AlertViewModel)
+        = view.get()?.presentAlert(viewModel)
 
     private fun viewModel(): Screen = Screen(
         Localized("mnemonicConfirmation.title"),
