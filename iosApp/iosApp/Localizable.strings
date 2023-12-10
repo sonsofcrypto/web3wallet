@@ -177,8 +177,8 @@
 "mnemonic.alert.customDerivation.title" = "Custom Derivation Path";
 "mnemonic.alert.customDerivation.body" = "Derive account on custom path\neg m/44'/60'/0'/0/0";
 "mnemonic.alert.customDerivation.cta" = "Derive Key";
-"mnemonic.alert.customDerivationError.title" = "Invalid derivation path";
-"mnemonic.alert.customDerivationError.body" = " is not valid derivation path";
+"mnemonic.alert.customDerivationErr.title" = "Invalid derivation path";
+"mnemonic.alert.customDerivationErr.body" = " is not valid derivation path";
 "mnemonic.toast.copy.privKey" = "Private key copied to to pasteboard for 30 seconds.";
 "mnemonic.size.title" = "Mnemonic size";
 

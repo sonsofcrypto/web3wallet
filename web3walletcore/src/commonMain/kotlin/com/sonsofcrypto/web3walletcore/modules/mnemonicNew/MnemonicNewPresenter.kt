@@ -5,8 +5,8 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.B
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
+import com.sonsofcrypto.web3lib.utils.execDelayed
 import com.sonsofcrypto.web3lib.utils.isValidDerivationPath
-import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.CANCEL
@@ -47,10 +47,6 @@ import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterE
 import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.SetPassword
 import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.SetSalt
 import com.sonsofcrypto.web3walletcore.modules.mnemonicNew.MnemonicNewPresenterEvent.ViewPrivKey
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 
 sealed class MnemonicNewPresenterEvent {
@@ -68,8 +64,8 @@ sealed class MnemonicNewPresenterEvent {
     data class SetAccountHidden(val hidden: Boolean, val idx: Int): MnemonicNewPresenterEvent()
     data class CopyAccountAddress(val idx: Int): MnemonicNewPresenterEvent()
     data class ViewPrivKey(val idx: Int): MnemonicNewPresenterEvent()
-    data class RightBarButtonAction(val idx: Int): MnemonicNewPresenterEvent()
     data class AlertAction(val idx: Int, val text: String?): MnemonicNewPresenterEvent()
+    data class RightBarButtonAction(val idx: Int): MnemonicNewPresenterEvent()
     data class CTAAction(val idx: Int): MnemonicNewPresenterEvent()
     object Dismiss: MnemonicNewPresenterEvent()
 }
@@ -92,108 +88,93 @@ class DefaultMnemonicNewPresenter(
 
     override fun present() { updateView() }
 
-    override fun handle(event: MnemonicNewPresenterEvent) {
-        when (event) {
-            is SetName -> interactor.name = event.name
-            is SetAccountName -> interactor.setAccountName(event.name, event.idx)
-            is SetICouldBackup -> interactor.iCloudSecretStorage = event.onOff
-            is SaltSwitch -> interactor.saltMnemonicOn = event.onOff
-            is SetSalt -> interactor.salt = event.salt
-            is SetAllowFaceId -> interactor.passUnlockWithBio = event.onOff
-            is SaltLearnMore -> wireframe.navigate(
-                MnemonicNewWireframeDestination.LearnMoreSalt
-            )
-            is SetPassType -> {
-                interactor.passwordType = passwordTypes()[event.idx]
-                updateView()
-            }
-            is SetPassword -> {
-                interactor.password = event.text
-                updateView()
-            }
-            is SetEntropySize -> {
-                interactor.entropySize = Bip39.EntropySize.values()[event.idx]
-                updateView()
-            }
-            is CopyMnemonic -> interactor.pasteToClipboard(
-                interactor.mnemonic().trim()
-            )
-            is SetAccountHidden -> {
-                interactor.setAccountHidden(event.hidden, event.idx)
-                updateView()
-            }
-            is CopyAccountAddress -> {
-                val address = interactor.accountAddress(event.idx)
-                interactor.pasteToClipboard(address)
-            }
-            is ViewPrivKey -> {
-                presentingPrivKeyAlert = event.idx
-                view.get()?.presentAlert(privKeyAlertViewModel(event.idx))
-            }
-            is RightBarButtonAction -> {
-                if (event.idx == 1) toggleExpertMode()
-                else interactor.showHidden = !interactor.showHidden
-                updateView()
-            }
-            is AlertAction -> {
-                if (presentingPrivKeyAlert > -1) {
-                    handlerPrivKeyAlertAction(event.idx)
-                }
-                if (presentingCustomDerivationAlert) {
-                    handleCustomDerivationPath(event.idx, event.text)
-                }
-            }
-            is CTAAction -> {
-                if (!expertMode()) {
-                    createWallet()
-                    return
-                }
-                when (event.idx) {
-                    0 -> interactor.addAccount()
-                    1 -> createWallet()
-                    2 -> {
-                        presentingCustomDerivationAlert = true
-                        view.get()?.presentAlert(customDerivationAlertViewModel())
-                    }
-                }
-                updateView()
-            }
-            is Dismiss -> wireframe.navigate(
-                MnemonicNewWireframeDestination.Dismiss
-            )
-        }
+    override fun handle(event: MnemonicNewPresenterEvent) = when (event) {
+        is SetName -> interactor.name = event.name
+        is SetAccountName -> interactor.setAccountName(event.name, event.idx)
+        is SetICouldBackup -> interactor.iCloudSecretStorage = event.onOff
+        is SaltSwitch -> interactor.saltMnemonicOn = event.onOff
+        is SetSalt -> interactor.salt = event.salt
+        is SetAllowFaceId -> interactor.passUnlockWithBio = event.onOff
+        is SaltLearnMore -> handleSaltLearnMore()
+        is SetPassType -> handleSetPassType(event.idx)
+        is SetPassword -> handleSetPassword(event.text)
+        is SetEntropySize -> handleSetEntropySize(event.idx)
+        is CopyMnemonic -> interactor.pasteToClipboard(interactor.mnemonic())
+        is SetAccountHidden -> handleSetAccountHidden(event.hidden, event.idx)
+        is CopyAccountAddress -> handleCopyAddress(event.idx)
+        is ViewPrivKey -> handleViewPrivKey(event.idx)
+        is AlertAction -> handleAlertAction(event.idx, event.text)
+        is RightBarButtonAction -> handleRightBarButtonAction(event.idx)
+        is CTAAction -> handleCTAAction(event.idx)
+        is Dismiss -> wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
     }
 
-    private fun createWallet() {
-        ctaTapped = true
-        if (!isValidForm) return updateView()
-        if (interactor.passwordType == BIO) {
-            interactor.password = interactor.generatePassword()
-        }
-        try {
-            interactor.generateDefaultNameIfNeeded()
-            val item = interactor.createMnemonicSigner()
-            context.handler(item)
-            wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
-        } catch (e: Throwable) {
-            // TODO: Handle error
-            println("[ERROR] $e")
-        }
+    private fun handleSaltLearnMore() = wireframe.navigate(
+        MnemonicNewWireframeDestination.LearnMoreSalt
+    )
+
+    private fun handleSetPassType(typeIdx: Int) {
+        interactor.passwordType = passwordTypes()[typeIdx]
+        updateView()
     }
+
+    private fun handleSetPassword(pass: String) {
+        interactor.password = pass
+        updateView()
+    }
+
+    private fun handleSetEntropySize(entIdx: Int) {
+        interactor.entropySize = Bip39.EntropySize.values()[entIdx]
+        updateView()
+    }
+
+    private fun handleSetAccountHidden(hidden: Boolean, idx: Int) {
+        interactor.setAccountHidden(hidden, idx)
+        updateView()
+    }
+
+    private fun handleCopyAddress(idx: Int) {
+        val address = interactor.accountAddress(idx)
+        interactor.pasteToClipboard(address)
+    }
+
+    private fun handleViewPrivKey(idx: Int) {
+        presentingPrivKeyAlert = idx
+        view.get()?.presentAlert(privKeyAlertViewModel(idx))
+    }
+
+    private fun privKeyAlertViewModel(accIdx: Int): AlertViewModel
+        = RegularAlertViewModel(
+            Localized("mnemonic.alert.privKey.title"),
+            Localized("mnemonic.alert.privKey.body.priv")
+                    + "\n${interactor.accountPrivKey(accIdx)}\n\n"
+                    + Localized("mnemonic.alert.privKey.body.xprv")
+                    + "\n${interactor.accountPrivKey(accIdx, true)}\n",
+            listOf(
+                Action(Localized("mnemonic.alert.privKey.btnPriv"), NORMAL),
+                Action(Localized("mnemonic.alert.privKey.btnXprv"), NORMAL),
+                Action(Localized("cancel"), CANCEL),
+            ),
+            SysName("key.horizontal")
+        )
 
     private fun handlerPrivKeyAlertAction(actionIdx: Int) {
         val accIdx = presentingPrivKeyAlert
         presentingPrivKeyAlert = -1
         if (actionIdx == 2) return;
         val key = interactor.accountPrivKey(accIdx, actionIdx == 1)
+        val title = Localized("mnemonic.toast.copy.privKey")
         interactor.pasteToClipboard(key)
-        view.get()?.presentToast(
-            ToastViewModel(
-                Localized("mnemonic.toast.copy.privKey"),
-                SysName("square.on.square"),
-                TOP
-            )
-        )
+        presentToast(ToastViewModel((title), SysName("square.on.square"), TOP))
+    }
+
+    private fun handleAlertAction(idx: Int, text: String?) {
+        if (presentingPrivKeyAlert > -1) {
+            handlerPrivKeyAlertAction(idx)
+        }
+        if (presentingCustomDerivationAlert) {
+            handleCustomDerivationPath(idx, text)
+        }
     }
 
     private fun handleCustomDerivationPath(actionIdx: Int, path: String?) {
@@ -211,33 +192,84 @@ class DefaultMnemonicNewPresenter(
         } else presentCustomDerivationPathError(path)
     }
 
-    private fun presentCustomDerivationPathError(path: String?) {
-        view.get()?.presentAlert(
-            RegularAlertViewModel(
-                Localized("Invalid derivation path"),
-                (path ?: "")
-                    + Localized("mnemonic.alert.customDerivationError.body"),
-                listOf(Action("ok", NORMAL)),
-                SysName("x.circle"),
-            )
+    private fun customDerivationAlertViewModel(): AlertViewModel
+        = InputAlertViewModel(
+            Localized("mnemonic.alert.customDerivation.title"),
+            Localized("mnemonic.alert.customDerivation.body"),
+            "",
+            "m/44'/60'/0'/0/0",
+            listOf(
+                Action(Localized("mnemonic.alert.customDerivation.cta"), NORMAL),
+                Action(Localized("cancel"), CANCEL),
+            ),
+            SysName("key.radiowaves.forward")
         )
+
+    private fun presentCustomDerivationPathError(path: String?) = presentAlert(
+        RegularAlertViewModel(
+            Localized("mnemonic.alert.customDerivationErr.title"),
+            (path ?: "") + Localized("mnemonic.alert.customDerivationErr.body"),
+            listOf(Action("ok", NORMAL)),
+            SysName("x.circle"),
+        )
+    )
+
+    private fun handleRightBarButtonAction(idx: Int) {
+        if (idx == 1) toggleExpertMode()
+        else interactor.showHidden = !interactor.showHidden
+        updateView()
     }
 
     private fun toggleExpertMode() {
         localExpertMode = !localExpertMode
         if (!localExpertMode) return
-        CoroutineScope(uiDispatcher).launch {
-            delay(0.15.seconds)
+        execDelayed(0.15.seconds) {
             val title = Localized("toast.expertMode")
-            view.get()?.presentToast(
-                ToastViewModel(title, SysName("brain"), TOP)
-            )
+            presentToast(ToastViewModel(title, SysName("brain"), TOP))
         }
     }
 
-    private fun updateView() {
-        view.get()?.update(viewModel())
+    private fun handleCTAAction(idx: Int) {
+        if (!expertMode()) {
+            createWallet()
+            return
+        }
+        when (idx) {
+            0 -> interactor.addAccount()
+            1 -> createWallet()
+            2 -> {
+                presentingCustomDerivationAlert = true
+                presentAlert(customDerivationAlertViewModel())
+            }
+        }
+        updateView()
     }
+
+    private fun createWallet() {
+        ctaTapped = true
+        if (!isValidForm) { updateView(); return }
+        if (interactor.passwordType == BIO) {
+            interactor.password = interactor.generatePassword()
+        }
+        try {
+            interactor.generateDefaultNameIfNeeded()
+            val item = interactor.createMnemonicSigner()
+            context.handler(item)
+            wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
+        } catch (e: Throwable) {
+            // TODO: Handle error
+            println("[ERROR] $e")
+        }
+    }
+
+    private fun updateView()
+        = view.get()?.update(viewModel())
+
+    private fun presentToast(viewModel: ToastViewModel)
+        = view.get()?.presentToast(viewModel)
+
+    private fun presentAlert(viewModel: AlertViewModel)
+        = view.get()?.presentAlert(viewModel)
 
     private fun viewModel(): Screen = Screen(
         Localized("mnemonic.title.new"),
@@ -348,34 +380,6 @@ class DefaultMnemonicNewPresenter(
             )
         }
 
-    private fun customDerivationAlertViewModel(): AlertViewModel
-        = InputAlertViewModel(
-            Localized("mnemonic.alert.customDerivation.title"),
-            Localized("mnemonic.alert.customDerivation.body"),
-            "",
-            "m/44'/60'/0'/0/0",
-            listOf(
-                Action(Localized("mnemonic.alert.customDerivation.cta"), NORMAL),
-                Action(Localized("cancel"), CANCEL),
-            ),
-            SysName("key.radiowaves.forward")
-        )
-
-    private fun privKeyAlertViewModel(accIdx: Int): AlertViewModel
-        = RegularAlertViewModel(
-            Localized("mnemonic.alert.privKey.title"),
-            Localized("mnemonic.alert.privKey.body.priv")
-                + "\n${interactor.accountPrivKey(accIdx)}\n\n"
-                + Localized("mnemonic.alert.privKey.body.xprv")
-                + "\n${interactor.accountPrivKey(accIdx, true)}\n",
-            listOf(
-                Action(Localized("mnemonic.alert.privKey.btnPriv"), NORMAL),
-                Action(Localized("mnemonic.alert.privKey.btnXprv"), NORMAL),
-                Action(Localized("cancel"), CANCEL),
-            ),
-            SysName("key.horizontal")
-        )
-
     private val placeholderType: String get()
         = if (interactor.passwordType == PIN) "pinType" else "passType"
 
@@ -391,7 +395,7 @@ class DefaultMnemonicNewPresenter(
 
     private val passwordErrorMessage: String? get() {
         if (!ctaTapped) return null
-        return interactor.validationError(
+        return interactor.validationErr(
             interactor.password,
             interactor.passwordType
         )
@@ -401,4 +405,3 @@ class DefaultMnemonicNewPresenter(
         return interactor.globalExpertMode() || localExpertMode
     }
 }
-

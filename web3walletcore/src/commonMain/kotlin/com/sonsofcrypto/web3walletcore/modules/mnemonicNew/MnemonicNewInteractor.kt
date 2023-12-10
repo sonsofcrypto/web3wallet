@@ -37,10 +37,7 @@ interface MnemonicNewInteractor {
     fun generatePassword(): String
 
     fun pasteToClipboard(text: String)
-    fun validationError(
-        password: String,
-        type: SignerStoreItem.PasswordType
-    ): String?
+    fun validationErr(pass: String, type: SignerStoreItem.PasswordType): String?
 
     @Throws(Exception::class)
     fun addAccount(derivationPath: String? = null)
@@ -88,22 +85,15 @@ class DefaultMnemonicNewInteractor(
     override var passUnlockWithBio: Boolean = true
     override var showHidden: Boolean = false
 
-    override fun mnemonic(): String = bip39.mnemonic.joinToString(" ")
+    override fun mnemonic(): String = bip39.mnemonic.joinToString(" ").trim()
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun createMnemonicSigner(): SignerStoreItem {
-        val item = signerStoreService.createMnemonicSigner(
-            MnemonicSignerConfig(
-                mnemonic = bip39.mnemonic,
-                name = name,
-                passUnlockWithBio = passUnlockWithBio,
-                iCloudSecretStorage = iCloudSecretStorage,
-                saltMnemonic = saltMnemonicOn,
-                passwordType = passwordType,
-            ),
-            password,
-            salt
+        val cnf = MnemonicSignerConfig(
+            bip39.mnemonic, name, passUnlockWithBio, iCloudSecretStorage,
+            saltMnemonicOn, passwordType,
         )
+        val item = signerStoreService.createMnemonicSigner(cnf, password, salt)
         for (i in 1..<accounts.count()) {
             val path = accounts[i].derivationPath
             val name = accounts[i].name
@@ -119,23 +109,22 @@ class DefaultMnemonicNewInteractor(
         regenerateAccountsAndAddresses()
     }
 
-    override fun generateDefaultNameIfNeeded() {
-        if (name.isEmpty()) {
-            name = Localized("mnemonic.defaultWalletName")
-            val mnemonicsCnt = signerStoreService.mnemonicSignerItems().count()
-            if (mnemonicsCnt > 0)
-                name = "$name $mnemonicsCnt"
-        }
-    }
+    override fun generateDefaultNameIfNeeded() = if (name.isEmpty()) {
+        name = Localized("mnemonic.defaultWalletName")
+        val mnemonicsCnt = signerStoreService.mnemonicSignerItems().count()
+        if (mnemonicsCnt > 0) name = "$name $mnemonicsCnt" else Unit
+    } else Unit
 
-    override fun generatePassword(): String = secureRand(32).toHexString()
+    override fun generatePassword(): String
+        = secureRand(32).toHexString()
 
-    override fun pasteToClipboard(text: String) = clipboardService.paste(text)
+    override fun pasteToClipboard(text: String)
+        = clipboardService.paste(text)
 
-    override fun validationError(
-        password: String,
+    override fun validationErr(
+        pass: String,
         type: SignerStoreItem.PasswordType
-    ): String? = passwordService.validationError(password, type)
+    ): String? = passwordService.validationError(pass, type)
 
     @Throws(Exception::class)
     override fun addAccount(derivationPath: String?) {
@@ -143,15 +132,17 @@ class DefaultMnemonicNewInteractor(
         val name = "$name, acc: ${accounts.count()}"
         val path = nextDerivationPath(derivationPath)
         val address = addressService.address(bip44.deriveChildKey(path))
-        accounts.add(Account(name, path, address, false))
+        accounts.add(Account(name, path, address))
     }
 
-    override fun accountName(idx: Int): String = account(idx).name
+    override fun accountName(idx: Int): String
+        = account(idx).name
 
-    override fun accountDerivationPath(idx: Int): String = account(idx)
-        .derivationPath
+    override fun accountDerivationPath(idx: Int): String
+        = account(idx).derivationPath
 
-    override fun accountAddress(idx: Int): String = account(idx).address
+    override fun accountAddress(idx: Int): String
+        = account(idx).address
 
     override fun accountPrivKey(idx: Int, xprv: Boolean): String {
         val key = bip44.deriveChildKey(accountDerivationPath(idx))
@@ -159,7 +150,8 @@ class DefaultMnemonicNewInteractor(
             else key.key.toHexString(false)
     }
 
-    override fun accountIsHidden(idx: Int): Boolean = account(idx).isHidden
+    override fun accountIsHidden(idx: Int): Boolean
+        = account(idx).isHidden
 
     override fun absoluteAccountIdx(idx: Int): Int
         = lastDerivationPathComponent(account(idx).derivationPath)
@@ -172,27 +164,29 @@ class DefaultMnemonicNewInteractor(
         account(idx).isHidden = hidden
     }
 
-    override fun accountsCount(): Int  = if (showHidden) accounts.count()
-        else visibleAccounts().count()
+    override fun accountsCount(): Int
+        = if (showHidden) accounts.count() else visibleAccounts().count()
 
-    override fun hiddenAccountsCount(): Int = accounts.count { it.isHidden }
+    override fun hiddenAccountsCount(): Int
+        = accounts.count { it.isHidden }
 
-    override fun globalExpertMode(): Boolean = settingsService.expertMode
+    override fun globalExpertMode(): Boolean
+        = settingsService.expertMode
 
     private fun regenerateAccountsAndAddresses() {
         bip39 = Bip39(bip39.mnemonic, salt, bip39.worldList)
         bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
         accounts.forEachIndexed { idx, acc ->
-            acc.address = addressService.address(
-                bip44.deriveChildKey(acc.derivationPath)
-            )
+            val key = bip44.deriveChildKey(acc.derivationPath)
+            acc.address = addressService.address(key)
         }
     }
 
-    private fun account(idx: Int): Account = if (showHidden) accounts[idx]
-        else visibleAccounts()[idx]
+    private fun account(idx: Int): Account
+        = if (showHidden) accounts[idx] else visibleAccounts()[idx]
 
-    private fun visibleAccounts(): List<Account> = accounts.filter { !it.isHidden }
+    private fun visibleAccounts(): List<Account>
+        = accounts.filter { !it.isHidden }
 
     private fun defaultAccount(): Account {
         val path = defaultDerivationPath()
