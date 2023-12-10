@@ -90,7 +90,6 @@ class DefaultMnemonicNewPresenter(
 
     override fun handle(event: MnemonicNewPresenterEvent) = when (event) {
         is SetName -> interactor.name = event.name
-        is SetAccountName -> interactor.setAccountName(event.name, event.idx)
         is SetICouldBackup -> interactor.iCloudSecretStorage = event.onOff
         is SaltSwitch -> interactor.saltMnemonicOn = event.onOff
         is SetSalt -> interactor.salt = event.salt
@@ -100,6 +99,7 @@ class DefaultMnemonicNewPresenter(
         is SetPassword -> handleSetPassword(event.text)
         is SetEntropySize -> handleSetEntropySize(event.idx)
         is CopyMnemonic -> interactor.pasteToClipboard(interactor.mnemonic())
+        is SetAccountName -> interactor.setAccountName(event.name, event.idx)
         is SetAccountHidden -> handleSetAccountHidden(event.hidden, event.idx)
         is CopyAccountAddress -> handleCopyAddress(event.idx)
         is ViewPrivKey -> handleViewPrivKey(event.idx)
@@ -231,21 +231,20 @@ class DefaultMnemonicNewPresenter(
 
     private fun handleCTAAction(idx: Int) {
         if (!expertMode()) {
-            createWallet()
+            handleCreateWallet()
             return
         }
         when (idx) {
-            0 -> interactor.addAccount()
-            1 -> createWallet()
+            0 -> handleAddAccount()
+            1 -> handleCreateWallet()
             2 -> {
                 presentingCustomDerivationAlert = true
                 presentAlert(customDerivationAlertViewModel())
             }
         }
-        updateView()
     }
 
-    private fun createWallet() {
+    private fun handleCreateWallet() {
         ctaTapped = true
         if (!isValidForm) { updateView(); return }
         if (interactor.passwordType == BIO) {
@@ -253,13 +252,19 @@ class DefaultMnemonicNewPresenter(
         }
         try {
             interactor.generateDefaultNameIfNeeded()
-            val item = interactor.createMnemonicSigner()
-            context.handler(item)
+            context.handler(interactor.createMnemonicSigner())
             wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
         } catch (e: Throwable) {
             // TODO: Handle error
-            println("[ERROR] $e")
+            println("[MnemonicNewPresenter.createWallet] $e")
         }
+        updateView()
+    }
+
+    private fun handleAddAccount() {
+        interactor.addAccount()
+        updateView()
+        view.get()?.scrollToBottom()
     }
 
     private fun updateView()
