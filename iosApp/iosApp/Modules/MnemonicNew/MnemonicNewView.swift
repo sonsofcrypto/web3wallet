@@ -21,22 +21,13 @@ final class MnemonicNewViewController: CollectionViewController {
     override func presentAlert(with viewModel: AlertViewModel) {
         let alertVc = AlertController(
             viewModel,
-            handler: { [weak self] i, t in
-                self?.presenter.handleEvent(.AlertAction(idx: i.int32, text: t))
-            }
+            handler: { [weak self] idx, t in self?.alertAction(idx, text: t) }
         )
         present(alertVc, animated: true)
     }
 
-    func scrollToBottom() {
-        cv.scrollToIdxPath(cv.lastIdxPath())
-    }
-
-    override func keyboardWillHide(notification: Notification) {
-        super.keyboardWillHide(notification: notification)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            self?.presenter.present()
-        }
+    override func present() {
+        presenter.present()
     }
 
     // MARK: - UICollectionViewDataSource
@@ -226,23 +217,6 @@ final class MnemonicNewViewController: CollectionViewController {
         presenter.handleEvent(MnemonicNewPresenterEvent.Dismiss())
     }
 
-    override func buttonSheetContainer(
-        _ bsc: ButtonSheetContainer,
-        didSelect idx: Int
-    ) {
-        presenter.handleEvent(.CTAAction(idx: idx.int32))
-        let sectionCnt = cv.numberOfSections
-        if idx == 0 && ctaButtonsContainer.buttons.count > 1 && sectionCnt > 2 {
-            let ip = IndexPath(item: 0, section: cv.numberOfSections - 1)
-            cv.scrollToItem(at: ip, at: .centeredVertically, animated: true)
-        }
-    }
-
-    @IBAction override func rightBarButtonAction(_ sender: Any?) {
-        guard let sender = sender as? UIBarButtonItem else { return }
-        presenter.handleEvent(.RightBarButtonAction(idx: sender.tag.int32))
-    }
-
     func nameDidChange(_ name: String) {
         presenter.handleEvent(.SetName(name: name))
     }
@@ -299,6 +273,27 @@ final class MnemonicNewViewController: CollectionViewController {
 
     func viewPrivKey(_ idxPath: IndexPath) {
         presenter.handleEvent(.ViewPrivKey(idx: idxPath.section.int32 - 2))
+    }
+
+    @IBAction override func rightBarButtonAction(_ sender: Any?) {
+        guard let sender = sender as? UIBarButtonItem else { return }
+        presenter.handleEvent(.RightBarButtonAction(idx: sender.tag.int32))
+    }
+
+    override func buttonSheetContainer(
+        _ bsc: ButtonSheetContainer,
+        didSelect idx: Int
+    ) {
+        presenter.handleEvent(.CTAAction(idx: idx.int32))
+        let sectionCnt = cv.numberOfSections
+        if idx == 0 && ctaButtonsContainer.buttons.count > 1 && sectionCnt > 2 {
+            let ip = IndexPath(item: 0, section: cv.numberOfSections - 1)
+            cv.scrollToItem(at: ip, at: .centeredVertically, animated: true)
+        }
+    }
+
+    override func alertAction(_ idx: Int, text: String?) {
+        presenter.handleEvent(.AlertAction(idx: idx.int32, text: text))
     }
 }
 

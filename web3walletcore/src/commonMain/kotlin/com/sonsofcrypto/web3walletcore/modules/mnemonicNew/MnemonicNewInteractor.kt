@@ -87,7 +87,21 @@ class DefaultMnemonicNewInteractor(
 
     override fun mnemonic(): String = bip39.mnemonic.joinToString(" ").trim()
 
-
+    @OptIn(ExperimentalStdlibApi::class)
+    override fun createMnemonicSigner(): SignerStoreItem {
+        val cnf = MnemonicSignerConfig(
+            bip39.mnemonic, name, passUnlockWithBio, iCloudSecretStorage,
+            saltMnemonicOn, passwordType,
+        )
+        val item = signerStoreService.createMnemonicSigner(cnf, password, salt)
+        for (i in 1..<accounts.count()) {
+            val path = accounts[i].derivationPath
+            val name = accounts[i].name
+            val hide = accounts[i].isHidden
+            signerStoreService.addAccount(item, password, salt, path, name, hide)
+        }
+        return item
+    }
 
     override fun regenerateMnemonic() {
         bip39 = Bip39.from(entropySize, salt)

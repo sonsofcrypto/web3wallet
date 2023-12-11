@@ -32,25 +32,8 @@ final class MnemonicUpdateViewController: CollectionViewController {
         )
     }
 
-    override func presentAlert(with viewModel: AlertViewModel) {
-        let alertVc = AlertController(
-            viewModel,
-            handler: { [weak self] i, t in
-                self?.presenter.handleEvent(.AlertAction(idx: i.int32, text: t))
-            }
-        )
-        present(alertVc, animated: true)
-    }
-
-    func scrollToBottom() {
-        cv.scrollToIdxPath(cv.lastIdxPath())
-    }
-
-    override func keyboardWillHide(notification: Notification) {
-        super.keyboardWillHide(notification: notification)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            self?.presenter.present()
-        }
+    override func present() {
+        presenter.present()
     }
 
     // MARK: - UICollectionViewDataSource
@@ -278,6 +261,10 @@ final class MnemonicUpdateViewController: CollectionViewController {
             let ip = IndexPath(item: 0, section: cv.numberOfSections - 1)
             cv.scrollToItem(at: ip, at: .centeredVertically, animated: true)
         }
+    }
+
+    override func alertAction(_ idx: Int, text: String?) {
+        presenter.handleEvent(.AlertAction(idx: idx.int32, text: text))
     }
 }
 

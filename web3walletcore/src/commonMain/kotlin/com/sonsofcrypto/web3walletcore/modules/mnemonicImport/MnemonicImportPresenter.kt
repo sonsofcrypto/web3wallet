@@ -112,10 +112,10 @@ class DefaultMnemonicImportPresenter(
     }
 
     private fun handleSetMnemonic(mnemStr: String, cursorLoc: Int) {
-        val prevMnemStr = interactor.mnemonicStr
         interactor.mnemonicStr = mnemStr.stripLeadingWhiteSpace()
-        interactor.cursorLoc = cursorLoc - (mnemStr.count()-prevMnemStr.count())
-        updateView(mnemStr != prevMnemStr)
+        interactor.cursorLoc = cursorLoc -
+            (mnemStr.count() - interactor.mnemonicStr.count())
+        updateView(mnemStr != interactor.mnemonicStr)
     }
 
     private fun handleSaltLearnMore() = wireframe.navigate(
@@ -318,7 +318,7 @@ class DefaultMnemonicImportPresenter(
                 MnemonicInputViewModel.Word(it.word, it.isInvalid)
             },
             if (ctaTapped) interactor.isMnemonicValid() else null,
-            if (updateMnemonic) interactor.mnemonic() else null,
+            if (updateMnemonic) interactor.mnemonicStr else null,
         )
 
     private fun mnemonicSection(): Section = Section(

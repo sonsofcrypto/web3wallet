@@ -9,20 +9,29 @@ final class MnemonicImportCell: ThemeCell, UICollectionViewDataSource,
     UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     typealias InputHandler = (_ mnemonic: String, _ cursorLocation: Int) -> Void
 
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var textView: UITextView?
 
     private var viewModel: MnemonicInputViewModel?
     private var handler: InputHandler?
     private var toolbarCollectionView: UICollectionView?
 
+    private var needsTextViewConfig: Bool = true
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         configure()
     }
 
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        if superview != nil {
+            configureTextViewIfNeeded()
+        }
+    }
+
     override func applyTheme(_ theme: ThemeProtocol) {
         super.applyTheme(theme)
-        textView.applyStyle(.body)
+        textView?.applyStyle(.body)
     }
 
     func update(
@@ -39,13 +48,20 @@ final class MnemonicImportCell: ThemeCell, UICollectionViewDataSource,
         return self
     }
 
-    override func configure() {
-        super.configure()
+    func configure() {
+        configureTextViewIfNeeded()
+    }
+    
+    private func configureTextViewIfNeeded() {
+        // NOTE: For unknown reason `textView` outlet is not connected in
+        // `awakeFromNib`
+        guard let textView = self.textView else { return }
+        guard needsTextViewConfig else { return }
+        needsTextViewConfig = false
         applyTheme(Theme)
         let toolbar = UIToolbar.collectionViewToolbar()
         toolbarCollectionView = toolbar.items?.first?.customView as? UICollectionView
         textView.inputAccessoryView = toolbar.wrapInInputView()
-        textView.delegate = self
         toolbarCollectionView?.register(PlainTextCell.self)
         toolbarCollectionView?.delegate = self
         toolbarCollectionView?.dataSource = self
@@ -59,7 +75,7 @@ final class MnemonicImportCell: ThemeCell, UICollectionViewDataSource,
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return viewModel?.potentialWords.count ?? 0
+        viewModel?.potentialWords.count ?? 0
     }
 
     func collectionView(
@@ -75,6 +91,7 @@ final class MnemonicImportCell: ThemeCell, UICollectionViewDataSource,
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
+        guard let textView = textView else { return }
         let word = viewModel?.potentialWords[safe: indexPath.item] ?? ""
         let text = addWordToMnemonic(appendingWord: word)
         textView.text = text
@@ -86,10 +103,10 @@ final class MnemonicImportCell: ThemeCell, UICollectionViewDataSource,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return String.estimateSize(
+        String.estimateSize(
             (viewModel?.potentialWords[safe: indexPath.item] ?? "") + " ",
             font: Theme.font.bodyBold,
-            maxWidth: textView.inputAccessoryView?.bounds.width ?? 300,
+            maxWidth: textView?.inputAccessoryView?.bounds.width ?? 300,
             extraHeight: Theme.padding
         )
     }
@@ -105,7 +122,7 @@ extension MnemonicImportCell: UITextViewDelegate {
 private extension MnemonicImportCell {
     
     func applyTextAndAttributes() {
-        guard let viewModel = self.viewModel  else { return }
+        guard let viewModel = viewModel, let textView = textView else { return }
         if let text = viewModel.mnemonicToUpdate {
             textView.text = text
         }
@@ -154,7 +171,8 @@ private extension MnemonicImportCell {
         ]
     }
 
-     func addWordToMnemonic(appendingWord word: String) -> String {
+    func addWordToMnemonic(appendingWord word: String) -> String {
+        guard let textView = textView else { return word + " " }
         guard let text = textView.text, !text.isEmpty else { return word + " " }
         if textView.selectedRange.location == text.count {
             if let lastCharacter = text.last, lastCharacter == " " {

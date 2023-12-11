@@ -333,6 +333,7 @@
 		2DC2C26F1F43B153BACAD338 /* CollectionBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C36EEBD7DC01205DEFA8 /* CollectionBackgroundView.swift */; };
 		2DC2C35C9D973A9C14FF5BBA /* ButtonSheetContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C1FCC42A2BD3CAB3F3C2 /* ButtonSheetContainer.swift */; };
 		2DC2C5651044E7CB9670CEB4 /* MnemonicAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CB3BFED47B008618518A /* MnemonicAccountCell.swift */; };
+		2DC2C592853C6B05443349CE /* Dispatch+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C2854090F17C5AEBDE9B /* Dispatch+Extensions.swift */; };
 		2DC2C5BFEF1C945B36C7CAA2 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C2138CB5F68D2DE85E9C /* Button.swift */; };
 		2DC2C620CFC47846ACCE3962 /* UIToolbar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C99C34B1CD6C6DE24FB8 /* UIToolbar+Extensions.swift */; };
 		2DC2C661E437984DDF1C0E33 /* AlertWireframe+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C4716D8E32D5CE26DDA2 /* AlertWireframe+Extensions.swift */; };
@@ -755,6 +756,7 @@
 		2DC2C1FCC42A2BD3CAB3F3C2 /* ButtonSheetContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonSheetContainer.swift; sourceTree = "<group>"; };
 		2DC2C2138CB5F68D2DE85E9C /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		2DC2C24534389C71A56B59FF /* SunLogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SunLogoView.swift; sourceTree = "<group>"; };
+		2DC2C2854090F17C5AEBDE9B /* Dispatch+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dispatch+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C36EEBD7DC01205DEFA8 /* CollectionBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionBackgroundView.swift; sourceTree = "<group>"; };
 		2DC2C3CCFB57B631938128A4 /* FPSCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPSCounter.swift; sourceTree = "<group>"; };
 		2DC2C41558C39C7EFB97BC1F /* LogoAnimView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoAnimView.swift; sourceTree = "<group>"; };
@@ -1482,6 +1484,7 @@
 				2DC2C7C91B9C13F1D182D921 /* UIControl+Extensions.swift */,
 				2DC2C5F6967254E33338C759 /* NotificationCenter+Extensions.swift */,
 				2DC2C99C34B1CD6C6DE24FB8 /* UIToolbar+Extensions.swift */,
+				2DC2C2854090F17C5AEBDE9B /* Dispatch+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2528,6 +2531,7 @@
 				2DC2C5BFEF1C945B36C7CAA2 /* Button.swift in Sources */,
 				2DC2C35C9D973A9C14FF5BBA /* ButtonSheetContainer.swift in Sources */,
 				2DC2CE5C28AA04327934DC8C /* ButtonCell.swift in Sources */,
+				2DC2C592853C6B05443349CE /* Dispatch+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
