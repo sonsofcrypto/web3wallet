@@ -177,6 +177,8 @@ extension DefaultMnemonicImportWireframe: MnemonicImportWireframe {
 }
 extension MnemonicImportViewController: MnemonicImportView {
     func update(viewModel: CollectionViewModel.Screen, mnemonicInputViewModel: MnemonicInputViewModel) { update(with: viewModel, mnemonicInputViewModel: mnemonicInputViewModel)}
+    func presentAlert(viewModel: AlertViewModel) { presentAlert(with: viewModel) }
+    func presentToast(viewModel: ToastViewModel) { presentToast(with: viewModel) }
 }
 extension MnemonicImportPresenter {
     func handleEvent(_ event: MnemonicImportPresenterEvent) { handle(event________________________________: event) }

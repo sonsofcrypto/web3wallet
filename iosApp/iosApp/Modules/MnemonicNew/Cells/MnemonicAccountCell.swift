@@ -5,7 +5,7 @@
 import UIKit
 import web3walletcore
 
-class MnemonicAccountCell: ThemeCell {
+class MnemonicAccountCell: SwipeCollectionViewCell {
     typealias Handler = ()->()
     typealias TextHandler = (_ text: String)->()
     

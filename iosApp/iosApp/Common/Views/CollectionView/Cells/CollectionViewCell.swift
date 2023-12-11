@@ -4,7 +4,7 @@
 
 import UIKit
 
-class ThemeCell: SwipeCollectionViewCell {
+class ThemeCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -108,11 +108,11 @@ class DefaultMnemonicImportInteractor(
         = mnemonicStr.trim()
 
     override fun potentialMnemonicWords(): List<String> = mnemonicService
-        .potentialMnemonicWords(mnemonicService.prefix(mnemonic(), cursorLoc))
+        .potentialMnemonicWords(mnemonicService.prefix(mnemonicStr, cursorLoc))
 
     override fun mnemonicWordsInfo(): List<MnemonicWord> {
-        val prefix = mnemonicService.prefix(mnemonic(), cursorLoc)
-        val words = mnemonicService.findInvalidWords(mnemonic())
+        val prefix = mnemonicService.prefix(mnemonicStr, cursorLoc)
+        val words = mnemonicService.findInvalidWords(mnemonicStr)
         return helper.updateWordsInfo(words, prefix, cursorLoc) {
             mnemonicService.isValidPrefix(it)
         }
@@ -122,7 +122,7 @@ class DefaultMnemonicImportInteractor(
         = mnemonicError() == null
 
     override fun mnemonicError(): MnemonicServiceError?
-        = mnemonicService.mnemonicError(mnemonic(), salt)
+        = mnemonicService.mnemonicError(mnemonicStr, salt)
 
     override fun passError(pass: String, type: SignerStoreItem.PasswordType): String?
         = passwordService.validationError(pass, type)

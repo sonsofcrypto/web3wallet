@@ -11,8 +11,9 @@ final class DefaultMnemonicImportWireframe {
     private let mnemonicService: MnemonicService
     private let passwordService: PasswordService
     private let signerStoreService: SignerStoreService
-    private let settingsService: SettingsService
     private let addressService: AddressService
+    private let clipboardService: ClipboardService
+    private let settingsService: SettingsService
 
     private weak var vc: UIViewController?
 
@@ -22,6 +23,7 @@ final class DefaultMnemonicImportWireframe {
         signerStoreService: SignerStoreService,
         mnemonicService: MnemonicService,
         passwordService: PasswordService,
+        clipboardService: ClipboardService,
         settingsService: SettingsService,
         addressService: AddressService
     ) {
@@ -30,6 +32,7 @@ final class DefaultMnemonicImportWireframe {
         self.signerStoreService = signerStoreService
         self.mnemonicService = mnemonicService
         self.passwordService = passwordService
+        self.clipboardService = clipboardService
         self.settingsService = settingsService
         self.addressService = addressService
     }
@@ -72,7 +75,9 @@ private extension DefaultMnemonicImportWireframe {
             signerStoreService: signerStoreService,
             mnemonicService: mnemonicService,
             passwordService: passwordService,
-            addressService: addressService
+            addressService: addressService,
+            clipboardService: clipboardService,
+            settingsService: settingsService
         )
         let vc: MnemonicImportViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultMnemonicImportPresenter(

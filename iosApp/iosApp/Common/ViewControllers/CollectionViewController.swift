@@ -59,53 +59,28 @@ class CollectionViewController: UICollectionViewController,
         updateHeadersAndFooters()
     }
 
+    func present() {
+        print("present")
+    }
+
     func presentToast(with viewModel: ToastViewModel) {
         navigationController?.asNavVc?.toast(viewModel)
     }
 
     func presentAlert(with viewModel: AlertViewModel) {
-        print("presentAlert \(viewModel)")
+        let alertVc = AlertController(
+            viewModel,
+            handler: { [weak self] idx, t in self?.alertAction(idx, text: t) }
+        )
+        present(alertVc, animated: true)
     }
 
-    func configureUI() {
-        NotificationCenter.addKeyboardObserver(
-            self,
-            selector: #selector(keyboardWillShow)
-        )
-        NotificationCenter.addKeyboardObserver(
-            self,
-            selector: #selector(keyboardWillHide),
-            event: .willHide
-        )
-        if enableCardFlipTransitioning {
-            let edgePan = UIScreenEdgePanGestureRecognizer(
-                target: self,
-                action: #selector(handleGesture(_:))
-            )
-            edgePan.edges = [UIRectEdge.left]
-            view.addGestureRecognizer(edgePan)
-        }
-        cv.abovescrollView = ctaButtonsContainer
-        cv.pinOverscrollToBottom = true
-        cv.stickAbovescrollViewToBottom = true
-        cv.abovescrollViewAboveCells = true
-        ctaButtonsContainer.delegate = self
-        applyTheme(Theme)
+    func alertAction(_ idx: Int, text: String?) {
+        print("alertAction \(idx) \(text)")
     }
 
-    func updateHeadersAndFooters() {
-        var kind = UICollectionView.elementKindSectionHeader
-        cv.indexPathsForVisibleSupplementaryElements(ofKind: kind).forEach {
-            let header = cv.supplementaryView(forElementKind: kind, at: $0)
-            let vm = viewModel?.sections[$0.section]
-            (header as? SectionHeaderView)?.update(with: vm)
-        }
-        kind = UICollectionView.elementKindSectionFooter
-        cv.indexPathsForVisibleSupplementaryElements(ofKind: kind).forEach {
-            let header = cv.supplementaryView(forElementKind: kind, at: $0)
-            let vm = viewModel?.sections[$0.section]
-            (header as? SectionFooterView)?.update(with: vm)
-        }
+    @objc func scrollToBottom() {
+        cv.scrollToIdxPath(cv.lastIdxPath())
     }
 
     func updateRightBarButtons(
@@ -151,10 +126,6 @@ class CollectionViewController: UICollectionViewController,
         )
     }
 
-    func buttonSheetContainer(_ bsc: ButtonSheetContainer, didSelect idx: Int) {
-        print("buttonContainer didSelectButtonAt \(idx)")
-    }
-
     func layoutAboveScrollView() {
         let btnCnt = viewModel?.ctaItems.count ?? 0
         let size = ctaButtonsContainer.intrinsicContentSize(for: btnCnt)
@@ -163,6 +134,51 @@ class CollectionViewController: UICollectionViewController,
             height: size.height + cv.safeAreaInsets.bottom - Theme.paddingHalf
         )
         cv.contentInset.bottom = bottomInset()
+    }
+
+    func buttonSheetContainer(_ bsc: ButtonSheetContainer, didSelect idx: Int) {
+        print("buttonContainer didSelectButtonAt \(idx)")
+    }
+
+    func configureUI() {
+        NotificationCenter.addKeyboardObserver(
+            self,
+            selector: #selector(keyboardWillShow)
+        )
+        NotificationCenter.addKeyboardObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            event: .willHide
+        )
+        if enableCardFlipTransitioning {
+            let edgePan = UIScreenEdgePanGestureRecognizer(
+                target: self,
+                action: #selector(handleGesture(_:))
+            )
+            edgePan.edges = [UIRectEdge.left]
+            view.addGestureRecognizer(edgePan)
+        }
+        cv.abovescrollView = ctaButtonsContainer
+        cv.pinOverscrollToBottom = true
+        cv.stickAbovescrollViewToBottom = true
+        cv.abovescrollViewAboveCells = true
+        ctaButtonsContainer.delegate = self
+        applyTheme(Theme)
+    }
+
+    func updateHeadersAndFooters() {
+        var kind = UICollectionView.elementKindSectionHeader
+        cv.indexPathsForVisibleSupplementaryElements(ofKind: kind).forEach {
+            let header = cv.supplementaryView(forElementKind: kind, at: $0)
+            let vm = viewModel?.sections[$0.section]
+            (header as? SectionHeaderView)?.update(with: vm)
+        }
+        kind = UICollectionView.elementKindSectionFooter
+        cv.indexPathsForVisibleSupplementaryElements(ofKind: kind).forEach {
+            let header = cv.supplementaryView(forElementKind: kind, at: $0)
+            let vm = viewModel?.sections[$0.section]
+            (header as? SectionFooterView)?.update(with: vm)
+        }
     }
 
     // MARK: - Keyboard handling
@@ -181,6 +197,7 @@ class CollectionViewController: UICollectionViewController,
 
     @objc func keyboardWillHide(notification: Notification) {
         cv.contentInset.bottom = bottomInset()
+        asyncMain(0.1) { [weak self] in self?.present() }
     }
 
     // MARK: - Utils
