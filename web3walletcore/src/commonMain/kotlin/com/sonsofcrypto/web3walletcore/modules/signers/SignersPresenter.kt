@@ -271,11 +271,4 @@ class DefaultSignersPresenter(
         ButtonViewModel(Localized("keyStore.connectHardwareWallet"), SECONDARY),
         ButtonViewModel(Localized("keyStore.createMultiSig"), SECONDARY)
     )
-
-    private fun formattedAddress(signerStoreItem: SignerStoreItem): String? {
-        // TODO: Review here when supporting other networks
-        val address = signerStoreItem.addresses[signerStoreItem.derivationPath]
-            ?: return null
-        return Formatters.address.format(address, 10, Network.ethereum())
-    }
 }

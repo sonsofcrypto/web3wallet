@@ -13,13 +13,13 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.K
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.InputAlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.RegularAlertViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.BarButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.SECONDARY
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.*
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.KeyValueList.Item
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.DEFAULT
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.NUMBER_PAD
-import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.BarButton
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title
@@ -278,12 +278,16 @@ class DefaultMnemonicNewPresenter(
         Localized("mnemonic.title.new"),
         listOf(mnemonicSection(), optionsSection()) + accountsSections(),
         listOf(
-            BarButton(
+            BarButtonViewModel(
                 null,
                 SysName(if (interactor.showHidden) "eye.slash" else "eye"),
                 interactor.hiddenAccountsCount() == 0
             ),
-            BarButton(null, SysName("brain"), interactor.globalExpertMode()),
+            BarButtonViewModel(
+                null,
+                SysName("brain"),
+                interactor.globalExpertMode()
+            ),
         ),
         if (expertMode())
             listOf(
