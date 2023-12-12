@@ -8,7 +8,6 @@ import com.sonsofcrypto.web3lib.utils.execDelayed
 import com.sonsofcrypto.web3lib.utils.extensions.stripLeadingWhiteSpace
 import com.sonsofcrypto.web3lib.utils.isValidDerivationPath
 import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicInputViewModel
-import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicPresenterHelper
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
@@ -103,7 +102,7 @@ class DefaultMnemonicImportPresenter(
         is CopyMnemonic -> interactor.pasteToClipboard(interactor.mnemonic())
         is SetAccountName -> interactor.setAccountName(event.name, event.idx)
         is SetAccountHidden -> handleSetAccountHidden(event.hidden, event.idx)
-        is CopyAccountAddress -> handleCopyAddress(event.idx)
+        is CopyAccountAddress -> handleCopyAccountAddress(event.idx)
         is ViewPrivKey -> handleViewPrivKey(event.idx)
         is AlertAction -> handleAlertAction(event.idx, event.text)
         is RightBarButtonAction -> handleRightBarButtonAction(event.idx)
@@ -137,10 +136,8 @@ class DefaultMnemonicImportPresenter(
         updateView()
     }
 
-    private fun handleCopyAddress(idx: Int) {
-        val address = interactor.accountAddress(idx)
-        interactor.pasteToClipboard(address)
-    }
+    private fun handleCopyAccountAddress(idx: Int)
+        = interactor.pasteToClipboard(interactor.accountAddress(idx))
 
     private fun handleViewPrivKey(idx: Int) {
         presentingPrivKeyAlert = idx
@@ -169,10 +166,7 @@ class DefaultMnemonicImportPresenter(
         val key = interactor.accountPrivKey(accIdx, actionIdx == 1)
         val title = Localized("mnemonic.toast.copy.privKey")
         interactor.pasteToClipboard(key)
-        presentToast(ToastViewModel((title),
-            SysName("square.on.square"),
-            TOP
-        ))
+        presentToast(ToastViewModel((title), SysName("square.on.square"), TOP))
     }
 
     private fun handleAlertAction(idx: Int, text: String?) {
@@ -290,9 +284,8 @@ class DefaultMnemonicImportPresenter(
     private fun viewModel(): Screen = Screen(
         Localized("mnemonic.title.import"),
         listOf(mnemonicSection()) + (
-            if (interactor.isMnemonicValid())
-                listOf(optionsSection()) + accountsSections()
-            else emptyList()
+            if (!interactor.isMnemonicValid()) emptyList()
+            else listOf(optionsSection()) + accountsSections()
         ),
         listOf(
             BarButton(
@@ -305,10 +298,10 @@ class DefaultMnemonicImportPresenter(
         if (expertMode())
             listOf(
                 ButtonViewModel(Localized("mnemonic.cta.account"), SECONDARY),
-                ButtonViewModel(Localized("mnemonic.cta.new")),
+                ButtonViewModel(Localized("mnemonic.cta.import")),
                 ButtonViewModel(Localized("mnemonic.cta.custom"), SECONDARY),
             )
-        else listOf(ButtonViewModel(Localized("mnemonic.cta.new")))
+        else listOf(ButtonViewModel(Localized("mnemonic.cta.import")))
     )
 
     private fun mnemonicItem(updateMnemonic: Boolean): MnemonicInputViewModel
@@ -322,9 +315,8 @@ class DefaultMnemonicImportPresenter(
         )
 
     private fun mnemonicSection(): Section = Section(
-        null,
-        listOf(CellViewModel.Text(interactor.mnemonicStr)),
-        mnemonicFooter(interactor.mnemonicError()),
+        items = listOf(CellViewModel.Text(interactor.mnemonicStr)),
+        footer = mnemonicFooter(interactor.mnemonicError()),
     )
 
     private fun mnemonicFooter(error: MnemonicServiceError? = null): Footer {
@@ -349,8 +341,7 @@ class DefaultMnemonicImportPresenter(
     }
 
     private fun optionsSection(): Section = Section(
-        null,
-        listOf(
+        items = listOf(
             CellViewModel.TextInput(
                 Localized("mnemonic.name.title"),
                 interactor.name,
@@ -380,12 +371,11 @@ class DefaultMnemonicImportPresenter(
 //              listOf(Localized("mnemonic.salt.descriptionHighlight")),
 //          ),
         ),
-        null
     )
 
     @OptIn(ExperimentalStdlibApi::class)
     private fun accountsSections(): List<Section>
-        = if (interactor.accountsCount() <= 1)
+        = if (!expertMode() && interactor.accountsCount() <= 1)
             emptyList()
         else (0..<interactor.accountsCount()).map {
             Section(

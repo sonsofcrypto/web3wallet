@@ -38,13 +38,13 @@ final class MnemonicImportViewController: CollectionViewController {
         }
     }
 
+    override func present() {
+        presenter.present()
+    }
+
     private func mnemonicImportCell() -> MnemonicImportCell? {
         cv?.visibleCells.first(where: { ($0 as? MnemonicImportCell) != nil })
             as? MnemonicImportCell
-    }
-
-    override func present() {
-        presenter.present()
     }
 
     // MARK: - UICollectionViewDataSource
@@ -108,6 +108,8 @@ final class MnemonicImportViewController: CollectionViewController {
                 textHandler: { [weak self] t in self?.passwordDidChange(t) },
                 switchHandler: { [weak self] v in self?.allowFaceIdDidChange(v) }
             )
+        case let vm as CellViewModel.Button:
+            return cv.dequeue(ButtonCell.self, for: indexPath).update(with: vm)
         default:
             ()
         }
@@ -275,25 +277,22 @@ final class MnemonicImportViewController: CollectionViewController {
     }
 
     func setAccountName(_ name: String, _ idxPath: IndexPath) {
-        presenter.handleEvent(
-            .SetAccountName(name: name, idx: idxPath.section.int32 - 2)
-        )
+        let ip = idxPath.section == 1 ? 0.int32 : offsetAccIdx(idxPath)
+        presenter.handleEvent(.SetAccountName(name: name, idx: ip))
     }
 
     func setAccountHidden(_ hidden: Bool, _ idxPath: IndexPath) {
         presenter.handleEvent(
-            .SetAccountHidden(hidden: hidden, idx: idxPath.section.int32 - 2)
+            .SetAccountHidden(hidden: hidden, idx: offsetAccIdx(idxPath))
         )
     }
 
     func copyAddress(_ idxPath: IndexPath) {
-        presenter.handleEvent(
-            .CopyAccountAddress(idx: idxPath.section.int32 - 2)
-        )
+        presenter.handleEvent(.CopyAccountAddress(idx: offsetAccIdx(idxPath)))
     }
 
     func viewPrivKey(_ idxPath: IndexPath) {
-        presenter.handleEvent(.ViewPrivKey(idx: idxPath.section.int32 - 2))
+        presenter.handleEvent(.ViewPrivKey(idx: offsetAccIdx(idxPath)))
     }
 
     @IBAction override func rightBarButtonAction(_ sender: Any?) {
@@ -361,7 +360,11 @@ extension MnemonicImportViewController: SwipeCollectionViewCellDelegate {
 private extension MnemonicImportViewController {
 
     func isAccountsSection(_ idxPath: IndexPath) -> Bool {
-        idxPath.section > 1
+        idxPath.section >= 2
+    }
+
+    func offsetAccIdx(_ idxPath: IndexPath) -> Int32 {
+        (idxPath.section - 2).int32
     }
 }
 

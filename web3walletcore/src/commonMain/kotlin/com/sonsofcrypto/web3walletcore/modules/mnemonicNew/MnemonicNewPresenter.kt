@@ -101,7 +101,7 @@ class DefaultMnemonicNewPresenter(
         is CopyMnemonic -> interactor.pasteToClipboard(interactor.mnemonic())
         is SetAccountName -> interactor.setAccountName(event.name, event.idx)
         is SetAccountHidden -> handleSetAccountHidden(event.hidden, event.idx)
-        is CopyAccountAddress -> handleCopyAddress(event.idx)
+        is CopyAccountAddress -> handleCopyAccountAddress(event.idx)
         is ViewPrivKey -> handleViewPrivKey(event.idx)
         is AlertAction -> handleAlertAction(event.idx, event.text)
         is RightBarButtonAction -> handleRightBarButtonAction(event.idx)
@@ -133,10 +133,8 @@ class DefaultMnemonicNewPresenter(
         updateView()
     }
 
-    private fun handleCopyAddress(idx: Int) {
-        val address = interactor.accountAddress(idx)
-        interactor.pasteToClipboard(address)
-    }
+    private fun handleCopyAccountAddress(idx: Int)
+        = interactor.pasteToClipboard(interactor.accountAddress(idx))
 
     private fun handleViewPrivKey(idx: Int) {
         presentingPrivKeyAlert = idx
@@ -147,9 +145,9 @@ class DefaultMnemonicNewPresenter(
         = RegularAlertViewModel(
             Localized("mnemonic.alert.privKey.title"),
             Localized("mnemonic.alert.privKey.body.priv")
-                    + "\n${interactor.accountPrivKey(accIdx)}\n\n"
-                    + Localized("mnemonic.alert.privKey.body.xprv")
-                    + "\n${interactor.accountPrivKey(accIdx, true)}\n",
+                + "\n${interactor.accountPrivKey(accIdx)}\n\n"
+                + Localized("mnemonic.alert.privKey.body.xprv")
+                + "\n${interactor.accountPrivKey(accIdx, true)}\n",
             listOf(
                 Action(Localized("mnemonic.alert.privKey.btnPriv"), NORMAL),
                 Action(Localized("mnemonic.alert.privKey.btnXprv"), NORMAL),
