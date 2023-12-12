@@ -83,7 +83,7 @@ public class SwipeAction: NSObject {
     ///
     /// - note: When set to `true`, the actions menu is automatically hidden when the action is selected. The default value is `false`.
     public var hidesWhenSelected = false
-    
+
     /**
      Constructs a new `SwipeAction` instance.
 
@@ -96,7 +96,18 @@ public class SwipeAction: NSObject {
         self.style = style
         self.handler = handler
     }
-    
+
+    public convenience init(
+        title: String?,
+        image: UIImage?,
+        style: SwipeActionStyle = .default,
+        handler: ((SwipeAction, IndexPath) -> Void)? = nil
+    ) {
+        self.init(style: style, title: title, handler: handler)
+        self.image = image
+        hidesWhenSelected = true
+    }
+
     /**
      Calling this method performs the configured expansion completion animation including deletion, if necessary. Calling this method more than once has no effect.
  

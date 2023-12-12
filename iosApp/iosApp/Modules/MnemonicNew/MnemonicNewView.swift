@@ -18,14 +18,6 @@ final class MnemonicNewViewController: CollectionViewController {
 
     // MARK: - MnemonicView
 
-    override func presentAlert(with viewModel: AlertViewModel) {
-        let alertVc = AlertController(
-            viewModel,
-            handler: { [weak self] idx, t in self?.alertAction(idx, text: t) }
-        )
-        present(alertVc, animated: true)
-    }
-
     override func present() {
         presenter.present()
     }
@@ -276,41 +268,21 @@ final class MnemonicNewViewController: CollectionViewController {
     override func alertAction(_ idx: Int, text: String?) {
         presenter.handleEvent(.AlertAction(idx: idx.int32, text: text))
     }
-}
 
-// MARK: - SwipeCollectionViewCellDelegate
+    // MARK: - SwipeCollectionViewCellDelegate
 
-extension MnemonicNewViewController: SwipeCollectionViewCellDelegate {
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        editActionsForItemAt indexPath: IndexPath,
-        for orientation: SwipeActionsOrientation
-    ) -> [SwipeAction]? {
+    override func rightSwipeActions(for idxPath: IndexPath) -> [SwipeAction]? {
         guard
-            orientation == .right,
-            let vm = viewModel(at: indexPath) as? CellViewModel.KeyValueList,
-            let isHidden = vm.userInfo?["isHidden"] as? Bool
+            let vm = viewModel(at: idxPath) as? CellViewModel.KeyValueList,
+            let hidden = vm.userInfo?["isHidden"] as? Bool
         else { return nil }
 
-        let flag = SwipeAction(
-            style: .default,
-            title: Localized(isHidden ? "show" : "hide"),
-            handler: { [weak self] act, idxPath in
-                self?.setAccountHidden(!isHidden, indexPath)
-            }
+        let acc = SwipeAction(
+            title: Localized(hidden ? "show" : "hide"),
+            image: UIImage(systemName: hidden ? "eye" : "eye.slash"),
+            handler: { [weak self] _, ip in self?.setAccountHidden(!hidden, ip)}
         )
-        flag.image = UIImage(systemName: isHidden ? "eye" : "eye.slash")
-        flag.hidesWhenSelected = true
-        return [flag]
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        editActionsOptionsForItemAt indexPath: IndexPath,
-        for orientation: SwipeActionsOrientation
-    ) -> SwipeOptions {
-        cellSwipeOption
+        return [acc]
     }
 }
 

@@ -20,7 +20,9 @@ extension UIToolbar {
     static func keyboardToolbar() -> UIToolbar {
         let width = AppDelegate.keyWindow()?.bounds.width ?? 320
         let frame = CGRect(origin: .zero, size: .init(width: width, height: 44))
-        return UIToolbar(frame: frame)
+        let toolbar = UIToolbar(frame: frame)
+        toolbar.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        return toolbar
     }
 
     static func collectionViewToolbar() -> UIToolbar {

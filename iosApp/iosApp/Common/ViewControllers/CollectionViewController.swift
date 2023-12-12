@@ -6,13 +6,15 @@ import UIKit
 import web3walletcore
 
 class CollectionViewController: UICollectionViewController,
-        UICollectionViewDelegateFlowLayout, ButtonSheetContainerDelegate {
+        UICollectionViewDelegateFlowLayout, ButtonSheetContainerDelegate,
+        SwipeCollectionViewCellDelegate {
     var didAppear: Bool = false
     var prevSize: CGSize = .zero
     var cellSize: CGSize = .zero
     var viewModel: CollectionViewModel.Screen?
     var cv: CollectionView! { (collectionView as! CollectionView) }
     var ctaButtonsContainer: ButtonSheetContainer = .init()
+    var ctaButtonsCompactCnt: Int = 2
     var cellSwipeOption =  SwipeOptions()
     var enableCardFlipTransitioning: Bool = false
 
@@ -120,7 +122,7 @@ class CollectionViewController: UICollectionViewController,
         }
         ctaButtonsContainer.setButtons(
             viewModel,
-            compactCount: 2,
+            compactCount: ctaButtonsCompactCnt,
             sheetState: .auto,
             animated: true
         )
@@ -257,6 +259,29 @@ class CollectionViewController: UICollectionViewController,
             maxWidth: cellSize.width,
             extraHeight: Theme.padding
         )
+    }
+
+    // MARK: - SwipeCollectionViewCellDelegate
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        editActionsForItemAt indexPath: IndexPath,
+        for orientation: SwipeActionsOrientation
+    ) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+        return rightSwipeActions(for: indexPath)
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        editActionsOptionsForItemAt indexPath: IndexPath,
+        for orientation: SwipeActionsOrientation
+    ) -> SwipeOptions {
+        cellSwipeOption
+    }
+
+    func rightSwipeActions(for idxPath: IndexPath) -> [SwipeAction]? {
+        nil
     }
 }
 
