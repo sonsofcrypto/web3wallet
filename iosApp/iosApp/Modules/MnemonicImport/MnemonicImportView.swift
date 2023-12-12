@@ -202,34 +202,20 @@ final class MnemonicImportViewController: CollectionViewController {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        guard let viewModel = viewModel(at: indexPath) else {
-            return cellSize
-        }
+        guard let viewModel = viewModel(at: indexPath) else { return cellSize }
+        var height = cellSize.height
         switch viewModel {
         case _ as CellViewModel.Text:
-            return .init(width: cellSize.width, height: Constant.mnemCellHeight)
+            height = Constant.mnemonicCellHeight
         case let vm as CellViewModel.SwitchTextInput:
-            return .init(
-                width: cellSize.width,
-                height: vm.onOff
-                    ? Constant.cellSaltOpenHeight
-                    : cellSize.height
-            )
+            height = vm.onOff ? Constant.cellSaltOpenHeight : cellSize.height
         case let vm as CellViewModel.SegmentWithTextAndSwitch:
-            return .init(
-                width: cellSize.width,
-                height: vm.selectedSegment != 2
-                    ? Constant.cellPassOpenHeight
-                    : cellSize.height
-            )
+            if vm.selectedSegment != 2 { height = Constant.cellOpenHeight }
         case let vm as CellViewModel.KeyValueList:
-            return .init(
-                width: cellSize.width,
-                height: cellSize.height * CGFloat(vm.items.count)
-            )
-        default:
-            return cellSize
+            height = cellSize.height * CGFloat(vm.items.count)
+        default: ()
         }
+        return .init(width: cellSize.width, height: height)
     }
 
     // MARK: - Actions
@@ -277,14 +263,13 @@ final class MnemonicImportViewController: CollectionViewController {
     }
 
     func setAccountName(_ name: String, _ idxPath: IndexPath) {
-        let ip = idxPath.section == 1 ? 0.int32 : offsetAccIdx(idxPath)
+        let ip = offsetAccIdx(idxPath)
         presenter.handleEvent(.SetAccountName(name: name, idx: ip))
     }
 
     func setAccountHidden(_ hidden: Bool, _ idxPath: IndexPath) {
-        presenter.handleEvent(
-            .SetAccountHidden(hidden: hidden, idx: offsetAccIdx(idxPath))
-        )
+        let idx = offsetAccIdx(idxPath)
+        presenter.handleEvent(.SetAccountHidden(hidden: hidden, idx: idx))
     }
 
     func copyAddress(_ idxPath: IndexPath) {
@@ -370,8 +355,8 @@ private extension MnemonicImportViewController {
 
 private extension MnemonicImportViewController {
     enum Constant {
-        static let mnemCellHeight: CGFloat = 110
+        static let mnemonicCellHeight: CGFloat = 110
         static let cellSaltOpenHeight: CGFloat = 142
-        static let cellPassOpenHeight: CGFloat = 138
+        static let cellOpenHeight: CGFloat = 138
     }
 }

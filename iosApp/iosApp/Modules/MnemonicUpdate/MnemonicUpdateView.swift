@@ -20,13 +20,11 @@ final class MnemonicUpdateViewController: CollectionViewController {
     // MARK: - MnemonicUpdateView
 
     override func update(with viewModel: CollectionViewModel.Screen) {
-        let buttonSections = buttonsSections()
         let layout = cv.collectionViewLayout as? TableFlowLayout
-        layout?.hiddenSectionIdxs = buttonSections.map { $0 }
         super.update(with: viewModel)
         ctaButtonsContainer.setButtons(
             viewModel.ctaItems,
-            compactCount: 1,
+            compactCount: 3,
             sheetState: .auto,
             animated: true
         )
@@ -152,50 +150,20 @@ final class MnemonicUpdateViewController: CollectionViewController {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        guard let viewModel = viewModel(at: indexPath) else {return cellSize}
+        guard let viewModel = viewModel(at: indexPath) else { return cellSize }
+        var height = cellSize.height
         switch viewModel {
         case _ as CellViewModel.Text:
-            return CGSize(
-                width: cellSize.width,
-                height: Constant.mnemonicCellHeight
-            )
-        case _ as CellViewModel.Button:
-            return CGSize(width: cellSize.width, height: Theme.buttonHeight)
+            height = Constant.mnemonicCellHeight
         case let vm as CellViewModel.SwitchTextInput:
-            return CGSize(
-                width: cellSize.width,
-                height: vm.onOff
-                    ? Constant.cellSaltOpenHeight
-                    : cellSize.height
-            )
+            height = vm.onOff ? Constant.cellSaltOpenHeight : cellSize.height
         case let vm as CellViewModel.SegmentWithTextAndSwitch:
-            return CGSize(
-                width: cellSize.width,
-                height: vm.selectedSegment != 2
-                    ? Constant.cellPassOpenHeight
-                    : cellSize.height
-            )
+            if vm.selectedSegment != 2 { height = Constant.cellOpenHeight }
         case let vm as CellViewModel.KeyValueList:
-            return CGSize(
-                width: cellSize.width,
-                height: cellSize.height * CGFloat(vm.items.count)
-            )
-        default:
-            return cellSize
+            height = cellSize.height * CGFloat(vm.items.count)
+        default: ()
         }
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        insetForSectionAt section: Int
-    ) -> UIEdgeInsets {
-        let buttonSections = buttonsSections()
-        switch section {
-        case buttonSections.first: return .with(top: Theme.paddingHalf)
-        case buttonSections.last: return .with(bottom: Theme.padding)
-        default: return .zero
-        }
+        return .init(width: cellSize.width, height: height)
     }
 
     // MARK: - UICollectionViewDelegate
@@ -208,10 +176,6 @@ final class MnemonicUpdateViewController: CollectionViewController {
         if indexPath.isZero() {
             presenter.handleEvent(.CopyMnemonic())
             (cell as? MnemonicUpdateCell)?.animateCopiedToPasteboard()
-        }
-        if isButtonSection(indexPath) {
-            let idx = offsetBtnIdx(indexPath)
-            presenter.handleEvent(.CellButtonAction(idx: idx))
         }
         return false
     }
@@ -308,30 +272,11 @@ extension MnemonicUpdateViewController: SwipeCollectionViewCellDelegate {
 private extension MnemonicUpdateViewController {
 
     func isAccountsSection(_ idxPath: IndexPath) -> Bool {
-        idxPath.section > (2 + buttonsSectionsCnt() - 1)
+        idxPath.section >= 2
     }
 
     func offsetAccIdx(_ idxPath: IndexPath) -> Int32 {
-        (idxPath.section - (2 + buttonsSectionsCnt())).int32
-    }
-
-    func isButtonSection(_ idxPath: IndexPath) -> Bool {
-        buttonsSections().contains(idxPath.section)
-    }
-
-    func offsetBtnIdx(_ idxPath: IndexPath) -> Int32 {
         (idxPath.section - 2).int32
-    }
-
-    func buttonsSections() -> Range<Int> {
-        2..<(buttonsSectionsCnt() + 2)
-    }
-
-    func buttonsSectionsCnt() -> Int {
-        let cnt = viewModel?.sections
-            .filter { ($0.items.first as? CellViewModel.Button) != nil }
-            .count ?? 0
-        return cnt
     }
 }
 
@@ -341,6 +286,6 @@ private extension MnemonicUpdateViewController {
     enum Constant {
         static let mnemonicCellHeight: CGFloat = 110
         static let cellSaltOpenHeight: CGFloat = 142
-        static let cellPassOpenHeight: CGFloat = 138
+        static let cellOpenHeight: CGFloat = 138
     }
 }
