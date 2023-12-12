@@ -58,4 +58,6 @@ data class SignerStoreItem(
         // TODO: Handle signers that require salt to see the address
         return addresses[derivationPath] ?: "0xAuthenticateToSeeAddress"
     }
+
+    fun isHidden(): Boolean = hidden ?: false
 }

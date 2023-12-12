@@ -9,13 +9,13 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.CANCEL
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.RegularAlertViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.BarButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.DESTRUCTIVE
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.SECONDARY
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Text
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.BarButton
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
@@ -310,12 +310,16 @@ class DefaultMnemonicUpdatePresenter(
             optionsSection(),
         ) + accountsSections(),
         listOf(
-            BarButton(
+            BarButtonViewModel(
                 null,
                 SysName(if (interactor.showHidden) "eye.slash" else "eye"),
                 interactor.hiddenAccountsCount() == 0
             ),
-            BarButton(null, SysName("brain"), interactor.globalExpertMode()),
+            BarButtonViewModel(
+                null,
+                SysName("brain"),
+                interactor.globalExpertMode()
+            ),
         ),
         listOf(
             ButtonViewModel(Localized("mnemonic.cta.account"), SECONDARY),

@@ -11,6 +11,7 @@ import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicInputViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
+import com.sonsofcrypto.web3walletcore.common.viewModels.BarButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.SECONDARY
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
@@ -19,7 +20,6 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWi
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.NUMBER_PAD
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Switch
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.BarButton
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
@@ -288,12 +288,12 @@ class DefaultMnemonicImportPresenter(
             else listOf(optionsSection()) + accountsSections()
         ),
         listOf(
-            BarButton(
+            BarButtonViewModel(
                 null,
                 SysName(if (interactor.showHidden) "eye.slash" else "eye"),
                 interactor.hiddenAccountsCount() == 0
             ),
-            BarButton(null, SysName("brain"), interactor.globalExpertMode()),
+            BarButtonViewModel(null, SysName("brain"), interactor.globalExpertMode()),
         ),
         if (expertMode())
             listOf(
