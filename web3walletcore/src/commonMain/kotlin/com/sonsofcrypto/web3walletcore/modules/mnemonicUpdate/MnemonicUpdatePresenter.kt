@@ -13,7 +13,6 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.DESTRUCTIVE
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.SECONDARY
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Button
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Text
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.BarButton
@@ -29,7 +28,6 @@ import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateData
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.AlertAction
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.CTAAction
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.CellButtonAction
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.CopyAccountAddress
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.CopyMnemonic
 import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.RightBarButtonAction
@@ -48,7 +46,6 @@ sealed class MnemonicUpdatePresenterEvent {
     data class SetAccountHidden(val hidden: Boolean, val idx: Int): MnemonicUpdatePresenterEvent()
     data class CopyAccountAddress(val idx: Int): MnemonicUpdatePresenterEvent()
     data class ViewPrivKey(val idx: Int): MnemonicUpdatePresenterEvent()
-    data class CellButtonAction(val idx: Int): MnemonicUpdatePresenterEvent()
     data class AlertAction(val idx: Int, val text: String?): MnemonicUpdatePresenterEvent()
     data class RightBarButtonAction(val idx: Int): MnemonicUpdatePresenterEvent()
     data class CTAAction(val idx: Int): MnemonicUpdatePresenterEvent()
@@ -122,7 +119,6 @@ class DefaultMnemonicUpdatePresenter(
         is SetAccountHidden -> handleSetAccountHidden(event.hidden, event.idx)
         is CopyAccountAddress -> handleCopyAccountAddress(event.idx)
         is ViewPrivKey -> handleViewPrivKey(event.idx)
-        is CellButtonAction -> handleCellButtonAction(event.idx)
         is AlertAction -> handleAlertAction(event.idx, event.text)
         is RightBarButtonAction -> handleRightBarButtonAction(event.idx)
         is CTAAction -> handleCTAAction(event.idx)
@@ -173,17 +169,6 @@ class DefaultMnemonicUpdatePresenter(
         val title = Localized("mnemonic.toast.copy.privKey")
         interactor.pasteToClipboard(key)
         presentToast(ToastViewModel(title, SysName("square.on.square"), TOP))
-    }
-
-    private fun handleCellButtonAction(idx: Int) {
-        when (idx) {
-            0 -> handleCopyAddress(true)
-            1 -> handleViewPrivKey(0)
-            2 -> { handleAddAccount(); return; }
-            3 -> presentDeleteConfirmation()
-            else -> Unit
-        }
-        updateView()
     }
 
     private fun handleCopyAddress(toast: Boolean = false) {
@@ -248,8 +233,10 @@ class DefaultMnemonicUpdatePresenter(
 
     private fun handleCTAAction(idx: Int) {
         when (idx) {
-            0 -> handleUpdate()
-            1 -> {
+            0 -> handleAddAccount()
+            1 -> presentDeleteConfirmation()
+            2 -> handleUpdate()
+            3 -> {
                 presentingCustomDerivationAlert = true
                 presentAlert(customDerivationAlertViewModel())
             }
@@ -321,7 +308,7 @@ class DefaultMnemonicUpdatePresenter(
         listOf(
             mnemonicSection(),
             optionsSection(),
-        ) + buttonsSections() + accountsSections(),
+        ) + accountsSections(),
         listOf(
             BarButton(
                 null,
@@ -330,12 +317,12 @@ class DefaultMnemonicUpdatePresenter(
             ),
             BarButton(null, SysName("brain"), interactor.globalExpertMode()),
         ),
-        if (expertMode())
-            listOf(
-                ButtonViewModel(Localized("mnemonic.cta.new")),
-                ButtonViewModel(Localized("mnemonic.cta.custom"), SECONDARY),
-            )
-        else listOf(ButtonViewModel(Localized("mnemonic.cta.update"))),
+        listOf(
+            ButtonViewModel(Localized("mnemonic.cta.account"), SECONDARY),
+            ButtonViewModel(Localized("mnemonic.cta.delete"), DESTRUCTIVE),
+            ButtonViewModel(Localized("mnemonic.cta.update")),
+            ButtonViewModel(Localized("mnemonic.cta.custom"), SECONDARY),
+        )
     )
 
     private fun mnemonicSection(): Section = Section(
@@ -365,13 +352,6 @@ class DefaultMnemonicUpdatePresenter(
         ),
         null
     )
-
-    private fun buttonsSections(): List<Section> = listOf(
-        ButtonViewModel(Localized("mnemonic.copy.address"), SECONDARY),
-        ButtonViewModel(Localized("mnemonic.view.privKey"), SECONDARY),
-        ButtonViewModel(Localized("mnemonic.cta.account"), SECONDARY),
-        ButtonViewModel(Localized("mnemonic.cta.delete"), DESTRUCTIVE),
-    ).map { Section(items = listOf(Button(it))) }
 
     @OptIn(ExperimentalStdlibApi::class)
     private fun accountsSections(): List<Section>

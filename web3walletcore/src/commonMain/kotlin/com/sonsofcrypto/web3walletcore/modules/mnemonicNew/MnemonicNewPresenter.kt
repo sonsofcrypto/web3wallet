@@ -354,7 +354,7 @@ class DefaultMnemonicNewPresenter(
 
     @OptIn(ExperimentalStdlibApi::class)
     private fun accountsSections(): List<Section>
-        = if (interactor.accountsCount() <= 1)
+        = if (!expertMode() && interactor.accountsCount() <= 1)
             emptyList()
         else (0..<interactor.accountsCount()).map {
             Section(
