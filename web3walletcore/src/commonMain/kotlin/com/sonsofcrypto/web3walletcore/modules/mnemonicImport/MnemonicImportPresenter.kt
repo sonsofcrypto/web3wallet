@@ -392,7 +392,7 @@ class DefaultMnemonicImportPresenter(
                                 Localized("mnemonic.account.name.placeholder"),
                             ),
                             CellViewModel.KeyValueList.Item(
-                                Localized("mnemonic.copy.address"),
+                                Localized("copyAddress"),
                                 Localized("mnemonic.view.privKey"),
                                 interactor.accountAddress(it),
                             ),
