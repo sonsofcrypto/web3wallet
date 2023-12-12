@@ -371,7 +371,7 @@ class DefaultMnemonicNewPresenter(
                                  Localized("mnemonic.account.name.placeholder"),
                              ),
                              Item(
-                                 Localized("mnemonic.copy.address"),
+                                 Localized("copyAddress"),
                                  Localized("mnemonic.view.privKey"),
                                  interactor.accountAddress(it),
                              ),

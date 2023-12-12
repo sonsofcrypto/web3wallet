@@ -61,6 +61,7 @@
 "ipfs.image.unavailable" = "¯\\_(ツ)_/¯\n\nImage not available on ipfs\n\n";
 "copiedToPasteboard" = "Copied to pasteboard";
 "address" = "Address";
+"copyAddress" = "Copy address";
 "toast.expertMode" = "Expert mode turned on. Adds additional options and toggles for advanced users";
 
 
@@ -167,7 +168,6 @@
 "mnemonic.account.name" = "Account Name";
 "mnemonic.account.name.placeholder" = "Account name";
 "mnemonic.privkey" = "Private Key";
-"mnemonic.copy.address" = "Copy address";
 "mnemonic.view.privKey" = "View priv key";
 "mnemonic.alert.privKey.title" = "Copy Private Key";
 "mnemonic.alert.privKey.body.priv" = "Private key hex:";

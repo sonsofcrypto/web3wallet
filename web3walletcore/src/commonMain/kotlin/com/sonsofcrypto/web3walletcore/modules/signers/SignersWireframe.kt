@@ -1,9 +1,9 @@
 package com.sonsofcrypto.web3walletcore.modules.signers
 
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
+import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWireframeContext
 
 sealed class SignersWireframeDestination {
-
     object SignersFullscreen: SignersWireframeDestination()
     object Networks: SignersWireframeDestination()
     object Dashboard: SignersWireframeDestination()
@@ -24,6 +24,9 @@ sealed class SignersWireframeDestination {
     object ImportAddress: SignersWireframeDestination()
     object ConnectHardwareWallet: SignersWireframeDestination()
     object CreateMultisig: SignersWireframeDestination()
+    data class Authenticate(
+        val context: AuthenticateWireframeContext
+    ): SignersWireframeDestination()
 }
 
 interface SignersWireframe {
