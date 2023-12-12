@@ -154,9 +154,9 @@ class DefaultMnemonicUpdatePresenter(
     ): AlertViewModel = RegularAlertViewModel(
         Localized("mnemonic.alert.privKey.title"),
         Localized("mnemonic.alert.privKey.body.priv")
-                + "\n${interactor.accountPrivKey(accIdx, false, pass, salt)}\n\n"
-                + Localized("mnemonic.alert.privKey.body.xprv")
-                + "\n${interactor.accountPrivKey(accIdx, true, pass, salt)}\n",
+            + "\n${interactor.accountPrivKey(accIdx, false, pass, salt)}\n\n"
+            + Localized("mnemonic.alert.privKey.body.xprv")
+            + "\n${interactor.accountPrivKey(accIdx, true, pass, salt)}\n",
         listOf(
             Action(Localized("mnemonic.alert.privKey.btnPriv"), NORMAL),
             Action(Localized("mnemonic.alert.privKey.btnXprv"), NORMAL),
@@ -177,7 +177,7 @@ class DefaultMnemonicUpdatePresenter(
 
     private fun handleCellButtonAction(idx: Int) {
         when (idx) {
-            0 -> copyAddress()
+            0 -> handleCopyAddress(true)
             1 -> handleViewPrivKey(0)
             2 -> { handleAddAccount(); return; }
             3 -> presentDeleteConfirmation()
@@ -186,10 +186,11 @@ class DefaultMnemonicUpdatePresenter(
         updateView()
     }
 
-    private fun copyAddress() {
+    private fun handleCopyAddress(toast: Boolean = false) {
         val address = interactor.accountAddress(0)
-        val title = Localized("account.action.copy.toast") + "\n" + address
         interactor.pasteToClipboard(address)
+        if (!toast) return;
+        val title = Localized("account.action.copy.toast") + "\n" + address
         presentToast(ToastViewModel(title, SysName("square.on.square"), TOP))
     }
 

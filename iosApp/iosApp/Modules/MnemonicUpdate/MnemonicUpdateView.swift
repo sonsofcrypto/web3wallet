@@ -72,8 +72,7 @@ final class MnemonicUpdateViewController: CollectionViewController {
             return cv.dequeue(SwitchCollectionViewCell.self, for: indexPath)
                 .update(with: vm) { [weak self] v in self?.backupDidChange(v) }
         case let vm as CellViewModel.Button:
-            return cv.dequeue(ButtonCell.self, for: indexPath)
-                .update(with: vm)
+            return cv.dequeue(ButtonCell.self, for: indexPath).update(with: vm)
         default:
             fatalError("[MnemonicUpdateView] wrong cellForItemAt \(indexPath)")
         }
@@ -227,15 +226,15 @@ final class MnemonicUpdateViewController: CollectionViewController {
         presenter.handleEvent(.SetICouldBackup(onOff: onOff))
     }
 
+    func setAccountName(_ name: String, _ idxPath: IndexPath) {
+        let ip = idxPath.section == 1 ? 0.int32 : offsetAccIdx(idxPath)
+        presenter.handleEvent(.SetAccountName(name: name, idx: ip))
+    }
+
     func setAccountHidden(_ hidden: Bool, _ idxPath: IndexPath) {
         presenter.handleEvent(
             .SetAccountHidden(hidden: hidden, idx: offsetAccIdx(idxPath))
         )
-    }
-
-    func setAccountName(_ name: String, _ idxPath: IndexPath) {
-        let ip = idxPath.section == 1 ? 0.int32 : offsetAccIdx(idxPath)
-        presenter.handleEvent(.SetAccountName(name: name, idx: ip))
     }
 
     func copyAddress(_ idxPath: IndexPath) {
