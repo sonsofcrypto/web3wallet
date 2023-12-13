@@ -22,6 +22,7 @@ final class DefaultSignersWireframeFactory {
     private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
+    private let authenticateWireframeFactory: AuthenticateWireframeFactory
 
     init(
         signerStoreService: SignerStoreService,
@@ -30,7 +31,8 @@ final class DefaultSignersWireframeFactory {
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
-        alertWireframeFactory: AlertWireframeFactory
+        alertWireframeFactory: AlertWireframeFactory,
+        authenticateWireframeFactory: AuthenticateWireframeFactory
     ) {
         self.signerStoreService = signerStoreService
         self.networksService = networksService
@@ -39,6 +41,7 @@ final class DefaultSignersWireframeFactory {
         self.updateMnemonic = updateMnemonic
         self.importMnemonic = importMnemonic
         self.alertWireframeFactory = alertWireframeFactory
+        self.authenticateWireframeFactory = authenticateWireframeFactory
     }
 }
 
@@ -57,7 +60,8 @@ extension DefaultSignersWireframeFactory: SignersWireframeFactory {
             newMnemonic: newMnemonic,
             updateMnemonic: updateMnemonic,
             importMnemonic: importMnemonic,
-            alertWireframeFactory: alertWireframeFactory
+            alertWireframeFactory: alertWireframeFactory,
+            authenticateWireframeFactory: authenticateWireframeFactory
         )
     }
 }
@@ -75,7 +79,8 @@ final class SignersWireframeFactoryAssembler: AssemblerComponent {
                 newMnemonic: resolver.resolve(),
                 updateMnemonic: resolver.resolve(),
                 importMnemonic: resolver.resolve(),
-                alertWireframeFactory: resolver.resolve()
+                alertWireframeFactory: resolver.resolve(),
+                authenticateWireframeFactory: resolver.resolve()
             )
         }
     }

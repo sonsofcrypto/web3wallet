@@ -16,6 +16,7 @@ final class DefaultSignersWireframe {
     private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
+    private let authenticateWireframeFactory: AuthenticateWireframeFactory
 
     private weak var vc: UIViewController?
 
@@ -27,7 +28,8 @@ final class DefaultSignersWireframe {
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
-        alertWireframeFactory: AlertWireframeFactory
+        alertWireframeFactory: AlertWireframeFactory,
+        authenticateWireframeFactory: AuthenticateWireframeFactory
     ) {
         self.parent = parent
         self.signerStoreService = signerStoreService
@@ -37,6 +39,7 @@ final class DefaultSignersWireframe {
         self.updateMnemonic = updateMnemonic
         self.importMnemonic = importMnemonic
         self.alertWireframeFactory = alertWireframeFactory
+        self.authenticateWireframeFactory = authenticateWireframeFactory
     }
 }
 
@@ -89,6 +92,9 @@ extension DefaultSignersWireframe {
         }
         if destination is SignersWireframeDestination.CreateMultisig {
             alertWireframeFactory.make(vc, context: .underConstructionAlert()).present()
+        }
+        if let d = destination as? SignersWireframeDestination.Authenticate {
+            authenticateWireframeFactory.make(vc,context: d.context).present()
         }
     }
 }
