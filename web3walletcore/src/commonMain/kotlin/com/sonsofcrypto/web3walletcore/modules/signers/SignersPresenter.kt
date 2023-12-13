@@ -8,6 +8,8 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.PRIMARY
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.SECONDARY
 import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
+import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position.TOP
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateData
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWireframeContext
@@ -125,11 +127,18 @@ class DefaultSignersPresenter(
             EDIT -> handleEditAction(itemIdx)
         }
 
-    private fun handleToggleHidden(idx: Int) =
-        interactor.setHidden(interactor.isHidden(idx), idx)
+    private fun handleToggleHidden(idx: Int) {
+        interactor.setHidden(!interactor.isHidden(idx), idx)
+        updateView()
+    }
 
-    private fun handleCopyAddress(idx: Int) =
-        interactor.address(idx)
+
+    private fun handleCopyAddress(idx: Int) {
+        val address = interactor.address(idx)
+        interactor.pasteToClipboard(address ?: "")
+        val title = Localized("account.action.copy.toast") + "\n" + address
+        presentToast(ToastViewModel(title, SysName("square.on.square"), TOP))
+    }
 
     private fun handleAddAccountAction(idx: Int) {
         val item = interactor.signer(idx)
@@ -168,7 +177,7 @@ class DefaultSignersPresenter(
     }
 
     private fun handleRightBarButtonAction(idx: Int) {
-        interactor.showHidden != interactor.showHidden
+        interactor.showHidden = !interactor.showHidden
         updateView()
     }
 
@@ -206,6 +215,9 @@ class DefaultSignersPresenter(
         view.get()?.update(viewModel(state))
         initialPresent = false
     }
+
+    private fun presentToast(viewModel: ToastViewModel)
+        = view.get()?.presentToast(viewModel)
 
     @OptIn(ExperimentalStdlibApi::class)
     private fun viewModel(state: SignersViewModel.State): SignersViewModel =
@@ -246,7 +258,7 @@ class DefaultSignersPresenter(
 
     private fun swipeOption(idx: Int): List<SwipeOption> {
         val options = listOf(
-            SwipeOption(if (interactor.isHidden(idx)) HIDE else SHOW),
+            SwipeOption(if (interactor.isHidden(idx)) SHOW else HIDE),
             if (interactor.isMnemonicSigner(idx)) SwipeOption(ADD) else null,
             SwipeOption(COPY),
             SwipeOption(EDIT),

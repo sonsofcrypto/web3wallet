@@ -12,8 +12,8 @@ final class SignersCell: SpacedCell {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var stack: UIStackView!
 
-    private var firstSet: Bool = false
     private var handler: Handler?
+    private var prevBntCnt: Int = 0
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,14 +21,9 @@ final class SignersCell: SpacedCell {
         buttons().forEach { $0.isHidden = true }
     }
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        buttons().forEach { $0.isHidden = true }
-    }
-
     override func applyTheme(_ theme: ThemeProtocol) {
         super.applyTheme(theme)
-        self.tintColor = Theme.color.textPrimary
+        tintColor = Theme.color.textPrimary
         titleLabel.apply(style: .title3)
         subtitleLabel.apply(style: .footnote)
         subtitleLabel.textColor = Theme.color.textSecondary
@@ -54,7 +49,13 @@ extension SignersCell {
         titleLabel.text = viewModel?.title
         subtitleLabel.text = viewModel?.address
         subtitleLabel.isHidden = viewModel?.address?.isEmpty ?? true
-        UIView.springAnimate { self.updateButtons(viewModel?.swipeOptions) }
+        if viewModel?.swipeOptions.count ?? 0 != prevBntCnt {
+            UIView.springAnimate { self.updateButtons(viewModel?.swipeOptions) }
+            stack.setNeedsLayout()
+            prevBntCnt = viewModel?.swipeOptions.count ?? 0
+        } else {
+            updateButtons(viewModel?.swipeOptions)
+        }
         return self
     }
 
@@ -67,20 +68,24 @@ extension SignersCell {
             if let vm = viewModel[safe: idx] {
                 button.isHidden = false
                 button.titleLabel?.text = vm.title()
+                button.setAttributedTitle(attrBtnStr(vm.title()), for: .normal)
                 button.titleLabel?.isHidden = hideText
-                button.imageView?.image = vm.media()?.image()
+                if let image = vm.media()?.image() {
+                    button.setImage(image, for: .normal)
+                }
+                button.alpha = 1
             } else {
                 button.isHidden = true
+                button.alpha = 0
             }
         }
-        // HACK: For some reason on first viewModel set images are not updated
-        if !firstSet {
-            firstSet = true
-            asyncMain(0.05) { [weak self ] in
-                self?.stack.setNeedsLayout()
-                self?.updateButtons(viewModel)
-            }
-        }
+    }
+
+    private func attrBtnStr(_ text: String) -> NSAttributedString {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.preferredFont(forTextStyle: .caption2)
+        ]
+        return NSMutableAttributedString(string: text, attributes: attributes)
     }
 }
 

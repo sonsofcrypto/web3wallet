@@ -65,8 +65,13 @@ final class SignersViewController: BaseViewController {
 extension SignersViewController {
 
     func update(with viewModel: SignersViewModel) {
+        let prevViewModel = self.viewModel
         self.viewModel = viewModel
-        collectionView.reloadData()
+        cv.reloadAnimatedIfNeeded(
+            prevVM: prevViewModel,
+            currVM: viewModel,
+            reloadOnly: !didAppear
+        )
         updateLogo(viewModel)
         updateTargetView(targetView: viewModel.targetView)
         updateBarButtons(
@@ -96,7 +101,7 @@ extension SignersViewController {
         UIView.springAnimate { self.layoutAboveScrollView() }
         ctaButtonsContainer.minimizeBgHeight = !viewModel.items.isEmpty
     }
-    
+
     func updateTargetView(targetView: SignersViewModel.TransitionTargetView) {
         transitionTargetView = targetView
     }
@@ -104,11 +109,19 @@ extension SignersViewController {
     func updateCTASheet(expanded: Bool) {
         ctaButtonsContainer.setSheetState(expanded ? .expanded : .compact)
     }
+
+    func presentToast(with viewModel: ToastViewModel) {
+        navigationController?.asNavVc?.toast(viewModel)
+    }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension SignersViewController: UICollectionViewDataSource {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        viewModel == nil ? 0 : 1
+    }
     
     func collectionView(
         _ collectionView: UICollectionView,

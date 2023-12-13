@@ -67,11 +67,14 @@ extension UICollectionView {
             .forEach { deselectItem(at: $0, animated: animated) }
 
         (idxPaths ?? []).forEach {
-            selectItem(
-                at: $0,
-                animated: animated,
-                scrollPosition: scrollPosition
-            )
+            let count = numberOfItems(inSection: $0.section)
+            if $0.item > 0 && $0.item < count {
+                selectItem(
+                    at: $0,
+                    animated: animated,
+                    scrollPosition: scrollPosition
+                )
+            }
         }
     }
 
@@ -184,8 +187,8 @@ extension UICollectionView {
         let emptyExp = [insertItems, removeItems, reloadItems]
 
         // Check if do not need to reload, just update
-        if nilExp.filter { $0 != nil }.isEmpty &&
-           emptyExp.filter { !$0.isEmpty }.isEmpty &&
+        if nilExp.filter({ $0 != nil }).isEmpty &&
+           emptyExp.filter({ !$0.isEmpty }).isEmpty &&
            !force {
                reconfigureItems(at:
                    visibleCells.map { indexPath(for: $0) }.compactMap{ $0 }
@@ -218,5 +221,19 @@ extension CollectionViewModel.Screen: AutoDiffInfo {
             let item = section.items[safe: idxPath.item]
         else { return "" }
         return "\(type(of: item))"
+    }
+}
+
+// MARK: - SignersViewModel
+
+extension SignersViewModel: AutoDiffInfo {
+    var sectionsCount: Int { 1 }
+
+    func itemCount(_ section: Int) -> Int {
+        items.count
+    }
+
+    func itemType(_ idxPath: IndexPath) -> String {
+        "\(type(of: items[idxPath.item]))"
     }
 }

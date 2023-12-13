@@ -155,6 +155,7 @@ extension DefaultSignersWireframe: SignersWireframe {
 }
 extension SignersViewController: SignersView {
     func update(viewModel_________________ viewModel: SignersViewModel) { update(with: viewModel) }
+    func presentToast(viewModel: ToastViewModel) { presentToast(with: viewModel) }
 }
 extension SignersPresenter {
     func handleEvent(_ event: SignersPresenterEvent) { handle(event________________________: event) }
