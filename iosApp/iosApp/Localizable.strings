@@ -39,6 +39,21 @@
 "search" = "Search";
 "hide" = "Hide";
 "show" = "Show";
+"edit" = "Edit";
+"copy" = "Copy";
+"account" = "Account";
+"pending" = "Pending";
+"closed" = "Closed";
+"error" = "Error";
+"cancel" = "Cancel";
+"sendLogs" = "Send Logs";
+"sonsofcrypto" = "sons of crypto";
+"ipfs.image.unavailable" = "¯\\_(ツ)_/¯\n\nImage not available on ipfs\n\n";
+"copiedToPasteboard" = "Copied to pasteboard";
+"address" = "Address";
+"copyAddress" = "Copy address";
+"toast.expertMode" = "Expert mode turned on. Adds additional options and toggles for advanced users";
+
 "time.ago.day" = "%@ day ago";
 "time.ago.days" = "%@ days ago";
 "time.ago.hour" = "%@ hour ago";
@@ -52,19 +67,6 @@
 "time.until.hour.shortest" = "%@h";
 "time.until.min.shortest" = "%@m";
 "time.until.sec.shortest" = "%@s";
-"pending" = "Pending";
-"closed" = "Closed";
-"error" = "Error";
-"cancel" = "Cancel";
-"sendLogs" = "Send Logs";
-"sonsofcrypto" = "sons of crypto";
-"ipfs.image.unavailable" = "¯\\_(ツ)_/¯\n\nImage not available on ipfs\n\n";
-"copiedToPasteboard" = "Copied to pasteboard";
-"address" = "Address";
-"copyAddress" = "Copy address";
-"toast.expertMode" = "Expert mode turned on. Adds additional options and toggles for advanced users";
-
-
 
 "error.alert.title" = "Oops! 😬";
 

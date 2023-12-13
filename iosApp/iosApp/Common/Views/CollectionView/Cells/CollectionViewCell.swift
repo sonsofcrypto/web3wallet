@@ -35,6 +35,30 @@ class ThemeCell: UICollectionViewCell {
     }
 }
 
+class SpacedCell: ThemeCell {
+
+    override var isSelected: Bool {
+       didSet { updateUI() }
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundColor = Theme.color.bgPrimary
+        layer.cornerRadius = Theme.cornerRadius
+        layer.borderColor = Theme.color.textPrimary.cgColor
+        updateUI()
+    }
+
+    override func applyTheme(_ theme: ThemeProtocol) {
+        super.applyTheme(theme)
+        updateUI()
+    }
+
+    private func updateUI() {
+        layer.borderWidth = isSelected ? 1.0 : 0.0
+    }
+}
+
 class CollectionViewCell: UICollectionViewCell {
 
     override var isSelected: Bool {

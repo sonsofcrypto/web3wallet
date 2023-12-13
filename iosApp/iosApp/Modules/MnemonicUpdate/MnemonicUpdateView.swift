@@ -199,9 +199,8 @@ final class MnemonicUpdateViewController: CollectionViewController {
         presenter.handleEvent(.ViewPrivKey(idx: offsetAccIdx(idxPath)))
     }
 
-    @IBAction override func rightBarButtonAction(_ sender: Any?) {
-        guard let sender = sender as? UIBarButtonItem else { return }
-        presenter.handleEvent(.RightBarButtonAction(idx: sender.tag.int32))
+    @IBAction override func rightBarButtonAction(_ idx: Int) {
+        presenter.handleEvent(.RightBarButtonAction(idx: idx.int32))
     }
     
     override func buttonSheetContainer(

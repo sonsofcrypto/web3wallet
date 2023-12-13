@@ -4,10 +4,12 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.BarButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ErrorViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
+import com.sonsofcrypto.web3walletcore.extensions.Localized
 
 data class SignersViewModel(
     val isEmpty: Boolean,
     val state: State,
+    val leftBarButtons: List<BarButtonViewModel> = emptyList(),
     val rightBarButtons: List<BarButtonViewModel> = emptyList(),
     val items: List<Item>,
     val selectedIdxs: List<Int>,
@@ -31,14 +33,15 @@ data class SignersViewModel(
             val kind: Kind,
         ) {
             enum class Kind {
-                HIDE, SHOW, COPY, ADD
+                HIDE, SHOW, ADD, COPY, EDIT
             }
 
             fun title(): String = when (kind) {
-                Kind.HIDE -> "hide"
-                Kind.SHOW -> "show"
-                Kind.COPY -> "copyAddress"
-                Kind.ADD -> "mnemonic.cta.account"
+                Kind.HIDE -> Localized("hide")
+                Kind.SHOW -> Localized("show")
+                Kind.COPY -> Localized("copy")
+                Kind.ADD -> Localized("account")
+                Kind.EDIT -> Localized("edit")
             }
 
             fun media(): ImageMedia? = when (kind) {
@@ -46,6 +49,7 @@ data class SignersViewModel(
                 Kind.SHOW -> ImageMedia.SysName("eye")
                 Kind.COPY -> ImageMedia.SysName("square.on.square")
                 Kind.ADD -> ImageMedia.SysName("plus")
+                Kind.EDIT -> ImageMedia.SysName("gearshape")
             }
         }
     }

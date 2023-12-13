@@ -97,17 +97,6 @@ public class SwipeAction: NSObject {
         self.handler = handler
     }
 
-    public convenience init(
-        title: String?,
-        image: UIImage?,
-        style: SwipeActionStyle = .default,
-        handler: ((SwipeAction, IndexPath) -> Void)? = nil
-    ) {
-        self.init(style: style, title: title, handler: handler)
-        self.image = image
-        hidesWhenSelected = true
-    }
-
     /**
      Calling this method performs the configured expansion completion animation including deletion, if necessary. Calling this method more than once has no effect.
  
@@ -139,4 +128,28 @@ internal extension SwipeAction {
     var hasBackgroundColor: Bool {
         return backgroundColor != .clear && backgroundEffect == nil
     }
+}
+
+import web3walletcore
+
+public extension SwipeAction {
+
+    convenience init(
+        title: String?,
+        image: UIImage?,
+        style: SwipeActionStyle = .default,
+        handler: ((SwipeAction, IndexPath) -> Void)? = nil
+    ) {
+        self.init(style: style, title: title, handler: handler)
+        self.image = image
+        hidesWhenSelected = true
+    }
+
+    convenience init(
+        viewModel: SignersViewModel.ItemSwipeOption,
+        handler: ((SwipeAction, IndexPath) -> Void)? = nil
+    ) {
+        self.init(title: viewModel.title(), image: viewModel.media()?.image())
+    }
+
 }

@@ -332,6 +332,7 @@
 		2DC2C012B95A4F8F35D1D6FB /* Formatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CD3EC5E4207469E46E7C /* Formatter+Extensions.swift */; };
 		2DC2C26F1F43B153BACAD338 /* CollectionBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C36EEBD7DC01205DEFA8 /* CollectionBackgroundView.swift */; };
 		2DC2C35C9D973A9C14FF5BBA /* ButtonSheetContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C1FCC42A2BD3CAB3F3C2 /* ButtonSheetContainer.swift */; };
+		2DC2C48DE9709A65A75346A2 /* BarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C461E2F93020EF59C7DA /* BarButton.swift */; };
 		2DC2C5651044E7CB9670CEB4 /* MnemonicAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CB3BFED47B008618518A /* MnemonicAccountCell.swift */; };
 		2DC2C592853C6B05443349CE /* Dispatch+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C2854090F17C5AEBDE9B /* Dispatch+Extensions.swift */; };
 		2DC2C5BFEF1C945B36C7CAA2 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C2138CB5F68D2DE85E9C /* Button.swift */; };
@@ -346,8 +347,10 @@
 		2DC2CA0CCE7CABC9108BF9AA /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CE81AB1FAA8B931C37CE /* UITextView+Extensions.swift */; };
 		2DC2CA1BB3426CD144AE0590 /* FPSCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C3CCFB57B631938128A4 /* FPSCounter.swift */; };
 		2DC2CA50F84C2639C6C30EF5 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C4B6C92D814FB1D50384 /* Double+Extensions.swift */; };
+		2DC2CB82CF6BA0459DC8EBA0 /* SignerSmallVerticalButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C2B6D8B5E7DE6957BAF1 /* SignerSmallVerticalButton.swift */; };
 		2DC2CBB26FD729F8384ED4A6 /* NFTsDashboardCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CA6DB2985E8753EA28D7 /* NFTsDashboardCollectionCell.swift */; };
 		2DC2CC0CAF4FB724C7E46D6F /* NotificationCenter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C5F6967254E33338C759 /* NotificationCenter+Extensions.swift */; };
+		2DC2CD1687FAE0CC8E629C76 /* ImageMediaExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C1CE254D1B09A1942908 /* ImageMediaExtension.swift */; };
 		2DC2CD37E996AD6BCD84AB58 /* NFTsDashboardCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CF5B30C63B61DBD39B20 /* NFTsDashboardCarouselCell.swift */; };
 		2DC2CD424EFF6FB6BC106BB6 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C8FA05735FD6B546BA4B /* StringExtensions.swift */; };
 		2DC2CD82A596ABBBA697D14E /* NFTsDashboardRefreshCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CE6C3DB0794556494A4D /* NFTsDashboardRefreshCell.swift */; };
@@ -753,14 +756,17 @@
 		1FC997DA2AC6C48E00EAF032 /* ServicesAssemblers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssemblers.swift; sourceTree = "<group>"; };
 		2DC2C18C65C1FB607E58F687 /* UIView+Toast+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Toast+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C18D29998109474100FE /* PlainTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlainTextCell.swift; sourceTree = "<group>"; };
+		2DC2C1CE254D1B09A1942908 /* ImageMediaExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMediaExtension.swift; sourceTree = "<group>"; };
 		2DC2C1FCC42A2BD3CAB3F3C2 /* ButtonSheetContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonSheetContainer.swift; sourceTree = "<group>"; };
 		2DC2C2138CB5F68D2DE85E9C /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		2DC2C24534389C71A56B59FF /* SunLogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SunLogoView.swift; sourceTree = "<group>"; };
 		2DC2C2854090F17C5AEBDE9B /* Dispatch+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dispatch+Extensions.swift"; sourceTree = "<group>"; };
+		2DC2C2B6D8B5E7DE6957BAF1 /* SignerSmallVerticalButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignerSmallVerticalButton.swift; sourceTree = "<group>"; };
 		2DC2C36EEBD7DC01205DEFA8 /* CollectionBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionBackgroundView.swift; sourceTree = "<group>"; };
 		2DC2C3CCFB57B631938128A4 /* FPSCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPSCounter.swift; sourceTree = "<group>"; };
 		2DC2C41558C39C7EFB97BC1F /* LogoAnimView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoAnimView.swift; sourceTree = "<group>"; };
 		2DC2C41CD86FECDF03FCCBE8 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
+		2DC2C461E2F93020EF59C7DA /* BarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarButton.swift; sourceTree = "<group>"; };
 		2DC2C4716D8E32D5CE26DDA2 /* AlertWireframe+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlertWireframe+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C4B6C92D814FB1D50384 /* Double+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C5E7CE1941947F8B78B4 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
@@ -967,6 +973,7 @@
 			children = (
 				1C60C1EC285724D0003BE25D /* SignersCell.swift */,
 				2DC2C41558C39C7EFB97BC1F /* LogoAnimView.swift */,
+				2DC2C2B6D8B5E7DE6957BAF1 /* SignerSmallVerticalButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1485,6 +1492,7 @@
 				2DC2C5F6967254E33338C759 /* NotificationCenter+Extensions.swift */,
 				2DC2C99C34B1CD6C6DE24FB8 /* UIToolbar+Extensions.swift */,
 				2DC2C2854090F17C5AEBDE9B /* Dispatch+Extensions.swift */,
+				2DC2C1CE254D1B09A1942908 /* ImageMediaExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1736,6 +1744,7 @@
 				1A4C3DBA41AF75471C619124 /* TextField.swift */,
 				1A4C3378B5287B6A9BDE65CD /* OldButton.swift */,
 				2DC2C2138CB5F68D2DE85E9C /* Button.swift */,
+				2DC2C461E2F93020EF59C7DA /* BarButton.swift */,
 			);
 			path = BasicViews;
 			sourceTree = "<group>";
@@ -2532,6 +2541,9 @@
 				2DC2C35C9D973A9C14FF5BBA /* ButtonSheetContainer.swift in Sources */,
 				2DC2CE5C28AA04327934DC8C /* ButtonCell.swift in Sources */,
 				2DC2C592853C6B05443349CE /* Dispatch+Extensions.swift in Sources */,
+				2DC2CD1687FAE0CC8E629C76 /* ImageMediaExtension.swift in Sources */,
+				2DC2CB82CF6BA0459DC8EBA0 /* SignerSmallVerticalButton.swift in Sources */,
+				2DC2C48DE9709A65A75346A2 /* BarButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

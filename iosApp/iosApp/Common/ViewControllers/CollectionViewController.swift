@@ -52,7 +52,12 @@ class CollectionViewController: UICollectionViewController,
         self.viewModel = viewModel
         guard let cv = collectionView else { return }
         updateCtaButtons(with: viewModel.ctaItems)
-        updateRightBarButtons(with: viewModel.rightBarButtons)
+        updateBarButtons(
+            with: viewModel.rightBarButtons,
+            position: .right,
+            animated: didAppear,
+            handler: { [weak self] idx in self?.rightBarButtonAction(idx)  }
+        )
         cv.reloadAnimatedIfNeeded(
             prevVM: prevViewModel,
             currVM: viewModel,
@@ -85,34 +90,8 @@ class CollectionViewController: UICollectionViewController,
         cv.scrollToIdxPath(cv.lastIdxPath())
     }
 
-    func updateRightBarButtons(
-        with viewModel: [CollectionViewModel.Screen.BarButton]
-    ) {
-        var buttons = navigationItem.rightBarButtonItems ?? []
-        while buttons.count > viewModel.count { buttons.removeLast() }
-        while buttons.count < viewModel.count {
-            let button = UIBarButtonItem(
-                with: "",
-                target: self,
-                action: #selector(rightBarButtonAction(_:))
-            )
-            buttons.append(button)
-        }
-        viewModel.enumerated().forEach { idx, vm in
-            let button = buttons[idx]
-            if #available(iOS 16.0, *) { button.isHidden = vm.hidden }
-            else { vm.hidden ? button.image = nil : () }
-            if let sysImg = vm.image as? ImageMedia.SysName, !vm.hidden {
-                button.image = UIImage(systemName: sysImg.name)
-                button.title = nil
-                button.tag = idx
-            }
-        }
-        navigationItem.setRightBarButtonItems(buttons, animated: false)
-    }
-
-    @IBAction func rightBarButtonAction(_ sender: Any?) {
-        print("Right bar button action", sender)
+    @IBAction func rightBarButtonAction(_ idx: Int) {
+        print("Right bar button action", idx)
     }
 
     func updateCtaButtons(with viewModel: [ButtonViewModel]) {

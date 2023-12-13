@@ -21,6 +21,7 @@ final class SignersViewController: BaseViewController {
     private var didAppear: Bool = false
     private var prevSize: CGSize = .zero
     private var cellSize: CGSize = .zero
+    private var cellSwipeOption =  SwipeOptions()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +69,18 @@ extension SignersViewController {
         collectionView.reloadData()
         updateLogo(viewModel)
         updateTargetView(targetView: viewModel.targetView)
+        updateBarButtons(
+            with: viewModel.leftBarButtons,
+            position: .left,
+            animated: didAppear,
+            handler: { [weak self] idx in self?.leftBarButtonAction(idx) }
+        )
+        updateBarButtons(
+            with: viewModel.rightBarButtons,
+            position: .right,
+            animated: didAppear,
+            handler: { [weak self] idx in self?.rightBarButtonAction(idx) }
+        )
         collectionView.deselectAllExcept(
             selectedIdxPaths(),
             animated: presentedViewController == nil,
@@ -108,10 +121,12 @@ extension SignersViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-         collectionView.dequeue(SignersCell.self, for: indexPath)
+        collectionView.dequeue(SignersCell.self, for: indexPath)
             .update(
                 with: viewModel?.items[indexPath.item],
-                handler: { [weak self] in self?.accessoryAction(indexPath) },
+                handler: { [weak self] actionIdx in
+                    self?.accessoryAction(indexPath, actionIdx: actionIdx)
+                },
                 index: indexPath.item
             )
     }
@@ -126,8 +141,23 @@ extension SignersViewController: UICollectionViewDelegate {
         presenter.handleEvent(.SignerAction(idx: indexPath.item.int32))
     }
 
-    func accessoryAction(_ idxPath: IndexPath) {
-        presenter.handleEvent(.AccessoryAction(idx: idxPath.item.int32))
+    func accessoryAction(_ idxPath: IndexPath, actionIdx: Int) {
+        let itm = idxPath.item.int32
+        let act = actionIdx.int32
+        presenter.handleEvent(.SwipeOptionAction(itemIdx: itm, actionIdx: act))
+    }
+
+    func swipeOptionAction(_ itemIdx: Int, actionIdx: Int) {
+        let (itm, act) = (itemIdx.int32, actionIdx.int32)
+        presenter.handleEvent(.SwipeOptionAction(itemIdx: itm, actionIdx: act))
+    }
+
+    func leftBarButtonAction(_ idx: Int) {
+        presenter.handleEvent(.LeftBarButtonAction(idx: idx.int32))
+    }
+
+    func rightBarButtonAction(_ idx: Int) {
+        presenter.handleEvent(.RightBarButtonAction(idx: idx.int32))
     }
 }
 
@@ -217,6 +247,43 @@ extension SignersViewController {
         )
         (cv.abovescrollView as? ButtonSheetContainer)?.forceLayout()
     }
+
+    func viewModel(at idxPath: IndexPath) -> SignersViewModel.Item? {
+        viewModel?.items[idxPath.item]
+    }
+}
+
+// MARK: - SwipeCollectionViewCellDelegate
+
+extension SignersViewController: SwipeCollectionViewCellDelegate {
+
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        editActionsForItemAt indexPath: IndexPath,
+        for orientation: SwipeActionsOrientation
+    ) -> [SwipeAction]? {
+        guard orientation == .right, let vm = viewModel(at: indexPath) else {
+            return nil
+        }
+        return vm.swipeOptions.enumerated().map { idx, vm in
+            SwipeAction(viewModel: vm) { [weak self] _,_  in
+                self?.swipeOptionAction(indexPath.item, actionIdx: idx)
+            }
+        }
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        editActionsOptionsForItemAt indexPath: IndexPath,
+        for orientation: SwipeActionsOrientation
+    ) -> SwipeOptions {
+        cellSwipeOption
+    }
+
+    func rightSwipeActions(for idxPath: IndexPath) -> [SwipeAction]? {
+        nil
+    }
 }
 
 // MARK: - Into animations
@@ -280,7 +347,7 @@ extension SignersViewController {
 extension SignersViewController: TargetViewTransitionDatasource {
 
     func targetView() -> UIView? {
-        if let input = transitionTargetView as? SignersViewModel.TransitionTargetViewKeyStoreItemAt {
+        if let input = transitionTargetView as? SignersViewModel.TransitionTargetViewSignerAt {
             return cv.cellForItem(at: IndexPath(item: input.idx.int))
         }
         if let input = transitionTargetView as? SignersViewModel.TransitionTargetViewButtonAt {
