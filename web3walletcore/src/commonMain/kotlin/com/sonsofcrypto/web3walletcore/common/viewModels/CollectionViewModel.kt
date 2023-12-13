@@ -11,7 +11,7 @@ sealed class CollectionViewModel {
     data class Screen(
         val id: String,
         val sections: List<Section>,
-        val rightBarButtonViewModels: List<BarButtonViewModel> = emptyList(),
+        val rightBarButtons: List<BarButtonViewModel> = emptyList(),
         val ctaItems: List<ButtonViewModel> = emptyList(),
     ): CollectionViewModel()
 

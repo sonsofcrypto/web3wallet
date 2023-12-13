@@ -31,7 +31,6 @@ interface SignersInteractor {
 class DefaultSignersInteractor(
     private var signerStoreService: SignerStoreService,
     private var networksService: NetworksService,
-    private var address: AddressService,
 ): SignersInteractor {
     override var selected: SignerStoreItem?
         get() = signerStoreService.selected
@@ -73,7 +72,7 @@ class DefaultSignersInteractor(
         signerStoreService.update(signer(idx).copy(hidden = hidden))
 
     override fun isMnemonicSigner(idx: Int): Boolean =
-        signer(idx).type != SignerStoreItem.Type.MNEMONIC
+        signer(idx).type == SignerStoreItem.Type.MNEMONIC
 
 
     override fun addAccount(

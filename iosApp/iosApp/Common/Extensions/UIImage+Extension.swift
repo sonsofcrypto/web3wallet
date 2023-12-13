@@ -2,7 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-import UIKit
+import web3walletcore
 
 extension UIImage {
     

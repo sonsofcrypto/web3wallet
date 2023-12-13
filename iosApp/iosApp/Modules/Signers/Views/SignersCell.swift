@@ -5,35 +5,41 @@
 import UIKit
 import web3walletcore
 
-final class SignersCell: CollectionViewCell {
-    typealias Handler = ()->()
+final class SignersCell: SpacedCell {
+    typealias Handler = (_ actionIdx: Int)->()
     
-    @IBOutlet weak var indexImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var accessoryButton: UIButton!
-    @IBOutlet weak var arrowForward: UIImageView!
-    
+    @IBOutlet weak var stack: UIStackView!
+
+    private var firstSet: Bool = false
     private var handler: Handler?
-        
+
     override func awakeFromNib() {
         super.awakeFromNib()
+        applyTheme(Theme)
+        buttons().forEach { $0.isHidden = true }
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        buttons().forEach { $0.isHidden = true }
+    }
+
+    override func applyTheme(_ theme: ThemeProtocol) {
+        super.applyTheme(theme)
+        self.tintColor = Theme.color.textPrimary
         titleLabel.apply(style: .title3)
         subtitleLabel.apply(style: .footnote)
         subtitleLabel.textColor = Theme.color.textSecondary
-        accessoryButton.addTarget(
-            self,
-            action: #selector(accessoryAction(_:)),
-            for: .touchUpInside
-        )
-        arrowForward.image = UIImage(systemName: "chevron.right")
-        accessoryButton.tintColor = Theme.color.textPrimary
-        arrowForward.tintColor = Theme.color.textPrimary
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        setSelected(isSelected)
+    @IBAction func accessoryAction(_ sender: UIButton) {
+        handler?(sender.tag)
+    }
+
+    private func buttons() -> [UIButton] {
+        stack.arrangedSubviews.map { $0 as? UIButton }.compactMap { $0 }
     }
 }
 
@@ -45,24 +51,36 @@ extension SignersCell {
         index: Int
     ) -> Self {
         self.handler = handler
-        let image = UIImage(systemName: "\(index + 1).square.fill")
-        let config = UIImage.SymbolConfiguration(
-            paletteColors: [
-                Theme.color.textPrimary,
-                Theme.color.buttonBgPrimary
-            ]
-        )
-        indexImage.image = image?.applyingSymbolConfiguration(config)
         titleLabel.text = viewModel?.title
         subtitleLabel.text = viewModel?.address
         subtitleLabel.isHidden = viewModel?.address?.isEmpty ?? true
+        UIView.springAnimate { self.updateButtons(viewModel?.swipeOptions) }
         return self
+    }
+
+    private func updateButtons(
+        _ viewModel: [SignersViewModel.ItemSwipeOption]?
+    ) {
+        guard let viewModel else { return }
+        let hideText = viewModel.count == 2
+        for (idx, button) in buttons().enumerated() {
+            if let vm = viewModel[safe: idx] {
+                button.isHidden = false
+                button.titleLabel?.text = vm.title()
+                button.titleLabel?.isHidden = hideText
+                button.imageView?.image = vm.media()?.image()
+            } else {
+                button.isHidden = true
+            }
+        }
+        // HACK: For some reason on first viewModel set images are not updated
+        if !firstSet {
+            firstSet = true
+            asyncMain(0.05) { [weak self ] in
+                self?.stack.setNeedsLayout()
+                self?.updateButtons(viewModel)
+            }
+        }
     }
 }
 
-private extension SignersCell {
-    
-    @objc func accessoryAction(_ sender: UIButton) {
-        handler?()
-    }
-}

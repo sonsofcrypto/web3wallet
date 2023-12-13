@@ -1,12 +1,8 @@
 package com.sonsofcrypto.web3walletcore.modules.signers
 
-import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
-import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.MNEMONIC
-import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.execDelayed
-import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import com.sonsofcrypto.web3walletcore.common.viewModels.BarButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.PRIMARY
@@ -16,9 +12,8 @@ import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateData
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.ButtonAction
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.EditAction
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.CopyAddress
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.ErrorAlertAction
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.LeftBarButtonAction
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SetCTASheet
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SignerAction
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.ReorderAction
@@ -29,6 +24,7 @@ import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.Item
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.Item.SwipeOption
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.Item.SwipeOption.Kind.ADD
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.Item.SwipeOption.Kind.COPY
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.Item.SwipeOption.Kind.EDIT
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.Item.SwipeOption.Kind.HIDE
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.Item.SwipeOption.Kind.SHOW
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.State.Loaded
@@ -46,19 +42,15 @@ import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestinati
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.Networks
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.NewMnemonic
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.SignersFullscreen
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 
 sealed class SignersPresenterEvent {
     data class SignerAction(val idx: Int): SignersPresenterEvent()
-    data class CopyAddress(val idx: Int): SignersPresenterEvent()
-    data class EditAction(val idx: Int): SignersPresenterEvent()
     data class SwipeOptionAction(val itemIdx: Int, val actionIdx: Int): SignersPresenterEvent()
     data class ReorderAction(val oldIdx: Int, val newIdx: Int): SignersPresenterEvent()
     data class SetSearchTerm(val term: String?): SignersPresenterEvent()
     data class ErrorAlertAction(val idx: Int): SignersPresenterEvent()
+    data class LeftBarButtonAction(val idx: Int): SignersPresenterEvent()
     data class RightBarButtonAction(val idx: Int): SignersPresenterEvent()
     data class ButtonAction(val idx: Int): SignersPresenterEvent()
     data class SetCTASheet(val expanded: Boolean): SignersPresenterEvent()
@@ -74,6 +66,7 @@ class DefaultSignersPresenter(
     private val wireframe: SignersWireframe,
     private val interactor: SignersInteractor,
 ): SignersPresenter {
+    private var isEditMode: Boolean = false
     private var ctaSheetExpanded: Boolean = false
     private var targetView: SignersViewModel.TransitionTargetView = None
     private var initialPresent: Boolean = true
@@ -83,13 +76,12 @@ class DefaultSignersPresenter(
     override fun handle(event: SignersPresenterEvent) {
         when (event) {
             is SignerAction -> handleDidSelectSignerStoreItem(event.idx)
-            is EditAction -> handleEditAction(event.idx)
-            is CopyAddress -> handleCopyAddress(event.idx)
             is SwipeOptionAction ->
                 handleSwipeOptionAction(event.itemIdx, event.actionIdx)
             is ReorderAction -> handleReorderAction(event.oldIdx, event.newIdx)
             is SetSearchTerm -> handleSetSearchTerm(event.term)
             is ErrorAlertAction -> handleDidSelectErrorAction(event.idx)
+            is LeftBarButtonAction -> handleLeftBarButtonAction(event.idx)
             is RightBarButtonAction -> handleRightBarButtonAction(event.idx)
             is ButtonAction -> handleButtonAction(event.idx)
             is SetCTASheet -> ctaSheetExpanded = event.expanded
@@ -128,8 +120,9 @@ class DefaultSignersPresenter(
     private fun handleSwipeOptionAction(itemIdx: Int, actionIdx: Int) =
         when (swipeOption(itemIdx)[actionIdx].kind) {
             HIDE, SHOW -> handleToggleHidden(itemIdx)
-            SwipeOption.Kind.COPY -> handleCopyAddress(itemIdx)
-            SwipeOption.Kind.ADD -> handleAddAccountAction(itemIdx)
+            COPY -> handleCopyAddress(itemIdx)
+            ADD -> handleAddAccountAction(itemIdx)
+            EDIT -> handleEditAction(itemIdx)
         }
 
     private fun handleToggleHidden(idx: Int) =
@@ -168,6 +161,11 @@ class DefaultSignersPresenter(
     }
 
     private fun handleDidSelectErrorAction(idx: Int) = updateView()
+
+    private fun handleLeftBarButtonAction(idx: Int) {
+        isEditMode = !isEditMode
+        updateView()
+    }
 
     private fun handleRightBarButtonAction(idx: Int) {
         interactor.showHidden != interactor.showHidden
@@ -214,19 +212,30 @@ class DefaultSignersPresenter(
         SignersViewModel(
             interactor.signersCount() == 0,
             state,
-            listOf(
-                BarButtonViewModel(
-                    null,
-                    SysName(if (interactor.showHidden) "eye.slash" else "eye"),
-                    interactor.hiddenSignersCount() == 0,
-                ),
-            ),
+            leftBarButtonItems(),
+            rightBarButtonItems(),
             (0..<interactor.signersCount()).map { itemViewModel(it) },
             listOf(selectedIdxs()).filterNotNull(),
             buttonsCompact(),
             buttonsExpanded(),
             targetView,
         )
+
+    private fun leftBarButtonItems(): List<BarButtonViewModel> = listOf(
+        BarButtonViewModel(
+            image = SysName(
+                if (!isEditMode) "rectangle.and.pencil.and.ellipsis"
+                else "ellipsis.rectangle"
+            ),
+        ),
+    )
+
+    private fun rightBarButtonItems(): List<BarButtonViewModel> = listOf(
+        BarButtonViewModel(
+            image = SysName(if (interactor.showHidden) "eye.slash" else "eye"),
+            hidden = interactor.hiddenSignersCount() == 0,
+        ),
+    )
 
     private fun itemViewModel(idx: Int): Item = Item(
         interactor.name(idx),
@@ -235,15 +244,15 @@ class DefaultSignersPresenter(
         interactor.isHidden(idx)
     )
 
-
-    private fun swipeOption(idx: Int): List<SwipeOption> = listOf(
-        SwipeOption(ADD),
-        SwipeOption(COPY),
-        SwipeOption(if (interactor.isHidden(idx)) HIDE else SHOW)
-    ).subList(
-        fromIndex = if (interactor.isMnemonicSigner(idx)) 1 else 0,
-        toIndex = 3
-    )
+    private fun swipeOption(idx: Int): List<SwipeOption> {
+        val options = listOf(
+            SwipeOption(if (interactor.isHidden(idx)) HIDE else SHOW),
+            if (interactor.isMnemonicSigner(idx)) SwipeOption(ADD) else null,
+            SwipeOption(COPY),
+            SwipeOption(EDIT),
+        ).filterNotNull()
+        return if (isEditMode) options else options.takeLast(2)
+    }
 
 
     private fun selectedIdxs(): Int? {
