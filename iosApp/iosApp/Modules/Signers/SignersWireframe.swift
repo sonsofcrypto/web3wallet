@@ -11,6 +11,7 @@ final class DefaultSignersWireframe {
     private weak var parent: UIViewController?
     private let signerStoreService: SignerStoreService
     private let networksService: NetworksService
+    private let clipboardService: ClipboardService
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
@@ -22,6 +23,7 @@ final class DefaultSignersWireframe {
         _ parent: UIViewController?,
         signerStoreService: SignerStoreService,
         networksService: NetworksService,
+        clipboardService: ClipboardService,
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
@@ -30,6 +32,7 @@ final class DefaultSignersWireframe {
         self.parent = parent
         self.signerStoreService = signerStoreService
         self.networksService = networksService
+        self.clipboardService =  clipboardService
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
         self.importMnemonic = importMnemonic
@@ -95,7 +98,8 @@ private extension DefaultSignersWireframe {
     func wireUp() -> UIViewController {
         let interactor = DefaultSignersInteractor(
             signerStoreService: signerStoreService,
-            networksService: networksService
+            networksService: networksService,
+            clipboardService: clipboardService
         )
         let vc: SignersViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultSignersPresenter(

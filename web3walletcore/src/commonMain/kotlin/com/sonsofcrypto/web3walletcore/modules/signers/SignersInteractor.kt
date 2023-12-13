@@ -7,6 +7,7 @@ import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.types.Network
+import com.sonsofcrypto.web3walletcore.services.clipboard.ClipboardService
 
 interface SignersInteractor {
     var selected: SignerStoreItem?
@@ -26,12 +27,14 @@ interface SignersInteractor {
 
     fun addAccount(item: SignerStoreItem, password: String, salt: String?)
     fun reorderSigner(fromIdx: Int, toIdx: Int)
+    fun pasteToClipboard(text: String)
 }
 
 class DefaultSignersInteractor(
     private var signerStoreService: SignerStoreService,
     private var networksService: NetworksService,
-): SignersInteractor {
+    private val clipboardService: ClipboardService,
+    ): SignersInteractor {
     override var selected: SignerStoreItem?
         get() = signerStoreService.selected
         set(value) {
@@ -91,4 +94,7 @@ class DefaultSignersInteractor(
     override fun reorderSigner(fromIdx: Int, toIdx: Int) {
         signerStoreService.setSortOrder(signer(fromIdx), toIdx.toUInt())
     }
+
+    override fun pasteToClipboard(text: String) =
+        clipboardService.paste(text)
 }

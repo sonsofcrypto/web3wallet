@@ -17,6 +17,7 @@ final class DefaultSignersWireframeFactory {
 
     private let signerStoreService: SignerStoreService
     private let networksService: NetworksService
+    private let clipboardService: ClipboardService
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
@@ -25,6 +26,7 @@ final class DefaultSignersWireframeFactory {
     init(
         signerStoreService: SignerStoreService,
         networksService: NetworksService,
+        clipboardService: ClipboardService,
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
@@ -32,6 +34,7 @@ final class DefaultSignersWireframeFactory {
     ) {
         self.signerStoreService = signerStoreService
         self.networksService = networksService
+        self.clipboardService = clipboardService
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
         self.importMnemonic = importMnemonic
@@ -50,6 +53,7 @@ extension DefaultSignersWireframeFactory: SignersWireframeFactory {
             parent,
             signerStoreService: signerStoreService,
             networksService: networksService,
+            clipboardService: clipboardService,
             newMnemonic: newMnemonic,
             updateMnemonic: updateMnemonic,
             importMnemonic: importMnemonic,
@@ -67,6 +71,7 @@ final class SignersWireframeFactoryAssembler: AssemblerComponent {
             DefaultSignersWireframeFactory(
                 signerStoreService: resolver.resolve(),
                 networksService: resolver.resolve(),
+                clipboardService: resolver.resolve(),
                 newMnemonic: resolver.resolve(),
                 updateMnemonic: resolver.resolve(),
                 importMnemonic: resolver.resolve(),
