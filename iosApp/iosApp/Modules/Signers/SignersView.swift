@@ -21,7 +21,6 @@ final class SignersViewController: BaseViewController {
     private var didAppear: Bool = false
     private var prevSize: CGSize = .zero
     private var cellSize: CGSize = .zero
-    private var cellSwipeOption =  SwipeOptions()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -263,39 +262,6 @@ extension SignersViewController {
 
     func viewModel(at idxPath: IndexPath) -> SignersViewModel.Item? {
         viewModel?.items[idxPath.item]
-    }
-}
-
-// MARK: - SwipeCollectionViewCellDelegate
-
-extension SignersViewController: SwipeCollectionViewCellDelegate {
-
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        editActionsForItemAt indexPath: IndexPath,
-        for orientation: SwipeActionsOrientation
-    ) -> [SwipeAction]? {
-        guard orientation == .right, let vm = viewModel(at: indexPath) else {
-            return nil
-        }
-        return vm.swipeOptions.enumerated().map { idx, vm in
-            SwipeAction(viewModel: vm) { [weak self] _,_  in
-                self?.swipeOptionAction(indexPath.item, actionIdx: idx)
-            }
-        }
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        editActionsOptionsForItemAt indexPath: IndexPath,
-        for orientation: SwipeActionsOrientation
-    ) -> SwipeOptions {
-        cellSwipeOption
-    }
-
-    func rightSwipeActions(for idxPath: IndexPath) -> [SwipeAction]? {
-        nil
     }
 }
 
