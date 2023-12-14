@@ -68,7 +68,7 @@ extension UICollectionView {
 
         (idxPaths ?? []).forEach {
             let count = numberOfItems(inSection: $0.section)
-            if $0.item > 0 && $0.item < count {
+            if $0.item >= 0 && $0.item < count && count > 0 {
                 selectItem(
                     at: $0,
                     animated: animated,
