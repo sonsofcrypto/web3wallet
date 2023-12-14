@@ -74,6 +74,7 @@ extension SignersViewController {
         cv.reloadAnimatedIfNeeded(
             prevVM: prevViewModel,
             currVM: viewModel,
+            force: prevViewModel?.items.count != viewModel.items.count,
             reloadOnly: !didAppear || needsFullReload
         )
         needsFullReload = false
@@ -92,14 +93,12 @@ extension SignersViewController {
             animated: didAppear,
             handler: { [weak self] idx in self?.rightBarButtonAction(idx) }
         )
-        asyncMain(0.05) {
-            print("Selected items \(self.selectedIdxPaths())")
-            self.collectionView.deselectAllExcept(
-                self.selectedIdxPaths(),
-                animated: self.presentedViewController == nil,
-                scrollPosition: .centeredVertically
-            )
-        }
+        collectionView.deselectAllExcept(
+            selectedIdxPaths(),
+            animated: presentedViewController == nil,
+            scrollPosition: .centeredVertically,
+            forceHack: true
+        )
         ctaButtonsContainer.setButtons(
             viewModel.buttons,
             compactCount: 3,
@@ -319,7 +318,7 @@ extension SignersViewController {
 
     func selectedIdxPaths() -> [IndexPath] {
         guard let viewModel = viewModel, !viewModel.items.isEmpty else { return [] }
-        return viewModel.selectedIdxs.map { IndexPath(item: $0.intValue, section: 0) }
+        return viewModel.selectedIdxs.map {IndexPath(item: $0.intValue, section: 0)}
     }
 
     func layoutAboveScrollView() {

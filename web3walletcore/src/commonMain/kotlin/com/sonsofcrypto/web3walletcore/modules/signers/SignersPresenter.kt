@@ -277,10 +277,7 @@ class DefaultSignersPresenter(
 
     private fun selectedIdxs(): Int? {
         val index = interactor.indexOf(interactor.selected)
-        if (index != -1) return index
-        // If we have items and the keystore item could not tell us which one is
-        // selected we default to 0, this should not happen though!
-        return if (interactor.signersCount() == 0) null else 0
+        return if (index != -1) return index else null
     }
 
     private fun buttonsCompact(): List<ButtonViewModel> = listOf(
