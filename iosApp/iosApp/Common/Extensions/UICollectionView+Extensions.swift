@@ -193,6 +193,7 @@ extension UICollectionView {
                reconfigureItems(at:
                    visibleCells.map { indexPath(for: $0) }.compactMap{ $0 }
                )
+            return
         }
 
         performBatchUpdates {
