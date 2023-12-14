@@ -24,7 +24,7 @@ interface SignersInteractor {
     fun isMnemonicSigner(idx: Int): Boolean
 
     fun addAccount(item: SignerStoreItem, password: String, salt: String?)
-    fun reorderSigner(fromIdx: Int, toIdx: Int)
+    fun reorderSigner(srcIdxs: List<Int>, destIdxs: List<Int>)
     fun pasteToClipboard(text: String)
     fun reloadItems(): List<SignerStoreItem>
 }
@@ -94,8 +94,11 @@ class DefaultSignersInteractor(
         reloadItems()
     }
 
-    override fun reorderSigner(fromIdx: Int, toIdx: Int) {
-        signerStoreService.setSortOrder(signer(fromIdx), toIdx.toUInt())
+    override fun reorderSigner(srcIdxs: List<Int>, destIdxs: List<Int>) {
+        val signers = srcIdxs.map { signer(it) }
+        signers.forEachIndexed { idx, itm ->
+            signerStoreService.setSortOrder(itm, destIdxs[idx].toUInt())
+        }
         reloadItems()
     }
 

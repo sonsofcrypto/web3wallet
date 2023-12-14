@@ -49,7 +49,7 @@ import kotlin.time.Duration.Companion.seconds
 sealed class SignersPresenterEvent {
     data class SignerAction(val idx: Int): SignersPresenterEvent()
     data class SwipeOptionAction(val itemIdx: Int, val actionIdx: Int): SignersPresenterEvent()
-    data class ReorderAction(val oldIdx: Int, val newIdx: Int): SignersPresenterEvent()
+    data class ReorderAction(val srcIdxs: List<Int>, val destIdxs: List<Int>): SignersPresenterEvent()
     data class SetSearchTerm(val term: String?): SignersPresenterEvent()
     data class ErrorAlertAction(val idx: Int): SignersPresenterEvent()
     data class LeftBarButtonAction(val idx: Int): SignersPresenterEvent()
@@ -80,7 +80,7 @@ class DefaultSignersPresenter(
             is SignerAction -> handleDidSelectSignerStoreItem(event.idx)
             is SwipeOptionAction ->
                 handleSwipeOptionAction(event.itemIdx, event.actionIdx)
-            is ReorderAction -> handleReorderAction(event.oldIdx, event.newIdx)
+            is ReorderAction -> handleReorderAction(event.srcIdxs, event.destIdxs)
             is SetSearchTerm -> handleSetSearchTerm(event.term)
             is ErrorAlertAction -> handleDidSelectErrorAction(event.idx)
             is LeftBarButtonAction -> handleLeftBarButtonAction(event.idx)
@@ -166,8 +166,8 @@ class DefaultSignersPresenter(
         updateView()
     }
 
-    private fun handleReorderAction(oldIdx: Int, newIdx: Int) {
-        interactor.reorderSigner(oldIdx, newIdx)
+    private fun handleReorderAction(srcIdxs: List<Int>, destIdxs: List<Int>) {
+        interactor.reorderSigner(srcIdxs, destIdxs)
         updateView()
     }
 

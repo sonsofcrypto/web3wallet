@@ -19,4 +19,8 @@ extension IndexPath {
     init(item: Int) {
         self.init(item: item, section: 0)
     }
+
+    func incrementingItem(_ byNum: Int = 1) -> IndexPath {
+        IndexPath(item: item + byNum, section: section)
+    }
 }
