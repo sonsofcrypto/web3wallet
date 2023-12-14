@@ -93,6 +93,7 @@ extension SignersViewController {
             handler: { [weak self] idx in self?.rightBarButtonAction(idx) }
         )
         asyncMain(0.05) {
+            print("Selected items \(self.selectedIdxPaths())")
             self.collectionView.deselectAllExcept(
                 self.selectedIdxPaths(),
                 animated: self.presentedViewController == nil,
@@ -245,27 +246,6 @@ extension SignersViewController: UICollectionViewDropDelegate {
         _ collectionView: UICollectionView,
         performDropWith coordinator: UICollectionViewDropCoordinator
     ) {
-//        var destIdxPath: IndexPath
-//        let srcIdxPath = coordinator.items[0].sourceIndexPath
-//        if let indexPath = coordinator.destinationIndexPath {
-//            destIdxPath = indexPath
-//        } else  {
-//            let itemCnt = collectionView.numberOfItems(inSection: 0)
-//            destIdxPath = IndexPath(item: itemCnt - 1, section: 0)
-//        }
-//
-//        if coordinator.proposal.operation == .move {
-//            presenter.handleEvent(
-//                    .ReorderAction(
-//                        oldIdx: srcIdxPath?.item.int32 ?? 0,
-//                        newIdx: destIdxPath.item.int32
-//                    )
-//            )
-//            coordinator.drop(coordinator.items[0].dragItem, toItemAt: destIdxPath)
-//        }
-
-        // ===
-
         guard coordinator.proposal.operation == .move else { return }
         var destIp = coordinator.destinationIndexPath
         if let ip = destIp {
