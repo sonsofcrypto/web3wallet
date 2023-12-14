@@ -465,6 +465,8 @@
                                 <connections>
                                     <outlet property="dataSource" destination="svS-SQ-rI7" id="lw5-mF-pIb"/>
                                     <outlet property="delegate" destination="svS-SQ-rI7" id="wNi-bK-RFW"/>
+                                    <outlet property="dragDelegate" destination="svS-SQ-rI7" id="QAM-3b-XC6"/>
+                                    <outlet property="dropDelegate" destination="svS-SQ-rI7" id="UmT-M2-Txp"/>
                                 </connections>
                             </collectionView>
                             <stackView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" spacing="-8" translatesAutoresizingMaskIntoConstraints="NO" id="szF-wo-2hH">

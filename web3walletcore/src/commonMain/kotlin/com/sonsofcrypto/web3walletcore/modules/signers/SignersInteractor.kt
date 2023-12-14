@@ -96,6 +96,7 @@ class DefaultSignersInteractor(
 
     override fun reorderSigner(fromIdx: Int, toIdx: Int) {
         signerStoreService.setSortOrder(signer(fromIdx), toIdx.toUInt())
+        reloadItems()
     }
 
     override fun pasteToClipboard(text: String) =

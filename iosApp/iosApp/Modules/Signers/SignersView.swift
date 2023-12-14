@@ -92,11 +92,13 @@ extension SignersViewController {
             animated: didAppear,
             handler: { [weak self] idx in self?.rightBarButtonAction(idx) }
         )
-        collectionView.deselectAllExcept(
-            selectedIdxPaths(),
-            animated: presentedViewController == nil,
-            scrollPosition: .centeredVertically
-        )
+        asyncMain(0.05) {
+            self.collectionView.deselectAllExcept(
+                self.selectedIdxPaths(),
+                animated: self.presentedViewController == nil,
+                scrollPosition: .centeredVertically
+            )
+        }
         ctaButtonsContainer.setButtons(
             viewModel.buttons,
             compactCount: 3,
@@ -147,6 +149,62 @@ extension SignersViewController: UICollectionViewDataSource {
                     self?.accessoryAction(indexPath, actionIdx: actionIdx)
                 }
             )
+    }
+}
+
+extension SignersViewController: UICollectionViewDragDelegate {
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        itemsForBeginning session: UIDragSession,
+        at indexPath: IndexPath
+    ) -> [UIDragItem] {
+        guard let vm = viewModel(at: indexPath) else { return [] }
+        let itemProvider = NSItemProvider(object: vm.description() as NSString)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        dragItem.localObject = vm
+        return [dragItem]
+    }
+}
+
+extension SignersViewController: UICollectionViewDropDelegate {
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        dropSessionDidUpdate session: UIDropSession,
+        withDestinationIndexPath destinationIndexPath: IndexPath?
+    ) -> UICollectionViewDropProposal {
+        if collectionView.hasActiveDrag {
+            return UICollectionViewDropProposal(
+                operation: .move,
+                intent: .insertAtDestinationIndexPath
+            )
+        }
+        return UICollectionViewDropProposal(operation: .forbidden)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        performDropWith coordinator: UICollectionViewDropCoordinator
+    ) {
+        var destIdxPath: IndexPath
+        let srcIdxPath = coordinator.items[0].sourceIndexPath
+        if let indexPath = coordinator.destinationIndexPath {
+            destIdxPath = indexPath
+        } else  {
+            let itemCnt = collectionView.numberOfItems(inSection: 0)
+            destIdxPath = IndexPath(item: itemCnt - 1, section: 0)
+        }
+        
+        if coordinator.proposal.operation == .move {
+            presenter.handleEvent(
+                .ReorderAction(
+                    oldIdx: srcIdxPath?.item.int32 ?? 0,
+                    newIdx: destIdxPath.item.int32
+                )
+            )
+            coordinator.drop(coordinator.items[0].dragItem, toItemAt: destIdxPath)
+        }
     }
 }
 
