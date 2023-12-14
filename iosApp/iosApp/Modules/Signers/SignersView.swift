@@ -152,62 +152,6 @@ extension SignersViewController: UICollectionViewDataSource {
     }
 }
 
-extension SignersViewController: UICollectionViewDragDelegate {
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        itemsForBeginning session: UIDragSession,
-        at indexPath: IndexPath
-    ) -> [UIDragItem] {
-        guard let vm = viewModel(at: indexPath) else { return [] }
-        let itemProvider = NSItemProvider(object: vm.description() as NSString)
-        let dragItem = UIDragItem(itemProvider: itemProvider)
-        dragItem.localObject = vm
-        return [dragItem]
-    }
-}
-
-extension SignersViewController: UICollectionViewDropDelegate {
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        dropSessionDidUpdate session: UIDropSession,
-        withDestinationIndexPath destinationIndexPath: IndexPath?
-    ) -> UICollectionViewDropProposal {
-        if collectionView.hasActiveDrag {
-            return UICollectionViewDropProposal(
-                operation: .move,
-                intent: .insertAtDestinationIndexPath
-            )
-        }
-        return UICollectionViewDropProposal(operation: .forbidden)
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        performDropWith coordinator: UICollectionViewDropCoordinator
-    ) {
-        var destIdxPath: IndexPath
-        let srcIdxPath = coordinator.items[0].sourceIndexPath
-        if let indexPath = coordinator.destinationIndexPath {
-            destIdxPath = indexPath
-        } else  {
-            let itemCnt = collectionView.numberOfItems(inSection: 0)
-            destIdxPath = IndexPath(item: itemCnt - 1, section: 0)
-        }
-        
-        if coordinator.proposal.operation == .move {
-            presenter.handleEvent(
-                .ReorderAction(
-                    oldIdx: srcIdxPath?.item.int32 ?? 0,
-                    newIdx: destIdxPath.item.int32
-                )
-            )
-            coordinator.drop(coordinator.items[0].dragItem, toItemAt: destIdxPath)
-        }
-    }
-}
-
 extension SignersViewController: UICollectionViewDelegate {
 
     func collectionView(
@@ -267,6 +211,76 @@ extension SignersViewController: UICollectionViewDelegateFlowLayout {
             width: view.bounds.width - Theme.padding * 2,
             height: Theme.cellHeightLarge
         )
+    }
+}
+
+extension SignersViewController: UICollectionViewDragDelegate {
+
+    func collectionView(
+            _ collectionView: UICollectionView,
+            itemsForBeginning session: UIDragSession,
+            at indexPath: IndexPath
+    ) -> [UIDragItem] {
+        guard let vm = viewModel(at: indexPath) else { return [] }
+        let itemProvider = NSItemProvider(object: vm.description() as NSString)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        dragItem.localObject = vm
+        return [dragItem]
+    }
+}
+
+extension SignersViewController: UICollectionViewDropDelegate {
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        dropSessionDidUpdate session: UIDropSession,
+        withDestinationIndexPath destinationIndexPath: IndexPath?
+    ) -> UICollectionViewDropProposal {
+        collectionView.hasActiveDrag
+            ? .init(operation: .move, intent: .insertAtDestinationIndexPath)
+            : .init(operation: .forbidden)
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        performDropWith coordinator: UICollectionViewDropCoordinator
+    ) {
+//        var destIdxPath: IndexPath
+//        let srcIdxPath = coordinator.items[0].sourceIndexPath
+//        if let indexPath = coordinator.destinationIndexPath {
+//            destIdxPath = indexPath
+//        } else  {
+//            let itemCnt = collectionView.numberOfItems(inSection: 0)
+//            destIdxPath = IndexPath(item: itemCnt - 1, section: 0)
+//        }
+//
+//        if coordinator.proposal.operation == .move {
+//            presenter.handleEvent(
+//                    .ReorderAction(
+//                        oldIdx: srcIdxPath?.item.int32 ?? 0,
+//                        newIdx: destIdxPath.item.int32
+//                    )
+//            )
+//            coordinator.drop(coordinator.items[0].dragItem, toItemAt: destIdxPath)
+//        }
+
+        // ===
+
+        guard coordinator.proposal.operation == .move else { return }
+        var destIp = coordinator.destinationIndexPath
+        if let ip = destIp {
+            let items = coordinator.items
+            let srcIdx = items.map { ($0.sourceIndexPath ?? .zero).item.kotlinInt }
+            let destIdx = (0..<items.count).map { ip.incrementingItem($0).item.kotlinInt }
+            presenter.handleEvent(
+                .ReorderAction(srcIdxs: srcIdx, destIdxs: destIdx)
+            )
+        }
+        coordinator.items.forEach {
+            let ip = destIp ?? $0.sourceIndexPath ?? cv.lastIdxPath()
+            coordinator.drop($0.dragItem, toItemAt: ip)
+            destIp = destIp?.incrementingItem()
+        }
     }
 }
 

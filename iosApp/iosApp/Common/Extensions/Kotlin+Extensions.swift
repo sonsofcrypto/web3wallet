@@ -25,3 +25,8 @@ extension Data {
         ExtensionsKt.byteArrayFrom(data: self)
     }
 }
+
+extension Int {
+
+    var kotlinInt: KotlinInt { KotlinInt(int: self.int32) }
+}
