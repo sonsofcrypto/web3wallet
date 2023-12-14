@@ -50,6 +50,7 @@ extension SignersCell {
         subtitleLabel.isHidden = viewModel?.address?.isEmpty ?? true
         updateButtons(viewModel?.swipeOptions)
         prevBntCnt = viewModel?.swipeOptions.count ?? 0
+        contentView.alpha = viewModel?.isHidden ?? false ? 0.5 : 1
         return self
     }
 

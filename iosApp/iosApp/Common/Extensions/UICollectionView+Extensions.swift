@@ -56,15 +56,27 @@ extension UICollectionView {
         register(type, forCellWithReuseIdentifier: "\(T.self)")
     }
 
-
     func deselectAllExcept(
         _ idxPaths: [IndexPath]? = nil,
         animated: Bool = true,
-        scrollPosition: UICollectionView.ScrollPosition = .top
+        scrollPosition: UICollectionView.ScrollPosition = .top,
+        forceHack: Bool = false
     ) {
-        (indexPathsForSelectedItems ?? [])
+        var selected = indexPathsForSelectedItems ?? []
+        if forceHack {
+            selected += visibleCells.filter { $0.isSelected }
+                .map { indexPath(for: $0) }
+                .compactMap { $0 }
+        }
+
+        (selected)
             .filter { !(idxPaths ?? []).contains($0) }
-            .forEach { deselectItem(at: $0, animated: animated) }
+            .forEach {
+                deselectItem(at: $0, animated: animated)
+                if (forceHack) {
+                    cellForItem(at: $0)?.isSelected = false
+                }
+            }
 
         (idxPaths ?? []).forEach {
             let count = numberOfItems(inSection: $0.section)
