@@ -21,6 +21,8 @@ final class SignersViewController: BaseViewController {
     private var didAppear: Bool = false
     private var prevSize: CGSize = .zero
     private var cellSize: CGSize = .zero
+    private var needsFullReload: Bool = false
+    private var searchController: UISearchController = .init()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,9 @@ final class SignersViewController: BaseViewController {
         animateIntro()
         collectionView.deselectAllExcept(selectedIdxPaths())
         didAppear = true
+        if navigationItem.searchController == nil {
+            navigationItem.hidesSearchBarWhenScrolling = true
+        }
     }
 
     override func viewSafeAreaInsetsDidChange() {
@@ -69,8 +74,10 @@ extension SignersViewController {
         cv.reloadAnimatedIfNeeded(
             prevVM: prevViewModel,
             currVM: viewModel,
-            reloadOnly: !didAppear
+            reloadOnly: !didAppear || needsFullReload
         )
+        needsFullReload = false
+        cv.reloadData()
         updateLogo(viewModel)
         updateTargetView(targetView: viewModel.targetView)
         updateBarButtons(
@@ -138,8 +145,7 @@ extension SignersViewController: UICollectionViewDataSource {
                 with: viewModel?.items[indexPath.item],
                 handler: { [weak self] actionIdx in
                     self?.accessoryAction(indexPath, actionIdx: actionIdx)
-                },
-                index: indexPath.item
+                }
             )
     }
 }
@@ -217,11 +223,26 @@ extension SignersViewController {
 
         ctaButtonsContainer.hideBgForNonExpanded = true
         ctaButtonsContainer.showHandle = true
+        ctaButtonsContainer.delegate = self
+
         cv.abovescrollView = ctaButtonsContainer
         cv.pinOverscrollToBottom = true
         cv.stickAbovescrollViewToBottom = true
         cv.abovescrollViewAboveCells = true
-        ctaButtonsContainer.delegate = self
+        setupSearchController()
+    }
+
+    func setupSearchController() {
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
+        definesPresentationContext = true
+        let searchBar = searchController.searchBar
+        let searchField = searchBar.value(forKey: "searchField") as? UITextField
+        searchBar.searchBarStyle = .minimal
+        searchField?.textColor = Theme.color.textPrimary
+
     }
 
     func updateLogo(_ viewModel: SignersViewModel) {
@@ -265,14 +286,28 @@ extension SignersViewController {
     }
 }
 
+// MARK: - UISearchResultsUpdating
+
+extension SignersViewController: UISearchResultsUpdating {
+
+    func updateSearchResults(for searchController: UISearchController) {
+        let text = searchController.searchBar.text ?? ""
+        if text.isEmpty {
+            needsFullReload = true
+        }
+        presenter.handleEvent(.SetSearchTerm(term: text))
+    }
+}
+
 // MARK: - Into animations
 
 extension SignersViewController {
 
     func animateIntro(_ animateButtons: Bool = true) {
-        guard viewModel?.isEmpty ?? false else {
-            return
-        }
+        guard
+            viewModel?.isEmpty ?? false &&
+            searchController.searchBar.text?.isEmpty ?? false
+        else { return}
         logoAnimView.isHidden = false
         logoAnimView.alpha = 0.001
         logoAnimView.animate()
@@ -280,7 +315,7 @@ extension SignersViewController {
             animateButtonsIntro()
         }
         animateOpenBeta()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+        asyncMain(0.25) { [weak self] in
             self?.logoAnimView.alpha = 1
             self?.logoAnimView.animate()
         }

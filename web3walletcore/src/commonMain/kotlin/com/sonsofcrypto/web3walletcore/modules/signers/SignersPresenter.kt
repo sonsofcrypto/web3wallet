@@ -103,12 +103,17 @@ class DefaultSignersPresenter(
             EditSignersItem(
                 interactor.signer(idx),
                 updateHandler = {
+                    interactor.reloadItems()
                     val newIdx = interactor.indexOf(it)
                     if (newIdx != -1) { targetView = SignerAt(newIdx) }
                     updateView()
                 },
-                addAccountHandler = { updateView() },
+                addAccountHandler = {
+                    interactor.reloadItems()
+                    updateView()
+                },
                 deleteHandler = {
+                    interactor.reloadItems()
                     targetView = None
                     if (interactor.signersCount() == 0) {
                         wireframe.navigate(SignersFullscreen)
@@ -198,6 +203,7 @@ class DefaultSignersPresenter(
     }
 
     private fun handleNewSigner(signerStoreItem: SignerStoreItem) {
+        interactor.reloadItems()
         interactor.selected = signerStoreItem
         val idx = interactor.indexOf(signerStoreItem)
         if (idx != -1) { targetView = SignerAt(idx) }

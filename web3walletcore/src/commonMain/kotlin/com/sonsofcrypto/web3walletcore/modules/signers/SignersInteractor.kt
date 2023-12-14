@@ -1,8 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.signers
 
 import com.sonsofcrypto.web3lib.formatters.Formatters
-import com.sonsofcrypto.web3lib.services.address.AddressService
-import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
@@ -28,6 +26,7 @@ interface SignersInteractor {
     fun addAccount(item: SignerStoreItem, password: String, salt: String?)
     fun reorderSigner(fromIdx: Int, toIdx: Int)
     fun pasteToClipboard(text: String)
+    fun reloadItems(): List<SignerStoreItem>
 }
 
 class DefaultSignersInteractor(
@@ -42,21 +41,23 @@ class DefaultSignersInteractor(
             if (value != null) networksService.signerStoreItem = value
         }
     override var searchTerm: String? = null
+        set(value) { field = value; reloadItems() }
     override var showHidden: Boolean = false
+        set(value) { field = value; reloadItems() }
 
-    private val items: List<SignerStoreItem> get() = signerStoreService.items()
+    private var items: List<SignerStoreItem> = reloadItems()
 
     override fun signer(idx: Int): SignerStoreItem =
-        if (showHidden) items[idx] else items.filter { !it.isHidden() }[idx]
+        items[idx]
 
     override fun indexOf(item: SignerStoreItem?): Int =
         item?.let { items.indexOfFirst { it.uuid == item.uuid } } ?: -1
 
     override fun signersCount(): Int =
-        if (showHidden) items.count() else items.count { !it.isHidden() }
+        items.count()
 
     override fun hiddenSignersCount(): Int =
-        items.count { it.isHidden() }
+        signerStoreService.items().count { it.isHidden() }
 
     override fun name(idx: Int): String =
         signer(idx).name
@@ -71,12 +72,13 @@ class DefaultSignersInteractor(
     override fun isHidden(idx: Int): Boolean =
         signer(idx).isHidden()
 
-    override fun setHidden(hidden: Boolean, idx: Int) =
+    override fun setHidden(hidden: Boolean, idx: Int) {
         signerStoreService.update(signer(idx).copy(hidden = hidden))
+        reloadItems()
+    }
 
     override fun isMnemonicSigner(idx: Int): Boolean =
         signer(idx).type == SignerStoreItem.Type.MNEMONIC
-
 
     override fun addAccount(
         item: SignerStoreItem,
@@ -89,6 +91,7 @@ class DefaultSignersInteractor(
             salt = salt ?: "",
             hidden = false,
         )
+        reloadItems()
     }
 
     override fun reorderSigner(fromIdx: Int, toIdx: Int) {
@@ -97,4 +100,20 @@ class DefaultSignersInteractor(
 
     override fun pasteToClipboard(text: String) =
         clipboardService.paste(text)
+
+    override fun reloadItems(): List<SignerStoreItem> {
+        var items = signerStoreService.items()
+        if (!showHidden)
+            items = items.filter { !it.isHidden() }
+        val term = (searchTerm ?: "").lowercase()
+        if (term.isNotEmpty())
+            items = items.filter {
+                it.name.lowercase().contains(term) ||
+                it.addresses[it.derivationPath]?.lowercase()?.contains(term)
+                    ?: false ||
+                it.derivationPath.contains(term)
+            }
+        this.items = items
+        return items
+    }
 }

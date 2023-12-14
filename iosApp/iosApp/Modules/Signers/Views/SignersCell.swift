@@ -42,20 +42,14 @@ extension SignersCell {
     
     func update(
         with viewModel: SignersViewModel.Item?,
-        handler: @escaping Handler,
-        index: Int
+        handler: @escaping Handler
     ) -> Self {
         self.handler = handler
         titleLabel.text = viewModel?.title
         subtitleLabel.text = viewModel?.address
         subtitleLabel.isHidden = viewModel?.address?.isEmpty ?? true
-        if viewModel?.swipeOptions.count ?? 0 != prevBntCnt {
-            UIView.springAnimate { self.updateButtons(viewModel?.swipeOptions) }
-            stack.setNeedsLayout()
-            prevBntCnt = viewModel?.swipeOptions.count ?? 0
-        } else {
-            updateButtons(viewModel?.swipeOptions)
-        }
+        updateButtons(viewModel?.swipeOptions)
+        prevBntCnt = viewModel?.swipeOptions.count ?? 0
         return self
     }
 
@@ -67,13 +61,13 @@ extension SignersCell {
         for (idx, button) in buttons().enumerated() {
             if let vm = viewModel[safe: idx] {
                 button.isHidden = false
+                button.alpha = 1
                 button.titleLabel?.text = vm.title()
                 button.setAttributedTitle(attrBtnStr(vm.title()), for: .normal)
                 button.titleLabel?.isHidden = hideText
                 if let image = vm.media()?.image() {
                     button.setImage(image, for: .normal)
                 }
-                button.alpha = 1
             } else {
                 button.isHidden = true
                 button.alpha = 0
