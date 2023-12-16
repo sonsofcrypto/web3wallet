@@ -1,11 +1,11 @@
 # web3wallet by sons of crypto Ξ
 
-| Prod / AppStore                                         | Staging                                                  | Dev / Nightly                                                  |
-|---------------------------------------------------------|----------------------------------------------------------|----------------------------------------------------------------|
-| ![pro](bundledAssets/images/testflight_prod.png)        | ![staging](bundledAssets/images/testflight_staging.png)  | ![dev.png](bundledAssets/images/testflight_dev.png)            |
-| web3wallet by sons of crypto Ξ v1.0.1 #30               | web3wallet by sons of crypto S v1.0.1 #30                | web3wallet by sons of crypto D v1.0.1 #30                      |
-| AppStore RC.                                            | New features not quite AppStore ready. Great for testing | Living on the bleeding edge. Latest features, latest bugs. 🐛  |
-| [Download](https://testflight.apple.com/join/I4DFVaiH)  | [Download](https://testflight.apple.com/join/5GiDXNJ3)   | [Download](https://testflight.apple.com/join/85JEPH96)         |
+| Prod / AppStore                                        | Staging                                                  | Dev / Nightly                                                 |
+|--------------------------------------------------------|----------------------------------------------------------|---------------------------------------------------------------|
+| ![pro](bundledAssets/images/testflight_prod.png)       | ![staging](bundledAssets/images/testflight_staging.png)  | ![dev.png](bundledAssets/images/testflight_dev.png)           |
+| web3wallet by sons of crypto Ξ v1.1.0 #33              | web3wallet by sons of crypto S v1.1.0 #33                | web3wallet by sons of crypto D v1.1.0 #33                     |
+| AppStore RC.                                           | New features not quite AppStore ready. Great for testing | Living on the bleeding edge. Latest features, latest bugs. 🐛 |
+| [Download](https://testflight.apple.com/join/I4DFVaiH) | [Download](https://testflight.apple.com/join/5GiDXNJ3)   | [Download](https://testflight.apple.com/join/85JEPH96)        |
 
 Live AppStore build link [here (v1.0 #28)](https://apps.apple.com/us/app/web3wallet-by-sons-of-crypto-%CE%BE/id6464587288)
 . All three builds can be installed simultaneously. For more info about web3wallet
@@ -13,6 +13,28 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 
 # Release Notes 
+
+### v1.1.0 #33
+- Deriving standard accounts
+- Deriving account at custom path
+- Viewing private key (hex, xpriv)
+- Reordering wallets 
+- Hiding wallets
+- Searching wallets
+- Expert mode
+- Entropy size control
+- Universal sheet control
+- Universal toasts
+- Account management shortcuts in signers
+- Improving addresses and derivation paths display
+- Keyboard accessory refactor
+- Words suggestions refactor
+- Overhaul of metadata management
+- Generic collection controller
+- Generic Button refactor
+- Migrating cells to generic type
+- Generic animated reloading 
+
 
 ### v1.0.1 #30
 - Adding "web3wallet stand for" to settings 
