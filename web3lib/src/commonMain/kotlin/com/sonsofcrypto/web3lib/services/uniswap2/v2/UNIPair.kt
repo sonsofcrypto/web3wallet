@@ -32,7 +32,6 @@ class UNIPair {
             "Uniswap V2",
             "UNI-V2",
             18u,
-            Currency.Type.ERC20,
             computePairAddress(
                 FACTORY_ADDRESS,
                 currencyAmounts[0].currency,
