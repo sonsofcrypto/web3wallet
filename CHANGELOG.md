@@ -16,10 +16,12 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 ### v1.1.1 #34
 - Metadata downloader renaming uppercase file extensions
+- Reduce size of metadata cache by ~66%, increase load speed by ~3x 
+- 
 
 ### v1.1.0 #36
 - Deriving standard accounts
-- Deriving account at custom path
+- Deriving account at custom path1
 - Viewing private key (hex, xpriv)
 - Reordering wallets 
 - Hiding wallets

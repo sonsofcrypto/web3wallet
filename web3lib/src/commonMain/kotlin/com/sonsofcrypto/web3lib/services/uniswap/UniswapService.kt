@@ -196,7 +196,7 @@ class DefaultUniswapService(): UniswapService {
             tokenIn = wrappedAddress(inputCurrency),
             tokenOut = wrappedAddress(outputCurrency),
             fee = state.fee.value,
-            recipient = if (outputCurrency.type == Currency.Type.NATIVE)
+            recipient = if (outputCurrency.isNative())
                 IV3SwapRouter.ExactInputSingleParams.Recipient.This
                 else IV3SwapRouter.ExactInputSingleParams.Recipient.MsgSender,
             amountIn = inputAmount,
@@ -206,14 +206,14 @@ class DefaultUniswapService(): UniswapService {
         val router = IV3SwapRouter(Address.HexString(routerAddress(provider.network)))
         var callDatas: MutableList<ByteArray> = mutableListOf()
         callDatas.add(router.exactInputSingle(params).toByteArrayData())
-        if (outputCurrency.type == Currency.Type.NATIVE) {
+        if (outputCurrency.isNative()) {
             callDatas.add(router.unwrapWETH9(minAmount).toByteArrayData())
         }
         val request = TransactionRequest(
             to = router.address,
             gasLimit = BigInt.from(300000),
             data = router.multicall(Clock.System.now() + 10.minutes, callDatas),
-            value = if (inputCurrency.type == Currency.Type.NATIVE) inputAmount
+            value = if (inputCurrency.isNative()) inputAmount
                 else BigInt.zero
         )
         return withBgCxt { wallet!!.sendTransaction(request) }
@@ -475,7 +475,7 @@ class DefaultUniswapService(): UniswapService {
     }
 
     private fun wrappedAddress(currency: Currency): AddressHexString {
-        return if (currency.type == Currency.Type.NATIVE)
+        return if (currency.isNative())
             // TODO: Add support for test nets
             when(network) {
                 Network.ethereum() -> "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
