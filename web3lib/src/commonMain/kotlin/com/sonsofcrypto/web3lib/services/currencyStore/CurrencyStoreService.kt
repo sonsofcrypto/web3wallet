@@ -13,7 +13,7 @@ import com.sonsofcrypto.web3lib.utils.extensions.subListTo
 import io.ktor.util.*
 import kotlinx.coroutines.*
 
-private val migratedCurrencies: Boolean = true
+private val migratedCurrencies: Boolean = false
 
 /** `CurrencyStoreService` handles currencies list and associated metadata. */
 interface CurrencyStoreService {
