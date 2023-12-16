@@ -8,7 +8,9 @@ import com.sonsofcrypto.web3lib.services.currencyStore.DefaultCurrencyStoreServi
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
+import com.sonsofcrypto.web3lib.utils.FileManager
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
+import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
@@ -31,7 +33,21 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
 
     @Test
     fun debug() {
-        println("Debug")
+        val fileName = "currencies_meta/cache_currencies_11155111_arr.json"
+        val jsonStr =FileManager()
+            .readSync(fileName, FileManager.Location.BUNDLE)
+            .decodeToString()
+        val arrayReps = jsonDecode<List<List<String>>>(jsonStr) ?: emptyList()
+        val currencies = arrayReps.map {
+            Currency(
+                symbol = it[0],
+                name = it[1],
+                coinGeckoId = it[2],
+                address = it.getOrNull(3),
+                decimals = it.getOrNull(4)?.toUIntOrNull(),
+            )
+        }
+        println("Result $currencies")
     }
 
     @Test
