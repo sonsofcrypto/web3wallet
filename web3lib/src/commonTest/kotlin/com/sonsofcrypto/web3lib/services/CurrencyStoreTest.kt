@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib
+package com.sonsofcrypto.web3lib.services
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
@@ -28,7 +28,7 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
 
     @Test
     fun testDebug() {
-
+        println()
     }
 
     @Test
