@@ -171,9 +171,9 @@ class DefaultWalletServiceMulticall(
         currency: Currency,
         amount: BigInt
     ): TransactionRequest {
-        if (currency.type == Currency.Type.NATIVE)
+        if (currency.isNative())
             return TransactionRequest(to = Address.HexString(to), value = amount)
-        if (currency.type == Currency.Type.ERC20 && currency.address != null)
+        if (currency.type() == Currency.Type.ERC20 && currency.address != null)
             return TransactionRequest(
                 to = Address.HexString(currency.address!!),
                 data = ERC20Legacy(Address.HexString(currency.address!!))

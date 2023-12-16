@@ -10,7 +10,6 @@ import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Currency.Type.ERC20
-import com.sonsofcrypto.web3lib.types.Currency.Type.NATIVE
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.abiDecodeAddress
@@ -77,9 +76,9 @@ class DefaultAccountInteractor(
     }
 
     override fun transactions(network: Network, currency: Currency): List<AccountTransaction> =
-        if (currency.type == ERC20) {
+        if (currency.type() == ERC20) {
             walletService.transferLogs(currency, network).toAccountTransactions(network)
-        } else if (currency.type == NATIVE) {
+        } else if (currency.isNative()) {
             etherScanService.transactionHistory(
                 address(network),
                 network,
@@ -91,9 +90,9 @@ class DefaultAccountInteractor(
 
 
     override suspend fun fetchTransactions(network: Network, currency: Currency) {
-        if (currency.type == ERC20) {
+        if (currency.type() == ERC20) {
             walletService.fetchTransferLogs(currency, network)
-        } else if (currency.type == NATIVE) {
+        } else if (currency.isNative()) {
             etherScanService.fetchTransactionHistory(address(network), network)
         }
     }

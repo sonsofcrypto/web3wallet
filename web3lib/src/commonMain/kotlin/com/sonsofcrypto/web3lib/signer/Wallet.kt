@@ -202,7 +202,7 @@ class Wallet(
 
     @Throws(Throwable::class)
     override suspend fun getTransferLogs(currency: Currency): List<Log> {
-        if (currency.type != Currency.Type.ERC20 || currency.address == null) {
+        if (currency.type() != Currency.Type.ERC20 || currency.address == null) {
             return listOf()
         }
         val hash = keccak256("Transfer(address,address,uint256)".toByteArray())
