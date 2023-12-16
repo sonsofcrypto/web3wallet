@@ -428,9 +428,14 @@ def copy_imgs_to_3x(metas: List[ImgMeta]):
         if image_name in bad_img_to_remove:
             continue
         parts = image_name.split('.')
+        file_extension = str(parts[1]
+
+        for ext in ['.PNG', '.JPG', '.JPEG']:
+            file_extension = file_extension.replace(ext, ext.lower())
+
         shutil.copyfile(
             'data/image/' + image_name,
-            'data/@3x/' + parts[0] + '@3x.' + parts[1]
+            'data/@3x/' + parts[0] + '@3x.' + file_extension
         )
 
 
