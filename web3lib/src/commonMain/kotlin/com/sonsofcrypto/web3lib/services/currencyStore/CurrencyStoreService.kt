@@ -221,8 +221,18 @@ class DefaultCurrencyStoreService(
     private suspend fun loadCurrencyCachesArr(
         network: Network
     ): CurrencyCache = withContext(bgDispatcher) {
-        val jsonStr = file("cache_currencies_${network.chainId}_arr.json") ?: "[]"
-        val currencies = jsonDecode<List<Currency>>(jsonStr) ?: emptyList()
+        val fileName = "cache_currencies_${network.chainId}_arr.json"
+        val jsonStr = file(fileName) ?: "[]"
+        val arrayReps = jsonDecode<List<List<String>>>(jsonStr) ?: emptyList()
+        val currencies = arrayReps.map {
+            Currency(
+                symbol = it[0],
+                name = it[1],
+                coinGeckoId = it[2],
+                address = it.getOrNull(3),
+                decimals = it.getOrNull(4)?.toUIntOrNull(),
+            )
+        }
         val trie = Trie()
         val idxMap = mutableMapOf<String, Int>()
         (currencies + userCurrencies(network)).forEachIndexed { idx, currency ->
