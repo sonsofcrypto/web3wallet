@@ -18,13 +18,13 @@ import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.NetworkFee
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.extensions.stdJson
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 sealed class NetworksEvent() {
     /** Emitted when `KeyStoreItem` is set */
@@ -252,7 +252,7 @@ class DefaultNetworksService(
 
     private fun getStoredNetworks(item: SignerStoreItem?): List<Network>? {
         store.get<String>(networksKey(item))?.let {
-            return Json.decodeFromString(it)
+            return stdJson.decodeFromString(it)
         }
         return null
     }
@@ -261,7 +261,7 @@ class DefaultNetworksService(
         networks: List<Network>,
         item: SignerStoreItem?
     ) {
-        store[networksKey(item)] = Json.encodeToString(networks)
+        store[networksKey(item)] = stdJson.encodeToString(networks)
     }
 
     private var pollRequest: PollServiceRequest? = null
