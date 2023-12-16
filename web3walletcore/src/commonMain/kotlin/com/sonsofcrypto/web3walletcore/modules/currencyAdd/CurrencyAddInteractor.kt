@@ -19,7 +19,7 @@ class DefaultCurrencyAddInteractor(
         contractAddress: String, name: String, symbol: String, decimals: UInt, network: Network
     ) {
         currencyStoreService.add(
-            Currency(name, symbol.lowercase(), decimals, ERC20, contractAddress, null),
+            Currency(name, symbol.lowercase(), decimals, contractAddress, null),
             network
         )
     }
