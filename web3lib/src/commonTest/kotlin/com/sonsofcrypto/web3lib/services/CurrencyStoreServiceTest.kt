@@ -30,6 +30,11 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
     private var lastEvent: CurrencyStoreEvent? = null
 
     @Test
+    fun debug() {
+        println("Debug")
+    }
+
+    @Test
     fun testCacheLoading() {
         val listener = this
         runBlocking {
