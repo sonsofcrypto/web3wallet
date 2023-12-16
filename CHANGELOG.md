@@ -14,6 +14,9 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 # Release Notes 
 
+### v1.1.1 #34
+- Metadata downloader renaming uppercase file extensions
+
 ### v1.1.0 #36
 - Deriving standard accounts
 - Deriving account at custom path
@@ -34,7 +37,6 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 - Generic Button refactor
 - Migrating cells to generic type
 - Generic animated reloading 
-
 
 ### v1.0.1 #30
 - Adding "web3wallet stand for" to settings 
