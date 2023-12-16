@@ -250,9 +250,9 @@ class DefaultWalletService(
         currency: Currency,
         amount: BigInt
     ): TransactionRequest {
-        if (currency.type == Currency.Type.NATIVE)
+        if (currency.isNative())
             return TransactionRequest(to = Address.HexString(to), value = amount)
-        if (currency.type == Currency.Type.ERC20 && currency.address != null)
+        if (currency.type() == Currency.Type.ERC20 && currency.address != null)
             return TransactionRequest(
                 to = Address.HexString(currency.address!!),
                 data = ERC20Legacy(Address.HexString(currency.address!!))
@@ -377,7 +377,7 @@ class DefaultWalletService(
             return
         // TODO: Get transaction from nonce and only update IRC20s in transaction
         currencies.forEach { currency ->
-            when (currency.type) {
+            when (currency.type()) {
                 Currency.Type.NATIVE -> {
                     val balance = wallet.getBalance(BlockTag.Latest)
                     updateBalance(wallet, currency, balance, newTransactionCount)

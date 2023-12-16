@@ -27,6 +27,11 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
     )
 
     @Test
+    fun testDebug() {
+
+    }
+
+    @Test
     fun testCacheLoading() {
         val listener = this
         runBlocking {
@@ -36,6 +41,7 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
             job.join()
             val end = Clock.System.now().toEpochMilliseconds()
             assertTrue(end - start < 500, "Took too long to load")
+            println("Currencies load time ${(end - start)}")
             val currencies = service.search("E", Network.ethereum(), 0)
             assertTrue(currencies.count() >= 172,"Search error ${currencies.size}")
         }
@@ -57,4 +63,3 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
         this.event = event
     }
 }
-

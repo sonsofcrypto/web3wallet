@@ -81,12 +81,16 @@ def main():
 
     print('cache_currencies.json')
     coins = create_cache_currencies(coins)
-    write_json_file('data/cache_currencies.json', coins)
+    coins_arrs = cache_currencies_arrs(coins)
+    # write_json_file('data/cache_currencies.json', coins)
+    write_json_file('data/cache_currencies_1_arrs.json', coins_arrs)
     print("Coins: ", len(coins))
 
     print('cache_markets.json')
     min_markets_dict = create_cache_markets(coins, markets_dict)
-    write_json_file('data/cache_markets.json', min_markets_dict)
+    min_markets_dict_arr = create_cache_markets_arr(coins, markets_dict)
+    # write_json_file('data/cache_markets.json', min_markets_dict)
+    write_json_file('data/cache_markets_arr.json', min_markets_dict_arr)
 
     print("Download images")
     download_image(img_meta, api, True)
@@ -98,8 +102,13 @@ def main():
     resize_images()
 
     print('cache_metadatas.json')
-    cache_metadatas = create_cache_metadatas(coins)
-    write_json_file('data/cache_metadatas.json', cache_metadatas)
+    # cache_metadatas = create_cache_metadatas(coins)
+    # write_json_file('data/cache_metadatas.json', cache_metadatas)
+    cache_metadatas_sml_arr = create_cache_metadatas_arrs(
+        create_cache_metadatas(coins, True),
+        True
+    )
+    write_json_file('data/cache_metadatas_arr.json', cache_metadatas_sml_arr)
 
     print("Copying images")
     copy_imgs_to_3x(img_meta_ranked_only)
@@ -139,6 +148,25 @@ def create_cache_markets(
     return minimized_markets
 
 
+def create_cache_markets_arr(
+    coins: List[Dict[str, any]],
+    markets_dict: Dict[str, any]
+) -> Dict[str, any]:
+    minimized_markets = dict()
+    keys = [
+        'current_price', 'market_cap', 'market_cap_rank',
+        'fully_diluted_valuation', 'total_volume',
+        'price_change_percentage_24h', 'circulating_supply', 'total_supply',
+    ]
+    for coin in coins:
+        id = coin['coinGeckoId']
+        if id in markets_dict:
+            md = markets_dict[id]
+            minimized_markets[id] = list(map(lambda x: md.get(x), keys))
+
+    return minimized_markets
+
+
 def transform_to_markets_dict(markets: List[Dict[str, any]]) -> Dict[str, any]:
     mdict = dict()
     for market in markets:
@@ -146,17 +174,14 @@ def transform_to_markets_dict(markets: List[Dict[str, any]]) -> Dict[str, any]:
     return mdict
 
 
-def create_cache_currencies(coins: List[Dict[str, any]]):
+def create_cache_currencies(coins: List[Dict[str, any]]) -> List[Dict[str, any]]:
     for coin in coins:
         id = coin['coinGeckoId']
         info = read_json_file('data/coin/' + id + '.json')
         if 'platforms' in coin:
             coin.pop('platforms', None)
 
-        if id in native_coins:
-            coin['type'] = 1
-        else:
-            coin['type'] = 2
+        if id not in native_coins:
 
             if 'platforms' in info and len(info['platforms']) != 0:
                 coin['address'] = info['platforms']['ethereum']
@@ -165,8 +190,19 @@ def create_cache_currencies(coins: List[Dict[str, any]]):
                 decimals = info['detail_platforms']['ethereum']['decimal_place']
                 if decimals != 18:
                     coin['decimals'] = decimals
-
     return coins
+
+
+def cache_currencies_arrs(coins: List[Dict[str, any]]) -> List[List[any]]:
+    min_coins = list()
+    for coin in coins:
+        mcoin = [coin['symbol'], coin['name'], coin['coinGeckoId']]
+        if 'address' in coin:
+            mcoin.append(coin['address'])
+        if 'decimals' in coin:
+            mcoin.append(coin['decimals'])
+        min_coins.append(mcoin)
+    return min_coins
 
 
 def missing_key(coin: Dict[str, any]) -> bool:
@@ -177,7 +213,10 @@ def missing_key(coin: Dict[str, any]) -> bool:
     return False
 
 
-def create_cache_metadatas(coins: List[Dict[str, any]]) -> Dict[str, any]:
+def create_cache_metadatas(
+        coins: List[Dict[str, any]],
+        small: bool = False
+) -> Dict[str, any]:
     metadatas = dict()
     overrides = read_json_file('data/overrides/overrides.json')
     for idx, coin in enumerate(coins):
@@ -194,22 +233,40 @@ def create_cache_metadatas(coins: List[Dict[str, any]]) -> Dict[str, any]:
             meta['rank'] = rank
 
         val = color_for(id, meta['imageUrl'], overrides)
+        # val = ['#FF00FF', '#FF00FF']
         if val is not None:
             meta['colors'] = val
 
         print_progress('Colors ' + id, idx, len(coins))
 
-        # val = val_at_path(['links', 'homepage'], info)
-        # if val is not None:
-        #     meta['link'] = val[0]
-        #
-        # val = val_at_path(['description', 'en'], info)
-        # if val is not None:
-        #     meta['description'] = val
+        if not small:
+            val = val_at_path(['links', 'homepage'], info)
+            if val is not None:
+                meta['link'] = val[0]
+
+            val = val_at_path(['description', 'en'], info)
+            if val is not None:
+                meta['description'] = val
 
         metadatas[id] = meta
 
     return metadatas
+
+
+def create_cache_metadatas_arrs(
+    metadata: Dict[str, any],
+    small: bool = False
+) -> Dict[str, any]:
+    arr_dict = dict()
+    arr_keys = ['imageUrl', 'rank', 'colors', 'link']
+    if not small:
+        # arr_keys.append('link')
+        arr_keys.append('description')
+
+    for key, meta_dict in metadata.items():
+        arr_dict[key] = list(map(lambda x: meta_dict.get(x), arr_keys))
+
+    return arr_dict
 
 
 def val_at_path(path: List[str], info: Dict[str, any]) -> any:
@@ -428,7 +485,7 @@ def copy_imgs_to_3x(metas: List[ImgMeta]):
         if image_name in bad_img_to_remove:
             continue
         parts = image_name.split('.')
-        file_extension = str(parts[1]
+        file_extension = parts[1]
 
         for ext in ['.PNG', '.JPG', '.JPEG']:
             file_extension = file_extension.replace(ext, ext.lower())

@@ -13,6 +13,8 @@ import com.sonsofcrypto.web3lib.utils.extensions.subListTo
 import io.ktor.util.*
 import kotlinx.coroutines.*
 
+private val migratedCurrencies: Boolean = true
+
 /** `CurrencyStoreService` handles currencies list and associated metadata. */
 interface CurrencyStoreService {
     /** Cached metadata for currency */
@@ -200,8 +202,27 @@ class DefaultCurrencyStoreService(
     private suspend fun loadCurrencyCaches(
         network: Network
     ): CurrencyCache = withContext(bgDispatcher) {
+        if (migratedCurrencies) return@withContext loadCurrencyCachesArr(network)
         val jsonString = file("cache_currencies_${network.chainId}.json") ?: "[]"
         val currencies = jsonDecode<List<Currency>>(jsonString) ?: emptyList()
+        val trie = Trie()
+        val idxMap = mutableMapOf<String, Int>()
+        (currencies + userCurrencies(network)).forEachIndexed { idx, currency ->
+            val name = currency.name.toLowerCasePreservingASCIIRules()
+            val symbol = currency.symbol.toLowerCasePreservingASCIIRules()
+            trie.insert(name)
+            trie.insert(symbol)
+            idxMap.put(name, idx)
+            idxMap.put(symbol, idx)
+        }
+        return@withContext CurrencyCache(network, currencies, trie, idxMap)
+    }
+
+    private suspend fun loadCurrencyCachesArr(
+        network: Network
+    ): CurrencyCache = withContext(bgDispatcher) {
+        val jsonStr = file("cache_currencies_${network.chainId}_arr.json") ?: "[]"
+        val currencies = jsonDecode<List<Currency>>(jsonStr) ?: emptyList()
         val trie = Trie()
         val idxMap = mutableMapOf<String, Int>()
         (currencies + userCurrencies(network)).forEachIndexed { idx, currency ->
