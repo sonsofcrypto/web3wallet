@@ -1,10 +1,12 @@
 package com.sonsofcrypto.web3lib.services.currencyStore
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.provider.utils.stringValue
 import com.sonsofcrypto.web3lib.services.coinGecko.CoinGeckoService
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Candle
 import com.sonsofcrypto.web3lib.services.coinGecko.model.toCurrencyMarketData
 import com.sonsofcrypto.web3lib.types.Currency
+import com.sonsofcrypto.web3lib.types.Flags
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
@@ -12,8 +14,7 @@ import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
 import com.sonsofcrypto.web3lib.utils.extensions.subListTo
 import io.ktor.util.*
 import kotlinx.coroutines.*
-
-private val migratedCurrencies: Boolean = false
+import kotlinx.serialization.json.JsonElement
 
 /** `CurrencyStoreService` handles currencies list and associated metadata. */
 interface CurrencyStoreService {
@@ -202,9 +203,10 @@ class DefaultCurrencyStoreService(
     private suspend fun loadCurrencyCaches(
         network: Network
     ): CurrencyCache = withContext(bgDispatcher) {
-        if (migratedCurrencies) return@withContext loadCurrencyCachesArr(network)
-        val jsonString = file("cache_currencies_${network.chainId}.json") ?: "[]"
-        val currencies = jsonDecode<List<Currency>>(jsonString) ?: emptyList()
+        if (Flags.migratedCurrencies)
+            return@withContext loadCurrencyCachesArr(network)
+        val jsonStr = file("cache_currencies_${network.chainId}.json") ?: "[]"
+        val currencies = jsonDecode<List<Currency>>(jsonStr) ?: emptyList()
         val trie = Trie()
         val idxMap = mutableMapOf<String, Int>()
         (currencies + userCurrencies(network)).forEachIndexed { idx, currency ->
@@ -223,12 +225,12 @@ class DefaultCurrencyStoreService(
     ): CurrencyCache = withContext(bgDispatcher) {
         val fileName = "cache_currencies_${network.chainId}_arr.json"
         val jsonStr = file(fileName) ?: "[]"
-        val arrayReps = jsonDecode<List<List<String>>>(jsonStr) ?: emptyList()
+        val arrayReps = jsonDecode<List<List<String?>>>(jsonStr) ?: emptyList()
         val currencies = arrayReps.map {
             Currency(
-                symbol = it[0],
-                name = it[1],
-                coinGeckoId = it[2],
+                symbol = it[0]!!,
+                name = it[1]!!,
+                coinGeckoId = it.getOrNull(2),
                 address = it.getOrNull(3),
                 decimals = it.getOrNull(4)?.toUIntOrNull(),
             )
@@ -248,12 +250,53 @@ class DefaultCurrencyStoreService(
 
     private suspend fun loadMetadataCaches(): Map<String, CurrencyMetadata> =
         withContext(bgDispatcher) {
-            jsonDecode(file("cache_metadatas.json") ?: "{}") ?: emptyMap()
+            if (Flags.migratedMetadata)
+                return@withContext loadMetadataCachesArr()
+            return@withContext jsonDecode(
+                file("cache_metadatas.json") ?: "{}"
+            ) ?: emptyMap()
+        }
+
+    private suspend fun loadMetadataCachesArr(): Map<String, CurrencyMetadata> =
+        withContext(bgDispatcher) {
+            val jsonStr = file("cache_metadatas_arr.json") ?: "{}"
+            val mapReps = jsonDecode<Map<String, List<JsonElement?>>>(jsonStr)
+            return@withContext (mapReps ?: emptyMap()).entries.map {
+                val metadata = CurrencyMetadata(
+                    imageUrl = it.value.getOrNull(0)?.stringValue(),
+                    rank = it.value.getOrNull(1)?.stringValue()?.toLongOrNull(),
+                    colors = jsonDecode<List<String>>(
+                        it.value.getOrNull(2)?.toString() ?: "[]"
+                    ) ?: emptyList(),
+                )
+                Pair(it.key, metadata)
+            }.toMap()
         }
 
     private suspend fun loadMarketCaches(): Map<String, CurrencyMarketData> =
         withContext(bgDispatcher) {
-            jsonDecode(file("cache_markets.json") ?: "{}") ?: emptyMap()
+            if (Flags.migratedMarkets)
+                return@withContext loadMarketCachesArr()
+            return@withContext jsonDecode(file("cache_markets.json") ?: "{}") ?: emptyMap()
+        }
+
+    private suspend fun loadMarketCachesArr(): Map<String, CurrencyMarketData> =
+        withContext(bgDispatcher) {
+            val jsonStr = file("cache_markets_arr.json") ?: "{}"
+            val mapReps = jsonDecode<Map<String, List<String?>>>(jsonStr)
+            return@withContext (mapReps ?: emptyMap()).entries.map {
+                val market = CurrencyMarketData(
+                    currentPrice = it.value.getOrNull(0)?.toDoubleOrNull(),
+                    marketCap = it.value.getOrNull(1)?.toDoubleOrNull(),
+                    marketCapRank = it.value.getOrNull(2)?.toLongOrNull(),
+                    fullyDilutedValuation = it.value.getOrNull(3)?.toDoubleOrNull(),
+                    totalVolume = it.value.getOrNull(4)?.toDoubleOrNull(),
+                    priceChangePercentage24h = it.value.getOrNull(5)?.toDoubleOrNull(),
+                    circulatingSupply = it.value.getOrNull(6)?.toDoubleOrNull(),
+                    totalSupply = it.value.getOrNull(7)?.toDoubleOrNull(),
+                )
+                Pair(it.key, market)
+            }.toMap()
         }
 
     private suspend fun handlesCacheResults(

@@ -83,7 +83,7 @@ def main():
     coins = create_cache_currencies(coins)
     coins_arrs = cache_currencies_arrs(coins)
     # write_json_file('data/cache_currencies.json', coins)
-    write_json_file('data/cache_currencies_1_arrs.json', coins_arrs)
+    write_json_file('data/cache_currencies_1_arr.json', coins_arrs)
     print("Coins: ", len(coins))
 
     print('cache_markets.json')
