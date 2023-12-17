@@ -7,6 +7,4 @@ data class CurrencyMetadata(
     val imageUrl: String?,
     val rank: Long?,
     val colors: List<String>?,
-    val link: String?,
-    val description: String?
 )
