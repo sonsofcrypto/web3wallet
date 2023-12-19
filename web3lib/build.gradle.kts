@@ -23,7 +23,7 @@ kotlin {
                 }
             }
             binaries.all {
-                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/")
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/", "-ld64")
             }
         },
         iosSimulatorArm64() {
@@ -34,7 +34,7 @@ kotlin {
                 }
             }
             binaries.all {
-                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/", "-ld64")
             }
         },
         iosX64() {
@@ -45,7 +45,7 @@ kotlin {
                 }
             }
             binaries.all {
-                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/", "-ld64")
             }
         },
     ).forEach {
