@@ -44,6 +44,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   cp -r ./build/ios/CoreCrypto.xcframework/ios-arm64_x86_64-simulator/CoreCrypto.framework \
     ./build/ios/ios-arm64_x86_64-simulator/CoreCrypto.framework
 
+  DEF_FILE_CONTENT="language = Objective-C\npackage = CoreCrypto\nmodules = CoreCrypto"
+  echo $DEF_FILE_CONTENT > ./build/ios/ios-arm64_x86_64-simulator/CoreCrypto.def
+  echo $DEF_FILE_CONTENT > ./build/ios/ios-arm64/CoreCrypto.def
+
     echo "======================"
     echo "iOS framework done"
 fi
