@@ -70,6 +70,7 @@ extension SignersViewController {
 
     func update(with viewModel: SignersViewModel) {
         let prevViewModel = self.viewModel
+        let itemCntChanged = prevViewModel?.items.count != viewModel.items.count
         self.viewModel = viewModel
         needsFullReload = needsFullReload || viewModel.needsForceReload
         cv.reloadAnimatedIfNeeded(
@@ -102,7 +103,7 @@ extension SignersViewController {
         ctaButtonsContainer.setButtons(
             viewModel.buttons,
             compactCount: 3,
-            sheetState: .auto,
+            sheetState:  itemCntChanged ? .compact :  .auto,
             animated: true,
             expandedButton: viewModel.expandedButtons
         )

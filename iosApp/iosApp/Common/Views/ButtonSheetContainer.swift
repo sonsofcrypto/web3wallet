@@ -75,11 +75,10 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         self.expandedButtons = expandedButton.isEmpty ? buttons : expandedButton
         hiddenButtonsCount = max(0, buttons.count - compactCount)
 
-        !animated
-            ? cv.reloadData()
-            : cv.reloadAnimatedIfNeeded(
+        cv.reloadAnimatedIfNeeded(
             prevVM: ButtonViewModelAutoDiffInfo(oldButtons),
-            currVM: ButtonViewModelAutoDiffInfo(buttons)
+            currVM: ButtonViewModelAutoDiffInfo(buttons),
+            reloadOnly: !animated
         )
         setupInsets(
             btnCnt: buttons.count,
@@ -119,6 +118,7 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         bgView.frame = cvBounds
         bgView.transform = transform
         handleView()?.center = .init(x: cvBounds.midX, y: Theme.padding)
+        layoutBgView()
     }
 
     func intrinsicContentSize(for btnCnt: Int) -> CGSize {
@@ -224,7 +224,6 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-         if !isExpanded { setCompact(false) }
          delegate?.buttonSheetContainer(self, didSelect: indexPath.item)
     }
         
@@ -247,6 +246,10 @@ class ButtonSheetContainer: UIView, ContentScrollInfo,
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         updateExpanded()
         updateDelegateContentHeight()
+    }
+    
+    func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
+        layoutBgView()
     }
     
     private func updateDelegateContentHeight() {

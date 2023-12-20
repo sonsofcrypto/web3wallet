@@ -51,7 +51,6 @@ class CollectionViewController: UICollectionViewController,
         let prevViewModel = self.viewModel
         self.viewModel = viewModel
         guard let cv = collectionView else { return }
-        updateCtaButtons(with: viewModel.ctaItems)
         updateBarButtons(
             with: viewModel.rightBarButtons,
             position: .right,
@@ -64,6 +63,7 @@ class CollectionViewController: UICollectionViewController,
             reloadOnly: !didAppear
         )
         updateHeadersAndFooters()
+        updateCtaButtons(with: viewModel.ctaItems)
     }
 
     func present() {
@@ -115,6 +115,7 @@ class CollectionViewController: UICollectionViewController,
             height: size.height + cv.safeAreaInsets.bottom - Theme.paddingHalf
         )
         cv.contentInset.bottom = bottomInset()
+        (cv.abovescrollView as? ButtonSheetContainer)?.forceLayout()
     }
 
     func buttonSheetContainer(_ bsc: ButtonSheetContainer, didSelect idx: Int) {
