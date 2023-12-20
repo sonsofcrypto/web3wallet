@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package com.sonsofcrypto.web3lib.utils
 
 import CoreCrypto.CoreCryptoHash
@@ -9,6 +11,7 @@ import CoreCrypto.CoreCryptoHashFnSha512
 import CoreCrypto.CoreCryptoHmacSha512
 import CoreCrypto.CoreCryptoKeccak256
 import CoreCrypto.CoreCryptoKeccak512
+import kotlinx.cinterop.ExperimentalForeignApi
 
 /** Hash functions*/
 

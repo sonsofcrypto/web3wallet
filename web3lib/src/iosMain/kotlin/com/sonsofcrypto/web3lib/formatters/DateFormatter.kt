@@ -1,5 +1,8 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package com.sonsofcrypto.web3lib.formatters
 
+import kotlinx.cinterop.ExperimentalForeignApi
 import platform.CoreFoundation.kCFAbsoluteTimeIntervalSince1970
 import platform.Foundation.NSDate
 import platform.Foundation.NSDateFormatter

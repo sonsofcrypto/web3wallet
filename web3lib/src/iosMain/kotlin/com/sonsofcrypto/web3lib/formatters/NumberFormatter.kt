@@ -1,6 +1,9 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package com.sonsofcrypto.web3lib.formatters
 
 import com.sonsofcrypto.web3lib.formatters.NumberFormatterStyle.Currency
+import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSLocale
 import platform.Foundation.NSNumber
 import platform.Foundation.NSNumberFormatter

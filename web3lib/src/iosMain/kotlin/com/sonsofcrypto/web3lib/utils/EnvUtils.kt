@@ -1,5 +1,8 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package com.sonsofcrypto.web3lib.utils
 
+import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSBundle
 
 actual class EnvUtils {

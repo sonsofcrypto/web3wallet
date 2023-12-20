@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package com.sonsofcrypto.web3lib.utils
 
 import CoreCrypto.CoreCryptoAddPrivKeys
@@ -14,6 +16,7 @@ import CoreCrypto.CoreCryptoIsBip44ValidPub
 import CoreCrypto.CoreCryptoPbkdf2
 import CoreCrypto.CoreCryptoScryptKey
 import CoreCrypto.CoreCryptoUncompressedPubKey
+import kotlinx.cinterop.ExperimentalForeignApi
 
 /** Returns compressed pub key bytes for `prv` key byte on given `curve`  */
 actual fun compressedPubKey(curve: Curve, prv: ByteArray): ByteArray {

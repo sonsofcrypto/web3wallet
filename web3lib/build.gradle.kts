@@ -23,7 +23,7 @@ kotlin {
                 }
             }
             binaries.all {
-                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/", "-ld64")
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/")
             }
         },
         iosSimulatorArm64() {
@@ -34,7 +34,7 @@ kotlin {
                 }
             }
             binaries.all {
-                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/", "-ld64")
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
             }
         },
         iosX64() {
@@ -45,7 +45,7 @@ kotlin {
                 }
             }
             binaries.all {
-                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/", "-ld64")
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
             }
         },
     ).forEach {
@@ -192,7 +192,6 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 29
-        targetSdk = 32
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     namespace = "com.sonsofcrypto.web3lib"

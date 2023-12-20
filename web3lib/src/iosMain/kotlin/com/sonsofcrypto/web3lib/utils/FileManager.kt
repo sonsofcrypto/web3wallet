@@ -1,7 +1,10 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package com.sonsofcrypto.web3lib.utils
 
 import com.sonsofcrypto.web3lib.utils.FileManager.Location.APPFILES
 import com.sonsofcrypto.web3lib.utils.FileManager.Location.BUNDLE
+import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSBundle
 import platform.Foundation.NSData
 import platform.Foundation.NSLibraryDirectory

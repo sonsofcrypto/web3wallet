@@ -19,7 +19,7 @@ kotlin {
                 }
             }
             binaries.all {
-                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/", "-ld64")
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/")
             }
         },
         iosSimulatorArm64() {
@@ -30,7 +30,7 @@ kotlin {
                 }
             }
             binaries.all {
-                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/", "-ld64")
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
             }
         },
         iosX64() {
@@ -41,7 +41,7 @@ kotlin {
                 }
             }
             binaries.all {
-                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/", "-ld64")
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
             }
         },
     ).forEach {
@@ -107,7 +107,6 @@ android {
     compileSdk = 33
     defaultConfig {
         minSdk = 21
-        targetSdk = 32
     }
     buildToolsVersion = "33.0.2"
     compileOptions {

@@ -1,11 +1,14 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package com.sonsofcrypto.web3lib.utils
 
 import CoreCrypto.CoreCryptoAESCTRXOREmptyOnError
 import CoreCrypto.CoreCryptoCurveSecp256k1
 import CoreCrypto.CoreCryptoSecureRandFatal
 import CoreCrypto.CoreCryptoSignEmptyOnError
+import kotlinx.cinterop.ExperimentalForeignApi
 
-/** Cryptographically secure source of randomnes */
+/** Cryptographically secure source of randomness */
 @Throws(Exception::class)
 actual fun secureRand(size: Int): ByteArray {
     return CoreCryptoSecureRandFatal(size.toLong())!!.toByteArray()
