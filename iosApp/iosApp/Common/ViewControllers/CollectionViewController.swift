@@ -30,7 +30,7 @@ class CollectionViewController: UICollectionViewController,
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        recomputeSizeIfNeeded()
+        _ = recomputeSizeIfNeeded()
         layoutAboveScrollView()
     }
 
@@ -83,7 +83,7 @@ class CollectionViewController: UICollectionViewController,
     }
 
     func alertAction(_ idx: Int, text: String?) {
-        print("alertAction \(idx) \(text)")
+        print("alertAction \(idx) \(text ?? "")")
     }
 
     @objc func scrollToBottom() {
@@ -152,13 +152,13 @@ class CollectionViewController: UICollectionViewController,
         cv.indexPathsForVisibleSupplementaryElements(ofKind: kind).forEach {
             let header = cv.supplementaryView(forElementKind: kind, at: $0)
             let vm = viewModel?.sections[$0.section]
-            (header as? SectionHeaderView)?.update(with: vm)
+            _ = (header as? SectionHeaderView)?.update(with: vm)
         }
         kind = UICollectionView.elementKindSectionFooter
         cv.indexPathsForVisibleSupplementaryElements(ofKind: kind).forEach {
             let header = cv.supplementaryView(forElementKind: kind, at: $0)
             let vm = viewModel?.sections[$0.section]
-            (header as? SectionFooterView)?.update(with: vm)
+            _ = (header as? SectionFooterView)?.update(with: vm)
         }
     }
 

@@ -357,7 +357,6 @@ class DefaultMnemonicUpdatePresenter(
         null
     )
 
-    @OptIn(ExperimentalStdlibApi::class)
     private fun accountsSections(): List<Section>
         = (0..<interactor.accountsCount()).map {
             Section(

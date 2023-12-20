@@ -106,11 +106,11 @@ class DefaultSignersPresenter(
                     interactor.reloadItems()
                     val newIdx = interactor.indexOf(it)
                     if (newIdx != -1) { targetView = SignerAt(newIdx) }
-                    updateView()
+                    updateView(needsForceReload = true)
                 },
                 addAccountHandler = {
                     interactor.reloadItems()
-                    updateView()
+                    updateView(needsForceReload = true)
                 },
                 deleteHandler = {
                     interactor.reloadItems()
@@ -118,7 +118,7 @@ class DefaultSignersPresenter(
                     if (interactor.signersCount() == 0) {
                         wireframe.navigate(SignersFullscreen)
                     }
-                    present()
+                    updateView(needsForceReload = true)
                 }
             )
         )
@@ -207,7 +207,7 @@ class DefaultSignersPresenter(
         interactor.selected = signerStoreItem
         val idx = interactor.indexOf(signerStoreItem)
         if (idx != -1) { targetView = SignerAt(idx) }
-        updateView()
+        updateView(needsForceReload = true)
         targetView = None
         navigateToDashboardIfNeeded()
     }
@@ -219,16 +219,21 @@ class DefaultSignersPresenter(
         execDelayed(1.2.seconds) { wireframe.navigate(DashboardOnboarding) }
     }
 
-    private fun updateView(state: SignersViewModel.State = Loaded) {
-        view.get()?.update(viewModel(state))
+    private fun updateView(
+        state: SignersViewModel.State = Loaded,
+        needsForceReload: Boolean = false
+    ) {
+        view.get()?.update(viewModel(state, needsForceReload))
         initialPresent = false
     }
 
     private fun presentToast(viewModel: ToastViewModel)
         = view.get()?.presentToast(viewModel)
 
-    @OptIn(ExperimentalStdlibApi::class)
-    private fun viewModel(state: SignersViewModel.State): SignersViewModel =
+    private fun viewModel(
+        state: SignersViewModel.State,
+        needsForceReload: Boolean = false
+    ): SignersViewModel =
         SignersViewModel(
             interactor.signersCount() == 0,
             state,
@@ -239,6 +244,7 @@ class DefaultSignersPresenter(
             buttonsCompact(),
             buttonsExpanded(),
             targetView,
+            needsForceReload
         )
 
     private fun leftBarButtonItems(): List<BarButtonViewModel> = listOf(

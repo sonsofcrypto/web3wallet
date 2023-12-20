@@ -373,7 +373,6 @@ class DefaultMnemonicImportPresenter(
         ),
     )
 
-    @OptIn(ExperimentalStdlibApi::class)
     private fun accountsSections(): List<Section>
         = if (!expertMode() && interactor.accountsCount() <= 1)
             emptyList()

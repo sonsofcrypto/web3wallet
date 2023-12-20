@@ -16,6 +16,7 @@ data class SignersViewModel(
     val buttons: List<ButtonViewModel>,
     val expandedButtons: List<ButtonViewModel>,
     val targetView: TransitionTargetView,
+    val needsForceReload: Boolean
 ) {
     sealed class State {
         object Loading: State()

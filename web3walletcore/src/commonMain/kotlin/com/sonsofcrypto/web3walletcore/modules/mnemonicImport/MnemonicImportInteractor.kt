@@ -127,7 +127,6 @@ class DefaultMnemonicImportInteractor(
     override fun passError(pass: String, type: SignerStoreItem.PasswordType): String?
         = passwordService.validationError(pass, type)
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun createMnemonicSigner(): SignerStoreItem {
         val cnf = MnemonicSignerConfig(
             bip39.mnemonic, name, passUnlockWithBio, iCloudSecretStorage,

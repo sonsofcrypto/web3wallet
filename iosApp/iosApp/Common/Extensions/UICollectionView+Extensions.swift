@@ -185,11 +185,11 @@ extension UICollectionView {
             }
             // Reconfigure or reload
             for itmIdx in 0..<min(prevItemCnt, currItemCnt) {
-                let idxPath = IndexPath(item: itmIdx, section: idx)
-                if currVM.itemType(idxPath) == prevVM.itemType(idxPath) {
-                    reconfigItems.append(idxPath)
+                let ip = IndexPath(item: itmIdx, section: idx)
+                if currVM.itemType(ip) == prevVM.itemType(ip) && !force {
+                    reconfigItems.append(ip)
                 } else {
-                    reloadItems.append(idxPath)
+                    reloadItems.append(ip)
                 }
             }
         }

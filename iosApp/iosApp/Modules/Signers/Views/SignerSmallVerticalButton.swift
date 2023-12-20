@@ -21,7 +21,7 @@ class SignerSmallVerticalButton: UIButton {
     }
 
     override var intrinsicContentSize: CGSize {
-        super.intrinsicContentSize
+        _ = super.intrinsicContentSize
         return .init(width: 39, height: 42)
     }
 }

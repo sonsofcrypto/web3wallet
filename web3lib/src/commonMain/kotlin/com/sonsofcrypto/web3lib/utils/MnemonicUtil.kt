@@ -12,7 +12,6 @@ fun incrementedDerivationPath(path: String): String {
     return (splitPath.dropLast(1) + nextIdx.toString()).joinToString("/")
 }
 
-@OptIn(ExperimentalStdlibApi::class)
 fun isValidDerivationPath(path: String): Boolean {
     if(path.substring(0..<2) != "m/") return false
     path.replace("m/", "").split("/").forEach {

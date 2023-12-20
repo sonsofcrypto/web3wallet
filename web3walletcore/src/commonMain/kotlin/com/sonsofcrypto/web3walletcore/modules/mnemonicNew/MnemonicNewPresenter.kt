@@ -251,7 +251,9 @@ class DefaultMnemonicNewPresenter(
         try {
             interactor.generateDefaultNameIfNeeded()
             context.handler(interactor.createMnemonicSigner())
-            wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
+            execDelayed(0.1.seconds) {
+                wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
+            }
         } catch (e: Throwable) {
             // TODO: Handle error
             println("[MnemonicNewPresenter.createWallet] $e")
@@ -356,7 +358,6 @@ class DefaultMnemonicNewPresenter(
         null
     )
 
-    @OptIn(ExperimentalStdlibApi::class)
     private fun accountsSections(): List<Section>
         = if (!expertMode() && interactor.accountsCount() <= 1)
             emptyList()

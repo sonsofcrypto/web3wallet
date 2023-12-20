@@ -78,7 +78,7 @@ final class MnemonicConfirmationViewController: UICollectionViewController,
             fatalError("Wrong number of items in section \(indexPath)")
         }
         switch viewModel {
-        case let vm as CellViewModel.Text:
+        case _ as CellViewModel.Text:
             return cv.dequeue(MnemonicImportCell.self, for: indexPath)
                 .update(with: mnemonicInputViewModel) { [weak self] str, loc in
                     self?.mnemonicDidChange(str, cursorLocation: loc)

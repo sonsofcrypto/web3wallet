@@ -111,7 +111,6 @@ class DefaultMnemonicUpdateInteractor(
         signerStoreService.remove(signerStoreItem!!)
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun idxForAccount(uuid: String): Int {
         for (i in 0..<accountsCount()) {
             if (account(i).uuid == uuid) return i

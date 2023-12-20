@@ -87,7 +87,6 @@ class DefaultMnemonicNewInteractor(
 
     override fun mnemonic(): String = bip39.mnemonic.joinToString(" ").trim()
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun createMnemonicSigner(): SignerStoreItem {
         val cnf = MnemonicSignerConfig(
             bip39.mnemonic, name, passUnlockWithBio, iCloudSecretStorage,

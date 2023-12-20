@@ -71,6 +71,7 @@ extension SignersViewController {
     func update(with viewModel: SignersViewModel) {
         let prevViewModel = self.viewModel
         self.viewModel = viewModel
+        needsFullReload = needsFullReload || viewModel.needsForceReload
         cv.reloadAnimatedIfNeeded(
             prevVM: prevViewModel,
             currVM: viewModel,
@@ -78,7 +79,6 @@ extension SignersViewController {
             reloadOnly: !didAppear || needsFullReload
         )
         needsFullReload = false
-        cv.reloadData()
         updateLogo(viewModel)
         updateTargetView(targetView: viewModel.targetView)
         updateBarButtons(
