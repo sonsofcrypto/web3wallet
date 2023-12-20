@@ -14,7 +14,7 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 # Release Notes 
 
-### v1.1.0 #33
+### v1.1.0 #36
 - Deriving standard accounts
 - Deriving account at custom path
 - Viewing private key (hex, xpriv)
