@@ -90,7 +90,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-okhttp:${rootProject.ext["ktor_version"]}")
             }
         }
-        val androidTest by getting {
+        val androidUnitTest by getting {
             dependencies {
                 implementation(files("$rootDir/coreCrypto/build/hostOS/coreCrypto.jar"))
                 // Core library

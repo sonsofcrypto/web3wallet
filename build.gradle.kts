@@ -1,6 +1,6 @@
 val compileSdkVersion by extra(33)
 buildscript {
-    val kotlinVersion = "1.8.20"
+    val kotlinVersion = "1.9.21"
     repositories {
         gradlePluginPortal()
         google()
@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-        classpath("com.android.tools.build:gradle:8.0.2")
+        classpath("com.android.tools.build:gradle:8.1.1")
         classpath("org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion")
         classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.13.3")
     }
@@ -16,12 +16,12 @@ buildscript {
 
 allprojects {
     ext["settings_version"] = "1.0.0"
-    ext["serialization_version"] = "1.5.0"
-    ext["coroutines_version"] = "1.6.3-native-mt"
-    ext["ktor_version"] = "2.2.4"
+    ext["serialization_version"] = "1.6.2"
+    ext["coroutines_version"] = "1.7.3"
+    ext["ktor_version"] = "2.3.7"
     ext["bignum_version"] = "0.3.8"
-    ext["datetime_version"] = "0.4.0"
-    ext["kotlin_version"] = "1.8.20"
+    ext["datetime_version"] = "0.5.0"
+    ext["kotlin_version"] = "1.9.21"
 
     repositories {
         gradlePluginPortal()
