@@ -68,14 +68,14 @@ extension DefaultSettingsWireframe {
             let url = URL(string: website.url)!
             webViewWireframeFactory.make(vc, context: .init(url: url)).present()
         }
-        if destination is SettingsWireframeDestination.KeyStore {
+        if let dest = destination as? SettingsWireframeDestination.KeyStore {
             vc?.navigationController?.popToRootViewController(animated: true)
             vc?.tabBarController?.selectedIndex = 0
             vc?.tabBarController?.edgeCardsController?.setDisplayMode(
                 .bottomCard,
                 animated: true
             )
-            if destination.setNeedsReload {
+            if dest.setNeedsReload {
                 let bmVc = vc?.tabBarController?.edgeCardsController?.bottomCard
                 let vc = bmVc?.asNavVc?.viewControllers.first
                 (vc as? SignersViewController)?.presenter.present()
