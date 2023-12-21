@@ -6,40 +6,27 @@ import UIKit
 import web3walletcore
 
 
-class SettingsViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class SettingsViewController: CollectionViewController {
     
     var presenter: SettingsPresenter!
 
-    private var prevSize: CGSize = .zero
-    private var cellSize: CGSize = .zero
-    private var viewModel: CollectionViewModel.Screen?
-    private var cv: CollectionView! { (collectionView as! CollectionView) }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureUI()
-        presenter?.present()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        recomputeSizeIfNeeded()
+    override func configureUI() {
+        title = Localized("Settings")
+        super.configureUI()
+        cv?.contentInset.bottom = Theme.padding * 3
+        configureOverscrollView()
+        presenter.present()
     }
 
-    override func traitCollectionDidChange(
-        _ previousTraitCollection: UITraitCollection?
-    ) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        applyTheme(Theme)
-        cv?.collectionViewLayout.invalidateLayout()
+    // MARK: - SettingView
+
+    override func present() {
+        presenter.present()
     }
 
-    // MARK: - SettingsView
-    
-    func update(with viewModel: CollectionViewModel.Screen) {
-        self.viewModel = viewModel
-        self.title = viewModel.id
-        collectionView.reloadData()
+    override func update(with viewModel: CollectionViewModel.Screen) {
+        super.update(with: viewModel)
+        title = viewModel.id
     }
 
     func updateThemeAndRefreshTraits() {
@@ -121,35 +108,7 @@ class SettingsViewController: UICollectionViewController, UICollectionViewDelega
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        recomputeSizeIfNeeded()
         return cellSize
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForHeaderInSection section: Int
-    ) -> CGSize {
-        String.estimateSize(
-            viewModel?.sections[section].header?.text(),
-            font: Theme.font.sectionHeader,
-            maxWidth: cellSize.width,
-            extraHeight: Theme.padding.twice,
-            minHeight: Theme.padding
-        )
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForFooterInSection section: Int
-    ) -> CGSize {
-        String.estimateSize(
-            viewModel?.sections[section].footer?.text(),
-            font: Theme.font.sectionFooter,
-            maxWidth: cellSize.width,
-            extraHeight: Theme.padding
-        )
     }
 
     // MARK: - UICollectionViewDelegate
@@ -161,6 +120,8 @@ class SettingsViewController: UICollectionViewController, UICollectionViewDelega
         handleSelect(indexPath)
     }
 
+    // MARK: - Actions
+
     private func handleSelect(_ idxPath: IndexPath) {
         presenter.handleEvent(
             .Select(section: idxPath.section.int32, item: idxPath.item.int32)
@@ -171,31 +132,7 @@ class SettingsViewController: UICollectionViewController, UICollectionViewDelega
 // MARK: - Configure UI
 
 private extension SettingsViewController {
-    
-    func configureUI() {
-        title = Localized("Settings")
-        configureOverscrollView()
-        applyTheme(Theme)
-        cv?.contentInset.bottom = Theme.padding * 3
-    }
 
-    func applyTheme(_ theme: ThemeProtocol) {
-        cv?.separatorInsets = .with(left: theme.padding)
-        cv?.sectionBackgroundColor = Theme.color.bgPrimary
-        cv?.sectionBorderColor = Theme.color.collectionSectionStroke
-        cv?.separatorColor = Theme.color.collectionSeparator
-        (cv?.overscrollView?.subviews.first as? UILabel)?.textColor = Theme.color.textPrimary
-    }
-
-    func recomputeSizeIfNeeded() {
-        guard prevSize.width != view.bounds.size.width else { return }
-        prevSize = view.bounds.size
-        cellSize = .init(
-            width: view.bounds.size.width - Theme.padding * 2,
-            height: Theme.cellHeight
-        )
-    }
-    
     func configureOverscrollView() {
         cv?.overscrollView = UIImageView(imgName: "overscroll_anon")
         let version = UILabel(
@@ -207,9 +144,4 @@ private extension SettingsViewController {
         cv?.overscrollView?.addSubview(version)
         version.center = .init(x: center.x - 1.5, y: center.x + 31)
     }
-
-    func viewModel(at idxPath: IndexPath) -> CellViewModel? {
-        viewModel?.sections[idxPath.section].items[idxPath.item]
-    }
-
 }
