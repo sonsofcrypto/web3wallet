@@ -84,3 +84,13 @@ private extension TextField {
         return button
     }
 }
+
+
+class OldTextField: TextField {
+
+    override func applyTheme(_ theme: ThemeProtocol) {
+        font = theme.font.body
+        textColor = theme.color.textPrimary
+        rightView = makeClearButton()
+    }
+}
