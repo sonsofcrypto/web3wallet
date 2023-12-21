@@ -60,10 +60,12 @@ extension DefaultMnemonicImportWireframe {
         if destination is MnemonicImportWireframeDestination.LearnMoreSalt {
             UIApplication.shared.open(Constant.saltExplanationURL)
         }
+        let presentingTopVc = (parent as? UINavigationController)?.topVc
         if destination is MnemonicImportWireframeDestination.Dismiss {
             // NOTE: Needs next run loop dispatch so that collectionView has
             // enough time to reload to have target cell for animation
-            DispatchQueue.main.async { [weak vc] in vc?.popOrDismiss() }
+            DispatchQueue.main.async { [weak presentingTopVc] in                 presentingTopVc?.dismiss(animated: true)
+            }
         }
     }
 }
