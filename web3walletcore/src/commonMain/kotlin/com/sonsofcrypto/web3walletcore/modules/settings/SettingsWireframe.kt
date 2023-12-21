@@ -5,7 +5,7 @@ sealed class SettingsWireframeDestination() {
     data class Website(val url: String): SettingsWireframeDestination()
     object Improvements: SettingsWireframeDestination()
     object Mail: SettingsWireframeDestination()
-    object KeyStore: SettingsWireframeDestination()
+    data class KeyStore(val setNeedsReload: Boolean = false): SettingsWireframeDestination()
 }
 
 interface SettingsWireframe {

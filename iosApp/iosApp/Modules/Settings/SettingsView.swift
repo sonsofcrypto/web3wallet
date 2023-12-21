@@ -13,9 +13,11 @@ class SettingsViewController: CollectionViewController {
     override func configureUI() {
         title = Localized("Settings")
         super.configureUI()
-        cv?.contentInset.bottom = Theme.padding * 3
         configureOverscrollView()
         presenter.present()
+        cv.stickAbovescrollViewToBottom = false
+        cv.abovescrollViewAboveCells = false
+        cv.pinOverscrollToBottom = false
     }
 
     // MARK: - SettingView

@@ -21,6 +21,7 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 - Global expert mode in settings
 - Added icons to settings
 - Setting moved to CollectionViewController
+- Fix reload key dev option
 - Tests clean up
 
 ### v1.1.0 #36

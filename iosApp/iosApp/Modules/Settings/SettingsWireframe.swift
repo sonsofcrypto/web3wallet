@@ -75,6 +75,11 @@ extension DefaultSettingsWireframe {
                 .bottomCard,
                 animated: true
             )
+            if destination.setNeedsReload {
+                let bmVc = vc?.tabBarController?.edgeCardsController?.bottomCard
+                let vc = bmVc?.asNavVc?.viewControllers.first
+                (vc as? SignersViewController)?.presenter.present()
+            }
         }
         if let settings = destination as? SettingsWireframeDestination.Settings {
             DefaultSettingsWireframe(
