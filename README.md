@@ -165,7 +165,7 @@ keytool -genkey -v -keystore androidApp/debug.keystore -storepass android -alias
 keytool -genkey -v -keystore androidApp/release.jks -storepass android -alias androidreleasekey -keyalg RSA -keysize 2048 -validity 10000
 ```
 
-### Android Studio Notes
+### android studio notes
 - Gradle 8.1.1
 - Android Gradle Plugin 8.1.1
 - Kotlin 1.9.21
