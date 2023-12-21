@@ -1,6 +1,8 @@
 package com.sonsofcrypto.web3walletcore
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.services.address.AddressService
+import com.sonsofcrypto.web3lib.services.address.DefaultAddressService
 import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.services.currencyStore.DefaultCurrencyStoreService
@@ -60,7 +62,8 @@ fun testEnvCurrencyStore(prefix: String = "test"): CurrencyStoreService =
 fun testEnvKeyStore(prefix: String = "Test"): SignerStoreService {
     val keyStore = DefaultSignerStoreService(
         KeyValueStore("$prefix.keyStore"),
-        MockKeyChainService()
+        MockKeyChainService(),
+        DefaultAddressService(),
     )
     keyStore.selected = mockSignerStoreItem
     return keyStore
