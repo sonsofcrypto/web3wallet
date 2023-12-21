@@ -10,6 +10,7 @@ sealed class CellViewModel {
         val accessory: Accessory = Accessory.NONE,
         val selected: Boolean = false,
         val trailingText: String? = null,
+        val image: ImageMedia? = null,
     ): CellViewModel()
 
     data class Text(val text: String?): CellViewModel()
@@ -32,6 +33,7 @@ sealed class CellViewModel {
     data class Switch(
         val title: String,
         val onOff: Boolean,
+        val image: ImageMedia? = null,
     ): CellViewModel()
 
     data class SegmentSelection(

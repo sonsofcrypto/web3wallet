@@ -8,6 +8,8 @@ import web3walletcore
 final class SwitchCollectionViewCell: ThemeCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var onOffSwitch: OnOffSwitch!
+    @IBOutlet weak var iconImageView: UIImageView?
+
 
     private var switchChangeHandler: ((Bool)->Void)?
 
@@ -23,6 +25,7 @@ final class SwitchCollectionViewCell: ThemeCell {
     override func applyTheme(_ theme: ThemeProtocol) {
         super.applyTheme(theme)
         titleLabel.apply(style: .body)
+        iconImageView?.tintColor = theme.color.textPrimary
     }
 
     @objc func switchAction(_ sender: UISwitch) {
@@ -36,6 +39,8 @@ final class SwitchCollectionViewCell: ThemeCell {
         switchChangeHandler = handler
         titleLabel.text = viewModel.title
         onOffSwitch.setOn(viewModel.onOff, animated: false)
+        iconImageView?.setImageMedia(viewModel.image)
+        iconImageView?.isHidden = iconImageView?.image == nil
         return self
     }
 }

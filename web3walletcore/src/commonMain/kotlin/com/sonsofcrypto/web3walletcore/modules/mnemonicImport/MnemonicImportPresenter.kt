@@ -24,6 +24,7 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Foo
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
 import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position.TOP
@@ -252,14 +253,27 @@ class DefaultMnemonicImportPresenter(
             interactor.password = interactor.generatePassword()
         }
         try {
-            interactor.generateDefaultNameIfNeeded()
-            context.handler(interactor.createMnemonicSigner())
-            navigateToDismiss()
+            presentAlert(generatingAccountsViewModel())
+            // NOTE: Hack to dispatch following on next run loops so that alert
+            // appears on straight await
+            execDelayed(0.05.seconds) {
+                interactor.generateDefaultNameIfNeeded()
+                context.handler(interactor.createMnemonicSigner())
+                navigateToDismiss()
+            }
         } catch (e: Throwable) {
             // TODO: Handle error
             println("[MnemonicImportPresenter.handleCreateWallet] $e")
         }
     }
+
+    private fun generatingAccountsViewModel(): AlertViewModel =
+        AlertViewModel.LoadingImageAlertViewModel(
+            Localized("mnemonic.alert.updating.title"),
+            "",
+            listOf(),
+            ImageMedia.Name("overscroll_pepe_analyst")
+        )
 
     private fun handleAddAccount() {
         interactor.addAccount()

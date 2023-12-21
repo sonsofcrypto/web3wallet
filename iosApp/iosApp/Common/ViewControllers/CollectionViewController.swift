@@ -20,6 +20,7 @@ class CollectionViewController: UICollectionViewController,
 
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
     private var interactiveTransitioning: CardFlipInteractiveTransitioning?
+    private var alertVc: UIAlertController?
 
     deinit { NotificationCenter.default.removeObserver(self) }
 
@@ -48,6 +49,9 @@ class CollectionViewController: UICollectionViewController,
     }
 
     func update(with viewModel: CollectionViewModel.Screen) {
+        if let alertVc = alertVc {
+            alertVc.dismiss(animated: true)
+        }
         let prevViewModel = self.viewModel
         self.viewModel = viewModel
         guard let cv = collectionView else { return }
@@ -79,6 +83,7 @@ class CollectionViewController: UICollectionViewController,
             viewModel,
             handler: { [weak self] idx, t in self?.alertAction(idx, text: t) }
         )
+        self.alertVc = alertVc
         present(alertVc, animated: true)
     }
 

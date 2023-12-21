@@ -10,7 +10,7 @@ interface SettingsInteractor {
     var themeId: ThemeId
     var themeVariant: ThemeVariant
     var nftCarouselSize: NFTCarouselSize
-
+    var expertMode: Boolean
     fun resetKeyStore()
 }
 
@@ -30,6 +30,10 @@ class DefaultSettingsInteractor(
     override var nftCarouselSize: NFTCarouselSize
         get() = settingsService.nftCarouselSize
         set(size) { settingsService.nftCarouselSize = size }
+
+    override var expertMode: Boolean
+        get() = settingsService.expertMode
+        set(value) { settingsService.expertMode = value }
 
     override fun resetKeyStore() {
         signerStoreService.items().forEach {

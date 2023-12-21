@@ -203,26 +203,6 @@ class DefaultCurrencyStoreService(
     private suspend fun loadCurrencyCaches(
         network: Network
     ): CurrencyCache = withContext(bgDispatcher) {
-        if (Flags.migratedCurrencies)
-            return@withContext loadCurrencyCachesArr(network)
-        val jsonStr = file("cache_currencies_${network.chainId}.json") ?: "[]"
-        val currencies = jsonDecode<List<Currency>>(jsonStr) ?: emptyList()
-        val trie = Trie()
-        val idxMap = mutableMapOf<String, Int>()
-        (currencies + userCurrencies(network)).forEachIndexed { idx, currency ->
-            val name = currency.name.toLowerCasePreservingASCIIRules()
-            val symbol = currency.symbol.toLowerCasePreservingASCIIRules()
-            trie.insert(name)
-            trie.insert(symbol)
-            idxMap.put(name, idx)
-            idxMap.put(symbol, idx)
-        }
-        return@withContext CurrencyCache(network, currencies, trie, idxMap)
-    }
-
-    private suspend fun loadCurrencyCachesArr(
-        network: Network
-    ): CurrencyCache = withContext(bgDispatcher) {
         val fileName = "cache_currencies_${network.chainId}_arr.json"
         val jsonStr = file(fileName) ?: "[]"
         val arrayReps = jsonDecode<List<List<String?>>>(jsonStr) ?: emptyList()
@@ -250,15 +230,6 @@ class DefaultCurrencyStoreService(
 
     private suspend fun loadMetadataCaches(): Map<String, CurrencyMetadata> =
         withContext(bgDispatcher) {
-            if (Flags.migratedMetadata)
-                return@withContext loadMetadataCachesArr()
-            return@withContext jsonDecode(
-                file("cache_metadatas.json") ?: "{}"
-            ) ?: emptyMap()
-        }
-
-    private suspend fun loadMetadataCachesArr(): Map<String, CurrencyMetadata> =
-        withContext(bgDispatcher) {
             val jsonStr = file("cache_metadatas_arr.json") ?: "{}"
             val mapReps = jsonDecode<Map<String, List<JsonElement?>>>(jsonStr)
             return@withContext (mapReps ?: emptyMap()).entries.map {
@@ -274,13 +245,6 @@ class DefaultCurrencyStoreService(
         }
 
     private suspend fun loadMarketCaches(): Map<String, CurrencyMarketData> =
-        withContext(bgDispatcher) {
-            if (Flags.migratedMarkets)
-                return@withContext loadMarketCachesArr()
-            return@withContext jsonDecode(file("cache_markets.json") ?: "{}") ?: emptyMap()
-        }
-
-    private suspend fun loadMarketCachesArr(): Map<String, CurrencyMarketData> =
         withContext(bgDispatcher) {
             val jsonStr = file("cache_markets_arr.json") ?: "{}"
             val mapReps = jsonDecode<Map<String, List<String?>>>(jsonStr)
