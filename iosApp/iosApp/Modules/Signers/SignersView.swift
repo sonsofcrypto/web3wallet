@@ -388,6 +388,7 @@ extension SignersViewController {
     }
 
     func animateOpenBeta() {
+        guard Date().timeIntervalSince1970 > 1703338307 else { return }
         let views = openBetaView.arrangedSubviews.map { $0 as? UIImageView }
         for (idx, view) in views.compactMap({$0}).enumerated() {
             view.alpha = 0.2
