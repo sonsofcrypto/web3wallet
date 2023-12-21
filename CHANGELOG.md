@@ -14,10 +14,14 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 # Release Notes 
 
-### v1.1.1 #34
+### v1.1.1 #40
 - Metadata downloader renaming uppercase file extensions
 - Reduce size of metadata cache by ~66%, increase load speed by ~3x 
-- 
+- Alert when create multiple account at the same time
+- Global expert mode in settings
+- Added icons to settings
+- Setting moved to CollectionViewController
+- Tests clean up
 
 ### v1.1.0 #36
 - Deriving standard accounts

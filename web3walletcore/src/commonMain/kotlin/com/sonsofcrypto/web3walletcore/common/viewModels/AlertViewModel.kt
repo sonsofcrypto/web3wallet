@@ -33,6 +33,13 @@ sealed class AlertViewModel(
         override val imageMedia: ImageMedia? = null,
     ): AlertViewModel(title, body, actions, imageMedia)
 
+    data class LoadingImageAlertViewModel(
+        override val title: String,
+        override val body: String,
+        override val actions: List<Action> = listOf(),
+        override val imageMedia: ImageMedia? = null,
+    ): AlertViewModel(title, body, actions, imageMedia)
+
     data class Action(
         val title: String,
         val kind: Kind

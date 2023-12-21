@@ -183,6 +183,8 @@
 "mnemonic.alert.customDerivationErr.body" = " is not valid derivation path";
 "mnemonic.toast.copy.privKey" = "Private key copied to to pasteboard for 30 seconds.";
 "mnemonic.size.title" = "Mnemonic size";
+"mnemonic.alert.updating.title" = "Giga brain cypherpunk Pepe is deriving & securing wallets";
+
 
 "networks.header.l1s" = "Layer #1s";
 "networks.header.l2s" = "Layer #2s";
@@ -199,9 +201,7 @@
 "settings.uitweaks.nft.carousel.title" = "NFT Carousel";
 "settings.uitweaks.nft.carousel.regular" = "NFT Carousel Regular";
 "settings.uitweaks.nft.carousel.large" = "NFT Carousel Large";
-
-"settings.improvement" = "Improvement proposals";
-
+"settings.expertMode" = "Display advanced features";
 "settings.developer" = "Developer menu";
 "settings.developer.resetKeyStore" = "Reset keystore";
 
@@ -210,7 +210,8 @@
 "settings.soc.telegram" = "Telegram";
 "settings.soc.substack" = "Substack";
 
-"settings.feedback" = "Feedback / Report issue 🪲";
+"settings.improvement" = "Improvement proposals";
+"settings.feedback" = "Feedback / Report issue";
 "settings.feedback.subject" = "App feedback %@";
 "settings.feedback.subject.beta" = "%@ feedback / Report 🪲";
 

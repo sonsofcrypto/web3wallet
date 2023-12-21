@@ -10,10 +10,13 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory.DETAIL
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory.NONE
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Label
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Switch
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsPresenterEvent.Select
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsScreenId.DEVELOPER
@@ -64,20 +67,24 @@ class DefaultSettingsPresenter(
         // Settings
         e.section == 0 && e.item == 0 -> wireframe.navigate(Settings(THEMES))
         e.section == 0 && e.item == 1 -> wireframe.navigate(Settings(UITWEAKS))
-        e.section == 0 && e.item == 2 -> wireframe.navigate(Improvements)
-        e.section == 0 && e.item == 3 -> wireframe.navigate(Mail)
-        e.section == 0 && e.item == 4 -> wireframe.navigate(Settings(DEVELOPER))
+        e.section == 0 && e.item == 2 -> {
+            interactor.expertMode = !interactor.expertMode
+            updateView()
+        }
+        e.section == 0 && e.item == 3 -> wireframe.navigate(Settings(DEVELOPER))
         // Sons of crypto
-        e.section == 1 && e.item == 0 -> wireframe.navigate(
+        e.section == 1 && e.item == 0 -> wireframe.navigate(Mail)
+        e.section == 1 && e.item == 1 -> wireframe.navigate(Improvements)
+        e.section == 1 && e.item == 2 -> wireframe.navigate(
             Website("https://www.sonsofcrypto.com")
         )
-        e.section == 1 && e.item == 1 -> wireframe.navigate(
+        e.section == 1 && e.item == 3 -> wireframe.navigate(
             Website("https://www.twitter.com/sonsofcryptolab")
         )
-        e.section == 1 && e.item == 2 -> wireframe.navigate(
+        e.section == 1 && e.item == 4 -> wireframe.navigate(
             Website("https://t.me/socweb3")
         )
-        e.section == 1 && e.item == 3 -> wireframe.navigate(
+        e.section == 1 && e.item == 5 -> wireframe.navigate(
             Website("https://sonsofcrypto.substack.com/")
         )
         // web3wallet stands for
@@ -156,40 +163,58 @@ class DefaultSettingsPresenter(
         DEVELOPER -> Screen(DEVELOPER.value, sectionsForDeveloper())
     }
 
-    private fun sectionsForRoot(): List<Section> = listOf(
-        Section(
-            Title(Localized("settings")),
-            listOf(
-                Label(Localized("settings.themes"), DETAIL),
-                Label(Localized("settings.uitweaks"), DETAIL),
-                Label(Localized("settings.improvement"), DETAIL),
-                Label(Localized("settings.feedback"), DETAIL),
-            ) + (
-                if (EnvUtils().isProd()) emptyList()
-                else listOf(Label(Localized("settings.developer"), DETAIL))
+    private fun sectionsForRoot(): List<Section> {
+        val img = listOf(
+            "theatermask.and.paintbrush", "gear", "brain",
+            "dot.scope.laptopcomputer", "ant", "signpost.right.and.left",
+            "globe", "bird", "paperplane", "doc.append", "scroll", "key", "flag"
+        ).map { SysName(it) }
+        return listOf(
+            Section(
+                Title(Localized("settings")),
+                listOf(
+                    Label(Localized("settings.themes"), DETAIL, image = img[0]),
+                    Label(Localized("settings.uitweaks"), DETAIL, image = img[1]),
+                    Switch(
+                        Localized("settings.expertMode"),
+                        interactor.expertMode,
+                        image = img[2]
+                    ),
+                ) + (
+                    if (EnvUtils().isProd()) emptyList()
+                    else listOf(
+                        Label(
+                            Localized("settings.developer"),
+                            DETAIL,
+                            image = img[3]
+                        )
+                    )
+                ),
+                null,
             ),
+            Section(
+                Title(Localized("sonsofcrypto")),
+                listOf(
+                    Label(Localized("settings.feedback"), DETAIL, image = img[4]),
+                    Label(Localized("settings.improvement"), DETAIL, image = img[5]),
+                    Label(Localized("settings.soc.website"), DETAIL, image = img[6]),
+                    Label(Localized("settings.soc.twitter"), DETAIL, image = img[7]),
+                    Label(Localized("settings.soc.telegram"), DETAIL, image = img[8]),
+                    Label(Localized("settings.soc.substack"), DETAIL, image = img[9]),
+                ),
+                null,
+            ),
+            Section(
+                Title(Localized("settings.docs.title")),
+                listOf(
+                    Label(Localized("settings.docs.cyberspace"), DETAIL, image = img[10]),
+                    Label(Localized("settings.docs.cypherpunkmanifesto"), DETAIL, image = img[11]),
+                    Label(Localized("settings.docs.netoworkstate"), DETAIL, image = img[12]),
+                ),
             null,
-        ),
-        Section(
-            Title(Localized("sonsofcrypto")),
-            listOf(
-                Label(Localized("settings.soc.website"), DETAIL),
-                Label(Localized("settings.soc.twitter"), DETAIL),
-                Label(Localized("settings.soc.telegram"), DETAIL),
-                Label(Localized("settings.soc.substack"), DETAIL),
-            ),
-            null,
-        ),
-        Section(
-            Title(Localized("settings.docs.title")),
-            listOf(
-                Label(Localized("settings.docs.cyberspace"), DETAIL),
-                Label(Localized("settings.docs.cypherpunkmanifesto"), DETAIL),
-                Label(Localized("settings.docs.netoworkstate"), DETAIL),
-            ),
-        null,
+            )
         )
-    )
+    }
 
     private fun sectionsForThemes(): List<Section> = listOf(
         Section(
