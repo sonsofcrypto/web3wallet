@@ -64,14 +64,13 @@ private extension CurrencyPickerViewController {
         searchTextFieldBox.backgroundColor = Theme.color.bgPrimary
         searchTextFieldBox.layer.cornerRadius = Theme.cornerRadius.half
         searchImageView.tintColor = Theme.color.textSecondary
-        searchTextField.backgroundColor = .clear
         searchTextField.text = nil
         searchTextField.delegate = self
         searchTextField.placeholder = Localized("search")
         searchTextField.inputAccessoryView = UIToolbar
                 .withDoneButton(self, action: #selector(clearSearchAnddismissKeyboard))
                 .wrapInInputView()
-
+        
         collectionView.register(
             CurrencyPickerSectionCell.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
