@@ -39,5 +39,6 @@ class DefaultSettingsInteractor(
         signerStoreService.items().forEach {
             signerStoreService.remove(it)
         }
+        signerStoreService.selected = null
     }
 }
