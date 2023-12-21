@@ -13,7 +13,7 @@ class CollectionViewController: UICollectionViewController,
     var cellSize: CGSize = .zero
     var viewModel: CollectionViewModel.Screen?
     var cv: CollectionView! { (collectionView as! CollectionView) }
-    var ctaButtonsContainer: ButtonSheetContainer = .init()
+    var ctaButtonsContainer: ButtonSheetContainer?
     var ctaButtonsCompactCnt: Int = 2
     var cellSwipeOption =  SwipeOptions()
     var enableCardFlipTransitioning: Bool = false
@@ -100,11 +100,18 @@ class CollectionViewController: UICollectionViewController,
     }
 
     func updateCtaButtons(with viewModel: [ButtonViewModel]) {
-        let needsLayout = ctaButtonsContainer.buttons.count != viewModel.count
+        guard !viewModel.isEmpty else { return }
+        if ctaButtonsContainer == nil {
+            ctaButtonsContainer = ButtonSheetContainer()
+            cv.abovescrollView = ctaButtonsContainer
+            ctaButtonsContainer?.delegate = self
+            layoutAboveScrollView()
+        }
+        let needsLayout = ctaButtonsContainer?.buttons.count != viewModel.count
         if needsLayout {
             UIView.springAnimate { self.layoutAboveScrollView() }
         }
-        ctaButtonsContainer.setButtons(
+        ctaButtonsContainer?.setButtons(
             viewModel,
             compactCount: ctaButtonsCompactCnt,
             sheetState: .auto,
@@ -113,6 +120,8 @@ class CollectionViewController: UICollectionViewController,
     }
 
     func layoutAboveScrollView() {
+        cv.contentInset.bottom = bottomInset()
+        guard let ctaButtonsContainer = ctaButtonsContainer else { return }
         let btnCnt = viewModel?.ctaItems.count ?? 0
         let size = ctaButtonsContainer.intrinsicContentSize(for: btnCnt)
         cv.abovescrollView?.bounds.size = .init(
@@ -145,11 +154,9 @@ class CollectionViewController: UICollectionViewController,
             edgePan.edges = [UIRectEdge.left]
             view.addGestureRecognizer(edgePan)
         }
-        cv.abovescrollView = ctaButtonsContainer
         cv.pinOverscrollToBottom = true
         cv.stickAbovescrollViewToBottom = true
         cv.abovescrollViewAboveCells = true
-        ctaButtonsContainer.delegate = self
         applyTheme(Theme)
     }
 
@@ -214,7 +221,7 @@ class CollectionViewController: UICollectionViewController,
     }
 
     func bottomInset() -> CGFloat {
-        cv.abovescrollView?.bounds.height ?? Theme.padding
+        cv.abovescrollView?.bounds.height ?? Theme.padding * 2
     }
 
     // MARK: - UICollectionViewDelegateFlowLayout
