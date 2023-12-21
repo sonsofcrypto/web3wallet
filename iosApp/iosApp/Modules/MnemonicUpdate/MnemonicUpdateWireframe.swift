@@ -59,12 +59,13 @@ extension DefaultMnemonicUpdateWireframe {
         if let input = destination as? MnemonicUpdateWireframeDestination.Alert {
             alertWireframeFactory.make(vc, context: input.context).present()
         }
+        let presentingTopVc = (parent as? UINavigationController)?.topVc
         if destination is MnemonicUpdateWireframeDestination.Dismiss {
             // NOTE: Dispatching on next run loop so that presenting
             // controller collectionView has time to reload and does not
             // break custom dismiss animation
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                [weak self] in self?.vc?.popOrDismiss()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [weak presentingTopVc] in
+                presentingTopVc?.dismiss(animated: true)
             }
         }
     }
