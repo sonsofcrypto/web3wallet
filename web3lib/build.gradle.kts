@@ -98,24 +98,18 @@ kotlin {
                 // AndroidJUnitRunner and JUnit Rules
                 implementation("androidx.test:runner:1.5.2")
                 implementation("androidx.test:rules:1.5.0")
-                // Assertions
-//                implementation("androidx.test.ext:junit:1.1.5")
-//                implementation("androidx.test.ext:truth-ktx:1.1.5")
                 // Espresso dependencies
-                implementation( "androidx.test.espresso:espresso-core:3.4.0")
-                implementation( "androidx.test.espresso:espresso-contrib:3.4.0")
-                implementation( "androidx.test.espresso:espresso-intents:3.4.0")
-                implementation( "androidx.test.espresso:espresso-accessibility:3.4.0")
-                implementation( "androidx.test.espresso:espresso-web:3.4.0")
-                implementation( "androidx.test.espresso.idling:idling-concurrent:3.4.0")
-                // The following Espresso dependency can be either "implementation",
-                // or "androidTestImplementation", depending on whether you want the
-                // dependency to appear on your APK"s compile classpath or the test APK
-                // classpath.
-                implementation( "androidx.test.espresso:espresso-idling-resource:3.4.0")
-
+                implementation("androidx.test.espresso:espresso-core:3.5.1")
+                implementation("androidx.test.espresso:espresso-contrib:3.5.1")
+                implementation("androidx.test.espresso:espresso-intents:3.5.1")
+                implementation("androidx.test.espresso:espresso-accessibility:3.5.1")
+                implementation("androidx.test.espresso:espresso-web:3.5.1")
+                implementation("androidx.test.espresso.idling:idling-concurrent:3.5.1")
+                // Espresso dependency can be "implementation", "androidTestImplementation".
+                // Whether you want the APK's compile classpath or the test APK classpath.
+                implementation("androidx.test.espresso:espresso-idling-resource:3.5.1")
                 implementation("junit:junit:4.13.2")
-                implementation("org.robolectric:robolectric:4.10")
+                implementation("org.robolectric:robolectric:4.11.1")
             }
         }
         val iosX64Main by getting
