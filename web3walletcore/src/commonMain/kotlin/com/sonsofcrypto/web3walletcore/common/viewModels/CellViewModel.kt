@@ -1,5 +1,7 @@
 package com.sonsofcrypto.web3walletcore.common.viewModels
 
+import com.sonsofcrypto.web3walletcore.extensions.Localized
+
 sealed class CellViewModel {
     enum class Accessory {
         NONE, DETAIL, CHECKMARK, COPY
@@ -11,7 +13,16 @@ sealed class CellViewModel {
         val selected: Boolean = false,
         val trailingText: String? = null,
         val image: ImageMedia? = null,
-    ): CellViewModel()
+    ): CellViewModel() {
+        companion object {
+            fun with(
+                localizedKey: String,
+                image: ImageMedia? = null,
+                accessory: Accessory = Accessory.DETAIL
+            ): Label =
+                Label(Localized(localizedKey), accessory, false, null, image)
+        }
+    }
 
     data class Text(val text: String?): CellViewModel()
 

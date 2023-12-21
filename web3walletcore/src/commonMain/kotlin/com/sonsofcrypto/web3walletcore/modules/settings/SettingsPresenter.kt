@@ -15,7 +15,6 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Foo
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
-import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
 import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.settings.SettingsPresenterEvent.Select
@@ -59,7 +58,7 @@ class DefaultSettingsPresenter(
                 ROOT -> handleEventForRoot(event)
                 THEMES -> handleEventForThemes(event)
                 UITWEAKS -> handleEventForUITweaks(event)
-                DEVELOPER -> handleEventForThemes(event)
+                DEVELOPER -> handleEventForDeveloper(event)
             }
     }
 
@@ -140,9 +139,9 @@ class DefaultSettingsPresenter(
     private fun handleEventForDeveloper(e: Select) = when {
         e.section == 0 && e.item == 0 -> {
             interactor.resetKeyStore()
-            wireframe.navigate(KeyStore)
+            wireframe.navigate(KeyStore(true))
         }
-        else -> {}
+        else -> Unit
     }
 
     private fun updateView() {
@@ -163,58 +162,56 @@ class DefaultSettingsPresenter(
         DEVELOPER -> Screen(DEVELOPER.value, sectionsForDeveloper())
     }
 
-    private fun sectionsForRoot(): List<Section> {
-        val img = listOf(
-            "theatermask.and.paintbrush", "gear", "brain",
-            "dot.scope.laptopcomputer", "ant", "signpost.right.and.left",
-            "globe", "bird", "paperplane", "doc.append", "scroll", "key", "flag"
-        ).map { SysName(it) }
-        return listOf(
-            Section(
-                Title(Localized("settings")),
-                listOf(
-                    Label(Localized("settings.themes"), DETAIL, image = img[0]),
-                    Label(Localized("settings.uitweaks"), DETAIL, image = img[1]),
-                    Switch(
-                        Localized("settings.expertMode"),
-                        interactor.expertMode,
-                        image = img[2]
-                    ),
-                ) + (
-                    if (EnvUtils().isProd()) emptyList()
-                    else listOf(
-                        Label(
-                            Localized("settings.developer"),
-                            DETAIL,
-                            image = img[3]
-                        )
+    private fun sectionsForRoot(): List<Section> = listOf(
+        Section(
+            Title(Localized("settings")),
+            listOf(
+                Label.with(
+                    "settings.themes",
+                    SysName("theatermask.and.paintbrush")
+                ),
+                Label.with(
+                    "settings.uitweaks",
+                    SysName("gear")
+                ),
+                Switch(
+                    Localized("settings.expertMode"),
+                    interactor.expertMode,
+                    image = SysName("brain")
+                ),
+            ) + (
+                if (EnvUtils().isProd()) emptyList()
+                else listOf(
+                    Label.with(
+                        "settings.developer",
+                        SysName("dot.scope.laptopcomputer")
                     )
-                ),
-                null,
+                )
             ),
-            Section(
-                Title(Localized("sonsofcrypto")),
-                listOf(
-                    Label(Localized("settings.feedback"), DETAIL, image = img[4]),
-                    Label(Localized("settings.improvement"), DETAIL, image = img[5]),
-                    Label(Localized("settings.soc.website"), DETAIL, image = img[6]),
-                    Label(Localized("settings.soc.twitter"), DETAIL, image = img[7]),
-                    Label(Localized("settings.soc.telegram"), DETAIL, image = img[8]),
-                    Label(Localized("settings.soc.substack"), DETAIL, image = img[9]),
-                ),
-                null,
-            ),
-            Section(
-                Title(Localized("settings.docs.title")),
-                listOf(
-                    Label(Localized("settings.docs.cyberspace"), DETAIL, image = img[10]),
-                    Label(Localized("settings.docs.cypherpunkmanifesto"), DETAIL, image = img[11]),
-                    Label(Localized("settings.docs.netoworkstate"), DETAIL, image = img[12]),
-                ),
             null,
-            )
+        ),
+        Section(
+            Title(Localized("sonsofcrypto")),
+            listOf(
+                Label.with("settings.feedback", SysName("ant")),
+                Label.with("settings.improvement", SysName("signpost.right.and.left")),
+                Label.with("settings.soc.website", SysName("globe")),
+                Label.with("settings.soc.twitter", SysName("bird")),
+                Label.with("settings.soc.telegram", SysName("paperplane")),
+                Label.with("settings.soc.substack", SysName("doc.append")),
+            ),
+            null,
+        ),
+        Section(
+            Title(Localized("settings.docs.title")),
+            listOf(
+                Label.with("settings.docs.cyberspace", SysName("scroll")),
+                Label.with("settings.docs.cypherpunkmanifesto", SysName("key")),
+                Label.with("settings.docs.netoworkstate", SysName("flag")),
+            ),
+            null,
         )
-    }
+    )
 
     private fun sectionsForThemes(): List<Section> = listOf(
         Section(

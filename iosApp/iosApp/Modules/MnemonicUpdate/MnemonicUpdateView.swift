@@ -209,7 +209,7 @@ final class MnemonicUpdateViewController: CollectionViewController {
     ) {
         presenter.handleEvent(.CTAAction(idx: idx.int32))
         let sectionCnt = cv.numberOfSections
-        if idx == 0 && ctaButtonsContainer.buttons.count > 1 && sectionCnt > 2 {
+        if idx == 0 && bsc.buttons.count > 1 && sectionCnt > 2 {
             let ip = IndexPath(item: 0, section: cv.numberOfSections - 1)
             cv.scrollToItem(at: ip, at: .centeredVertically, animated: true)
         }
