@@ -12,6 +12,7 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.CANCEL
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.InputAlertViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.LoadingImageAlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.RegularAlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.BarButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
@@ -25,6 +26,7 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Foo
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Screen
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Section
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
 import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position.TOP
@@ -249,9 +251,12 @@ class DefaultMnemonicNewPresenter(
             interactor.password = interactor.generatePassword()
         }
         try {
-            interactor.generateDefaultNameIfNeeded()
-            context.handler(interactor.createMnemonicSigner())
-            execDelayed(0.1.seconds) {
+            presentAlert(generatingAccountsViewModel())
+            // NOTE: Hack to dispatch following on next run loops so that alert
+            // appears on straight await
+            execDelayed(0.05.seconds) {
+                interactor.generateDefaultNameIfNeeded()
+                context.handler(interactor.createMnemonicSigner())
                 wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
             }
         } catch (e: Throwable) {
@@ -260,6 +265,14 @@ class DefaultMnemonicNewPresenter(
         }
         updateView()
     }
+
+    private fun generatingAccountsViewModel(): AlertViewModel =
+        LoadingImageAlertViewModel(
+            Localized("mnemonic.alert.updating.title"),
+            "",
+            listOf(),
+            ImageMedia.Name("overscroll_pepe_analyst")
+        )
 
     private fun handleAddAccount() {
         interactor.addAccount()

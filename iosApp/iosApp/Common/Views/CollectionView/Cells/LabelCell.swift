@@ -11,6 +11,7 @@ class LabelCell: ThemeCell {
     @IBOutlet weak var trailingLabel: UILabel!
     @IBOutlet weak var accessoryImageView: UIImageView!
     @IBOutlet weak var contentStackView: UIStackView!
+    @IBOutlet weak var iconImageView: UIImageView?
 
     private weak var accessoryType: CellViewModel.Label.Accessory?
 
@@ -21,6 +22,8 @@ class LabelCell: ThemeCell {
         label.text = vm.text
         trailingLabel?.text = vm.trailingText
         updateAccessoryView(vm.accessory)
+        iconImageView?.setImageMedia(vm.image)
+        iconImageView?.isHidden = iconImageView?.image == nil
         return self
     }
 
@@ -30,6 +33,7 @@ class LabelCell: ThemeCell {
             $0?.textColor = theme.color.textPrimary
             $0?.font = theme.font.callout
         }
+        iconImageView?.tintColor = theme.color.textPrimary
     }
 
     private func updateAccessoryView(_ accType: CellViewModel.Label.Accessory) {

@@ -13,7 +13,7 @@ class SettingsViewController: UICollectionViewController, UICollectionViewDelega
     private var prevSize: CGSize = .zero
     private var cellSize: CGSize = .zero
     private var viewModel: CollectionViewModel.Screen?
-    private var cv: CollectionView? { collectionView as? CollectionView }
+    private var cv: CollectionView! { (collectionView as! CollectionView) }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,8 +74,21 @@ class SettingsViewController: UICollectionViewController, UICollectionViewDelega
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(LabelCell.self, for: indexPath)
-        return cell.update(with: viewModel(at: indexPath))
+        guard let viewModel = self.viewModel(at: indexPath) else {
+            fatalError("[SettingsView] ViewModel wrong idxPath:  \(indexPath)")
+        }
+        switch viewModel {
+        case let vm as CellViewModel.Label:
+            return cv.dequeue(LabelCell.self, for: indexPath)
+                .update(with: vm)
+        case let vm as CellViewModel.Switch:
+            return cv.dequeue(SwitchCollectionViewCell.self, for: indexPath)
+                .update(with: vm) { [weak self] v in
+                    self?.handleSelect(indexPath)
+                }
+        default:
+            fatalError("[SettingsView] ViewModel wrong idxPath:  \(indexPath)")
+        }
     }
     
     override func collectionView(
@@ -145,11 +158,12 @@ class SettingsViewController: UICollectionViewController, UICollectionViewDelega
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
+        handleSelect(indexPath)
+    }
+
+    private func handleSelect(_ idxPath: IndexPath) {
         presenter.handleEvent(
-            .Select(
-                section: indexPath.section.int32,
-                item: indexPath.item.int32
-            )
+            .Select(section: idxPath.section.int32, item: idxPath.item.int32)
         )
     }
 }

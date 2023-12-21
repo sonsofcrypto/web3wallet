@@ -56,6 +56,10 @@ extension AlertController {
                 field.placeholder = vm.inputPlaceholder
             }
         }
+
+        if let _ = viewModel as? AlertViewModel.LoadingImageAlertViewModel {
+            showActivityIndicator =  true
+        }
     }
 }
 
@@ -78,8 +82,11 @@ class AlertController: UIAlertController {
     private(set) var originalTitle: String?
     private var spaceAdjustedTitle: String = ""
     private weak var imageView: UIImageView? = nil
+    private weak var activityIndicatorView: UIActivityIndicatorView? = nil
     private var previousImgViewSize: CGSize = .zero
     private var imageInsets: UIEdgeInsets = .zero
+
+    var showActivityIndicator: Bool = false
 
     override var title: String? {
         didSet {
@@ -119,6 +126,18 @@ class AlertController: UIAlertController {
         return imageView
     }
 
+    private func addActivityIndicatorViewIfNeeded() -> UIActivityIndicatorView? {
+        guard showActivityIndicator else { return nil }
+        guard let activityIndicatorView = self.activityIndicatorView else {
+            let activityIndicatorView = UIActivityIndicatorView(style: .large)
+            view.addSubview(activityIndicatorView)
+            self.activityIndicatorView = activityIndicatorView
+            activityIndicatorView.startAnimating()
+            return activityIndicatorView
+        }
+        return activityIndicatorView
+    }
+
     // MARK: -  Layout code
 
     override func viewDidLayoutSubviews() {
@@ -137,11 +156,22 @@ class AlertController: UIAlertController {
         imageView.center.x = view.bounds.width / 2.0
         imageView.center.y = padding + linesCount * lineHeight / 2.0
         super.viewDidLayoutSubviews()
+        // Position `activityIndicatorView`
+        if showActivityIndicator {
+            activityIndicatorView = addActivityIndicatorViewIfNeeded()
+            activityIndicatorView?.center = .init(
+                x: imageView.frame.midX,
+                y: imageView.frame.maxY 
+                    + (activityIndicatorView?.bounds.height.half ?? 0)
+                    + Constants.padding(for: preferredStyle)
+            )
+        }
     }
 
     /// Adds appropriate number of "\n" to `title` text to make space for `imageView`
     private func adjustTitle(for imageView: UIImageView) {
         let linesCount = Int(newLinesCount(for: imageView))
+            + (showActivityIndicator ? 1 : 0)
         let lines = (0..<linesCount).map({ _ in "\n" }).reduce("", +)
         spaceAdjustedTitle = lines + (originalTitle ?? "")
         title = spaceAdjustedTitle
@@ -150,6 +180,7 @@ class AlertController: UIAlertController {
     /// - Return: Number new line chars needed to make enough space for `imageView`
     private func newLinesCount(for imageView: UIImageView) -> CGFloat {
         return ceil(imageView.bounds.inset(by: imageInsets).height / lineHeight)
+            + (showActivityIndicator ? 1 : 0)
     }
 
     /// Calculated based on system font line height
