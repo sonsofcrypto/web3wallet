@@ -21,7 +21,6 @@ final class SignersViewController: BaseViewController {
     private var didAppear: Bool = false
     private var prevSize: CGSize = .zero
     private var cellSize: CGSize = .zero
-    private var needsFullReload: Bool = false
     private var searchController: UISearchController = .init()
 
     override func viewDidLoad() {
@@ -72,14 +71,11 @@ extension SignersViewController {
         let prevViewModel = self.viewModel
         let itemCntChanged = prevViewModel?.items.count != viewModel.items.count
         self.viewModel = viewModel
-        needsFullReload = needsFullReload || viewModel.needsForceReload
         cv.reloadAnimatedIfNeeded(
             prevVM: prevViewModel,
             currVM: viewModel,
-            force: prevViewModel?.items.count != viewModel.items.count,
-            reloadOnly: !didAppear || needsFullReload
+            reloadOnly: !didAppear || viewModel.needsForceReload
         )
-        needsFullReload = false
         updateLogo(viewModel)
         updateTargetView(targetView: viewModel.targetView)
         updateBarButtons(
@@ -344,9 +340,6 @@ extension SignersViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         let text = searchController.searchBar.text ?? ""
-        if text.isEmpty {
-            needsFullReload = true
-        }
         presenter.handleEvent(.SetSearchTerm(term: text))
     }
 }
