@@ -16,13 +16,13 @@ enum ThemeVariant: String {
 
 protocol ThemeProtocol {
     var name: String { get }
+    var id: ThemeId { get }
     var color: ThemeColorProtocol { get }
     var font: ThemeFont { get }
     var supportedVariants: [ThemeVariant] { get }
     var statusBarStyle: UIStatusBarStyle { get }
     var padding: CGFloat { get }
     var paddingHalf: CGFloat { get }
-    // TODO(Anon): To be consolidated further
     var cornerRadius: CGFloat { get }
     var cellHeightLarge: CGFloat { get }
     var cellHeight: CGFloat { get }
@@ -33,12 +33,13 @@ protocol ThemeProtocol {
     var buttonInCellHeight: CGFloat { get }
 }
 
-// TODO(Anon): This can be further consolidated
 protocol ThemeColorProtocol {
     var textPrimary: UIColor { get }
     var textSecondary: UIColor { get }
     var textTertiary: UIColor { get }
+
     var bgPrimary: UIColor { get }
+    var bgSecondary: UIColor { get }
     var bgBlurTint: UIColor { get }
     var bgGradientTop: UIColor { get }
     var bgGradientBtm: UIColor { get }
@@ -54,16 +55,11 @@ protocol ThemeColorProtocol {
     var collectionSectionStroke: UIColor { get }
     var collectionSeparator: UIColor { get }
 
-    var stroke: UIColor { get }
     var separator: UIColor { get }
     var buttonBgPrimary: UIColor { get }
     var buttonBgSecondary: UIColor { get }
     var switchOnTint: UIColor { get }
-    // TODO(Anon): Definitely dont need all this for segmented control
-    var segmentedControlBackground: UIColor { get }
-    var segmentedControlBackgroundSelected: UIColor { get }
-    var segmentedControlText: UIColor { get }
-    var segmentedControlTextSelected: UIColor { get }
+
     var priceUp: UIColor { get }
     var priceDown: UIColor { get }
     var dashboardTVCryptoBalance: UIColor { get }

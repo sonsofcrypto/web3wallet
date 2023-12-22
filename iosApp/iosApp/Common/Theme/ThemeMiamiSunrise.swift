@@ -3,9 +3,11 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 struct ThemeMiamiSunrise: ThemeProtocol {
     let name: String = "Miami Sunrise"
+    let id: ThemeId = ThemeId.miami
     let color: ThemeColorProtocol = ThemeColor()
     let supportedVariants: [ThemeVariant] = [.light, .dark]
     let statusBarStyle: UIStatusBarStyle = .lightContent
@@ -24,13 +26,17 @@ struct ThemeMiamiSunrise: ThemeProtocol {
         var textPrimary: UIColor { Palette.white }
         var textSecondary: UIColor { Palette.white6 }
         var textTertiary: UIColor { Palette.white3 }
+
         var bgPrimary: UIColor { Palette.white18 }
+        var bgSecondary: UIColor { Palette.white01 }
         var bgBlurTint: UIColor { Palette.bgBlurTint }
         var bgGradientTop: UIColor { .init(variants: [Palette.blue, Palette.pink]) }
         var bgGradientBtm: UIColor { .init(variants: [Palette.pinkLight, Palette.purple]) }
+
         var navBarBackground: UIColor { Palette.lightBlack }
         var navBarTint: UIColor { Palette.orange }
         var navBarTitle: UIColor { Palette.white }
+
         var tabBarBackground: UIColor { Palette.lightBlack }
         var tabBarTint: UIColor { Palette.blue }
         var tabBarTintSelected: UIColor { Palette.pink }
@@ -38,16 +44,11 @@ struct ThemeMiamiSunrise: ThemeProtocol {
         var collectionSectionStroke: UIColor { Palette.white01 }
         var collectionSeparator: UIColor { Palette.white18 }
 
-        var stroke: UIColor { Palette.lightGray }
         var separator: UIColor { Palette.lighterGray }
         var buttonBgPrimary: UIColor { .init(variants: [Palette.blue, Palette.pink]) }
         var buttonBgSecondary: UIColor { UIColor.clear }
         var switchOnTint: UIColor { Palette.orange }
 
-        var segmentedControlBackground: UIColor { Palette.lighterGray.withAlpha(0.1) }
-        var segmentedControlBackgroundSelected: UIColor { Palette.white18 }
-        var segmentedControlText: UIColor { Palette.white }
-        var segmentedControlTextSelected: UIColor { Palette.white }
         var priceUp: UIColor { Palette.teal }
         var priceDown: UIColor { Palette.pink }
         var dashboardTVCryptoBalance: UIColor { Palette.orange }
