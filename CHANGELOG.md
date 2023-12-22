@@ -14,7 +14,7 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 # Release Notes 
 
-### v1.1.1 #41
+### v1.1.1 #42
 - Metadata downloader renaming uppercase file extensions
 - Reduce size of metadata cache by ~66%, increase load speed by ~3x 
 - Alert when create multiple account at the same time
