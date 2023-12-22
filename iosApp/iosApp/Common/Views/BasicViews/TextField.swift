@@ -39,7 +39,7 @@ class TextField: UITextField {
         font = theme.font.body
         textColor = theme.color.textPrimary
         rightView = makeClearButton()
-        backgroundColor = theme.color.segmentedControlBackground
+        backgroundColor = theme.color.bgSecondary
         layer.cornerRadius = theme.cornerRadius.half
         layer.maskedCorners = .all
     }

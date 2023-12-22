@@ -3,9 +3,11 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 struct ThemeVanilla: ThemeProtocol {
     let name: String = "Vanilla"
+    let id: ThemeId = ThemeId.vanilla
     let color: ThemeColorProtocol = ThemeColor()
     let supportedVariants: [ThemeVariant] = [.light, .dark]
     let statusBarStyle: UIStatusBarStyle = .default
@@ -24,13 +26,17 @@ struct ThemeVanilla: ThemeProtocol {
         var textPrimary: UIColor { .label }
         var textSecondary: UIColor { .secondaryLabel }
         var textTertiary: UIColor { .tertiaryLabel }
+
         var bgPrimary: UIColor { .secondarySystemBackground }
+        var bgSecondary: UIColor { .tertiarySystemBackground }
         var bgBlurTint: UIColor { .secondarySystemBackground }
         var bgGradientTop: UIColor { .systemBackground }
         var bgGradientBtm: UIColor { .systemBackground }
+
         var navBarBackground: UIColor { .systemBackground }
         var navBarTint: UIColor { Palette.orange }
         var navBarTitle: UIColor { .label }
+
         var tabBarBackground: UIColor { .systemBackground }
         var tabBarTint: UIColor { Palette.blue }
         var tabBarTintSelected: UIColor { Palette.pink }
@@ -38,16 +44,11 @@ struct ThemeVanilla: ThemeProtocol {
         var collectionSectionStroke: UIColor { UIColor.quaternaryLabel.withAlpha(0.1) }
         var collectionSeparator: UIColor { .quaternaryLabel }
 
-        var stroke: UIColor { .label }
         var separator: UIColor { .tertiaryLabel }
         var buttonBgPrimary: UIColor { Palette.blue }
         var buttonBgSecondary: UIColor { .secondarySystemBackground }
         var switchOnTint: UIColor { Palette.orange }
 
-        var segmentedControlBackground: UIColor { .tertiarySystemBackground }
-        var segmentedControlBackgroundSelected: UIColor { .secondarySystemBackground }
-        var segmentedControlText: UIColor { .secondaryLabel }
-        var segmentedControlTextSelected: UIColor { .label }
         var priceUp: UIColor { Palette.green }
         var priceDown: UIColor { Palette.red }
         var dashboardTVCryptoBalance: UIColor { Palette.orange }

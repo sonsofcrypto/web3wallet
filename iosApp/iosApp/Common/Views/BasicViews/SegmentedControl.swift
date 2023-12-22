@@ -12,46 +12,53 @@ final class SegmentedControl: UISegmentedControl {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureUI()
+        applyTheme(Theme)
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        configureUI()
+        applyTheme(Theme)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        configureUI()
+        applyTheme(Theme)
     }
 
 }
 
 private extension SegmentedControl {
     
-    func configureUI() {
+    func applyTheme(_ theme: ThemeProtocol) {
+        let font = theme.font.footnote
         setTitleTextAttributes(
-            [
-                .font: Theme.font.footnote,
-                .foregroundColor: Theme.color.segmentedControlText
-            ],
+            [.font: font, .foregroundColor: Theme.color.textPrimary],
             for: .normal
         )
         setTitleTextAttributes(
-            [
-                .font: Theme.font.footnote,
-                .foregroundColor: Theme.color.segmentedControlTextSelected
-            ],
+            [.font: font, .foregroundColor: Theme.color.textPrimary],
             for: .selected
         )
 
+        guard theme.id != .vanilla else {
+            setBackgroundImage(nil, for: .normal, barMetrics: .default)
+            setBackgroundImage(nil, for: .selected, barMetrics: .default)
+            setDividerImage(
+                nil,
+                forLeftSegmentState: .normal,
+                rightSegmentState: .normal,
+                barMetrics: .default
+            )
+            return
+        }
+
         setBackgroundImage(
-            Theme.color.segmentedControlBackground.image(),
+            Theme.color.bgSecondary.image(),
             for: .normal,
             barMetrics: .default
         )
         setBackgroundImage(
-            Theme.color.segmentedControlBackgroundSelected.image(),
+            Theme.color.bgPrimary.image(),
             for: .selected,
             barMetrics: .default
         )
