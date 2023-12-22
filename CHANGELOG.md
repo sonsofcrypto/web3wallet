@@ -23,6 +23,8 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 - Setting moved to CollectionViewController
 - Fix reload key dev option
 - Tests clean up
+- Fixing search field at currency screen
+- Fixing scrolling to item when keyboard appears
 
 ### v1.1.0 #36
 - Deriving standard accounts
