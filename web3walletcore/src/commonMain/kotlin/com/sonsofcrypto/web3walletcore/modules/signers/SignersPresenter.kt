@@ -173,7 +173,7 @@ class DefaultSignersPresenter(
 
     private fun handleSetSearchTerm(term: String?) {
         interactor.searchTerm = term
-        updateView()
+        updateView(Loaded, term?.isEmpty() ?: false)
     }
 
     private fun handleDidSelectErrorAction(idx: Int) = updateView()

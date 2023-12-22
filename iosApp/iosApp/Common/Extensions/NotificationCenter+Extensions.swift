@@ -16,12 +16,14 @@ extension NotificationCenter {
 
     enum KeyboardEvent {
         case willShow
+        case didShow
         case willHide
 
         func notificationName() -> NSNotification.Name {
             switch self {
             case .willShow: return UIApplication.keyboardWillShowNotification
             case .willHide: return UIApplication.keyboardWillHideNotification
+            case .didShow: return UIApplication.keyboardDidShowNotification
             }
         }
     }

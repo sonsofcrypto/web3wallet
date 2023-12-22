@@ -20,6 +20,10 @@ class CollectionViewController: UICollectionViewController,
 
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
     private var interactiveTransitioning: CardFlipInteractiveTransitioning?
+    
+    /// A workaround to avoid keyboard creating `asdjustedContentInsets` far to big
+    private var compensateContentInsetForKeyboard: Bool = false
+
 
     deinit { NotificationCenter.default.removeObserver(self) }
 
@@ -138,6 +142,11 @@ class CollectionViewController: UICollectionViewController,
         )
         NotificationCenter.addKeyboardObserver(
             self,
+            selector: #selector(keyboardDidShow),
+            event: .didShow
+        )
+        NotificationCenter.addKeyboardObserver(
+            self,
             selector: #selector(keyboardWillHide),
             event: .willHide
         )
@@ -171,21 +180,23 @@ class CollectionViewController: UICollectionViewController,
     }
 
     // MARK: - Keyboard handling
-
-    @objc func keyboardWillShow(notification: Notification) {
-        let firstResponderIdxPath = cv.indexPathsForVisibleItems.filter {
-            cv.cellForItem(at: $0)?.firstResponder != nil
-        }.first
-
-        cv.contentInset.bottom = Theme.padding
-
-        if let idxPath = firstResponderIdxPath {
-            cv.scrollToItem(at: idxPath, at: .centeredVertically, animated: true)
+    override func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
+        let delta = cv.adjustedContentInset.bottom - cv.contentInset.bottom
+        if delta > Theme.padding * 3 && compensateContentInsetForKeyboard {
+            cv.contentInset.bottom = Theme.padding * 3
         }
+    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        compensateContentInsetForKeyboard = true
+    }
+    
+    @objc func keyboardDidShow(notification: Notification) {
+        compensateContentInsetForKeyboard = false
     }
 
     @objc func keyboardWillHide(notification: Notification) {
-        cv.contentInset.bottom = bottomInset()
+        cv.contentInset.bottom =  bottomInset()
         asyncMain(0.1) { [weak self] in self?.present() }
     }
 
@@ -209,14 +220,14 @@ class CollectionViewController: UICollectionViewController,
         guard prevSize.width != view.bounds.size.width else { return false }
         prevSize = view.bounds.size
         cellSize = .init(
-            width: view.bounds.size.width - Theme.padding * 2,
+            width: view.bounds.size.width - Theme.padding.twice,
             height: Theme.cellHeight
         )
         return true
     }
 
     func bottomInset() -> CGFloat {
-        cv.abovescrollView?.bounds.height ?? Theme.padding * 2
+        cv.abovescrollView?.bounds.height ?? Theme.padding.twice
     }
 
     // MARK: - UICollectionViewDelegateFlowLayout

@@ -52,7 +52,7 @@ class CollectionView: UICollectionView {
     var sectionBorderColor: UIColor = .secondarySystemBackground {
         didSet { tableLayout()?.sectionBackgroundBorderColor = sectionBorderColor }
     }
-    
+
     override init(
         frame: CGRect,
         collectionViewLayout layout: UICollectionViewLayout
@@ -79,7 +79,7 @@ class CollectionView: UICollectionView {
             stickToBottom: stickAbovescrollViewToBottom
         )
     }
-
+    
     private func layoutTopOverscrollView(_ view: UIView?, pin: Bool = false) {
         guard let view = view else { return }
 
