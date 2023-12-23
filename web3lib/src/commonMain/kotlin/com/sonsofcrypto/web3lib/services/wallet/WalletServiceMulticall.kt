@@ -4,8 +4,14 @@ import com.sonsofcrypto.web3lib.abi.ERC20
 import com.sonsofcrypto.web3lib.abi.Interface
 import com.sonsofcrypto.web3lib.abi.Multicall3
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3lib.provider.model.*
-import com.sonsofcrypto.web3lib.services.currencyStore.*
+import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.Log
+import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
+import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
+import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
+import com.sonsofcrypto.web3lib.services.currencyStore.ethereumDefaultCurrencies
+import com.sonsofcrypto.web3lib.services.currencyStore.goerliDefaultCurrencies
+import com.sonsofcrypto.web3lib.services.currencyStore.sepoliaDefaultCurrencies
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent.EnabledNetworksDidChange
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent.KeyStoreItemDidChange
@@ -16,11 +22,21 @@ import com.sonsofcrypto.web3lib.services.poll.PollService
 import com.sonsofcrypto.web3lib.services.poll.PollServiceRequest
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.signer.contracts.ERC20Legacy
-import com.sonsofcrypto.web3lib.types.*
-import com.sonsofcrypto.web3lib.utils.*
+import com.sonsofcrypto.web3lib.types.Address
+import com.sonsofcrypto.web3lib.types.AddressHexString
+import com.sonsofcrypto.web3lib.types.Currency
+import com.sonsofcrypto.web3lib.types.Network
+import com.sonsofcrypto.web3lib.types.toHexString
+import com.sonsofcrypto.web3lib.types.toHexStringAddress
+import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
-import kotlinx.coroutines.*
+import com.sonsofcrypto.web3lib.utils.withBgCxt
+import com.sonsofcrypto.web3lib.utils.withUICxt
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 
 class DefaultWalletServiceMulticall(

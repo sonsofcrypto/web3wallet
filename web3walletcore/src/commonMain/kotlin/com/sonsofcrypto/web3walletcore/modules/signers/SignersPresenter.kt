@@ -16,12 +16,12 @@ import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWirefram
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.ButtonAction
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.ErrorAlertAction
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.LeftBarButtonAction
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SetCTASheet
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SignerAction
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.ReorderAction
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SetSearchTerm
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SwipeOptionAction
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.RightBarButtonAction
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SetCTASheet
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SetSearchTerm
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SignerAction
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersPresenterEvent.SwipeOptionAction
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.Item
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.Item.SwipeOption
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.Item.SwipeOption.Kind.ADD
@@ -31,8 +31,8 @@ import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.Item.Swi
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.Item.SwipeOption.Kind.SHOW
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.State.Loaded
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.TransitionTargetView.ButtonAt
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.TransitionTargetView.SignerAt
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.TransitionTargetView.None
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersViewModel.TransitionTargetView.SignerAt
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.Authenticate
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.ConnectHardwareWallet
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.CreateMultisig

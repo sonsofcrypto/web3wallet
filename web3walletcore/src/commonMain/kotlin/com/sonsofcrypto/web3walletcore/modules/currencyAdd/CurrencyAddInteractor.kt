@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3walletcore.modules.currencyAdd
 
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.types.Currency
-import com.sonsofcrypto.web3lib.types.Currency.Type.ERC20
 import com.sonsofcrypto.web3lib.types.Network
 
 interface CurrencyAddInteractor {

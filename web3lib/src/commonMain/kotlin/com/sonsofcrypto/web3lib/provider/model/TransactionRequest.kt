@@ -6,7 +6,11 @@ import com.sonsofcrypto.web3lib.provider.utils.RlpList
 import com.sonsofcrypto.web3lib.provider.utils.encode
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonObject
 
 data class TransactionRequest(
     val to: Address.HexString? = null,

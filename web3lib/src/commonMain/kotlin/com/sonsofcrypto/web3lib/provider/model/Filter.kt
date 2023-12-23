@@ -4,7 +4,12 @@ import com.sonsofcrypto.web3lib.provider.utils.stringValue
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.jsonPrimitive
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonObject
 
 @Serializable
 sealed class Topic {

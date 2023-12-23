@@ -23,7 +23,6 @@ import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 
 sealed class NetworksEvent() {

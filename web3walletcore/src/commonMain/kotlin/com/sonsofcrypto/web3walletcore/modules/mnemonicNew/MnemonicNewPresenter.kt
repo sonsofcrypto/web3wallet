@@ -17,10 +17,15 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.RegularA
 import com.sonsofcrypto.web3walletcore.common.viewModels.BarButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.SECONDARY
-import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.*
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.KeyValueList
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.KeyValueList.Item
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentSelection
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.DEFAULT
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.SegmentWithTextAndSwitch.KeyboardType.NUMBER_PAD
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Switch
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Text
+import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.TextInput
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Footer.HighlightWords
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title

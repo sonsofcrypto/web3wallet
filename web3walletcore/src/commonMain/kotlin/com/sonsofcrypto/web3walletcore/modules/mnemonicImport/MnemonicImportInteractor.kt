@@ -1,18 +1,12 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicImport
 
-import com.sonsofcrypto.web3lib.provider.model.addPrefix
 import com.sonsofcrypto.web3lib.services.address.AddressService
 import com.sonsofcrypto.web3lib.services.keyStore.MnemonicSignerConfig
-import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
-import com.sonsofcrypto.web3lib.services.uuid.UUIDService
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
-import com.sonsofcrypto.web3lib.types.ExtKey.Version.MAINNETPRV
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
-import com.sonsofcrypto.web3lib.utils.bip39.WordList
-import com.sonsofcrypto.web3lib.utils.bip39.localeString
 import com.sonsofcrypto.web3lib.utils.defaultDerivationPath
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.lastDerivationPathComponent

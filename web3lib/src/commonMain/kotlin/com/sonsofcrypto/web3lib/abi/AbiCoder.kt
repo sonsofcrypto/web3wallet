@@ -5,10 +5,11 @@ import com.sonsofcrypto.web3lib.utils.BigInt.Companion.maxInt
 import com.sonsofcrypto.web3lib.utils.BigInt.Companion.maxUInt
 import com.sonsofcrypto.web3lib.utils.BigInt.Companion.minInt
 import com.sonsofcrypto.web3lib.utils.BigInt.Companion.zero
-import com.sonsofcrypto.web3lib.utils.extensions.*
+import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
+import com.sonsofcrypto.web3lib.utils.extensions.inv
 import com.sonsofcrypto.web3lib.utils.padTwosComplement
-import io.ktor.utils.io.*
-import io.ktor.utils.io.core.*
+import io.ktor.utils.io.core.String
+import io.ktor.utils.io.core.toByteArray
 import kotlin.math.ceil
 
 typealias CoerceFunc = (type: String, value: Any) -> Any

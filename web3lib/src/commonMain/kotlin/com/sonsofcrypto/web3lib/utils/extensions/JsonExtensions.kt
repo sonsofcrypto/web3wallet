@@ -1,6 +1,5 @@
 package com.sonsofcrypto.web3lib.utils.extensions
 
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.native.concurrent.SharedImmutable

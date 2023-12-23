@@ -1,7 +1,6 @@
 package com.sonsofcrypto.web3walletcore
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3lib.services.address.AddressService
 import com.sonsofcrypto.web3lib.services.address.DefaultAddressService
 import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService

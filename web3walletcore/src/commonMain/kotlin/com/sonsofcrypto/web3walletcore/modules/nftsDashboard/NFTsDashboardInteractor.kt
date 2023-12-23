@@ -9,7 +9,7 @@ import com.sonsofcrypto.web3walletcore.services.nfts.NFTCollection
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTsServiceListener
-import com.sonsofcrypto.web3walletcore.services.settings.NFTCarouselSize.*
+import com.sonsofcrypto.web3walletcore.services.settings.NFTCarouselSize.REGULAR
 import com.sonsofcrypto.web3walletcore.services.settings.SettingsService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
