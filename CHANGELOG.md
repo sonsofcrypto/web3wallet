@@ -16,6 +16,7 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 ### v1.1.2 #43
 - Theme color consolidation & clean up
+- Fixing confirm mnemonic
 
 ### v1.1.1 #42
 - Metadata downloader renaming uppercase file extensions

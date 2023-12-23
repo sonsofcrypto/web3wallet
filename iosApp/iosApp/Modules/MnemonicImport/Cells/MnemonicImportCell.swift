@@ -51,6 +51,10 @@ final class MnemonicImportCell: ThemeCell, UICollectionViewDataSource,
     func configure() {
         configureTextViewIfNeeded()
     }
+
+    @objc func doneAction(_ sender: Any) {
+        textView?.resignFirstResponder()
+    }
     
     private func configureTextViewIfNeeded() {
         // NOTE: For unknown reason `textView` outlet is not connected in
@@ -59,7 +63,8 @@ final class MnemonicImportCell: ThemeCell, UICollectionViewDataSource,
         guard needsTextViewConfig else { return }
         needsTextViewConfig = false
         applyTheme(Theme)
-        let toolbar = UIToolbar.collectionViewToolbar()
+        let action = #selector(doneAction(_:))
+        let toolbar = UIToolbar.collectionViewToolbar(self, action: action)
         toolbarCollectionView = toolbar.items?.first?.customView as? UICollectionView
         textView.inputAccessoryView = toolbar.wrapInInputView()
         toolbarCollectionView?.register(PlainTextCell.self)

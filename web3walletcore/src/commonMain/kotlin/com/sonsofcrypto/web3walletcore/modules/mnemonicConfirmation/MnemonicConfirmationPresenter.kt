@@ -4,12 +4,17 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.extensions.stripLeadingWhiteSpace
 import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicInputViewModel
 import com.sonsofcrypto.web3walletcore.common.helpers.MnemonicPresenterHelper
+import com.sonsofcrypto.web3walletcore.common.viewModels.BarButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel.Header.Title
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationWireframeDestination.Dismiss
+import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationPresenterEvent.Confirm
+import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationPresenterEvent.Dismiss
+import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationPresenterEvent.MnemonicChanged
+import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationPresenterEvent.SaltChanged
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError
 
 sealed class MnemonicConfirmationPresenterEvent {
@@ -32,9 +37,6 @@ class DefaultMnemonicConfirmationPresenter(
     private val wireframe: MnemonicConfirmationWireframe,
     private val interactor: MnemonicConfirmationInteractor
 ): MnemonicConfirmationPresenter {
-    private var mnemonic = ""
-    private var salt = ""
-    private var cursorLocation = 0
     private var ctaTapped = false
     private val common = MnemonicPresenterHelper()
 
@@ -42,30 +44,35 @@ class DefaultMnemonicConfirmationPresenter(
 
     override fun handle(event: MnemonicConfirmationPresenterEvent) {
         when (event) {
-            is MnemonicConfirmationPresenterEvent.Dismiss ->
-                wireframe.navigate(Dismiss)
-            is MnemonicConfirmationPresenterEvent.MnemonicChanged -> {
-                mnemonic = event.to.stripLeadingWhiteSpace()
-                cursorLocation = event.cursorLocation -
-                        (event.to.count() -  mnemonic.count())
-                updateView(event.to != mnemonic)
+            is Dismiss ->
+                wireframe.navigate(
+                    MnemonicConfirmationWireframeDestination.Dismiss
+                )
+            is MnemonicChanged -> {
+                ctaTapped = false
+                interactor.mnemonicStr = event.to.stripLeadingWhiteSpace()
+                interactor.cursorLoc = event.cursorLocation -
+                    (event.to.count() - interactor.mnemonicStr.count())
+                updateView(event.to != interactor.mnemonicStr)
             }
-            is MnemonicConfirmationPresenterEvent.SaltChanged -> {
-                salt = event.to
+            is SaltChanged -> {
+                interactor.salt = event.to
                 updateView()
             }
-            is MnemonicConfirmationPresenterEvent.Confirm -> {
+            is Confirm -> {
                 if (!ctaTapped) {
                     ctaTapped = true
                     updateView()
                     return
                 }
-                if (!interactor.isMnemonicValid(mnemonic, salt)) {
+                if (!interactor.isMnemonicValid()) {
                     updateView()
                     return
                 }
                 interactor.markConfirmActionComplete()
-                wireframe.navigate(Dismiss)
+                wireframe.navigate(
+                    MnemonicConfirmationWireframeDestination.Dismiss
+                )
             }
         }
     }
@@ -75,19 +82,20 @@ class DefaultMnemonicConfirmationPresenter(
     }
 
     private fun viewModel(): CollectionViewModel.Screen {
-        val error = interactor.mnemonicError(mnemonic.trim().split(" "), salt)
+        val error = interactor.mnemonicError()
         var sections = mutableListOf(mnemonicSection(error))
         if (error == null && interactor.showSalt())
             sections.add(saltSection())
         return CollectionViewModel.Screen(
             Localized("mnemonicConfirmation.title"),
             sections,
+            listOf(BarButtonViewModel(null, SysName("xmark"), false)),
             ctaItems = listOf(ButtonViewModel(ctaString())),
         )
     }
 
     private fun ctaString(): String = if (ctaTapped) {
-        val isValid = interactor.isMnemonicValid(mnemonic.trim(), salt)
+        val isValid = interactor.isMnemonicValid()
         if (isValid) Localized("mnemonicConfirmation.cta.congratulations")
         else Localized("mnemonicConfirmation.cta.invalid")
     } else Localized("mnemonicConfirmation.cta")
@@ -97,7 +105,7 @@ class DefaultMnemonicConfirmationPresenter(
         listOf(
             CellViewModel.TextInput(
                 "",
-                salt,
+                interactor.salt,
                 Localized("mnemonicConfirmation.salt.placeholder"),
             ),
         ),
@@ -107,27 +115,19 @@ class DefaultMnemonicConfirmationPresenter(
     private fun mnemonicSection(err: MnemonicServiceError?): CollectionViewModel.Section =
         CollectionViewModel.Section(
             Title(Localized("mnemonicConfirmation.confirm.wallet")),
-            listOf(CellViewModel.Text(mnemonic)),
+            listOf(CellViewModel.Text(interactor.mnemonicStr)),
             mnemonicFooter(err),
         )
 
-    // TODO: Clean up
-    private fun mnemonicItem(updateMnemonic: Boolean): MnemonicInputViewModel {
-        val helper = MnemonicPresenterHelper()
-        val currentWord = interactor.prefix(mnemonic, cursorLocation)
-        val potentialWords = interactor.potentialMnemonicWords(currentWord)
-        var wordsInfo = interactor.findInvalidWords(mnemonic)
-        wordsInfo = helper.updateWordsInfo(wordsInfo, currentWord, cursorLocation) {
-            interactor.isValidPrefix(it)
-        }
-        val isMnemonicValid = interactor.isMnemonicValid(mnemonic.trim(), salt)
-        return MnemonicInputViewModel(
-            potentialWords,
-            wordsInfo.map { MnemonicInputViewModel.Word(it.word, it.isInvalid) },
-            if (ctaTapped) isMnemonicValid else null,
-            if (updateMnemonic) mnemonic else null,
+    private fun mnemonicItem(updateMnemonic: Boolean): MnemonicInputViewModel =
+        MnemonicInputViewModel(
+            interactor.potentialMnemonicWords(),
+            interactor.mnemonicWordsInfo().map {
+                MnemonicInputViewModel.Word(it.word, it.isInvalid)
+            },
+            if (ctaTapped) interactor.isMnemonicValid() else null,
+            if (updateMnemonic) interactor.mnemonicStr else null,
         )
-    }
 
     private fun mnemonicFooter(error: MnemonicServiceError? = null): CollectionViewModel.Footer {
         if (error == null)
