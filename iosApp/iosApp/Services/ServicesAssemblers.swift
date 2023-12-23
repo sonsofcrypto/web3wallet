@@ -47,9 +47,10 @@ final class WalletServiceAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .singleton) { resolver -> WalletService in
-            DefaultWalletService(
+            DefaultWalletServiceMulticall(
                 networkService: resolver.resolve(),
                 currencyStoreService: resolver.resolve(),
+                pollService: resolver.resolve(),
                 currenciesCache: KeyValueStore(
                     name: "WalletService.currencies"
                 ),

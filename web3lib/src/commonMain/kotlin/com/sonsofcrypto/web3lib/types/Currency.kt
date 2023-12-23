@@ -20,7 +20,7 @@ data class Currency(
     }
 
     fun type(): Type =
-        if (address == null) Type.ERC20 else Type.NATIVE
+        if (address == null) Type.NATIVE else Type.ERC20
 
     fun id(): String {
         coinGeckoId?.let { return coinGeckoId }
