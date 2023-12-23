@@ -14,9 +14,11 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 # Release Notes 
 
-### v1.1.2 #43
+### v1.1.2 #44
 - Theme color consolidation & clean up
 - Mnemonic confirm keyboard fix
+- Fixing currency type error
+- Switching to WalletServiceMultiCall
 
 ### v1.1.1 #42
 - Metadata downloader renaming uppercase file extensions
