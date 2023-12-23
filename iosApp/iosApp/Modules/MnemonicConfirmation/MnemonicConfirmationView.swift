@@ -5,29 +5,22 @@
 import UIKit
 import web3walletcore
 
-final class MnemonicConfirmationViewController: UICollectionViewController,
-    UICollectionViewDelegateFlowLayout {
+final class MnemonicConfirmationViewController: CollectionViewController {
     @IBOutlet weak var ctaButton: OldButton!
 
     var presenter: MnemonicConfirmationPresenter!
 
-    private var didAppear: Bool = false
-    private var prevSize: CGSize = .zero
-    private var cellSize: CGSize = .zero
     private var mnemonicInputViewModel: MnemonicInputViewModel?
-    private var viewModel: CollectionViewModel.Screen?
-    private var cv: CollectionView! { (collectionView as! CollectionView) }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureUI()
+    override func configureUI() {
+        title = Localized("mnemonicConfirmation.title")
+        ctaButtonsCompactCnt = 1
+        super.configureUI()
         presenter.present()
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        recomputeSizeIfNeeded()
-        layoutOverscrollView()
+    override func present() {
+        presenter.present()
     }
 
     override func traitCollectionDidChange(
@@ -44,17 +37,7 @@ final class MnemonicConfirmationViewController: UICollectionViewController,
     ) {
         self.viewModel = viewModel
         self.mnemonicInputViewModel = mnemonicInputViewModel
-
-        guard let cv = collectionView else { return }
-        ctaButton.setTitle(viewModel.ctaItems.last?.title, for: .normal)
-
-        let cells = cv.visibleCells
-            .map { cv.indexPath(for: $0) }
-            .compactMap { $0 }
-
-        didAppear
-            ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
-            : cv.reloadData()
+        update(with: viewModel)
     }
 
     // MARK: - UICollectionViewDataSource
@@ -103,19 +86,28 @@ final class MnemonicConfirmationViewController: UICollectionViewController,
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             return cv.dequeue(SectionHeaderView.self, for: indexPath, kind: kind)
-                .update(with: viewModel?.sections[indexPath.section])
+                    .update(with: viewModel?.sections[safe: indexPath.section])
+        case UICollectionView.elementKindSectionFooter:
+            return cv.dequeue(
+                SectionFooterView.self,
+                for: indexPath,
+                kind: kind
+            ).update(with: viewModel?.sections[safe: indexPath.section])
         default:
             fatalError("Failed to handle \(kind) \(indexPath)")
         }
     }
-
+    
     // MARK: - CTAs
 
-    @IBAction func ctaAction(_ sender: Any) {
+    override func buttonSheetContainer(
+        _ bsc: ButtonSheetContainer,
+        didSelect idx: Int
+    ) {
         presenter.handleEvent(.Confirm())
     }
 
-    @IBAction func dismissAction(_ sender: Any?) {
+    @IBAction override func rightBarButtonAction(_ idx: Int) {
         presenter.handleEvent(.Dismiss())
     }
 
@@ -146,98 +138,6 @@ final class MnemonicConfirmationViewController: UICollectionViewController,
         default:
             return cellSize
         }
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForHeaderInSection section: Int
-    ) -> CGSize {
-        String.estimateSize(
-            viewModel?.sections[section].header?.text(),
-            font: Theme.font.sectionHeader,
-            maxWidth: cellSize.width,
-            extraHeight: Theme.padding.twice,
-            minHeight: Theme.padding
-        )
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForFooterInSection section: Int
-    ) -> CGSize {
-        .zero
-    }
-}
-
-// MARK: - Configure
-
-private extension MnemonicConfirmationViewController {
-    
-    func configureUI() {
-        title = Localized("mnemonicConfirmation.title")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            sysImgName: "xmark",
-            target: self,
-            action: #selector(dismissAction)
-        )
-        NotificationCenter.addKeyboardObserver(
-            self,
-            selector: #selector(keyboardWillShow)
-        )
-        NotificationCenter.addKeyboardObserver(
-            self,
-            selector: #selector(keyboardWillHide),
-            event: .willHide
-        )
-        cv.pinOverscrollToBottom = true
-        applyTheme(Theme)
-        ctaButton.style = .primary
-    }
-
-    func layoutOverscrollView() {
-        ctaButton.bounds.size.height = Theme.buttonHeight
-        cv.abovescrollView?.bounds.size.width = view.bounds.size.width
-        cv.abovescrollView?.bounds.size.height = ctaButton.bounds.height
-            + view.safeAreaInsets.bottom
-            + Theme.padding
-    }
-
-    func applyTheme(_ theme: ThemeProtocol) {
-        cv?.separatorInsets = .with(left: theme.padding)
-        cv?.sectionBackgroundColor = theme.color.bgPrimary
-        cv?.sectionBorderColor = theme.color.collectionSectionStroke
-        cv?.separatorColor = theme.color.collectionSeparator
-        (cv?.overscrollView?.subviews.first as? UILabel)?
-            .textColor = theme.color.textPrimary
-    }
-
-    @objc func keyboardWillShow(notification: Notification) {
-        let firstResponderIdxPath = cv.indexPathsForVisibleItems.filter {
-            cv.cellForItem(at: $0)?.firstResponder != nil
-        }.first
-
-        if let idxPath = firstResponderIdxPath {
-            cv.scrollToItem(at: idxPath, at: .centeredVertically, animated: true)
-        }
-    }
-
-    @objc func keyboardWillHide(notification: Notification) {
-        collectionView.contentInset.bottom = Theme.padding * 2
-    }
-
-    func viewModel(at idxPath: IndexPath) -> CellViewModel? {
-        return viewModel?.sections[idxPath.section].items[idxPath.item]
-    }
-
-    func recomputeSizeIfNeeded() {
-        guard prevSize.width != view.bounds.size.width else { return }
-        prevSize = view.bounds.size
-        cellSize = .init(
-            width: view.bounds.size.width - Theme.padding * 2,
-            height: Theme.cellHeight
-        )
     }
 }
 

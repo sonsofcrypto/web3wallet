@@ -25,7 +25,10 @@ extension UIToolbar {
         return toolbar
     }
 
-    static func collectionViewToolbar() -> UIToolbar {
+    static func collectionViewToolbar(
+            _ doneTarget: Any? = nil,
+            action: Selector? = nil
+    ) -> UIToolbar {
         let toolbar = keyboardToolbar()
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -35,7 +38,15 @@ extension UIToolbar {
             collectionViewLayout: layout
         )
         collectionView.backgroundColor = .clear
-        toolbar.setItems([.init(customView: collectionView)], animated: false)
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        var items = [UIBarButtonItem(customView: collectionView)]
+        if let target = doneTarget, let action = action {
+            collectionView.frame.size.width -= 85
+            items.append(
+                .init(with: Localized("done"), target: target, action: action)
+            )
+        }
+        toolbar.setItems(items, animated: false)
         return toolbar
     }
 

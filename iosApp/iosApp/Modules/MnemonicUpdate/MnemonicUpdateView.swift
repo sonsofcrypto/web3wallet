@@ -11,7 +11,6 @@ final class MnemonicUpdateViewController: CollectionViewController {
     
     override func configureUI() {
         title = Localized("mnemonic.title.update")
-        cv.register(ButtonCell.self)
         enableCardFlipTransitioning = true
         ctaButtonsCompactCnt = 3
         super.configureUI()
