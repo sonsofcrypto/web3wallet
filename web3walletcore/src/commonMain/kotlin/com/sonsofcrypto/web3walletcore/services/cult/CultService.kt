@@ -14,14 +14,23 @@ import com.sonsofcrypto.web3walletcore.services.cult.CultProposal.ProjectDocumen
 import com.sonsofcrypto.web3walletcore.services.cult.CultProposal.Status.CLOSED
 import com.sonsofcrypto.web3walletcore.services.cult.CultProposal.Status.PENDING
 import com.sonsofcrypto.web3walletcore.services.cult.CultProposalJSON.Description
-import io.ktor.client.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.logging.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
-import io.ktor.utils.io.charsets.*
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.logging.SIMPLE
+import io.ktor.client.request.get
+import io.ktor.client.request.headers
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import io.ktor.http.URLProtocol
+import io.ktor.http.Url
+import io.ktor.http.path
+import io.ktor.http.withCharset
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.utils.io.charsets.Charsets
 import kotlinx.serialization.Serializable
 
 data class CultServiceResponse(

@@ -23,7 +23,6 @@ import com.sonsofcrypto.web3lib.utils.bip39.localeString
 import com.sonsofcrypto.web3lib.utils.defaultDerivationPath
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.secureRand
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.test.Test

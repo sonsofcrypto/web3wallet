@@ -2,16 +2,25 @@ package com.sonsofcrypto.web3walletcore.modules.currencySwap
 
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
-import com.sonsofcrypto.web3lib.services.uniswap.*
+import com.sonsofcrypto.web3lib.services.uniswap.ApprovalState
+import com.sonsofcrypto.web3lib.services.uniswap.OutputState
+import com.sonsofcrypto.web3lib.services.uniswap.PoolsState
+import com.sonsofcrypto.web3lib.services.uniswap.UniswapEvent
+import com.sonsofcrypto.web3lib.services.uniswap.UniswapListener
+import com.sonsofcrypto.web3lib.services.uniswap.UniswapService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.NetworkFee
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapInteractorApprovalState.*
+import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapInteractorApprovalState.APPROVE
+import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapInteractorApprovalState.APPROVED
+import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapInteractorApprovalState.APPROVING
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapInteractorOutputAmountState.LOADING
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapInteractorOutputAmountState.READY
-import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapInteractorSwapState.*
+import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapInteractorSwapState.NOT_AVAILABLE
+import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapInteractorSwapState.NO_POOLS
+import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapInteractorSwapState.SWAP
 
 interface CurrencyInteractorLister {
     fun handle(event: UniswapEvent)

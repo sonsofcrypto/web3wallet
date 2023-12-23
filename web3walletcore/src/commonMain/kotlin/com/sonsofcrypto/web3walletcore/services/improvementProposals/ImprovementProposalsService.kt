@@ -4,15 +4,18 @@ import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
 import com.sonsofcrypto.web3lib.utils.extensions.stdJson
-import io.ktor.client.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.logging.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.logging.SIMPLE
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType.Application.Json
-import io.ktor.serialization.kotlinx.json.*
-import io.ktor.utils.io.charsets.*
+import io.ktor.http.withCharset
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.utils.io.charsets.Charsets
 
 interface ImprovementProposalsService {
     /** Fetched proposals for github */

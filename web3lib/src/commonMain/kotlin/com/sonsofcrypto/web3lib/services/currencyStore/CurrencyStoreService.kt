@@ -6,14 +6,24 @@ import com.sonsofcrypto.web3lib.services.coinGecko.CoinGeckoService
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Candle
 import com.sonsofcrypto.web3lib.services.coinGecko.model.toCurrencyMarketData
 import com.sonsofcrypto.web3lib.types.Currency
-import com.sonsofcrypto.web3lib.types.Flags
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.utils.*
+import com.sonsofcrypto.web3lib.utils.FileManager
+import com.sonsofcrypto.web3lib.utils.Trie
+import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
 import com.sonsofcrypto.web3lib.utils.extensions.subListTo
-import io.ktor.util.*
-import kotlinx.coroutines.*
+import com.sonsofcrypto.web3lib.utils.logExceptionHandler
+import com.sonsofcrypto.web3lib.utils.uiDispatcher
+import com.sonsofcrypto.web3lib.utils.withUICxt
+import io.ktor.util.toLowerCasePreservingASCIIRules
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonElement
 
 /** `CurrencyStoreService` handles currencies list and associated metadata. */

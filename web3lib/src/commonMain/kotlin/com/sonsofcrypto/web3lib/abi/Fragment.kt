@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3lib.abi
 
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 private val json = Json {

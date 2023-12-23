@@ -7,7 +7,6 @@ import com.sonsofcrypto.web3walletcore.common.ThemeId
 import com.sonsofcrypto.web3walletcore.common.ThemeVariant
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory.CHECKMARK
-import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory.DETAIL
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Accessory.NONE
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Label
 import com.sonsofcrypto.web3walletcore.common.viewModels.CellViewModel.Switch

@@ -1,10 +1,21 @@
 package com.sonsofcrypto.web3lib.types
 
-import com.sonsofcrypto.web3lib.utils.*
+import com.sonsofcrypto.web3lib.utils.Curve
+import com.sonsofcrypto.web3lib.utils.addPrvKeys
+import com.sonsofcrypto.web3lib.utils.addPubKeys
+import com.sonsofcrypto.web3lib.utils.compressedPubKey
+import com.sonsofcrypto.web3lib.utils.decodeBase58WithChecksum
+import com.sonsofcrypto.web3lib.utils.encodeToBase58WithChecksum
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.extensions.toUInt
+import com.sonsofcrypto.web3lib.utils.hmacSha512
+import com.sonsofcrypto.web3lib.utils.isBip44ValidPrv
+import com.sonsofcrypto.web3lib.utils.isBip44ValidPub
+import com.sonsofcrypto.web3lib.utils.ripemd160
+import com.sonsofcrypto.web3lib.utils.sha256
+import com.sonsofcrypto.web3lib.utils.upcompressedPubKey
 
 private const val firstHardenedIdx: UInt = 2147483648u
 
