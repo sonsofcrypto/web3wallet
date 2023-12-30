@@ -28,7 +28,7 @@ class ExtKey(
     val fingerprint: ByteArray,         // 4 Bytes
     val index: UInt,                    // 4 Bytes
     val chainCode: ByteArray,           // 32 bytes
-    val key: Key,                 // 33 bytes (prefix 0x0 for prv key)
+    val key: Key,                       // 33 bytes (prefix 0x0 for prv key)
     val curve: Curve = Curve.SECP256K1,
 ) {
 

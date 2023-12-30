@@ -1,5 +1,7 @@
 package com.sonsofcrypto.web3lib.services.keyStore
 
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.MNEMONIC
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.PRVKEY
 import kotlinx.serialization.Serializable
 /**
  * `SignerStoreItem` contains metadata about `SecretStorage` items. Allows access
@@ -54,9 +56,11 @@ data class SignerStoreItem(
         }
     }
 
-    fun primaryAddress(): String {
+    fun primaryAddress(): String = when(type) {
         // TODO: Handle signers that require salt to see the address
-        return addresses[derivationPath] ?: "0xAuthenticateToSeeAddress"
+        MNEMONIC -> addresses[derivationPath] ?: "0xAuthenticateToSeeAddress"
+        PRVKEY -> addresses["1"] ?: "0xAuthenticateToSeeAddress"
+        else -> ""
     }
 
     fun isHidden(): Boolean = hidden ?: false
