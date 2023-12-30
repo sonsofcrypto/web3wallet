@@ -25,52 +25,52 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position.TOP
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.AlertAction
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.CTAAction
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.CopyAccountAddress
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.CopyPrivKey
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.Dismiss
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.RightBarButtonAction
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.SetAccountHidden
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.SetAccountName
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.SetAllowFaceId
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.SetICouldBackup
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.SetKey
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.SetName
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.SetPassType
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.SetPassword
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrivKeyImportPresenterEvent.ViewPrivKey
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.AlertAction
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.CTAAction
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.CopyAccountAddress
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.CopyPrvKey
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.Dismiss
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.RightBarButtonAction
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.SetAccountHidden
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.SetAccountName
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.SetAllowFaceId
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.SetICouldBackup
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.SetKey
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.SetName
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.SetPassType
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.SetPassword
+import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportPresenterEvent.ViewPrvKey
 import kotlin.time.Duration.Companion.seconds
 
-sealed class PrivKeyImportPresenterEvent {
-    data class SetKey(val text: String): PrivKeyImportPresenterEvent()
-    object CopyPrivKey: PrivKeyImportPresenterEvent()
-    data class SetName(val name: String): PrivKeyImportPresenterEvent()
-    data class SetICouldBackup(val onOff: Boolean): PrivKeyImportPresenterEvent()
-    data class SetPassType(val idx: Int): PrivKeyImportPresenterEvent()
-    data class SetPassword(val text: String): PrivKeyImportPresenterEvent()
-    data class SetAllowFaceId(val onOff: Boolean): PrivKeyImportPresenterEvent()
-    data class SetAccountName(val name: String, val idx: Int): PrivKeyImportPresenterEvent()
-    data class SetAccountHidden(val hidden: Boolean, val idx: Int): PrivKeyImportPresenterEvent()
-    data class CopyAccountAddress(val idx: Int): PrivKeyImportPresenterEvent()
-    data class ViewPrivKey(val idx: Int): PrivKeyImportPresenterEvent()
-    data class AlertAction(val idx: Int, val text: String?): PrivKeyImportPresenterEvent()
-    data class RightBarButtonAction(val idx: Int): PrivKeyImportPresenterEvent()
-    data class CTAAction(val idx: Int): PrivKeyImportPresenterEvent()
-    object Dismiss: PrivKeyImportPresenterEvent()
+sealed class PrvKeyImportPresenterEvent {
+    data class SetKey(val text: String): PrvKeyImportPresenterEvent()
+    object CopyPrvKey: PrvKeyImportPresenterEvent()
+    data class SetName(val name: String): PrvKeyImportPresenterEvent()
+    data class SetICouldBackup(val onOff: Boolean): PrvKeyImportPresenterEvent()
+    data class SetPassType(val idx: Int): PrvKeyImportPresenterEvent()
+    data class SetPassword(val text: String): PrvKeyImportPresenterEvent()
+    data class SetAllowFaceId(val onOff: Boolean): PrvKeyImportPresenterEvent()
+    data class SetAccountName(val name: String, val idx: Int): PrvKeyImportPresenterEvent()
+    data class SetAccountHidden(val hidden: Boolean, val idx: Int): PrvKeyImportPresenterEvent()
+    data class CopyAccountAddress(val idx: Int): PrvKeyImportPresenterEvent()
+    data class ViewPrvKey(val idx: Int): PrvKeyImportPresenterEvent()
+    data class AlertAction(val idx: Int, val text: String?): PrvKeyImportPresenterEvent()
+    data class RightBarButtonAction(val idx: Int): PrvKeyImportPresenterEvent()
+    data class CTAAction(val idx: Int): PrvKeyImportPresenterEvent()
+    object Dismiss: PrvKeyImportPresenterEvent()
 }
 
-interface PrivKeyImportPresenter {
+interface PrvKeyImportPresenter {
     fun present()
-    fun handle(event: PrivKeyImportPresenterEvent)
+    fun handle(event: PrvKeyImportPresenterEvent)
 }
 
-class DefaultPrivKeyImportPresenter(
+class DefaultPrvKeyImportPresenter(
     private val view: WeakRef<PrvKeyImportView>,
     private val wireframe: PrvKeyImportWireframe,
     private val interactor: PrvKeyImportInteractor,
     private val context: PrvKeyImportWireframeContext,
-): PrivKeyImportPresenter {
+): PrvKeyImportPresenter {
     private var ctaTapped = false
     private var localExpertMode: Boolean = false
     /** -1 alert not presented. Else it is idx of account alert is about */
@@ -78,18 +78,18 @@ class DefaultPrivKeyImportPresenter(
 
     override fun present() { updateView() }
 
-    override fun handle(event: PrivKeyImportPresenterEvent): Unit = when (event) {
+    override fun handle(event: PrvKeyImportPresenterEvent): Unit = when (event) {
         is SetKey -> handleKeyInput(event.text)
         is SetName -> interactor.name = event.name
         is SetICouldBackup -> interactor.iCloudSecretStorage = event.onOff
         is SetPassType -> handleSetPassType(event.idx)
         is SetPassword -> handleSetPassword(event.text)
         is SetAllowFaceId -> interactor.passUnlockWithBio = event.onOff
-        is CopyPrivKey -> interactor.pasteToClipboard(interactor.prvKey())
+        is CopyPrvKey -> interactor.pasteToClipboard(interactor.prvKey())
         is SetAccountName -> interactor.setAccountName(event.name, event.idx)
         is SetAccountHidden -> handleSetAccountHidden(event.hidden, event.idx)
         is CopyAccountAddress -> handleCopyAccountAddress(event.idx)
-        is ViewPrivKey -> handleViewPrivKey(event.idx)
+        is ViewPrvKey -> handleViewPrivKey(event.idx)
         is AlertAction -> handleAlertAction(event.idx, event.text)
         is RightBarButtonAction -> handleRightBarButtonAction(event.idx)
         is CTAAction -> handleCTAAction(event.idx)

@@ -15,6 +15,7 @@ final class DefaultSignersWireframe {
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
+    private let importPrivKey: PrvKeyImportWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
 
@@ -28,6 +29,7 @@ final class DefaultSignersWireframe {
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
+        importPrivKey: PrvKeyImportWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         authenticateWireframeFactory: AuthenticateWireframeFactory
     ) {
@@ -38,6 +40,7 @@ final class DefaultSignersWireframe {
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
         self.importMnemonic = importMnemonic
+        self.importPrivKey = importPrivKey
         self.alertWireframeFactory = alertWireframeFactory
         self.authenticateWireframeFactory = authenticateWireframeFactory
     }

@@ -21,6 +21,7 @@ final class DefaultSignersWireframeFactory {
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
+    private let importPrvKey: PrvKeyImportWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
 
@@ -31,6 +32,7 @@ final class DefaultSignersWireframeFactory {
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
+        importPrvKey: PrvKeyImportWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         authenticateWireframeFactory: AuthenticateWireframeFactory
     ) {
@@ -40,6 +42,7 @@ final class DefaultSignersWireframeFactory {
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
         self.importMnemonic = importMnemonic
+        self.importPrvKey = importPrvKey
         self.alertWireframeFactory = alertWireframeFactory
         self.authenticateWireframeFactory = authenticateWireframeFactory
     }
@@ -60,6 +63,7 @@ extension DefaultSignersWireframeFactory: SignersWireframeFactory {
             newMnemonic: newMnemonic,
             updateMnemonic: updateMnemonic,
             importMnemonic: importMnemonic,
+            importPrivKey: importPrvKey,
             alertWireframeFactory: alertWireframeFactory,
             authenticateWireframeFactory: authenticateWireframeFactory
         )
@@ -79,6 +83,7 @@ final class SignersWireframeFactoryAssembler: AssemblerComponent {
                 newMnemonic: resolver.resolve(),
                 updateMnemonic: resolver.resolve(),
                 importMnemonic: resolver.resolve(),
+                importPrvKey: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
                 authenticateWireframeFactory: resolver.resolve()
             )

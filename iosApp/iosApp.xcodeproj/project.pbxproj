@@ -318,6 +318,10 @@
 		1F5E646B2AACA58A000A1548 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5E64692AACA58A000A1548 /* ImageCacheService.swift */; };
 		1F5E646C2AACA58A000A1548 /* UIImgeView+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5E646A2AACA58A000A1548 /* UIImgeView+Cache.swift */; };
 		1F6A9FBC2A97ACE50056732C /* bundledAssets in Resources */ = {isa = PBXBuildFile; fileRef = 1F6A9FBB2A97ACE50056732C /* bundledAssets */; };
+		1F7F5A4D2B406E99003448CB /* PrvKeyImportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A492B406E99003448CB /* PrvKeyImportCell.swift */; };
+		1F7F5A4E2B406E99003448CB /* PrvKeyImportWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A4A2B406E99003448CB /* PrvKeyImportWireframe.swift */; };
+		1F7F5A4F2B406E99003448CB /* PrvKeyImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A4B2B406E99003448CB /* PrvKeyImportView.swift */; };
+		1F7F5A502B406E99003448CB /* PrvKeyImportWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A4C2B406E99003448CB /* PrvKeyImportWireframeFactory.swift */; };
 		1F871F522AC1791E0002A1AC /* TableFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F871F4A2AC1791E0002A1AC /* TableFlowLayout.swift */; };
 		1F871F532AC1791E0002A1AC /* TableGroupedFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F871F4B2AC1791E0002A1AC /* TableGroupedFlowLayout.swift */; };
 		1F871F542AC1791E0002A1AC /* SectionBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F871F4C2AC1791E0002A1AC /* SectionBackgroundView.swift */; };
@@ -743,6 +747,10 @@
 		1F5E64692AACA58A000A1548 /* ImageCacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		1F5E646A2AACA58A000A1548 /* UIImgeView+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImgeView+Cache.swift"; sourceTree = "<group>"; };
 		1F6A9FBB2A97ACE50056732C /* bundledAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bundledAssets; sourceTree = "<group>"; };
+		1F7F5A492B406E99003448CB /* PrvKeyImportCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrvKeyImportCell.swift; sourceTree = "<group>"; };
+		1F7F5A4A2B406E99003448CB /* PrvKeyImportWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrvKeyImportWireframe.swift; sourceTree = "<group>"; };
+		1F7F5A4B2B406E99003448CB /* PrvKeyImportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrvKeyImportView.swift; sourceTree = "<group>"; };
+		1F7F5A4C2B406E99003448CB /* PrvKeyImportWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrvKeyImportWireframeFactory.swift; sourceTree = "<group>"; };
 		1F871F4A2AC1791E0002A1AC /* TableFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableFlowLayout.swift; sourceTree = "<group>"; };
 		1F871F4B2AC1791E0002A1AC /* TableGroupedFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableGroupedFlowLayout.swift; sourceTree = "<group>"; };
 		1F871F4C2AC1791E0002A1AC /* SectionBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionBackgroundView.swift; sourceTree = "<group>"; };
@@ -1125,6 +1133,7 @@
 				1C5D24AC28E19F62007DA557 /* ImprovementProposal */,
 				1C5D24B928E19F62007DA557 /* ImprovementProposals */,
 				1C54DC0F2862320200E378F6 /* QRCodeScan */,
+				1F7F5A472B406E99003448CB /* PrvKeyImport */,
 				1C60C23E285724D0003BE25D /* Root */,
 				1F871F582AC17BB00002A1AC /* Settings */,
 				1C7FC98628B60A0B00FC9175 /* ThemePicker */,
@@ -1717,6 +1726,25 @@
 			path = ImageCache;
 			sourceTree = "<group>";
 		};
+		1F7F5A472B406E99003448CB /* PrvKeyImport */ = {
+			isa = PBXGroup;
+			children = (
+				1F7F5A482B406E99003448CB /* Cells */,
+				1F7F5A4A2B406E99003448CB /* PrvKeyImportWireframe.swift */,
+				1F7F5A4B2B406E99003448CB /* PrvKeyImportView.swift */,
+				1F7F5A4C2B406E99003448CB /* PrvKeyImportWireframeFactory.swift */,
+			);
+			path = PrvKeyImport;
+			sourceTree = "<group>";
+		};
+		1F7F5A482B406E99003448CB /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				1F7F5A492B406E99003448CB /* PrvKeyImportCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		1F871F582AC17BB00002A1AC /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -2270,6 +2298,7 @@
 				1C60C308285724D1003BE25D /* NFTsDashboardWireframeFactory.swift in Sources */,
 				1F0452DC2B08C1C500BC5922 /* Extensions.swift in Sources */,
 				1C60C34E285724D1003BE25D /* CultProposalCellPending.swift in Sources */,
+				1F7F5A4E2B406E99003448CB /* PrvKeyImportWireframe.swift in Sources */,
 				1C60C2D9285724D0003BE25D /* MnemonicNewView.swift in Sources */,
 				1C7FC9A328BCC5DE00FC9175 /* MailService.swift in Sources */,
 				1C60C358285724D1003BE25D /* DegenView.swift in Sources */,
@@ -2326,10 +2355,12 @@
 				1C228ACB28A3B122005316A3 /* ConfirmationTxInProgressView.swift in Sources */,
 				1C7F863F28D20E490073FD95 /* UIStackView+Extensions.swift in Sources */,
 				1C7F864128D20E490073FD95 /* UIBarButtonItem+Extensions.swift in Sources */,
+				1F7F5A4F2B406E99003448CB /* PrvKeyImportView.swift in Sources */,
 				1C60C2F3285724D0003BE25D /* NFTDetailWireframe.swift in Sources */,
 				1C228ACF28A3C774005316A3 /* ConfirmationTxFailedView.swift in Sources */,
 				1C7FC99C28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift in Sources */,
 				1C60C2CF285724D0003BE25D /* AlertView.swift in Sources */,
+				1F7F5A4D2B406E99003448CB /* PrvKeyImportCell.swift in Sources */,
 				1C7F864D28D20E490073FD95 /* NSLocalizedString+Extension.swift in Sources */,
 				D116CF3227C31ECC005542AA /* iCarousel.m in Sources */,
 				1C60C3672857C5F0003BE25D /* CurrencyReceiveView.swift in Sources */,
@@ -2400,6 +2431,7 @@
 				1C54DC6A2869D60D00E378F6 /* ThemeMiamiSunrise.swift in Sources */,
 				1CB8B0C0288DBEFF00024E7C /* CultProposalDetailSummaryView.swift in Sources */,
 				1CB8B0E62891346B00024E7C /* CultProposalFooterSupplementaryView.swift in Sources */,
+				1F7F5A502B406E99003448CB /* PrvKeyImportWireframeFactory.swift in Sources */,
 				1C60C2CD285724D0003BE25D /* AlertWireframeFactory.swift in Sources */,
 				1C60C2DF285724D0003BE25D /* DashboardHeaderTitleView.swift in Sources */,
 				1CB8B0B8288C351A00024E7C /* CultProposalDetailViewCell.swift in Sources */,
