@@ -148,14 +148,14 @@ class DefaultMnemonicUpdatePresenter(
         pass: String? = null,
         salt: String? = null
     ): AlertViewModel = RegularAlertViewModel(
-        Localized("mnemonic.alert.privKey.title"),
-        Localized("mnemonic.alert.privKey.body.priv")
+        Localized("mnemonic.alert.prvKey.title"),
+        Localized("mnemonic.alert.prvKey.body.prv")
             + "\n${interactor.accountPrivKey(accIdx, false, pass, salt)}\n\n"
-            + Localized("mnemonic.alert.privKey.body.xprv")
+            + Localized("mnemonic.alert.prvKey.body.xprv")
             + "\n${interactor.accountPrivKey(accIdx, true, pass, salt)}\n",
         listOf(
-            Action(Localized("mnemonic.alert.privKey.btnPriv"), NORMAL),
-            Action(Localized("mnemonic.alert.privKey.btnXprv"), NORMAL),
+            Action(Localized("mnemonic.alert.prvKey.btnPriv"), NORMAL),
+            Action(Localized("mnemonic.alert.prvKey.btnXprv"), NORMAL),
             Action(Localized("cancel"), CANCEL),
         ),
         SysName("key.horizontal")
@@ -166,7 +166,7 @@ class DefaultMnemonicUpdatePresenter(
         presentingPrivKeyAlert = -1
         if (actionIdx == 2) return;
         val key = interactor.accountPrivKey(accIdx, actionIdx == 1)
-        val title = Localized("mnemonic.toast.copy.privKey")
+        val title = Localized("mnemonic.toast.copy.prvKey")
         interactor.pasteToClipboard(key)
         presentToast(ToastViewModel(title, SysName("square.on.square"), TOP))
     }
@@ -374,7 +374,7 @@ class DefaultMnemonicUpdatePresenter(
                             ),
                             CellViewModel.KeyValueList.Item(
                                 Localized("copyAddress"),
-                                Localized("mnemonic.view.privKey"),
+                                Localized("mnemonic.view.prvKey"),
                                 interactor.accountAddress(it),
                             ),
                         ),

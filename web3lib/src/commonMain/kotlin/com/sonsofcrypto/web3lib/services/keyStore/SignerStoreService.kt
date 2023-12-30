@@ -3,6 +3,7 @@ package com.sonsofcrypto.web3lib.services.keyStore
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.address.AddressService
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.MNEMONIC
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.PRVKEY
 import com.sonsofcrypto.web3lib.services.uuid.UUIDService
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
@@ -10,6 +11,7 @@ import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.bip39.localeString
 import com.sonsofcrypto.web3lib.utils.defaultDerivationPath
+import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.incrementedDerivationPath
 import com.sonsofcrypto.web3lib.utils.lastDerivationPathComponent
 import kotlinx.serialization.decodeFromByteArray
@@ -30,6 +32,16 @@ data class MnemonicSignerConfig(
     val derivationPath: String = defaultDerivationPath(),
     val sortOrder: UInt? = null,
     val parentId: String? = null,
+    val hidden: Boolean? = false,
+)
+
+data class PrvKeySignerConfig(
+    val key: String,
+    val name: String,
+    val passUnlockWithBio: Boolean,
+    val iCloudSecretStorage: Boolean,
+    val passwordType: SignerStoreItem.PasswordType,
+    val sortOrder: UInt? = null,
     val hidden: Boolean? = false,
 )
 
@@ -69,6 +81,16 @@ interface SignerStoreService {
         derivationPath: String? = null,
         name: String? = null,
         hidden: Boolean? = false,
+    ): SignerStoreItem
+    /** Generates `SignerStoreItem` & `SecretStorage` without adding to store */
+    fun generatePrivKeySigner(
+        config: PrvKeySignerConfig,
+        password: String,
+    ): Pair<SignerStoreItem, SecretStorage>
+    /** Create `SignerStoreItem` & `SecretStorage` & adds it to store */
+    fun createPrivKeySigner(
+        config: PrvKeySignerConfig,
+        password: String
     ): SignerStoreItem
     /** Add `KeyStoreItem` using password and SecreteStorage.
      *
@@ -207,6 +229,47 @@ class DefaultSignerStoreService(
             item, password, salt, derivationPath, name, hidden
         )
         add(signerStoreItem, password, secreteStorage)
+        return signerStoreItem
+    }
+
+    override fun generatePrivKeySigner(
+        config: PrvKeySignerConfig,
+        password: String,
+    ): Pair<SignerStoreItem, SecretStorage> {
+        // TODO: Handle xprv format
+        val privKey = config.key.hexStringToByteArray()
+        val address = addressService.addressFromPrivKeyBytes(privKey)
+        val signerStoreItem = SignerStoreItem(
+            uuid = UUIDService().uuidString(),
+            name = config.name,
+            sortOrder = config.sortOrder
+                ?: ((items().lastOrNull()?.sortOrder ?: 0u) + 100u),
+            type = PRVKEY,
+            passUnlockWithBio = config.passUnlockWithBio,
+            iCloudSecretStorage = config.iCloudSecretStorage,
+            passwordType = config.passwordType,
+            derivationPath = "",
+            addresses = mapOf("1" to address),
+            hidden = config.hidden,
+        )
+        val secretStorage = SecretStorage.encryptDefault(
+            id = signerStoreItem.uuid,
+            data = privKey,
+            password = password,
+            address = address,
+        )
+        return Pair(signerStoreItem, secretStorage)
+    }
+
+    override fun createPrivKeySigner(
+        config: PrvKeySignerConfig,
+        password: String,
+    ): SignerStoreItem {
+        val (signerStoreItem, secretStorage) = this.generatePrivKeySigner(
+            config = config,
+            password = password,
+        )
+        this.add(signerStoreItem, password, secretStorage)
         return signerStoreItem
     }
 

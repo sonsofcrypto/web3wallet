@@ -169,21 +169,25 @@
 "mnemonic.update.failed.alert.message" = "Unable to update your wallet. Please try again.";
 "mnemonic.account.name" = "Account Name";
 "mnemonic.account.name.placeholder" = "Account name";
-"mnemonic.privkey" = "Private Key";
-"mnemonic.view.privKey" = "View priv key";
-"mnemonic.alert.privKey.title" = "Copy Private Key";
-"mnemonic.alert.privKey.body.priv" = "Private key hex:";
-"mnemonic.alert.privKey.body.xprv" = "XPRV (Base58Check):";
-"mnemonic.alert.privKey.btnPriv" = "Copy Private Key";
-"mnemonic.alert.privKey.btnXprv" = "Copy Extended Private Key (xprv)";
+"mnemonic.prvkey" = "Private Key";
+"mnemonic.view.prvKey" = "View priv key";
+"mnemonic.alert.prvKey.title" = "Copy Private Key";
+"mnemonic.alert.prvKey.body.prv" = "Private key hex:";
+"mnemonic.alert.prvKey.body.xprv" = "XPRV (Base58Check):";
+"mnemonic.alert.prvKey.btnPriv" = "Copy Private Key";
+"mnemonic.alert.prvKey.btnXprv" = "Copy Extended Private Key (xprv)";
 "mnemonic.alert.customDerivation.title" = "Custom Derivation Path";
 "mnemonic.alert.customDerivation.body" = "Derive account on custom path\neg m/44'/60'/0'/0/0";
 "mnemonic.alert.customDerivation.cta" = "Derive Key";
 "mnemonic.alert.customDerivationErr.title" = "Invalid derivation path";
 "mnemonic.alert.customDerivationErr.body" = " is not valid derivation path";
-"mnemonic.toast.copy.privKey" = "Private key copied to to pasteboard for 30 seconds.";
+"mnemonic.toast.copy.prvKey" = "Private key copied to to pasteboard for 30 seconds.";
 "mnemonic.size.title" = "Mnemonic size";
 "mnemonic.alert.updating.title" = "Giga brain cypherpunk Pepe is deriving & securing wallets";
+"prvKeyImport.title.import" = "Import Private Key";
+"prvKeyImport.footer" = "Enter key hex bytes or xprv format. Never share private key with anyone. Whoever possess private key, has control of all the crypto in this account.";
+"prvKeyImport.footerHighlightWord0" = "Never share";
+"prvKeyImport.footerHighlightWord1" = "has control of all the crypto";
 
 
 "networks.header.l1s" = "Layer #1s";
