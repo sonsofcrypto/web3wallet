@@ -151,14 +151,14 @@ extension DegenPresenter {
 
 // MARK: Signers
 extension DefaultSignersWireframe: SignersWireframe {
-    func navigate(destination___________________________ destination: SignersWireframeDestination) { navigate(to: destination) }
+    func navigate(destination____________________________ destination: SignersWireframeDestination) { navigate(to: destination) }
 }
 extension SignersViewController: SignersView {
     func update(viewModel_______________________ viewModel: SignersViewModel) { update(with: viewModel) }
     func presentToast(viewModel: ToastViewModel) { presentToast(with: viewModel) }
 }
 extension SignersPresenter {
-    func handleEvent(_ event: SignersPresenterEvent) { handle(event________________________________: event) }
+    func handleEvent(_ event: SignersPresenterEvent) { handle(event_________________________________: event) }
 }
 
 // MARK: MnemonicConfirmation
@@ -183,6 +183,19 @@ extension MnemonicImportViewController: MnemonicImportView {
 }
 extension MnemonicImportPresenter {
     func handleEvent(_ event: MnemonicImportPresenterEvent) { handle(event_____________________: event) }
+}
+
+// MARK: PrvKeyImport
+extension DefaultPrvKeyImportWireframe: PrvKeyImportWireframe {
+    func navigate(destination________________________ destination: PrvKeyImportWireframeDestination) { navigate(to: destination) }
+}
+extension PrvKeyImportViewController: PrvKeyImportView {
+    func update(viewModel: CollectionViewModel.Screen, inputViewModel: PrvKeyInputViewModel) { update(with: viewModel, inputViewModel: inputViewModel)}
+    func presentAlert(viewModel: AlertViewModel) { presentAlert(with: viewModel) }
+    func presentToast(viewModel: ToastViewModel) { presentToast(with: viewModel) }
+}
+extension PrvKeyImportPresenter {
+    func handleEvent(_ event: PrvKeyImportPresenterEvent) { handle(event______________________________: event) }
 }
 
 // MARK: MnemonicNew
@@ -305,22 +318,22 @@ extension ImprovementProposalsPresenter {
 
 // MARK: QRCodeScan
 extension DefaultQRCodeScanWireframe: QRCodeScanWireframe {
-    func navigate(destination________________________ destination: QRCodeScanWireframeDestination) { navigate(to: destination) }
+    func navigate(destination_________________________ destination: QRCodeScanWireframeDestination) { navigate(to: destination) }
 }
 extension QRCodeScanViewController: QRCodeScanView {
     func update(viewModel______________________ viewModel: QRCodeScanViewModel) { update(with: viewModel)}
 }
 extension QRCodeScanPresenter {
-    func handleEvent(_ event: QRCodeScanPresenterEvent) { handle(event______________________________: event) }
+    func handleEvent(_ event: QRCodeScanPresenterEvent) { handle(event_______________________________: event) }
 }
 
 // MARK: Settings
 extension DefaultSettingsWireframe: SettingsWireframe {
-    func navigate(destination__________________________ destination: SettingsWireframeDestination) { navigate(to: destination) }
+    func navigate(destination___________________________ destination: SettingsWireframeDestination) { navigate(to: destination) }
 }
 extension SettingsViewController: SettingsView {
     func update(viewModel_______________ viewModel: CollectionViewModel.Screen) { update(with: viewModel)}
 }
 extension SettingsPresenter {
-    func handleEvent(_ event: SettingsPresenterEvent) { handle(event_______________________________: event)}
+    func handleEvent(_ event: SettingsPresenterEvent) { handle(event________________________________: event)}
 }
