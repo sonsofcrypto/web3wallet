@@ -59,7 +59,7 @@ data class SignerStoreItem(
     fun primaryAddress(): String = when(type) {
         // TODO: Handle signers that require salt to see the address
         MNEMONIC -> addresses[derivationPath] ?: "0xAuthenticateToSeeAddress"
-        PRVKEY -> addresses["1"] ?: "0xAuthenticateToSeeAddress"
+        PRVKEY -> addresses["priv key account"] ?: "0xAuthenticateToSeeAddress"
         else -> ""
     }
 

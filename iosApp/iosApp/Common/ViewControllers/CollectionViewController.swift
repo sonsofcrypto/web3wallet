@@ -68,6 +68,7 @@ class CollectionViewController: UICollectionViewController,
         )
         updateHeadersAndFooters()
         updateCtaButtons(with: viewModel.ctaItems)
+        title = viewModel.id
     }
 
     func present() {

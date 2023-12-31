@@ -128,12 +128,9 @@ class DefaultPrvKeyImportPresenter(
         = AlertViewModel.RegularAlertViewModel(
             Localized("mnemonic.alert.prvKey.title"),
             Localized("mnemonic.alert.prvKey.body.prv")
-                + "\n${interactor.accountPrivKey(accIdx)}\n\n"
-                + Localized("mnemonic.alert.prvKey.body.xprv")
-                + "\n${interactor.accountPrivKey(accIdx, true)}\n",
+                + "\n${interactor.accountPrivKey(accIdx)}\n\n",
             listOf(
                 Action(Localized("mnemonic.alert.prvKey.btnPriv"), NORMAL),
-                Action(Localized("mnemonic.alert.prvKey.btnXprv"), NORMAL),
                 Action(Localized("cancel"), Action.Kind.CANCEL),
             ),
             SysName("key.horizontal")
@@ -142,7 +139,7 @@ class DefaultPrvKeyImportPresenter(
     private fun handlerPrivKeyAlertAction(actionIdx: Int) {
         val accIdx = presentingPrivKeyAlert
         presentingPrivKeyAlert = -1
-        if (actionIdx == 2) return;
+        if (actionIdx == 1) return;
         val key = interactor.accountPrivKey(accIdx, actionIdx == 1)
         val title = Localized("mnemonic.toast.copy.prvKey")
         interactor.pasteToClipboard(key)
@@ -209,7 +206,6 @@ class DefaultPrvKeyImportPresenter(
             ImageMedia.Name("overscroll_pepe_analyst")
         )
 
-
     private fun navigateToDismiss() =
         wireframe.navigate(PrvKeyImportWireframeDestination.Dismiss)
 
@@ -262,11 +258,10 @@ class DefaultPrvKeyImportPresenter(
             )
         return when (error) {
             PrvKeyImportError.NOT_HEX_DIGIT -> HighlightWords(
-                Localized("mnemonic.error.invalid.wordCount"),
+                Localized("prvKeyImport.error.hexDigit"),
             )
             PrvKeyImportError.INVALID_PRV_KEY -> HighlightWords(
-                Localized("mnemonic.error.invalid"),
-                listOf(Localized("mnemonic.error.invalid"))
+                Localized("prvKeyImport.error.invalid"),
             )
         }
     }
@@ -302,8 +297,7 @@ class DefaultPrvKeyImportPresenter(
         else (0..<interactor.accountsCount()).map {
             Section(
                 CollectionViewModel.Header.Title(
-                    "Account ${interactor.absoluteAccountIdx(it)}",
-                    interactor.accountDerivationPath(it)
+                    Localized("prvKeyImport.accountSectionTitle"),
                 ),
                 listOf(
                     CellViewModel.KeyValueList(

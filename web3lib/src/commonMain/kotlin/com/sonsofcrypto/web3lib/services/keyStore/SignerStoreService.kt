@@ -248,8 +248,8 @@ class DefaultSignerStoreService(
             passUnlockWithBio = config.passUnlockWithBio,
             iCloudSecretStorage = config.iCloudSecretStorage,
             passwordType = config.passwordType,
-            derivationPath = "",
-            addresses = mapOf("1" to address),
+            derivationPath = "prv key account",
+            addresses = mapOf("priv key account" to address),
             hidden = config.hidden,
         )
         val secretStorage = SecretStorage.encryptDefault(

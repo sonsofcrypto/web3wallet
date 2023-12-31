@@ -20,7 +20,7 @@ fun String.hexStringToByteArray(): ByteArray {
 fun String.isValidHexString(allowOdd: Boolean = false): Boolean {
     val str = trimHexPrefix()
     if (!allowOdd && str.length % 2 != 0) return false
-    return Regex("[0-9a-f]+/i").matchEntire(str)?.groupValues != null
+    return Regex("^[0-9a-fA-F]*\$").matchEntire(str.lowercase())?.groupValues != null
 }
 
 fun String.trimHexPrefix(): String =
