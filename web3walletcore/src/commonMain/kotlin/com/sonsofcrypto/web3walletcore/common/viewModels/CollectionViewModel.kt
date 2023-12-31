@@ -30,7 +30,7 @@ sealed class CollectionViewModel {
         data class Text(val text: String): Footer()
         data class HighlightWords(
             val text: String,
-            val words: List<String>
+            val words: List<String> = emptyList()
         ): Footer()
 
         fun text(): String? = when (this) {

@@ -15,7 +15,7 @@ final class DefaultSignersWireframe {
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
-    private let importPrivKey: PrvKeyImportWireframeFactory
+    private let importPrvKey: PrvKeyImportWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
 
@@ -40,7 +40,7 @@ final class DefaultSignersWireframe {
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
         self.importMnemonic = importMnemonic
-        self.importPrivKey = importPrivKey
+        self.importPrvKey = importPrivKey
         self.alertWireframeFactory = alertWireframeFactory
         self.authenticateWireframeFactory = authenticateWireframeFactory
     }
@@ -78,6 +78,10 @@ extension DefaultSignersWireframe {
             let context = MnemonicImportWireframeContext(handler: input.handler)
             importMnemonic.make(vc, context: context).present()
         }
+        if let input =  destination as? SignersWireframeDestination.ImportPrvKey {
+            let context = PrvKeyImportWireframeContext(handler: input.handler)
+            importPrvKey.make(vc, context: context).present()
+        }
         if let input = destination as? SignersWireframeDestination.EditSignersItem {
             let context = MnemonicUpdateWireframeContext(
                 signerStoreItem: input.item,
@@ -88,9 +92,6 @@ extension DefaultSignersWireframe {
             updateMnemonic.make(vc, context: context).present()
         }
         if destination is SignersWireframeDestination.ConnectHardwareWallet {
-            alertWireframeFactory.make(vc, context: .underConstructionAlert()).present()
-        }
-        if destination is SignersWireframeDestination.ImportPrivateKey {
             alertWireframeFactory.make(vc, context: .underConstructionAlert()).present()
         }
         if destination is SignersWireframeDestination.CreateMultisig {

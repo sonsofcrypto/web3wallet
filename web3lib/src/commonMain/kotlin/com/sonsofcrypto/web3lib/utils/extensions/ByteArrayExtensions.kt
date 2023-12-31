@@ -11,12 +11,20 @@ fun ByteArray.toHexString(prefix: Boolean = false): String = (if (prefix) "0x" e
 
 fun String.hexStringToByteArray(): ByteArray {
     check(length % 2 == 0) { "Must have an even length" }
-
-    return (if (length > 1 && substring(0, 2) == "0x") substring(2) else this)
+    return trimHexPrefix()
         .chunked(2)
         .map { it.toInt(16).toByte() }
         .toByteArray()
 }
+
+fun String.isValidHexString(allowOdd: Boolean = false): Boolean {
+    val str = trimHexPrefix()
+    if (!allowOdd && str.length % 2 != 0) return false
+    return Regex("[0-9a-f]+/i").matchEntire(str)?.groupValues != null
+}
+
+fun String.trimHexPrefix(): String =
+    if (length > 1 && substring(0, 2).lowercase() == "0x") substring(2) else this
 
 /** UInt */
 
