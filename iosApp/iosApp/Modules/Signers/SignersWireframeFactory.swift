@@ -20,6 +20,7 @@ final class DefaultSignersWireframeFactory {
     private let clipboardService: ClipboardService
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
+    private let updatePrvKey: PrvKeyUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
     private let importPrvKey: PrvKeyImportWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
@@ -31,6 +32,7 @@ final class DefaultSignersWireframeFactory {
         clipboardService: ClipboardService,
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
+        updatePrvKey: PrvKeyUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
         importPrvKey: PrvKeyImportWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
@@ -41,6 +43,7 @@ final class DefaultSignersWireframeFactory {
         self.clipboardService = clipboardService
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
+        self.updatePrvKey = updatePrvKey
         self.importMnemonic = importMnemonic
         self.importPrvKey = importPrvKey
         self.alertWireframeFactory = alertWireframeFactory
@@ -62,6 +65,7 @@ extension DefaultSignersWireframeFactory: SignersWireframeFactory {
             clipboardService: clipboardService,
             newMnemonic: newMnemonic,
             updateMnemonic: updateMnemonic,
+            updatePrvKey: updatePrvKey,
             importMnemonic: importMnemonic,
             importPrivKey: importPrvKey,
             alertWireframeFactory: alertWireframeFactory,
@@ -82,6 +86,7 @@ final class SignersWireframeFactoryAssembler: AssemblerComponent {
                 clipboardService: resolver.resolve(),
                 newMnemonic: resolver.resolve(),
                 updateMnemonic: resolver.resolve(),
+                updatePrvKey: resolver.resolve(),
                 importMnemonic: resolver.resolve(),
                 importPrvKey: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),

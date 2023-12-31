@@ -14,6 +14,7 @@ final class DefaultSignersWireframe {
     private let clipboardService: ClipboardService
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
+    private let updatePrvKey: PrvKeyUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
     private let importPrvKey: PrvKeyImportWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
@@ -28,6 +29,7 @@ final class DefaultSignersWireframe {
         clipboardService: ClipboardService,
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
+        updatePrvKey: PrvKeyUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
         importPrivKey: PrvKeyImportWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
@@ -39,6 +41,7 @@ final class DefaultSignersWireframe {
         self.clipboardService =  clipboardService
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
+        self.updatePrvKey = updatePrvKey
         self.importMnemonic = importMnemonic
         self.importPrvKey = importPrivKey
         self.alertWireframeFactory = alertWireframeFactory
@@ -83,6 +86,15 @@ extension DefaultSignersWireframe {
             importPrvKey.make(vc, context: context).present()
         }
         if let input = destination as? SignersWireframeDestination.EditSignersItem {
+            if input.item.type == .prvkey {
+                let context = PrvKeyUpdateWireframeContext(
+                    signerStoreItem: input.item,
+                    updateHandler: input.updateHandler,
+                    deleteHandler: input.deleteHandler
+                )
+                updatePrvKey.make(vc, context: context).present()
+                return;
+            }
             let context = MnemonicUpdateWireframeContext(
                 signerStoreItem: input.item,
                 updateHandler: input.updateHandler,
