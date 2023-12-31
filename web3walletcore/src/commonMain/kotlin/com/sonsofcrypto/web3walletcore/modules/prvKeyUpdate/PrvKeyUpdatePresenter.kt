@@ -232,7 +232,14 @@ class DefaultPrvKeyUpdatePresenter(
 
     private fun handleUpdate() {
         if (interactor.name.isEmpty()) interactor.name = "No name wallet"
-        interactor.update()?.let { context.updateHandler(it) }
+        println("about to update")
+        val item = interactor.update()
+        println("did update")
+        println("$item")
+        item?.let {
+            context.updateHandler(it)
+        }
+        //interactor.update()?.let { context.updateHandler(it) }
         // HACK: to make sure UI had enough time to update for custom transition
         execDelayed(0.1.seconds) { wireframe.navigate(Dismiss) }
     }

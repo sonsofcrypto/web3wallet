@@ -16,7 +16,6 @@ import com.sonsofcrypto.web3walletcore.services.settings.SettingsService
 
 interface PrvKeyUpdateInteractor {
     var name: String
-    var salt: String
     var iCloudSecretStorage: Boolean
     var showHidden: Boolean
 
@@ -65,8 +64,6 @@ class DefaultPrvKeyUpdateInteractor(
 
     override var name: String = ""
     override var iCloudSecretStorage: Boolean = false
-
-    override var salt: String = ""
     override var showHidden: Boolean = false
 
     @Throws(Throwable::class)
@@ -77,7 +74,6 @@ class DefaultPrvKeyUpdateInteractor(
     ) {
         this.signerStoreItem = signerStoreItem
         this.password = password
-        this.salt = salt
         this.name = signerStoreItem.name
         this.iCloudSecretStorage = signerStoreItem.iCloudSecretStorage
         val result = signerStoreService.secretStorage(signerStoreItem, password)
@@ -93,7 +89,7 @@ class DefaultPrvKeyUpdateInteractor(
 
     override fun pasteToClipboard(text: String) = clipboardService.paste(text)
 
-    override fun update(): SignerStoreItem? = signerStoreItem?.let {
+    override fun update(): SignerStoreItem? = signers.firstOrNull()?.let {
         updateSigner(
             it,
             it.copy(name = name, iCloudSecretStorage = iCloudSecretStorage)
@@ -125,11 +121,11 @@ class DefaultPrvKeyUpdateInteractor(
         if (idx == 0 && signers.first().hidden != true) name
         else account(idx).name
 
-    override fun accountDerivationPath(idx: Int): String
-        = account(idx).derivationPath
+    override fun accountDerivationPath(idx: Int): String =
+        account(idx).derivationPath
 
-    override fun accountAddress(idx: Int): String
-        = account(idx).primaryAddress()
+    override fun accountAddress(idx: Int): String =
+        account(idx).primaryAddress()
 
     @Throws(Exception::class)
     override fun accountPrivKey(
@@ -145,7 +141,7 @@ class DefaultPrvKeyUpdateInteractor(
         if (signers.isEmpty()) false else account(idx).hidden ?: false
 
     override fun absoluteAccountIdx(idx: Int): Int =
-        0
+        idx
 
     override fun setAccountName(name: String, idx: Int) {
         if (isPrimaryAccount(idx)) this.name = name
@@ -178,8 +174,7 @@ class DefaultPrvKeyUpdateInteractor(
         return if (showHidden) signers[idx] else visibleAccounts()[idx]
     }
 
-    private fun visibleAccounts(): List<SignerStoreItem> =
-        signers.filter { !(it.hidden ?: false) }
+    private fun visibleAccounts(): List<SignerStoreItem> = signers.filter { !(it.hidden ?: false) }
 
     private fun loadSigners() {
         val currItm = signerStoreItem ?: return
