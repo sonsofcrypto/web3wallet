@@ -10,7 +10,6 @@ final class MnemonicUpdateViewController: CollectionViewController {
     var presenter: MnemonicUpdatePresenter!
     
     override func configureUI() {
-        title = Localized("mnemonic.title.update")
         enableCardFlipTransitioning = true
         ctaButtonsCompactCnt = 3
         super.configureUI()
