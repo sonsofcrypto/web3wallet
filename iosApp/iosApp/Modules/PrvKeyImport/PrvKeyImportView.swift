@@ -15,8 +15,6 @@ final class PrvKeyImportViewController: CollectionViewController {
         ctaButtonsCompactCnt = 1
         super.configureUI()
         presenter.present()
-        cv.backgroundView = nil
-        cv.backgroundColor = .clear
     }
 
     override func viewDidAppear(_ animated: Bool) {

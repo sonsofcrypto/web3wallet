@@ -91,7 +91,7 @@ class DefaultPrvKeyImportInteractor(
     }
 
     override fun isPrvKeyValid(): Boolean =
-        if (prvKey().length != 16 && prvKey().length != 111) false
+        if (!(prvKey().length == 64 || prvKey().length == 111)) false
         else prvKeyError() == null
 
     override fun prvKeyError(): PrvKeyImportError? {

@@ -64,7 +64,7 @@ class DefaultSignersInteractor(
 
     override fun address(idx: Int, short: Boolean): String? {
         val item = signer(idx)
-        val address = item.addresses[item.derivationPath]
+        val address = item.primaryAddress()
         return if (!short) address
             else Formatters.address.format(address ?: "", 10, Network.ethereum())
     }
@@ -113,8 +113,7 @@ class DefaultSignersInteractor(
         if (term.isNotEmpty())
             items = items.filter {
                 it.name.lowercase().contains(term) ||
-                it.addresses[it.derivationPath]?.lowercase()?.contains(term)
-                    ?: false ||
+                it.primaryAddress().lowercase()?.contains(term) ?: false ||
                 it.derivationPath.contains(term)
             }
         this.items = items

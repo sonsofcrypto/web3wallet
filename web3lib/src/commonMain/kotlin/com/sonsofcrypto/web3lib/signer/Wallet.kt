@@ -141,7 +141,9 @@ class Wallet(
     @Throws(Throwable::class)
     override fun address(): Address {
         val path = signerStoreItem.derivationPath
-        val hexStrAddress = signerStoreItem.addresses[path]
+        val hexStrAddress = signerStoreItem.primaryAddress(
+            network() ?: Network.ethereum()
+        )
         if (hexStrAddress != null)
             return Address.HexString(hexStrAddress)
         throw Error.MissingAddressError(path, signerStoreItem.uuid)
