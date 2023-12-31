@@ -186,6 +186,7 @@
 "mnemonic.alert.updating.title" = "Giga brain cypherpunk Pepe is deriving & securing wallets";
 "prvKeyImport.title.import" = "Import Private Key";
 "prvKeyImport.footer" = "Enter key hex bytes or xprv format. Never share private key with anyone. Whoever possess private key, has control of all the crypto in this account.";
+"prvKeyImport.update.footer" = "Never share private key with anyone. Whoever possess private key, has control of all the crypto in this account.";
 "prvKeyImport.footerHighlightWord0" = "Never share";
 "prvKeyImport.footerHighlightWord1" = "has control of all the crypto";
 "prvKeyImport.error.hexDigit" = "Contains invalid hex digit";

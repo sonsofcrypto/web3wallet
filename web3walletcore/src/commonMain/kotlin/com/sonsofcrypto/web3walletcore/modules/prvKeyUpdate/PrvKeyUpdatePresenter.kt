@@ -1,9 +1,8 @@
-package com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate
+package com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate
 
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.execDelayed
-import com.sonsofcrypto.web3lib.utils.isValidDerivationPath
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.CANCEL
@@ -26,48 +25,47 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateData
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWireframeContext
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.AlertAction
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.CTAAction
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.CopyAccountAddress
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.CopyMnemonic
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.RightBarButtonAction
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.SetAccountHidden
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.SetAccountName
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.SetICouldBackup
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdatePresenterEvent.ViewPrivKey
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination.Authenticate
-import com.sonsofcrypto.web3walletcore.modules.mnemonicUpdate.MnemonicUpdateWireframeDestination.Dismiss
+import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.AlertAction
+import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.CTAAction
+import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.CopyAccountAddress
+import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.CopyKey
+import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.RightBarButtonAction
+import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.SetAccountHidden
+import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.SetAccountName
+import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.SetICouldBackup
+import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.ViewPrivKey
+import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdateWireframeDestination.Authenticate
+import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdateWireframeDestination.Dismiss
 import kotlin.time.Duration.Companion.seconds
 
-sealed class MnemonicUpdatePresenterEvent {
-    object CopyMnemonic: MnemonicUpdatePresenterEvent()
-    data class SetAccountName(val name: String, val idx: Int): MnemonicUpdatePresenterEvent()
-    data class SetICouldBackup(val onOff: Boolean): MnemonicUpdatePresenterEvent()
-    data class SetAccountHidden(val hidden: Boolean, val idx: Int): MnemonicUpdatePresenterEvent()
-    data class CopyAccountAddress(val idx: Int): MnemonicUpdatePresenterEvent()
-    data class ViewPrivKey(val idx: Int): MnemonicUpdatePresenterEvent()
-    data class AlertAction(val idx: Int, val text: String?): MnemonicUpdatePresenterEvent()
-    data class RightBarButtonAction(val idx: Int): MnemonicUpdatePresenterEvent()
-    data class CTAAction(val idx: Int): MnemonicUpdatePresenterEvent()
-    object Dismiss: MnemonicUpdatePresenterEvent()
+sealed class PrvKeyUpdatePresenterEvent {
+    object CopyKey: PrvKeyUpdatePresenterEvent()
+    data class SetAccountName(val name: String, val idx: Int): PrvKeyUpdatePresenterEvent()
+    data class SetICouldBackup(val onOff: Boolean): PrvKeyUpdatePresenterEvent()
+    data class SetAccountHidden(val hidden: Boolean, val idx: Int): PrvKeyUpdatePresenterEvent()
+    data class CopyAccountAddress(val idx: Int): PrvKeyUpdatePresenterEvent()
+    data class ViewPrivKey(val idx: Int): PrvKeyUpdatePresenterEvent()
+    data class AlertAction(val idx: Int, val text: String?): PrvKeyUpdatePresenterEvent()
+    data class RightBarButtonAction(val idx: Int): PrvKeyUpdatePresenterEvent()
+    data class CTAAction(val idx: Int): PrvKeyUpdatePresenterEvent()
+    object Dismiss: PrvKeyUpdatePresenterEvent()
 }
 
-interface MnemonicUpdatePresenter {
+interface PrvKeyUpdatePresenter {
     fun present()
-    fun handle(event: MnemonicUpdatePresenterEvent)
+    fun handle(event: PrvKeyUpdatePresenterEvent)
 }
 
-class DefaultMnemonicUpdatePresenter(
-    private val view: WeakRef<MnemonicUpdateView>,
-    private val wireframe: MnemonicUpdateWireframe,
-    private val interactor: MnemonicUpdateInteractor,
-    private val context: MnemonicUpdateWireframeContext,
-): MnemonicUpdatePresenter {
+class DefaultPrvKeyUpdatePresenter(
+    private val view: WeakRef<PrvKeyUpdateView>,
+    private val wireframe: PrvKeyUpdateWireframe,
+    private val interactor: PrvKeyUpdateInteractor,
+    private val context: PrvKeyUpdateWireframeContext,
+): PrvKeyUpdatePresenter {
     private var authenticated: Boolean = false
     private var localExpertMode: Boolean = false
     /** -1 alert not presented. Else it is idx of account alert is about */
     private var presentingPrivKeyAlert: Int = -1
-    private var presentingCustomDerivationAlert: Boolean = false
     private var presentingDeleteConfirmation: Boolean = false
 
     override fun present() {
@@ -97,7 +95,8 @@ class DefaultMnemonicUpdatePresenter(
     ) {
         if (auth == null || err != null) { dismiss(); return }
         interactor.setup(item, auth.password, auth.salt)
-        if (interactor.mnemonic().isEmpty()) dismiss()
+        // TODO: Try catch show error
+        if (interactor.prvKey().isEmpty()) dismiss()
         else updateView()
     }
 
@@ -112,8 +111,8 @@ class DefaultMnemonicUpdatePresenter(
         presentAlert(privKeyAlertViewModel(idx, auth.password, auth.salt))
     }
 
-    override fun handle(event: MnemonicUpdatePresenterEvent) =  when (event) {
-        is CopyMnemonic -> interactor.pasteToClipboard(interactor.mnemonic())
+    override fun handle(event: PrvKeyUpdatePresenterEvent) =  when (event) {
+        is CopyKey -> interactor.pasteToClipboard(interactor.prvKey())
         is SetAccountName -> interactor.setAccountName(event.name, event.idx)
         is SetICouldBackup -> interactor.iCloudSecretStorage = event.onOff
         is SetAccountHidden -> handleSetAccountHidden(event.hidden, event.idx)
@@ -122,7 +121,7 @@ class DefaultMnemonicUpdatePresenter(
         is AlertAction -> handleAlertAction(event.idx, event.text)
         is RightBarButtonAction -> handleRightBarButtonAction(event.idx)
         is CTAAction -> handleCTAAction(event.idx)
-        is MnemonicUpdatePresenterEvent.Dismiss -> dismiss()
+        is PrvKeyUpdatePresenterEvent.Dismiss -> dismiss()
     }
 
     private fun handleSetAccountHidden(hidden: Boolean, idx: Int) {
@@ -150,12 +149,9 @@ class DefaultMnemonicUpdatePresenter(
     ): AlertViewModel = RegularAlertViewModel(
         Localized("mnemonic.alert.prvKey.title"),
         Localized("mnemonic.alert.prvKey.body.prv")
-            + "\n${interactor.accountPrivKey(accIdx, false, pass, salt)}\n\n"
-            + Localized("mnemonic.alert.prvKey.body.xprv")
-            + "\n${interactor.accountPrivKey(accIdx, true, pass, salt)}\n",
+            + "\n${interactor.accountPrivKey(accIdx, false, pass, salt)}\n\n",
         listOf(
             Action(Localized("mnemonic.alert.prvKey.btnPriv"), NORMAL),
-            Action(Localized("mnemonic.alert.prvKey.btnXprv"), NORMAL),
             Action(Localized("cancel"), CANCEL),
         ),
         SysName("key.horizontal")
@@ -164,7 +160,7 @@ class DefaultMnemonicUpdatePresenter(
     private fun handlerPrivKeyAlertAction(actionIdx: Int) {
         val accIdx = presentingPrivKeyAlert
         presentingPrivKeyAlert = -1
-        if (actionIdx == 2) return;
+        if (actionIdx == 1) return;
         val key = interactor.accountPrivKey(accIdx, actionIdx == 1)
         val title = Localized("mnemonic.toast.copy.prvKey")
         interactor.pasteToClipboard(key)
@@ -196,11 +192,6 @@ class DefaultMnemonicUpdatePresenter(
         presentAlert(alertViewModel)
     }
 
-    private fun handleAddAccount(path: String? = null) {
-        interactor.addAccount(path)
-        updateView()
-        view.get()?.scrollToBottom()
-    }
 
     private fun handleDeleteAlertAction(idx: Int) {
         presentingDeleteConfirmation = false
@@ -212,7 +203,6 @@ class DefaultMnemonicUpdatePresenter(
 
     private fun handleAlertAction(idx: Int, text: String? = null) = when {
         presentingPrivKeyAlert > -1 -> handlerPrivKeyAlertAction(idx)
-        presentingCustomDerivationAlert -> handleCustomDerivationPath(idx, text)
         presentingDeleteConfirmation -> handleDeleteAlertAction(idx)
         else -> Unit
     }
@@ -233,13 +223,9 @@ class DefaultMnemonicUpdatePresenter(
 
     private fun handleCTAAction(idx: Int) {
         when (idx) {
-            0 -> handleAddAccount()
+            0 -> handleCopyAddress(true)
             1 -> presentDeleteConfirmation()
             2 -> handleUpdate()
-            3 -> {
-                presentingCustomDerivationAlert = true
-                presentAlert(customDerivationAlertViewModel())
-            }
         }
         updateView()
     }
@@ -251,62 +237,23 @@ class DefaultMnemonicUpdatePresenter(
         execDelayed(0.1.seconds) { wireframe.navigate(Dismiss) }
     }
 
-    private fun customDerivationAlertViewModel(): AlertViewModel
-        = AlertViewModel.InputAlertViewModel(
-            Localized("mnemonic.alert.customDerivation.title"),
-            Localized("mnemonic.alert.customDerivation.body"),
-            "",
-            "m/44'/60'/0'/0/0",
-            listOf(
-                Action(Localized("mnemonic.alert.customDerivation.cta"), NORMAL),
-                Action(Localized("cancel"), CANCEL),
-            ),
-            SysName("key.radiowaves.forward")
-        )
-
-    private fun handleCustomDerivationPath(actionIdx: Int, path: String?) {
-        presentingCustomDerivationAlert = false
-        if (actionIdx == 1 || path == null) return;
-        if (isValidDerivationPath(path)) {
-            try {
-                interactor.addAccount(path)
-                updateView()
-                view.get()?.scrollToBottom()
-            }
-            catch (err: Throwable) {
-                println(err)
-                presentCustomDerivationPathError(path)
-            }
-        } else presentCustomDerivationPathError(path)
-    }
-
-    private fun presentCustomDerivationPathError(path: String?) = presentAlert(
-        RegularAlertViewModel(
-            Localized("mnemonic.alert.customDerivationErr.title"),
-            (path ?: "") + Localized("mnemonic.alert.customDerivationErr.body"),
-            listOf(Action("ok", NORMAL)),
-            SysName("x.circle"),
-        )
-    )
-
     private fun dismiss() {
-        context.addAccountHandler()
         wireframe.navigate(Dismiss)
     }
 
-    private fun updateView()
-        = view.get()?.update(viewModel())
+    private fun updateView() =
+        view.get()?.update(viewModel())
 
-    private fun presentToast(viewModel: ToastViewModel)
-        = view.get()?.presentToast(viewModel)
+    private fun presentToast(viewModel: ToastViewModel) =
+        view.get()?.presentToast(viewModel)
 
-    private fun presentAlert(viewModel: AlertViewModel)
-        = view.get()?.presentAlert(viewModel)
+    private fun presentAlert(viewModel: AlertViewModel) =
+        view.get()?.presentAlert(viewModel)
 
     private fun viewModel(): Screen = Screen(
-        Localized("mnemonic.title.update"),
+        Localized("mnemonicConfirmation.title"),
         listOf(
-            mnemonicSection(),
+            keySection(),
             optionsSection(),
         ) + accountsSections(),
         listOf(
@@ -322,21 +269,20 @@ class DefaultMnemonicUpdatePresenter(
             ),
         ),
         listOf(
-            ButtonViewModel(Localized("mnemonic.cta.account"), SECONDARY),
+            ButtonViewModel(Localized("copyAddress"), SECONDARY),
             ButtonViewModel(Localized("mnemonic.cta.delete"), DESTRUCTIVE),
             ButtonViewModel(Localized("mnemonic.cta.update")),
-            ButtonViewModel(Localized("mnemonic.cta.custom"), SECONDARY),
         )
     )
 
-    private fun mnemonicSection(): Section = Section(
+    private fun keySection(): Section = Section(
         null,
-        listOf(Text(interactor.mnemonic())),
+        listOf(Text(interactor.prvKey())),
         HighlightWords(
-            Localized("mnemonic.footer"),
+            Localized("prvKeyImport.update.footer"),
             listOf(
-                Localized("mnemonic.footerHighlightWord0"),
-                Localized("mnemonic.footerHighlightWord1"),
+                Localized("prvKeyImport.footerHighlightWord0"),
+                Localized("prvKeyImport.footerHighlightWord1"),
             )
         ),
     )

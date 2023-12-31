@@ -322,6 +322,9 @@
 		1F7F5A4E2B406E99003448CB /* PrvKeyImportWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A4A2B406E99003448CB /* PrvKeyImportWireframe.swift */; };
 		1F7F5A4F2B406E99003448CB /* PrvKeyImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A4B2B406E99003448CB /* PrvKeyImportView.swift */; };
 		1F7F5A502B406E99003448CB /* PrvKeyImportWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A4C2B406E99003448CB /* PrvKeyImportWireframeFactory.swift */; };
+		1F7F5A582B41A9FF003448CB /* PrvKeyUpdateWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A522B41A9FF003448CB /* PrvKeyUpdateWireframeFactory.swift */; };
+		1F7F5A5B2B41A9FF003448CB /* PrvKeyUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A562B41A9FF003448CB /* PrvKeyUpdateView.swift */; };
+		1F7F5A5C2B41A9FF003448CB /* PrvKeyUpdateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A572B41A9FF003448CB /* PrvKeyUpdateWireframe.swift */; };
 		1F871F522AC1791E0002A1AC /* TableFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F871F4A2AC1791E0002A1AC /* TableFlowLayout.swift */; };
 		1F871F532AC1791E0002A1AC /* TableGroupedFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F871F4B2AC1791E0002A1AC /* TableGroupedFlowLayout.swift */; };
 		1F871F542AC1791E0002A1AC /* SectionBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F871F4C2AC1791E0002A1AC /* SectionBackgroundView.swift */; };
@@ -751,6 +754,9 @@
 		1F7F5A4A2B406E99003448CB /* PrvKeyImportWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrvKeyImportWireframe.swift; sourceTree = "<group>"; };
 		1F7F5A4B2B406E99003448CB /* PrvKeyImportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrvKeyImportView.swift; sourceTree = "<group>"; };
 		1F7F5A4C2B406E99003448CB /* PrvKeyImportWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrvKeyImportWireframeFactory.swift; sourceTree = "<group>"; };
+		1F7F5A522B41A9FF003448CB /* PrvKeyUpdateWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrvKeyUpdateWireframeFactory.swift; sourceTree = "<group>"; };
+		1F7F5A562B41A9FF003448CB /* PrvKeyUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrvKeyUpdateView.swift; sourceTree = "<group>"; };
+		1F7F5A572B41A9FF003448CB /* PrvKeyUpdateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrvKeyUpdateWireframe.swift; sourceTree = "<group>"; };
 		1F871F4A2AC1791E0002A1AC /* TableFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableFlowLayout.swift; sourceTree = "<group>"; };
 		1F871F4B2AC1791E0002A1AC /* TableGroupedFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableGroupedFlowLayout.swift; sourceTree = "<group>"; };
 		1F871F4C2AC1791E0002A1AC /* SectionBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionBackgroundView.swift; sourceTree = "<group>"; };
@@ -1134,6 +1140,7 @@
 				1C5D24B928E19F62007DA557 /* ImprovementProposals */,
 				1C54DC0F2862320200E378F6 /* QRCodeScan */,
 				1F7F5A472B406E99003448CB /* PrvKeyImport */,
+				1F7F5A512B41A9FF003448CB /* PrvKeyUpdate */,
 				1C60C23E285724D0003BE25D /* Root */,
 				1F871F582AC17BB00002A1AC /* Settings */,
 				1C7FC98628B60A0B00FC9175 /* ThemePicker */,
@@ -1745,6 +1752,16 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		1F7F5A512B41A9FF003448CB /* PrvKeyUpdate */ = {
+			isa = PBXGroup;
+			children = (
+				1F7F5A522B41A9FF003448CB /* PrvKeyUpdateWireframeFactory.swift */,
+				1F7F5A562B41A9FF003448CB /* PrvKeyUpdateView.swift */,
+				1F7F5A572B41A9FF003448CB /* PrvKeyUpdateWireframe.swift */,
+			);
+			path = PrvKeyUpdate;
+			sourceTree = "<group>";
+		};
 		1F871F582AC17BB00002A1AC /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -2259,6 +2276,7 @@
 				1CE66BD22848ED4000AB6ACA /* PresentationStyle.swift in Sources */,
 				1C54BB3C291B9F400009F158 /* Web3walletcore+Extensions.swift in Sources */,
 				1C60C2F6285724D0003BE25D /* NFTDetailWireframeFactory.swift in Sources */,
+				1F7F5A582B41A9FF003448CB /* PrvKeyUpdateWireframeFactory.swift in Sources */,
 				1C7F862728D20E490073FD95 /* Array+Extensions.swift in Sources */,
 				1C7FC98128AFB32600FC9175 /* PasswordValidatorHelper.swift in Sources */,
 				D1EF5BCE287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift in Sources */,
@@ -2355,6 +2373,7 @@
 				1C228ACB28A3B122005316A3 /* ConfirmationTxInProgressView.swift in Sources */,
 				1C7F863F28D20E490073FD95 /* UIStackView+Extensions.swift in Sources */,
 				1C7F864128D20E490073FD95 /* UIBarButtonItem+Extensions.swift in Sources */,
+				1F7F5A5B2B41A9FF003448CB /* PrvKeyUpdateView.swift in Sources */,
 				1F7F5A4F2B406E99003448CB /* PrvKeyImportView.swift in Sources */,
 				1C60C2F3285724D0003BE25D /* NFTDetailWireframe.swift in Sources */,
 				1C228ACF28A3C774005316A3 /* ConfirmationTxFailedView.swift in Sources */,
@@ -2444,6 +2463,7 @@
 				1C60C352285724D1003BE25D /* CultProposalsWireframeFactory.swift in Sources */,
 				1C7FC98828B60A1A00FC9175 /* ThemePickerWireframe.swift in Sources */,
 				1CE0064028894F41002D1EB3 /* ConfirmationSendView.swift in Sources */,
+				1F7F5A5C2B41A9FF003448CB /* PrvKeyUpdateWireframe.swift in Sources */,
 				1CDED610289C521000DF34A7 /* NFTSendImageCollectionViewCell.swift in Sources */,
 				1C60C2F2285724D0003BE25D /* NFTDetailView+Content.swift in Sources */,
 				1C6720162885E13500C5F044 /* CurrencySwapLimitCollectionViewCell.swift in Sources */,
