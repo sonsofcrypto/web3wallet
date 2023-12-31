@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3lib.services.keyStore
 
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.MNEMONIC
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.PRVKEY
+import com.sonsofcrypto.web3lib.types.Network
 import kotlinx.serialization.Serializable
 /**
  * `SignerStoreItem` contains metadata about `SecretStorage` items. Allows access
@@ -56,12 +57,20 @@ data class SignerStoreItem(
         }
     }
 
-    fun primaryAddress(): String = when(type) {
-        // TODO: Handle signers that require salt to see the address
-        MNEMONIC -> addresses[derivationPath] ?: "0xAuthenticateToSeeAddress"
-        PRVKEY -> addresses["priv key account"] ?: "0xAuthenticateToSeeAddress"
-        else -> ""
+    fun primaryAddress(network: Network = Network.ethereum()): String = when {
+        // TODO: When nav to mnemonic update addresses for all networks
+        type == PRVKEY -> addresses["evm_${network.id()}"] ?: fallbackAddr
+        type == MNEMONIC && saltMnemonic -> fallbackAddr
+        type == MNEMONIC && !saltMnemonic -> addresses[derivationPath]
+            ?: fallbackAddr
+        else -> "0xFailedToRertieveAddresss"
     }
 
     fun isHidden(): Boolean = hidden ?: false
+
+    companion object {
+        private val fallbackAddr = "0xAuthenticateToSeeAddress"
+    }
 }
+
+
