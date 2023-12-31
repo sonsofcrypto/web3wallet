@@ -36,6 +36,7 @@ data class MnemonicSignerConfig(
 )
 
 data class PrvKeySignerConfig(
+    /** hex string of 32 bytes of private key */
     val key: String,
     val name: String,
     val passUnlockWithBio: Boolean,
@@ -236,7 +237,6 @@ class DefaultSignerStoreService(
         config: PrvKeySignerConfig,
         password: String,
     ): Pair<SignerStoreItem, SecretStorage> {
-        // TODO: Handle xprv format
         val privKey = config.key.hexStringToByteArray()
         val address = addressService.addressFromPrivKeyBytes(privKey)
         val signerStoreItem = SignerStoreItem(

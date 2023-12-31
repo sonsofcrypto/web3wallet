@@ -139,6 +139,7 @@ fun ByteArray.encodeToBase58WithChecksum(): String {
     return arrayWithChecksum.encodeToBase58String()
 }
 
+@Throws(Exception::class)
 fun String.decodeBase58WithChecksum(): ByteArray {
     val rawBytes = decodeBase58()
     if (rawBytes.size < CHECKSUM_SIZE) {

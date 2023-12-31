@@ -188,7 +188,8 @@
 "prvKeyImport.footer" = "Enter key hex bytes or xprv format. Never share private key with anyone. Whoever possess private key, has control of all the crypto in this account.";
 "prvKeyImport.footerHighlightWord0" = "Never share";
 "prvKeyImport.footerHighlightWord1" = "has control of all the crypto";
-
+"prvKeyImport.error.hexDigit" = "Contains invalid hex digit";
+"prvKeyImport.error.invalid" = "Private key you've entered appears to be invalid.";
 
 "networks.header.l1s" = "Layer #1s";
 "networks.header.l2s" = "Layer #2s";

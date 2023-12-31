@@ -203,7 +203,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="www-v4-rjC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="600.79999999999995" y="1486.6995073891626"/>
+            <point key="canvasLocation" x="601" y="1583"/>
         </scene>
         <!--Ts Collection View Controller-->
         <scene sceneID="LZ3-lR-qok">
@@ -247,7 +247,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Te-Ty-260" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1294" y="1487"/>
+            <point key="canvasLocation" x="1294" y="1583"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="Ujb-W2-v0C">
@@ -397,7 +397,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LTZ-4H-416" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="601" y="2163"/>
+            <point key="canvasLocation" x="601" y="2258"/>
         </scene>
         <!--Signers-->
         <scene sceneID="b01-w3-BPv">
@@ -1768,7 +1768,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h3t-OK-tQH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3385" y="117"/>
+            <point key="canvasLocation" x="2634" y="117"/>
         </scene>
         <!--Import Mnemonic-->
         <scene sceneID="ZxT-Y5-RZ4">
@@ -2399,12 +2399,12 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZfL-9g-f71" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4057" y="117"/>
+            <point key="canvasLocation" x="3306" y="117"/>
         </scene>
         <!--Import Prv Key-->
         <scene sceneID="ayV-rh-DLF">
             <objects>
-                <collectionViewController storyboardIdentifier="PrvKeyImportViewController" title="Import Prv Key" id="SIS-jr-b5E" customClass="PrvKeyImportViewController" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="PrvKeyImportViewController" title="Import Prv Key" id="SIS-jr-b5E" customClass="PrvKeyImportViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="a3d-eq-J4X" customClass="CollectionView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2889,7 +2889,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rci-XY-u91" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2663" y="117"/>
+            <point key="canvasLocation" x="1961" y="-549"/>
         </scene>
     </scenes>
     <designables>

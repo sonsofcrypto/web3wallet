@@ -40,7 +40,7 @@ import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestinati
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.EditSignersItem
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.ImportAddress
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.ImportMnemonic
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.ImportPrivateKey
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.ImportPrvKey
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.Networks
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.NewMnemonic
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.SignersFullscreen
@@ -194,8 +194,8 @@ class DefaultSignersPresenter(
         when (idx) {
             0 -> wireframe.navigate(NewMnemonic { handleNewSigner(it) })
             1 -> wireframe.navigate(ImportMnemonic { handleNewSigner(it)})
-            2 -> if (ctaSheetExpanded) wireframe.navigate(ImportPrivateKey)
-                else view.get()?.updateCTASheet(!ctaSheetExpanded)
+            2 -> if (!ctaSheetExpanded) handleToggleSheet()
+                else wireframe.navigate(ImportPrvKey { handleNewSigner(it) })
             3 -> wireframe.navigate(ImportAddress)
             4 -> wireframe.navigate(ConnectHardwareWallet)
             5 -> wireframe.navigate(CreateMultisig)
@@ -211,6 +211,9 @@ class DefaultSignersPresenter(
         targetView = None
         navigateToDashboardIfNeeded()
     }
+
+    private fun handleToggleSheet() =
+        view.get()?.updateCTASheet(!ctaSheetExpanded)
 
     private fun navigateToDashboardIfNeeded() {
         if (interactor.signersCount() != 1) return

@@ -15,6 +15,7 @@ interface PrvKeyImportView {
 }
 
 data class PrvKeyInputViewModel(
+    val key: String,
     val isValid: Boolean,
     val err: PrvKeyImportError?
 )

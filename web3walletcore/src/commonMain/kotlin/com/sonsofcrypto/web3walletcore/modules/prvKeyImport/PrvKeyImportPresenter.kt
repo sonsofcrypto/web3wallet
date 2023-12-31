@@ -224,6 +224,7 @@ class DefaultPrvKeyImportPresenter(
 
     private fun inputViewModel(): PrvKeyInputViewModel =
         PrvKeyInputViewModel(
+            interactor.keyInput ?: "",
             interactor.isPrvKeyValid(),
             interactor.prvKeyError(),
         )
@@ -260,11 +261,10 @@ class DefaultPrvKeyImportPresenter(
                 )
             )
         return when (error) {
-            PrvKeyImportError.INVALID_WORD_COUNT -> HighlightWords(
+            PrvKeyImportError.NOT_HEX_DIGIT -> HighlightWords(
                 Localized("mnemonic.error.invalid.wordCount"),
-                listOf(Localized("mnemonic.error.invalid.wordCount.highlight"))
             )
-            PrvKeyImportError.OTHER -> HighlightWords(
+            PrvKeyImportError.INVALID_PRV_KEY -> HighlightWords(
                 Localized("mnemonic.error.invalid"),
                 listOf(Localized("mnemonic.error.invalid"))
             )
