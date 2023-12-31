@@ -47,7 +47,6 @@ interface PrvKeyImportInteractor {
     /** if xprv is false returns prv key hex string else xprv hex string */
     fun accountPrivKey(idx: Int, xprv: Boolean = false): String
     fun accountIsHidden(idx: Int): Boolean
-    fun absoluteAccountIdx(idx: Int): Int
     fun setAccountName(name: String, idx: Int)
     fun setAccountHidden(hidden: Boolean, idx: Int)
     fun accountsCount(): Int
@@ -92,16 +91,16 @@ class DefaultPrvKeyImportInteractor(
     }
 
     override fun isPrvKeyValid(): Boolean =
-        if (prvKey().length < 16) false
+        if (prvKey().length != 16 && prvKey().length != 111) false
         else prvKeyError() == null
 
     override fun prvKeyError(): PrvKeyImportError? {
         val key = prvKey().lowercase()
-        if (key.length < 3)
+        if (key.length < 4)
             return null
         if (key.substring(0, 4) != "xprv" && !key.isValidHexString(true))
             return PrvKeyImportError.NOT_HEX_DIGIT
-        if (key.length == 111 && key.length == 64)
+        if (key.length == 111 || key.length == 64)
             try {
                 addressService.addressFromPrivKeyBytes(prvKeyBytes())
             } catch (err: Throwable) {
@@ -151,9 +150,6 @@ class DefaultPrvKeyImportInteractor(
     override fun accountIsHidden(idx: Int): Boolean =
         account(idx).isHidden
 
-    override fun absoluteAccountIdx(idx: Int): Int =
-        lastDerivationPathComponent(account(idx).derivationPath)
-
     override fun setAccountName(name: String, idx: Int) {
         account(idx).name = name
     }
@@ -173,7 +169,7 @@ class DefaultPrvKeyImportInteractor(
 
     private fun regenerateAccountsAndAddresses() {
         if (!isPrvKeyValid()) return;
-        val keyBytes = prvKey().hexStringToByteArray()
+        val keyBytes = prvKeyBytes()
         accounts.forEachIndexed { idx, acc ->
             acc.address = addressService.addressFromPrivKeyBytes(keyBytes)
         }

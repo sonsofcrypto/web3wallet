@@ -11,8 +11,8 @@ final class PrvKeyImportViewController: CollectionViewController {
     var inputViewModel: PrvKeyInputViewModel?
 
     override func configureUI() {
-        title = Localized("mnemonic.title.import")
         enableCardFlipTransitioning = true
+        ctaButtonsCompactCnt = 1
         super.configureUI()
         presenter.present()
     }
@@ -75,8 +75,8 @@ final class PrvKeyImportViewController: CollectionViewController {
         switch viewModel {
         case _ as CellViewModel.Text:
             return cv.dequeue(PrvKeyImportCell.self, for: indexPath)
-                .update(with: inputViewModel) { [weak self] str, loc in
-                    self?.mnemonicDidChange(str, cursorLocation: loc)
+                .update(with: inputViewModel) { [weak self] str in
+                    self?.keyInputDidChange(str)
                 }
         case let vm as CellViewModel.TextInput:
             return cv.dequeue(TextInputCollectionViewCell.self, for: indexPath)
@@ -212,7 +212,7 @@ final class PrvKeyImportViewController: CollectionViewController {
         presenter.handleEvent(.Dismiss())
     }
 
-    func mnemonicDidChange(_ text: String, cursorLocation: Int) {
+    func keyInputDidChange(_ text: String) {
         presenter.handleEvent(.SetKey(text: text))
     }
 

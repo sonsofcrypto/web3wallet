@@ -190,6 +190,7 @@
 "prvKeyImport.footerHighlightWord1" = "has control of all the crypto";
 "prvKeyImport.error.hexDigit" = "Contains invalid hex digit";
 "prvKeyImport.error.invalid" = "Private key you've entered appears to be invalid.";
+"prvKeyImport.accountSectionTitle" = "Private Key Account";
 
 "networks.header.l1s" = "Layer #1s";
 "networks.header.l2s" = "Layer #2s";
