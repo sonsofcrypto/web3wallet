@@ -176,7 +176,9 @@ class DefaultPrvKeyImportInteractor(
     }
 
     private fun account(idx: Int): Account =
-        if (showHidden) accounts[idx] else visibleAccounts()[idx]
+        if (showHidden) accounts[idx]
+        else if (visibleAccounts().isEmpty()) accounts[idx]
+        else visibleAccounts()[idx]
 
     private fun visibleAccounts(): List<Account> =
         accounts.filter { !it.isHidden }

@@ -99,8 +99,6 @@ class DefaultSignersPresenter(
     private fun handleEditAction(idx: Int) {
         targetView = SignerAt(idx)
         view.get()?.updateTargetView(targetView)
-        if (interactor.signer(idx).type == SignerStoreItem.Type.PRVKEY)
-
         wireframe.navigate(
             EditSignersItem(
                 interactor.signer(idx),
