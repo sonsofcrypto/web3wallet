@@ -402,7 +402,7 @@
 		D1ED725F287C1122005805CF /* CurrencySendCurrencyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ED725C287C1122005805CF /* CurrencySendCurrencyCollectionViewCell.swift */; };
 		D1ED7260287C1122005805CF /* CurrencySendCTACollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ED725D287C1122005805CF /* CurrencySendCTACollectionViewCell.swift */; };
 		D1ED7261287C1122005805CF /* CurrencySendToAddressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ED725E287C1122005805CF /* CurrencySendToAddressCollectionViewCell.swift */; };
-		D1EF5BC7287BEE92004CAD82 /* MnemonicUpdateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BBE287BEE92004CAD82 /* MnemonicUpdateCell.swift */; };
+		D1EF5BC7287BEE92004CAD82 /* HiddenContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BBE287BEE92004CAD82 /* HiddenContentCell.swift */; };
 		D1EF5BC9287BEE92004CAD82 /* MnemonicUpdateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */; };
 		D1EF5BCD287BEE92004CAD82 /* MnemonicUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC4287BEE92004CAD82 /* MnemonicUpdateView.swift */; };
 		D1EF5BCE287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC5287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift */; };
@@ -840,7 +840,7 @@
 		D1ED725C287C1122005805CF /* CurrencySendCurrencyCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencySendCurrencyCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1ED725D287C1122005805CF /* CurrencySendCTACollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencySendCTACollectionViewCell.swift; sourceTree = "<group>"; };
 		D1ED725E287C1122005805CF /* CurrencySendToAddressCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencySendToAddressCollectionViewCell.swift; sourceTree = "<group>"; };
-		D1EF5BBE287BEE92004CAD82 /* MnemonicUpdateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateCell.swift; sourceTree = "<group>"; };
+		D1EF5BBE287BEE92004CAD82 /* HiddenContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HiddenContentCell.swift; sourceTree = "<group>"; };
 		D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateWireframe.swift; sourceTree = "<group>"; };
 		D1EF5BC4287BEE92004CAD82 /* MnemonicUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateView.swift; sourceTree = "<group>"; };
 		D1EF5BC5287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateWireframeFactory.swift; sourceTree = "<group>"; };
@@ -2024,7 +2024,7 @@
 		D1EF5BBD287BEE92004CAD82 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				D1EF5BBE287BEE92004CAD82 /* MnemonicUpdateCell.swift */,
+				D1EF5BBE287BEE92004CAD82 /* HiddenContentCell.swift */,
 				1C7FC97A28AE7A3A00FC9175 /* DeleteCell.swift */,
 			);
 			path = Cells;
@@ -2326,7 +2326,7 @@
 				1C60C2E9285724D0003BE25D /* DashboardWireframe.swift in Sources */,
 				1C67202128870FE100C5F044 /* ConfirmationWireframeFactory.swift in Sources */,
 				1C60C2EF285724D0003BE25D /* NetworksWireframe.swift in Sources */,
-				D1EF5BC7287BEE92004CAD82 /* MnemonicUpdateCell.swift in Sources */,
+				D1EF5BC7287BEE92004CAD82 /* HiddenContentCell.swift in Sources */,
 				1C60C2EC285724D0003BE25D /* NetworksView.swift in Sources */,
 				1C6487162832DEFE0091A12D /* Reachability.swift in Sources */,
 				1C60C2FE285724D0003BE25D /* NFTDetailView+Content+Properties.swift in Sources */,
