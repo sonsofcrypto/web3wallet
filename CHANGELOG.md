@@ -14,7 +14,7 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 # Release Notes 
 
-### v1.1.2 #45
+### v1.1.2 #45 Prv & Xprv key accounts imports & bug fixes
 - Import prv & xprv keys
 - Theme color consolidation & clean up
 - Mnemonic confirm keyboard fix
