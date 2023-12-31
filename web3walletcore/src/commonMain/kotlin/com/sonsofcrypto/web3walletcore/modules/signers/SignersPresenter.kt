@@ -148,7 +148,6 @@ class DefaultSignersPresenter(
     }
 
     private fun handleAddAccountAction(idx: Int) {
-        println("handleAddAccountAction $idx")
         val item = interactor.signer(idx)
         val title = Localized("authenticate.title.unlock")
         val cxt = AuthenticateWireframeContext(title, item) { auth, err ->
