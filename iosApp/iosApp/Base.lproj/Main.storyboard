@@ -407,6 +407,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view hidden="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="400" verticalHuggingPriority="400" horizontalCompressionResistancePriority="800" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="Mil-2Q-T9I" userLabel="logoAnimView" customClass="LogoAnimView" customModule="iosApp" customModuleProvider="target">
+                                <rect key="frame" x="16" y="182.66666666666663" width="343" height="343"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Mil-2Q-T9I" secondAttribute="height" id="9NG-z4-rXz"/>
+                                </constraints>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sVF-hO-qLL" customClass="CollectionView" customModule="iosApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -585,13 +592,6 @@
                                     <constraint firstItem="NE3-4T-brG" firstAttribute="height" secondItem="85i-Af-9NQ" secondAttribute="height" priority="999" id="ugw-ii-BuD"/>
                                 </constraints>
                             </stackView>
-                            <view hidden="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="400" verticalHuggingPriority="400" horizontalCompressionResistancePriority="800" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="Mil-2Q-T9I" userLabel="logoAnimView" customClass="LogoAnimView" customModule="iosApp" customModuleProvider="target">
-                                <rect key="frame" x="16" y="182.66666666666663" width="343" height="343"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="Mil-2Q-T9I" secondAttribute="height" id="9NG-z4-rXz"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Qt6-JY-q0K"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
