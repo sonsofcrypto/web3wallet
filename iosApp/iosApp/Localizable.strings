@@ -49,7 +49,9 @@
 "sendLogs" = "Send Logs";
 "sonsofcrypto" = "sons of crypto";
 "ipfs.image.unavailable" = "¯\\_(ツ)_/¯\n\nImage not available on ipfs\n\n";
+"tapToReveal" = "Tap to reveal";
 "copiedToPasteboard" = "Copied to pasteboard";
+"copiedToPasteboard30s" = "Copied to pasteboard\n for 30 seconds.";
 "address" = "Address";
 "copyAddress" = "Copy address";
 "toast.expertMode" = "Expert mode turned on. Adds additional options and toggles for advanced users";
@@ -136,7 +138,6 @@
 "mnemonic.title.new" = "New Mnemonic";
 "mnemonic.title.import" = "Import Mnemonic";
 "mnemonic.title.update" = "Edit Wallet";
-"mnemonic.tapToReveal" = "Tap to reveal mnemonic";
 "mnemonic.footer" = "Write down mnemonic above. Never share it with anyone. All of the accounts/wallets are derived from it. If lost crypto is unrecoverable.";
 "mnemonic.footerHighlightWord0" = "Never";
 "mnemonic.footerHighlightWord1" = "unrecoverable";
@@ -155,7 +156,6 @@
 "mnemonic.pinType.placeholder" = "Enter pin";
 "mnemonic.passType.placeholder" = "Enter password";
 "mnemonic.passType.allowFaceId" = "Allow unlock with FaceID";
-"mnemonic.pasteboard" = "Mnemonic copied to pasteboard\n(for 30 seconds)";
 "mnemonic.cta.new" = "Create new wallet";
 "mnemonic.cta.account" = "Add Account";
 "mnemonic.cta.custom" = "Custom Derivation Path";

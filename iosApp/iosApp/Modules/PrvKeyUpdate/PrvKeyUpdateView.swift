@@ -47,7 +47,7 @@ final class PrvKeyUpdateViewController: CollectionViewController {
         }
         switch viewModel {
         case let vm as CellViewModel.Text:
-            return cv.dequeue(MnemonicUpdateCell.self, for: indexPath)
+            return cv.dequeue(HiddenContentCell.self, for: indexPath)
                 .update(with: vm)
         case let vm as CellViewModel.TextInput:
             return cv.dequeue(TextInputCollectionViewCell.self, for: indexPath)
@@ -163,7 +163,7 @@ final class PrvKeyUpdateViewController: CollectionViewController {
         let cell = cv.cellForItem(at: indexPath)
         if indexPath.isZero() {
             presenter.handleEvent(.CopyKey())
-            (cell as? MnemonicUpdateCell)?.animateCopiedToPasteboard()
+            (cell as? HiddenContentCell)?.animateCopiedToPasteboard()
         }
         return false
     }

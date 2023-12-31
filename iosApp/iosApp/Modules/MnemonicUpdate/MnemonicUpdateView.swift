@@ -47,7 +47,7 @@ final class MnemonicUpdateViewController: CollectionViewController {
         }
         switch viewModel {
         case let vm as CellViewModel.Text:
-            return cv.dequeue(MnemonicUpdateCell.self, for: indexPath)
+            return cv.dequeue(HiddenContentCell.self, for: indexPath)
                 .update(with: vm)
         case let vm as CellViewModel.TextInput:
             return cv.dequeue(TextInputCollectionViewCell.self, for: indexPath)
@@ -57,8 +57,6 @@ final class MnemonicUpdateViewController: CollectionViewController {
         case let vm as CellViewModel.Switch:
             return cv.dequeue(SwitchCollectionViewCell.self, for: indexPath)
                 .update(with: vm) { [weak self] v in self?.backupDidChange(v) }
-        case let vm as CellViewModel.Button:
-            return cv.dequeue(ButtonCell.self, for: indexPath).update(with: vm)
         default:
             fatalError("[MnemonicUpdateView] wrong cellForItemAt \(indexPath)")
         }
@@ -163,7 +161,7 @@ final class MnemonicUpdateViewController: CollectionViewController {
         let cell = cv.cellForItem(at: indexPath)
         if indexPath.isZero() {
             presenter.handleEvent(.CopyMnemonic())
-            (cell as? MnemonicUpdateCell)?.animateCopiedToPasteboard()
+            (cell as? HiddenContentCell)?.animateCopiedToPasteboard()
         }
         return false
     }

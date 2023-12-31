@@ -21,6 +21,7 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 - Fixing currency type error
 - Switching to WalletServiceMultiCall
 - Uniswap crash fix
+- Hidden content cell refactor
 
 ### v1.1.1 #42
 - Metadata downloader renaming uppercase file extensions
