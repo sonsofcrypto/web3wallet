@@ -29,7 +29,7 @@ private extension NFTDetailViewController {
         titleLabel.text = Localized("nft.detail.section.title.other")
         titleLabel.numberOfLines = 0
         rows.append(titleLabel)
-        rows.append(.dividerLine())
+        rows.append(TransparentLineView())
         let network = Network.Companion().ethereum()
         let items: [(name: String, value: String)] = [
             (

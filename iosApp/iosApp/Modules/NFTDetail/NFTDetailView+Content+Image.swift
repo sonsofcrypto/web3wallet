@@ -36,7 +36,12 @@ extension NFTDetailViewController {
         idLabel.textAlignment = .center
         idLabel.text = Localized("nft.detail.section.id", item.identifier)
         views.append(idLabel)
-        views.append(.vSpace(height: Theme.paddingHalf * 0.75))
+        let vSpacer = UIView()
+        vSpacer.backgroundColor = .clear
+        vSpacer.addConstraint(
+            vSpacer.heightAnchor.constraint(equalToConstant: Theme.paddingHalf * 0.75)
+        )
+        views.append(vSpacer)
         let containerView = UIView()
         let vStackView = VStackView(views)
         vStackView.spacing = Theme.paddingHalf
