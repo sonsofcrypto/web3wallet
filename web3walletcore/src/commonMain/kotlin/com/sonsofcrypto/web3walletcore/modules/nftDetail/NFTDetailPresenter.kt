@@ -77,6 +77,7 @@ class DefaultNFTDetailPresenter(
             nft.previewImageUrl,
             nft.fallbackText,
             nft.tokenId.toDecimalString(),
+            nft.name,
             listOf(description) +
                 (if (nft.properties.isEmpty()) emptyList() else listOf(props)) +
                 listOf(other)
