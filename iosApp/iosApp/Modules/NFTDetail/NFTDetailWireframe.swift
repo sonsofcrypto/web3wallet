@@ -54,7 +54,7 @@ extension DefaultNFTDetailWireframe {
 private extension DefaultNFTDetailWireframe {
     
     func wireUp() -> UIViewController {
-        let vc: NFTDetailViewController = UIStoryboard(.nftDetail).instantiate()
+        let vc: NFTDetailViewController = UIStoryboard(.main).instantiate()
         let interactor = DefaultNFTDetailInteractor(nftService: nftsService)
         let presenter = DefaultNFTDetailPresenter(
             view: WeakRef(referred: vc),

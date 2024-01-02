@@ -1,6 +1,8 @@
 package com.sonsofcrypto.web3walletcore.modules.nftDetail
 
+import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
+import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeDestination.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeDestination.Send
 
@@ -33,6 +35,51 @@ class DefaultNFTDetailPresenter(
     }
 
     private fun updateView() {
-        view.get()?.update(NFTDetailViewModel(nft, collection))
+        view.get()?.update(viewModel())
+    }
+
+    private fun viewModel(): NFTDetailViewModel {
+        val description = NFTDetailViewModel.InfoGroup(
+            Localized("nft.detail.section.title.description"),
+            listOf(
+                NFTDetailViewModel.InfoGroup.Item(null, collection.description)
+            )
+        )
+        val props = NFTDetailViewModel.InfoGroup(
+            Localized("nft.detail.section.title.properties"),
+            nft.properties.map {
+                NFTDetailViewModel.InfoGroup.Item(it.name, it.value)
+            }
+        )
+        val other = NFTDetailViewModel.InfoGroup(
+            Localized("nft.detail.section.title.other"),
+            listOf(
+                NFTDetailViewModel.InfoGroup.Item(
+                    Localized("nft.detail.section.title.other.contractAddress"),
+                    nft.address,
+                ),
+                NFTDetailViewModel.InfoGroup.Item(
+                    Localized("nft.detail.section.title.other.schemaName"),
+                    nft.schemaName,
+                ),
+                NFTDetailViewModel.InfoGroup.Item(
+                    Localized("nft.detail.section.title.other.tokenId"),
+                    nft.tokenId.toDecimalString(),
+                ),
+                NFTDetailViewModel.InfoGroup.Item(
+                    Localized("nft.detail.section.title.other.network"),
+                    Network.ethereum().name,
+                ),
+            )
+        )
+        return NFTDetailViewModel(
+            nft.gatewayImageUrl,
+            nft.previewImageUrl,
+            nft.fallbackText,
+            nft.tokenId.toDecimalString(),
+            listOf(description) +
+                (if (nft.properties.isEmpty()) emptyList() else listOf(props)) +
+                listOf(other)
+        )
     }
 }
