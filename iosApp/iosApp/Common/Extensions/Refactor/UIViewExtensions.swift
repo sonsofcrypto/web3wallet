@@ -86,13 +86,6 @@ extension Array where Element == UIView.Constraint {
             .layout(anchor: .trailingAnchor, constant: .equalTo(constant: padding))
         ]
     }
-
-    func adding(_ constraint: UIView.Constraint) -> [UIView.Constraint] {
-
-        var array = self
-        array.append(constraint)
-        return array
-    }
 }
 
 private extension UIView {
