@@ -27,7 +27,7 @@ private extension NFTDetailViewController {
         sectionTitle.text = Localized("nft.detail.section.title.description")
         sectionTitle.numberOfLines = 0
         vStack.addArrangedSubview(sectionTitle)
-        vStack.addArrangedSubview(.dividerLine())
+        vStack.addArrangedSubview(TransparentLineView())
         let sectionContent = UILabel()
         sectionContent.apply(style: .body)
         sectionContent.text = description
