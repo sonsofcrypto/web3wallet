@@ -26,6 +26,7 @@ final class NFTDetailViewController: UICollectionViewController, ButtonSheetCont
 
     func update(with viewModel: NFTDetailViewModel) {
         self.viewModel = viewModel
+        title = viewModel.title
         collectionView.reloadData()
     }
 

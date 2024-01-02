@@ -18,6 +18,7 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 - Deploy transaction address crash fix
 - Making content offset consistent
 - Removing unused elements 
+- NFTDetail module refactor
 
 ### v1.1.2 #45 Prv & Xprv key accounts imports & bug fixes
 - Import prv & xprv keys

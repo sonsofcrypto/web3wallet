@@ -5,6 +5,7 @@ data class NFTDetailViewModel(
     val fallBackImageURL: String?,
     val fallBackTest: String,
     val tokenID: String,
+    val title: String,
     val infos: List<InfoGroup>
 ) {
     data class InfoGroup(
