@@ -16,6 +16,7 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 ### v1.1.3 #46
 - Deploy transaction address crash fix
+- Making content offset consistent
 
 ### v1.1.2 #45 Prv & Xprv key accounts imports & bug fixes
 - Import prv & xprv keys

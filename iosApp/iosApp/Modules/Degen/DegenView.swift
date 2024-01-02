@@ -33,6 +33,7 @@ final class DegenViewController: BaseViewController {
         collectionView.indexPathsForSelectedItems?.forEach {
             collectionView.deselectItem(at: $0, animated: true)
         }
+        collectionView.contentInset.bottom = Theme.padding.twice
     }
 
     deinit {

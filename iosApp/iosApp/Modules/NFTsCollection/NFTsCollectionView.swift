@@ -116,7 +116,7 @@ private extension NFTsCollectionViewController {
     }
     
     func applyTheme(_ theme: ThemeProtocol) {
-        cv?.contentInset.bottom = Theme.padding
+        cv?.contentInset.bottom = Theme.padding.twice
         cv?.contentInset.top = Theme.padding
         cv?.refreshControl?.tintColor = Theme.color.textPrimary
     }
