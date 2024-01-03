@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3lib.services.keyStore
 
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.MNEMONIC
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.PRVKEY
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.VIEW_ONLY
 import com.sonsofcrypto.web3lib.types.Network
 import kotlinx.serialization.Serializable
 /**
@@ -60,6 +61,7 @@ data class SignerStoreItem(
     fun primaryAddress(network: Network = Network.ethereum()): String = when {
         // TODO: When nav to mnemonic update addresses for all networks
         type == PRVKEY -> addresses["evm_${network.id()}"] ?: fallbackAddr
+        type == VIEW_ONLY -> addresses["evm_${network.id()}"] ?: fallbackAddr
         type == MNEMONIC && saltMnemonic -> fallbackAddr
         type == MNEMONIC && !saltMnemonic -> addresses[derivationPath]
             ?: fallbackAddr

@@ -22,7 +22,7 @@ final class DefaultSignersWireframeFactory {
     private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let updatePrvKey: PrvKeyUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
-    private let importPrvKey: PrvKeyImportWireframeFactory
+    private let importPrvKey: AccountImportWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
 
@@ -34,7 +34,7 @@ final class DefaultSignersWireframeFactory {
         updateMnemonic: MnemonicUpdateWireframeFactory,
         updatePrvKey: PrvKeyUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
-        importPrvKey: PrvKeyImportWireframeFactory,
+        importPrvKey: AccountImportWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         authenticateWireframeFactory: AuthenticateWireframeFactory
     ) {

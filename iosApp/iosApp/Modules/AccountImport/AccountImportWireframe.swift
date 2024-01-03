@@ -5,9 +5,9 @@
 import UIKit
 import web3walletcore
 
-final class DefaultPrvKeyImportWireframe {
+final class DefaultAccountImportWireframe {
     private weak var parent: UIViewController?
-    private let context: PrvKeyImportWireframeContext
+    private let context: AccountImportWireframeContext
     private let passwordService: PasswordService
     private let signerStoreService: SignerStoreService
     private let addressService: AddressService
@@ -18,7 +18,7 @@ final class DefaultPrvKeyImportWireframe {
 
     init(
         _ parent: UIViewController?,
-        context: PrvKeyImportWireframeContext,
+        context: AccountImportWireframeContext,
         signerStoreService: SignerStoreService,
         passwordService: PasswordService,
         clipboardService: ClipboardService,
@@ -35,7 +35,7 @@ final class DefaultPrvKeyImportWireframe {
     }
 }
 
-extension DefaultPrvKeyImportWireframe {
+extension DefaultAccountImportWireframe {
 
     func present() {
         let vc = wireUp()
@@ -53,9 +53,9 @@ extension DefaultPrvKeyImportWireframe {
         presentingTopVc?.present(vc, animated: true)
     }
 
-    func navigate(to destination: PrvKeyImportWireframeDestination) {
+    func navigate(to destination: AccountImportWireframeDestination) {
         let presentingTopVc = (parent as? UINavigationController)?.topVc
-        if destination is PrvKeyImportWireframeDestination.Dismiss {
+        if destination is AccountImportWireframeDestination.Dismiss {
             // NOTE: Needs next run loop dispatch so that collectionView has
             // enough time to reload to have target cell for animation
             DispatchQueue.main.async { [weak presentingTopVc] in
@@ -65,18 +65,18 @@ extension DefaultPrvKeyImportWireframe {
     }
 }
 
-private extension DefaultPrvKeyImportWireframe {
+private extension DefaultAccountImportWireframe {
 
     func wireUp() -> UIViewController {
-        let interactor = DefaultPrvKeyImportInteractor(
+        let interactor = DefaultAccountImportInteractor(
             signerStoreService: signerStoreService,
             passwordService: passwordService,
             addressService: addressService,
             clipboardService: clipboardService,
             settingsService: settingsService
         )
-        let vc: PrvKeyImportViewController = UIStoryboard(.main).instantiate()
-        let presenter = DefaultPrvKeyImportPresenter(
+        let vc: AccountImportViewController = UIStoryboard(.main).instantiate()
+        let presenter = DefaultAccountImportPresenter(
             view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor,
@@ -90,7 +90,7 @@ private extension DefaultPrvKeyImportWireframe {
     }
 }
 
-extension DefaultPrvKeyImportWireframe {
+extension DefaultAccountImportWireframe {
     enum Constant {
         static let saltExplanationURL = URL(
             string: "https://www.youtube.com/watch?v=XqB5xA62gLw"

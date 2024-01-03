@@ -20,7 +20,6 @@ class DefaultNetworkSettingsInteractor(
 ): NetworkSettingsInteractor {
 
     override fun select(type: Type, network: Network) {
-        println("=== type $type")
         val provider = when (type) {
             Type.POCKET -> ProviderPocket(network)
             Type.ALCHEMY -> ProviderAlchemy(network)

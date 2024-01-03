@@ -16,7 +16,7 @@ final class DefaultSignersWireframe {
     private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let updatePrvKey: PrvKeyUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
-    private let importPrvKey: PrvKeyImportWireframeFactory
+    private let importPrvKey: AccountImportWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
 
@@ -31,7 +31,7 @@ final class DefaultSignersWireframe {
         updateMnemonic: MnemonicUpdateWireframeFactory,
         updatePrvKey: PrvKeyUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
-        importPrivKey: PrvKeyImportWireframeFactory,
+        importPrivKey: AccountImportWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         authenticateWireframeFactory: AuthenticateWireframeFactory
     ) {
@@ -81,8 +81,11 @@ extension DefaultSignersWireframe {
             let context = MnemonicImportWireframeContext(handler: input.handler)
             importMnemonic.make(vc, context: context).present()
         }
-        if let input =  destination as? SignersWireframeDestination.ImportPrvKey {
-            let context = PrvKeyImportWireframeContext(handler: input.handler)
+        if let input =  destination as? SignersWireframeDestination.ImportAccount {
+            let context = AccountImportWireframeContext(
+                signerType: input.signerType,
+                handler: input.handler
+            )
             importPrvKey.make(vc, context: context).present()
         }
         if let input = destination as? SignersWireframeDestination.EditSignersItem {

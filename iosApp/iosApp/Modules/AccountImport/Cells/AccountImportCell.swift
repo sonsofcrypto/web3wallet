@@ -5,7 +5,7 @@
 import UIKit
 import web3walletcore
 
-final class PrvKeyImportCell: ThemeCell {
+final class AccountImportCell: ThemeCell {
     typealias InputHandler = (_ text: String) -> Void
 
     @IBOutlet weak var textView: UITextView?
@@ -35,7 +35,7 @@ final class PrvKeyImportCell: ThemeCell {
     }
 
     func update(
-        with viewModel: PrvKeyInputViewModel?,
+        with viewModel: AccountImportInputViewModel?,
         handler: @escaping InputHandler
     ) -> Self {
         self.handler = handler
@@ -63,7 +63,7 @@ final class PrvKeyImportCell: ThemeCell {
     }
 }
 
-extension PrvKeyImportCell: UITextViewDelegate {
+extension AccountImportCell: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         handler?(textView.text)
