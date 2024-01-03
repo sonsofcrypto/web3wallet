@@ -2221,7 +2221,7 @@
         <!--Import Prv Key-->
         <scene sceneID="ayV-rh-DLF">
             <objects>
-                <collectionViewController storyboardIdentifier="PrvKeyImportViewController" title="Import Prv Key" id="SIS-jr-b5E" customClass="PrvKeyImportViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="AccountImportViewController" title="Import Prv Key" id="SIS-jr-b5E" customClass="AccountImportViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="a3d-eq-J4X" customClass="CollectionView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2233,7 +2233,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PrvKeyImportCell" id="n8y-go-mTf" customClass="PrvKeyImportCell" customModule="iosApp" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AccountImportCell" id="n8y-go-mTf" customClass="AccountImportCell" customModule="iosApp" customModuleProvider="target">
                                 <rect key="frame" x="16" y="50" width="343" height="149"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Hp5-AZ-q3c">

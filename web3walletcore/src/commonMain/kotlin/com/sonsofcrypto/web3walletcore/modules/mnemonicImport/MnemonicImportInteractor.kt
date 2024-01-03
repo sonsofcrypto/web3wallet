@@ -124,7 +124,7 @@ class DefaultMnemonicImportInteractor(
     override fun createMnemonicSigner(): SignerStoreItem {
         val cnf = MnemonicSignerConfig(
             bip39.mnemonic, name, passUnlockWithBio, iCloudSecretStorage,
-            saltMnemonicOn, passwordType,
+            saltMnemonicOn, passwordType
         )
         val item = signerStoreService.createMnemonicSigner(cnf, password, salt)
         for (i in 1..<accounts.count()) {

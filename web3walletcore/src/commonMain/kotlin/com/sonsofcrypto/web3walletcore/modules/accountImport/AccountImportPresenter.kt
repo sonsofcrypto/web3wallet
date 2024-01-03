@@ -39,7 +39,7 @@ import com.sonsofcrypto.web3walletcore.modules.accountImport.AccountImportPresen
 import com.sonsofcrypto.web3walletcore.modules.accountImport.AccountImportPresenterEvent.SetName
 import com.sonsofcrypto.web3walletcore.modules.accountImport.AccountImportPresenterEvent.SetPassType
 import com.sonsofcrypto.web3walletcore.modules.accountImport.AccountImportPresenterEvent.SetPassword
-import com.sonsofcrypto.web3walletcore.modules.accountImport.AccountImportPresenterEvent.ViewAccount
+import com.sonsofcrypto.web3walletcore.modules.accountImport.AccountImportPresenterEvent.ViewPrvKey
 import kotlin.time.Duration.Companion.seconds
 
 sealed class AccountImportPresenterEvent {
@@ -52,7 +52,7 @@ sealed class AccountImportPresenterEvent {
     data class SetAccountName(val name: String, val idx: Int): AccountImportPresenterEvent()
     data class SetAccountHidden(val hidden: Boolean, val idx: Int): AccountImportPresenterEvent()
     data class CopyAccountAddress(val idx: Int): AccountImportPresenterEvent()
-    data class ViewAccount(val idx: Int): AccountImportPresenterEvent()
+    data class ViewPrvKey(val idx: Int): AccountImportPresenterEvent()
     data class AlertAction(val idx: Int, val text: String?): AccountImportPresenterEvent()
     data class RightBarButtonAction(val idx: Int): AccountImportPresenterEvent()
     data class CTAAction(val idx: Int): AccountImportPresenterEvent()
@@ -92,7 +92,7 @@ class DefaultAccountImportPresenter(
         is SetAccountName -> interactor.setAccountName(event.name, event.idx)
         is SetAccountHidden -> handleSetAccountHidden(event.hidden, event.idx)
         is CopyAccountAddress -> handleCopyAccountAddress(event.idx)
-        is ViewAccount -> handleViewPrivKey(event.idx)
+        is ViewPrvKey -> handleViewPrivKey(event.idx)
         is AlertAction -> handleAlertAction(event.idx, event.text)
         is RightBarButtonAction -> handleRightBarButtonAction(event.idx)
         is CTAAction -> handleCTAAction(event.idx)
@@ -221,8 +221,8 @@ class DefaultAccountImportPresenter(
     private fun presentAlert(viewModel: AlertViewModel) =
         view.get()?.presentAlert(viewModel)
 
-    private fun inputViewModel(): AccountKeyInputViewModel =
-        AccountKeyInputViewModel(
+    private fun inputViewModel(): AccountImportInputViewModel =
+        AccountImportInputViewModel(
             interactor.keyInput ?: "",
             interactor.isValid(),
             interactor.keyError(),
@@ -330,7 +330,7 @@ class DefaultAccountImportPresenter(
                         ),
                         mapOf(
                             "isHidden" to interactor.accountIsHidden(it),
-                            "hideTrailingBtn" to isPrvKeyMode
+                            "hideTrailingBtn" to !isPrvKeyMode
                         )
                     )
                 ),

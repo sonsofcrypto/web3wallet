@@ -13,7 +13,7 @@ sealed class SignersWireframeDestination {
     data class NewMnemonic(val handler: SignerHandler): SignersWireframeDestination()
     data class ImportMnemonic(val handler: SignerHandler): SignersWireframeDestination()
     data class ImportAccount(
-        val type: SignerStoreItem.Type,
+        val signerType: SignerStoreItem.Type,
         val handler: SignerHandler
     ): SignersWireframeDestination()
     data class EditSignersItem(

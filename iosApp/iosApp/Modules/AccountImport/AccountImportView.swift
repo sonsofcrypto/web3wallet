@@ -5,10 +5,10 @@
 import UIKit
 import web3walletcore
 
-final class PrvKeyImportViewController: CollectionViewController {
+final class AccountImportViewController: CollectionViewController {
 
-    var presenter: PrvKeyImportPresenter!
-    var inputViewModel: PrvKeyInputViewModel?
+    var presenter: AccountImportPresenter!
+    var inputViewModel: AccountImportInputViewModel?
 
     override func configureUI() {
         enableCardFlipTransitioning = true
@@ -24,11 +24,11 @@ final class PrvKeyImportViewController: CollectionViewController {
         }
     }
 
-    // MARK: - PrvKeyImportView
+    // MARK: - AccountImportView
 
     func update(
         with viewModel: CollectionViewModel.Screen,
-        inputViewModel: PrvKeyInputViewModel?
+        inputViewModel: AccountImportInputViewModel?
     ) {
         let sameCnt = self.viewModel?.sections.count == viewModel.sections.count
         self.inputViewModel = inputViewModel
@@ -42,9 +42,9 @@ final class PrvKeyImportViewController: CollectionViewController {
         presenter.present()
     }
 
-    private func mnemonicImportCell() -> PrvKeyImportCell? {
-        cv?.visibleCells.first(where: { ($0 as? PrvKeyImportCell) != nil })
-            as? PrvKeyImportCell
+    private func mnemonicImportCell() -> AccountImportCell? {
+        cv?.visibleCells.first(where: { ($0 as? AccountImportCell) != nil })
+            as? AccountImportCell
     }
 
     // MARK: - UICollectionViewDataSource
@@ -74,7 +74,7 @@ final class PrvKeyImportViewController: CollectionViewController {
         }
         switch viewModel {
         case _ as CellViewModel.Text:
-            return cv.dequeue(PrvKeyImportCell.self, for: indexPath)
+            return cv.dequeue(AccountImportCell.self, for: indexPath)
                 .update(with: inputViewModel) { [weak self] str in
                     self?.keyInputDidChange(str)
                 }
@@ -208,7 +208,7 @@ final class PrvKeyImportViewController: CollectionViewController {
     }
 
     func keyInputDidChange(_ text: String) {
-        presenter.handleEvent(.SetKey(text: text))
+        presenter.handleEvent(.SetInput(text: text))
     }
 
     func nameDidChange(_ name: String) {
@@ -288,7 +288,7 @@ final class PrvKeyImportViewController: CollectionViewController {
 
 // MARK: - Configure UI
 
-private extension PrvKeyImportViewController {
+private extension AccountImportViewController {
 
     func isAccountsSection(_ idxPath: IndexPath) -> Bool {
         idxPath.section >= 2
@@ -299,7 +299,7 @@ private extension PrvKeyImportViewController {
     }
 }
 
-private extension PrvKeyImportViewController {
+private extension AccountImportViewController {
     enum Constant {
         static let mnemonicCellHeight: CGFloat = 110
         static let cellOpenHeight: CGFloat = 138

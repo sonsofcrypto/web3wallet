@@ -7,14 +7,14 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel
 interface AccountImportView {
     fun update(
         viewModel: CollectionViewModel.Screen,
-        inputViewModel: AccountKeyInputViewModel,
+        inputViewModel: AccountImportInputViewModel,
     )
     fun presentAlert(viewModel: AlertViewModel)
     fun presentToast(viewModel: ToastViewModel)
     fun scrollToBottom()
 }
 
-data class AccountKeyInputViewModel(
+data class AccountImportInputViewModel(
     val key: String,
     val isValid: Boolean,
     val err: AccountImportError?

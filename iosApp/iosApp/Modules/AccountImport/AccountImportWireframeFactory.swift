@@ -5,15 +5,15 @@
 import UIKit
 import web3walletcore
 
-protocol PrvKeyImportWireframeFactory {
+protocol AccountImportWireframeFactory {
 
     func make(
         _ parent: UIViewController?,
-        context: PrvKeyImportWireframeContext
-    ) -> PrvKeyImportWireframe
+        context: AccountImportWireframeContext
+    ) -> AccountImportWireframe
 }
 
-final class DefaultPrvKeyImportWireframeFactory {
+final class DefaultAccountImportWireframeFactory {
     private let signerStoreService: SignerStoreService
     private let passwordService: PasswordService
     private let clipboardService: ClipboardService
@@ -35,12 +35,12 @@ final class DefaultPrvKeyImportWireframeFactory {
     }
 }
 
-extension DefaultPrvKeyImportWireframeFactory: PrvKeyImportWireframeFactory {
+extension DefaultAccountImportWireframeFactory: AccountImportWireframeFactory {
     func make(
         _ parent: UIViewController?,
-        context: PrvKeyImportWireframeContext
-    ) -> PrvKeyImportWireframe {
-        DefaultPrvKeyImportWireframe(
+        context: AccountImportWireframeContext
+    ) -> AccountImportWireframe {
+        DefaultAccountImportWireframe(
             parent,
             context: context,
             signerStoreService: signerStoreService,
@@ -52,11 +52,11 @@ extension DefaultPrvKeyImportWireframeFactory: PrvKeyImportWireframeFactory {
     }
 }
 
-final class PrvKeyImportWireframeFactoryAssembler: AssemblerComponent {
+final class AccountImportWireframeFactoryAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> PrvKeyImportWireframeFactory in
-            DefaultPrvKeyImportWireframeFactory(
+        registry.register(scope: .instance) { resolver -> AccountImportWireframeFactory in
+            DefaultAccountImportWireframeFactory(
                 signerStoreService: resolver.resolve(),
                 passwordService: resolver.resolve(),
                 clipboardService: resolver.resolve(),
