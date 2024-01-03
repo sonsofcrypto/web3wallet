@@ -4,6 +4,7 @@ import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.address.AddressService
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.MNEMONIC
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.PRVKEY
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.VIEW_ONLY
 import com.sonsofcrypto.web3lib.services.uuid.UUIDService
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
@@ -38,6 +39,17 @@ data class MnemonicSignerConfig(
 data class PrvKeySignerConfig(
     /** hex string of 32 bytes of private key */
     val key: String,
+    val name: String,
+    val passUnlockWithBio: Boolean,
+    val iCloudSecretStorage: Boolean,
+    val passwordType: SignerStoreItem.PasswordType,
+    val sortOrder: UInt? = null,
+    val hidden: Boolean? = false,
+)
+
+data class AddressVoidSignerConfig(
+    /** hex string of 20 bytes of address */
+    val address: String,
     val name: String,
     val passUnlockWithBio: Boolean,
     val iCloudSecretStorage: Boolean,
@@ -91,6 +103,16 @@ interface SignerStoreService {
     /** Create `SignerStoreItem` & `SecretStorage` & adds it to store */
     fun createPrivKeySigner(
         config: PrvKeySignerConfig,
+        password: String
+    ): SignerStoreItem
+    /** Generates `SignerStoreItem` & `SecretStorage` without adding to store */
+    fun generateAddressVoidSigner(
+        config: AddressVoidSignerConfig,
+        password: String,
+    ): Pair<SignerStoreItem, SecretStorage>
+    /** Create `SignerStoreItem` & `SecretStorage` & adds it to store */
+    fun createAddressVoidSigner(
+        config: AddressVoidSignerConfig,
         password: String
     ): SignerStoreItem
     /** Add `KeyStoreItem` using password and SecreteStorage.
@@ -266,6 +288,45 @@ class DefaultSignerStoreService(
         password: String,
     ): SignerStoreItem {
         val (signerStoreItem, secretStorage) = this.generatePrivKeySigner(
+            config = config,
+            password = password,
+        )
+        this.add(signerStoreItem, password, secretStorage)
+        return signerStoreItem
+    }
+
+    override fun generateAddressVoidSigner(
+        config: AddressVoidSignerConfig,
+        password: String,
+    ): Pair<SignerStoreItem, SecretStorage> {
+        val address = config.address
+        val signerStoreItem = SignerStoreItem(
+            uuid = UUIDService().uuidString(),
+            name = config.name,
+            sortOrder = config.sortOrder
+                ?: ((items().lastOrNull()?.sortOrder ?: 0u) + 100u),
+            type = VIEW_ONLY,
+            passUnlockWithBio = config.passUnlockWithBio,
+            iCloudSecretStorage = config.iCloudSecretStorage,
+            passwordType = config.passwordType,
+            derivationPath = "",
+            addresses = mapOf("evm_1" to address),
+            hidden = config.hidden,
+        )
+        val secretStorage = SecretStorage.encryptDefault(
+            id = signerStoreItem.uuid,
+            data = ByteArray(32),
+            password = password,
+            address = address,
+        )
+        return Pair(signerStoreItem, secretStorage)
+    }
+
+    override fun createAddressVoidSigner(
+        config: AddressVoidSignerConfig,
+        password: String,
+    ): SignerStoreItem {
+        val (signerStoreItem, secretStorage) = this.generateAddressVoidSigner(
             config = config,
             password = password,
         )

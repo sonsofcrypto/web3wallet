@@ -1,6 +1,8 @@
 package com.sonsofcrypto.web3walletcore.modules.signers
 
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.PRVKEY
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.VIEW_ONLY
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.execDelayed
 import com.sonsofcrypto.web3walletcore.common.viewModels.BarButtonViewModel
@@ -38,9 +40,8 @@ import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestinati
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.CreateMultisig
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.DashboardOnboarding
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.EditSignersItem
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.ImportAddress
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.ImportMnemonic
-import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.ImportPrvKey
+import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.ImportAccount
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.Networks
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.NewMnemonic
 import com.sonsofcrypto.web3walletcore.modules.signers.SignersWireframeDestination.SignersFullscreen
@@ -194,8 +195,12 @@ class DefaultSignersPresenter(
             0 -> wireframe.navigate(NewMnemonic { handleNewSigner(it) })
             1 -> wireframe.navigate(ImportMnemonic { handleNewSigner(it)})
             2 -> if (!ctaSheetExpanded) handleToggleSheet()
-                else wireframe.navigate(ImportPrvKey { handleNewSigner(it) })
-            3 -> wireframe.navigate(ImportAddress)
+                else wireframe.navigate(
+                    ImportAccount(PRVKEY) { handleNewSigner(it) }
+                )
+            3 -> wireframe.navigate(
+                ImportAccount(VIEW_ONLY) { handleNewSigner(it) }
+            )
             4 -> wireframe.navigate(ConnectHardwareWallet)
             5 -> wireframe.navigate(CreateMultisig)
         }

@@ -1,21 +1,21 @@
-package com.sonsofcrypto.web3walletcore.modules.prvKeyImport
+package com.sonsofcrypto.web3walletcore.modules.accountImport
 
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CollectionViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel
 
-interface PrvKeyImportView {
+interface AccountImportView {
     fun update(
         viewModel: CollectionViewModel.Screen,
-        inputViewModel: PrvKeyInputViewModel,
+        inputViewModel: AccountKeyInputViewModel,
     )
     fun presentAlert(viewModel: AlertViewModel)
     fun presentToast(viewModel: ToastViewModel)
     fun scrollToBottom()
 }
 
-data class PrvKeyInputViewModel(
+data class AccountKeyInputViewModel(
     val key: String,
     val isValid: Boolean,
-    val err: PrvKeyImportError?
+    val err: AccountImportError?
 )

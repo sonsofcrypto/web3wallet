@@ -184,14 +184,20 @@
 "mnemonic.toast.copy.prvKey" = "Private key copied to to pasteboard for 30 seconds.";
 "mnemonic.size.title" = "Mnemonic size";
 "mnemonic.alert.updating.title" = "Giga brain cypherpunk Pepe is deriving & securing wallets";
-"prvKeyImport.title.import" = "Import Private Key";
-"prvKeyImport.footer" = "Enter key hex bytes or xprv format. Never share private key with anyone. Whoever possess private key, has control of all the crypto in this account.";
+"accountImport.prv.title" = "Import Private Key";
+"accountImport.address.title" = "Import Address Key";
+"accountImport.prv.footer" = "Enter key hex bytes or xprv format. Never share private key with anyone. Whoever possess private key, has control of all the crypto in this account.";
+"accountImport.address.footer" = "Enter address to create view only wallet. You will be able to view balances, translations, nts etc. But you will not be able to send any kind of translations.";
+
+"accountImport.error.hexDigit" = "Contains invalid hex digit";
+"accountImport.error.invalid" = "Private key you've entered appears to be invalid.";
+"accountImport.error.address" = "Private key you've entered appears to be invalid.";
+"accountImport.prv.accountSectionTitle" = "Private Key Account";
+"accountImport.address.accountSectionTitle" = "Address Only Account";
+
 "prvKeyImport.update.footer" = "Never share private key with anyone. Whoever possess private key, has control of all the crypto in this account.";
 "prvKeyImport.footerHighlightWord0" = "Never share";
 "prvKeyImport.footerHighlightWord1" = "has control of all the crypto";
-"prvKeyImport.error.hexDigit" = "Contains invalid hex digit";
-"prvKeyImport.error.invalid" = "Private key you've entered appears to be invalid.";
-"prvKeyImport.accountSectionTitle" = "Private Key Account";
 
 "networks.header.l1s" = "Layer #1s";
 "networks.header.l2s" = "Layer #2s";

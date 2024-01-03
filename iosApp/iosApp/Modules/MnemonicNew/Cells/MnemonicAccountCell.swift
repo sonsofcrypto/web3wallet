@@ -87,11 +87,11 @@ extension MnemonicAccountCell {
         nameTextField.text = viewModel.items.first?.value
         copyAddressButton.setTitle(viewModel.items[1].key, for: .normal)
         viewPrivKeyButton.setTitle(viewModel.items[1].value, for: .normal)
+        viewPrivKeyButton.isHidden = (viewModel.userInfo?["hideTrailingBtn"] as? Bool) ?? false
         address = viewModel.items[1].placeholder
         self.nameHandler = nameHandler
         self.addressHandler = addressHandler
         self.privKeyHandler = privKeyHandler
-        self.showAsHidden = (viewModel.userInfo?["isHidden"] as? Bool) ?? false
         return self
     }
 }
