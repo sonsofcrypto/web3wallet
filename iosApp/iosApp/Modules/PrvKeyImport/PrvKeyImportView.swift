@@ -177,11 +177,6 @@ final class PrvKeyImportViewController: CollectionViewController {
         _ collectionView: UICollectionView,
         shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
-        let cell = cv.cellForItem(at: indexPath)
-        if indexPath.isZero() {
-            presenter.handleEvent(.CopyPrvKey())
-            (cell as? MnemonicNewCell)?.animateCopiedToPasteboard()
-        }
         return false
     }
 

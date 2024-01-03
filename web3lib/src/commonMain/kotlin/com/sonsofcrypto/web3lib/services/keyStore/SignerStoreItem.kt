@@ -38,7 +38,7 @@ data class SignerStoreItem(
 ) {
     @Serializable
     enum class Type {
-        MNEMONIC, PRVKEY, PUBKEY, HARDWARE, MULTISIG,
+        MNEMONIC, PRVKEY, VIEW_ONLY, HARDWARE, MULTISIG,
     }
 
     @Serializable

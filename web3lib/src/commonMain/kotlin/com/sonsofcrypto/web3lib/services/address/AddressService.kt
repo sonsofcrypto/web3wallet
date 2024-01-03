@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3lib.services.address
 
 import com.sonsofcrypto.web3lib.types.ExtKey
+import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.Curve
 import com.sonsofcrypto.web3lib.utils.compressedPubKey
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
@@ -14,6 +15,8 @@ interface AddressService {
 
     fun addressFromPrivKeyBytes(privKey: ByteArray): String
     fun byteAddressFromPrivKeyBytes(privKey: ByteArray): ByteArray
+
+    fun isValid(address: String, network: Network = Network.ethereum()): Boolean
 
     companion object
 }
@@ -41,6 +44,9 @@ class DefaultAddressService: AddressService {
         return keccak256(bytes).copyOfRange(12, 32)
     }
 
-
+    override fun isValid(address: String, network: Network): Boolean {
+        // TODO: Validate address
+        return true
+    }
 }
 

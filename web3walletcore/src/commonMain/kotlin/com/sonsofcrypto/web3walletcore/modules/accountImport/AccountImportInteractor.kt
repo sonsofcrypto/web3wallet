@@ -1,27 +1,28 @@
-package com.sonsofcrypto.web3walletcore.modules.prvKeyImport
+package com.sonsofcrypto.web3walletcore.modules.accountImport
 
 import com.sonsofcrypto.web3lib.services.address.AddressService
+import com.sonsofcrypto.web3lib.services.keyStore.AddressVoidSignerConfig
 import com.sonsofcrypto.web3lib.services.keyStore.PrvKeySignerConfig
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.utils.decodeBase58WithChecksum
-import com.sonsofcrypto.web3lib.utils.defaultDerivationPath
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.isValidHexString
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.extensions.trimHexPrefix
-import com.sonsofcrypto.web3lib.utils.lastDerivationPathComponent
 import com.sonsofcrypto.web3lib.utils.secureRand
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.modules.prvKeyImport.PrvKeyImportError.INVALID_PRV_KEY
+import com.sonsofcrypto.web3walletcore.modules.accountImport.AccountImportError.INVALID_ADDRESS
+import com.sonsofcrypto.web3walletcore.modules.accountImport.AccountImportError.INVALID_PRV_KEY
 import com.sonsofcrypto.web3walletcore.services.clipboard.ClipboardService
 import com.sonsofcrypto.web3walletcore.services.password.PasswordService
 import com.sonsofcrypto.web3walletcore.services.settings.SettingsService
 
-enum class PrvKeyImportError { NOT_HEX_DIGIT, INVALID_PRV_KEY }
+enum class AccountImportError { NOT_HEX_DIGIT, INVALID_PRV_KEY, INVALID_ADDRESS }
 
-interface PrvKeyImportInteractor {
+interface AccountImportInteractor {
+    var signerType: SignerStoreItem.Type
     var keyInput: String?
     var name: String
     var iCloudSecretStorage: Boolean
@@ -30,12 +31,12 @@ interface PrvKeyImportInteractor {
     var passUnlockWithBio: Boolean
     var showHidden: Boolean
 
-    fun prvKey(): String
-    fun isPrvKeyValid(): Boolean
-    fun prvKeyError(): PrvKeyImportError?
+    fun key(): String
+    fun isValid(): Boolean
+    fun keyError(): AccountImportError?
     fun passError(password: String, type: SignerStoreItem.PasswordType): String?
 
-    fun createPrvKeySigner(): SignerStoreItem
+    fun createSigner(): SignerStoreItem
     fun generateDefaultNameIfNeeded()
     fun generatePassword(): String
     fun pasteToClipboard(text: String)
@@ -54,17 +55,21 @@ interface PrvKeyImportInteractor {
     fun globalExpertMode(): Boolean
 }
 
-class DefaultPrvKeyImportInteractor(
+class DefaultAccountImportInteractor(
     private val signerStoreService: SignerStoreService,
     private val passwordService: PasswordService,
     private val addressService: AddressService,
     private val clipboardService: ClipboardService,
     private val settingsService: SettingsService,
-): PrvKeyImportInteractor {
+): AccountImportInteractor {
+    private val isPrvKeyMode: Boolean
+        get() { return signerType == SignerStoreItem.Type.PRVKEY }
+
     private var accounts: MutableList<Account> = mutableListOf(
         Account("", "", "", false)
     )
 
+    override var signerType: SignerStoreItem.Type = SignerStoreItem.Type.PRVKEY
     override var keyInput: String? = ""
         set(value) { field = value; keyInputDidChange(value ?: "") }
 
@@ -79,27 +84,33 @@ class DefaultPrvKeyImportInteractor(
     override var showHidden: Boolean = false
 
     private fun keyInputDidChange(keyInput: String) =
-        if (isPrvKeyValid()) regenerateAccountsAndAddresses() else Unit
+        if (isValid()) regenerateAccountsAndAddresses() else Unit
 
-    override fun prvKey(): String =
+    override fun key(): String =
         keyInput?.trim()?.trimHexPrefix() ?: ""
 
-    private fun prvKeyBytes(): ByteArray = when (prvKey().length) {
-        64 -> prvKey().hexStringToByteArray()
-        111 -> prvKey().decodeBase58WithChecksum().takeLast(32).toByteArray()
+    private fun prvKeyBytes(): ByteArray = when (key().length) {
+        64 -> key().hexStringToByteArray()
+        111 -> key().decodeBase58WithChecksum().takeLast(32).toByteArray()
         else -> ByteArray(0)
     }
 
-    override fun isPrvKeyValid(): Boolean =
-        if (!(prvKey().length == 64 || prvKey().length == 111)) false
-        else prvKeyError() == null
+    override fun isValid(): Boolean =
+        if (isPrvKeyMode)
+            if (!(key().length == 64 || key().length == 111)) false
+            else keyError() == null
+        else
+            if (key().length != 40) false else keyError() == null
 
-    override fun prvKeyError(): PrvKeyImportError? {
-        val key = prvKey().lowercase()
+    override fun keyError(): AccountImportError? {
+        if (!isPrvKeyMode) {
+            return if (addressService.isValid(key())) null else INVALID_ADDRESS
+        }
+        val key = key().lowercase()
         if (key.length < 4)
             return null
         if (key.substring(0, 4) != "xprv" && !key.isValidHexString(true))
-            return PrvKeyImportError.NOT_HEX_DIGIT
+            return AccountImportError.NOT_HEX_DIGIT
         if (key.length == 111 || key.length == 64)
             try {
                 addressService.addressFromPrivKeyBytes(prvKeyBytes())
@@ -114,13 +125,23 @@ class DefaultPrvKeyImportInteractor(
         type: SignerStoreItem.PasswordType
     ): String? = passwordService.validationError(pass, type)
 
-    override fun createPrvKeySigner(): SignerStoreItem {
-        val cnf = PrvKeySignerConfig(
-            prvKeyBytes().toHexString(), name, passUnlockWithBio,
-            iCloudSecretStorage, passwordType,
-        )
-        return signerStoreService.createPrivKeySigner(cnf, password)
-    }
+    override fun createSigner(): SignerStoreItem =
+        if (isPrvKeyMode)
+            signerStoreService.createPrivKeySigner(
+                PrvKeySignerConfig(
+                    prvKeyBytes().toHexString(), name, passUnlockWithBio,
+                    iCloudSecretStorage, passwordType,
+                ),
+                password
+            )
+        else
+            signerStoreService.createAddressVoidSigner(
+                AddressVoidSignerConfig(
+                    "0x" + key(), name, passUnlockWithBio, iCloudSecretStorage,
+                    passwordType,
+                ),
+                password
+            )
 
     override fun generateDefaultNameIfNeeded() = if (name.isEmpty()) {
         name = Localized("mnemonic.defaultWalletName")
@@ -144,7 +165,7 @@ class DefaultPrvKeyImportInteractor(
         account(idx).address
 
     override fun accountPrivKey(idx: Int, xprv: Boolean): String {
-        return prvKey()
+        return key()
     }
 
     override fun accountIsHidden(idx: Int): Boolean =
@@ -168,10 +189,10 @@ class DefaultPrvKeyImportInteractor(
         settingsService.expertMode
 
     private fun regenerateAccountsAndAddresses() {
-        if (!isPrvKeyValid()) return;
-        val keyBytes = prvKeyBytes()
+        if (!isValid()) return;
         accounts.forEachIndexed { idx, acc ->
-            acc.address = addressService.addressFromPrivKeyBytes(keyBytes)
+            acc.address = if (!isPrvKeyMode) "0x" + key()
+                else addressService.addressFromPrivKeyBytes( prvKeyBytes())
         }
     }
 

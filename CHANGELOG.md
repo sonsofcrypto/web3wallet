@@ -3,7 +3,7 @@
 | Prod / AppStore                                        | Staging                                                  | Dev / Nightly                                                 |
 |--------------------------------------------------------|----------------------------------------------------------|---------------------------------------------------------------|
 | ![pro](bundledAssets/images/testflight_prod.png)       | ![staging](bundledAssets/images/testflight_staging.png)  | ![dev.png](bundledAssets/images/testflight_dev.png)           |
-| web3wallet by sons of crypto Ξ v1.1.2 #45              | web3wallet by sons of crypto S v1.1.2 #45                | web3wallet by sons of crypto D v1.1.3 #46                     |
+| web3wallet by sons of crypto Ξ v1.1.2 #45              | web3wallet by sons of crypto S v1.1.2 #45                | web3wallet by sons of crypto D v1.1.3 #47                     |
 | AppStore RC.                                           | New features not quite AppStore ready. Great for testing | Living on the bleeding edge. Latest features, latest bugs. 🐛 |
 | [Download](https://testflight.apple.com/join/I4DFVaiH) | [Download](https://testflight.apple.com/join/5GiDXNJ3)   | [Download](https://testflight.apple.com/join/85JEPH96)        |
 
@@ -14,7 +14,8 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 # Release Notes 
 
-### v1.1.3 #46
+### v1.1.3 #47
+- Address only wallets
 - Deploy transaction address crash fix
 - Making content offset consistent
 - Removing unused elements 
