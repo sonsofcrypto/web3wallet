@@ -10,6 +10,7 @@ import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Sect
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.Wallets
 
 data class DashboardViewModel(
+    val title: String,
     val sections: List<Section>,
 ) {
     data class Section(

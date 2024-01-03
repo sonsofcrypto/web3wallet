@@ -142,7 +142,10 @@ class DefaultDashboardPresenter(
         view.get()?.update(viewModel)
     }
 
-    private fun viewModel(): DashboardViewModel = DashboardViewModel(sections())
+    private fun viewModel(): DashboardViewModel = DashboardViewModel(
+        interactor.selectedSignerName() ?: "WEB3WALLET",
+        sections()
+    )
 
     private fun sections(): List<Section> {
         val sections = mutableListOf<Section>()

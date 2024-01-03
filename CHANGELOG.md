@@ -16,6 +16,7 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 ### v1.1.3 #47
 - Address / View only wallets
+- Show wallet name in title bar
 - Deploy transaction address crash fix
 - Making content offset consistent
 - Removing unused elements 

@@ -48,6 +48,7 @@ interface DashboardInteractorLister {
 }
 
 interface DashboardInteractor {
+    fun selectedSignerName(): String?
     fun enabledNetworks(): List<Network>
     fun currencies(network: Network): List<Currency>
     fun setCurrencies(currencies: List<Currency>, network: Network)
@@ -78,6 +79,9 @@ class DefaultDashboardInteractor(
     private var listener: WeakRef<DashboardInteractorLister>? = null
     private val bgScope = CoroutineScope(bgDispatcher)
     private val uiScope = CoroutineScope(uiDispatcher)
+
+    override fun selectedSignerName(): String? =
+        walletService.selectedSignerName()
 
     override fun enabledNetworks(): List<Network> = networksService.enabledNetworks()
 
