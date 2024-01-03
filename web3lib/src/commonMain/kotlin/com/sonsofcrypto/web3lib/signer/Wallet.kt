@@ -45,6 +45,8 @@ interface SignerIntf {
     /** Returns the checksum address */
     @Throws(Throwable::class)
     fun address(): Address
+    /** Name of the signer */
+    fun signerName(): String?
 
     /** Signed prefixed-message. Bytes or encoded string as a UTF8-message */
     suspend fun signMessage(message: ByteArray): ByteArray
@@ -148,6 +150,9 @@ class Wallet(
             return Address.HexString(hexStrAddress)
         throw Error.MissingAddressError(path, signerStoreItem.uuid)
     }
+
+    override fun signerName(): String =
+        signerStoreItem.name
 
     override suspend fun signMessage(message: ByteArray): ByteArray {
         TODO("Not yet implemented")

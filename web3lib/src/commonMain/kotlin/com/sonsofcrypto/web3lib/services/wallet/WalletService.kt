@@ -64,6 +64,8 @@ interface WalletService {
     /** Set tracked currencies for network */
     fun setCurrencies(currencies: List<Currency>, network: Network)
 
+    /** Selected signer name */
+    fun selectedSignerName(): String?
     /** Address for network */
     fun address(network: Network): AddressHexString?
     /** Last known balance number for network connected to wallet  */
@@ -165,6 +167,9 @@ class DefaultWalletService(
         emit(WalletEvent.Currencies(network, currencies))
         currencyStoreService.cacheMetadata(currencies)
     }
+
+    override fun selectedSignerName(): String? =
+        selectedNetwork()?.let { networkService.wallet(it)?.signerName() }
 
     override fun address(network: Network): AddressHexString? {
         return networkService.wallet(network)?.address()?.toHexString()
