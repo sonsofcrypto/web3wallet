@@ -138,12 +138,11 @@ class DefaultDashboardPresenter(
         networks = interactor.enabledNetworks()
         nfts = interactor.nfts(Network.ethereum())
         nftCollections = interactor.nftCollections(Network.ethereum())
-        val viewModel = viewModel()
-        view.get()?.update(viewModel)
+        view.get()?.update(viewModel())
     }
 
     private fun viewModel(): DashboardViewModel = DashboardViewModel(
-        interactor.selectedSignerName() ?: "WEB3WALLET",
+        interactor.selectedSignerName()?.uppercase() ?: "WEB3WALLET",
         sections()
     )
 

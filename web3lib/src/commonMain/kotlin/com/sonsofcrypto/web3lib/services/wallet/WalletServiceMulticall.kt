@@ -87,6 +87,9 @@ class DefaultWalletServiceMulticall(
         currencyStoreService.cacheMetadata(currencies)
     }
 
+    override fun selectedSignerName(): String? =
+        selectedNetwork()?.let { networkService.wallet(it)?.signerName() }
+
     override fun address(network: Network): AddressHexString? {
         return networkService.wallet(network)?.address()?.toHexString()
     }
