@@ -5,16 +5,16 @@
 import UIKit
 import web3walletcore
 
-protocol PrvKeyUpdateWireframeFactory {
+protocol AccountUpdateWireframeFactory {
     func make(
         _ parent: UIViewController?,
-        context: PrvKeyUpdateWireframeContext
-    ) -> PrvKeyUpdateWireframe
+        context: AccountUpdateWireframeContext
+    ) -> AccountUpdateWireframe
 }
 
 // MARK: - DefaultMnemonicWireframeFactory
 
-final class DefaultPrvKeyUpdateWireframeFactory {
+final class DefaultAccountUpdateWireframeFactory {
     private let signerStoreService: SignerStoreService
     private let addressService: AddressService
     private let clipboardService: ClipboardService
@@ -41,13 +41,13 @@ final class DefaultPrvKeyUpdateWireframeFactory {
 
 // MARK: - MnemonicWireframeFactory
 
-extension DefaultPrvKeyUpdateWireframeFactory: PrvKeyUpdateWireframeFactory {
+extension DefaultAccountUpdateWireframeFactory: AccountUpdateWireframeFactory {
 
     func make(
         _ parent: UIViewController?,
-        context: PrvKeyUpdateWireframeContext
-    ) -> PrvKeyUpdateWireframe {
-        DefaultPrvKeyUpdateWireframe(
+        context: AccountUpdateWireframeContext
+    ) -> AccountUpdateWireframe {
+        DefaultAccountUpdateWireframe(
             parent,
             context: context,
             signerStoreService: signerStoreService,
@@ -62,11 +62,11 @@ extension DefaultPrvKeyUpdateWireframeFactory: PrvKeyUpdateWireframeFactory {
 
 // MARK: - Assembler
 
-final class PrvKeyUpdateWireframeFactoryAssembler: AssemblerComponent {
+final class AccountUpdateWireframeFactoryAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> PrvKeyUpdateWireframeFactory in
-            DefaultPrvKeyUpdateWireframeFactory(
+        registry.register(scope: .instance) { resolver -> AccountUpdateWireframeFactory in
+            DefaultAccountUpdateWireframeFactory(
                 signerStoreService: resolver.resolve(),
                 addressService: resolver.resolve(),
                 clipboardService: resolver.resolve(),

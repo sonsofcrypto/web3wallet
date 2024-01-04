@@ -2653,7 +2653,7 @@
         <!--Update Prv Key-->
         <scene sceneID="s4H-Nc-cpr">
             <objects>
-                <collectionViewController storyboardIdentifier="PrvKeyUpdateViewController" title="Update Prv Key" id="hby-Em-Owe" customClass="PrvKeyUpdateViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="AccountUpdateViewController" title="Update Prv Key" id="hby-Em-Owe" customClass="AccountUpdateViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="bbv-5Q-ngN" customClass="CollectionView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

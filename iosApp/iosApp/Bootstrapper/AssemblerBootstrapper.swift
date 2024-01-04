@@ -63,7 +63,7 @@ private extension AssemblerBootstrapper {
             MnemonicImportWireframeFactoryAssembler(),
             MnemonicConfirmationWireframeFactoryAssembler(),
             AccountImportWireframeFactoryAssembler(),
-            PrvKeyUpdateWireframeFactoryAssembler(),
+            AccountUpdateWireframeFactoryAssembler(),
             NetworksWireframeFactoryAssembler(),
             NetworkSettingsWireframeFactoryAssembler(),
             NFTsDashboardWireframeFactoryAssembler(),

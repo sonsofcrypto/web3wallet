@@ -14,7 +14,7 @@ final class DefaultSignersWireframe {
     private let clipboardService: ClipboardService
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
-    private let updatePrvKey: PrvKeyUpdateWireframeFactory
+    private let updatePrvKey: AccountUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
     private let importPrvKey: AccountImportWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
@@ -29,7 +29,7 @@ final class DefaultSignersWireframe {
         clipboardService: ClipboardService,
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
-        updatePrvKey: PrvKeyUpdateWireframeFactory,
+        updatePrvKey: AccountUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
         importPrivKey: AccountImportWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
@@ -89,8 +89,8 @@ extension DefaultSignersWireframe {
             importPrvKey.make(vc, context: context).present()
         }
         if let input = destination as? SignersWireframeDestination.EditSignersItem {
-            if input.item.type == .prvkey {
-                let context = PrvKeyUpdateWireframeContext(
+            if input.item.type == .prvkey || input.item.type == .viewOnly {
+                let context = AccountUpdateWireframeContext(
                     signerStoreItem: input.item,
                     updateHandler: input.updateHandler,
                     deleteHandler: input.deleteHandler
