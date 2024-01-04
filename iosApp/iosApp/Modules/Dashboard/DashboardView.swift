@@ -57,6 +57,7 @@ final class DashboardViewController: BaseViewController {
 extension DashboardViewController {
     
     func update(with viewModel: DashboardViewModel) {
+        navigationItem.title = viewModel.title
         if collectionView.refreshControl?.isRefreshing ?? false {
             collectionView.refreshControl?.endRefreshing()
         }
