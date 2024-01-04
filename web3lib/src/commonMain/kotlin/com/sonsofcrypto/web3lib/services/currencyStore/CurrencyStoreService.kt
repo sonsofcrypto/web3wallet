@@ -111,9 +111,7 @@ class DefaultCurrencyStoreService(
             coinGeckoService.market(ids, "usd", 0, "24h").forEach {
                 resultMap.put(it.id, it.toCurrencyMarketData())
             }
-        } catch (err: Throwable) {
-            println("[ERROR] $err")
-        }
+        } catch (err: Throwable) { }
         withContext(uiDispatcher) {
             resultMap.forEach {
                 markets.put(it.key, it.value)
@@ -137,7 +135,6 @@ class DefaultCurrencyStoreService(
             }
             return@withContext result
         } catch (err: Throwable) {
-            println("[ERROR] $err")
             return@withContext null
         }
     }

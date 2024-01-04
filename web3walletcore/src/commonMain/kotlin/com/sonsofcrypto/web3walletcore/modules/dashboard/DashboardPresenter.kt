@@ -8,7 +8,12 @@ import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.RegularAlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CandlesViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.Tint.DESTRUCTIVE
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Header.Balance
@@ -91,12 +96,12 @@ class DefaultDashboardPresenter(
             is DashboardPresenterEvent.ReceiveAction -> {
                 wireframe.navigate(DashboardWireframeDestination.Receive)
             }
-            is DashboardPresenterEvent.SendAction -> {
-                wireframe.navigate(DashboardWireframeDestination.Send(null))
-            }
-            is DashboardPresenterEvent.SwapAction -> {
-                wireframe.navigate(DashboardWireframeDestination.Swap)
-            }
+            is DashboardPresenterEvent.SendAction ->
+                if (interactor.isVoidSigner()) presentVoidSignerAlert()
+                else wireframe.navigate(DashboardWireframeDestination.Send(null))
+            is DashboardPresenterEvent.SwapAction ->
+                if (interactor.isVoidSigner()) presentVoidSignerAlert()
+                else wireframe.navigate(DashboardWireframeDestination.Swap)
             is DashboardPresenterEvent.DidTapAction -> {
                 didTapAction(event.idx)
             }
@@ -140,6 +145,15 @@ class DefaultDashboardPresenter(
         nftCollections = interactor.nftCollections(Network.ethereum())
         view.get()?.update(viewModel())
     }
+
+    private fun presentVoidSignerAlert() = view.get()?.presentAlert(
+        RegularAlertViewModel(
+            Localized("voidSigner.alert.title"),
+            Localized("voidSigner.alert.body"),
+            listOf(AlertViewModel.Action(Localized("Done"), NORMAL)),
+            ImageMedia.SysName("xmark.circle.fill", DESTRUCTIVE)
+        )
+    )
 
     private fun viewModel(): DashboardViewModel = DashboardViewModel(
         interactor.selectedSignerName()?.uppercase() ?: "WEB3WALLET",

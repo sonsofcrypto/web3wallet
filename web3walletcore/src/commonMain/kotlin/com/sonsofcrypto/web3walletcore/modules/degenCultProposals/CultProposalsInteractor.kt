@@ -11,6 +11,7 @@ interface CultProposalsInteractor {
     @Throws(Throwable::class)
     suspend fun fetch(): CultServiceResponse
     val hasCultBalance: Boolean
+    fun isVoidSigner(): Boolean
 }
 
 class DefaultCultProposalsInteractor(
@@ -24,4 +25,7 @@ class DefaultCultProposalsInteractor(
         val balance = walletService.balance(Network.ethereum(), Currency.cult())
         return balance.isGreaterThan(BigInt.zero)
     }
+
+    override fun isVoidSigner(): Boolean =
+        walletService.isSelectedVoidSigner()
 }

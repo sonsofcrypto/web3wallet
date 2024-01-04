@@ -66,6 +66,8 @@ interface WalletService {
 
     /** Selected signer name */
     fun selectedSignerName(): String?
+    /** Selected signer void signer (can sign transactions) */
+    fun isSelectedVoidSigner(): Boolean
     /** Address for network */
     fun address(network: Network): AddressHexString?
     /** Last known balance number for network connected to wallet  */
@@ -170,6 +172,10 @@ class DefaultWalletService(
 
     override fun selectedSignerName(): String? =
         selectedNetwork()?.let { networkService.wallet(it)?.signerName() }
+
+    override fun isSelectedVoidSigner(): Boolean =
+        selectedNetwork()?.let { networkService.wallet(it)?.isVoidSigner() }
+            ?: true
 
     override fun address(network: Network): AddressHexString? {
         return networkService.wallet(network)?.address()?.toHexString()

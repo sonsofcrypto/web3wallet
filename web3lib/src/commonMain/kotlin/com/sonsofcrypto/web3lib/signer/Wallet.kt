@@ -47,6 +47,8 @@ interface SignerIntf {
     fun address(): Address
     /** Name of the signer */
     fun signerName(): String?
+    /** Is void signer (can sign transaction) */
+    fun isVoidSigner(): Boolean
 
     /** Signed prefixed-message. Bytes or encoded string as a UTF8-message */
     suspend fun signMessage(message: ByteArray): ByteArray
@@ -153,6 +155,9 @@ class Wallet(
 
     override fun signerName(): String =
         signerStoreItem.name
+
+    override fun isVoidSigner(): Boolean =
+        signerStoreItem.type == SignerStoreItem.Type.VIEW_ONLY
 
     override suspend fun signMessage(message: ByteArray): ByteArray {
         TODO("Not yet implemented")

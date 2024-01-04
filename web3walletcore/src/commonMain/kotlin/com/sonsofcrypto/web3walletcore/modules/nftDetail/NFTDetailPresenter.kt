@@ -2,6 +2,12 @@ package com.sonsofcrypto.web3walletcore.modules.nftDetail
 
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.WeakRef
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.RegularAlertViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.Tint.DESTRUCTIVE
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeDestination.Dismiss
 import com.sonsofcrypto.web3walletcore.modules.nftDetail.NFTDetailWireframeDestination.Send
@@ -29,7 +35,15 @@ class DefaultNFTDetailPresenter(
 
     override fun handle(event: NFTDetailPresenterEvent) {
         when(event) {
-            is NFTDetailPresenterEvent.Send -> wireframe.navigate(Send(nft))
+            is NFTDetailPresenterEvent.Send ->
+                if (interactor.isVoidSigner()) view.get()?.presentAlert(
+                    RegularAlertViewModel(
+                        Localized("voidSigner.alert.title"),
+                        Localized("voidSigner.alert.body"),
+                        listOf(Action(Localized("Done"), NORMAL)),
+                        ImageMedia.SysName("xmark.circle.fill", DESTRUCTIVE)
+                    )
+                ) else wireframe.navigate(Send(nft))
             is NFTDetailPresenterEvent.Dismiss -> wireframe.navigate(Dismiss)
         }
     }

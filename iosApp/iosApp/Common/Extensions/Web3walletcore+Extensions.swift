@@ -11,6 +11,7 @@ extension DefaultAccountWireframe: AccountWireframe {
 }
 extension AccountViewController: AccountView {
     func update(viewModel: AccountViewModel) { update(with: viewModel) }
+    func presentAlert(viewModel: AlertViewModel) { presentAlert(with: viewModel) }
 }
 extension AccountPresenter {
     func handleEvent(_ event: AccountPresenterEvent) { handle(event____: event)  }
@@ -110,6 +111,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
 }
 extension DashboardViewController: DashboardView {
     func update(viewModel__________ viewModel: DashboardViewModel) { update(with: viewModel) }
+    func presentAlert(viewModel: AlertViewModel) { presentAlert(with: viewModel) }
 }
 extension DashboardPresenter {
     func handleEvent(_ event: DashboardPresenterEvent) { handle(event________________: event) }
@@ -133,6 +135,8 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
 }
 extension CultProposalsViewController: CultProposalsView {
     func update(viewModel_____________ viewModel: CultProposalsViewModel) { update(with: viewModel) }
+    func presentAlert(viewModel: AlertViewModel) { presentAlert(with: viewModel) }
+    func presentToast(viewModel: ToastViewModel) { presentToast(viewModel: viewModel) }
 }
 extension CultProposalsPresenter {
     func handleEvent(_ event: CultProposalsPresenterEvent) { handle(event___________________: event) }
@@ -144,6 +148,8 @@ extension DefaultDegenWireframe: DegenWireframe {
 }
 extension DegenViewController: DegenView {
     func update(viewModel___________ viewModel: DegenViewModel) { update(with: viewModel) }
+    func presentAlert(viewModel: AlertViewModel) { presentAlert(with: viewModel) }
+    func presentToast(viewModel: ToastViewModel) { presentToast(viewModel: viewModel) }
 }
 extension DegenPresenter {
     func handleEvent(_ event: DegenPresenterEvent) { handle(event_________________: event) }
@@ -271,6 +277,7 @@ extension DefaultNFTDetailWireframe: NFTDetailWireframe {
 }
 extension NFTDetailViewController: NFTDetailView {
     func update(viewModel__________________ viewModel: NFTDetailViewModel) { update(with: viewModel)}
+    func presentAlert(viewModel: AlertViewModel) { presentAlert(with: viewModel) }
 }
 extension NFTDetailPresenter {
     func handleEvent(_ event: NFTDetailPresenterEvent) { handle(event____________________________: event) }

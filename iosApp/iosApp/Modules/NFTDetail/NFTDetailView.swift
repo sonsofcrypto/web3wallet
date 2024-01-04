@@ -30,6 +30,11 @@ final class NFTDetailViewController: UICollectionViewController, ButtonSheetCont
         collectionView.reloadData()
     }
 
+    func presentAlert(with viewModel: AlertViewModel) {
+        let vc = AlertController(viewModel, handler: { _, _ in () })
+        present(vc, animated: true)
+    }
+
     // MARK: - UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {

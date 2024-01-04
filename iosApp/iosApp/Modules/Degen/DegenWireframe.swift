@@ -12,6 +12,7 @@ final class DefaultDegenWireframe {
     private let alertWireframeFactory: AlertWireframeFactory
     private let degenService: DegenService
     private let networksService: NetworksService
+    private let walletService: WalletService
 
     private weak var vc: UIViewController?
 
@@ -21,7 +22,8 @@ final class DefaultDegenWireframe {
         cultProposalsWireframeFactory: CultProposalsWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         degenService: DegenService,
-        networksService: NetworksService
+        networksService: NetworksService,
+        walletService: WalletService
     ) {
         
         self.parent = parent
@@ -30,6 +32,7 @@ final class DefaultDegenWireframe {
         self.alertWireframeFactory = alertWireframeFactory
         self.degenService = degenService
         self.networksService = networksService
+        self.walletService = walletService
     }
 }
 
@@ -67,7 +70,8 @@ private extension DefaultDegenWireframe {
     func wireUp() -> UIViewController {
         let interactor = DefaultDegenInteractor(
             degenService: degenService,
-            networksService: networksService
+            networksService: networksService,
+            walletService: walletService
         )
         let vc: DegenViewController = UIStoryboard(.degen).instantiate()
         let presenter = DefaultDegenPresenter(

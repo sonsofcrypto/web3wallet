@@ -11,6 +11,7 @@ final class DefaultNFTDetailWireframe {
     private let nftSendWireframeFactory: NFTSendWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let nftsService: NFTsService
+    private let walletService: WalletService
     private let networksService: NetworksService
 
     private weak var vc: UIViewController?
@@ -21,6 +22,7 @@ final class DefaultNFTDetailWireframe {
         nftSendWireframeFactory: NFTSendWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         nftsService: NFTsService,
+        walletService: WalletService,
         networksService: NetworksService
     ) {
         self.parent = parent
@@ -28,6 +30,7 @@ final class DefaultNFTDetailWireframe {
         self.nftSendWireframeFactory = nftSendWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.nftsService = nftsService
+        self.walletService = walletService
         self.networksService = networksService
     }
 }
@@ -55,7 +58,10 @@ private extension DefaultNFTDetailWireframe {
     
     func wireUp() -> UIViewController {
         let vc: NFTDetailViewController = UIStoryboard(.main).instantiate()
-        let interactor = DefaultNFTDetailInteractor(nftService: nftsService)
+        let interactor = DefaultNFTDetailInteractor(
+            nftService: nftsService,
+            walletService: walletService
+        )
         let presenter = DefaultNFTDetailPresenter(
             view: WeakRef(referred: vc),
             wireframe: self,

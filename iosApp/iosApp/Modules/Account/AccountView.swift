@@ -48,6 +48,11 @@ extension AccountViewController {
             ? Theme.color.priceUp
             : Theme.color.priceDown
     }
+
+    func presentAlert(with viewModel: AlertViewModel) {
+        let vc = AlertController(viewModel, handler: { _, _ in () })
+        present(vc, animated: true)
+    }
 }
 
 extension AccountViewController: UICollectionViewDataSource {

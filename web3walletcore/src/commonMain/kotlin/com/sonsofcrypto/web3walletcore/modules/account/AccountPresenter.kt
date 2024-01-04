@@ -7,7 +7,13 @@ import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.RegularAlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.CandlesViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.Tint.DESTRUCTIVE
 import com.sonsofcrypto.web3walletcore.common.viewModels.loaded
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.account.AccountViewModel.Header.Button
@@ -51,12 +57,25 @@ class DefaultAccountPresenter(
     override fun handle(event: AccountPresenterEvent) {
         when(event) {
             is AccountPresenterEvent.Receive -> wireframe.navigate(Receive)
-            is AccountPresenterEvent.Send -> wireframe.navigate(Send)
-            is AccountPresenterEvent.Swap -> wireframe.navigate(Swap)
+            is AccountPresenterEvent.Send ->
+                if (interactor.isVoidSigner()) presentVoidSignerAlert()
+                else wireframe.navigate(Send)
+            is AccountPresenterEvent.Swap ->
+                if (interactor.isVoidSigner()) presentVoidSignerAlert()
+                else wireframe.navigate(Swap)
             is AccountPresenterEvent.More -> wireframe.navigate(More)
             is AccountPresenterEvent.PullDownToRefresh -> refreshTransactions()
         }
     }
+
+    private fun presentVoidSignerAlert() = view.get()?.presentAlert(
+        RegularAlertViewModel(
+            Localized("voidSigner.alert.title"),
+            Localized("voidSigner.alert.body"),
+            listOf(Action(Localized("Done"), NORMAL)),
+            ImageMedia.SysName("xmark.circle.fill", DESTRUCTIVE)
+        )
+    )
 
     private fun updateView() = view.get()?.update(viewModel())
 
