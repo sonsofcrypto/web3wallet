@@ -5,9 +5,9 @@
 import UIKit
 import web3walletcore
 
-final class DefaultPrvKeyUpdateWireframe {
+final class DefaultAccountUpdateWireframe {
     private weak var parent: UIViewController?
-    private let context: PrvKeyUpdateWireframeContext
+    private let context: AccountUpdateWireframeContext
     private let signerStoreService: SignerStoreService
     private let addressService: AddressService
     private let clipboardService: ClipboardService
@@ -19,7 +19,7 @@ final class DefaultPrvKeyUpdateWireframe {
 
     init(
         _ parent: UIViewController?,
-        context: PrvKeyUpdateWireframeContext,
+        context: AccountUpdateWireframeContext,
         signerStoreService: SignerStoreService,
         addressService: AddressService,
         clipboardService: ClipboardService,
@@ -38,7 +38,7 @@ final class DefaultPrvKeyUpdateWireframe {
     }
 }
 
-extension DefaultPrvKeyUpdateWireframe {
+extension DefaultAccountUpdateWireframe {
 
     func present() {
         let vc = wireUp()
@@ -52,15 +52,12 @@ extension DefaultPrvKeyUpdateWireframe {
         presentingTopVc?.present(vc, animated: true)
     }
 
-    func navigate(to destination: PrvKeyUpdateWireframeDestination) {
-        if let input = destination as? PrvKeyUpdateWireframeDestination.Authenticate {
+    func navigate(to destination: AccountUpdateWireframeDestination) {
+        if let input = destination as? AccountUpdateWireframeDestination.Authenticate {
             authenticateWireframeFactory.make(vc, context: input.context).present()
         }
-        if let input = destination as? PrvKeyUpdateWireframeDestination.Alert {
-            alertWireframeFactory.make(vc, context: input.context).present()
-        }
         let presentingTopVc = (parent as? UINavigationController)?.topVc
-        if destination is PrvKeyUpdateWireframeDestination.Dismiss {
+        if destination is AccountUpdateWireframeDestination.Dismiss {
             // NOTE: Dispatching on next run loop so that presenting
             // controller collectionView has time to reload and does not
             // break custom dismiss animation
@@ -71,17 +68,17 @@ extension DefaultPrvKeyUpdateWireframe {
     }
 }
 
-private extension DefaultPrvKeyUpdateWireframe {
+private extension DefaultAccountUpdateWireframe {
 
     func wireUp() -> UIViewController {
-        let interactor = DefaultPrvKeyUpdateInteractor(
+        let interactor = DefaultAccountUpdateInteractor(
             signerStoreService: signerStoreService,
             addressService: addressService,
             clipboardService: clipboardService,
             settingsService: settingsService
         )
-        let vc: PrvKeyUpdateViewController = UIStoryboard(.main).instantiate()
-        let presenter = DefaultPrvKeyUpdatePresenter(
+        let vc: AccountUpdateViewController = UIStoryboard(.main).instantiate()
+        let presenter = DefaultAccountUpdatePresenter(
             view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor,
@@ -94,7 +91,7 @@ private extension DefaultPrvKeyUpdateWireframe {
     }
 }
 
-extension DefaultPrvKeyUpdateWireframe {
+extension DefaultAccountUpdateWireframe {
 
     enum Constant {
         static let saltExplanationURL = URL(

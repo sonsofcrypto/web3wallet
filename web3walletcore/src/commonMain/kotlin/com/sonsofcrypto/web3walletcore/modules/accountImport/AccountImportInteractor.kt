@@ -5,6 +5,7 @@ import com.sonsofcrypto.web3lib.services.keyStore.AddressVoidSignerConfig
 import com.sonsofcrypto.web3lib.services.keyStore.PrvKeySignerConfig
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.PasswordType.BIO
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.PRVKEY
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.utils.decodeBase58WithChecksum
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
@@ -63,13 +64,13 @@ class DefaultAccountImportInteractor(
     private val settingsService: SettingsService,
 ): AccountImportInteractor {
     private val isPrvKeyMode: Boolean
-        get() { return signerType == SignerStoreItem.Type.PRVKEY }
+        get() { return signerType == PRVKEY }
 
     private var accounts: MutableList<Account> = mutableListOf(
         Account("", "", "", false)
     )
 
-    override var signerType: SignerStoreItem.Type = SignerStoreItem.Type.PRVKEY
+    override var signerType: SignerStoreItem.Type = PRVKEY
     override var keyInput: String? = ""
         set(value) { field = value; keyInputDidChange(value ?: "") }
 

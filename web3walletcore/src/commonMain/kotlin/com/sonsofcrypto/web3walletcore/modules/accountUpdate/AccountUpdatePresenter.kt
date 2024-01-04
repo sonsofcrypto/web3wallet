@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate
+package com.sonsofcrypto.web3walletcore.modules.accountUpdate
 
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.utils.WeakRef
@@ -25,48 +25,52 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateData
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWireframeContext
-import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.AlertAction
-import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.CTAAction
-import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.CopyAccountAddress
-import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.CopyKey
-import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.RightBarButtonAction
-import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.SetAccountHidden
-import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.SetAccountName
-import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.SetICouldBackup
-import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdatePresenterEvent.ViewPrivKey
-import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdateWireframeDestination.Authenticate
-import com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate.PrvKeyUpdateWireframeDestination.Dismiss
+import com.sonsofcrypto.web3walletcore.modules.accountUpdate.AccountUpdatePresenterEvent.AlertAction
+import com.sonsofcrypto.web3walletcore.modules.accountUpdate.AccountUpdatePresenterEvent.CTAAction
+import com.sonsofcrypto.web3walletcore.modules.accountUpdate.AccountUpdatePresenterEvent.CopyAccountAddress
+import com.sonsofcrypto.web3walletcore.modules.accountUpdate.AccountUpdatePresenterEvent.Copy
+import com.sonsofcrypto.web3walletcore.modules.accountUpdate.AccountUpdatePresenterEvent.RightBarButtonAction
+import com.sonsofcrypto.web3walletcore.modules.accountUpdate.AccountUpdatePresenterEvent.SetAccountHidden
+import com.sonsofcrypto.web3walletcore.modules.accountUpdate.AccountUpdatePresenterEvent.SetAccountName
+import com.sonsofcrypto.web3walletcore.modules.accountUpdate.AccountUpdatePresenterEvent.SetICouldBackup
+import com.sonsofcrypto.web3walletcore.modules.accountUpdate.AccountUpdatePresenterEvent.ViewPrivKey
+import com.sonsofcrypto.web3walletcore.modules.accountUpdate.AccountUpdateWireframeDestination.Authenticate
+import com.sonsofcrypto.web3walletcore.modules.accountUpdate.AccountUpdateWireframeDestination.Dismiss
 import kotlin.time.Duration.Companion.seconds
 
-sealed class PrvKeyUpdatePresenterEvent {
-    object CopyKey: PrvKeyUpdatePresenterEvent()
-    data class SetAccountName(val name: String, val idx: Int): PrvKeyUpdatePresenterEvent()
-    data class SetICouldBackup(val onOff: Boolean): PrvKeyUpdatePresenterEvent()
-    data class SetAccountHidden(val hidden: Boolean, val idx: Int): PrvKeyUpdatePresenterEvent()
-    data class CopyAccountAddress(val idx: Int): PrvKeyUpdatePresenterEvent()
-    data class ViewPrivKey(val idx: Int): PrvKeyUpdatePresenterEvent()
-    data class AlertAction(val idx: Int, val text: String?): PrvKeyUpdatePresenterEvent()
-    data class RightBarButtonAction(val idx: Int): PrvKeyUpdatePresenterEvent()
-    data class CTAAction(val idx: Int): PrvKeyUpdatePresenterEvent()
-    object Dismiss: PrvKeyUpdatePresenterEvent()
+sealed class AccountUpdatePresenterEvent {
+    object Copy: AccountUpdatePresenterEvent()
+    data class SetAccountName(val name: String, val idx: Int): AccountUpdatePresenterEvent()
+    data class SetICouldBackup(val onOff: Boolean): AccountUpdatePresenterEvent()
+    data class SetAccountHidden(val hidden: Boolean, val idx: Int): AccountUpdatePresenterEvent()
+    data class CopyAccountAddress(val idx: Int): AccountUpdatePresenterEvent()
+    data class ViewPrivKey(val idx: Int): AccountUpdatePresenterEvent()
+    data class AlertAction(val idx: Int, val text: String?): AccountUpdatePresenterEvent()
+    data class RightBarButtonAction(val idx: Int): AccountUpdatePresenterEvent()
+    data class CTAAction(val idx: Int): AccountUpdatePresenterEvent()
+    object Dismiss: AccountUpdatePresenterEvent()
 }
 
-interface PrvKeyUpdatePresenter {
+interface AccountUpdatePresenter {
     fun present()
-    fun handle(event: PrvKeyUpdatePresenterEvent)
+    fun handle(event: AccountUpdatePresenterEvent)
 }
 
-class DefaultPrvKeyUpdatePresenter(
-    private val view: WeakRef<PrvKeyUpdateView>,
-    private val wireframe: PrvKeyUpdateWireframe,
-    private val interactor: PrvKeyUpdateInteractor,
-    private val context: PrvKeyUpdateWireframeContext,
-): PrvKeyUpdatePresenter {
+class DefaultAccountUpdatePresenter(
+    private val view: WeakRef<AccountUpdateView>,
+    private val wireframe: AccountUpdateWireframe,
+    private val interactor: AccountUpdateInteractor,
+    private val context: AccountUpdateWireframeContext,
+): AccountUpdatePresenter {
     private var authenticated: Boolean = false
     private var localExpertMode: Boolean = false
     /** -1 alert not presented. Else it is idx of account alert is about */
     private var presentingPrivKeyAlert: Int = -1
     private var presentingDeleteConfirmation: Boolean = false
+    private val isPrvKeyMode: Boolean
+        get() {
+            return context.signerStoreItem.type == SignerStoreItem.Type.PRVKEY
+        }
 
     override fun present() {
         updateView()
@@ -96,7 +100,7 @@ class DefaultPrvKeyUpdatePresenter(
         if (auth == null || err != null) { dismiss(); return }
         interactor.setup(item, auth.password, auth.salt)
         // TODO: Try catch show error
-        if (interactor.prvKey().isEmpty()) dismiss()
+        if (interactor.key().isEmpty()) dismiss()
         else updateView()
     }
 
@@ -111,8 +115,8 @@ class DefaultPrvKeyUpdatePresenter(
         presentAlert(privKeyAlertViewModel(idx, auth.password, auth.salt))
     }
 
-    override fun handle(event: PrvKeyUpdatePresenterEvent) =  when (event) {
-        is CopyKey -> interactor.pasteToClipboard(interactor.prvKey())
+    override fun handle(event: AccountUpdatePresenterEvent) =  when (event) {
+        is Copy -> interactor.pasteToClipboard(interactor.key())
         is SetAccountName -> interactor.setAccountName(event.name, event.idx)
         is SetICouldBackup -> interactor.iCloudSecretStorage = event.onOff
         is SetAccountHidden -> handleSetAccountHidden(event.hidden, event.idx)
@@ -121,7 +125,7 @@ class DefaultPrvKeyUpdatePresenter(
         is AlertAction -> handleAlertAction(event.idx, event.text)
         is RightBarButtonAction -> handleRightBarButtonAction(event.idx)
         is CTAAction -> handleCTAAction(event.idx)
-        is PrvKeyUpdatePresenterEvent.Dismiss -> dismiss()
+        is AccountUpdatePresenterEvent.Dismiss -> dismiss()
     }
 
     private fun handleSetAccountHidden(hidden: Boolean, idx: Int) {
@@ -277,9 +281,12 @@ class DefaultPrvKeyUpdatePresenter(
 
     private fun keySection(): Section = Section(
         null,
-        listOf(Text(interactor.prvKey())),
+        listOf(Text(interactor.key())),
         HighlightWords(
-            Localized("prvKeyImport.update.footer"),
+            Localized(
+                if (isPrvKeyMode) "accountImport.prv.footer"
+                else "accountImport.address.footer"
+            ),
             listOf(
                 Localized("prvKeyImport.footerHighlightWord0"),
                 Localized("prvKeyImport.footerHighlightWord1"),
@@ -307,8 +314,10 @@ class DefaultPrvKeyUpdatePresenter(
         = (0..<interactor.accountsCount()).map {
             Section(
                 CollectionViewModel.Header.Title(
-                    "Account ${interactor.absoluteAccountIdx(it)}",
-                    interactor.accountDerivationPath(it)
+                    Localized(
+                        if (isPrvKeyMode) "accountImport.prv.accountSectionTitle"
+                        else "accountImport.address.accountSectionTitle"
+                    ),
                 ),
                 listOf(
                     CellViewModel.KeyValueList(
@@ -324,7 +333,10 @@ class DefaultPrvKeyUpdatePresenter(
                                 interactor.accountAddress(it),
                             ),
                         ),
-                        mapOf("isHidden" to interactor.accountIsHidden(it))
+                        mapOf(
+                            "isHidden" to interactor.accountIsHidden(it),
+                            "hideTrailingBtn" to !isPrvKeyMode
+                        )
                     )
                 ),
                 CollectionViewModel.Footer.Text(interactor.accountAddress(it)),

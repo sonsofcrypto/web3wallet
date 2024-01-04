@@ -1,27 +1,21 @@
-package com.sonsofcrypto.web3walletcore.modules.prvKeyUpdate
+package com.sonsofcrypto.web3walletcore.modules.accountUpdate
 
 import com.sonsofcrypto.web3lib.services.address.AddressService
-import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
+import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem.Type.PRVKEY
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
-import com.sonsofcrypto.web3lib.types.Bip44
-import com.sonsofcrypto.web3lib.types.ExtKey
-import com.sonsofcrypto.web3lib.utils.bip39.Bip39
-import com.sonsofcrypto.web3lib.utils.bip39.WordList
-import com.sonsofcrypto.web3lib.utils.defaultDerivationPath
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
-import com.sonsofcrypto.web3lib.utils.lastDerivationPathComponent
 import com.sonsofcrypto.web3walletcore.services.clipboard.ClipboardService
 import com.sonsofcrypto.web3walletcore.services.settings.SettingsService
 
-interface PrvKeyUpdateInteractor {
+interface AccountUpdateInteractor {
     var name: String
     var iCloudSecretStorage: Boolean
     var showHidden: Boolean
 
     @Throws(Throwable::class)
     fun setup(signerStoreItem: SignerStoreItem, password: String, salt: String)
-    fun prvKey(): String
+    fun key(): String
     fun pasteToClipboard(text: String)
     fun update(): SignerStoreItem?
     fun delete()
@@ -51,16 +45,19 @@ interface PrvKeyUpdateInteractor {
     fun globalExpertMode(): Boolean
 }
 
-class DefaultPrvKeyUpdateInteractor(
+class DefaultAccountUpdateInteractor(
     private val signerStoreService: SignerStoreService,
     private val addressService: AddressService,
     private val clipboardService: ClipboardService,
     private val settingsService: SettingsService,
-): PrvKeyUpdateInteractor {
+): AccountUpdateInteractor {
     private var signerStoreItem: SignerStoreItem? = null
     private var key: String = ""
     private var password: String = ""
     private var signers: MutableList<SignerStoreItem> = mutableListOf()
+    private val isPrvKeyMode: Boolean
+        get() { return (signerStoreItem?.type ?: PRVKEY) == PRVKEY }
+
 
     override var name: String = ""
     override var iCloudSecretStorage: Boolean = false
@@ -76,16 +73,19 @@ class DefaultPrvKeyUpdateInteractor(
         this.password = password
         this.name = signerStoreItem.name
         this.iCloudSecretStorage = signerStoreItem.iCloudSecretStorage
-        val result = signerStoreService.secretStorage(signerStoreItem, password)
-            ?.decrypt(password)
-        key = result?.key?.toHexString(false) ?: ""
-        if (key.isEmpty()) {
-            throw Exception("Failed to retrieve key")
+        if (signerStoreItem.type == PRVKEY) {
+            key = signerStoreService.secretStorage(signerStoreItem, password)
+                ?.decrypt(password)
+                ?.key
+                ?.toHexString(false) ?: ""
+        } else {
+            key = signerStoreItem.primaryAddress()
         }
+        if (key.isEmpty()) throw Exception("Failed to retrieve key")
         loadSigners()
     }
 
-    override fun prvKey(): String = key
+    override fun key(): String = key
 
     override fun pasteToClipboard(text: String) = clipboardService.paste(text)
 

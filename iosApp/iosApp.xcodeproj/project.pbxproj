@@ -311,9 +311,9 @@
 		1F5E646C2AACA58A000A1548 /* UIImgeView+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5E646A2AACA58A000A1548 /* UIImgeView+Cache.swift */; };
 		1F5F4A872B448AD300F1B197 /* ButtonViewModel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5F4A862B448AD300F1B197 /* ButtonViewModel+Extension.swift */; };
 		1F6A9FBC2A97ACE50056732C /* bundledAssets in Resources */ = {isa = PBXBuildFile; fileRef = 1F6A9FBB2A97ACE50056732C /* bundledAssets */; };
-		1F7F5A582B41A9FF003448CB /* PrvKeyUpdateWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A522B41A9FF003448CB /* PrvKeyUpdateWireframeFactory.swift */; };
-		1F7F5A5B2B41A9FF003448CB /* PrvKeyUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A562B41A9FF003448CB /* PrvKeyUpdateView.swift */; };
-		1F7F5A5C2B41A9FF003448CB /* PrvKeyUpdateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A572B41A9FF003448CB /* PrvKeyUpdateWireframe.swift */; };
+		1F7F5A582B41A9FF003448CB /* AccountUpdateWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A522B41A9FF003448CB /* AccountUpdateWireframeFactory.swift */; };
+		1F7F5A5B2B41A9FF003448CB /* AccountUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A562B41A9FF003448CB /* AccountUpdateView.swift */; };
+		1F7F5A5C2B41A9FF003448CB /* AccountUpdateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7F5A572B41A9FF003448CB /* AccountUpdateWireframe.swift */; };
 		1F871F522AC1791E0002A1AC /* TableFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F871F4A2AC1791E0002A1AC /* TableFlowLayout.swift */; };
 		1F871F532AC1791E0002A1AC /* TableGroupedFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F871F4B2AC1791E0002A1AC /* TableGroupedFlowLayout.swift */; };
 		1F871F542AC1791E0002A1AC /* SectionBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F871F4C2AC1791E0002A1AC /* SectionBackgroundView.swift */; };
@@ -739,9 +739,9 @@
 		1F5E646A2AACA58A000A1548 /* UIImgeView+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImgeView+Cache.swift"; sourceTree = "<group>"; };
 		1F5F4A862B448AD300F1B197 /* ButtonViewModel+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ButtonViewModel+Extension.swift"; sourceTree = "<group>"; };
 		1F6A9FBB2A97ACE50056732C /* bundledAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bundledAssets; sourceTree = "<group>"; };
-		1F7F5A522B41A9FF003448CB /* PrvKeyUpdateWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrvKeyUpdateWireframeFactory.swift; sourceTree = "<group>"; };
-		1F7F5A562B41A9FF003448CB /* PrvKeyUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrvKeyUpdateView.swift; sourceTree = "<group>"; };
-		1F7F5A572B41A9FF003448CB /* PrvKeyUpdateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrvKeyUpdateWireframe.swift; sourceTree = "<group>"; };
+		1F7F5A522B41A9FF003448CB /* AccountUpdateWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountUpdateWireframeFactory.swift; sourceTree = "<group>"; };
+		1F7F5A562B41A9FF003448CB /* AccountUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountUpdateView.swift; sourceTree = "<group>"; };
+		1F7F5A572B41A9FF003448CB /* AccountUpdateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountUpdateWireframe.swift; sourceTree = "<group>"; };
 		1F871F4A2AC1791E0002A1AC /* TableFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableFlowLayout.swift; sourceTree = "<group>"; };
 		1F871F4B2AC1791E0002A1AC /* TableGroupedFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableGroupedFlowLayout.swift; sourceTree = "<group>"; };
 		1F871F4C2AC1791E0002A1AC /* SectionBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionBackgroundView.swift; sourceTree = "<group>"; };
@@ -1105,6 +1105,7 @@
 			isa = PBXGroup;
 			children = (
 				1FEB40972B45A8C600C5E624 /* AccountImport */,
+				1F7F5A512B41A9FF003448CB /* AccountUpdate */,
 				1C60C244285724D0003BE25D /* Account */,
 				1C60C1FA285724D0003BE25D /* Alert */,
 				D1A12A58287D333900606FC8 /* Authenticate */,
@@ -1132,7 +1133,6 @@
 				1C5D24AC28E19F62007DA557 /* ImprovementProposal */,
 				1C5D24B928E19F62007DA557 /* ImprovementProposals */,
 				1C54DC0F2862320200E378F6 /* QRCodeScan */,
-				1F7F5A512B41A9FF003448CB /* PrvKeyUpdate */,
 				1C60C23E285724D0003BE25D /* Root */,
 				1F871F582AC17BB00002A1AC /* Settings */,
 				1C7FC98628B60A0B00FC9175 /* ThemePicker */,
@@ -1720,14 +1720,14 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		1F7F5A512B41A9FF003448CB /* PrvKeyUpdate */ = {
+		1F7F5A512B41A9FF003448CB /* AccountUpdate */ = {
 			isa = PBXGroup;
 			children = (
-				1F7F5A522B41A9FF003448CB /* PrvKeyUpdateWireframeFactory.swift */,
-				1F7F5A562B41A9FF003448CB /* PrvKeyUpdateView.swift */,
-				1F7F5A572B41A9FF003448CB /* PrvKeyUpdateWireframe.swift */,
+				1F7F5A522B41A9FF003448CB /* AccountUpdateWireframeFactory.swift */,
+				1F7F5A562B41A9FF003448CB /* AccountUpdateView.swift */,
+				1F7F5A572B41A9FF003448CB /* AccountUpdateWireframe.swift */,
 			);
-			path = PrvKeyUpdate;
+			path = AccountUpdate;
 			sourceTree = "<group>";
 		};
 		1F871F582AC17BB00002A1AC /* Settings */ = {
@@ -2271,7 +2271,7 @@
 				1CE66BD22848ED4000AB6ACA /* PresentationStyle.swift in Sources */,
 				1C54BB3C291B9F400009F158 /* Web3walletcore+Extensions.swift in Sources */,
 				1C60C2F6285724D0003BE25D /* NFTDetailWireframeFactory.swift in Sources */,
-				1F7F5A582B41A9FF003448CB /* PrvKeyUpdateWireframeFactory.swift in Sources */,
+				1F7F5A582B41A9FF003448CB /* AccountUpdateWireframeFactory.swift in Sources */,
 				1C7F862728D20E490073FD95 /* Array+Extensions.swift in Sources */,
 				1C7FC98128AFB32600FC9175 /* PasswordValidatorHelper.swift in Sources */,
 				D1EF5BCE287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift in Sources */,
@@ -2365,7 +2365,7 @@
 				1C228ACB28A3B122005316A3 /* ConfirmationTxInProgressView.swift in Sources */,
 				1C7F863F28D20E490073FD95 /* UIStackView+Extensions.swift in Sources */,
 				1C7F864128D20E490073FD95 /* UIBarButtonItem+Extensions.swift in Sources */,
-				1F7F5A5B2B41A9FF003448CB /* PrvKeyUpdateView.swift in Sources */,
+				1F7F5A5B2B41A9FF003448CB /* AccountUpdateView.swift in Sources */,
 				1C60C2F3285724D0003BE25D /* NFTDetailWireframe.swift in Sources */,
 				1C228ACF28A3C774005316A3 /* ConfirmationTxFailedView.swift in Sources */,
 				1C60C2CF285724D0003BE25D /* AlertView.swift in Sources */,
@@ -2450,7 +2450,7 @@
 				1C60C352285724D1003BE25D /* CultProposalsWireframeFactory.swift in Sources */,
 				1C7FC98828B60A1A00FC9175 /* ThemePickerWireframe.swift in Sources */,
 				1CE0064028894F41002D1EB3 /* ConfirmationSendView.swift in Sources */,
-				1F7F5A5C2B41A9FF003448CB /* PrvKeyUpdateWireframe.swift in Sources */,
+				1F7F5A5C2B41A9FF003448CB /* AccountUpdateWireframe.swift in Sources */,
 				1CDED610289C521000DF34A7 /* NFTSendImageCollectionViewCell.swift in Sources */,
 				1C6720162885E13500C5F044 /* CurrencySwapLimitCollectionViewCell.swift in Sources */,
 				1C228AC528A17744005316A3 /* CurrencyPickerNetworkCell.swift in Sources */,

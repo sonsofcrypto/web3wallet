@@ -5,9 +5,9 @@
 import UIKit
 import web3walletcore
 
-final class PrvKeyUpdateViewController: CollectionViewController {
+final class AccountUpdateViewController: CollectionViewController {
 
-    var presenter: PrvKeyUpdatePresenter!
+    var presenter: AccountUpdatePresenter!
     
     override func configureUI() {
         enableCardFlipTransitioning = true
@@ -16,12 +16,12 @@ final class PrvKeyUpdateViewController: CollectionViewController {
         presenter.present()
     }
 
-    // MARK: - PrvKeyUpdateView
+    // MARK: - AccountUpdateView
 
     override func present() {
         presenter.present()
     }
-
+ 
     // MARK: - UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -60,7 +60,7 @@ final class PrvKeyUpdateViewController: CollectionViewController {
         case let vm as CellViewModel.Button:
             return cv.dequeue(ButtonCell.self, for: indexPath).update(with: vm)
         default:
-            fatalError("[PrvKeyUpdateView] wrong cellForItemAt \(indexPath)")
+            fatalError("[AccountUpdateView] wrong cellForItemAt \(indexPath)")
         }
     }
 
@@ -162,7 +162,7 @@ final class PrvKeyUpdateViewController: CollectionViewController {
     ) -> Bool {
         let cell = cv.cellForItem(at: indexPath)
         if indexPath.isZero() {
-            presenter.handleEvent(.CopyKey())
+            presenter.handleEvent(.Copy())
             (cell as? HiddenContentCell)?.animateCopiedToPasteboard()
         }
         return false
@@ -236,7 +236,7 @@ final class PrvKeyUpdateViewController: CollectionViewController {
 
 // MARK: - Configure UI
 
-private extension PrvKeyUpdateViewController {
+private extension AccountUpdateViewController {
 
     func isAccountsSection(_ idxPath: IndexPath) -> Bool {
         idxPath.section >= 2
@@ -249,7 +249,7 @@ private extension PrvKeyUpdateViewController {
 
 // MARK: - Constants
 
-private extension PrvKeyUpdateViewController {
+private extension AccountUpdateViewController {
     enum Constant {
         static let mnemonicCellHeight: CGFloat = 110
         static let cellSaltOpenHeight: CGFloat = 142
