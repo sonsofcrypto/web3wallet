@@ -16,17 +16,20 @@ final class DefaultNFTDetailWireframeFactory {
     private let nftSendWireframeFactory: NFTSendWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let nftsService: NFTsService
+    private let walletService: WalletService
     private let networksService: NetworksService
 
     init(
         nftSendWireframeFactory: NFTSendWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         nftsService: NFTsService,
+        walletService: WalletService,
         networksService: NetworksService
     ) {
         self.nftSendWireframeFactory = nftSendWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.nftsService = nftsService
+        self.walletService = walletService
         self.networksService = networksService
     }
 }
@@ -43,6 +46,7 @@ extension DefaultNFTDetailWireframeFactory: NFTDetailWireframeFactory {
             nftSendWireframeFactory: nftSendWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             nftsService: nftsService,
+            walletService: walletService,
             networksService: networksService
         )
     }
@@ -58,6 +62,7 @@ final class NFTDetailWireframeFactoryAssembler: AssemblerComponent {
                 nftSendWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
                 nftsService: resolver.resolve(),
+                walletService: resolver.resolve(),
                 networksService: resolver.resolve()
             )
         }

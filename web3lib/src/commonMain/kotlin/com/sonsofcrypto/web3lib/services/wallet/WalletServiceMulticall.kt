@@ -94,6 +94,10 @@ class DefaultWalletServiceMulticall(
         return networkService.wallet(network)?.address()?.toHexString()
     }
 
+    override fun isSelectedVoidSigner(): Boolean =
+        selectedNetwork()?.let { networkService.wallet(it)?.isVoidSigner() }
+            ?: true
+
     override fun balance(network: Network, currency: Currency): BigInt {
         networksState[balanceKey(network, currency)]?.let { return it }
         networksStateCache.get<String>(balanceKey(network, currency))?.let {

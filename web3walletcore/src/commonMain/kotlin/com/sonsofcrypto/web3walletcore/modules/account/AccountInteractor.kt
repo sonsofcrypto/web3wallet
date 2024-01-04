@@ -38,6 +38,7 @@ interface AccountInteractor {
     fun transactions(network: Network, currency: Currency): List<AccountTransaction>
     @Throws(Throwable::class)
     suspend fun fetchTransactions(network: Network, currency: Currency)
+    fun isVoidSigner(): Boolean
 }
 
 class DefaultAccountInteractor(
@@ -96,6 +97,9 @@ class DefaultAccountInteractor(
             etherScanService.fetchTransactionHistory(address(network), network)
         }
     }
+
+    override fun isVoidSigner(): Boolean =
+        walletService.isSelectedVoidSigner()
 }
 
 private val Network.isEthereum: Boolean get() = chainId == Network.ethereum().chainId

@@ -93,6 +93,8 @@
 "dashboard.button.swap" = "Swap";
 "dashboard.section.nfts" = "NFTs";
 "dashboard.section.Notifications" = "Notifications";
+"voidSigner.alert.title" = "Void Signer Selected";
+"voidSigner.alert.body" = "Currently selected wallet is VIEW ONLY, can not sign or send transactions";
 
 "degen.dappCategory.title.swap" = "Swap";
 "degen.dappCategory.title.cult" = "Cult.DAO";

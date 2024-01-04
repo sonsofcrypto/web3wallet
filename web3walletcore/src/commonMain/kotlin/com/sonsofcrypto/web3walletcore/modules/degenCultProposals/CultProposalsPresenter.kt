@@ -3,7 +3,12 @@ package com.sonsofcrypto.web3walletcore.modules.degenCultProposals
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.RegularAlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ErrorViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.Tint.DESTRUCTIVE
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.alert.AlertWireframeContext.Action.Type.PRIMARY
@@ -29,7 +34,7 @@ sealed class CultProposalsPresenterEvent {
 
 interface CultProposalsPresenter {
     fun present()
-    fun handle(event: CultProposalsPresenterEvent)
+    fun handle(event: CultProposalsPresenterEvent): Unit
 }
 
 class DefaultCultProposalsPresenter(
@@ -62,24 +67,39 @@ class DefaultCultProposalsPresenter(
         }
     }
 
-    override fun handle(event: CultProposalsPresenterEvent) = when (event) {
-        is CultProposalsPresenterEvent.SelectPendingProposals -> {
-            sectionType = PENDING
-            updateView()
+    override fun handle(event: CultProposalsPresenterEvent) {
+        when (event) {
+            is CultProposalsPresenterEvent.SelectPendingProposals -> {
+                sectionType = PENDING
+                updateView()
+            }
+            is CultProposalsPresenterEvent.SelectClosedProposals -> {
+                sectionType = CLOSED
+                updateView()
+            }
+            is CultProposalsPresenterEvent.SelectProposal -> {
+                val proposals = if (sectionType == PENDING) pending else closed
+                wireframe.navigate(Proposal(proposals[event.idx], proposals))
+            }
+            is CultProposalsPresenterEvent.ApproveProposal ->
+                if (interactor.isVoidSigner()) presentVoidSignerAlert()
+                else castVote(event.idx, true)
+            is CultProposalsPresenterEvent.RejectProposal ->
+                if (interactor.isVoidSigner()) presentVoidSignerAlert()
+                else castVote(event.idx, false)
         }
-        is CultProposalsPresenterEvent.SelectClosedProposals -> {
-            sectionType = CLOSED
-            updateView()
-        }
-        is CultProposalsPresenterEvent.SelectProposal -> {
-            val proposals = if (sectionType == PENDING) pending else closed
-            wireframe.navigate(Proposal(proposals[event.idx], proposals))
-        }
-        is CultProposalsPresenterEvent.ApproveProposal -> castVote(event.idx, true)
-        is CultProposalsPresenterEvent.RejectProposal -> castVote(event.idx, false)
     }
 
     private fun updateView() { view.get()?.update(viewModel()) }
+
+    private fun presentVoidSignerAlert() = view.get()?.presentAlert(
+        RegularAlertViewModel(
+            Localized("voidSigner.alert.title"),
+            Localized("voidSigner.alert.body"),
+            listOf(AlertViewModel.Action(Localized("Done"), NORMAL)),
+            ImageMedia.SysName("xmark.circle.fill", DESTRUCTIVE)
+        )
+    )
 
     private fun viewModel(): CultProposalsViewModel {
         if (err != null) { return CultProposalsViewModel.Error(errorViewModel(err!!)) }

@@ -19,19 +19,22 @@ final class DefaultDegenWireframeFactory {
     private let alertWireframeFactory: AlertWireframeFactory
     private let degenService: DegenService
     private let networksService: NetworksService
+    private let walletService: WalletService
 
     init(
         currencySwapWireframeFactory: CurrencySwapWireframeFactory,
         cultProposalsWireframeFactory: CultProposalsWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         degenService: DegenService,
-        networksService: NetworksService
+        networksService: NetworksService,
+        walletService: WalletService
     ) {
         self.currencySwapWireframeFactory = currencySwapWireframeFactory
         self.cultProposalsWireframeFactory = cultProposalsWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.degenService = degenService
         self.networksService = networksService
+        self.walletService = walletService
     }
 }
 
@@ -44,7 +47,8 @@ extension DefaultDegenWireframeFactory: DegenWireframeFactory {
             cultProposalsWireframeFactory: cultProposalsWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             degenService: degenService,
-            networksService: networksService
+            networksService: networksService,
+            walletService: walletService
         )
     }
 }
@@ -60,7 +64,8 @@ final class DegenWireframeFactoryAssembler: AssemblerComponent {
                 cultProposalsWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
                 degenService: resolver.resolve(),
-                networksService: resolver.resolve()
+                networksService: resolver.resolve(),
+                walletService: resolver.resolve()
             )
         }
     }

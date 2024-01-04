@@ -63,6 +63,7 @@ interface DashboardInteractor {
     fun dismissAction(action: Action)
     fun totalFiatBalance(): Double
     fun reloadData()
+    fun isVoidSigner(): Boolean
     fun didEnterBackground()
     fun willEnterForeground()
     fun addListener(listener: DashboardInteractorLister)
@@ -162,6 +163,9 @@ class DefaultDashboardInteractor(
             }
         }
     }
+
+    override fun isVoidSigner(): Boolean =
+        walletService.isSelectedVoidSigner()
 
     override fun didEnterBackground() = walletService.pausePolling()
 

@@ -38,6 +38,15 @@ extension CultProposalsViewController {
             refreshControl.endRefreshing()
         }
     }
+
+    func presentAlert(with viewModel: AlertViewModel) {
+        let vc = AlertController(viewModel, handler: { _, _ in () })
+        present(vc, animated: true)
+    }
+
+    func presentToast(with viewModel: ToastViewModel) {
+        navigationController?.asNavVc?.toast(viewModel)
+    }
 }
 
 extension CultProposalsViewController: UICollectionViewDataSource {

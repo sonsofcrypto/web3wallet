@@ -3,6 +3,12 @@ package com.sonsofcrypto.web3walletcore.modules.degen
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
+import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.RegularAlertViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.Tint.DESTRUCTIVE
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenViewModel.Section.Group
 import com.sonsofcrypto.web3walletcore.modules.degen.DegenViewModel.Section.Header
@@ -61,7 +67,10 @@ class DefaultDegenPresenter(
         when (event) {
             is DegenPresenterEvent.DidSelectCategory -> {
                 val category = activeCategories[event.idx]
-                if (category == SWAP) { wireframe.navigate(Swap) }
+                if (category == SWAP) {
+                    if (interactor.isVoidSigner()) presentVoidSignerAlert()
+                    else wireframe.navigate(Swap)
+                }
                 if (category == CULT) { wireframe.navigate(Cult) }
             }
             is DegenPresenterEvent.ComingSoon -> wireframe.navigate(ComingSoon)
@@ -69,6 +78,15 @@ class DefaultDegenPresenter(
     }
 
     private fun updateView() { view.get()?.update(viewModel()) }
+
+    private fun presentVoidSignerAlert() = view.get()?.presentAlert(
+        RegularAlertViewModel(
+            Localized("voidSigner.alert.title"),
+            Localized("voidSigner.alert.body"),
+            listOf(Action(Localized("Done"), NORMAL)),
+            ImageMedia.SysName("xmark.circle.fill", DESTRUCTIVE)
+        )
+    )
 
     private fun viewModel(): DegenViewModel =
         DegenViewModel(

@@ -36,6 +36,11 @@ final class DegenViewController: BaseViewController {
         collectionView.contentInset.bottom = Theme.padding.twice
     }
 
+    func presentAlert(with viewModel: AlertViewModel) {
+        let vc = AlertController(viewModel, handler: { _, _ in () })
+        present(vc, animated: true)
+    }
+
     deinit {
         presenter.releaseResources()
     }
