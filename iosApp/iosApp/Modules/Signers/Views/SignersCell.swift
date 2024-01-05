@@ -8,9 +8,11 @@ import web3walletcore
 final class SignersCell: SpacedCell {
     typealias Handler = (_ actionIdx: Int)->()
     
+    @IBOutlet weak var walletTypeIndicator: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var stack: UIStackView!
+    @IBOutlet weak var chevronView: UIImageView!
 
     private var handler: Handler?
     private var prevBntCnt: Int = 0
@@ -19,6 +21,7 @@ final class SignersCell: SpacedCell {
         super.awakeFromNib()
         applyTheme(Theme)
         buttons().forEach { $0.isHidden = true }
+        // chevronView.isHidden = true
     }
 
     override func applyTheme(_ theme: ThemeProtocol) {
@@ -51,6 +54,7 @@ extension SignersCell {
         updateButtons(viewModel?.swipeOptions)
         prevBntCnt = viewModel?.swipeOptions.count ?? 0
         contentView.alpha = viewModel?.isHidden ?? false ? 0.5 : 1
+        walletTypeIndicator.setImageMedia(viewModel?.kindImage)
         return self
     }
 

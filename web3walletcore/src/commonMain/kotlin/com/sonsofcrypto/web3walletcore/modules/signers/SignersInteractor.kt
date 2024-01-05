@@ -66,7 +66,7 @@ class DefaultSignersInteractor(
         val item = signer(idx)
         val address = item.primaryAddress()
         return if (!short) address
-            else Formatters.address.format(address ?: "", 10, Network.ethereum())
+            else Formatters.address.format(address ?: "", 8, Network.ethereum())
     }
 
     override fun isHidden(idx: Int): Boolean =

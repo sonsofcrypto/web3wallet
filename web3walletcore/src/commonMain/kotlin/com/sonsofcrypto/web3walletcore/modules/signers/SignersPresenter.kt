@@ -9,6 +9,7 @@ import com.sonsofcrypto.web3walletcore.common.viewModels.BarButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.PRIMARY
 import com.sonsofcrypto.web3walletcore.common.viewModels.ButtonViewModel.Kind.SECONDARY
+import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia
 import com.sonsofcrypto.web3walletcore.common.viewModels.ImageMedia.SysName
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.ToastViewModel.Position.TOP
@@ -273,9 +274,17 @@ class DefaultSignersPresenter(
     private fun itemViewModel(idx: Int): Item = Item(
         interactor.name(idx),
         interactor.address(idx, true),
+        kindImageMedia(interactor.signer(idx).type),
         swipeOption(idx),
         interactor.isHidden(idx)
     )
+
+    private fun kindImageMedia(signerType: SignerStoreItem.Type): ImageMedia =
+        when (signerType) {
+            SignerStoreItem.Type.PRVKEY -> SysName("key.horizontal")
+            SignerStoreItem.Type.VIEW_ONLY -> SysName("eye")
+            else -> ImageMedia.Name("wallet")
+        }
 
     private fun swipeOption(idx: Int): List<SwipeOption> {
         val options = listOf(
