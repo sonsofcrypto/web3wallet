@@ -15,7 +15,8 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 # Release Notes 
 
 ### v1.1.4 #48
-- Wallet type indicator icon.
+- Wallet type indicator icon
+- Swipe up / down to show wallets search bar
 
 ### v1.1.3 #47 Address / View only wallets
 - Address / View only wallets
