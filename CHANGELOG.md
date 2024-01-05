@@ -3,18 +3,21 @@
 | Prod / AppStore                                        | Staging                                                  | Dev / Nightly                                                 |
 |--------------------------------------------------------|----------------------------------------------------------|---------------------------------------------------------------|
 | ![pro](bundledAssets/images/testflight_prod.png)       | ![staging](bundledAssets/images/testflight_staging.png)  | ![dev.png](bundledAssets/images/testflight_dev.png)           |
-| web3wallet by sons of crypto Ξ v1.1.2 #45              | web3wallet by sons of crypto S v1.1.2 #45                | web3wallet by sons of crypto D v1.1.3 #47                     |
+| web3wallet by sons of crypto Ξ v1.1.3 #47              | web3wallet by sons of crypto S v1.1.4 #48                | web3wallet by sons of crypto D v1.1.4 #48                     |
 | AppStore RC.                                           | New features not quite AppStore ready. Great for testing | Living on the bleeding edge. Latest features, latest bugs. 🐛 |
 | [Download](https://testflight.apple.com/join/I4DFVaiH) | [Download](https://testflight.apple.com/join/5GiDXNJ3)   | [Download](https://testflight.apple.com/join/85JEPH96)        |
 
-Live AppStore build link [here (v1.0 #28)](https://apps.apple.com/us/app/web3wallet-by-sons-of-crypto-%CE%BE/id6464587288)
+Live AppStore build link [here (v1.1.3 #47)](https://apps.apple.com/us/app/web3wallet-by-sons-of-crypto-%CE%BE/id6464587288)
 . All three builds can be installed simultaneously. For more info about web3wallet
 head over to [sonsofcrypto.com](https://sonsofcrypto.com/). 
 
 
 # Release Notes 
 
-### v1.1.3 #47
+### v1.1.4 #48
+- Wallet type indicator icon.
+
+### v1.1.3 #47 Address / View only wallets
 - Address / View only wallets
 - Show wallet name in title bar
 - Deploy transaction address crash fix

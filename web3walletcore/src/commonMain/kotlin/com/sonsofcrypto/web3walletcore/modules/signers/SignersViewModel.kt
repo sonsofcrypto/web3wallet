@@ -27,6 +27,7 @@ data class SignersViewModel(
     data class Item(
         val title: String,
         val address: String?,
+        val kindImage: ImageMedia,
         val swipeOptions: List<SwipeOption>,
         val isHidden: Boolean = false,
     ) {
