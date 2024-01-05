@@ -84,12 +84,6 @@ extension SignersViewController {
             animated: didAppear,
             handler: { [weak self] idx in self?.leftBarButtonAction(idx) }
         )
-        updateBarButtons(
-            with: viewModel.rightBarButtons,
-            position: .right,
-            animated: didAppear,
-            handler: { [weak self] idx in self?.rightBarButtonAction(idx) }
-        )
         collectionView.deselectAllExcept(
             selectedIdxPaths(),
             animated: presentedViewController == nil,
@@ -175,6 +169,24 @@ extension SignersViewController: UICollectionViewDelegate {
 
     func rightBarButtonAction(_ idx: Int) {
         presenter.handleEvent(.RightBarButtonAction(idx: idx.int32))
+    }
+    
+    @IBAction func toggleSearchController(_ sender: Any? = nil) {
+        if navigationItem.searchController == nil {
+            navigationItem.searchController = searchController
+        } else {
+            navigationItem.searchController = nil
+        }
+    }
+
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let searchVisible = navigationItem.searchController != nil
+        let y = scrollView.contentOffset.y
+        let top = view.safeAreaInsets.top
+        if !searchVisible && y < -(top + Theme.padding) ||
+            searchVisible && y > -(top - Theme.padding) {
+            toggleSearchController(self)
+        }
     }
 }
 
@@ -278,19 +290,24 @@ extension SignersViewController {
         cv.stickAbovescrollViewToBottom = true
         cv.abovescrollViewAboveCells = true
         setupSearchController()
+        let searchBtn = UIBarButtonItem(
+            sysImgName: "magnifyingglass",
+            target: self,
+            action: #selector(toggleSearchController(_:))
+        )
+        navigationItem.setRightBarButtonItems([searchBtn], animated: false)
     }
 
     func setupSearchController() {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
-        navigationItem.searchController = searchController
+        navigationItem.searchController = nil
         navigationItem.hidesSearchBarWhenScrolling = true
         definesPresentationContext = true
         let searchBar = searchController.searchBar
         let searchField = searchBar.value(forKey: "searchField") as? UITextField
         searchBar.searchBarStyle = .minimal
         searchField?.textColor = Theme.color.textPrimary
-
     }
 
     func updateLogo(_ viewModel: SignersViewModel) {
