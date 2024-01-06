@@ -1,159 +1,77 @@
 package com.sonsofcrypto.web3lib.abi
 
 import com.sonsofcrypto.web3lib.provider.Provider
-import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
+import com.sonsofcrypto.web3lib.provider.call
+import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.signer.SignerIntf
-import com.sonsofcrypto.web3lib.types.Address
+import com.sonsofcrypto.web3lib.types.AddressHexString
+import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 
 open class Contract{
-    private var address: Address.HexString?
-    private var provider: Provider?
-    private var signerIntf: SignerIntf?
-    private var params: List<Input> = emptyList()
-    private var events: List<Event> = emptyList()
-    private var methods: List<Method> = emptyList()
+    val intf: Interface
+    var address: AddressHexString? private set
+    var provider: Provider? private set
+    var signer: SignerIntf? private set
 
     @Throws(Throwable::class)
     constructor(
-        abis: List<String>,
-        address: Address.HexString? = null,
+        intf: Interface,
+        address: AddressHexString? = null,
         provider: Provider? = null,
-        signerIntf: SignerIntf? = null
+        signer: SignerIntf? = null
     ) {
+        this.intf = intf
         this.address = address
         this.provider = provider
-        this.signerIntf = signerIntf
-        this.params = abis.map { abiDecodeParams(it) }.flatten()
-        this.methods= abis.map { abiDecodeMethods(it) }.flatten()
-        this.events = abis.map { abiDecodeEvents(it) }.flatten()
+        this.signer = signer
     }
 
     /** When changing provider, signer or address we always create copy to
      * avoid potential inconsistent state / security issues */
     fun connect(
-        address: Address.HexString? = null,
+        address: AddressHexString? = null,
         provider: Provider? = null,
         signerIntf: SignerIntf? = null,
-    ): Contract {
-        val copy = Contract(
-            listOf(),
-            address ?: this.address,
-            provider ?: this.provider,
-            signerIntf ?: this.signerIntf
-        )
-        copy.params = this.params
-        copy.events = this.events
-        copy.methods = this.methods
-        return copy
-    }
+    ): Contract = Contract(
+        this.intf,
+        address ?: this.address,
+        provider ?: this.provider,
+        signerIntf ?: this.signer
+    )
 
-    /** List of contract parameters */
-    fun params(): List<Input> = params
-
-    /** List of events */
-    fun events(): List<Event> = events
-
-    /** Methods optionally filtered by stateMutability */
     @Throws(Throwable::class)
-    fun methods(stateMutability: Method.StateMutability? = null): Method {
-        if (stateMutability == null) return methods()
-        TODO("Any to be replaced with contrate Method.Attribute type")
-    }
+    fun fn(identifier: String): Fn = Fn(
+        intf.function(identifier),
+        address ?: throw Error.NullAddress,
+        intf,
+        provider ?: throw Error.NullProvider,
+    )
 
-    /** Find method by signature string, else throw eg `balance(address)` */
-    @Throws(Throwable::class)
-    fun method(string: String): Method {
-        TODO("Throw if method not found, give hits similar method names")
-    }
-
-    /** Deploys smart contract, signer has to be unlocks & provider connected */
-    @Throws(Throwable::class)
-    suspend fun deploy(): Address.HexString {
-        TODO("This will come later")
-    }
-
-    data class Method(
-        val name: String,
-        val inputs: List<Input>,
-        val outputs: List<Any>,
-        val stateMutability: StateMutability
+    data class Fn(
+        private val fnFragment: FunctionFragment,
+        private val address: AddressHexString,
+        private val intf: Interface,
+        private val provider: Provider,
     ) {
 
-        /** Encode method signature, params and return data */
-        fun callData(params: List<AbiEncodable>): ByteArray {
-            TODO("Encode signature and parameters")
-        }
+        suspend fun call(args: List<Any>): List<Any> = decodeResult(
+            provider.call(
+                address,
+                intf.encodeFunction(fnFragment, args).toHexString(true),
+            ).toByteArrayData()
+        )
 
-        /** Call view only functions. Throws if provider is not connected */
-        @Throws(Throwable::class)
-        suspend fun call(params: List<AbiEncodable> = emptyList()): Any? {
-            TODO("Encode signature and parameters")
-            TODO("Figure out return type if any and decode it")
-            // enconde abi
-            // create transaction
-            // val transaction = Transaction(to: ContratAddree, data: encodeData)
-            // val resutl == provider?.call(trasaction)
-            // parse to kotlin type
-        }
+        fun encode(args: List<Any>): ByteArray =
+            intf.encodeFunction(fnFragment, args)
 
-        /** Contract state transition method call, provider needs to be
-          * connected and signer needs to be unlocked, otherwise throws */
-        @Throws(Throwable::class)
-        suspend fun send(params: List<AbiEncodable> = emptyList()): TransactionResponse {
-            TODO("Implement")
-            // check if signer is unlocked
-            // enconde abi
-            // create transaction
-            // val transaction = Transaction(to: ContratAddree, data: encodeData)
-            // val resutl == provider?.call(trasaction)
-            // parse to kotlin type
-        }
-
-        /** Decodes contract return data to type */
-        @Throws(Throwable::class)
-        fun decodeReturnData(data: ByteArray): Any? {
-            TODO("Implement")
-        }
-
-        fun signature(): ByteArray {
-            TODO("Implement")
-        }
-
-        enum class StateMutability {
-            NONPAYABLE, PAYABLE, VIEW,
-        }
+        // TODO: Handle error
+        fun decodeResult(data: ByteArray): List<Any> =
+            intf.decodeFunctionResult(fnFragment, data)
     }
 
-    data class Input(
-        val name: String,
-        val value: Any
-    )
-
-    data class Event(
-        val name: String
-    )
-
-    private fun abiDecodeParams(abi: String): List<Input> {
-        TODO("Implement")
-    }
-
-    private fun abiDecodeMethods(abi: String): List<Method> {
-        TODO("Implement")
-    }
-
-    private fun abiDecodeEvents(abi: String): List<Event> {
-        TODO("Implement")
-    }
-
-    private fun abiDecodeErrors(abi: String): List<Event> {
-        TODO("Implement")
-    }
-
-    private fun abiDecodeStructs(abi: String): List<Event> {
-        TODO("Implement")
+    sealed class Error(message: String? = null) : Exception(message) {
+        object NullAddress : Error("Contract address is null")
+        object NullProvider : Error("Contract provider is null")
     }
 }
 
-interface AbiEncodable {
-    fun abiEncode(): ByteArray
-}
