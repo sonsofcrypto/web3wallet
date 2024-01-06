@@ -42,6 +42,8 @@ class Interface {
 
     companion object {
 
+        var cache: MutableMap<String, Interface> = mutableMapOf()
+
         @Throws(Throwable::class)
         fun fromJson(jsonString: String): Interface = Interface(
             fragmentsFrom(jsonString).map { Fragment.from(it) }.filterNotNull()
