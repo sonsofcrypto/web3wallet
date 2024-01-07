@@ -37,11 +37,11 @@ import kotlinx.coroutines.flow.onEach
 import kotlin.time.Duration.Companion.seconds
 
 /** Generic signer interface */
-interface SignerIntf {
+interface LegacySigner {
     /** Returns provider if connected */
     fun provider(): Provider?
     /** Returns a new instance of the Signer, connected to provider. */
-    fun connect(provider: Provider): SignerIntf;
+    fun connect(provider: Provider): LegacySigner;
     /** Returns the checksum address */
     @Throws(Throwable::class)
     fun address(): Address
@@ -96,11 +96,11 @@ interface SignerIntf {
 
 private val autoLockInterval = 5.seconds
 
-class Wallet(
+class LegacyWallet(
     private val signerStoreItem: SignerStoreItem,
     private val signerStoreService: SignerStoreService,
     private var provider: Provider? = null,
-): SignerIntf {
+): LegacySigner {
     private var key: ByteArray? = null
     private var lockJob: Job? = null
 
@@ -109,7 +109,7 @@ class Wallet(
 
     override fun provider(): Provider? = provider
 
-    override fun connect(provider: Provider): SignerIntf {
+    override fun connect(provider: Provider): LegacySigner {
         this.provider = provider
         return this
     }
@@ -290,8 +290,8 @@ class Wallet(
         return provider!!.resolveName(name)
     }
 
-    fun copy(provider: Provider? = null): Wallet {
-        return Wallet(signerStoreItem, signerStoreService, provider)
+    fun copy(provider: Provider? = null): LegacyWallet {
+        return LegacyWallet(signerStoreItem, signerStoreService, provider)
     }
 
     /** Exceptions */
@@ -304,8 +304,8 @@ class Wallet(
         data class MissingAddressError(val path: String, val itemId: String) :
             Error("Missing address $path for item $itemId")
         /** When calling methods that require provider while one is not connected */
-        data class ProviderConnectionError(val wallet: Wallet) :
-            Error("Provider not connected for ${wallet.id()}")
+        data class ProviderConnectionError(val legacyWallet: LegacyWallet) :
+            Error("Provider not connected for ${legacyWallet.id()}")
         /** Failed to unlock wallet */
         object FailedToUnlockWallet: Error("Failed to unlock wallet")
     }

@@ -10,8 +10,8 @@ import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.IV3SwapRouter
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.Quoter
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.UniswapV3PoolState
-import com.sonsofcrypto.web3lib.signer.Wallet
-import com.sonsofcrypto.web3lib.signer.contracts.ERC20Legacy
+import com.sonsofcrypto.web3lib.signer.LegacyWallet
+import com.sonsofcrypto.web3lib.signer.LegacyERC20Contract
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency
@@ -100,9 +100,9 @@ interface UniswapService {
     val approvalState: ApprovalState
     val outputState: OutputState
     var provider: Provider
-    var wallet: Wallet?
+    var legacyWallet: LegacyWallet?
 
-    suspend fun requestApproval(currency: Currency, wallet: Wallet)
+    suspend fun requestApproval(currency: Currency, legacyWallet: LegacyWallet)
     @Throws(Throwable::class)
     suspend fun executeSwap(): TransactionResponse
 
@@ -166,7 +166,7 @@ class DefaultUniswapService(): UniswapService {
         }
 
     override var provider: Provider = ProviderVoid(Network.ethereum())
-    override var wallet: Wallet? = null
+    override var legacyWallet: LegacyWallet? = null
         set(value) {
             if (field != value) {
                 field = value
@@ -194,11 +194,11 @@ class DefaultUniswapService(): UniswapService {
             .launchIn(scope)
     }
 
-    override suspend fun requestApproval(currency: Currency, wallet: Wallet) {
+    override suspend fun requestApproval(currency: Currency, legacyWallet: LegacyWallet) {
         approvalState = ApprovalState.Approving(currency)
         val spender = routerAddress(provider.network)
         scope.launch {
-            val state = approve(currency, spender, wallet)
+            val state = approve(currency, spender, legacyWallet)
             withUICxt { approvalState = state }
         }
     }
@@ -211,7 +211,7 @@ class DefaultUniswapService(): UniswapService {
         val state = outputState as? OutputState.Valid
         if (state == null)
             throw Throwable("No valid quote")
-        if (wallet == null)
+        if (legacyWallet == null)
             throw Throwable("No wallet")
         val minAmount = BigDec.from(state.quote).mul(BigDec.from(0.969)).toBigInt()
         val params = IV3SwapRouter.ExactInputSingleParams(
@@ -238,7 +238,7 @@ class DefaultUniswapService(): UniswapService {
             value = if (inputCurrency.isNative()) inputAmount
                 else BigInt.zero
         )
-        return withBgCxt { wallet!!.sendTransaction(request) }
+        return withBgCxt { legacyWallet!!.sendTransaction(request) }
     }
 
     private fun currencyChanged(input: Currency, output: Currency) {
@@ -248,7 +248,7 @@ class DefaultUniswapService(): UniswapService {
         val needsApproval = approvalState.needsApproval(inputCurrency)
         if (needsApproval)
             approvalState = ApprovalState.Loading(inputCurrency)
-        val owner = wallet?.address()?.toHexStringAddress()?.hexString
+        val owner = legacyWallet?.address()?.toHexStringAddress()?.hexString
         val spender = routerAddress(provider.network)
         val amount = inputAmount
         poolsStateJob = scope.launch {
@@ -421,7 +421,7 @@ class DefaultUniswapService(): UniswapService {
         provider: Provider
     ): ApprovalState {
         val tokenAddress = wrappedAddress(currency)
-        val erc20Legacy = ERC20Legacy(Address.HexString(tokenAddress))
+        val erc20Legacy = LegacyERC20Contract(Address.HexString(tokenAddress))
         if (owner == null)
             return ApprovalState.DoesNotApply(currency)
         try {
@@ -449,19 +449,19 @@ class DefaultUniswapService(): UniswapService {
     suspend fun approve(
         currency: Currency,
         spender: AddressHexString,
-        wallet: Wallet
+        legacyWallet: LegacyWallet
     ): ApprovalState {
         val tokenAddress = wrappedAddress(currency)
-        val erc20 = ERC20Legacy(Address.HexString(tokenAddress))
+        val erc20 = LegacyERC20Contract(Address.HexString(tokenAddress))
         try {
             val data = erc20.approve(Address.HexString(spender), UINT256_MAX)
             val request = TransactionRequest(to = erc20.address, data = data)
-            val response = wallet!!.sendTransaction(request)
+            val response = legacyWallet!!.sendTransaction(request)
             var throwCount = 0
             while (throwCount < 10) {
                 delay(5.seconds)
                 try {
-                    val receipt = wallet.provider()!!.getTransactionReceipt(response.hash)
+                    val receipt = legacyWallet.provider()!!.getTransactionReceipt(response.hash)
                     if (receipt.status == 1) {
                         return ApprovalState.Approved(currency)
                     }

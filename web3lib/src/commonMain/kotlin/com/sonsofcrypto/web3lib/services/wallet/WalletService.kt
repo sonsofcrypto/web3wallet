@@ -17,8 +17,8 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent.EnabledNetworksDidChange
 import com.sonsofcrypto.web3lib.services.networks.NetworksListener
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
-import com.sonsofcrypto.web3lib.signer.Wallet
-import com.sonsofcrypto.web3lib.signer.contracts.ERC20Legacy
+import com.sonsofcrypto.web3lib.signer.LegacyWallet
+import com.sonsofcrypto.web3lib.signer.LegacyERC20Contract
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency
@@ -290,7 +290,7 @@ class DefaultWalletService(
         if (currency.type() == Currency.Type.ERC20 && currency.address != null)
             return TransactionRequest(
                 to = Address.HexString(currency.address!!),
-                data = ERC20Legacy(Address.HexString(currency.address!!))
+                data = LegacyERC20Contract(Address.HexString(currency.address!!))
                     .transfer(Address.HexString(to), amount)
             )
         throw Error.UnableToSendTransaction
@@ -388,9 +388,9 @@ class DefaultWalletService(
         }
     }
 
-    private suspend fun blockNumber(wallet: Wallet) {
-        val network = wallet.network()!!
-        val block = wallet.provider()?.blockNumber() ?: BigInt.zero
+    private suspend fun blockNumber(legacyWallet: LegacyWallet) {
+        val network = legacyWallet.network()!!
+        val block = legacyWallet.provider()?.blockNumber() ?: BigInt.zero
         withUICxt {
             networksState[blockNumKey(network)] = block
             networksStateCache.set(blockNumKey(network), jsonEncode(block))
@@ -399,13 +399,13 @@ class DefaultWalletService(
     }
 
     private suspend fun transactionCountAndBalance(
-        wallet: Wallet,
+        legacyWallet: LegacyWallet,
         transactionCount: BigInt?,
         currencies: List<Currency>,
         force: Boolean = false
     ) {
-        val newTransactionCount = wallet.getTransactionCount(
-            wallet.address(),
+        val newTransactionCount = legacyWallet.getTransactionCount(
+            legacyWallet.address(),
             BlockTag.Latest
         )
         if (!force && transactionCount != null && transactionCount == newTransactionCount)
@@ -414,20 +414,20 @@ class DefaultWalletService(
         currencies.forEach { currency ->
             when (currency.type()) {
                 Currency.Type.NATIVE -> {
-                    val balance = wallet.getBalance(BlockTag.Latest)
-                    updateBalance(wallet, currency, balance, newTransactionCount)
+                    val balance = legacyWallet.getBalance(BlockTag.Latest)
+                    updateBalance(legacyWallet, currency, balance, newTransactionCount)
                 }
                 Currency.Type.ERC20 -> {
-                    val contract = ERC20Legacy(Address.HexString(currency.address!!))
-                    val address = wallet.address().toHexStringAddress()
-                    val encodedBalance = wallet.call(
+                    val contract = LegacyERC20Contract(Address.HexString(currency.address!!))
+                    val address = legacyWallet.address().toHexStringAddress()
+                    val encodedBalance = legacyWallet.call(
                         TransactionRequest(
                             to = contract.address,
                             data = contract.balanceOf(address),
                         )
                     )
                     val balance = abiDecodeBigInt(encodedBalance)
-                    updateBalance(wallet, currency, balance, newTransactionCount)
+                    updateBalance(legacyWallet, currency, balance, newTransactionCount)
                 }
                 else -> { println("Unhandled balance") }
             }
@@ -456,7 +456,7 @@ class DefaultWalletService(
 
     private suspend fun processPending(
         pendingTransactions: List<PendingInfo>,
-        wallets: Map<String, Wallet?>
+        wallets: Map<String, LegacyWallet?>
     ) {
         val remaining: MutableList<PendingInfo> = mutableListOf()
         val receipts: MutableList<ReceiptInfo> = mutableListOf()
@@ -488,12 +488,12 @@ class DefaultWalletService(
     }
 
     private suspend fun updateBalance(
-        wallet: Wallet,
+        legacyWallet: LegacyWallet,
         currency: Currency,
         balance: BigInt,
         transactionCount: BigInt
     ) = withUICxt {
-        val network = wallet.network()!!
+        val network = legacyWallet.network()!!
         networksState[balanceKey(network, currency)] = balance
         networksState[transactionCountKey(network)] = transactionCount
         networksStateCache.set(
@@ -583,9 +583,9 @@ class DefaultWalletService(
      * getEthBalance
      * balances
      * all in one RPC call */
-    fun executePoll2(wallet: Wallet, currencies: List<Currency>) {
-        val multicallAddress = wallet.network()!!.multicall3Address()
-        val walletAddress = wallet.address().toHexStringAddress()
+    fun executePoll2(legacyWallet: LegacyWallet, currencies: List<Currency>) {
+        val multicallAddress = legacyWallet.network()!!.multicall3Address()
+        val walletAddress = legacyWallet.address().toHexStringAddress()
         val currenciesAddresses = currencies.mapNotNull { it.address }
         val aggregateFn = ifaceMulticall.function("aggregate3")
         val balanceOfFn = ifaceERC20.function("balanceOf")

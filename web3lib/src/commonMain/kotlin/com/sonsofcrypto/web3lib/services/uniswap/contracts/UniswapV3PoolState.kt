@@ -2,14 +2,14 @@ package com.sonsofcrypto.web3lib.services.uniswap.contracts
 
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
-import com.sonsofcrypto.web3lib.signer.contracts.ContractLegacy
+import com.sonsofcrypto.web3lib.signer.LegacyContract
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.abiDecodeBigInt
 import com.sonsofcrypto.web3lib.utils.abiDecodeUInt
 import com.sonsofcrypto.web3lib.utils.keccak256
 
-class UniswapV3PoolState(address: Address.HexString): ContractLegacy(address) {
+class UniswapV3PoolState(address: Address.HexString): LegacyContract(address) {
     /**
      * @notice The 0th storage slot in the pool stores many values, and is
      * exposed as a single method to save gas when accessed externally.

@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3lib.services.governance
 
 import com.sonsofcrypto.web3lib.abi.Contract
 import com.sonsofcrypto.web3lib.provider.Provider
-import com.sonsofcrypto.web3lib.signer.SignerIntf
+import com.sonsofcrypto.web3lib.signer.LegacySigner
 
 /** Governance supports `GovernorAlpha`, `GovernorBravo` & Compound
  * compatibility */
@@ -17,7 +17,7 @@ interface GovernanceService {
 class DefaultGovernanceService(
     val contract: Contract,
     val provider: Provider,
-    val signerIntf: SignerIntf
+    val legacySigner: LegacySigner
 ): GovernanceService {
 
     override suspend fun proposals(): List<GovernanceProposal> {
