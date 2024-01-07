@@ -23,6 +23,7 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 - Legacy transaction support
 - EIP-2718 support
 - EIP-2930 support
+- Lots of tests
 
 ### v1.1.4 #48
 - Wallet type indicator icon

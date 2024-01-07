@@ -4,6 +4,7 @@ import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.encode
 import com.sonsofcrypto.web3lib.provider.model.encodeEIP1559
+import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.services.address.AddressService
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.Key
@@ -27,7 +28,9 @@ class KeySigner(
 
     @Throws(Throwable::class)
     override suspend fun signMessage(message: ByteArray): ByteArray {
-        TODO("Not yet implemented")
+        val payload = "\u0019Ethereum Signed Message:\n${message.size}"
+            .encodeToByteArray() + message
+        return sign(keccak256(payload), key)
     }
 
     @Throws(Throwable::class)
