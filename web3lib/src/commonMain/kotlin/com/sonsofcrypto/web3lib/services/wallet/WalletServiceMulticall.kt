@@ -20,8 +20,8 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.poll.FnPollServiceRequest
 import com.sonsofcrypto.web3lib.services.poll.PollService
 import com.sonsofcrypto.web3lib.services.poll.PollServiceRequest
-import com.sonsofcrypto.web3lib.signer.Wallet
-import com.sonsofcrypto.web3lib.signer.contracts.ERC20Legacy
+import com.sonsofcrypto.web3lib.signer.LegacyWallet
+import com.sonsofcrypto.web3lib.signer.LegacyERC20Contract
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency
@@ -199,7 +199,7 @@ class DefaultWalletServiceMulticall(
         if (currency.type() == Currency.Type.ERC20 && currency.address != null)
             return TransactionRequest(
                 to = Address.HexString(currency.address!!),
-                data = ERC20Legacy(Address.HexString(currency.address!!))
+                data = LegacyERC20Contract(Address.HexString(currency.address!!))
                     .transfer(Address.HexString(to), amount)
             )
         throw Error.UnableToSendTransaction
@@ -274,7 +274,7 @@ class DefaultWalletServiceMulticall(
 
     private suspend fun processPending(
         pendingTransactions: List<PendingInfo>,
-        wallets: Map<String, Wallet?>
+        wallets: Map<String, LegacyWallet?>
     ) {
         val remaining: MutableList<PendingInfo> = mutableListOf()
         val receipts: MutableList<ReceiptInfo> = mutableListOf()

@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3lib.abi
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.call
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
-import com.sonsofcrypto.web3lib.signer.SignerIntf
+import com.sonsofcrypto.web3lib.signer.LegacySigner
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 
@@ -11,14 +11,14 @@ open class Contract{
     val intf: Interface
     var address: AddressHexString? private set
     var provider: Provider? private set
-    var signer: SignerIntf? private set
+    var signer: LegacySigner? private set
 
     @Throws(Throwable::class)
     constructor(
         intf: Interface,
         address: AddressHexString? = null,
         provider: Provider? = null,
-        signer: SignerIntf? = null
+        signer: LegacySigner? = null
     ) {
         this.intf = intf
         this.address = address
@@ -31,12 +31,12 @@ open class Contract{
     fun connect(
         address: AddressHexString? = null,
         provider: Provider? = null,
-        signerIntf: SignerIntf? = null,
+        legacySigner: LegacySigner? = null,
     ): Contract = Contract(
         this.intf,
         address ?: this.address,
         provider ?: this.provider,
-        signerIntf ?: this.signer
+        legacySigner ?: this.signer
     )
 
     @Throws(Throwable::class)
