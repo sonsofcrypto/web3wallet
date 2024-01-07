@@ -13,7 +13,7 @@ import com.sonsofcrypto.web3lib.services.node.NodeService
 import com.sonsofcrypto.web3lib.services.poll.GroupPollServiceRequest
 import com.sonsofcrypto.web3lib.services.poll.PollService
 import com.sonsofcrypto.web3lib.services.poll.PollServiceRequest
-import com.sonsofcrypto.web3lib.signer.Wallet
+import com.sonsofcrypto.web3lib.signer.LegacyWallet
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.NetworkFee
@@ -63,11 +63,11 @@ interface NetworksService {
     /** Sets `provider` for `network`. Does not rebuild wallets */
     fun setProvider(provider: ProviderInfo, network: Network)
     /** `Wallet`s for all enabled networks connected to providers */
-    fun walletsForEnabledNetworks(): List<Wallet>
+    fun walletsForEnabledNetworks(): List<LegacyWallet>
     /** `Wallet` for network */
-    fun wallet(network: Network): Wallet?
+    fun wallet(network: Network): LegacyWallet?
     /** `Wallet` for selected network */
-    fun wallet(): Wallet?
+    fun wallet(): LegacyWallet?
     /** Add listener for `NetworksEvent`s */
     fun add(listener: NetworksListener)
     /** Remove listener for `NetworksEvent`s, if null removes all listeners */
@@ -129,7 +129,7 @@ class DefaultNetworksService(
         }
 
     private var providers: MutableMap<Network, Provider> = mutableMapOf()
-    private var wallets: MutableMap<String, Wallet> = mutableMapOf()
+    private var wallets: MutableMap<String, LegacyWallet> = mutableMapOf()
     private var networkInfo: MutableMap<String, NetworkInfo> = mutableMapOf()
     private var listeners: List<NetworksListener> = listOf()
     private val uiScope = CoroutineScope(uiDispatcher)
@@ -180,19 +180,19 @@ class DefaultNetworksService(
         setProvider(provider.toProvider(network), network)
     }
 
-    override fun walletsForEnabledNetworks(): List<Wallet> {
+    override fun walletsForEnabledNetworks(): List<LegacyWallet> {
         return enabledNetworks.mapNotNull { wallet(it) }
     }
 
-    override fun wallet(network: Network): Wallet? {
+    override fun wallet(network: Network): LegacyWallet? {
         wallets[network.id()]?.let { return it }
         signerStoreItem?.let {
-            wallets[network.id()] = Wallet(it, signerStoreService, provider(network))
+            wallets[network.id()] = LegacyWallet(it, signerStoreService, provider(network))
         }
         return wallets[network.id()]
     }
 
-    override fun wallet(): Wallet? {
+    override fun wallet(): LegacyWallet? {
         network?.let { return wallet(it) }
         return null
     }

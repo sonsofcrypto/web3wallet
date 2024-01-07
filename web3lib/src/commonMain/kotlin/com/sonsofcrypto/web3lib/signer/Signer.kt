@@ -15,10 +15,11 @@ import com.sonsofcrypto.web3lib.types.toHexString
 import com.sonsofcrypto.web3lib.types.toHexStringAddress
 import com.sonsofcrypto.web3lib.utils.BigInt
 
-abstract class Signer {
+abstract class Signer(provider: Provider? = null) {
     /** Connected provider */
-    var provider: Provider? = null
+    var provider: Provider? = provider
         private set
+
     /** Returns a new instance of the Signer, connected to provider. */
     abstract fun connect(provider: Provider): Signer
 
@@ -87,7 +88,8 @@ abstract class Signer {
 
     /** Resolves name using selected resolver */
     @Throws(Throwable::class)
-    abstract suspend fun resolveName(name: String): AddressHexString?
+    suspend fun resolveName(name: String): AddressHexString? =
+        unwrappedProvider().resolveName(name)?.hexString
 
     /** Populate transaction, checks that address matches signer*/
     @Throws(Throwable::class)
