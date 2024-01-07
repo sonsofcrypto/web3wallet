@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.services.uniswap.contracts
 
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.signer.LegacyContract
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.AddressHexString
@@ -65,7 +65,7 @@ class IV3SwapRouter(address: Address.HexString): LegacyContract(address) {
      *     ExactInputSingleParams calldata params
      * ) external payable returns (uint256 amountOut);
      */
-    fun exactInputSingle(params: ExactInputSingleParams) = DataHexString(
+    fun exactInputSingle(params: ExactInputSingleParams) = DataHexStr(
         keccak256(
             "exactInputSingle((address,address,uint24,address,uint256,uint256,uint160))"
                 .encodeToByteArray()
@@ -80,7 +80,7 @@ class IV3SwapRouter(address: Address.HexString): LegacyContract(address) {
      *
      * function unwrapWETH9(uint256 amountMinimum) external payable;
      */
-    fun unwrapWETH9(amountMinimum: BigInt): DataHexString = DataHexString(
+    fun unwrapWETH9(amountMinimum: BigInt): DataHexStr = DataHexStr(
         keccak256("unwrapWETH9(uint256)".encodeToByteArray()).copyOfRange(0, 4) +
         abiEncode(amountMinimum)
     )
@@ -94,7 +94,7 @@ class IV3SwapRouter(address: Address.HexString): LegacyContract(address) {
      *
      * function multicall(uint256 deadline, bytes[] calldata data) external payable returns (bytes[] memory results);
      */
-    fun multicall(deadline: Instant, calldata: List<ByteArray>): DataHexString {
+    fun multicall(deadline: Instant, calldata: List<ByteArray>): DataHexStr {
         var data = keccak256(
             "multicall(uint256,bytes[])".encodeToByteArray()
         ).copyOfRange(0, 4)
@@ -153,7 +153,7 @@ class IV3SwapRouter(address: Address.HexString): LegacyContract(address) {
         } else {
             throw Exception("Unsupported number of calldatas ${calldata.size}, needs refactor")
         }
-        return DataHexString(data)
+        return DataHexStr(data)
     }
 }
 

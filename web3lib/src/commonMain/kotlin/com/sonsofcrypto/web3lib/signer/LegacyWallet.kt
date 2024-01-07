@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3lib.signer
 
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.provider.model.FeeData
 import com.sonsofcrypto.web3lib.provider.model.FilterRequest
 import com.sonsofcrypto.web3lib.provider.model.Log
@@ -55,11 +55,11 @@ interface LegacySigner {
     /** Signs a transaction and returns the fully serialized, signed transaction
      * The transaction MUST be signed, and NO additional properties to be added.*/
     @Throws(Throwable::class)
-    suspend fun signTransaction(transaction: TransactionRequest): DataHexString
+    suspend fun signTransaction(transaction: TransactionRequest): DataHexStr
 
     /** Populates "from" if unspecified, and calls with the transaction */
     @Throws(Throwable::class)
-    suspend fun call(transaction: TransactionRequest, block: BlockTag = BlockTag.Latest): DataHexString
+    suspend fun call(transaction: TransactionRequest, block: BlockTag = BlockTag.Latest): DataHexStr
     /** Populates all fields, signs and sends it to the network */
     @Throws(Throwable::class)
     suspend fun sendTransaction(transaction: TransactionRequest): TransactionResponse
@@ -163,12 +163,12 @@ class LegacyWallet(
         TODO("Not yet implemented")
     }
 
-    override suspend fun signTransaction(transaction: TransactionRequest): DataHexString {
+    override suspend fun signTransaction(transaction: TransactionRequest): DataHexStr {
         TODO("Not yet implemented")
     }
 
     @Throws(Throwable::class)
-    override suspend fun call(transaction: TransactionRequest, block: BlockTag): DataHexString {
+    override suspend fun call(transaction: TransactionRequest, block: BlockTag): DataHexStr {
         return provider!!.call(transaction, block)
     }
 
@@ -205,7 +205,7 @@ class LegacyWallet(
         val signedRawTx = signedTransaction.encodeEIP1559()
         key.zeroOut()
         val nonce = signedTransaction.nonce!!
-        val hash = provider.sendRawTransaction(DataHexString(signedRawTx))
+        val hash = provider.sendRawTransaction(DataHexStr(signedRawTx))
         return TransactionResponse(
             hash = hash,
             blockNumber = null,
@@ -238,9 +238,9 @@ class LegacyWallet(
             return listOf()
         }
         val hash = keccak256("Transfer(address,address,uint256)".toByteArray())
-        val signature = DataHexString(hash)
+        val signature = DataHexStr(hash)
         val address = address().toHexStringAddress().hexString
-        val abiAddress = DataHexString(abiEncode(Address.HexString(address)))
+        val abiAddress = DataHexStr(abiEncode(Address.HexString(address)))
         val fromLogs = provider?.getLogs(
             FilterRequest(
                 BlockTag.Earliest,

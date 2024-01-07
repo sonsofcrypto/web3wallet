@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.types
 
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonPrimitive
 
@@ -28,7 +28,7 @@ sealed class Address() {
 
 fun Address.toHexStringAddress(): Address.HexString = when (this) {
     is Address.HexString -> this
-    is Address.Bytes -> Address.HexString(DataHexString(this.data))
+    is Address.Bytes -> Address.HexString(DataHexStr(this.data))
     else -> TODO("Resolve name address")
 }
 
@@ -37,7 +37,7 @@ fun Address.toHexString(): AddressHexString = this.toHexStringAddress().hexStrin
 
 fun Address.jsonPrimitive(): JsonPrimitive = when (this) {
     is Address.HexString -> JsonPrimitive(hexString)
-    is Address.Bytes -> JsonPrimitive(DataHexString(data))
+    is Address.Bytes -> JsonPrimitive(DataHexStr(data))
     else -> JsonPrimitive("")
 }
 

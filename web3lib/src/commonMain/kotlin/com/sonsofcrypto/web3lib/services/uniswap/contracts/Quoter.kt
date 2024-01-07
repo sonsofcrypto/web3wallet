@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.services.uniswap.contracts
 
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.signer.LegacyContract
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
@@ -26,7 +26,7 @@ class Quoter(address: Address.HexString): LegacyContract(address) {
         fee: UInt,
         amountIn: BigInt,
         sqrtPriceLimitX96: UInt,
-    ):DataHexString = DataHexString(
+    ):DataHexStr = DataHexStr(
         keccak256("quoteExactInputSingle(address,address,uint24,uint256,uint160)"
             .encodeToByteArray()).copyOfRange(0, 4) +
         abiEncode(tokenIn) +

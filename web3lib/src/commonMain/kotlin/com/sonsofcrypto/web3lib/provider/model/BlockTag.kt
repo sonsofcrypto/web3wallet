@@ -14,7 +14,7 @@ sealed class BlockTag() {
         Earliest -> JsonPrimitive("earliest")
         Latest -> JsonPrimitive("latest")
         Pending -> JsonPrimitive("pending")
-        is Number -> JsonPrimitive(QuantityHexString(number))
+        is Number -> JsonPrimitive(QntHexStr(number))
         is Hash -> JsonPrimitive(hash)
     }
 }

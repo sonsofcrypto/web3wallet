@@ -12,13 +12,13 @@ import kotlinx.serialization.json.jsonArray
 @Serializable
 data class Log(
     val blockNumber: BigInt,
-    val blockHash: DataHexString,
+    val blockHash: DataHexStr,
     val transactionIndex: BigInt,
     val removed: Boolean,
     val address: Address.HexString,
-    val data: DataHexString,
+    val data: DataHexStr,
     val topics: List<Topic>?,
-    val transactionHash: DataHexString,
+    val transactionHash: DataHexStr,
     val logIndex: BigInt,
 ) { companion object }
 

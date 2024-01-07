@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib.abi
 
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.types.Address
@@ -37,7 +37,7 @@ class MultiCallTests {
         val result = provider.call(
             TransactionRequest(
                 to = Address.HexString(multiCallAddress),
-                data = DataHexString(multucallData),
+                data = DataHexStr(multucallData),
             )
         )
         println("[RESULT] $result")
