@@ -25,6 +25,11 @@ data class AccessListItem(
 enum class TransactionType(val value: Int) {
     LEGACY(0), EIP2930(1), EIP1559(2);
 
+    fun isLegacy(): Boolean = when(this) {
+        LEGACY, EIP2930 -> true
+        EIP1559 -> false
+    }
+
     fun toByteArray(): ByteArray = QuantityHexString(value).toByteArrayQnt()
 
     companion object {

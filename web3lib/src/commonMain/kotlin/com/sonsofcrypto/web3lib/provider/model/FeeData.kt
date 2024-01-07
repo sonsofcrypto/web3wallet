@@ -5,10 +5,10 @@ import com.sonsofcrypto.web3lib.utils.BigInt
 data class FeeData(
     /** The Max Fee Per Gas, which is the absolute maximum you are willing to
      * pay per unit of gas to get your transaction included in a block. */
-    val maxFeePerGas: BigInt,
+    val maxFeePerGas: BigInt?,
     /** A Max Priority Fee, which is optional, determined by the user, and is
      * paid directly to miners. */
-    val maxPriorityFeePerGas: BigInt,
+    val maxPriorityFeePerGas: BigInt?,
     /** Legacy pre EIP-1559 gas price */
-    val gasPrice: BigInt,
+    val gasPrice: BigInt?,
 )
