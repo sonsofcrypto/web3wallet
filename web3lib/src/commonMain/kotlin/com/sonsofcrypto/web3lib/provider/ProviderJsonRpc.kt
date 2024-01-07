@@ -375,7 +375,8 @@ abstract class ProviderJsonRpc(
         } catch (e: Throwable) {
             println(e)
         }
-        if (debugLogs) println("[RPC ERROR] ${jsonRpcErrorResponse?.error ?: error}")
+        if (debugLogs)
+            println("[RPC ERROR] ${jsonRpcErrorResponse?.error ?: error}")
         throw jsonRpcErrorResponse?.error ?: error
     }
 

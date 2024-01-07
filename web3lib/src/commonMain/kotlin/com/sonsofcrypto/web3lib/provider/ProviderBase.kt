@@ -143,6 +143,21 @@ open class ProviderBase(override val network: Network): Provider() {
     }
 
     @Throws(Throwable::class)
+    override suspend fun chainId(): BigInt {
+        TODO("Implement")
+    }
+
+    @Throws(Throwable::class)
+    override suspend fun netVersion(): BigInt {
+        TODO("Implement")
+    }
+
+    @Throws(Throwable::class)
+    override suspend fun clientVersion(): BigInt {
+        TODO("Implement")
+    }
+
+    @Throws(Throwable::class)
     override suspend fun resolveName(name: String): Address.HexString? {
         TODO("Not yet implemented")
     }
