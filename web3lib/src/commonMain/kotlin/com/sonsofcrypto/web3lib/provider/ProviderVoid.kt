@@ -118,6 +118,18 @@ class ProviderVoid(override val network: Network) : Provider() {
         TODO("Not yet implemented")
     }
 
+    override suspend fun chainId(): BigInt {
+        TODO("Implement")
+    }
+
+    override suspend fun netVersion(): BigInt {
+        TODO("Implement")
+    }
+
+    override suspend fun clientVersion(): BigInt {
+        TODO("Implement")
+    }
+
     override suspend fun resolveName(name: String): Address.HexString? {
         TODO("Not yet implemented")
     }

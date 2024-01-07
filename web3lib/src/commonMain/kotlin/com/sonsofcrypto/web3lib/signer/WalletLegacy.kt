@@ -189,7 +189,7 @@ class Wallet(
         val populatedTx = transaction.copy(
             from = address.toHexStringAddress(),
             nonce = getTransactionCount(address, block = BlockTag.Latest),
-            chainId = network.chainId.toInt(),
+            chainId = BigInt.from(network.chainId),
             type = TransactionType.EIP1559,
             maxPriorityFeePerGas = feeData.maxPriorityFeePerGas,
             maxFeePerGas = feeData.maxFeePerGas,

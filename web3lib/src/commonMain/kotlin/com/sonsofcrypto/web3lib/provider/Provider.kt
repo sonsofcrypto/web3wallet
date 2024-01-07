@@ -17,8 +17,6 @@ import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlinx.serialization.json.JsonObject
 
-interface SignedTransaction {}
-
 /** Abstract Provider web3 JSON-RPC API */
 abstract class Provider {
 
@@ -104,6 +102,20 @@ abstract class Provider {
     @Throws(Throwable::class)
     abstract suspend fun uninstallFilter(id: QuantityHexString): Boolean
 
+    /** API Methods */
+
+    /** Returns the chain ID used for signing replay-protected transactions. */
+    @Throws(Throwable::class)
+    abstract suspend fun chainId(): BigInt
+
+    /** The current network id. (Chain id) */
+    @Throws(Throwable::class)
+    abstract suspend fun netVersion(): BigInt
+
+    /** Returns the current client version.*/
+    @Throws(Throwable::class)
+    abstract suspend fun clientVersion(): BigInt
+
     /** Name service */
 
     @Throws(Throwable::class)
@@ -124,11 +136,9 @@ abstract class Provider {
 
     /** Errors */
     sealed class Error(message: String? = null) : Exception(message) {
-
         /** Unable to compute `FeeData` due to missing `Block.baseFeePerGas` */
         object feeDataNullBaseFeePerGas :
             Error("Unable to compute `FeeData` due to missing `Block.baseFeePerGas`")
-
         /** Initialized provider with unsupported network */
         data class UnsupportedNetwork(val network: Network) :
             Error("Unsupported network $network")

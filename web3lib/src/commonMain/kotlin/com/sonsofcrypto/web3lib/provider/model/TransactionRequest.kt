@@ -20,7 +20,7 @@ data class TransactionRequest(
     val gasPrice: BigInt? = null,
     val data: DataHexString? = null,
     val value: BigInt? = null,
-    val chainId: Int? = null,
+    val chainId: BigInt? = null,
     val type: TransactionType? = null,
 
     /** Signature */

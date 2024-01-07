@@ -36,39 +36,3 @@ class ContractTests {
         )
     }
 }
-
-interface Signer {
-
-    /** Balance of network native currency */
-    @Throws(Throwable::class)
-    suspend fun getBalance(block: BlockTag): BigInt
-    /** Count of all the sent transactions (nonce) */
-    @Throws(Throwable::class)
-    suspend fun getTransactionCount(address: Address, block: BlockTag): BigInt
-    /** Populates `from` if unspecified, and estimates the fee */
-    @Throws(Throwable::class)
-    suspend fun estimateGas(transaction: TransactionRequest): BigInt
-
-    /** Populates "from" if unspecified, and calls with the transaction */
-    @Throws(Throwable::class)
-    suspend fun call(transaction: TransactionRequest, block: BlockTag = Latest): DataHexString
-    /** Populates all fields, signs and sends it to the network */
-    @Throws(Throwable::class)
-    suspend fun sendTransaction(transaction: TransactionRequest): TransactionResponse
-
-    /** Get transfer logs for ERC20 */
-    @Throws(Throwable::class)
-    suspend fun getTransferLogs(currency: Currency): List<Log>
-    /** Get transaction receipt */
-    suspend fun getTransactionReceipt(hash: String): TransactionReceipt
-
-    /** Chain id of network */
-    @Throws(Throwable::class)
-    suspend fun getChainId(): Unit
-    /** Gas price */
-    @Throws(Throwable::class)
-    suspend fun gasPrice(): BigInt
-    /** FeeData */
-    @Throws(Throwable::class)
-    suspend fun feeData(): FeeData
-}
