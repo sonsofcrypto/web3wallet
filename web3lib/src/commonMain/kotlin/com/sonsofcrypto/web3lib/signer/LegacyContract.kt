@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.signer
 
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.abiDecodeAddress
@@ -25,7 +25,7 @@ class LegacyERC20Contract(address: Address.HexString) : LegacyContract(address) 
      * Returns the name of the token.
      * @return public view virtual override returns (string memory)
      */
-    fun name(): DataHexString = DataHexString(
+    fun name(): DataHexStr = DataHexStr(
         keccak256("name()".encodeToByteArray()).copyOfRange(0, 4)
     )
 
@@ -33,7 +33,7 @@ class LegacyERC20Contract(address: Address.HexString) : LegacyContract(address) 
      * Returns the symbol of the token, usually a shorter version of the name.
      * @return public view virtual override returns (string memory)
      */
-    fun symbol(): DataHexString = DataHexString(
+    fun symbol(): DataHexStr = DataHexStr(
         keccak256("symbol()".encodeToByteArray()).copyOfRange(0, 4)
     )
 
@@ -48,7 +48,7 @@ class LegacyERC20Contract(address: Address.HexString) : LegacyContract(address) 
      *
      * @return public view virtual override returns (uint8)
      */
-    fun decimals(): DataHexString = DataHexString(
+    fun decimals(): DataHexStr = DataHexStr(
         keccak256("decimals()".encodeToByteArray()).copyOfRange(0, 4)
     )
 
@@ -58,7 +58,7 @@ class LegacyERC20Contract(address: Address.HexString) : LegacyContract(address) 
      * - the caller must have a balance of at least `amount`.
      * @return public virtual override returns (bool)
      */
-    fun transfer(to: Address.HexString, amount: BigInt): DataHexString = DataHexString(
+    fun transfer(to: Address.HexString, amount: BigInt): DataHexStr = DataHexStr(
         keccak256("transfer(address,uint256)".encodeToByteArray()).copyOfRange(0, 4)
             + abiEncode(to)
             + abiEncode(amount)
@@ -68,7 +68,7 @@ class LegacyERC20Contract(address: Address.HexString) : LegacyContract(address) 
      * @dev See {IERC20-balanceOf}.
      * @return public view virtual override returns (uint256)
      */
-    fun balanceOf(account: Address.HexString): DataHexString = DataHexString(
+    fun balanceOf(account: Address.HexString): DataHexStr = DataHexStr(
         keccak256("balanceOf(address)".encodeToByteArray()).copyOfRange(0, 4) +
             abiEncode(account)
     )
@@ -82,13 +82,13 @@ class LegacyERC20Contract(address: Address.HexString) : LegacyContract(address) 
      *
      * function allowance(address owner, address spender) → uint256
      */
-    fun allowance(owner: Address.HexString, spender: Address.HexString): DataHexString = DataHexString(
+    fun allowance(owner: Address.HexString, spender: Address.HexString): DataHexStr = DataHexStr(
         keccak256("allowance(address,address)".encodeToByteArray()).copyOfRange(0, 4) +
             abiEncode(owner) +
             abiEncode(spender)
     )
 
-    fun decodeAllowance(data: DataHexString): BigInt = abiDecodeBigInt(data)
+    fun decodeAllowance(data: DataHexStr): BigInt = abiDecodeBigInt(data)
 
     /**
      * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
@@ -105,13 +105,13 @@ class LegacyERC20Contract(address: Address.HexString) : LegacyContract(address) 
      * Emits an {Approval} event.
      * function approve(address spender, uint256 amount) external returns (bool);
      */
-    fun approve(spender: Address.HexString, amount: BigInt): DataHexString = DataHexString(
+    fun approve(spender: Address.HexString, amount: BigInt): DataHexStr = DataHexStr(
         keccak256("approve(address,uint256)".encodeToByteArray()).copyOfRange(0, 4) +
             abiEncode(spender) +
             abiEncode(amount)
     )
 
-    fun decodeApprove(data: DataHexString): BigInt = abiDecodeBigInt(data)
+    fun decodeApprove(data: DataHexStr): BigInt = abiDecodeBigInt(data)
 }
 
 class ERC721(address: Address.HexString): LegacyContract(address) {
@@ -123,7 +123,7 @@ class ERC721(address: Address.HexString): LegacyContract(address) {
         from: Address.HexString,
         to: Address.HexString,
         tokenId: BigInt,
-    ) = DataHexString(
+    ) = DataHexStr(
         keccak256("transferFrom(address,address,uint256)".encodeToByteArray())
             .copyOfRange(0, 4) +
             abiEncode(from) +
@@ -140,7 +140,7 @@ class CultGovernor: LegacyContract(
      * @param proposalId The id of the proposal to vote on
      * @param support The support value for the vote. 0=against, 1=for, 2=abstain
      */
-    fun castVote(proposalId: UInt, support: UInt) = DataHexString(
+    fun castVote(proposalId: UInt, support: UInt) = DataHexStr(
         keccak256("castVote(uint256,uint8)".encodeToByteArray()).copyOfRange(0, 4) +
             abiEncode(proposalId) +
             abiEncode(support)

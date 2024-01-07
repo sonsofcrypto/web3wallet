@@ -3,7 +3,6 @@ package com.sonsofcrypto.web3lib.services.uniswap
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.ProviderVoid
 import com.sonsofcrypto.web3lib.provider.call
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
@@ -377,7 +376,7 @@ class DefaultUniswapService(): UniswapService {
         tokenAddressA: AddressHexString,
         tokenAddressB: AddressHexString,
         feeAmount: PoolFee,
-        poolInitHash: DataHexString
+        poolInitHash: DataHexStr
     ): AddressHexString {
         val addresses = this.sortedAddresses(tokenAddressA, tokenAddressB)
         val salt = keccak256(

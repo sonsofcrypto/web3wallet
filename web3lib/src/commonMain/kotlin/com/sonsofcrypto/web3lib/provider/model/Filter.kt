@@ -43,7 +43,7 @@ sealed class Topic {
     }
 
     @Serializable
-    data class TopicValue(val value: DataHexString?): Topic() {
+    data class TopicValue(val value: DataHexStr?): Topic() {
 
         fun jsonPrimitive(): JsonElement {
             return if (value != null) JsonPrimitive(value) else JsonNull

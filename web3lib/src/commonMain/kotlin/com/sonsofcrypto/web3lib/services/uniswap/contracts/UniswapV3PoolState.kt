@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.services.uniswap.contracts
 
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.signer.LegacyContract
 import com.sonsofcrypto.web3lib.types.Address
@@ -41,11 +41,11 @@ class UniswapV3PoolState(address: Address.HexString): LegacyContract(address) {
      *     bool unlocked
      * );
      */
-    fun slot0() = DataHexString(
+    fun slot0() = DataHexStr(
         keccak256("slot0()".encodeToByteArray()).copyOfRange(0, 4)
     )
 
-    fun decodeSlot(data: DataHexString): Slot0 {
+    fun decodeSlot(data: DataHexStr): Slot0 {
         val bytes = data.toByteArrayData()
         return Slot0(
             sqrtPriceX96 = bytes.copyOfRange(0, 32),
@@ -63,11 +63,11 @@ class UniswapV3PoolState(address: Address.HexString): LegacyContract(address) {
      * @dev This value has no relationship to the total liquidity across all ticks
      * function liquidity() external view returns (uint128);
      */
-    fun liquidity() = DataHexString(
+    fun liquidity() = DataHexStr(
         keccak256("liquidity()".encodeToByteArray()).copyOfRange(0, 4)
     )
 
-    fun decodeLiquidity(data: DataHexString): BigInt = abiDecodeBigInt(data)
+    fun decodeLiquidity(data: DataHexStr): BigInt = abiDecodeBigInt(data)
 
     data class Slot0(
         val sqrtPriceX96: ByteArray,

@@ -1,6 +1,5 @@
 package com.sonsofcrypto.web3lib.services.uniswap2.v2
 
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.services.uniswap.PoolFee
 import com.sonsofcrypto.web3lib.services.uniswap2.core.isBefore
 import com.sonsofcrypto.web3lib.services.uniswap2.core.sortedAddresses
@@ -97,7 +96,7 @@ fun poolAddress(
     tokenAddressA: AddressHexString,
     tokenAddressB: AddressHexString,
     feeAmount: PoolFee,
-    poolInitHash: DataHexString
+    poolInitHash: DataHexStr
 ): AddressHexString {
     val addresses = sortedAddresses(tokenAddressA, tokenAddressB)
     val salt = keccak256(

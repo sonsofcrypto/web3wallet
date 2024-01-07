@@ -1,5 +1,8 @@
 package com.sonsofcrypto.web3lib.provider.model
 
+import com.sonsofcrypto.web3lib.provider.model.TransactionType.EIP1559
+import com.sonsofcrypto.web3lib.provider.model.TransactionType.EIP2930
+import com.sonsofcrypto.web3lib.provider.model.TransactionType.LEGACY
 import com.sonsofcrypto.web3lib.provider.utils.JsonPrimitiveQntHexStr
 import com.sonsofcrypto.web3lib.provider.utils.RlpItem
 import com.sonsofcrypto.web3lib.provider.utils.RlpList
@@ -18,7 +21,7 @@ data class TransactionRequest(
     val nonce: BigInt? = null,
     val gasLimit: BigInt? = null,
     val gasPrice: BigInt? = null,
-    val data: DataHexString? = null,
+    val data: DataHexStr? = null,
     val value: BigInt? = null,
     val chainId: BigInt? = null,
     val type: TransactionType? = null,
@@ -40,48 +43,100 @@ data class TransactionRequest(
 ) { companion object }
 
 @Throws(Throwable::class)
+fun TransactionRequest.encode(): ByteArray = when (type ?: EIP1559) {
+    EIP1559 -> encodeEIP1559()
+    EIP2930 -> encodeEIP2930()
+    LEGACY -> encodeLegacy()
+}
+
+@Throws(Throwable::class)
+fun TransactionRequest.encodeLegacy(): ByteArray {
+    var items = listOf(
+        RlpItem(
+            if (nonce == null || nonce.isZero()) ByteArray(0)
+            else QntHexStr(nonce).toByteArrayQnt()
+        ),
+        RlpItem(QntHexStr(gasPrice!!).toByteArrayQnt()),
+        RlpItem(QntHexStr(gasLimit!!).toByteArrayQnt()),
+        RlpItem(to?.hexString?.toByteArrayData() ?: ByteArray(0)),
+        RlpItem(
+            if (value == null || value.isZero()) ByteArray(0)
+            else QntHexStr(value).toByteArrayQnt()
+        ),
+        RlpItem(data?.toByteArrayData() ?: ByteArray(0)),
+    )
+
+    if (r != null && s != null && v != null)
+        items += listOf(v, r, s).map { RlpItem(it.toByteArray()) }
+
+    return RlpList(items).encode()
+}
+
+@Throws(Throwable::class)
+fun TransactionRequest.encodeEIP2930(): ByteArray {
+    var items = listOf(
+        RlpItem(QntHexStr(chainId!!).toByteArrayQnt()),
+        RlpItem(
+            if (nonce == null || nonce.isZero()) ByteArray(0)
+            else QntHexStr(nonce).toByteArrayQnt()
+        ),
+        RlpItem(QntHexStr(gasPrice!!).toByteArrayQnt()),
+        RlpItem(QntHexStr(gasLimit!!).toByteArrayQnt()),
+        RlpItem(to?.hexString?.toByteArrayData() ?: ByteArray(0)),
+        RlpItem(
+            if (value == null || value.isZero()) ByteArray(0)
+            else QntHexStr(value).toByteArrayQnt()
+        ),
+        RlpItem(data?.toByteArrayData() ?: ByteArray(0)),
+        rlpListAccessList(),
+    )
+
+    if (r != null && s != null && v != null)
+        items += listOf(v, r, s).map { RlpItem(it.toByteArray()) }
+
+    return EIP2930.toByteArray() + RlpList(items).encode()
+}
+
+@Throws(Throwable::class)
 fun TransactionRequest.encodeEIP1559(): ByteArray {
     if (gasPrice != null && gasPrice != maxFeePerGas) {
         throw Exception("Mismatch EIP-1559 gasPrice != maxFeePerGas")
     }
 
     var items = listOf(
-        RlpItem(QuantityHexString(chainId!!).toByteArrayQnt()),
+        RlpItem(QntHexStr(chainId!!).toByteArrayQnt()),
         RlpItem(
-            if (nonce == null || nonce.isZero() == true) ByteArray(0)
-            else QuantityHexString(nonce).toByteArrayQnt()
+            if (nonce == null || nonce.isZero()) ByteArray(0)
+            else QntHexStr(nonce).toByteArrayQnt()
         ),
-        RlpItem(QuantityHexString(maxPriorityFeePerGas ?: BigInt.zero).toByteArrayQnt()),
-        RlpItem(QuantityHexString(maxFeePerGas ?: BigInt.zero).toByteArrayQnt()),
-        RlpItem(QuantityHexString(gasLimit!!).toByteArrayQnt()),
+        RlpItem(QntHexStr(maxPriorityFeePerGas ?: BigInt.zero).toByteArrayQnt()),
+        RlpItem(QntHexStr(maxFeePerGas ?: BigInt.zero).toByteArrayQnt()),
+        RlpItem(QntHexStr(gasLimit!!).toByteArrayQnt()),
         RlpItem(to?.hexString?.toByteArrayData() ?: ByteArray(0)),
         RlpItem(
-            if (value == null || value.isZero() == true) ByteArray(0)
-            else QuantityHexString(value).toByteArrayQnt()
+            if (value == null || value.isZero()) ByteArray(0)
+            else QntHexStr(value).toByteArrayQnt()
         ),
-        RlpItem(if(data == null) ByteArray(0) else data.toByteArrayData()),
-        RlpList(
-            accessList?.map {
-                RlpList(
-                    listOf(
-                        RlpItem(it.address.hexString.toByteArrayData()),
-                        RlpList(it.storageKeys.map { k -> RlpItem(k.toByteArrayData()) })
-                    )
-                )
-            } ?: emptyList()
-        )
+        RlpItem(data?.toByteArrayData() ?: ByteArray(0)),
+        rlpListAccessList(),
     )
 
-    if (r != null && s != null && v != null) {
-        items += listOf(
-            RlpItem(v.toByteArray()),
-            RlpItem(r.toByteArray()),
-            RlpItem(s.toByteArray()),
-        )
-    }
+    if (r != null && s != null && v != null)
+        items += listOf(v, r, s).map { RlpItem(it.toByteArray()) }
 
-    return TransactionType.EIP1559.toByteArray() + RlpList(items).encode()
+    return EIP1559.toByteArray() + RlpList(items).encode()
 }
+
+private fun TransactionRequest.rlpListAccessList(): RlpList = RlpList(
+    accessList?.map {
+        RlpList(
+            listOf(
+                RlpItem(it.address.hexString.toByteArrayData()),
+                RlpList(it.storageKeys.map { k -> RlpItem(k.toByteArrayData()) })
+            )
+        )
+    } ?: emptyList()
+)
 
 fun TransactionRequest.toHexifiedJsonObject(): JsonObject = buildJsonObject {
     if (to != null) put("to", JsonPrimitive(to.hexString))

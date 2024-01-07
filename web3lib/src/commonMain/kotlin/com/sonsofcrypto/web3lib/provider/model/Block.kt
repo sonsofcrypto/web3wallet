@@ -8,21 +8,21 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
 data class Block(
-    val hash: DataHexString,
-    val parentHash: DataHexString,
+    val hash: DataHexStr,
+    val parentHash: DataHexStr,
     val number: BigInt,
     val timestamp: ULong,
     val nonce: BigInt?,
     val difficulty: BigInt,
     val gasLimit: BigInt,
     val gasUsed: BigInt,
-    val miner: DataHexString,
-    val extraData: DataHexString,
+    val miner: DataHexStr,
+    val extraData: DataHexStr,
     val baseFeePerGas: BigInt?,
     val transactions: List<BlockTransaction>,
 ) {
     sealed class BlockTransaction {
-        data class Hash(val value: DataHexString) : BlockTransaction()
+        data class Hash(val value: DataHexStr) : BlockTransaction()
         data class Object(val value: Transaction) : BlockTransaction()
     }
 

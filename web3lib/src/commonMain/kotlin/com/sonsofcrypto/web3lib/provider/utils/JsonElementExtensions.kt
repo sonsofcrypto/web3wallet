@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.provider.utils
 
-import com.sonsofcrypto.web3lib.provider.model.QuantityHexString
+import com.sonsofcrypto.web3lib.provider.model.QntHexStr
 import com.sonsofcrypto.web3lib.provider.model.toBigIntQnt
 import com.sonsofcrypto.web3lib.provider.model.toIntQnt
 import com.sonsofcrypto.web3lib.provider.model.toULongQnt
@@ -23,8 +23,8 @@ fun JsonElement.toBigIntQnt(): BigInt = (this as JsonPrimitive)
     .stringValue()
     .toBigIntQnt()
 
-fun JsonPrimitiveQntHexStr(int: Int): JsonPrimitive = JsonPrimitive(QuantityHexString(int))
-fun JsonPrimitiveQntHexStr(uint: UInt): JsonPrimitive = JsonPrimitive(QuantityHexString(uint))
-fun JsonPrimitiveQntHexStr(long: Long): JsonPrimitive = JsonPrimitive(QuantityHexString(long))
-fun JsonPrimitiveQntHexStr(ulong: ULong): JsonPrimitive = JsonPrimitive(QuantityHexString(ulong))
-fun JsonPrimitiveQntHexStr(bigInt: BigInt): JsonPrimitive = JsonPrimitive(QuantityHexString(bigInt))
+fun JsonPrimitiveQntHexStr(int: Int): JsonPrimitive = JsonPrimitive(QntHexStr(int))
+fun JsonPrimitiveQntHexStr(uint: UInt): JsonPrimitive = JsonPrimitive(QntHexStr(uint))
+fun JsonPrimitiveQntHexStr(long: Long): JsonPrimitive = JsonPrimitive(QntHexStr(long))
+fun JsonPrimitiveQntHexStr(ulong: ULong): JsonPrimitive = JsonPrimitive(QntHexStr(ulong))
+fun JsonPrimitiveQntHexStr(bigInt: BigInt): JsonPrimitive = JsonPrimitive(QntHexStr(bigInt))

@@ -6,10 +6,10 @@ import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.provider.model.AccessListItem
 import com.sonsofcrypto.web3lib.provider.model.Block
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.provider.model.FilterRequest
 import com.sonsofcrypto.web3lib.provider.model.Log
-import com.sonsofcrypto.web3lib.provider.model.QuantityHexString
+import com.sonsofcrypto.web3lib.provider.model.QntHexStr
 import com.sonsofcrypto.web3lib.provider.model.Topic
 import com.sonsofcrypto.web3lib.provider.model.Transaction
 import com.sonsofcrypto.web3lib.provider.model.TransactionReceipt
@@ -612,7 +612,7 @@ class ProviderTest {
     fun testGetLogs() = runBlocking {
         val provider = ProviderAlchemy(Network.ethereum())
         val hash = keccak256("Transfer(address,address,uint256)".toByteArray())
-        val signature = DataHexString(hash)
+        val signature = DataHexStr(hash)
         val erc20 = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
         val sender = "0x769380d02ec0f022b610a907abdd090db23c46f3"
         val recipient = "0x69D9934bB65CF7B39C5baC913d12F8D140d9796E"
@@ -625,7 +625,7 @@ class ProviderTest {
                 Address.HexString(erc20),
                 listOf(
                     Topic.TopicValue(signature),
-                    Topic.TopicValue(DataHexString(abiEncode(Address.HexString(sender)))),
+                    Topic.TopicValue(DataHexStr(abiEncode(Address.HexString(sender)))),
                     Topic.TopicValue(null),
                 )
             )
@@ -733,7 +733,7 @@ class ProviderTest {
         println("=== rlp2 signed encoded $rlpHexStringSigned")
 
         val provider = ProviderPocket(Network.sepolia())
-        val result = provider.sendRawTransaction(DataHexString(rlpDataSigned))
+        val result = provider.sendRawTransaction(DataHexStr(rlpDataSigned))
         println("=== $result")
 
 //        const signature = this._signingKey().signDigest(keccak256(serialize(<UnsignedTransaction>tx)));
@@ -803,7 +803,7 @@ class ProviderTest {
         val rlpHexStringSigned = rlpDataSigned.toHexString()
         println("=== rlp2 signed encoded $rlpHexStringSigned")
 
-        val result = provider.sendRawTransaction(DataHexString(rlpDataSigned))
+        val result = provider.sendRawTransaction(DataHexStr(rlpDataSigned))
         println("=== $result")
     }
 
@@ -838,19 +838,19 @@ class ProviderTest {
 
     @Test
     fun testQuantityHexString() {
-        val str = "0xe78a3b" as QuantityHexString
+        val str = "0xe78a3b" as QntHexStr
 
         assertTrue(str.toIntQnt() == 15174203, "QuantityHexString toIntQnt")
         assertTrue(str.toUIntQnt() == 15174203u, "QuantityHexString toUIntQnt")
         assertTrue(str.toLongQnt() == 15174203L, "QuantityHexString toLongQnt")
         assertTrue(str.toULongQnt() == 15174203uL, "QuantityHexString toULongQnt")
 
-        assertTrue(QuantityHexString(15174203) == "0xe78a3b", "QuantityHexString fromIntQnt")
-        assertTrue(QuantityHexString(15174203u) == "0xe78a3b", "QuantityHexString fromUIntQnt")
-        assertTrue(QuantityHexString(15174203L) == "0xe78a3b", "QuantityHexString fromLongQnt")
-        assertTrue(QuantityHexString(15174203uL) == "0xe78a3b", "QuantityHexString fromULongQnt")
+        assertTrue(QntHexStr(15174203) == "0xe78a3b", "QuantityHexString fromIntQnt")
+        assertTrue(QntHexStr(15174203u) == "0xe78a3b", "QuantityHexString fromUIntQnt")
+        assertTrue(QntHexStr(15174203L) == "0xe78a3b", "QuantityHexString fromLongQnt")
+        assertTrue(QntHexStr(15174203uL) == "0xe78a3b", "QuantityHexString fromULongQnt")
 
-        assertTrue(QuantityHexString(0uL) == "0x0", "QuantityHexString ${QuantityHexString(0uL)}")
-        assertTrue(QuantityHexString(1024uL) == "0x400", "QuantityHexString ${QuantityHexString(1024uL)}")
+        assertTrue(QntHexStr(0uL) == "0x0", "QuantityHexString ${QntHexStr(0uL)}")
+        assertTrue(QntHexStr(1024uL) == "0x400", "QuantityHexString ${QntHexStr(1024uL)}")
     }
 }
