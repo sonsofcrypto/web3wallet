@@ -2,12 +2,12 @@ package com.sonsofcrypto.web3lib.provider
 
 import com.sonsofcrypto.web3lib.provider.model.Block
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.provider.model.FeeData
 import com.sonsofcrypto.web3lib.provider.model.FilterRequest
 import com.sonsofcrypto.web3lib.provider.model.ProviderEvent
 import com.sonsofcrypto.web3lib.provider.model.ProviderListener
-import com.sonsofcrypto.web3lib.provider.model.QuantityHexString
+import com.sonsofcrypto.web3lib.provider.model.QntHexStr
 import com.sonsofcrypto.web3lib.provider.model.Transaction
 import com.sonsofcrypto.web3lib.provider.model.TransactionReceipt
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
@@ -26,7 +26,7 @@ class ProviderVoid(override val network: Network) : Provider() {
         TODO("Not yet implemented")
     }
 
-    override suspend fun sendRawTransaction(transaction: DataHexString): DataHexString {
+    override suspend fun sendRawTransaction(transaction: DataHexStr): DataHexStr {
         TODO("Not yet implemented")
     }
 
@@ -38,7 +38,7 @@ class ProviderVoid(override val network: Network) : Provider() {
         address: Address,
         position: ULong,
         block: BlockTag
-    ): DataHexString {
+    ): DataHexStr {
         TODO("Not yet implemented")
     }
 
@@ -46,11 +46,11 @@ class ProviderVoid(override val network: Network) : Provider() {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getCode(address: Address, block: BlockTag): DataHexString {
+    override suspend fun getCode(address: Address, block: BlockTag): DataHexStr {
         TODO("Not yet implemented")
     }
 
-    override suspend fun call(transaction: TransactionRequest, block: BlockTag): DataHexString {
+    override suspend fun call(transaction: TransactionRequest, block: BlockTag): DataHexStr {
         TODO("Not yet implemented")
     }
 
@@ -74,7 +74,7 @@ class ProviderVoid(override val network: Network) : Provider() {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getTransaction(hash: DataHexString): Transaction {
+    override suspend fun getTransaction(hash: DataHexStr): Transaction {
         TODO("Not yet implemented")
     }
 
@@ -94,27 +94,27 @@ class ProviderVoid(override val network: Network) : Provider() {
         TODO("Not yet implemented")
     }
 
-    override suspend fun newFilter(filterRequest: FilterRequest): QuantityHexString {
+    override suspend fun newFilter(filterRequest: FilterRequest): QntHexStr {
         TODO("Not yet implemented")
     }
 
-    override suspend fun newBlockFilter(): QuantityHexString {
+    override suspend fun newBlockFilter(): QntHexStr {
         TODO("Not yet implemented")
     }
 
-    override suspend fun newPendingTransactionFilter(): QuantityHexString {
+    override suspend fun newPendingTransactionFilter(): QntHexStr {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getFilterChanges(id: QuantityHexString): JsonObject {
+    override suspend fun getFilterChanges(id: QntHexStr): JsonObject {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getFilterLogs(id: QuantityHexString): JsonObject {
+    override suspend fun getFilterLogs(id: QntHexStr): JsonObject {
         TODO("Not yet implemented")
     }
 
-    override suspend fun uninstallFilter(id: QuantityHexString): Boolean {
+    override suspend fun uninstallFilter(id: QntHexStr): Boolean {
         TODO("Not yet implemented")
     }
 

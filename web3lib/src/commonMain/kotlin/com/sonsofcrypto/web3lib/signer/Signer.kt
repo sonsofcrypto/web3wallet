@@ -3,11 +3,10 @@ package com.sonsofcrypto.web3lib.signer
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
 import com.sonsofcrypto.web3lib.provider.model.BlockTag.Latest
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.provider.model.FeeData
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.TransactionType.EIP1559
-import com.sonsofcrypto.web3lib.provider.model.TransactionType.EIP2930
 import com.sonsofcrypto.web3lib.provider.model.TransactionType.LEGACY
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.AddressHexString
@@ -60,15 +59,15 @@ abstract class Signer(provider: Provider? = null) {
     suspend fun call(
         transaction: TransactionRequest,
         blockTag: BlockTag = Latest
-    ): DataHexString =
+    ): DataHexStr =
         unwrappedProvider().call(transaction, blockTag)
 
     /** Populates all fields, signs and sends it to the network */
     @Throws(Throwable::class)
-    suspend fun sendTransaction(transaction: TransactionRequest): DataHexString {
+    suspend fun sendTransaction(transaction: TransactionRequest): DataHexStr {
         val populatedTx = populateTransaction(transaction)
         val signedTx = signTransaction(populatedTx)
-        return unwrappedProvider().sendRawTransaction(DataHexString(signedTx))
+        return unwrappedProvider().sendRawTransaction(DataHexStr(signedTx))
     }
 
     /** Chain id of network */

@@ -4,7 +4,7 @@ import com.sonsofcrypto.web3lib.abi.ERC20
 import com.sonsofcrypto.web3lib.abi.Interface
 import com.sonsofcrypto.web3lib.abi.Multicall3
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.provider.model.Log
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
@@ -172,7 +172,7 @@ class DefaultWalletServiceMulticall(
     @Throws(Throwable::class)
     override suspend fun contractSend(
         contractAddress: AddressHexString,
-        data: DataHexString,
+        data: DataHexStr,
         network: Network
     ): TransactionResponse = withBgCxt {
         val request = TransactionRequest(

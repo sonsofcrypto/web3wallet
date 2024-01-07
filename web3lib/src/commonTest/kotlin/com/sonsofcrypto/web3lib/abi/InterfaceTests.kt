@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib.abi
 
 import com.sonsofcrypto.web3lib.abi.Fragment.Format.FULL_SIGNATURE
-import com.sonsofcrypto.web3lib.provider.model.QuantityHexString
+import com.sonsofcrypto.web3lib.provider.model.QntHexStr
 import com.sonsofcrypto.web3lib.provider.utils.stringValue
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.BigInt.Companion.one
@@ -58,11 +58,11 @@ class InterfaceTests {
         stripLeading: Boolean = true
     ): String = when {
         value is ByteArray -> value.toHexString(true)
-        value is BigInt -> if (stripLeading) QuantityHexString(value)
+        value is BigInt -> if (stripLeading) QntHexStr(value)
             else value.toByteArray().toHexString(true)
         value is List<Any?> -> value.map { stringifyForEvent(it, stripLeading) }
             .toString()
-        value is Long -> QuantityHexString(BigInt.from(value))
+        value is Long -> QntHexStr(BigInt.from(value))
         else -> value.toString()
     }.replace("0x-", "-0x")
 

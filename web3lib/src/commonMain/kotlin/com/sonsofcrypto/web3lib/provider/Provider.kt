@@ -3,12 +3,11 @@ package com.sonsofcrypto.web3lib.provider
 import com.sonsofcrypto.web3lib.provider.model.Block
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
 import com.sonsofcrypto.web3lib.provider.model.BlockTag.Latest
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.provider.model.FeeData
 import com.sonsofcrypto.web3lib.provider.model.FilterRequest
 import com.sonsofcrypto.web3lib.provider.model.ProviderEvent
 import com.sonsofcrypto.web3lib.provider.model.ProviderListener
-import com.sonsofcrypto.web3lib.provider.model.QuantityHexString
+import com.sonsofcrypto.web3lib.provider.model.QntHexStr
 import com.sonsofcrypto.web3lib.provider.model.Transaction
 import com.sonsofcrypto.web3lib.provider.model.TransactionReceipt
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
@@ -33,7 +32,7 @@ abstract class Provider {
     abstract suspend fun gasPrice(): BigInt
 
     @Throws(Throwable::class)
-    abstract suspend fun sendRawTransaction(transaction: DataHexString): DataHexString
+    abstract suspend fun sendRawTransaction(transaction: DataHexStr): DataHexStr
 
     /** State */
 
@@ -41,16 +40,16 @@ abstract class Provider {
     abstract suspend fun getBalance(address: Address, block: BlockTag = Latest): BigInt
 
     @Throws(Throwable::class)
-    abstract suspend fun getStorageAt(address: Address, position: ULong, block: BlockTag = Latest): DataHexString
+    abstract suspend fun getStorageAt(address: Address, position: ULong, block: BlockTag = Latest): DataHexStr
 
     @Throws(Throwable::class)
     abstract suspend fun getTransactionCount(address: Address, block: BlockTag = Latest): BigInt
 
     @Throws(Throwable::class)
-    abstract suspend fun getCode(address: Address, block: BlockTag = Latest): DataHexString
+    abstract suspend fun getCode(address: Address, block: BlockTag = Latest): DataHexStr
 
     @Throws(Throwable::class)
-    abstract suspend fun call(transaction: TransactionRequest, block: BlockTag = Latest): DataHexString
+    abstract suspend fun call(transaction: TransactionRequest, block: BlockTag = Latest): DataHexStr
 
     @Throws(Throwable::class)
     abstract suspend fun estimateGas(transaction: TransactionRequest): BigInt
@@ -70,7 +69,7 @@ abstract class Provider {
     abstract suspend fun getBlock(block: BlockTag, full: Boolean = false): Block
 
     @Throws(Throwable::class)
-    abstract suspend fun getTransaction(hash: DataHexString): Transaction
+    abstract suspend fun getTransaction(hash: DataHexStr): Transaction
 
     @Throws(Throwable::class)
     abstract suspend fun getTransaction(block: BlockTag, index: BigInt): Transaction
@@ -85,22 +84,22 @@ abstract class Provider {
     abstract suspend fun getLogs(filterRequest: FilterRequest): List<Any>
 
     @Throws(Throwable::class)
-    abstract suspend fun newFilter(filterRequest: FilterRequest): QuantityHexString
+    abstract suspend fun newFilter(filterRequest: FilterRequest): QntHexStr
 
     @Throws(Throwable::class)
-    abstract suspend fun newBlockFilter(): QuantityHexString
+    abstract suspend fun newBlockFilter(): QntHexStr
 
     @Throws(Throwable::class)
-    abstract suspend fun newPendingTransactionFilter(): QuantityHexString
+    abstract suspend fun newPendingTransactionFilter(): QntHexStr
 
     @Throws(Throwable::class)
-    abstract suspend fun getFilterChanges(id: QuantityHexString): JsonObject
+    abstract suspend fun getFilterChanges(id: QntHexStr): JsonObject
 
     @Throws(Throwable::class)
-    abstract suspend fun getFilterLogs(id: QuantityHexString): JsonObject
+    abstract suspend fun getFilterLogs(id: QntHexStr): JsonObject
 
     @Throws(Throwable::class)
-    abstract suspend fun uninstallFilter(id: QuantityHexString): Boolean
+    abstract suspend fun uninstallFilter(id: QntHexStr): Boolean
 
     /** API Methods */
 

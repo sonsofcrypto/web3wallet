@@ -3,11 +3,11 @@ package com.sonsofcrypto.web3lib.provider
 import com.sonsofcrypto.web3lib.provider.JsonRpcRequest.Method
 import com.sonsofcrypto.web3lib.provider.model.Block
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.provider.model.FeeData
 import com.sonsofcrypto.web3lib.provider.model.FilterRequest
 import com.sonsofcrypto.web3lib.provider.model.Log
-import com.sonsofcrypto.web3lib.provider.model.QuantityHexString
+import com.sonsofcrypto.web3lib.provider.model.QntHexStr
 import com.sonsofcrypto.web3lib.provider.model.Transaction
 import com.sonsofcrypto.web3lib.provider.model.TransactionReceipt
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
@@ -72,8 +72,8 @@ abstract class ProviderJsonRpc(
 
     @Throws(Throwable::class)
     override suspend fun sendRawTransaction(
-        transaction: DataHexString
-    ): DataHexString = withBgCxt {
+        transaction: DataHexStr
+    ): DataHexStr = withBgCxt {
         return@withBgCxt performGetStrResult(
             Method.SEND_RAW_TRANSACTION,
             listOf(transaction.jsonPrimitive())
@@ -94,12 +94,12 @@ abstract class ProviderJsonRpc(
     override suspend fun getStorageAt(address: Address,
         position: ULong,
         block: BlockTag
-    ): DataHexString = withBgCxt {
+    ): DataHexStr = withBgCxt {
         return@withBgCxt performGetStrResult(
             Method.GET_STORAGE_AT,
             listOf(
                 address.jsonPrimitive(),
-                QuantityHexString(position).jsonPrimitive(),
+                QntHexStr(position).jsonPrimitive(),
                 block.jsonPrimitive()
             )
         )
@@ -120,7 +120,7 @@ abstract class ProviderJsonRpc(
     override suspend fun getCode(
         address: Address,
         block: BlockTag
-    ): DataHexString = withBgCxt {
+    ): DataHexStr = withBgCxt {
         return@withBgCxt performGetStrResult(
             Method.GET_CODE,
             listOf(address.jsonPrimitive(), block.jsonPrimitive())
@@ -131,7 +131,7 @@ abstract class ProviderJsonRpc(
     override suspend fun call(
         transaction: TransactionRequest,
         block: BlockTag
-    ): DataHexString = withBgCxt {
+    ): DataHexStr = withBgCxt {
         return@withBgCxt performGetStrResult(
             Method.CALL,
             listOf(transaction.toHexifiedJsonObject(), block.jsonPrimitive())
@@ -205,7 +205,7 @@ abstract class ProviderJsonRpc(
     }
 
     @Throws(Throwable::class)
-    override suspend fun getTransaction(hash: DataHexString): Transaction = withBgCxt {
+    override suspend fun getTransaction(hash: DataHexStr): Transaction = withBgCxt {
         val result = performGetObjResult(
             Method.GET_TRANSACTION_BY_HASH, listOf(JsonPrimitive(hash))
         )
@@ -224,7 +224,7 @@ abstract class ProviderJsonRpc(
             },
             listOf(
                 block.jsonPrimitive(),
-                JsonPrimitive(QuantityHexString(index))
+                JsonPrimitive(QntHexStr(index))
             )
         )
         return@withBgCxt Transaction.fromHexifiedJsonObject(result)
@@ -252,7 +252,7 @@ abstract class ProviderJsonRpc(
             },
             listOf(
                 block.jsonPrimitive(),
-                JsonPrimitive(QuantityHexString(index))
+                JsonPrimitive(QntHexStr(index))
             )
         )
         return@withBgCxt Block.fromHexifiedJsonObject(result)
@@ -269,25 +269,25 @@ abstract class ProviderJsonRpc(
     @Throws(Throwable::class)
     override suspend fun newFilter(
         filterRequest: FilterRequest
-    ): QuantityHexString = withBgCxt {
+    ): QntHexStr = withBgCxt {
         return@withBgCxt performGetStrResult(
             Method.NEW_FILTER, listOf(filterRequest.toHexifiedJsonObject())
         )
     }
 
     @Throws(Throwable::class)
-    override suspend fun newBlockFilter(): QuantityHexString = withBgCxt {
+    override suspend fun newBlockFilter(): QntHexStr = withBgCxt {
         return@withBgCxt performGetStrResult(Method.NEW_BLOCK_FILTER)
     }
 
     @Throws(Throwable::class)
-    override suspend fun newPendingTransactionFilter(): QuantityHexString = withBgCxt {
+    override suspend fun newPendingTransactionFilter(): QntHexStr = withBgCxt {
         val result = performGetStrResult(Method.NEW_PENDING_TRANSACTION_FILTER)
         return@withBgCxt result
     }
 
     @Throws(Throwable::class)
-    override suspend fun getFilterChanges(id: QuantityHexString): JsonObject = withBgCxt {
+    override suspend fun getFilterChanges(id: QntHexStr): JsonObject = withBgCxt {
         // TODO: Does not work over HTTPs. Implement responses once Websockets
         return@withBgCxt performGetObjResult(
             Method.GET_FILTER_CHANGES, listOf(id.jsonPrimitive())
@@ -295,7 +295,7 @@ abstract class ProviderJsonRpc(
     }
 
     @Throws(Throwable::class)
-    override suspend fun getFilterLogs(id: QuantityHexString): JsonObject = withBgCxt {
+    override suspend fun getFilterLogs(id: QntHexStr): JsonObject = withBgCxt {
         // TODO: Does not work over HTTPs. Implement responses once Websockets
         return@withBgCxt performGetObjResult(
             Method.GET_FILTER_LOGS, listOf(id.jsonPrimitive())
@@ -303,7 +303,7 @@ abstract class ProviderJsonRpc(
     }
 
     @Throws(Throwable::class)
-    override suspend fun uninstallFilter(id: QuantityHexString): Boolean = withBgCxt {
+    override suspend fun uninstallFilter(id: QntHexStr): Boolean = withBgCxt {
         return@withBgCxt performGetStrResult(
             Method.UNINTALL_FILTER, listOf(id.jsonPrimitive())
         ).toBoolean()

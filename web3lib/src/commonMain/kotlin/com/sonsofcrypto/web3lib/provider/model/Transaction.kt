@@ -19,7 +19,7 @@ typealias AccessList = List<AccessListItem>
 
 data class AccessListItem(
     val address: Address.HexString,
-    val storageKeys: List<DataHexString>
+    val storageKeys: List<DataHexStr>
 )
 
 enum class TransactionType(val value: Int) {
@@ -30,7 +30,7 @@ enum class TransactionType(val value: Int) {
         EIP1559 -> false
     }
 
-    fun toByteArray(): ByteArray = QuantityHexString(value).toByteArrayQnt()
+    fun toByteArray(): ByteArray = QntHexStr(value).toByteArrayQnt()
 
     companion object {
         fun from(int: Int?): TransactionType? = values().find { it.value == int}
@@ -44,7 +44,7 @@ data class Transaction(
     val nonce: BigInt,
     val gasLimit: BigInt = BigInt.zero,
     val gasPrice: BigInt? = null,
-    val input: DataHexString = "",
+    val input: DataHexStr = "",
     val value: BigInt,
     val chainId: BigInt,
     val type: TransactionType?,
@@ -74,13 +74,13 @@ fun Transaction.encodeEIP1559(): ByteArray {
     }
 
     var items = listOf(
-        RlpItem(QuantityHexString(chainId).toByteArrayQnt()),
-        RlpItem(if (nonce.isZero()) ByteArray(0) else QuantityHexString(nonce).toByteArrayQnt()),
-        RlpItem(QuantityHexString(maxPriorityFeePerGas ?: BigInt.zero).toByteArrayQnt()),
-        RlpItem(QuantityHexString(maxFeePerGas ?: BigInt.zero).toByteArrayQnt()),
-        RlpItem(QuantityHexString(gasLimit).toByteArrayQnt()),
+        RlpItem(QntHexStr(chainId).toByteArrayQnt()),
+        RlpItem(if (nonce.isZero()) ByteArray(0) else QntHexStr(nonce).toByteArrayQnt()),
+        RlpItem(QntHexStr(maxPriorityFeePerGas ?: BigInt.zero).toByteArrayQnt()),
+        RlpItem(QntHexStr(maxFeePerGas ?: BigInt.zero).toByteArrayQnt()),
+        RlpItem(QntHexStr(gasLimit).toByteArrayQnt()),
         RlpItem(to?.hexString?.toByteArrayData() ?: ByteArray(0)),
-        RlpItem(QuantityHexString(value).toByteArrayQnt()),
+        RlpItem(QntHexStr(value).toByteArrayQnt()),
         RlpItem(if(input.isEmpty()) ByteArray(0) else input.toByteArrayData()),
         RlpList(
             accessList?.map {
