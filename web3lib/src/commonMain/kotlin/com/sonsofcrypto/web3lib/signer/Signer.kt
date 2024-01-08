@@ -48,7 +48,9 @@ abstract class Signer(provider: Provider? = null) {
     @Throws(Throwable::class)
     abstract suspend fun signMessage(message: ByteArray): ByteArray
 
-    // TODO: sign validator data & structured data https://eips.ethereum.org/EIPS/eip-191
+    // TODO: sign validator data & structured data
+    // TODO: https://eips.ethereum.org/EIPS/eip-191
+    // TODO: https://eips.ethereum.org/EIPS/eip-712
 
     /** Fully serialized signed transaction */
     @Throws(Throwable::class)

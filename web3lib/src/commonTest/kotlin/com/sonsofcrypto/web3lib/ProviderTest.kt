@@ -769,7 +769,7 @@ class ProviderTest {
             gasPrice = null,
             data = "",
             value = BigInt.from("1400000000000000"),
-            chainId = provider.network.chainId.toInt(),
+            chainId = BigInt.from(provider.network.chainId),
             type = TransactionType.EIP1559,
             r = null,
             s = null,
