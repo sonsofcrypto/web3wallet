@@ -24,6 +24,7 @@ import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class CommonTest {
 
@@ -183,3 +184,5 @@ val mockSignerStoreItem = SignerStoreItem(
 )
 
 val testMnemonic = BuildKonfig.testMnemonic
+
+fun assertBool(exp: Boolean, msg: String) = assertTrue(exp, msg)

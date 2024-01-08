@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3lib.services.uniswap2.v2
 
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.services.uniswap.PoolFee
 import com.sonsofcrypto.web3lib.services.uniswap2.core.isBefore
 import com.sonsofcrypto.web3lib.services.uniswap2.core.sortedAddresses

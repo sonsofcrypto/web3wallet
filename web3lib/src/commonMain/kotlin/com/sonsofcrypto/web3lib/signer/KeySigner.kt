@@ -3,18 +3,17 @@ package com.sonsofcrypto.web3lib.signer
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.encode
-import com.sonsofcrypto.web3lib.provider.model.encodeEIP1559
-import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.services.address.AddressService
+import com.sonsofcrypto.web3lib.services.address.DefaultAddressService
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.Key
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.keccak256
-import com.sonsofcrypto.web3lib.utils.sign
+import com.sonsofcrypto.web3lib.utils.Signature
 
 class KeySigner(
     private val key: Key,
-    private val addressService: AddressService,
+    private val addressService: AddressService = DefaultAddressService(),
     provider: Provider? = null
 ): Signer(provider) {
 
@@ -30,18 +29,15 @@ class KeySigner(
     override suspend fun signMessage(message: ByteArray): ByteArray {
         val payload = "\u0019Ethereum Signed Message:\n${message.size}"
             .encodeToByteArray() + message
-        return sign(keccak256(payload), key)
+        val sig = Signature.make(keccak256(payload), key)
+        return sig.copy(v = sig.v.add(BigInt.from(27))).toByteArray()
     }
 
     @Throws(Throwable::class)
     override suspend fun signTransaction(
         transaction: TransactionRequest
     ): ByteArray {
-        val signature = sign(keccak256(transaction.encode()), key)
-        return transaction.copy(
-            r = BigInt.from(signature.copyOfRange(0, 32)),
-            s = BigInt.from(signature.copyOfRange(32, 64)),
-            v = BigInt.from(signature[64].toInt()),
-        ).encode()
+        val sig = Signature.make(keccak256(transaction.encode()), key)
+        return transaction.copy(r = sig.r, s = sig.s, v = sig.v,).encode()
     }
 }
