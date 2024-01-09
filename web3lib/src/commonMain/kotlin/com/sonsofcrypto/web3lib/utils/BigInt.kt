@@ -42,8 +42,8 @@ class BigInt {
     fun div(value: BigInt): BigInt = BigInt(storage.divide(value.storage))
     fun pow(value: Long): BigInt = BigInt(storage.pow(value))
 
-    fun toByteArray(): ByteArray = if (byteForZeroVal && storage.toByteArray().isEmpty())
-            ByteArray(1)
+    fun toByteArray(): ByteArray =
+        if (byteForZeroVal && storage.toByteArray().isEmpty()) ByteArray(1)
         else storage.toByteArray()
     fun toTwosComplement(): ByteArray = storage.toTwosComplementByteArray()
     fun toHexString(): String = storage.toString(16)

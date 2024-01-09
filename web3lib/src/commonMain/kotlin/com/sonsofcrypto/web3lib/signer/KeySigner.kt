@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3lib.signer
 
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
-import com.sonsofcrypto.web3lib.provider.model.encode
 import com.sonsofcrypto.web3lib.services.address.AddressService
 import com.sonsofcrypto.web3lib.services.address.DefaultAddressService
 import com.sonsofcrypto.web3lib.types.Address
@@ -10,6 +9,7 @@ import com.sonsofcrypto.web3lib.types.Key
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.keccak256
 import com.sonsofcrypto.web3lib.utils.Signature
+import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 
 class KeySigner(
     private val key: Key,
@@ -38,6 +38,6 @@ class KeySigner(
         transaction: TransactionRequest
     ): ByteArray {
         val sig = Signature.make(keccak256(transaction.encode()), key)
-        return transaction.copy(r = sig.r, s = sig.s, v = sig.v,).encode()
+        return transaction.copy(r = sig.r, s = sig.s, v = sig.v).encode()
     }
 }
