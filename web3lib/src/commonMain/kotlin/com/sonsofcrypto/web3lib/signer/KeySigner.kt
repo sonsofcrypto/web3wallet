@@ -38,6 +38,7 @@ class KeySigner(
         transaction: TransactionRequest
     ): ByteArray {
         val sig = Signature.make(keccak256(transaction.encode()), key)
-        return transaction.copy(r = sig.r, s = sig.s, v = sig.v).encode()
+        val tx = transaction.copy(r = sig.r, s = sig.s, v = sig.v)
+        return tx.encode()
     }
 }

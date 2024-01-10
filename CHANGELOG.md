@@ -15,17 +15,17 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 # Release Notes 
 
 ### v1.2.0 #49
+- Legacy transaction support
+- EIP-2718 support
+- EIP-2930 support
+- RLP decoding support
+- MessageSign personal tests
+- Additional transaction tests
 - Signer refactor
 - VoidSigner
 - KeySigner
 - ExtKeySigner
 - MnemonicSigner
-- Legacy transaction support
-- EIP-2718 support
-- EIP-2930 support
-- RLP decoding support
-- messageSign personal tests
-- more transaction tests
 
 ### v1.1.4 #48
 - Wallet type indicator icon
