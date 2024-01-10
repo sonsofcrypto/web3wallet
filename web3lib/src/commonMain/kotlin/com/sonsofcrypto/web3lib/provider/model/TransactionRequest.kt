@@ -65,12 +65,30 @@ data class TransactionRequest(
             RlpItem(data?.toByteArrayData() ?: ByteArray(0)),
         )
 
-        if (r != null && s != null && v != null) {
-            val recId = if (chainId != null) eip155RecId(chainId, v)
-                        else legacyRecId(v)
-            items += listOf(recId, r, s).map { RlpItem(it.toByteArray()) }
+        var chainId: BigInt = BigInt.zero
+
+        // A chainId was provided; if non-zero we'll use EIP-155
+        if (this.chainId != null)
+            chainId = this.chainId
+        // No chainId, but the signature is signing with EIP-155; derive chainId
+        else if (v != null && v.isGreaterThan(BigInt.from(28)))
+            chainId = BigInt.from(v.toDecimalString().toInt() - 35 / 2)
+
+        // We have an EIP-155 transaction without signature
+        if (r == null || s == null || v == null || r.isZero() || s.isZero()) {
+            if (!chainId.isZero())
+                items += listOf(chainId, BigInt.zero, BigInt.zero)
+                    .map { RlpItem(qntBigIntToByteArray(it)) }
+            println("returning $chainId")
+            return RlpList(items).encode()
         }
 
+        var v = legacyRecId(this.v)
+        if (!chainId.isZero())
+            v = v.add(chainId.mul(2).add(8))
+
+        items += listOf(v, r, s).map { RlpItem(it.toByteArray()) }
+        println("encoding ${v.toDecimalString()}")
         return RlpList(items).encode()
     }
 
@@ -78,12 +96,6 @@ data class TransactionRequest(
         val intV = v.toDecimalString().toInt()
         return if (intV == 0 || intV == 1) BigInt.from(intV + 27) else v
     }
-
-    private fun eip155RecId(chanId: BigInt, v: BigInt): BigInt {
-        val intV = v.toDecimalString().toInt()
-        return if (intV == 0 || intV == 1) BigInt.from(intV + 27) else v
-    }
-
 
     @Throws(Throwable::class)
     fun encodeEIP2930(): ByteArray {
@@ -186,7 +198,6 @@ data class TransactionRequest(
         fun decodeLegacy(bytes: ByteArray): TransactionRequest {
             val rlp = Rlp.decode(bytes) as? RlpList
             if (rlp == null) throw Error.DecodeInvalidRlp(rlp)
-            println(rlp)
             val tx = TransactionRequest(
                 type = LEGACY,
                 nonce = BigInt.from((rlp.element[0] as RlpItem).bytes),
@@ -209,15 +220,20 @@ data class TransactionRequest(
                 r?.isZero() == true &&
                 s?.isZero() == true
             )
-                return tx.copy(chainId = v, v = v, r = r, s = s)
+                return tx.copy(
+                    chainId = nullIfZero(v), v = BigInt.zero, r = r, s = s
+                )
 
             // Signed legacy
-            if (rlp.element.size == 9 && v != null && r != null && s != null) {
-                var chainId = v.sub(BigInt.from(35)).div(BigInt.from(2))
-                chainId = if (chainId.isLessThan(BigInt.zero)) BigInt.zero
-                    else chainId
+            if (rlp.element.size == 9 && (v != null && r != null && s != null)) {
+                var chainId = v.sub(35).div(2)
+                var recId = v.sub(27)
+                chainId = if (chainId.isLessThanZero()) BigInt.zero else chainId
+                if (chainId.isGreaterThan(BigInt.zero))
+                    recId = recId.sub(chainId.mul(2).add(8))
+
                 // TODO: Recover `from` address
-                return tx.copy(chainId = chainId, v = v, r = r, s = s)
+                return tx.copy(chainId = nullIfZero(chainId), v = recId, r = r, s = s)
             }
 
             return tx.copy(v = v, r = r, s = s)
@@ -227,7 +243,6 @@ data class TransactionRequest(
         fun decodeEIP2930(bytes: ByteArray): TransactionRequest {
             val rlp = Rlp.decode(bytes) as? RlpList
             if (rlp == null) throw Error.DecodeInvalidRlp(rlp)
-            println(rlp)
             return TransactionRequest(
                 type = EIP2930,
                 chainId = BigInt.from((rlp.element[0] as RlpItem).bytes),
@@ -255,7 +270,6 @@ data class TransactionRequest(
         fun decodeEIP1559(bytes: ByteArray): TransactionRequest {
             val rlp = Rlp.decode(bytes) as? RlpList
             if (rlp == null) throw Error.DecodeInvalidRlp(rlp)
-            println(rlp)
             return TransactionRequest(
                 type = EIP1559,
                 chainId = BigInt.from((rlp.element[0] as RlpItem).bytes),
@@ -289,5 +303,11 @@ data class TransactionRequest(
 
         private fun bigIntOrNull(bytes: ByteArray?): BigInt? =
             bytes?.let { BigInt.from(it) }
+
+        private fun bigIntOr0Null(bytes: ByteArray?): BigInt? =
+            bytes?.let { nullIfZero(BigInt.from(it)) }
+
+        private fun nullIfZero(value: BigInt) =
+            if (value.isZero()) null else value
     }
 }

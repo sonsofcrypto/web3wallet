@@ -3,17 +3,14 @@ package com.sonsofcrypto.web3lib.signer
 import com.sonsofcrypto.web3lib.assertBool
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.types.toHexString
-import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.FileManager
 import com.sonsofcrypto.web3lib.utils.FileManager.Location.BUNDLE
-import com.sonsofcrypto.web3lib.utils.Signature
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.keccak256
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
-import kotlin.test.Asserter
 import kotlin.test.Test
 
 class KeySignerTest {
@@ -59,7 +56,6 @@ class KeySignerTest {
                 "0x7222038446034a0425b6e3f0cc3594f0d979c656206408f937c37a8180bb1bea047d061e4ded4aeac77fa86eb02d42ba7250964ac3eb9da1337090258ce798491c",
             ),
         ).forEach {
-            println(it.name)
             val signer = KeySigner(it.prvKey)
             val address = signer.address().toHexString().lowercase()
             assertBool(
@@ -90,63 +86,77 @@ class KeySignerTest {
         val gasPrice: String?,
         val value: String?,
         val nonce: String?,
-    )
+    ) {
+        fun prvKey(): ByteArray = privateKey.hexStringToByteArray()
+        fun unsignedTx(): ByteArray = unsignedTransaction.hexStringToByteArray()
+        fun unsignedTx5(): ByteArray = unsignedTransactionChainId5.hexStringToByteArray()
+        fun signedTx(): ByteArray = signedTransaction.hexStringToByteArray()
+        fun signedTx5(): ByteArray = signedTransactionChainId5.hexStringToByteArray()
+    }
 
     @Test
-    fun testSignMessageTransaction() = runBlocking {
+    fun testSignTransactions() = runBlocking {
         val data = FileManager().readSync("testcases/transactions.json", BUNDLE)
         val tests = jsonDecode<List<TransactionTestCase>>(data.decodeToString())
         println("tests len ${tests?.size}")
         (tests ?: emptyList()).forEach {
-            val signer = KeySigner(it.privateKey.hexStringToByteArray())
-
-            val legacyUnsign = TransactionRequest.decode(
-                it.unsignedTransaction.hexStringToByteArray()
-            )
-            val legacyUnsignRedo = legacyUnsign.encode().toHexString(true)
-            assertBool(
-                it.unsignedTransaction == legacyUnsignRedo,
-                "${it.name} unsigned\n${it.unsignedTransaction}\n$legacyUnsignRedo"
-            )
-
-            val legacySign = signer.signTransaction(legacyUnsign)
-                .toHexString(true)
-            assertBool(
-                it.signedTransaction == legacySign,
-                "${it.name} signed\n${it.signedTransaction}\n$legacySign"
-            )
-
-            println(it.name)
-            val unsign = TransactionRequest.decode(
-                it.unsignedTransactionChainId5.hexStringToByteArray()
-            )
-            val unsignRedo = unsign.encode().toHexString(true)
-            assertBool(
-                it.unsignedTransactionChainId5 == unsignRedo,
-                "${it.name} unsigned5\n${it.unsignedTransactionChainId5}\n$unsignRedo"
-            )
-
-//            val sig = Signature.make(keccak256(legacyUnsign.encode()), it.privateKey.hexStringToByteArray())
-//            val legacySignRedo = legacyUnsign.copy(r = sig.r, s = sig.s, v = sig.v.add(BigInt.from(27)))
-//            val legacySignLoaded = TransactionRequest.decode(
-//                it.signedTransaction.hexStringToByteArray()
-//            )
-
-//            println(it.name)
-//            println(unsign)
-//            println("exp: ${it.unsignedTransactionChainId5}")
-//            println("res: ${unsignRedo}")
-//            println("===")
-//             return@runBlocking
+            testSignTransaction(it)
         }
     }
+
+    @Throws(Throwable::class)
+    private fun testSignTransaction(t: TransactionTestCase) = runBlocking {
+        val signer = KeySigner(t.prvKey())
+
+        // Deserialize legacy unsigned transaction an serialize
+        val legacyUnsigned = TransactionRequest.decode(t.unsignedTx())
+        val luRedo = legacyUnsigned.encode().toHexString(true)
+        assertBool(
+            t.unsignedTransaction == luRedo,
+            "${t.name} redo unsigned\n${t.unsignedTransaction}\n$luRedo"
+        )
+
+        // Sign legacy unsigned transaction an serialize
+        val luSign = signer.signTransaction(legacyUnsigned).toHexString(true)
+        assertBool(
+            t.signedTransaction == luSign,
+            "${t.name} sign unsigned\n${t.signedTransaction}\n$luSign"
+        )
+
+        // Deserialize signed legacy transaction, serialize & re signe it
+        val legacySigned = TransactionRequest.decode(t.signedTx())
+        val legacySignedNoSig = legacySigned.copy(v=null, r=null, s=null)
+        val lsRedo = legacySigned.encode().toHexString(true)
+        val lsSign = signer.signTransaction(legacySignedNoSig).toHexString(true)
+        assertBool(
+            t.signedTransaction == lsRedo && t.signedTransaction == lsSign,
+            "${t.name} redo signed\n${t.signedTransaction}\n$lsRedo\n$lsSign"
+        )
+
+        // Deserialize legacy unsigned transaction an serialize chainId 5
+        val legacyUnsigned5 = TransactionRequest.decode(t.unsignedTx5())
+        val luRedo5 = legacyUnsigned5.encode().toHexString(true)
+        assertBool(
+            t.unsignedTransactionChainId5 == luRedo5,
+            "${t.name} redo unsigned5\n${t.unsignedTransactionChainId5}\n$luRedo5"
+        )
+
+        // Sign legacy unsigned transaction an serialize
+        val luSign5 = signer.signTransaction(legacyUnsigned5).toHexString(true)
+        assertBool(
+            t.signedTransactionChainId5 == luSign5,
+            "${t.name} sign unsigned5\n${t.signedTransactionChainId5}\n$luSign5"
+        )
+
+        // Deserialize signed legacy transaction, serialize & re signe it
+        val legacySigned5 = TransactionRequest.decode(t.signedTx5())
+        val legacySignedNoSig5 = legacySigned5.copy(v=null, r=null, s=null)
+        val lsRedo5 = legacySigned5.encode().toHexString(true)
+        val lsSign5 = signer.signTransaction(legacySignedNoSig5).toHexString(true)
+        assertBool(
+            t.signedTransactionChainId5 == lsRedo5 &&
+            t.signedTransactionChainId5 == lsSign5,
+            "${t.name} redo signed\n${t.signedTransactionChainId5}\n$lsRedo5\n$lsSign5"
+        )
+    }
 }
-//{
-//    nonce: 0,
-//    gasPrice: BigNumber { _hex: '0x00', _isBigNumber: true },
-//    gasLimit: BigNumber { _hex: '0x00', _isBigNumber: true },
-//    to: null,
-//    value: BigNumber { _hex: '0x00', _isBigNumber: true },
-//    data: '0x',
-//    chainId: 0
-//}
