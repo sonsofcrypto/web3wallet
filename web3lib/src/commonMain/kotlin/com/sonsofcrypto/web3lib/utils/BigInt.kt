@@ -42,6 +42,12 @@ class BigInt {
     fun div(value: BigInt): BigInt = BigInt(storage.divide(value.storage))
     fun pow(value: Long): BigInt = BigInt(storage.pow(value))
 
+    fun add(value: Int): BigInt = this.add(from(value))
+    fun sub(value: Int): BigInt = this.sub(from(value))
+    fun mul(value: Int): BigInt = this.mul(from(value))
+    @Throws(Throwable::class)
+    fun div(value: Int): BigInt = this.div(from(value))
+
     fun toByteArray(): ByteArray =
         if (byteForZeroVal && storage.toByteArray().isEmpty()) ByteArray(1)
         else storage.toByteArray()
@@ -53,6 +59,9 @@ class BigInt {
     fun isLessThan(other: BigInt): Boolean = storage.compare(other.storage) == -1
     fun isGreaterThan(other: BigInt): Boolean = storage.compare(other.storage) == 1
     fun isZero(): Boolean = storage.isZero()
+
+    fun isLessThanZero(): Boolean = isLessThan(BigInt.zero)
+
 
     override fun toString(): String = storage.toString(10)
 
