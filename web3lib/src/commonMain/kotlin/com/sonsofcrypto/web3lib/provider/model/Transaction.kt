@@ -166,3 +166,22 @@ fun Transaction.Companion.fromHexifiedJsonObject(jsonObject: JsonObject): Transa
     blockNumber = jsonObject["blockNumber"]?.toBigIntQnt(),
     transactionIndex = jsonObject["transactionIndex"]?.toBigIntQnt(),
 )
+
+fun Transaction.toTransactionRequest(): TransactionRequest =
+     TransactionRequest(
+        to = this.to,
+        from = this.from,
+        nonce = this.nonce,
+        gasLimit = this.gasLimit,
+        gasPrice = this.gasPrice,
+        data = this.input,
+        value = this.value,
+        chainId = this.chainId,
+        type = this.type,
+        r = this.r,
+        s = this.s,
+        v = this.v,
+        accessList = this.accessList,
+        maxPriorityFeePerGas = this.maxPriorityFeePerGas,
+        maxFeePerGas = this.maxFeePerGas,
+     )
