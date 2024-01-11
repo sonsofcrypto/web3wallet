@@ -1,8 +1,16 @@
 package com.sonsofcrypto.web3lib.signer
 
 import com.sonsofcrypto.web3lib.assertBool
+import com.sonsofcrypto.web3lib.provider.model.AccessListItem
+import com.sonsofcrypto.web3lib.provider.model.DataHexStr
+import com.sonsofcrypto.web3lib.provider.model.QntHexStr
+import com.sonsofcrypto.web3lib.provider.model.Transaction
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
+import com.sonsofcrypto.web3lib.provider.model.TransactionType
+import com.sonsofcrypto.web3lib.provider.model.toBigIntQnt
+import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.toHexString
+import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.FileManager
 import com.sonsofcrypto.web3lib.utils.FileManager.Location.BUNDLE
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
@@ -198,6 +206,21 @@ class KeySignerTest {
 
         // https://github.com/ethers-io/ethers.js/issues/3086
         // https://github.com/ethers-io/ethers.js/commit/c47d2eba4dc741eb5cb754c3ef5064b8ea7ac7cc#diff-5b33afed28abe2747b24cc6e91c186dc358c318551caaf022116496a3e7b8304
+
+        data class TestCaseEIP2930(
+            val hash: String,
+            val data: String,
+            val preimage: String,
+            val tx: Transaction,
+        )
+
+        val data = FileManager().readSync("testcases/transactions_eip2930.json", BUNDLE)
+        val tests = jsonDecode<List<TestCaseEIP2930>>(data.decodeToString())
+        println("tests len ${tests?.size}")
+
+        for (t in tests ?: emptyList()) {
+            println(t)
+        }
 
     }
 }
