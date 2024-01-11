@@ -7,7 +7,9 @@ import com.sonsofcrypto.web3lib.provider.model.QntHexStr
 import com.sonsofcrypto.web3lib.provider.model.Transaction
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.TransactionType
+import com.sonsofcrypto.web3lib.provider.model.fromHexifiedJsonObject
 import com.sonsofcrypto.web3lib.provider.model.toBigIntQnt
+import com.sonsofcrypto.web3lib.provider.model.toTransactionRequest
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.toHexString
 import com.sonsofcrypto.web3lib.utils.BigInt
@@ -19,6 +21,7 @@ import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.keccak256
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
 import kotlin.test.Test
 
 class KeySignerTest {
@@ -206,12 +209,14 @@ class KeySignerTest {
 
         // https://github.com/ethers-io/ethers.js/issues/3086
         // https://github.com/ethers-io/ethers.js/commit/c47d2eba4dc741eb5cb754c3ef5064b8ea7ac7cc#diff-5b33afed28abe2747b24cc6e91c186dc358c318551caaf022116496a3e7b8304
-
+    }
+    fun testSignTransactionsEIP2930() {
+        @Serializable
         data class TestCaseEIP2930(
             val hash: String,
             val data: String,
             val preimage: String,
-            val tx: Transaction,
+            val tx: JsonObject,
         )
 
         val data = FileManager().readSync("testcases/transactions_eip2930.json", BUNDLE)
@@ -219,7 +224,18 @@ class KeySignerTest {
         println("tests len ${tests?.size}")
 
         for (t in tests ?: emptyList()) {
-            println(t)
+            val transaction = Transaction.fromHexifiedJsonObject(t.tx)
+            val tx = transaction.toTransactionRequest()
+            val unsigned = tx.copy(r=null, s=null, v=null).encode().toHexString(true)
+            val signed = tx.encode().toHexString(true)
+            assertBool(
+                unsigned == t.preimage,
+                "EIP2390 unsigned does not match $unsigned ${t.preimage}"
+            )
+            assertBool(
+                unsigned == t.preimage,
+                "EIP2390 signed does not match $signed ${t.data}"
+            )
         }
 
     }
