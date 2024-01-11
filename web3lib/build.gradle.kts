@@ -176,6 +176,7 @@ buildkonfig {
         buildConfigField(Type.STRING, "alchemyKey", properties["com.sonsofcrypto.alchemyKey"] as String)
         buildConfigField(Type.STRING, "etherscanKey", properties["com.sonsofcrypto.etherscanKey"] as String)
         buildConfigField(Type.STRING, "testMnemonic", properties["com.sonsofcrypto.testMnemonic"] as String)
+        buildConfigField(Type.STRING, "testPrvKey", properties["com.sonsofcrypto.testPrvKey"] as String)
         buildConfigField(Type.STRING, "moralisKey", properties["com.sonsofcrypto.moralisKey"] as String)
         buildConfigField(Type.STRING, "sourceSet", "default")
     }
