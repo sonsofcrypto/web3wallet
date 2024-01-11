@@ -125,7 +125,7 @@ data class TransactionRequest(
             RlpItem(qntBigIntToByteArray(nonce)),
             RlpItem(QntHexStr(maxPriorityFeePerGas ?: BigInt.zero).toByteArrayQnt()),
             RlpItem(QntHexStr(maxFeePerGas ?: BigInt.zero).toByteArrayQnt()),
-            RlpItem(qntBigIntToByteArray(nonce)),
+            RlpItem(qntBigIntToByteArray(gasLimit)),
             RlpItem(to?.hexString?.toByteArrayData() ?: ByteArray(0)),
             RlpItem(qntBigIntToByteArray(value)),
             RlpItem(data?.toByteArrayData() ?: ByteArray(0)),
@@ -260,8 +260,21 @@ data class TransactionRequest(
             )
         }
 
+        @Throws(Throwable::class)
         private fun decodeAccessList(rlp: Rlp?): AccessList? {
-            return null
+            val topList = (rlp as? RlpList) ?: return null
+            return topList.element.map {
+                val item = it as RlpList
+                AccessListItem(
+                    Address.HexString(
+                        (item.element[0] as RlpItem).bytes.toHexString(true)
+                    ),
+                    (item.element[1] as RlpList).element.map { sk ->
+                        DataHexStr((sk as RlpItem).bytes)
+                    }
+                )
+
+            }
         }
 
         @Throws(Throwable::class)
