@@ -79,7 +79,6 @@ data class TransactionRequest(
             if (!chainId.isZero())
                 items += listOf(chainId, BigInt.zero, BigInt.zero)
                     .map { RlpItem(qntBigIntToByteArray(it)) }
-            println("returning $chainId")
             return RlpList(items).encode()
         }
 
@@ -88,7 +87,6 @@ data class TransactionRequest(
             v = v.add(chainId.mul(2).add(8))
 
         items += listOf(v, r, s).map { RlpItem(it.toByteArray()) }
-        println("encoding ${v.toDecimalString()}")
         return RlpList(items).encode()
     }
 
