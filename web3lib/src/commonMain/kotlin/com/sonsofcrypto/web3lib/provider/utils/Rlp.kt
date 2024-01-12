@@ -1,7 +1,6 @@
 package com.sonsofcrypto.web3lib.provider.utils
 
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.extensions.toUInt
 
 private const val ELEM_OFFSET = 128
 private const val LIST_OFFSET = 192
@@ -18,7 +17,7 @@ data class RlpItem(val bytes: ByteArray) : Rlp() {
     override fun hashCode() = bytes.contentHashCode()
 }
 
-data class RlpList(val element: List<Rlp>) : Rlp() {
+data class RlpList(val items: List<Rlp>) : Rlp() {
     companion object
 }
 
@@ -27,7 +26,7 @@ data class RlpList(val element: List<Rlp>) : Rlp() {
 @Throws(Throwable::class)
 fun Rlp.encode(): ByteArray = when (this) {
     is RlpItem -> bytes.encodeRlp(ELEM_OFFSET)
-    is RlpList -> element.asSequence().map { it.encode() }
+    is RlpList -> items.asSequence().map { it.encode() }
         .fold(ByteArray(0)) { acc, bytes -> acc + bytes }
         .encodeRlp(LIST_OFFSET)
 }
@@ -91,16 +90,6 @@ private fun ByteArray.getLengthAndOffset(firstByte: Int, offset: Int) =
             .toInt()
         LengthAndOffset(length, offset + size)
     }
-
-//@Throws(Throwable::class)
-//private fun ByteArray.getLengthAndOffset2(firstByte: Int, offset: Int) =
-//    if (firstByte <= 55)
-//        LengthAndOffset(firstByte, offset + 1)
-//    else {
-//        val size = firstByte - 54
-//        val length = BigInteger(1, copyOfRange(offset + 1, offset + size)).toInt()
-//        LengthAndOffset(length, offset + size)
-//    }
 
 /* Utils */
 
