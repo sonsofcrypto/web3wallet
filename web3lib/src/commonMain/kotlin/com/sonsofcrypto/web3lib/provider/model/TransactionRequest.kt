@@ -176,7 +176,10 @@ data class TransactionRequest(
             put("accessList", JsonArray(encoded))
         }
         if (maxPriorityFeePerGas != null) {
-            put("maxPriorityFeePerGas", JsonPrimitiveQntHexStr(maxPriorityFeePerGas))
+            put(
+                "maxPriorityFeePerGas",
+                JsonPrimitiveQntHexStr(maxPriorityFeePerGas)
+            )
         }
         if (maxFeePerGas != null) {
             put("maxFeePerGas", JsonPrimitiveQntHexStr(maxFeePerGas))
@@ -184,141 +187,133 @@ data class TransactionRequest(
     }
 
     sealed class Error(message: String? = null) : Exception(message) {
-        data class DecodeInvalidTypeByte(val byte: UInt) :
-            Error("Can not decode transaction, invalid first byte $byte")
-        data class DecodeInvalidRlp(val rlp: Rlp?):
-            Error("Expected RlpList, got item $rlp")
+        data class DecodeInvalidType(val byte: UInt) :
+            Error("Can not decode transaction, invalid type byte $byte")
+        data class DecodeInvalidRlp(val data: ByteArray?):
+            Error("Expected RlpList, got item ${data?.toHexString(true)}")
     }
 
-    companion object {
+    companion object
+}
 
-        @Throws(Throwable::class)
-        fun decodeLegacy(bytes: ByteArray): TransactionRequest {
-            val rlp = Rlp.decode(bytes) as? RlpList
-            if (rlp == null) throw Error.DecodeInvalidRlp(rlp)
-            val tx = TransactionRequest(
-                type = LEGACY,
-                nonce = BigInt.from((rlp.element[0] as RlpItem).bytes),
-                gasPrice = BigInt.from((rlp.element[1] as RlpItem).bytes),
-                gasLimit = BigInt.from((rlp.element[2] as RlpItem).bytes),
-                to = if ((rlp.element[3] as RlpItem).bytes.isEmpty()) null
-                    else Address.HexString(
-                        (rlp.element[3] as RlpItem).bytes.toHexString(true)
-                    ),
-                value = BigInt.from((rlp.element[4] as RlpItem).bytes),
-                data = DataHexStr((rlp.element[5] as RlpItem).bytes),
-            )
-            val v = bigIntOrNull((rlp.element.getOrNull(6) as? RlpItem)?.bytes)
-            val r = bigIntOrNull((rlp.element.getOrNull(7) as? RlpItem)?.bytes)
-            val s = bigIntOrNull((rlp.element.getOrNull(8) as? RlpItem)?.bytes)
-
-            // EIP-155 unsigned transaction
-            if (
-                v?.isZero() == false &&
-                r?.isZero() == true &&
-                s?.isZero() == true
-            )
-                return tx.copy(
-                    chainId = nullIfZero(v), v = BigInt.zero, r = r, s = s
-                )
-
-            // Signed legacy
-            if (rlp.element.size == 9 && (v != null && r != null && s != null)) {
-                var chainId = v.sub(35).div(2)
-                var recId = v.sub(27)
-                chainId = if (chainId.isLessThanZero()) BigInt.zero else chainId
-                if (chainId.isGreaterThan(BigInt.zero))
-                    recId = recId.sub(chainId.mul(2).add(8))
-
-                // TODO: Recover `from` address
-                return tx.copy(chainId = nullIfZero(chainId), v = recId, r = r, s = s)
-            }
-
-            return tx.copy(v = v, r = r, s = s)
-        }
-
-        @Throws(Throwable::class)
-        fun decodeEIP2930(bytes: ByteArray): TransactionRequest {
-            val rlp = Rlp.decode(bytes) as? RlpList
-            if (rlp == null) throw Error.DecodeInvalidRlp(rlp)
-            return TransactionRequest(
-                type = EIP2930,
-                chainId = BigInt.from((rlp.element[0] as RlpItem).bytes),
-                nonce = BigInt.from((rlp.element[1] as RlpItem).bytes),
-                gasPrice = BigInt.from((rlp.element[2] as RlpItem).bytes),
-                gasLimit = BigInt.from((rlp.element[3] as RlpItem).bytes),
-                to = if ((rlp.element[4] as RlpItem).bytes.isEmpty()) null
-                    else Address.HexString(
-                        (rlp.element[4] as RlpItem).bytes.toHexString(true)
-                    ),
-                value = BigInt.from((rlp.element[5] as RlpItem).bytes),
-                data = DataHexStr((rlp.element[6] as RlpItem).bytes),
-                accessList = decodeAccessList(rlp.element[7]),
-                v = bigIntOrNull((rlp.element.getOrNull(8) as? RlpItem)?.bytes),
-                r = bigIntOrNull((rlp.element.getOrNull(9) as? RlpItem)?.bytes),
-                s = bigIntOrNull((rlp.element.getOrNull(10) as? RlpItem)?.bytes),
-            )
-        }
-
-        @Throws(Throwable::class)
-        private fun decodeAccessList(rlp: Rlp?): AccessList? {
-            val topList = (rlp as? RlpList) ?: return null
-            return topList.element.map {
-                val item = it as RlpList
-                AccessListItem(
-                    Address.HexString(
-                        (item.element[0] as RlpItem).bytes.toHexString(true)
-                    ),
-                    (item.element[1] as RlpList).element.map { sk ->
-                        DataHexStr((sk as RlpItem).bytes)
-                    }
-                )
-
-            }
-        }
-
-        @Throws(Throwable::class)
-        fun decodeEIP1559(bytes: ByteArray): TransactionRequest {
-            val rlp = Rlp.decode(bytes) as? RlpList
-            if (rlp == null) throw Error.DecodeInvalidRlp(rlp)
-            return TransactionRequest(
-                type = EIP1559,
-                chainId = BigInt.from((rlp.element[0] as RlpItem).bytes),
-                nonce = BigInt.from((rlp.element[1] as RlpItem).bytes),
-                maxPriorityFeePerGas = BigInt.from((rlp.element[2] as RlpItem).bytes),
-                maxFeePerGas = BigInt.from((rlp.element[3] as RlpItem).bytes),
-                gasLimit = BigInt.from((rlp.element[4] as RlpItem).bytes),
-                to = if ((rlp.element[5] as RlpItem).bytes.isEmpty()) null
-                else Address.HexString(
-                    (rlp.element[5] as RlpItem).bytes.toHexString(true)
-                ),
-                value = BigInt.from((rlp.element[6] as RlpItem).bytes),
-                data = DataHexStr((rlp.element[7] as RlpItem).bytes),
-                accessList = decodeAccessList(rlp.element[8]),
-                v = bigIntOrNull((rlp.element.getOrNull(9) as? RlpItem)?.bytes),
-                r = bigIntOrNull((rlp.element.getOrNull(10) as? RlpItem)?.bytes),
-                s = bigIntOrNull((rlp.element.getOrNull(11) as? RlpItem)?.bytes),
-            )
-        }
-
-        @Throws(Throwable::class)
-        fun decode(bytes: ByteArray): TransactionRequest {
-            val firstByteInt = bytes[0].toUInt()
-            if (firstByteInt >= 128u) return decodeLegacy(bytes)
-            return when(firstByteInt) {
-                1u -> decodeEIP2930(bytes.copyOfRange(1, bytes.size))
-                2u -> decodeEIP1559(bytes.copyOfRange(1, bytes.size))
-                else -> throw Error.DecodeInvalidTypeByte(firstByteInt)
-            }
-        }
-
-        private fun bigIntOrNull(bytes: ByteArray?): BigInt? =
-            bytes?.let { BigInt.from(it) }
-
-        private fun bigIntOr0Null(bytes: ByteArray?): BigInt? =
-            bytes?.let { nullIfZero(BigInt.from(it)) }
-
-        private fun nullIfZero(value: BigInt) =
-            if (value.isZero()) null else value
+@Throws(Throwable::class)
+fun TransactionRequest.Companion.decode(bytes: ByteArray): TransactionRequest {
+    val firstByteInt = bytes[0].toUInt()
+    if (firstByteInt >= 128u) return decodeLegacy(bytes)
+    return when(firstByteInt) {
+        1u -> decodeEIP2930(bytes.copyOfRange(1, bytes.size))
+        2u -> decodeEIP1559(bytes.copyOfRange(1, bytes.size))
+        else -> throw TransactionRequest.Error.DecodeInvalidType(firstByteInt)
     }
 }
+
+@Throws(Throwable::class)
+fun TransactionRequest.Companion.decodeLegacy(
+    bytes: ByteArray
+): TransactionRequest {
+    val rlp = Rlp.decode(bytes) as? RlpList
+        ?: throw TransactionRequest.Error.DecodeInvalidRlp(bytes)
+
+    val tx = TransactionRequest(
+        type = LEGACY,
+        nonce = decodeBigInt(rlp.items[0]),
+        gasPrice = decodeBigInt(rlp.items[1]),
+        gasLimit = decodeBigInt(rlp.items[2]),
+        to = decodeAddress(rlp.items[3]),
+        value = decodeBigInt(rlp.items[4]),
+        data = DataHexStr((rlp.items[5] as RlpItem).bytes),
+    )
+
+    val v = decodeBigIntOrNull(rlp.items.getOrNull(6))
+    val r = decodeBigIntOrNull(rlp.items.getOrNull(7))
+    val s = decodeBigIntOrNull(rlp.items.getOrNull(8))
+
+    // EIP-155 unsigned transaction
+    if (v?.isZero() == false && r?.isZero() == true && s?.isZero() == true)
+        return tx.copy(chainId = nullIfZero(v), v = BigInt.zero, r = r, s = s)
+
+    // Signed legacy
+    if (rlp.items.size == 9 && (v != null && r != null && s != null)) {
+        var chainId = v.sub(35).div(2)
+        var recId = v.sub(27)
+        chainId = if (chainId.isLessThanZero()) BigInt.zero else chainId
+        if (chainId.isGreaterThan(BigInt.zero))
+            recId = recId.sub(chainId.mul(2).add(8))
+
+        // TODO: Recover `from` address
+        return tx.copy(chainId = nullIfZero(chainId), v = recId, r = r, s = s)
+    }
+
+    return tx.copy(v = v, r = r, s = s)
+}
+
+@Throws(Throwable::class)
+fun TransactionRequest.Companion.decodeEIP2930(
+    bytes: ByteArray
+): TransactionRequest {
+    val rlp = Rlp.decode(bytes) as? RlpList
+        ?: throw TransactionRequest.Error.DecodeInvalidRlp(bytes)
+    return TransactionRequest(
+        type = EIP2930,
+        chainId = decodeBigInt(rlp.items[0]),
+        nonce = decodeBigInt(rlp.items[1]),
+        gasPrice = decodeBigInt(rlp.items[2]),
+        gasLimit = decodeBigInt(rlp.items[3]),
+        to = decodeAddress(rlp.items[4]),
+        value = decodeBigInt(rlp.items[5]),
+        data = DataHexStr((rlp.items[6] as RlpItem).bytes),
+        accessList = decodeAccessList(rlp.items.getOrNull(7)),
+        v = decodeBigIntOrNull(rlp.items.getOrNull(8)),
+        r = decodeBigIntOrNull(rlp.items.getOrNull(9)),
+        s = decodeBigIntOrNull(rlp.items.getOrNull(10)),
+    )
+}
+
+@Throws(Throwable::class)
+fun TransactionRequest.Companion.decodeEIP1559(
+    bytes: ByteArray
+): TransactionRequest {
+    val rlp = Rlp.decode(bytes) as? RlpList
+        ?: throw TransactionRequest.Error.DecodeInvalidRlp(bytes)
+    return TransactionRequest(
+        type = EIP1559,
+        chainId = decodeBigInt(rlp.items[0]),
+        nonce = decodeBigInt(rlp.items[1]),
+        maxPriorityFeePerGas = decodeBigInt(rlp.items[2]),
+        maxFeePerGas = decodeBigInt(rlp.items[3]),
+        gasLimit = decodeBigInt(rlp.items[4]),
+        to = decodeAddress(rlp.items[5]),
+        value = decodeBigInt(rlp.items[6]),
+        data = DataHexStr((rlp.items[7] as RlpItem).bytes),
+        accessList = decodeAccessList(rlp.items.getOrNull(8)),
+        v = decodeBigIntOrNull(rlp.items.getOrNull(9)),
+        r = decodeBigIntOrNull(rlp.items.getOrNull(10)),
+        s = decodeBigIntOrNull(rlp.items.getOrNull(11)),
+    )
+}
+
+@Throws(Throwable::class)
+private fun decodeBigInt(rlp: Rlp): BigInt =
+    BigInt.from((rlp as RlpItem).bytes)
+
+private fun decodeBigIntOrNull(rlp: Rlp?): BigInt? =
+    (rlp as? RlpItem)?.let { decodeBigInt(it) }
+
+private fun nullIfZero(value: BigInt) =
+    if (value.isZero()) null else value
+
+private fun decodeAddress(rlp: Rlp): Address.HexString? =
+    if ((rlp as RlpItem).bytes.isEmpty()) null
+    else Address.HexString((rlp as RlpItem).bytes.toHexString(true))
+
+@Throws(Throwable::class)
+private fun decodeAccessList(rlp: Rlp?): AccessList? =
+    (rlp as? RlpList)?.items?.map { it as RlpList }?.map {
+        AccessListItem(
+            Address.HexString((it.items[0] as RlpItem).bytes.toHexString(true)),
+            (it.items[1] as RlpList).items.map {
+                    s -> DataHexStr((s as RlpItem).bytes)
+            }
+        )
+    }
+
