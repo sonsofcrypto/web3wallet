@@ -5,6 +5,7 @@ import com.sonsofcrypto.web3lib.assertBool
 import com.sonsofcrypto.web3lib.provider.model.AccessListItem
 import com.sonsofcrypto.web3lib.provider.model.Transaction
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
+import com.sonsofcrypto.web3lib.provider.model.decode
 import com.sonsofcrypto.web3lib.provider.model.fromHexifiedJsonObject
 import com.sonsofcrypto.web3lib.provider.model.toTransactionRequest
 import com.sonsofcrypto.web3lib.types.Address
@@ -24,7 +25,7 @@ class KeySignerTest {
 
     @Test
     fun testSignMessage() = runBlocking {
-        data class SignMessageTestCase(
+        data class TestCase(
             val address: String,
             val name: String,
             val message: String?,
@@ -35,7 +36,7 @@ class KeySignerTest {
         )
 
         listOf(
-            SignMessageTestCase(
+            TestCase(
                 "0x14791697260E4c9A71f18484C9f997B308e59325",
                 "string(\"hello world\")",
                 "hello world",
@@ -44,7 +45,7 @@ class KeySignerTest {
                 "0x0123456789012345678901234567890123456789012345678901234567890123".hexStringToByteArray(),
                 "0xddd0a7290af9526056b4e35a077b9a11b513aa0028ec6c9880948544508f3c63265e99e47ad31bb2cab9646c504576b3abc6939a1710afc08cbf3034d73214b81c",
             ),
-            SignMessageTestCase(
+            TestCase(
                 "0xD351c7c627ad5531Edb9587f4150CaF393c33E87",
                 "bytes(0x47173285...4cb01fad)",
                 null,
@@ -53,7 +54,7 @@ class KeySignerTest {
                 "0x51d1d6047622bca92272d36b297799ecc152dc2ef91b229debf84fc41e8c73ee".hexStringToByteArray(),
                 "0x546f0c996fa4cfbf2b68fd413bfb477f05e44e66545d7782d87d52305831cd055fc9943e513297d0f6755ad1590a5476bf7d1761d4f9dc07dfe473824bbdec751b",
             ),
-            SignMessageTestCase(
+            TestCase(
                 "0xe7deA7e64B62d1Ca52f1716f29cd27d4FE28e3e1",
                 "zero-prefixed signature",
                 null,
@@ -94,11 +95,20 @@ class KeySignerTest {
         val value: String?,
         val nonce: String?,
     ) {
-        fun prvKey(): ByteArray = privateKey.hexStringToByteArray()
-        fun unsignedTx(): ByteArray = unsignedTransaction.hexStringToByteArray()
-        fun unsignedTx5(): ByteArray = unsignedTransactionChainId5.hexStringToByteArray()
-        fun signedTx(): ByteArray = signedTransaction.hexStringToByteArray()
-        fun signedTx5(): ByteArray = signedTransactionChainId5.hexStringToByteArray()
+        fun prvKey(): ByteArray =
+            privateKey.hexStringToByteArray()
+
+        fun unsignedTx(): ByteArray =
+            unsignedTransaction.hexStringToByteArray()
+
+        fun unsignedTx5(): ByteArray =
+            unsignedTransactionChainId5.hexStringToByteArray()
+
+        fun signedTx(): ByteArray =
+            signedTransaction.hexStringToByteArray()
+
+        fun signedTx5(): ByteArray =
+            signedTransactionChainId5.hexStringToByteArray()
     }
 
     @Test
