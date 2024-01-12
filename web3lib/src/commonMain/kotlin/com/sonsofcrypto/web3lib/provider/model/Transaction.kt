@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.provider.model
 
-import com.sonsofcrypto.web3lib.provider.utils.JsonPrimitiveQntHexStr
+import com.sonsofcrypto.web3lib.provider.utils.JsonPrimQntHexStr
 import com.sonsofcrypto.web3lib.provider.utils.RlpItem
 import com.sonsofcrypto.web3lib.provider.utils.RlpList
 import com.sonsofcrypto.web3lib.provider.utils.encode
@@ -106,19 +106,19 @@ fun Transaction.encodeEIP1559(): ByteArray {
 }
 
 fun Transaction.toHexifiedJsonObject(): JsonObject = buildJsonObject {
-    put("nonce", JsonPrimitiveQntHexStr(nonce))
-    put("gas", JsonPrimitiveQntHexStr(gasLimit))
+    put("nonce", JsonPrimQntHexStr(nonce))
+    put("gas", JsonPrimQntHexStr(gasLimit))
     put("data", JsonPrimitive(input))
-    put("value", JsonPrimitiveQntHexStr(value))
-    put("chainId", JsonPrimitiveQntHexStr(chainId))
+    put("value", JsonPrimQntHexStr(value))
+    put("chainId", JsonPrimQntHexStr(chainId))
     if (hash != null) put("hash", JsonPrimitive(hash))
     if (to != null) put("to", JsonPrimitive(to.hexString))
     if (from != null) put("from", JsonPrimitive(from.hexString))
-    if (gasPrice != null) put("gasPrice", JsonPrimitiveQntHexStr(gasPrice))
-    if (type != null) put("type", JsonPrimitiveQntHexStr(type.value))
-    if (r != null) put("r", JsonPrimitiveQntHexStr(r))
-    if (s != null) put("s", JsonPrimitiveQntHexStr(s))
-    if (v != null) put("v", JsonPrimitiveQntHexStr(v))
+    if (gasPrice != null) put("gasPrice", JsonPrimQntHexStr(gasPrice))
+    if (type != null) put("type", JsonPrimQntHexStr(type.value))
+    if (r != null) put("r", JsonPrimQntHexStr(r))
+    if (s != null) put("s", JsonPrimQntHexStr(s))
+    if (v != null) put("v", JsonPrimQntHexStr(v))
     if (accessList != null) {
         val encoded = accessList.map {
             buildJsonObject{
@@ -129,10 +129,10 @@ fun Transaction.toHexifiedJsonObject(): JsonObject = buildJsonObject {
         put("accessList", JsonArray(encoded))
     }
     if (maxPriorityFeePerGas != null) {
-        put("maxPriorityFeePerGas", JsonPrimitiveQntHexStr(maxPriorityFeePerGas))
+        put("maxPriorityFeePerGas", JsonPrimQntHexStr(maxPriorityFeePerGas))
     }
     if (maxFeePerGas != null) {
-        put("maxFeePerGas", JsonPrimitiveQntHexStr(maxFeePerGas))
+        put("maxFeePerGas", JsonPrimQntHexStr(maxFeePerGas))
     }
 }
 

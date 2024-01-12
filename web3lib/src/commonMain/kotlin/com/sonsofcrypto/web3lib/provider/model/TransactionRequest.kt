@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3lib.provider.model
 import com.sonsofcrypto.web3lib.provider.model.TransactionType.EIP1559
 import com.sonsofcrypto.web3lib.provider.model.TransactionType.EIP2930
 import com.sonsofcrypto.web3lib.provider.model.TransactionType.LEGACY
-import com.sonsofcrypto.web3lib.provider.utils.JsonPrimitiveQntHexStr
+import com.sonsofcrypto.web3lib.provider.utils.JsonPrimQntHexStr
 import com.sonsofcrypto.web3lib.provider.utils.Rlp
 import com.sonsofcrypto.web3lib.provider.utils.RlpList
 import com.sonsofcrypto.web3lib.provider.utils.RlpItem
@@ -53,7 +53,6 @@ data class TransactionRequest(
         LEGACY -> encodeLegacy()
     }
 
-
     @Throws(Throwable::class)
     fun encodeLegacy(): ByteArray {
         var items = listOf(
@@ -90,11 +89,6 @@ data class TransactionRequest(
         return RlpList(items).encode()
     }
 
-    private fun legacyRecId(v: BigInt): BigInt {
-        val intV = v.toDecimalString().toInt()
-        return if (intV == 0 || intV == 1) BigInt.from(intV + 27) else v
-    }
-
     @Throws(Throwable::class)
     fun encodeEIP2930(): ByteArray {
         var items = listOf(
@@ -109,7 +103,7 @@ data class TransactionRequest(
         )
 
         if (r != null && s != null && v != null)
-            items += listOf(v, r, s).map { RlpItem(it.toByteArray()) }
+            items += listOf(v, r, s).map { RlpItem(qntBigIntToByteArray(it)) }
 
         return EIP2930.toByteArray() + RlpList(items).encode()
     }
@@ -133,19 +127,18 @@ data class TransactionRequest(
         )
 
         if (r != null && s != null && v != null)
-            items += listOf(v, r, s).map { RlpItem(it.toByteArray()) }
+            items += listOf(v, r, s).map { RlpItem(qntBigIntToByteArray(it)) }
 
         return EIP1559.toByteArray() + RlpList(items).encode()
     }
 
     private fun rlpListAccessList(): RlpList = RlpList(
-        accessList?.map {
-            RlpList(
-                listOf(
-                    RlpItem(it.address.hexString.toByteArrayData()),
-                    RlpList(it.storageKeys.map { k -> RlpItem(k.toByteArrayData()) })
-                )
+        accessList?.map { el ->
+            val itms = listOf(
+                RlpItem(el.address.hexString.toByteArrayData()),
+                RlpList(el.storageKeys.map { RlpItem(it.toByteArrayData()) })
             )
+            RlpList(itms)
         } ?: emptyList()
     )
 
@@ -153,38 +146,41 @@ data class TransactionRequest(
         if (value == null || value.isZero()) ByteArray(0)
         else QntHexStr(value).toByteArrayQnt()
 
+    private fun legacyRecId(v: BigInt): BigInt {
+        val intV = v.toDecimalString().toInt()
+        return if (intV == 0 || intV == 1) BigInt.from(intV + 27) else v
+    }
+
     fun toHexifiedJsonObject(): JsonObject = buildJsonObject {
         if (to != null) put("to", JsonPrimitive(to.hexString))
         if (from != null) put("from", JsonPrimitive(from.hexString))
-        if (nonce != null) put("nonce", JsonPrimitiveQntHexStr(nonce))
-        if (gasLimit != null) put("gas", JsonPrimitiveQntHexStr(gasLimit))
-        if (gasPrice != null) put("gasPrice", JsonPrimitiveQntHexStr(gasPrice))
+        if (nonce != null) put("nonce", JsonPrimQntHexStr(nonce))
+        if (gasLimit != null) put("gas", JsonPrimQntHexStr(gasLimit))
+        if (gasPrice != null) put("gasPrice", JsonPrimQntHexStr(gasPrice))
         put("data", JsonPrimitive(data))
-        if (value != null) put("value", JsonPrimitiveQntHexStr(value))
-        if (chainId != null) put("chainId", JsonPrimitiveQntHexStr(chainId))
-        if (type != null) put("type", JsonPrimitiveQntHexStr(type.value))
-        if (r != null) put("r", JsonPrimitiveQntHexStr(r))
-        if (s != null) put("s", JsonPrimitiveQntHexStr(s))
-        if (v != null) put("v", JsonPrimitiveQntHexStr(v))
-        if (accessList != null) {
-            val encoded = accessList.map {
-                buildJsonObject{
-                    put("address", JsonPrimitive(it.address.hexString) as JsonElement)
-                    put("storageKeys", it.storageKeys.map { k -> JsonPrimitive(k) } as JsonElement)
-                }
-            }
-            put("accessList", JsonArray(encoded))
-        }
-        if (maxPriorityFeePerGas != null) {
-            put(
-                "maxPriorityFeePerGas",
-                JsonPrimitiveQntHexStr(maxPriorityFeePerGas)
-            )
-        }
-        if (maxFeePerGas != null) {
-            put("maxFeePerGas", JsonPrimitiveQntHexStr(maxFeePerGas))
-        }
+        if (value != null) put("value", JsonPrimQntHexStr(value))
+        if (chainId != null) put("chainId", JsonPrimQntHexStr(chainId))
+        if (type != null) put("type", JsonPrimQntHexStr(type.value))
+        if (r != null) put("r", JsonPrimQntHexStr(r))
+        if (s != null) put("s", JsonPrimQntHexStr(s))
+        if (v != null) put("v", JsonPrimQntHexStr(v))
+        if (accessList != null)
+            put("accessList", JsonArray(hexifiedAccessList(accessList)))
+        if (maxPriorityFeePerGas != null)
+            put("maxPriorityFeePerGas", JsonPrimQntHexStr(maxPriorityFeePerGas))
+        if (maxFeePerGas != null)
+            put("maxFeePerGas", JsonPrimQntHexStr(maxFeePerGas))
     }
+
+    private fun hexifiedAccessList(accessList: AccessList): List<JsonObject> =
+        accessList.map {
+            val address = it.address.hexString
+            val storageKeys = it.storageKeys.map { k -> JsonPrimitive(k) }
+            buildJsonObject{
+                put("address", JsonPrimitive(address) as JsonElement)
+                put("storageKeys", storageKeys as JsonElement)
+            }
+        }
 
     sealed class Error(message: String? = null) : Exception(message) {
         data class DecodeInvalidType(val byte: UInt) :
@@ -312,7 +308,7 @@ private fun decodeAccessList(rlp: Rlp?): AccessList? =
         AccessListItem(
             Address.HexString((it.items[0] as RlpItem).bytes.toHexString(true)),
             (it.items[1] as RlpList).items.map {
-                    s -> DataHexStr((s as RlpItem).bytes)
+                s -> DataHexStr((s as RlpItem).bytes)
             }
         )
     }
