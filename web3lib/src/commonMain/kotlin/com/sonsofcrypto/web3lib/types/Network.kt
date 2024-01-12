@@ -32,10 +32,8 @@ data class Network(
         return type == Type.L1_TEST || type == Type.L2_TEST
     }
 
-    fun isValidAddress(input: String): Boolean = when (name) {
-        "Ethereum" -> input.dropLast(40) == "0x" && input.length == 42
-        else -> false
-    }
+    fun isValidAddress(input: String): Boolean =
+        input.dropLast(40) == "0x" && input.length == 42
 
     override fun equals(other: Any?): Boolean {
         return chainId == (other as? Network)?.chainId

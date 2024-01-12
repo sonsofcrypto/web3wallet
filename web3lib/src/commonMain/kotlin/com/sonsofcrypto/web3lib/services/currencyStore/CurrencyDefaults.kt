@@ -49,13 +49,6 @@ val sepoliaDefaultCurrencies = listOf(
         coinGeckoId = "ethereum",
     ),
     Currency(
-        name = "Sepolia WETH",
-        symbol = "weth",
-        decimals = 18u,
-        address = "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14",
-        coinGeckoId = "weth",
-    ),
-    Currency(
         name = "Sepolia UNI Token",
         symbol = "uni",
         decimals = 18u,
@@ -79,4 +72,20 @@ val goerliDefaultCurrencies = listOf(
         address = "0x509Ee0d083DdF8AC028f2a56731412edD63223B9",
         coinGeckoId = "tether",
     ),
+    Currency(
+        name = "Goerli UNI Token",
+        symbol = "uni",
+        decimals = 18u,
+        address = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        coinGeckoId = "uniswap",
+    ),
+    Currency(
+        name = "Goerli Wrapped ETH",
+        symbol = "weth",
+        decimals = 18u,
+        address = "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
+        coinGeckoId = "uniswap",
+    ),
 )
+
+
