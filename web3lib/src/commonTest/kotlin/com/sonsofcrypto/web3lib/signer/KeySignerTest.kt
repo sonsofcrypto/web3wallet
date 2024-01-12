@@ -200,11 +200,8 @@ class KeySignerTest {
             val recoded = decoded.encode().toHexString(true)
             val noSig = decoded.copy(v=null, r=null, s=null)
             val resigned = signer.signTransaction(noSig).toHexString(true)
-            println("$t")
-            println("$resigned")
             assertBool(t == recoded, "recoded $i \n${t}\n$recoded")
             assertBool(t == resigned, "resigned $i \n${t}\n$resigned")
-            println("========")
         }
 
         // Test extern signed transactions
@@ -222,7 +219,7 @@ class KeySignerTest {
         ).forEachIndexed { i, t ->
             val decoded = TransactionRequest.decode(t.hexStringToByteArray())
             val recoded = decoded.encode().toHexString(true)
-            // assertBool(t == recoded, "recoded \n${t}\n$recoded")
+             assertBool(t == recoded, "recoded \n${t}\n$recoded")
         }
     }
 

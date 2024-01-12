@@ -85,14 +85,14 @@ data class TransactionRequest(
         if (!chainId.isZero())
             v = v.add(chainId.mul(2).add(8))
 
-        items += listOf(v, r, s).map { RlpItem(it.toByteArray()) }
+        items += listOf(v, r, s).map { RlpItem(qntBigIntToByteArray(it)) }
         return RlpList(items).encode()
     }
 
     @Throws(Throwable::class)
     fun encodeEIP2930(): ByteArray {
         var items = listOf(
-            RlpItem(QntHexStr(chainId!!).toByteArrayQnt()),
+            RlpItem(qntBigIntToByteArray(chainId)),
             RlpItem(qntBigIntToByteArray(nonce)),
             RlpItem(qntBigIntToByteArray(gasPrice)),
             RlpItem(qntBigIntToByteArray(gasLimit)),
@@ -110,22 +110,17 @@ data class TransactionRequest(
 
     @Throws(Throwable::class)
     fun encodeEIP1559(): ByteArray {
-        if (gasPrice != null && gasPrice != maxFeePerGas) {
-            throw Exception("Mismatch EIP-1559 gasPrice != maxFeePerGas")
-        }
-
         var items = listOf(
-            RlpItem(QntHexStr(chainId!!).toByteArrayQnt()),
+            RlpItem(qntBigIntToByteArray(chainId)),
             RlpItem(qntBigIntToByteArray(nonce)),
-            RlpItem(QntHexStr(maxPriorityFeePerGas ?: BigInt.zero).toByteArrayQnt()),
-            RlpItem(QntHexStr(maxFeePerGas ?: BigInt.zero).toByteArrayQnt()),
+            RlpItem(qntBigIntToByteArray(maxPriorityFeePerGas)),
+            RlpItem(qntBigIntToByteArray(maxFeePerGas)),
             RlpItem(qntBigIntToByteArray(gasLimit)),
             RlpItem(to?.hexString?.toByteArrayData() ?: ByteArray(0)),
             RlpItem(qntBigIntToByteArray(value)),
             RlpItem(data?.toByteArrayData() ?: ByteArray(0)),
             rlpListAccessList(),
         )
-
         if (r != null && s != null && v != null)
             items += listOf(v, r, s).map { RlpItem(qntBigIntToByteArray(it)) }
 
