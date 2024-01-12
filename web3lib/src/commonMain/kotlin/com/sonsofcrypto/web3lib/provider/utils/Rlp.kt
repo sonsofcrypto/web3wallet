@@ -32,7 +32,9 @@ fun Rlp.encode(): ByteArray = when (this) {
 }
 
 private fun ByteArray.encodeRlp(offset: Int) = when {
-    size == 1 && ((first().toInt() and 0xff) < ELEM_OFFSET) && offset == ELEM_OFFSET -> this
+    size == 1 &&
+        ((first().toInt() and 0xff) < ELEM_OFFSET) &&
+        offset == ELEM_OFFSET -> this
     size <= 55 -> ByteArray(1) { (size + offset).toByte() }.plus(this)
     else -> size.toMinimalByteArray().let { arr ->
         ByteArray(1) { (offset + 55 + arr.size).toByte() } + arr + this
@@ -43,52 +45,56 @@ private fun ByteArray.encodeRlp(offset: Int) = when {
 
 @Throws(Throwable::class)
 fun Rlp.Companion.decode(bytes: ByteArray): Rlp =
-    bytes.decodeRLPWithSize(0).element
+    bytes.decodeRLPWithSize(0).elem
 
-private data class DecodeResult(val element: Rlp, val size: Int)
-
-private data class LengthAndOffset(val length: Int, val offset: Int)
+private data class Decoded(val elem: Rlp, val size: Int)
+private data class RlpRange(val length: Int, val offset: Int)
 
 @Throws(Throwable::class)
-private fun ByteArray.decodeRLPWithSize(offset: Int = 0): DecodeResult {
+private fun ByteArray.decodeRLPWithSize(offset: Int = 0): Decoded {
     if (offset >= size)
         throw Exception("Cannot decode RLP at offset=$offset and size=$size")
 
     val value = this[offset].toInt() and 0xFF
     return when {
-        value < ELEM_OFFSET -> DecodeResult(RlpItem(ByteArray(1) { value.toByte() }), 1)
+        value < ELEM_OFFSET -> Decoded(
+            RlpItem(ByteArray(1) { value.toByte() }),
+            1
+        )
         value < LIST_OFFSET -> (value - ELEM_OFFSET).let {
-            val lengthAndOffset = getLengthAndOffset(it, offset)
-            DecodeResult(
-                RlpItem(copyOfRange(lengthAndOffset.offset, lengthAndOffset.offset + lengthAndOffset.length)),
-                lengthAndOffset.length + lengthAndOffset.offset - offset
+            val range = getRlpRange(it, offset)
+            Decoded(
+                RlpItem(copyOfRange(range.offset, range.offset + range.length)),
+                range.length + range.offset - offset
             )
         }
         else -> (value - LIST_OFFSET).let {
             val list = mutableListOf<Rlp>()
-
-            val lengthAndOffset = getLengthAndOffset(it, offset)
-            var currentOffset = lengthAndOffset.offset
-            while (currentOffset < lengthAndOffset.offset + lengthAndOffset.length) {
-                val element = decodeRLPWithSize(currentOffset)
-                currentOffset += element.size
-                list.add(element.element)
+            val rlpRange = getRlpRange(it, offset)
+            var currOffset = rlpRange.offset
+            while (currOffset < rlpRange.offset + rlpRange.length) {
+                val element = decodeRLPWithSize(currOffset)
+                currOffset += element.size
+                list.add(element.elem)
             }
-            DecodeResult(RlpList(list), (lengthAndOffset.offset + lengthAndOffset.length) - offset)
+            Decoded(
+                RlpList(list),
+                (rlpRange.offset + rlpRange.length) - offset
+            )
         }
     }
 }
 
 @Throws(Throwable::class)
-private fun ByteArray.getLengthAndOffset(firstByte: Int, offset: Int) =
+private fun ByteArray.getRlpRange(firstByte: Int, offset: Int) =
     if (firstByte <= 55)
-        LengthAndOffset(firstByte, offset + 1)
+        RlpRange(firstByte, offset + 1)
     else {
         val size = firstByte - 54
         val length = BigInt.from(copyOfRange(offset + 1, offset + size))
             .toDecimalString()
             .toInt()
-        LengthAndOffset(length, offset + size)
+        RlpRange(length, offset + size)
     }
 
 /* Utils */
