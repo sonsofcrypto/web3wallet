@@ -14,10 +14,11 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 # Release Notes 
 
-### v1.2.0 #49
+### v1.2.0 #50
 - Legacy transaction support
 - EIP-2718 support
 - EIP-2930 support
+- EIP-155 support
 - RLP decoding support
 - MessageSign personal tests
 - Additional transaction tests
