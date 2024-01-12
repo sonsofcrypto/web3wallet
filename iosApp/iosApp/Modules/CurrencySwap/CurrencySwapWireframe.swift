@@ -111,7 +111,7 @@ private extension DefaultCurrencySwapWireframe {
             fatalError("Unable to configure Uniswap service, no wallet found.")
         }
         let provider = networksService.provider(network: context.network)
-        swapService.wallet = wallet
+        swapService.legacyWallet = wallet
         swapService.provider = provider
     }
     
