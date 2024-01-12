@@ -3,7 +3,7 @@
 | Prod / AppStore                                        | Staging                                                  | Dev / Nightly                                                 |
 |--------------------------------------------------------|----------------------------------------------------------|---------------------------------------------------------------|
 | ![pro](bundledAssets/images/testflight_prod.png)       | ![staging](bundledAssets/images/testflight_staging.png)  | ![dev.png](bundledAssets/images/testflight_dev.png)           |
-| web3wallet by sons of crypto Ξ v1.1.3 #47              | web3wallet by sons of crypto S v1.1.4 #48                | web3wallet by sons of crypto D v1.1.4 #48                     |
+| web3wallet by sons of crypto Ξ v1.1.3 #47              | web3wallet by sons of crypto S v1.1.4 #49                | web3wallet by sons of crypto D v1.1.4 #49                     |
 | AppStore RC.                                           | New features not quite AppStore ready. Great for testing | Living on the bleeding edge. Latest features, latest bugs. 🐛 |
 | [Download](https://testflight.apple.com/join/I4DFVaiH) | [Download](https://testflight.apple.com/join/5GiDXNJ3)   | [Download](https://testflight.apple.com/join/85JEPH96)        |
 
@@ -15,6 +15,10 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 # Release Notes 
 
 ### v1.2.0 #50
+
+### v1.1.4 #49
+- Wallet type indicator icon
+- Swipe up / down to show wallets search bar
 - Legacy transaction support
 - EIP-2718 support
 - EIP-2930 support
@@ -27,10 +31,7 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 - KeySigner
 - ExtKeySigner
 - MnemonicSigner
-
-### v1.1.4 #48
-- Wallet type indicator icon
-- Swipe up / down to show wallets search bar
+- Address validation fixes
 
 ### v1.1.3 #47 Address / View only wallets
 - Address / View only wallets
