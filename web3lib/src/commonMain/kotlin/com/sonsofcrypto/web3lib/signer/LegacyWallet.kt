@@ -90,7 +90,7 @@ interface LegacySigner {
 
     /** Resolves name using selected resolver */
     @Throws(Throwable::class)
-    suspend fun resolveName(name: String): Address.HexString?
+    suspend fun resolveName(name: String): Address.HexStr?
 }
 
 private val autoLockInterval = 5.seconds
@@ -148,7 +148,7 @@ class LegacyWallet(
             network() ?: Network.ethereum()
         )
         if (hexStrAddress != null)
-            return Address.HexString(hexStrAddress)
+            return Address.HexStr(hexStrAddress)
         throw Error.MissingAddressError(path, signerStoreItem.uuid)
     }
 
@@ -239,12 +239,12 @@ class LegacyWallet(
         val hash = keccak256("Transfer(address,address,uint256)".toByteArray())
         val signature = DataHexStr(hash)
         val address = address().toHexStringAddress().hexString
-        val abiAddress = DataHexStr(abiEncode(Address.HexString(address)))
+        val abiAddress = DataHexStr(abiEncode(Address.HexStr(address)))
         val fromLogs = provider?.getLogs(
             FilterRequest(
                 BlockTag.Earliest,
                 BlockTag.Latest,
-                Address.HexString(currency.address),
+                Address.HexStr(currency.address),
                 listOf(
                     Topic.TopicValue(signature),
                     Topic.TopicValue(abiAddress),
@@ -256,7 +256,7 @@ class LegacyWallet(
             FilterRequest(
                 BlockTag.Earliest,
                 BlockTag.Latest,
-                Address.HexString(currency.address),
+                Address.HexStr(currency.address),
                 listOf(
                     Topic.TopicValue(signature),
                     Topic.TopicValue(null),
@@ -285,7 +285,7 @@ class LegacyWallet(
         return provider!!.feeData()
     }
 
-    override suspend fun resolveName(name: String): Address.HexString? {
+    override suspend fun resolveName(name: String): Address.HexStr? {
         return provider!!.resolveName(name)
     }
 

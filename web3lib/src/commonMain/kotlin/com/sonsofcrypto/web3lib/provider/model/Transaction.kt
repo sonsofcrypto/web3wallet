@@ -18,7 +18,7 @@ import kotlinx.serialization.json.jsonArray
 typealias AccessList = List<AccessListItem>
 
 data class AccessListItem(
-    val address: Address.HexString,
+    val address: Address.HexStr,
     val storageKeys: List<DataHexStr>
 )
 
@@ -39,8 +39,8 @@ enum class TransactionType(val value: Int) {
 
 data class Transaction(
     val hash: String? = null,
-    val to: Address.HexString?,
-    val from: Address.HexString?,
+    val to: Address.HexStr?,
+    val from: Address.HexStr?,
     val nonce: BigInt,
     val gasLimit: BigInt = BigInt.zero,
     val gasPrice: BigInt? = null,
@@ -156,7 +156,7 @@ fun Transaction.Companion.fromHexifiedJsonObject(jsonObject: JsonObject): Transa
     accessList = jsonObject["accessList"]?.jsonArray?.map {
         val obj = it as JsonObject
         AccessListItem(
-            Address.HexString(obj["address"]!!.stringValue()),
+            Address.HexStr(obj["address"]!!.stringValue()),
             obj.get("storageKeys")!!.jsonArray.map { k -> k.stringValue() }
         )
     },

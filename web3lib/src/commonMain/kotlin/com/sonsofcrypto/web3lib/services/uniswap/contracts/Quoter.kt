@@ -7,7 +7,7 @@ import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.abiEncode
 import com.sonsofcrypto.web3lib.utils.keccak256
 
-class Quoter(address: Address.HexString): LegacyContract(address) {
+class Quoter(address: Address.HexStr): LegacyContract(address) {
 
     /**
      * /// @inheritdoc IQuoter
@@ -21,8 +21,8 @@ class Quoter(address: Address.HexString): LegacyContract(address) {
      */
 
     fun quoteExactInputSingle(
-        tokenIn: Address.HexString,
-        tokenOut: Address.HexString,
+        tokenIn: Address.HexStr,
+        tokenOut: Address.HexStr,
         fee: UInt,
         amountIn: BigInt,
         sqrtPriceLimitX96: UInt,

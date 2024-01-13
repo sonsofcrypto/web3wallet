@@ -9,7 +9,7 @@ import com.sonsofcrypto.web3lib.utils.abiEncode
 import com.sonsofcrypto.web3lib.utils.keccak256
 import kotlinx.datetime.Instant
 
-class IV3SwapRouter(address: Address.HexString): LegacyContract(address) {
+class IV3SwapRouter(address: Address.HexStr): LegacyContract(address) {
     /**
      * struct ExactInputSingleParams {
      *     address tokenIn;
@@ -30,8 +30,8 @@ class IV3SwapRouter(address: Address.HexString): LegacyContract(address) {
         val amountOutMinimum: BigInt,
         val sqrtPriceLimitX96: BigInt
     ) {
-        fun encoded(): ByteArray = abiEncode(Address.HexString(tokenIn)) +
-            abiEncode(Address.HexString(tokenOut)) +
+        fun encoded(): ByteArray = abiEncode(Address.HexStr(tokenIn)) +
+            abiEncode(Address.HexStr(tokenOut)) +
             abiEncode(fee) +
             recipient.abiEncoded() +
             abiEncode(amountIn) +
@@ -44,7 +44,7 @@ class IV3SwapRouter(address: Address.HexString): LegacyContract(address) {
             object MsgSender: Recipient()
 
             fun abiEncoded(): ByteArray = when (this) {
-                is HexAddress -> abiEncode(Address.HexString(this.address))
+                is HexAddress -> abiEncode(Address.HexStr(this.address))
                 is This -> abiEncode(BigInt.from(2))
                 is MsgSender -> abiEncode(BigInt.from(1))
             }
