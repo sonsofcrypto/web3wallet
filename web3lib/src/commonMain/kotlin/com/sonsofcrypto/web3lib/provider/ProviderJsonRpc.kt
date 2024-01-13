@@ -1,6 +1,5 @@
 package com.sonsofcrypto.web3lib.provider
 
-import com.sonsofcrypto.web3lib.provider.model.JsonRpcRequest.Method
 import com.sonsofcrypto.web3lib.provider.model.Block
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
 import com.sonsofcrypto.web3lib.provider.model.DataHexStr
@@ -8,6 +7,7 @@ import com.sonsofcrypto.web3lib.provider.model.FeeData
 import com.sonsofcrypto.web3lib.provider.model.FilterRequest
 import com.sonsofcrypto.web3lib.provider.model.JsonRpcErrorResponse
 import com.sonsofcrypto.web3lib.provider.model.JsonRpcRequest
+import com.sonsofcrypto.web3lib.provider.model.JsonRpcRequest.Method
 import com.sonsofcrypto.web3lib.provider.model.JsonRpcRequest.Method.CHAIN_ID
 import com.sonsofcrypto.web3lib.provider.model.JsonRpcResponse
 import com.sonsofcrypto.web3lib.provider.model.Log
@@ -33,7 +33,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -296,6 +295,7 @@ abstract class ProviderJsonRpc(
     @Throws(Throwable::class)
     override suspend fun getFilterChanges(id: QntHexStr): JsonObject = withBgCxt {
         // TODO: Does not work over HTTPs. Implement responses once Websockets
+        // For pocket, works for Alchemy
         return@withBgCxt performGetObjResult(
             Method.GET_FILTER_CHANGES, listOf(id.jsonPrimitive())
         )
