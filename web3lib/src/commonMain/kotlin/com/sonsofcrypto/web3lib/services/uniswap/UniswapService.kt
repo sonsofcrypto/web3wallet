@@ -10,8 +10,8 @@ import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.IV3SwapRouter
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.Quoter
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.UniswapV3PoolState
-import com.sonsofcrypto.web3lib.signer.LegacyWallet
 import com.sonsofcrypto.web3lib.signer.LegacyERC20Contract
+import com.sonsofcrypto.web3lib.signer.LegacyWallet
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency
