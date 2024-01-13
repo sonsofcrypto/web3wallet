@@ -13,11 +13,11 @@ extension Network {
     static func sepolia() -> Network { Network.Companion().sepolia() }
 }
 
-extension Formatters {
-    static var currency: CurrencyFormatter { Formatters.Companion().currency }
-    static var fiat: FiatFormatter { Formatters.Companion().fiat }
-    static var pct: PctFormatter { Formatters.Companion().pct }
-    static var date: DateFormatter { Formatters.Companion().date }
+extension Formater {
+    static var currency: CurrencyFormatter { Formater.Companion().currency }
+    static var fiat: FiatFormatter { Formater.Companion().fiat }
+    static var pct: PctFormatter { Formater.Companion().pct }
+    static var date: DateFormatter { Formater.Companion().date }
 }
 
 extension Data {
