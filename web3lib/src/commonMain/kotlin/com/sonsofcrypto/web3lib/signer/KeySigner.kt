@@ -7,9 +7,8 @@ import com.sonsofcrypto.web3lib.services.address.DefaultAddressService
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.Key
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.keccak256
 import com.sonsofcrypto.web3lib.utils.Signature
-import com.sonsofcrypto.web3lib.utils.extensions.toHexString
+import com.sonsofcrypto.web3lib.utils.keccak256
 
 class KeySigner(
     private val key: Key,

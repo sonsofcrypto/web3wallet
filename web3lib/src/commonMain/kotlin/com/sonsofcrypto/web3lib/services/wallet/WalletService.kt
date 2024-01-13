@@ -17,8 +17,8 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent.EnabledNetworksDidChange
 import com.sonsofcrypto.web3lib.services.networks.NetworksListener
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
-import com.sonsofcrypto.web3lib.signer.LegacyWallet
 import com.sonsofcrypto.web3lib.signer.LegacyERC20Contract
+import com.sonsofcrypto.web3lib.signer.LegacyWallet
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency

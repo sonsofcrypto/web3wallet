@@ -7,7 +7,6 @@ import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
-import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.Action.Kind.NORMAL
 import com.sonsofcrypto.web3walletcore.common.viewModels.AlertViewModel.RegularAlertViewModel

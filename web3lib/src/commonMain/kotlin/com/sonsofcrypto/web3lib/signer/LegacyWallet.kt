@@ -11,7 +11,6 @@ import com.sonsofcrypto.web3lib.provider.model.TransactionReceipt
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
 import com.sonsofcrypto.web3lib.provider.model.TransactionType
-import com.sonsofcrypto.web3lib.provider.model.encodeEIP1559
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SignerStoreService
 import com.sonsofcrypto.web3lib.types.Address

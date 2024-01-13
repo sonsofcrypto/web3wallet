@@ -5,8 +5,8 @@ import com.sonsofcrypto.web3lib.provider.model.TransactionType.EIP2930
 import com.sonsofcrypto.web3lib.provider.model.TransactionType.LEGACY
 import com.sonsofcrypto.web3lib.provider.utils.JsonPrimQntHexStr
 import com.sonsofcrypto.web3lib.provider.utils.Rlp
-import com.sonsofcrypto.web3lib.provider.utils.RlpList
 import com.sonsofcrypto.web3lib.provider.utils.RlpItem
+import com.sonsofcrypto.web3lib.provider.utils.RlpList
 import com.sonsofcrypto.web3lib.provider.utils.decode
 import com.sonsofcrypto.web3lib.provider.utils.encode
 import com.sonsofcrypto.web3lib.types.Address
