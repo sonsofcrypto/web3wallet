@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.provider
+package com.sonsofcrypto.web3lib.provider.utils
 
 import com.sonsofcrypto.web3lib.types.Address
 

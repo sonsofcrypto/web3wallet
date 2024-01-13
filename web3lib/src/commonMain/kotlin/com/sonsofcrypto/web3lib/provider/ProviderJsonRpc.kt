@@ -14,8 +14,8 @@ import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.fromHexifiedJsonObject
 import com.sonsofcrypto.web3lib.provider.model.jsonPrimitive
 import com.sonsofcrypto.web3lib.provider.model.toBigIntQnt
-import com.sonsofcrypto.web3lib.provider.model.toHexifiedJsonObject
 import com.sonsofcrypto.web3lib.provider.model.toULongQnt
+import com.sonsofcrypto.web3lib.provider.utils.NameServiceProvider
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.jsonPrimitive
