@@ -38,7 +38,6 @@ enum class TransactionType(val value: Int) {
 }
 
 data class Transaction(
-    val hash: String? = null,
     val to: Address.HexStr?,
     val from: Address.HexStr?,
     val nonce: BigInt,
@@ -62,6 +61,7 @@ data class Transaction(
     val maxFeePerGas: BigInt? = BigInt.zero,
 
     /** In response only */
+    val hash: String? = null,
     val blockHash: String? = null,
     val blockNumber: BigInt? = null,
     val transactionIndex: BigInt? = null
