@@ -15,6 +15,9 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 # Release Notes 
 
 ### v1.2.0 #51
+- ExtKeySigner clean up
+- MnemonicSigner clean up
+- Additional transaction tests
 
 ### v1.1.5 #51
 - Removing unused fonts
