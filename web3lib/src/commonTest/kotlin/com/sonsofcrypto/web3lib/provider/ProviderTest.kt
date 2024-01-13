@@ -13,8 +13,6 @@ import com.sonsofcrypto.web3lib.provider.model.Topic
 import com.sonsofcrypto.web3lib.provider.model.Transaction
 import com.sonsofcrypto.web3lib.provider.model.TransactionReceipt
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
-import com.sonsofcrypto.web3lib.provider.model.TransactionType
-import com.sonsofcrypto.web3lib.provider.model.encodeEIP1559
 import com.sonsofcrypto.web3lib.provider.model.fromHexifiedJsonObject
 import com.sonsofcrypto.web3lib.provider.model.toBigIntData
 import com.sonsofcrypto.web3lib.provider.model.toIntQnt
@@ -23,18 +21,12 @@ import com.sonsofcrypto.web3lib.provider.model.toUIntQnt
 import com.sonsofcrypto.web3lib.provider.model.toULongQnt
 import com.sonsofcrypto.web3lib.testKeySigner
 import com.sonsofcrypto.web3lib.types.Address
-import com.sonsofcrypto.web3lib.types.Bip44
-import com.sonsofcrypto.web3lib.types.ExtKey
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.abiEncode
-import com.sonsofcrypto.web3lib.utils.bip39.Bip39
-import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
-import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.keccak256
-import com.sonsofcrypto.web3lib.utils.sign
 import io.ktor.utils.io.core.toByteArray
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -43,7 +35,6 @@ import kotlinx.serialization.json.JsonObject
 import kotlin.test.Test
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.ExperimentalTime
 
 class ProviderTest {
 
