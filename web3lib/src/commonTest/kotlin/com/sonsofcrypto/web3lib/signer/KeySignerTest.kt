@@ -3,16 +3,13 @@ package com.sonsofcrypto.web3lib.signer
 import com.sonsofcrypto.web3lib.BuildKonfig
 import com.sonsofcrypto.web3lib.assertBool
 import com.sonsofcrypto.web3lib.provider.model.AccessListItem
-import com.sonsofcrypto.web3lib.provider.model.QntHexStr
 import com.sonsofcrypto.web3lib.provider.model.Transaction
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.decode
 import com.sonsofcrypto.web3lib.provider.model.fromHexifiedJsonObject
-import com.sonsofcrypto.web3lib.provider.model.toByteArrayQnt
 import com.sonsofcrypto.web3lib.provider.model.toTransactionRequest
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.toHexString
-import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.FileManager
 import com.sonsofcrypto.web3lib.utils.FileManager.Location.BUNDLE
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
