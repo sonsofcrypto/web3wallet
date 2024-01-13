@@ -130,11 +130,11 @@ class ProviderVoid(override val network: Network) : Provider() {
         TODO("Implement")
     }
 
-    override suspend fun resolveName(name: String): Address.HexString? {
+    override suspend fun resolveName(name: String): Address.HexStr? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun lookupAddress(address: Address.HexString): String? {
+    override suspend fun lookupAddress(address: Address.HexStr): String? {
         TODO("Not yet implemented")
     }
 

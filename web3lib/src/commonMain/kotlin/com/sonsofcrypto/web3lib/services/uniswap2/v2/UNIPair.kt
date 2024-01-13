@@ -101,8 +101,8 @@ fun poolAddress(
 ): AddressHexString {
     val addresses = sortedAddresses(tokenAddressA, tokenAddressB)
     val salt = keccak256(
-        abiEncode(Address.HexString(addresses.first)) +
-                abiEncode(Address.HexString(addresses.second)) +
+        abiEncode(Address.HexStr(addresses.first)) +
+                abiEncode(Address.HexStr(addresses.second)) +
                 abiEncode(feeAmount.value)
     )
     val poolAddressBytes = keccak256(

@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.dashboard
 
-import com.sonsofcrypto.web3lib.formatters.Formatters
+import com.sonsofcrypto.web3lib.formatters.Formater
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Candle
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyMarketData
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyMetadata
@@ -103,7 +103,7 @@ class DefaultDashboardInteractor(
         walletService.balance(network, currency)
 
     override fun fiatBalance(network: Network, currency: Currency): Double =
-        Formatters.crypto(
+        Formater.crypto(
             cryptoBalance(network, currency),
             currency.decimals(),
             marketdata(currency)?.currentPrice ?: 0.0

@@ -19,8 +19,8 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonObject
 
 data class TransactionRequest(
-    val to: Address.HexString? = null,
-    val from: Address.HexString? = null,
+    val to: Address.HexStr? = null,
+    val from: Address.HexStr? = null,
     val nonce: BigInt? = null,
     val gasLimit: BigInt? = null,
     val gasPrice: BigInt? = null,
@@ -44,7 +44,7 @@ data class TransactionRequest(
     /** EIP-3668 */
     val ccipReadEnabled: Boolean? = null,
 
-) {
+    ) {
 
     @Throws(Throwable::class)
     fun encode(): ByteArray = when (type ?: EIP1559) {
@@ -293,15 +293,15 @@ private fun decodeBigIntOrNull(rlp: Rlp?): BigInt? =
 private fun nullIfZero(value: BigInt) =
     if (value.isZero()) null else value
 
-private fun decodeAddress(rlp: Rlp): Address.HexString? =
+private fun decodeAddress(rlp: Rlp): Address.HexStr? =
     if ((rlp as RlpItem).bytes.isEmpty()) null
-    else Address.HexString((rlp as RlpItem).bytes.toHexString(true))
+    else Address.HexStr((rlp as RlpItem).bytes.toHexString(true))
 
 @Throws(Throwable::class)
 private fun decodeAccessList(rlp: Rlp?): AccessList? =
     (rlp as? RlpList)?.items?.map { it as RlpList }?.map {
         AccessListItem(
-            Address.HexString((it.items[0] as RlpItem).bytes.toHexString(true)),
+            Address.HexStr((it.items[0] as RlpItem).bytes.toHexString(true)),
             (it.items[1] as RlpList).items.map {
                 s -> DataHexStr((s as RlpItem).bytes)
             }

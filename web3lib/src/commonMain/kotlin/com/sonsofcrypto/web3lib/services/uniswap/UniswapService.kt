@@ -225,7 +225,7 @@ class DefaultUniswapService(): UniswapService {
             amountOutMinimum = minAmount,
             sqrtPriceLimitX96 = BigInt.zero,
         )
-        val router = IV3SwapRouter(Address.HexString(routerAddress(provider.network)))
+        val router = IV3SwapRouter(Address.HexStr(routerAddress(provider.network)))
         var callDatas: MutableList<ByteArray> = mutableListOf()
         callDatas.add(router.exactInputSingle(params).toByteArrayData())
         if (outputCurrency.isNative()) {
@@ -310,13 +310,13 @@ class DefaultUniswapService(): UniswapService {
 
     suspend fun fetchQuote(request: QuoteRequest, fee: PoolFee): BigInt {
         val network = provider.network
-        val quoter = Quoter(Address.HexString(quoterAddress(network)))
+        val quoter = Quoter(Address.HexStr(quoterAddress(network)))
         try {
             val quoteResult = provider.call(
                 quoter.address.hexString,
                 quoter.quoteExactInputSingle(
-                    Address.HexString(wrappedAddress(request.input)),
-                    Address.HexString(wrappedAddress(request.output)),
+                    Address.HexStr(wrappedAddress(request.input)),
+                    Address.HexStr(wrappedAddress(request.output)),
                     fee.value,
                     request.amountIn,
                     0u
@@ -345,7 +345,7 @@ class DefaultUniswapService(): UniswapService {
         val valid: MutableList<PoolFee> = mutableListOf()
         PoolFee.values().forEach { fee ->
             val address = poolAddress(input, output, fee, network)
-            val poolState = UniswapV3PoolState(Address.HexString(address))
+            val poolState = UniswapV3PoolState(Address.HexStr(address))
             try {
                 val resultSlot0 = provider.call(address, poolState.slot0())
                 val slot0 = poolState.decodeSlot(resultSlot0)
@@ -381,8 +381,8 @@ class DefaultUniswapService(): UniswapService {
     ): AddressHexString {
         val addresses = this.sortedAddresses(tokenAddressA, tokenAddressB)
         val salt = keccak256(
-            abiEncode(Address.HexString(addresses.first)) +
-                abiEncode(Address.HexString(addresses.second)) +
+            abiEncode(Address.HexStr(addresses.first)) +
+                abiEncode(Address.HexStr(addresses.second)) +
                 abiEncode(feeAmount.value)
         )
         val poolAddressBytes = keccak256(
@@ -400,7 +400,7 @@ class DefaultUniswapService(): UniswapService {
     ): Map<AddressHexString, UniswapV3PoolState.Slot0> {
         var results = mutableMapOf<AddressHexString, UniswapV3PoolState.Slot0>()
         pools.forEach {
-            val poolState = UniswapV3PoolState(Address.HexString(it))
+            val poolState = UniswapV3PoolState(Address.HexStr(it))
             try {
                 val resultSlot0 = provider.call(it, poolState.slot0())
                 results[it] = poolState.decodeSlot(resultSlot0)
@@ -421,13 +421,13 @@ class DefaultUniswapService(): UniswapService {
         provider: Provider
     ): ApprovalState {
         val tokenAddress = wrappedAddress(currency)
-        val erc20Legacy = LegacyERC20Contract(Address.HexString(tokenAddress))
+        val erc20Legacy = LegacyERC20Contract(Address.HexStr(tokenAddress))
         if (owner == null)
             return ApprovalState.DoesNotApply(currency)
         try {
             val data = erc20Legacy.allowance(
-                Address.HexString(owner),
-                Address.HexString(spender)
+                Address.HexStr(owner),
+                Address.HexStr(spender)
             )
             val result = provider.call(tokenAddress, data)
             val allowance = erc20Legacy.decodeAllowance(result)
@@ -452,9 +452,9 @@ class DefaultUniswapService(): UniswapService {
         legacyWallet: LegacyWallet
     ): ApprovalState {
         val tokenAddress = wrappedAddress(currency)
-        val erc20 = LegacyERC20Contract(Address.HexString(tokenAddress))
+        val erc20 = LegacyERC20Contract(Address.HexStr(tokenAddress))
         try {
-            val data = erc20.approve(Address.HexString(spender), UINT256_MAX)
+            val data = erc20.approve(Address.HexStr(spender), UINT256_MAX)
             val request = TransactionRequest(to = erc20.address, data = data)
             val response = legacyWallet!!.sendTransaction(request)
             var throwCount = 0

@@ -102,7 +102,7 @@ abstract class Provider {
     @Throws(Throwable::class)
     abstract suspend fun uninstallFilter(id: QntHexStr): Boolean
 
-    /** API Methods */
+    /** Client Methods */
 
     /** Returns the chain ID used for signing replay-protected transactions. */
     @Throws(Throwable::class)
@@ -119,10 +119,10 @@ abstract class Provider {
     /** Name service */
 
     @Throws(Throwable::class)
-    abstract suspend fun resolveName(name: String): Address.HexString?
+    abstract suspend fun resolveName(name: String): Address.HexStr?
 
     @Throws(Throwable::class)
-    abstract suspend fun lookupAddress(address: Address.HexString): String?
+    abstract suspend fun lookupAddress(address: Address.HexStr): String?
 
     /** Event emitter */
 

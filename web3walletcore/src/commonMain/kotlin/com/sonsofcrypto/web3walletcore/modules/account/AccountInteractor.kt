@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.account
 
-import com.sonsofcrypto.web3lib.formatters.Formatters
+import com.sonsofcrypto.web3lib.formatters.Formater
 import com.sonsofcrypto.web3lib.provider.model.Log
 import com.sonsofcrypto.web3lib.provider.model.Topic
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Candle
@@ -64,14 +64,14 @@ class DefaultAccountInteractor(
     override fun fiatBalance(network: Network, currency: Currency): Double {
         val mul = market(currency)?.currentPrice ?: 0.toDouble()
         val amount = cryptoBalance(network, currency)
-        var balance = Formatters.crypto(amount, currency.decimals(), mul)
+        var balance = Formater.crypto(amount, currency.decimals(), mul)
         balance *= 100
         return balance.toInt().toDouble() / 100
     }
 
     override fun fiatPrice(amount: BigInt, currency: Currency): Double {
         val mul = market(currency)?.currentPrice ?: 0.toDouble()
-        var price = Formatters.crypto(amount, currency.decimals(), mul)
+        var price = Formater.crypto(amount, currency.decimals(), mul)
         price *= 100
         return price.toInt().toDouble() / 100
     }

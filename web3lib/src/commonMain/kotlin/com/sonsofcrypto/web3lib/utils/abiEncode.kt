@@ -8,7 +8,7 @@ import com.sonsofcrypto.web3lib.utils.extensions.toUInt_8
 
 private val abiParamLen = 32
 
-fun abiEncode(address: Address.HexString): ByteArray {
+fun abiEncode(address: Address.HexStr): ByteArray {
     val addressBytes = address.hexString.hexStringToByteArray()
     return ByteArray(abiParamLen - addressBytes.size) + addressBytes
 }
@@ -31,12 +31,12 @@ fun abiDecodeBigInt(value: String): BigInt {
     return stripped.toBigIntData()
 }
 
-fun abiDecodeAddress(value: String): Address.HexString {
+fun abiDecodeAddress(value: String): Address.HexStr {
     var idx = 2
     while (value[idx] == '0' && idx<(value.length-2)) {  idx += 1 }
     var stripped = value.substring(idx)
     stripped = if (stripped.length % 2 == 0) stripped else "0" + stripped
-    return Address.HexString("0x" + stripped)
+    return Address.HexStr("0x" + stripped)
 }
 
 fun abiDecodeUInt(bytes: ByteArray): UInt = bytes.takeLast(8).toByteArray().toUInt_8()

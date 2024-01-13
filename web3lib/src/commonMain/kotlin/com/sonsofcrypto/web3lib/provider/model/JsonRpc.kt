@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.provider
+package com.sonsofcrypto.web3lib.provider.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
@@ -36,6 +36,7 @@ data class JsonRpcRequest(
         GET_CODE("eth_getCode"),
         CALL("eth_call"),
         ESTIMATE_GAS("eth_estimateGas"),
+        CREATE_ACCESS_LIST("eth_createAccessList"),
 
         /** History */
 
@@ -61,6 +62,9 @@ data class JsonRpcRequest(
         GET_FILTER_CHANGES("eth_getFilterChanges"),
         GET_FILTER_LOGS("eth_getFilterLogs"),
         GET_LOGS("eth_getLogs"),
+
+        /** Client */
+        CHAIN_ID("eth_chainId"),
     }
 }
 

@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3lib.formatters
 import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.BigInt
 
-class Formatters {
+class Formater {
 
     companion object {
         val currency = CurrencyFormatter()
@@ -18,6 +18,14 @@ class Formatters {
                 .mul(BigDec.from(mul))
                 .toDouble()
         }
+
+        /** Converts regular number to Solidity BigInt */
+        fun formatTo(amount: BigDec, decimals: Long): BigInt =
+            amount.mul(BigDec.from(10).pow(decimals)).toBigInt()
+
+        /** Converts Solidity BigInt decimal number */
+        fun formatFrom(amount: BigInt, decimal: Long): BigDec =
+            BigDec.from(amount).div(BigDec.from(10).pow(decimal))
     }
 
     sealed class Style {
