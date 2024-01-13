@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3walletcore.modules.currencySwap
 
-import com.sonsofcrypto.web3lib.formatters.Formatters
-import com.sonsofcrypto.web3lib.formatters.Formatters.Output.Normal
+import com.sonsofcrypto.web3lib.formatters.Formater
+import com.sonsofcrypto.web3lib.formatters.Formater.Output.Normal
 import com.sonsofcrypto.web3lib.formatters.FormattersOutput
 import com.sonsofcrypto.web3lib.services.uniswap.UniswapEvent
 import com.sonsofcrypto.web3lib.types.Currency
@@ -207,7 +207,7 @@ class DefaultCurrencySwapPresenter(
     private fun currencySwapPriceViewModel(): CurrencySwapPriceViewModel =
         CurrencySwapPriceViewModel(swapPrice)
 
-    private val swapPrice: List<Formatters.Output> get() {
+    private val swapPrice: List<Formater.Output> get() {
         val symbolFrom = currencyFrom.symbol.uppercase()
         val symbolTo = currencyTo.symbol.uppercase()
         val fiatFrom = interactor.fiatPrice(currencyFrom)
@@ -215,7 +215,7 @@ class DefaultCurrencySwapPresenter(
         if (fiatFrom == 0.toDouble() || fiatTo == 0.toDouble()) listOf(Normal("-"))
         else if (fiatFrom == 0.toDouble()) listOf(Normal("? $symbolFrom ≈ 1 $symbolTo" ))
         else if (fiatTo == 0.toDouble()) listOf(Normal("1 $symbolFrom ≈ ? $symbolTo" ))
-        val output = mutableListOf<Formatters.Output>(Normal("1 $symbolFrom ≈ "))
+        val output = mutableListOf<Formater.Output>(Normal("1 $symbolFrom ≈ "))
         val swapPriceString = BigDec.from(fiatFrom/fiatTo).toDecimalString()
         output.addAll(FormattersOutput().convert(swapPriceString, 10u, false))
         output.add(Normal(" $symbolTo"))
@@ -288,10 +288,10 @@ class DefaultCurrencySwapPresenter(
     private val priceImpact: Double get() {
         val amountFrom = amountFrom ?: return 0.toDouble()
         val amountTo = amountTo ?: return 0.toDouble()
-        val fromFiatValue = Formatters.crypto(
+        val fromFiatValue = Formater.crypto(
             amountFrom, currencyFrom.decimals(), interactor.fiatPrice(currencyFrom)
         )
-        val toFiatValue = Formatters.crypto(
+        val toFiatValue = Formater.crypto(
             amountTo, currencyTo.decimals(), interactor.fiatPrice(currencyTo)
         )
         return 1 - (toFiatValue/fromFiatValue)

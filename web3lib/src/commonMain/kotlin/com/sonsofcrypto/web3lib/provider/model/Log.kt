@@ -15,7 +15,7 @@ data class Log(
     val blockHash: DataHexStr,
     val transactionIndex: BigInt,
     val removed: Boolean,
-    val address: Address.HexString,
+    val address: Address.HexStr,
     val data: DataHexStr,
     val topics: List<Topic>?,
     val transactionHash: DataHexStr,

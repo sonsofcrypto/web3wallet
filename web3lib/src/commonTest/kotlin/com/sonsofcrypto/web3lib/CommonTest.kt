@@ -19,6 +19,7 @@ import com.sonsofcrypto.web3lib.services.poll.DefaultPollService
 import com.sonsofcrypto.web3lib.services.poll.PollService
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
+import com.sonsofcrypto.web3lib.signer.KeySigner
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
@@ -43,6 +44,9 @@ class CommonTest {
         )
     }
 }
+
+fun testKeySigner(): KeySigner =
+    KeySigner(BuildKonfig.testPrvKey.hexStringToByteArray())
 
 class TestEnvServices(
     val currencyStoreService: CurrencyStoreService,

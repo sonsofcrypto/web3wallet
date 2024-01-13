@@ -20,7 +20,7 @@ class KeySigner(
         KeySigner(key, addressService, provider)
 
     @Throws(Throwable::class)
-    override suspend fun address(): Address = Address.HexString(
+    override suspend fun address(): Address = Address.HexStr(
         addressService.addressFromPrivKeyBytes(key)
     )
 

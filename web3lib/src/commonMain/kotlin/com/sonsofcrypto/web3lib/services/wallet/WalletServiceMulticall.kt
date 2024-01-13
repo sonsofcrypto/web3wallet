@@ -176,7 +176,7 @@ class DefaultWalletServiceMulticall(
         network: Network
     ): TransactionResponse = withBgCxt {
         val request = TransactionRequest(
-            to = Address.HexString(contractAddress),
+            to = Address.HexStr(contractAddress),
             data = data
         )
         val wallet = networkService.wallet(network)
@@ -195,12 +195,12 @@ class DefaultWalletServiceMulticall(
         amount: BigInt
     ): TransactionRequest {
         if (currency.isNative())
-            return TransactionRequest(to = Address.HexString(to), value = amount)
+            return TransactionRequest(to = Address.HexStr(to), value = amount)
         if (currency.type() == Currency.Type.ERC20 && currency.address != null)
             return TransactionRequest(
-                to = Address.HexString(currency.address!!),
-                data = LegacyERC20Contract(Address.HexString(currency.address!!))
-                    .transfer(Address.HexString(to), amount)
+                to = Address.HexStr(currency.address!!),
+                data = LegacyERC20Contract(Address.HexStr(currency.address!!))
+                    .transfer(Address.HexStr(to), amount)
             )
         throw Error.UnableToSendTransaction
     }

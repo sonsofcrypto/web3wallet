@@ -9,7 +9,7 @@ import com.sonsofcrypto.web3lib.utils.abiDecodeBigInt
 import com.sonsofcrypto.web3lib.utils.abiDecodeUInt
 import com.sonsofcrypto.web3lib.utils.keccak256
 
-class UniswapV3PoolState(address: Address.HexString): LegacyContract(address) {
+class UniswapV3PoolState(address: Address.HexStr): LegacyContract(address) {
     /**
      * @notice The 0th storage slot in the pool stores many values, and is
      * exposed as a single method to save gas when accessed externally.

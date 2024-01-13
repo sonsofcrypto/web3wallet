@@ -10,16 +10,16 @@ import com.sonsofcrypto.web3lib.utils.keccak256
 
 
 open class LegacyContract(
-    open var address: Address.HexString
+    open var address: Address.HexStr
 ) {
     open class Event()
 
-    fun decodeAddress(value: String): Address.HexString {
+    fun decodeAddress(value: String): Address.HexStr {
         return abiDecodeAddress(value)
     }
 }
 
-class LegacyERC20Contract(address: Address.HexString) : LegacyContract(address) {
+class LegacyERC20Contract(address: Address.HexStr) : LegacyContract(address) {
 
     /**
      * Returns the name of the token.
@@ -58,7 +58,7 @@ class LegacyERC20Contract(address: Address.HexString) : LegacyContract(address) 
      * - the caller must have a balance of at least `amount`.
      * @return public virtual override returns (bool)
      */
-    fun transfer(to: Address.HexString, amount: BigInt): DataHexStr = DataHexStr(
+    fun transfer(to: Address.HexStr, amount: BigInt): DataHexStr = DataHexStr(
         keccak256("transfer(address,uint256)".encodeToByteArray()).copyOfRange(0, 4)
             + abiEncode(to)
             + abiEncode(amount)
@@ -68,7 +68,7 @@ class LegacyERC20Contract(address: Address.HexString) : LegacyContract(address) 
      * @dev See {IERC20-balanceOf}.
      * @return public view virtual override returns (uint256)
      */
-    fun balanceOf(account: Address.HexString): DataHexStr = DataHexStr(
+    fun balanceOf(account: Address.HexStr): DataHexStr = DataHexStr(
         keccak256("balanceOf(address)".encodeToByteArray()).copyOfRange(0, 4) +
             abiEncode(account)
     )
@@ -82,7 +82,7 @@ class LegacyERC20Contract(address: Address.HexString) : LegacyContract(address) 
      *
      * function allowance(address owner, address spender) → uint256
      */
-    fun allowance(owner: Address.HexString, spender: Address.HexString): DataHexStr = DataHexStr(
+    fun allowance(owner: Address.HexStr, spender: Address.HexStr): DataHexStr = DataHexStr(
         keccak256("allowance(address,address)".encodeToByteArray()).copyOfRange(0, 4) +
             abiEncode(owner) +
             abiEncode(spender)
@@ -105,7 +105,7 @@ class LegacyERC20Contract(address: Address.HexString) : LegacyContract(address) 
      * Emits an {Approval} event.
      * function approve(address spender, uint256 amount) external returns (bool);
      */
-    fun approve(spender: Address.HexString, amount: BigInt): DataHexStr = DataHexStr(
+    fun approve(spender: Address.HexStr, amount: BigInt): DataHexStr = DataHexStr(
         keccak256("approve(address,uint256)".encodeToByteArray()).copyOfRange(0, 4) +
             abiEncode(spender) +
             abiEncode(amount)
@@ -114,14 +114,14 @@ class LegacyERC20Contract(address: Address.HexString) : LegacyContract(address) 
     fun decodeApprove(data: DataHexStr): BigInt = abiDecodeBigInt(data)
 }
 
-class ERC721(address: Address.HexString): LegacyContract(address) {
+class ERC721(address: Address.HexStr): LegacyContract(address) {
 
     /**
      * function transferFrom(address from, address to, uint256 tokenId)
      */
     fun transferFrom(
-        from: Address.HexString,
-        to: Address.HexString,
+        from: Address.HexStr,
+        to: Address.HexStr,
         tokenId: BigInt,
     ) = DataHexStr(
         keccak256("transferFrom(address,address,uint256)".encodeToByteArray())
@@ -133,7 +133,7 @@ class ERC721(address: Address.HexString): LegacyContract(address) {
 }
 
 class CultGovernor: LegacyContract(
-    Address.HexString("0x0831172B9b136813b0B35e7cc898B1398bB4d7e7")
+    Address.HexStr("0x0831172B9b136813b0B35e7cc898B1398bB4d7e7")
 ) {
     /**
      * @notice Cast a vote for a proposal

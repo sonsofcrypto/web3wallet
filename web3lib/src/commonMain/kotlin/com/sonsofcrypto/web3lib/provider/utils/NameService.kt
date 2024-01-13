@@ -3,8 +3,8 @@ package com.sonsofcrypto.web3lib.provider.utils
 import com.sonsofcrypto.web3lib.types.Address
 
 interface NameServiceProvider {
-    suspend fun resolve(name: String): Address.HexString?
-    suspend fun lookup(address: Address.HexString): String?
+    suspend fun resolve(name: String): Address.HexStr?
+    suspend fun lookup(address: Address.HexStr): String?
     suspend fun resolver(name: String): Resolver?
 }
 

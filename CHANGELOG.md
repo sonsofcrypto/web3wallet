@@ -17,6 +17,8 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 ### v1.2.0 #51
 - ExtKeySigner clean up
 - MnemonicSigner clean up
+- FeeData tweaks
+- Additional provider tests
 - Additional transaction tests
 
 ### v1.1.5 #51
