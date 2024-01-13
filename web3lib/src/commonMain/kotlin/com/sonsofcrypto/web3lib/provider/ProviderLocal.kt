@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3lib.provider
 
+import com.sonsofcrypto.web3lib.provider.utils.NameServiceProvider
 import com.sonsofcrypto.web3lib.types.Network
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
