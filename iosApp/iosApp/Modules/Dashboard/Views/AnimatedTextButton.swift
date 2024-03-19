@@ -106,7 +106,7 @@ private extension AnimatedTextButton {
 
     func makeTextLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont.font(.gothicA1, style: .medium, size: .caption2)
+        label.font = Theme.font.caption2Bold
         label.textColor = tint
         label.layer.applyShadow(
             tint,
