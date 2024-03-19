@@ -4,15 +4,6 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>GothicA1-ExtraLight.ttf</string>
-		<string>GothicA1-Regular.ttf</string>
-		<string>GothicA1-Light.ttf</string>
-		<string>GothicA1-Thin.ttf</string>
-		<string>GothicA1-Bold.ttf</string>
-		<string>GothicA1-Medium.ttf</string>
-		<string>GothicA1-Black.ttf</string>
-		<string>GothicA1-SemiBold.ttf</string>
-		<string>NothingYouCouldDo-Regular.ttf</string>
 		<string>NaokoAA-Black.otf</string>
 		<string>NaokoAA-Light-Italic.otf</string>
 		<string>NaokoAA-Light.otf</string>

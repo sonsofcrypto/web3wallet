@@ -54,7 +54,7 @@ extension UIBarButtonItem {
 
     static func smallLabel(_ title: String = "") -> UIBarButtonItem {
         let label = UILabel(with: .subheadline)
-        label.font = UIFont.font(.gothicA1, style: .regular, size: .caption1)
+        label.font = Theme.font.caption1
         return UIBarButtonItem(customView: label)
     }
 }
