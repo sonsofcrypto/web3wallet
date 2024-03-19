@@ -1,6 +1,6 @@
 val compileSdkVersion by extra(33)
 buildscript {
-    val kotlinVersion = "1.9.21"
+    val kotlinVersion = "1.9.23"
     repositories {
         gradlePluginPortal()
         google()
@@ -21,7 +21,7 @@ allprojects {
     ext["ktor_version"] = "2.3.7"
     ext["bignum_version"] = "0.3.8"
     ext["datetime_version"] = "0.5.0"
-    ext["kotlin_version"] = "1.9.21"
+    ext["kotlin_version"] = "1.9.23"
 
     repositories {
         gradlePluginPortal()

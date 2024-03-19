@@ -18,7 +18,8 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 ### v1.1.5 #50
 - Removing unused fonts
-- Upgrading to KMM 
+- Migrating to Kotlin 1.9.23
+- Android Studio build fixes
 
 ### v1.1.4 #49
 - Wallet type indicator icon
