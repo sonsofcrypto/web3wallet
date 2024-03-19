@@ -20,9 +20,6 @@ extension UITextView {
         case body
         case bodyGlow
         case smallLabel
-        case smallerLabel
-        case smallestLabel
-        case smallestLabelGlow
         case smallBody
     }
 
