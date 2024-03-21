@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3walletcore.modules.account
 import com.sonsofcrypto.web3lib.formatters.Formater
 import com.sonsofcrypto.web3lib.formatters.Formater.Style.Custom
 import com.sonsofcrypto.web3lib.types.Currency
-import com.sonsofcrypto.web3lib.utils.BigDec
+import com.sonsofcrypto.web3lib.types.BigDec
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.uiDispatcher

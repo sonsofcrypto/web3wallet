@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib.formatters
 
 import com.sonsofcrypto.web3lib.formatters.Formater.Output.Normal
-import com.sonsofcrypto.web3lib.utils.BigDec
+import com.sonsofcrypto.web3lib.types.BigDec
 import kotlin.math.max
 
 class FiatFormatter {

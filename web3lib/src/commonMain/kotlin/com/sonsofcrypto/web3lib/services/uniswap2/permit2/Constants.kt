@@ -4,7 +4,7 @@ import com.sonsofcrypto.web3lib.services.uniswap2.core.MaxUint160
 import com.sonsofcrypto.web3lib.services.uniswap2.core.MaxUint256
 import com.sonsofcrypto.web3lib.services.uniswap2.core.MaxUint48
 import com.sonsofcrypto.web3lib.types.AddressHexString
-import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.types.BigInt
 
 val PERMIT2_ADDRESS: AddressHexString = "0x000000000022D473030F116dDEE9F6B43aC78BA3"
 

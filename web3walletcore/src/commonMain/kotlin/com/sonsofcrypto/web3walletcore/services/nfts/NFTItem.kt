@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3walletcore.services.nfts
 
-import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.BigIntSerializer
+import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.BigIntSerializer
 import kotlinx.serialization.Serializable
 
 @Serializable

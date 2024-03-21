@@ -5,7 +5,7 @@ import com.sonsofcrypto.web3lib.formatters.Formater.Output.Normal
 import com.sonsofcrypto.web3lib.formatters.Formater.Style
 import com.sonsofcrypto.web3lib.formatters.Formater.Style.Custom
 import com.sonsofcrypto.web3lib.formatters.Formater.Style.Max
-import com.sonsofcrypto.web3lib.utils.BigDec
+import com.sonsofcrypto.web3lib.types.BigDec
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

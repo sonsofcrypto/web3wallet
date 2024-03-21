@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3lib.services.uniswap2.smartOrderRouter
 import com.sonsofcrypto.web3lib.services.uniswap2.core.entities.Fraction
 import com.sonsofcrypto.web3lib.services.uniswap2.permit2.Permit2Permit
 import com.sonsofcrypto.web3lib.types.AddressHexString
-import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.types.BigInt
 
 
 interface SwapOptions {

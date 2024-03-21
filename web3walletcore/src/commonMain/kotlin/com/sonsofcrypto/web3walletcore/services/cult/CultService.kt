@@ -1,11 +1,11 @@
 package com.sonsofcrypto.web3walletcore.services.cult
 
-import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.utils.KeyValueStore
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
-import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
-import com.sonsofcrypto.web3lib.utils.extensions.stdJson
-import com.sonsofcrypto.web3lib.utils.timestamp.BlockNumberToTimestampHelper
+import com.sonsofcrypto.web3lib.extensions.jsonDecode
+import com.sonsofcrypto.web3lib.extensions.jsonEncode
+import com.sonsofcrypto.web3lib.extensions.stdJson
+import com.sonsofcrypto.web3lib.legacy.BlockNumberToTimestampHelper
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.services.cult.CultProposal.GuardianInfo
 import com.sonsofcrypto.web3walletcore.services.cult.CultProposal.ProjectDocuments
