@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3lib.services.governance
 
 import com.sonsofcrypto.web3lib.abi.Contract
 import com.sonsofcrypto.web3lib.provider.Provider
-import com.sonsofcrypto.web3lib.signer.LegacySigner
+import com.sonsofcrypto.web3lib.legacy.LegacySigner
 
 /** Governance supports `GovernorAlpha`, `GovernorBravo` & Compound
  * compatibility */

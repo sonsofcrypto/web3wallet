@@ -11,10 +11,10 @@ import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Currency.Type.ERC20
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.abiDecodeAddress
-import com.sonsofcrypto.web3lib.utils.abiDecodeBigInt
-import com.sonsofcrypto.web3lib.utils.timestamp.BlockNumberToTimestampHelper
+import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.legacy.abiDecodeAddress
+import com.sonsofcrypto.web3lib.legacy.abiDecodeBigInt
+import com.sonsofcrypto.web3lib.legacy.BlockNumberToTimestampHelper
 import com.sonsofcrypto.web3walletcore.services.etherScan.EtherScanService
 import com.sonsofcrypto.web3walletcore.services.etherScan.EtherScanTransaction
 

@@ -4,8 +4,8 @@ import com.sonsofcrypto.web3lib.formatters.Formater.Output
 import com.sonsofcrypto.web3lib.formatters.Formater.Output.Normal
 import com.sonsofcrypto.web3lib.formatters.Formater.Style
 import com.sonsofcrypto.web3lib.types.Currency
-import com.sonsofcrypto.web3lib.utils.BigDec
-import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.types.BigDec
+import com.sonsofcrypto.web3lib.types.BigInt
 
 class CurrencyFormatter {
     private val placeholder = "-"

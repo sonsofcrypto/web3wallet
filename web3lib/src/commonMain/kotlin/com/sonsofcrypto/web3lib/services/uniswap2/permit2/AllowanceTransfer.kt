@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3lib.services.uniswap2.permit2
 import com.sonsofcrypto.web3lib.services.uniswap2.core.TypedDataDomain
 import com.sonsofcrypto.web3lib.services.uniswap2.core.TypedDataField
 import com.sonsofcrypto.web3lib.types.AddressHexString
-import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.types.BigInt
 
 
 data class PermitDetails(

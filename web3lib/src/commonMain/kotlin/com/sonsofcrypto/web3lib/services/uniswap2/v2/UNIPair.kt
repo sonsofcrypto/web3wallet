@@ -9,9 +9,9 @@ import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.CurrencyAmount
 import com.sonsofcrypto.web3lib.types.toHexString
-import com.sonsofcrypto.web3lib.utils.abiEncode
-import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
-import com.sonsofcrypto.web3lib.utils.keccak256
+import com.sonsofcrypto.web3lib.legacy.abiEncode
+import com.sonsofcrypto.web3lib.extensions.hexStringToByteArray
+import com.sonsofcrypto.web3lib.utilsCrypto.keccak256
 
 val FACTORY_ADDRESS: AddressHexString = ""
 val INIT_CODE_HASH = ""

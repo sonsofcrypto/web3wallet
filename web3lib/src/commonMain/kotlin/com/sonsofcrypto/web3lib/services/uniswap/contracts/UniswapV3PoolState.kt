@@ -2,12 +2,12 @@ package com.sonsofcrypto.web3lib.services.uniswap.contracts
 
 import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
-import com.sonsofcrypto.web3lib.signer.LegacyContract
+import com.sonsofcrypto.web3lib.legacy.LegacyContract
 import com.sonsofcrypto.web3lib.types.Address
-import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.abiDecodeBigInt
-import com.sonsofcrypto.web3lib.utils.abiDecodeUInt
-import com.sonsofcrypto.web3lib.utils.keccak256
+import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.legacy.abiDecodeBigInt
+import com.sonsofcrypto.web3lib.legacy.abiDecodeUInt
+import com.sonsofcrypto.web3lib.utilsCrypto.keccak256
 
 class UniswapV3PoolState(address: Address.HexStr): LegacyContract(address) {
     /**

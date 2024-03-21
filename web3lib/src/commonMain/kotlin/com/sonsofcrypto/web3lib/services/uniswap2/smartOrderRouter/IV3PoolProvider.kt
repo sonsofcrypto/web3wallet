@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3lib.services.uniswap2.smartOrderRouter
 
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency
-import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.types.BigInt
 
 class V3PoolAccessor(
     private val pools: Map<AddressHexString, Pool>

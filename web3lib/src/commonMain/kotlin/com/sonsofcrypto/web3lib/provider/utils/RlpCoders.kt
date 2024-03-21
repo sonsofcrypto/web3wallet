@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.provider.utils
 
-import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.types.BigInt
 
 private const val ELEM_OFFSET = 128
 private const val LIST_OFFSET = 192

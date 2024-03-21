@@ -4,8 +4,8 @@ import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.services.uniswap.UniswapService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
-import com.sonsofcrypto.web3lib.signer.CultGovernor
-import com.sonsofcrypto.web3lib.signer.ERC721
+import com.sonsofcrypto.web3lib.legacy.CultGovernor
+import com.sonsofcrypto.web3lib.legacy.ERC721
 import com.sonsofcrypto.web3lib.types.Address.HexStr
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network

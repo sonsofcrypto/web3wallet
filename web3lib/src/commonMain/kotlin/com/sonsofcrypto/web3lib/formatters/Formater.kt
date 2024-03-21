@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib.formatters
 
-import com.sonsofcrypto.web3lib.utils.BigDec
-import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.types.BigDec
+import com.sonsofcrypto.web3lib.types.BigInt
 
 class Formater {
 

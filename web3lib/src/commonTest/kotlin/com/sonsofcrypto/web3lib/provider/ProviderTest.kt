@@ -22,11 +22,11 @@ import com.sonsofcrypto.web3lib.provider.model.toULongQnt
 import com.sonsofcrypto.web3lib.testKeySigner
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.utils.BigDec
-import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.abiEncode
-import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
-import com.sonsofcrypto.web3lib.utils.keccak256
+import com.sonsofcrypto.web3lib.types.BigDec
+import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.legacy.abiEncode
+import com.sonsofcrypto.web3lib.extensions.jsonDecode
+import com.sonsofcrypto.web3lib.utilsCrypto.keccak256
 import io.ktor.utils.io.core.toByteArray
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
