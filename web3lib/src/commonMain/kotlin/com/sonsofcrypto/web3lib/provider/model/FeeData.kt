@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.provider.model
 
-import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.types.BigInt
 
 data class FeeData(
     /** Latest block BaseFeePerGas */

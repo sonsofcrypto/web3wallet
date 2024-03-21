@@ -11,8 +11,8 @@ import com.sonsofcrypto.web3lib.services.uniswap.UniswapService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.types.NetworkFee
-import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.legacy.NetworkFee
+import com.sonsofcrypto.web3lib.types.BigInt
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapInteractorApprovalState.APPROVE
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapInteractorApprovalState.APPROVED
 import com.sonsofcrypto.web3walletcore.modules.currencySwap.CurrencySwapInteractorApprovalState.APPROVING

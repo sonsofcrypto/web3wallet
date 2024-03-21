@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3lib.services.uniswap2.smartOrderRouter
 import com.sonsofcrypto.web3lib.services.uniswap2.core.TradeType
 import com.sonsofcrypto.web3lib.services.uniswap2.router.Route
 import com.sonsofcrypto.web3lib.types.CurrencyAmount
-import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.types.BigInt
 
 data class TradeSwap(
     val route: Route,

@@ -5,9 +5,9 @@ import com.sonsofcrypto.web3lib.formatters.Formater.Output.Normal
 import com.sonsofcrypto.web3lib.formatters.FormattersOutput
 import com.sonsofcrypto.web3lib.services.uniswap.UniswapEvent
 import com.sonsofcrypto.web3lib.types.Currency
-import com.sonsofcrypto.web3lib.types.NetworkFee
-import com.sonsofcrypto.web3lib.utils.BigDec
-import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.legacy.NetworkFee
+import com.sonsofcrypto.web3lib.types.BigDec
+import com.sonsofcrypto.web3lib.types.BigInt
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
@@ -176,7 +176,8 @@ class DefaultCurrencySwapPresenter(
             context.network.name
         )
 
-    private val currencyFromBalance: BigInt get() =
+    private val currencyFromBalance: BigInt
+        get() =
         interactor.balance(currencyFrom, context.network)
 
     private fun currencyToViewModel(): CurrencyAmountPickerViewModel =
@@ -192,7 +193,8 @@ class DefaultCurrencySwapPresenter(
             context.network.name
         )
 
-    private val currencyToBalance: BigInt get() =
+    private val currencyToBalance: BigInt
+        get() =
         interactor.balance(currencyTo, context.network)
 
     private fun currencySwapProviderViewModel(): CurrencySwapProviderViewModel =
