@@ -4,7 +4,7 @@ import com.sonsofcrypto.web3lib.services.uniswap2.core.entities.Fraction
 import com.sonsofcrypto.web3lib.services.uniswap2.core.entities.MethodParameters
 import com.sonsofcrypto.web3lib.services.uniswap2.router.RouteWithValidQuote
 import com.sonsofcrypto.web3lib.types.CurrencyAmount
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 
 open class SwapRoute(
     /**

@@ -10,7 +10,7 @@ import com.sonsofcrypto.web3lib.provider.utils.RlpList
 import com.sonsofcrypto.web3lib.provider.utils.decode
 import com.sonsofcrypto.web3lib.provider.utils.encode
 import com.sonsofcrypto.web3lib.types.Address
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.extensions.toHexString
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement

@@ -6,8 +6,8 @@ import com.sonsofcrypto.web3lib.formatters.FormattersOutput
 import com.sonsofcrypto.web3lib.services.uniswap.UniswapEvent
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.legacy.NetworkFee
-import com.sonsofcrypto.web3lib.types.BigDec
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigDec
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.uiDispatcher

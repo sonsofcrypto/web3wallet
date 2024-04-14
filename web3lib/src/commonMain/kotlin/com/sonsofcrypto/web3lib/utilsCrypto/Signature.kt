@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.utilsCrypto
 
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 
 data class Signature(
     val r: BigInt,

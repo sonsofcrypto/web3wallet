@@ -6,7 +6,7 @@ import com.sonsofcrypto.web3lib.services.address.AddressService
 import com.sonsofcrypto.web3lib.services.address.DefaultAddressService
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.Key
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.utilsCrypto.Signature
 import com.sonsofcrypto.web3lib.utilsCrypto.keccak256
 

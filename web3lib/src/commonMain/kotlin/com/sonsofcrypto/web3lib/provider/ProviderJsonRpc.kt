@@ -23,7 +23,7 @@ import com.sonsofcrypto.web3lib.provider.utils.NameServiceProvider
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.jsonPrimitive
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.utils.withBgCxt
 import io.ktor.client.HttpClient
 import io.ktor.client.request.post

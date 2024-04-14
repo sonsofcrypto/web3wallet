@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3walletcore.common.viewModels
 
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 
 data class CurrencyAmountPickerViewModel(
     val amount: BigInt?,

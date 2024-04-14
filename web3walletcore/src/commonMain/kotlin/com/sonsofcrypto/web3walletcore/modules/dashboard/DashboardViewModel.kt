@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3walletcore.modules.dashboard
 
 import com.sonsofcrypto.web3lib.formatters.Formater
 import com.sonsofcrypto.web3lib.types.Currency
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3walletcore.common.viewModels.CandlesViewModel
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.Actions
 import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.Buttons

@@ -12,7 +12,7 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksListener
 import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
 import com.sonsofcrypto.web3lib.services.poll.DefaultPollService
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock

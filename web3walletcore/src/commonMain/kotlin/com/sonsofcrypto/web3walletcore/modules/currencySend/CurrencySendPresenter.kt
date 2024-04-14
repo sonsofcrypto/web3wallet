@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3walletcore.modules.currencySend
 import com.sonsofcrypto.web3lib.formatters.Formater
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.legacy.NetworkFee
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.common.viewModels.CurrencyAmountPickerViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.NetworkAddressPickerViewModel

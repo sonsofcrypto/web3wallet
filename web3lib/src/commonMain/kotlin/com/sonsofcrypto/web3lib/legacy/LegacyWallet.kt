@@ -19,7 +19,7 @@ import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.ExtKey
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.toHexStringAddress
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utilsCrypto.bip39.Bip39
 import com.sonsofcrypto.web3lib.utilsCrypto.bip39.WordList

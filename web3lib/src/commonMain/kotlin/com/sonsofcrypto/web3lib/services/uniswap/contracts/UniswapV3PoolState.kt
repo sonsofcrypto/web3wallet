@@ -4,7 +4,7 @@ import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.legacy.LegacyContract
 import com.sonsofcrypto.web3lib.types.Address
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.legacy.abiDecodeBigInt
 import com.sonsofcrypto.web3lib.legacy.abiDecodeUInt
 import com.sonsofcrypto.web3lib.utilsCrypto.keccak256

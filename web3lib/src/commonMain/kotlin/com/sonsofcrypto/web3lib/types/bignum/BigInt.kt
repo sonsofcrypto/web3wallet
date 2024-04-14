@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.types
+package com.sonsofcrypto.web3lib.types.bignum
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import com.ionspin.kotlin.bignum.integer.util.fromTwosComplementByteArray

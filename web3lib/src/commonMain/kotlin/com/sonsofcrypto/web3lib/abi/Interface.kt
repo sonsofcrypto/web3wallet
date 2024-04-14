@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.abi
 
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.extensions.concant
 import com.sonsofcrypto.web3lib.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.extensions.isHexString

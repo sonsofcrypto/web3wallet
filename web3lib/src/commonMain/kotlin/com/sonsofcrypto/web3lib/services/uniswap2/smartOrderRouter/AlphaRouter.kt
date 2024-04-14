@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3lib.services.uniswap2.smartOrderRouter
 
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.services.uniswap2.router.Protocol
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 
 interface UniswapMulticallProvider {}
 interface IV3SubgraphProvider {}

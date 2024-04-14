@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.legacy
 
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.types.Currency
 
 data class NetworkFee(

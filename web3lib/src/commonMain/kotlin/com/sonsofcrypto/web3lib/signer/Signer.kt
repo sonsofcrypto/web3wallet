@@ -12,7 +12,7 @@ import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.toHexString
 import com.sonsofcrypto.web3lib.types.toHexStringAddress
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 
 abstract class Signer(provider: Provider? = null) {
     /** Connected provider */

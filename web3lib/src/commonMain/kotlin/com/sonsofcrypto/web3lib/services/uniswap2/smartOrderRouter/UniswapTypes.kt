@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3lib.services.uniswap2.smartOrderRouter
 
 import com.sonsofcrypto.web3lib.services.uniswap2.core.entities.Fraction
 import com.sonsofcrypto.web3lib.types.AddressHexString
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 
 
 

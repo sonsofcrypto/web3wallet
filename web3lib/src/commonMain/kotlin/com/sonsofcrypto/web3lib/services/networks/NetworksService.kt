@@ -17,7 +17,7 @@ import com.sonsofcrypto.web3lib.legacy.LegacyWallet
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.legacy.NetworkFee
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.extensions.stdJson
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import kotlinx.coroutines.CoroutineScope

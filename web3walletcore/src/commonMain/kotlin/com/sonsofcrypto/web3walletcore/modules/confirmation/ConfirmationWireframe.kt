@@ -4,7 +4,7 @@ import com.sonsofcrypto.web3lib.services.uniswap.UniswapService
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.legacy.NetworkFee
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWireframeContext
 import com.sonsofcrypto.web3walletcore.services.cult.CultProposal
 import com.sonsofcrypto.web3walletcore.services.nfts.NFTItem
