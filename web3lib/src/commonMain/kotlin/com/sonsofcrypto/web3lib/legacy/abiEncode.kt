@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3lib.legacy
 
 import com.sonsofcrypto.web3lib.provider.model.toBigIntData
 import com.sonsofcrypto.web3lib.types.Address
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.extensions.toByteArray
 import com.sonsofcrypto.web3lib.extensions.toUInt_8

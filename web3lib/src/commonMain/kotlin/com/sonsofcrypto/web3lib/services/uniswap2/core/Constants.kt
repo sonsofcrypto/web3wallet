@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.services.uniswap2.core
 
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 
 enum class TradeType(val value: Int) {
     EXACT_INPUT(0), EXACT_OUTPUT(1),

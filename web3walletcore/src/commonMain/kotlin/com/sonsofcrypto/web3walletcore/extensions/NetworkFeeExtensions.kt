@@ -4,8 +4,8 @@ import com.sonsofcrypto.web3lib.formatters.Formater
 import com.sonsofcrypto.web3lib.formatters.Formater.Style.Custom
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.legacy.NetworkFee
-import com.sonsofcrypto.web3lib.types.BigDec
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigDec
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3walletcore.common.viewModels.NetworkFeeViewModel
 
 // TODO(Anon): Refactor this to fee service

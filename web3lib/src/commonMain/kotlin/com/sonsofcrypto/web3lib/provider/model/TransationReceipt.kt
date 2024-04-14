@@ -4,7 +4,7 @@ import com.sonsofcrypto.web3lib.provider.utils.stringValue
 import com.sonsofcrypto.web3lib.provider.utils.toBigIntQnt
 import com.sonsofcrypto.web3lib.provider.utils.toIntQnt
 import com.sonsofcrypto.web3lib.types.Address
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonArray
 

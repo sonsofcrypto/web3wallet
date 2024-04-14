@@ -3,8 +3,8 @@ package com.sonsofcrypto.web3lib.abi
 import com.sonsofcrypto.web3lib.abi.Fragment.Format.FULL_SIGNATURE
 import com.sonsofcrypto.web3lib.provider.model.QntHexStr
 import com.sonsofcrypto.web3lib.provider.utils.stringValue
-import com.sonsofcrypto.web3lib.types.BigInt
-import com.sonsofcrypto.web3lib.types.BigInt.Companion.one
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt.Companion.one
 import com.sonsofcrypto.web3lib.utils.FileManager
 import com.sonsofcrypto.web3lib.utils.FileManager.Location.BUNDLE
 import com.sonsofcrypto.web3lib.extensions.hexStringToByteArray

@@ -22,8 +22,8 @@ import com.sonsofcrypto.web3lib.provider.model.toULongQnt
 import com.sonsofcrypto.web3lib.testKeySigner
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.types.BigDec
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigDec
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.legacy.abiEncode
 import com.sonsofcrypto.web3lib.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utilsCrypto.keccak256

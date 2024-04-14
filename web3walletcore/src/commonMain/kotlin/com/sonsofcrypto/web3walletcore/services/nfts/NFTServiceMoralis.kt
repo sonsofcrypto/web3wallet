@@ -6,7 +6,7 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.toHexStringAddress
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.extensions.jsonEncode
 import com.sonsofcrypto.web3lib.extensions.stdJson

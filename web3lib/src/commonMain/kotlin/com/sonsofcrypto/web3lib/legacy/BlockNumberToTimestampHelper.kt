@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib.legacy
 
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 
 class BlockNumberToTimestampHelper {
 

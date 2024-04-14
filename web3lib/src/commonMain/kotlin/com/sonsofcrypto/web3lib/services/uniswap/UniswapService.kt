@@ -18,8 +18,8 @@ import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.toHexString
 import com.sonsofcrypto.web3lib.types.toHexStringAddress
-import com.sonsofcrypto.web3lib.types.BigDec
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigDec
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.legacy.abiDecodeBigInt
 import com.sonsofcrypto.web3lib.legacy.abiEncode
 import com.sonsofcrypto.web3lib.utils.bgDispatcher

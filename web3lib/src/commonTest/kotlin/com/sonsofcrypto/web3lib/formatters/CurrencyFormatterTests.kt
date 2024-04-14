@@ -6,7 +6,7 @@ import com.sonsofcrypto.web3lib.formatters.Formater.Output.Normal
 import com.sonsofcrypto.web3lib.formatters.Formater.Output.Up
 import com.sonsofcrypto.web3lib.formatters.Formater.Style
 import com.sonsofcrypto.web3lib.types.Currency
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

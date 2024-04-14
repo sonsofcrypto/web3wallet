@@ -1,13 +1,13 @@
 package com.sonsofcrypto.web3lib.abi
 
-import com.sonsofcrypto.web3lib.types.BigInt
-import com.sonsofcrypto.web3lib.types.BigInt.Companion.maxInt
-import com.sonsofcrypto.web3lib.types.BigInt.Companion.maxUInt
-import com.sonsofcrypto.web3lib.types.BigInt.Companion.minInt
-import com.sonsofcrypto.web3lib.types.BigInt.Companion.zero
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt.Companion.maxInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt.Companion.maxUInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt.Companion.minInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt.Companion.zero
 import com.sonsofcrypto.web3lib.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.extensions.inv
-import com.sonsofcrypto.web3lib.types.padTwosComplement
+import com.sonsofcrypto.web3lib.types.bignum.padTwosComplement
 import io.ktor.utils.io.core.String
 import io.ktor.utils.io.core.toByteArray
 import kotlin.math.ceil

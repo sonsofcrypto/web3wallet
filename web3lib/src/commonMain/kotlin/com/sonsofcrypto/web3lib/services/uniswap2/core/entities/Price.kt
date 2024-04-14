@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3lib.services.uniswap2.core.entities
 
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.CurrencyAmount
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 
 class Price {
     val baseCurrency: Currency

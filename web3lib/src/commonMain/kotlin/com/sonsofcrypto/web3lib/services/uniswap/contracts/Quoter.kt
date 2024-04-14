@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3lib.services.uniswap.contracts
 import com.sonsofcrypto.web3lib.provider.model.DataHexStr
 import com.sonsofcrypto.web3lib.legacy.LegacyContract
 import com.sonsofcrypto.web3lib.types.Address
-import com.sonsofcrypto.web3lib.types.BigInt
+import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import com.sonsofcrypto.web3lib.legacy.abiEncode
 import com.sonsofcrypto.web3lib.utilsCrypto.keccak256
 
