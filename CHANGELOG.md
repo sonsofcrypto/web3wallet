@@ -3,7 +3,7 @@
 | Prod / AppStore                                        | Staging                                                  | Dev / Nightly                                                 |
 |--------------------------------------------------------|----------------------------------------------------------|---------------------------------------------------------------|
 | ![pro](bundledAssets/images/testflight_prod.png)       | ![staging](bundledAssets/images/testflight_staging.png)  | ![dev.png](bundledAssets/images/testflight_dev.png)           |
-| web3wallet by sons of crypto Ξ v1.1.3 #47              | web3wallet by sons of crypto S v1.1.4 #49                | web3wallet by sons of crypto D v1.1.5 #50                     |
+| web3wallet by sons of crypto Ξ v1.1.5 #51               | web3wallet by sons of crypto S v1.1.5 #51                 | web3wallet by sons of crypto D v1.1.5 #51                     |
 | AppStore RC.                                           | New features not quite AppStore ready. Great for testing | Living on the bleeding edge. Latest features, latest bugs. 🐛 |
 | [Download](https://testflight.apple.com/join/I4DFVaiH) | [Download](https://testflight.apple.com/join/5GiDXNJ3)   | [Download](https://testflight.apple.com/join/85JEPH96)        |
 
@@ -16,10 +16,11 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 ### v1.2.0 #51
 
-### v1.1.5 #50
+### v1.1.5 #51
 - Removing unused fonts
 - Migrating to Kotlin 1.9.23
 - Android Studio build fixes
+- Fixing pokt config
 
 ### v1.1.4 #49
 - Wallet type indicator icon
