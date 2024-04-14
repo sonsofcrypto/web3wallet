@@ -59,9 +59,9 @@ class ProviderPocket: ProviderJsonRpc {
 
     @Throws(Throwable::class)
     override fun url(): String = when (network.chainId) {
-        1u -> "https://eth-mainnet.gateway.pokt.network/v1/lb/${apiKeys.portalId}"
-        5u -> "https://eth-goerli.gateway.pokt.network/v1/lb/${apiKeys.portalId}"
-        11155111u -> "https://sepolia.gateway.pokt.network/v1/lb/${apiKeys.portalId}"
+        1u -> "https://eth-mainnet.rpc.grove.city/v1/lb/${apiKeys.portalId}"
+        5u -> "https://eth-goerli.rpc.grove.city/v1/lb/${apiKeys.portalId}"
+        11155111u -> "https://sepolia.rpc.grove.city/v1/lb/${apiKeys.portalId}"
         else -> throw  Error.UnsupportedNetwork(network)
     }
 
