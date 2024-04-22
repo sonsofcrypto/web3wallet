@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3walletcore.modules.currencySwap
 import com.sonsofcrypto.web3lib.formatters.Formater
 import com.sonsofcrypto.web3lib.formatters.Formater.Output.Normal
 import com.sonsofcrypto.web3lib.formatters.FormattersOutput
-import com.sonsofcrypto.web3lib.services.uniswap.UniswapEvent
+import com.sonsofcrypto.web3lib.integrations.uniswap.UniswapEvent
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.legacy.NetworkFee
 import com.sonsofcrypto.web3lib.types.bignum.BigDec
@@ -121,7 +121,7 @@ class DefaultCurrencySwapPresenter(
         interactor.remove(this)
     }
 
-    override fun handle(event: UniswapEvent) {
+    override fun handle(event: com.sonsofcrypto.web3lib.integrations.uniswap.UniswapEvent) {
         if (!interactor.isCurrentQuote(currencyFrom, currencyTo, amountFrom ?: BigInt.zero))
             return
         invalidQuote = false

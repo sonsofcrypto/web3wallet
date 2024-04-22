@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.confirmation
 
-import com.sonsofcrypto.web3lib.services.uniswap.UniswapService
+import com.sonsofcrypto.web3lib.integrations.uniswap.UniswapService
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.legacy.NetworkFee

@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3walletcore.modules.confirmation
 
 import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
-import com.sonsofcrypto.web3lib.services.uniswap.UniswapService
+import com.sonsofcrypto.web3lib.integrations.uniswap.UniswapService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.legacy.CultGovernor
 import com.sonsofcrypto.web3lib.legacy.ERC721
