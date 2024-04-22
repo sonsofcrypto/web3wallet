@@ -89,7 +89,9 @@ private extension NetworkFeePickerView {
             fontSmall: Theme.font.caption2,
             foregroundColor: Theme.color.textPrimary
         )
-        stackView?.add(.targetAction(.init(target: self, selector: #selector(feeTapped(_:)))))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(feeTapped(_:)))
+        stackView?.isUserInteractionEnabled = true
+        stackView?.addGestureRecognizer(tap)
     }
     
     func estimatedFee(fee: NetworkFee) -> String {

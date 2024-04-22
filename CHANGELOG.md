@@ -15,6 +15,8 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 # Release Notes 
 
 ### v1.2.0 #52
+- Removing TargetActionViewModel
+- Cult proposals fetch fix
 - Factoring out integrations
 - ExtKeySigner clean up
 - MnemonicSigner clean up
