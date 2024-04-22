@@ -14,7 +14,8 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 # Release Notes 
 
-### v1.2.0 #51
+### v1.2.0 #52
+- Factoring out integrations
 - ExtKeySigner clean up
 - MnemonicSigner clean up
 - FeeData tweaks

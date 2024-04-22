@@ -22,7 +22,7 @@ extension Formater {
 
 extension Data {
     func byteArray() -> KotlinByteArray {
-        ExtensionsKt.byteArrayFrom(data: self)
+        ByteArrayExtensionsKt.byteArrayFrom(data: self)
     }
 }
 
