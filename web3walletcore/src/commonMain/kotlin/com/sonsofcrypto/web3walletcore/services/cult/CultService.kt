@@ -106,7 +106,7 @@ class DefaultCultService(
                 path("proposals/$proposals")
                 parameters.append("format", "json")
             }
-        }.bodyAsText()
+        }.bodyAsText().replace("\"description\":\"\"", "\"description\":{}")
         return jsonDecode<CultProposalServiceJSON>(body)?.data ?: emptyList()
     }
 }
@@ -124,11 +124,11 @@ private fun CultProposalJSON.toCultProposal(status: CultProposal.Status): CultPr
         rejectedVotes(),
         endDate(),
         description.guardianInfo(),
-        description.shortDescription,
+        description.shortDescription ?: "",
         projectDocuments(),
         description.cultReward(),
         description.rewardDistribution(),
-        description.wallet,
+        description.wallet ?: "",
         status,
         stateName
     )
@@ -158,7 +158,7 @@ private fun CultProposalJSON.projectDocuments(): List<ProjectDocuments> {
             listOf(Link(description.file ?: "", description.file ?: ""))
         )
     )
-    val socialDocs = description.socialChannel.replace("\n", " ")
+    val socialDocs = description.socialChannel?.replace("\n", " ") ?: ""
     val socialDocsUrls = socialDocs.split(" ").map { it }
     if (socialDocsUrls.isNotEmpty()) {
         documents.add(
@@ -168,7 +168,7 @@ private fun CultProposalJSON.projectDocuments(): List<ProjectDocuments> {
             )
         )
     }
-    val url = Url.parse(description.links)
+    val url = Url.parse(description.links ?: "")
     if (url != null) {
         documents.add(
             ProjectDocuments(
@@ -180,7 +180,7 @@ private fun CultProposalJSON.projectDocuments(): List<ProjectDocuments> {
         documents.add(
             ProjectDocuments(
                 Localized("cult.proposals.result.audits"),
-                listOf(Note(description.links))
+                listOf(Note(description.links ?: ""))
             )
         )
     }
@@ -227,15 +227,15 @@ private data class CultProposalJSON(
 ) {
     @Serializable
     data class Description(
-        val projectName: String,
-        val shortDescription: String,
+        val projectName: String?,
+        val shortDescription: String?,
         val file: String?,
-        val socialChannel: String,
-        val links: String,
+        val socialChannel: String?,
+        val links: String?,
         val range: String?,
         val rate: String?,
         val time: String?,
-        val wallet: String,
+        val wallet: String?,
         val guardianProposal: String?,
         val guardianDiscord: String?,
         val guardianAddress: String?,
