@@ -331,7 +331,6 @@
 		2DC2C7C3A650E3B9EB8B0D3B /* SunLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C24534389C71A56B59FF /* SunLogoView.swift */; };
 		2DC2C8B1CFC018D58D54D527 /* LogoAnimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C41558C39C7EFB97BC1F /* LogoAnimView.swift */; };
 		2DC2C8C25834253D2CA2A0C5 /* NFTDetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CB7B92F32CA533259FD9 /* NFTDetailImageCell.swift */; };
-		2DC2C9901F566790509A07AC /* UIView+Toast+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C18C65C1FB607E58F687 /* UIView+Toast+Extensions.swift */; };
 		2DC2C9D1FB74B5B96901DF84 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C41CD86FECDF03FCCBE8 /* UILabel+Extensions.swift */; };
 		2DC2C9D9EC56173B33DF06FA /* PlainTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2C18D29998109474100FE /* PlainTextCell.swift */; };
 		2DC2CA0CCE7CABC9108BF9AA /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2CE81AB1FAA8B931C37CE /* UITextView+Extensions.swift */; };
@@ -719,7 +718,6 @@
 		1FEB409A2B45A8C600C5E624 /* AccountImportCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountImportCell.swift; sourceTree = "<group>"; };
 		1FEB409B2B45A8C600C5E624 /* AccountImportWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountImportWireframeFactory.swift; sourceTree = "<group>"; };
 		1FEB409C2B45A8C600C5E624 /* AccountImportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountImportView.swift; sourceTree = "<group>"; };
-		2DC2C18C65C1FB607E58F687 /* UIView+Toast+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Toast+Extensions.swift"; sourceTree = "<group>"; };
 		2DC2C18D29998109474100FE /* PlainTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlainTextCell.swift; sourceTree = "<group>"; };
 		2DC2C1CE254D1B09A1942908 /* ImageMediaExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMediaExtension.swift; sourceTree = "<group>"; };
 		2DC2C1FCC42A2BD3CAB3F3C2 /* ButtonSheetContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonSheetContainer.swift; sourceTree = "<group>"; };
@@ -1715,7 +1713,6 @@
 				2DC2C41CD86FECDF03FCCBE8 /* UILabel+Extensions.swift */,
 				2DC2CE81AB1FAA8B931C37CE /* UITextView+Extensions.swift */,
 				2DC2CD771E4261A43B284DBD /* UIViewExtensions.swift */,
-				2DC2C18C65C1FB607E58F687 /* UIView+Toast+Extensions.swift */,
 			);
 			path = Refactor;
 			sourceTree = "<group>";
@@ -2438,7 +2435,6 @@
 				1FC997DB2AC6C48E00EAF032 /* ServicesAssemblers.swift in Sources */,
 				2DC2CA0CCE7CABC9108BF9AA /* UITextView+Extensions.swift in Sources */,
 				2DC2CD833926C212135B8005 /* UIViewExtensions.swift in Sources */,
-				2DC2C9901F566790509A07AC /* UIView+Toast+Extensions.swift in Sources */,
 				1F0452E42B08C1C500BC5922 /* SwipeCollectionViewCell.swift in Sources */,
 				2DC2C26F1F43B153BACAD338 /* CollectionBackgroundView.swift in Sources */,
 				2DC2CD37E996AD6BCD84AB58 /* NFTsDashboardCarouselCell.swift in Sources */,
@@ -2582,7 +2578,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = P52TMYZ5WB;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -2717,7 +2713,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = P52TMYZ5WB;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -2859,7 +2855,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = P52TMYZ5WB;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -3002,7 +2998,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = P52TMYZ5WB;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -3201,7 +3197,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = P52TMYZ5WB;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -3245,7 +3241,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = P52TMYZ5WB;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;

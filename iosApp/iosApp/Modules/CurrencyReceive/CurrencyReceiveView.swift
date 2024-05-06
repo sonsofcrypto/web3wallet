@@ -102,7 +102,13 @@ private extension CurrencyReceiveViewController {
     
     @objc func onCopyAction() {
         UIPasteboard.general.string = self.viewModel?.address
-        view.presentToastAlert(with: Localized("currencyReceive.action.copy.toast"))
+        navigationController?.asNavVc?.toast(
+            ToastViewModel(
+                text: Localized("currencyReceive.action.copy.toast"),
+                media: nil,
+                position: .top
+            )
+        )
     }
 
     func shareAction() -> (() -> Void) {

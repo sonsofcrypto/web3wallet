@@ -42,10 +42,8 @@ extension QRCodeScanViewController {
         self.viewModel = viewModel
         title = viewModel.title.uppercased()
         if let failure = viewModel.failure {
-            view.presentToastAlert(
-                with: failure,
-                duration: 3.0,
-                bottomOffset: view.frame.height * 0.15
+            navigationController?.asNavVc?.toast(
+                ToastViewModel(text: failure, media: nil, position: .top)
             )
         }
     }
