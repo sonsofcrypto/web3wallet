@@ -213,7 +213,7 @@ extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {
         guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
         guard let qrCode = readableObject.stringValue else { return }
         // NOTE: We ignore if we keep detecting the same code over whist a failure toast is presented
-        guard !view.isToastFailurePresented else { return }
+        guard navigationController?.asNavVc?.isPresentingToast() == false else { return }
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
         presenter.handleEvent(.QRCode(input: qrCode))
     }
