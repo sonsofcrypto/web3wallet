@@ -16,6 +16,8 @@ head over to [sonsofcrypto.com](https://sonsofcrypto.com/).
 
 ### v1.2.0 #53
 - Unifying toast alerts
+- Adding wallets networks indicator
+- 
 
 ### v1.2.0 #52
 - Removing TargetActionViewModel
