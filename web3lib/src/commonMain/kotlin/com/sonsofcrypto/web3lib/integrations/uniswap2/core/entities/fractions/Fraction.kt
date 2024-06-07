@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities
+package com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities.fractions
 
 import com.sonsofcrypto.web3lib.types.bignum.BigInt
 

@@ -62,6 +62,14 @@ class BigInt {
 
     fun isLessThanZero(): Boolean = isLessThan(zero)
 
+    fun gt(other: BigInt): Boolean = storage.compare(other.storage) == 1
+    fun lt(other: BigInt): Boolean = storage.compare(other.storage) == -1
+
+    fun gte(other: BigInt): Boolean = listOf(0, 1)
+        .contains(storage.compare(other.storage))
+    fun lte(other: BigInt): Boolean = listOf(0, -1)
+        .contains(storage.compare(other.storage))
+
 
     override fun toString(): String = storage.toString(10)
 

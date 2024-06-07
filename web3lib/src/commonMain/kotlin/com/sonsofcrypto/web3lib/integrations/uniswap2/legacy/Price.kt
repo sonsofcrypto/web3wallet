@@ -1,8 +1,9 @@
-package com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities
+package com.sonsofcrypto.web3lib.integrations.uniswap2.legacy//package com.sonsofcrypto.web3lib.integrations.uniswap2.core
 
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.CurrencyAmount
 import com.sonsofcrypto.web3lib.types.bignum.BigInt
+import com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities.fractions.Fraction
 
 class Price {
     val baseCurrency: Currency

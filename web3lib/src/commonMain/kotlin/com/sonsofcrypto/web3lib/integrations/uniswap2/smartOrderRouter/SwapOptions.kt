@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.integrations.uniswap2.smartOrderRouter
 
-import com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities.Fraction
+import com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities.fractions.Fraction
 import com.sonsofcrypto.web3lib.integrations.uniswap2.permit2.Permit2Permit
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.bignum.BigInt

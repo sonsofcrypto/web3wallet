@@ -40,5 +40,3 @@ fun Address.jsonPrimitive(): JsonPrimitive = when (this) {
     is Address.Bytes -> JsonPrimitive(DataHexStr(data))
     else -> JsonPrimitive("")
 }
-
-

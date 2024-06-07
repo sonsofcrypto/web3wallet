@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib.integrations.uniswap2.smartOrderRouter
 
 import com.sonsofcrypto.web3lib.integrations.uniswap2.core.TradeType
-import com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities.Fraction
+import com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities.fractions.Fraction
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.CurrencyAmount
 

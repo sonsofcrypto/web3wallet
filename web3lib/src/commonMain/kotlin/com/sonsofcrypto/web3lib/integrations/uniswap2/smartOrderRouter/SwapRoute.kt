@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib.integrations.uniswap2.smartOrderRouter
 
-import com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities.Fraction
-import com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities.MethodParameters
+import com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities.fractions.Fraction
+import com.sonsofcrypto.web3lib.integrations.uniswap2.legacy.MethodParameters
 import com.sonsofcrypto.web3lib.integrations.uniswap2.router.RouteWithValidQuote
 import com.sonsofcrypto.web3lib.types.CurrencyAmount
 import com.sonsofcrypto.web3lib.types.bignum.BigInt

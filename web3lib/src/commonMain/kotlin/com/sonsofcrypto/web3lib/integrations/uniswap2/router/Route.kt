@@ -1,9 +1,8 @@
 package com.sonsofcrypto.web3lib.integrations.uniswap2.router
 
-import com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities.Price
 import com.sonsofcrypto.web3lib.integrations.uniswap2.smartOrderRouter.Pool
 import com.sonsofcrypto.web3lib.types.Currency
-
+import com.sonsofcrypto.web3lib.integrations.uniswap2.legacy.Price
 
 /** Represents a list of pools through which a swap can occur */
 open class Route(

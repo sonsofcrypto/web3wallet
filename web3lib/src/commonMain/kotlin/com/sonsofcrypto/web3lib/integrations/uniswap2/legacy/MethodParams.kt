@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities
+package com.sonsofcrypto.web3lib.integrations.uniswap2.legacy//package com.sonsofcrypto.web3lib.integrations.uniswap2.core
 
 import com.sonsofcrypto.web3lib.types.AddressHexString
 

@@ -44,7 +44,8 @@ sealed class NetworksEvent() {
 /** `NetworksEvent` listener */
 interface NetworksListener { fun handle(event: NetworksEvent) }
 
-/** Network service manages enabled `Network`s, `Wallet`s and `Provider`s
+/**
+ * Network service manages enabled `Network`s, `Wallet`s and `Provider`s
  * Enabled and selected networks and provider preferences are persisted.
  */
 interface NetworksService {
