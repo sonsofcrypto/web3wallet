@@ -1,8 +1,6 @@
-package com.sonsofcrypto.web3lib.integrations.uniswap2.core.fractions
+package com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities
 
-import com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities.Ether
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class EtherTests {

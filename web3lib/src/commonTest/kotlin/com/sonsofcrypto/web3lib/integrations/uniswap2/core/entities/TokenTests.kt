@@ -1,6 +1,5 @@
-package com.sonsofcrypto.web3lib.integrations.uniswap2.core.fractions
+package com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities
 
-import com.sonsofcrypto.web3lib.integrations.uniswap2.core.entities.Token
 import com.sonsofcrypto.web3lib.types.bignum.BigInt
 import kotlin.test.Test
 import kotlin.test.assertEquals
